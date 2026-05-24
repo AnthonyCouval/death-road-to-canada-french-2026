@@ -539,7 +539,7 @@ cyoa: rescuedme
 		judgerecruit
 	else
 		"'Ouais eh bien personne n'est parfait" cyoa-title!
-		($ Thegroup .. "  se sent tres coupable a propos de " .. rname .. "  se faire manger.		Cest la vie, je suppose." $) cyoa-text!
+		($ Thegroup .. "  se sent tres coupable a propos de " .. rname .. "  se faire manger.		C'est la vie, je suppose." $) cyoa-text!
 		morale--all
 	then
 ;
@@ -570,7 +570,7 @@ cyoa-choice: chicken-dinner
 ;
 
 cyoa-choice: chicken-free
-	"Le poulet laisse un uf ! Cest un signe de chance ! Probablement." text!
+	"Le poulet laisse un uf ! C'est un signe de chance ! Probablement." text!
 	morale++all goodfx
 	1 weapondef{ WEAPON_EGG } trunk.weapon+
 ;

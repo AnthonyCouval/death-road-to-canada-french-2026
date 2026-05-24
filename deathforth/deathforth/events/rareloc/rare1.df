@@ -112,7 +112,7 @@ cyoa: rare1-museum
 cyoa: rare1-factory
 	"Usine mysterieuse" cyoa-title!
 	someicon 0 8 rnd to mystfactory
-	($ Thegroup .. "  repère une usine dont les enseignes sont rongees par la rouille. Les zombies " .. " ONT PRIS POSSESSION " rbold .. " des lieux. A l'interieur il reste probablement un peu de ce que l'usine fabriquait avant, quoi que ce soit.'," $) cyoa-text! basic-tone
+	($ Thegroup .. "  repere une usine dont les enseignes sont rongees par la rouille. Les zombies " .. " ONT PRIS POSSESSION " rbold .. " des lieux. A l'interieur il reste probablement un peu de ce que l'usine fabriquait avant, quoi que ce soit.'," $) cyoa-text! basic-tone
 	1.5 8 18 rnd 1 2 rnd zforecast // former 1.8
 	"events/rareloc/region/industry.df" $load-region
 		choice( " Enqueter sur l'usine" )choice: premission

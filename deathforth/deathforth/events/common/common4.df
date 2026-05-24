@@ -175,7 +175,7 @@ cyoa-choice: common4-sneeze-try
 	($ cname .. " ne peut pas eternuer sur commande. " .. cHe .. " perd l'eternuement! C'est tres ennuyeux!" $) text!
 	morale--
 	cattitude- if
-		($ "Cest le " .. "le pire qui puisse arriver a quelquun" rbold .. " dans la zombocalypse!" $) +crtext morale-- attitudeREV
+		($ "C'est le " .. "le pire qui puisse arriver a quelquun" rbold .. " dans la zombocalypse!" $) +crtext morale-- attitudeREV
 	then
 ;
 
@@ -502,7 +502,7 @@ cyoa-bridge: common4-vending-pick
 		choice( "Laisse le tranquille" )choice
 	then;
 	($ "Qui devrait inserer les billets pourris d'un dollar dans la machine ?" $) cyoa-text!
-	"ATTENTION : ça risque d'etre un moment long et ennuyant" rbold +crtext
+	"ATTENTION : ca risque d'etre un moment long et ennuyant" rbold +crtext
 	' common4-vending-go cyoa-human-choice
 	choice( "Laissez-la tranquille finalement" )choice
 ;

@@ -5,7 +5,7 @@
     : RUBICK-oneline5 "Non, le masque ne s'enleve pas." ;
     : RUBICK-oneline6 "Ca te derange si je copie le volant ?" ;
     : RUBICK-oneline7 "J'arrive, les Canadiens ! Attendez-moi !" ;
-    : RUBICK-oneline8 "Ma soif de connaissances ne peut etre étanchee." ;
+    : RUBICK-oneline8 "Ma soif de connaissances ne peut etre etanchee." ;
     : RUBICK-oneline9 "Aucune sorcellerie n'est hors de ma portee." ;
     : RUBICK-oneline10 "Je ne suis pas un voleur. J'emprunte, simplement. La police... n'est pas d'accord." ;
     : RUBICK-oneline11 "Hmmm. Quel test ce sera..." ;
@@ -17,7 +17,7 @@
     : RUBICK-oneline17 "QUI est le mage ultime ? C'est exact. C'est moi." ;
     : RUBICK-oneline18 "Ce qui est a moi est a moi, et ce qui est a toi est a moi aussi." ;
     : RUBICK-oneline19 "J'ai fait le reve le plus etrange, j'etais debout au milieu d'une riviere..." ;
-    : RUBICK-oneline20 "On ferait mieux d'esperer ne pas croiser l'anti-mage. C'est un vrai crétin." ;
+    : RUBICK-oneline20 "On ferait mieux d'esperer ne pas croiser l'anti-mage. C'est un vrai cretin." ;
     : RUBICK-oneline21 "Des zombies partout, Obama, pas de jeux... j'en serais presque triste." ;
 
 	deck-new

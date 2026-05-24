@@ -85,7 +85,7 @@ cyoa-choice: fishing-3
 ;
 
 cyoa-choice: fishing-1
-	($ cname .. "  souhaite avoir de la nourriture! " .. cHe .. " ' decide de faire cuire le poisson. Cest tres nutritif!" $) text! badfx
+	($ cname .. "  souhaite avoir de la nourriture! " .. cHe .. " ' decide de faire cuire le poisson. C'est tres nutritif!" $) text! badfx
 	25 trunk-food+
 ;
 

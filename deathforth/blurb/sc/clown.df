@@ -20,7 +20,7 @@
 	CLOWN-ONELINERS var clown-oneliners
 	CLOWN-ONELINERS shuffles to clown-oneliners
 
-	: CLOWN-emote1 " remonte une petite boite a musique et elle se met à jouer quelque chose de flippant." ;
+	: CLOWN-emote1 " remonte une petite boite a musique et elle se met a jouer quelque chose de flippant." ;
 	: CLOWN-emote2 " fait un animal en ballon, mais il a etrangement un visage humain." ;
 	: CLOWN-emote3 " fixe du regard tout en emettant des ricanements bizarres." ;
 	: CLOWN-emote4 " se comporte de maniere perturbante en permanence." ;

@@ -220,7 +220,7 @@ cyoa-choice: trade-shotgun-shell-all
 
 cyoa: trade-shotgun-shell
 	"Shotgun Shell Stand" cyoa-title! picon!
-	($ Thegroup .. " aperçoit un homme bourru pres d'un camion de glace. Le mot " .. "GLACE" pbold .. " ont ete rayes de l'enseigne et " .. "CARTOUCHES DE FUSIL A POMPE" rbold .. " a ete ecrit a la place." $) cyoa-text!
+	($ Thegroup .. " apercoit un homme bourru pres d'un camion de glace. Le mot " .. "GLACE" pbold .. " ont ete rayes de l'enseigne et " .. "CARTOUCHES DE FUSIL A POMPE" rbold .. " a ete ecrit a la place." $) cyoa-text!
 	shotgun-shell-bought 15 < if
 		"Il propose de vendre 5 cartouches de fusil pour chaque nourriture que vous lui donnez." +crtext foodamt
 		choice( "Non merci" )choice back-esc

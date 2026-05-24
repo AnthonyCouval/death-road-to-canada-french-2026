@@ -13,7 +13,7 @@ cyoa{ road{
 cyoa: walk-camp1
 	camp-pic
 	"RUFFIN LE COCHONNET" cyoa-title!
-	($ "" .. Thegroup .. " trouve un bon endroit pour camper pendant la nuit dans la foret. Le vent et la pluie sy presentent a la surprise de LUI. Cest une nuit miserable sans voiture pour se refugier " .. thegroup .. " cabane E" $) cyoa-text! morale2-all +cr fullcamp
+	($ "" .. Thegroup .. " trouve un bon endroit pour camper pendant la nuit dans la foret. Le vent et la pluie sy presentent a la surprise de LUI. C'est une nuit miserable sans voiture pour se refugier " .. thegroup .. " cabane E" $) cyoa-text! morale2-all +cr fullcamp
 ;
 cyoa: walk-camp2
 	image-cabin-in-woods

@@ -4,7 +4,7 @@ cyoa{
 : coffeed? pchar statmod{ .coffee? } ;
 
 cyoa-choice: coffee-get2
-	($ cname .. "  utilise toutes " .. chis .. "  competences mecaniques pour comprendre a quoi servent les nombreux boutons de la cafetiere.	" .. cHe .. " ' prepare la tasse de cafe parfaite! Cest delicieux!	La machine a cafe emet des etincelles, de la fumee et meurt." $) cyoa-text!
+	($ cname .. "  utilise toutes " .. chis .. "  competences mecaniques pour comprendre a quoi servent les nombreux boutons de la cafetiere.	" .. cHe .. " ' prepare la tasse de cafe parfaite! C'est delicieux!	La machine a cafe emet des etincelles, de la fumee et meurt." $) cyoa-text!
 		coffeed	pchar statmod{ .unsick }
 		morale2+ dexterity++ goodfx clear-cyoa mechanicREV
 ;

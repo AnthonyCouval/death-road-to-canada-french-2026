@@ -66,7 +66,7 @@ cyoa: broomy-cyoa
 	1 to broom-found
 	($ pname .. " essaie de saisir ce balai " .. phe .. "  trouve, mais il se met soudain a parler !" $) text!
 		($ "'HEI ! Arrete de m'attraper, GROS DINGUE ! Je ne suis pas un balai !" pbold $) +crtext
-	"Cest etrange quun balai dise ca." +crtext
+	"C'est etrange quun balai dise ca." +crtext
 		choice( "Fais comme si tu navais jamais vu ce balai" )choice
 		choice( "Prends ce balai" )choice: broomy-recruit
 ;

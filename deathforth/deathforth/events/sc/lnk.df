@@ -36,7 +36,7 @@ cyoa-choice: lnk-bomb
 ;
 
 cyoa: lnk-timeup
-	52 stpick if choosechar cicon else ($ "L*nk" pbold .. "  nest plus la. Cest probablement pour le mieux. Veuillez ne dire a personne que nous avons mis ce personnage dans le jeu." $) text! exit then
+	52 stpick if choosechar cicon else ($ "L*nk" pbold .. "  nest plus la. C'est probablement pour le mieux. Veuillez ne dire a personne que nous avons mis ce personnage dans le jeu." $) text! exit then
 	"DA NA NA NAAAAAAA!" cyoa-title!
 	lnk-event 0 = if
 		lnk-chest ($ "Boomerang en bois !" pbold $) +text

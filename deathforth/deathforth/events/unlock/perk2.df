@@ -112,7 +112,7 @@ cyoa-blank: perk2-
 cyoa: perk2-dingus gstats{
 	"Peak Performance Perks" cyoa-title!
 
-	($ "Le Dernier Bodybuilder semble perdu dans ses pensées.
+	($ "Le Dernier Bodybuilder semble perdu dans ses pensees.
 	" .. "ON NE PEUT PAS COMPTER SUR LES ARMES POUR SURVIVRE... LES SEULES ARMES SUR LESQUELLES VOUS POUVEZ VRAIMENT COMPTER SONT
 	" pbold .. "L*D*B gonfle et montre ses muscles, WOW" fbold $) text!
 

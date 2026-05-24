@@ -110,7 +110,7 @@ berserk-personality-endsay-base shuffles var berserk-personality-endsay
 
 0 stack
 	"Je lai fait!" shove
-	"Cest le moment de profiter du mode de vie canadien!" shove
+	"C'est le moment de profiter du mode de vie canadien!" shove
 	"'Ca suffit les zombies pour moi, merci" shove
 	"Attendez! Jai oublie ma brosse a dents en Floride!" shove
 	"Touchdooooown!" shove
@@ -118,11 +118,11 @@ berserk-personality-endsay-base shuffles var berserk-personality-endsay
 	"I'm going to need a new car..." shove
 	"Je me sens en insecurite sans aucune chaise de jet en vue." shove
 	"Jespere pouvoir piller plus de toilettes plus tard." shove
-	"Cest le moment de se detendre et de relaxer." shove
+	"C'est le moment de se detendre et de relaxer." shove
 	"Victoire!" shove
 	"Je merite des vacances." shove
 	"Est ce quil neige toujours ici?" shove
-	"Cest lheure de faire la fete!" shove
+	"C'est lheure de faire la fete!" shove
 	"Felicitations!" shove
 	"Whoaaaa!" shove
 	"Tout ca cest grace a moi!" shove
@@ -130,7 +130,7 @@ value generic-personality-endsay-base
 generic-personality-endsay-base shuffles var generic-personality-endsay
 
 0 stack
-	"Cest exactement comme dans mes animes japonais!" shove
+	"C'est exactement comme dans mes animes japonais!" shove
 	"Ils se moquaient de mes figurines d'anime mais qui rit maintenant?" shove
 	"Y a t il des animes canadiens?" shove
 	"Tout cela grace a la superiorite des armes japonaises!" shove
@@ -164,7 +164,7 @@ herotype-personality-endsay-base shuffles var herotype-personality-endsay
 
 0 stack
 	"Faut pas perdre de temps !" shove
-	"Cest bien cool." shove
+	"C'est bien cool." shove
 	"Mange ca, Docteur Robotnik !" shove
 	"'Je suis plus rapide que Sonic le Hedgehog !" shove
 value dex-personality-endsay-base
@@ -227,7 +227,7 @@ dog-personality-endsay-base shuffles var dog-personality-endsay
 	<- char .specialtype@ 26 = if "Oui!" then;
 	<- char .specialtype@ 27 = if "glou glou" then;
 	<- char .specialtype@ 29 = if "HA! CEST LE TEMPS POUR UNE NOUVELLE AVENTURE!" then;
-	<- char .specialtype@ 30 = if "Cest ma victoire !" then;
+	<- char .specialtype@ 30 = if "C'est ma victoire !" then;
 	<- char .specialtype@ 31 = if "JE DETESTE LES LUNDIS !" then;
 	<- char .specialtype@ 33 = if "Ooo! Never forget me! Oooooo!" then;
 	<- char .specialtype@ 34 = if "HENNISSEMENT !" then;

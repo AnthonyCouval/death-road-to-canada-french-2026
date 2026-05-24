@@ -1,4 +1,4 @@
-	: NINJA-oneline1 "Si seulement notre ennemi n'était pas si facile a couper en deux." ;
+	: NINJA-oneline1 "Si seulement notre ennemi n'etait pas si facile a couper en deux." ;
 	: NINJA-oneline2 "Ce n'est pas la lame qui compte, c'est la personne qui la manie." ;
 	: NINJA-oneline3 "Hmmm......." ;
 
@@ -13,7 +13,7 @@
 	: NINJA-emote1 " fait passer sa lame par la fenetre et decapite un zombie." ;
 	: NINJA-emote2 " sort legerement son katana de son fourreau puis le remet tout doucement." ;
 	: NINJA-emote3 " lui remet silencieusement son bandeau fantaisie." ;
-	: NINJA-emote4 " coince son bandeau dans le siège." ;
+	: NINJA-emote4 " coince son bandeau dans le siege." ;
 	: NINJA-emote5 " fait claquer sa langue sur son palais." ;
 	: NINJA-emote6 " fixe l'horizon au loin." ;
 	: NINJA-emote7 " deboucle et boucle sa ceinture de securite sans un bruit." ;

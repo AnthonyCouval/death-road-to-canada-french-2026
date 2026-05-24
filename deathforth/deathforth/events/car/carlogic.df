@@ -254,7 +254,7 @@ cyoa{ road{
 // Common used elements for road block encounters
 
 cyoa-choice: car-detour
-	($ Thegroup .. " decide de faire un detour! Cest generalement une mauvaise idee." $) cyoa-text!
+	($ Thegroup .. " decide de faire un detour! C'est generalement une mauvaise idee." $) cyoa-text!
 	detour-roll
 ;
 

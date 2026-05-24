@@ -7,7 +7,7 @@
 	: KNIGHT-oneline7 "Cette armure n'est pas ideale pour les longues randonnees. Si seulement j'avais encore un cheval !" ;
 	: KNIGHT-oneline8 "Il faudrait une legion de morts-vivants pour traverser mon armure d'acier." ;
 	: KNIGHT-oneline9 "Les bardes chanteront mes aventures." ;
-	: KNIGHT-oneline10 "Merci pour cette joyeuse coopération !" ;
+	: KNIGHT-oneline10 "Merci pour cette joyeuse cooperation !" ;
 
 	deck-new
 		card: KNIGHT-oneline1

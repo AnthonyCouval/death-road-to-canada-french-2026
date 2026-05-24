@@ -24,7 +24,7 @@
 	else
 		blurbslot 2 < if
 			cattitude+ not if
-				($ "Si tu fermes les yeux, ça a presque le goût de la merde !" $) blurbsay
+				($ "Si tu fermes les yeux, ca a presque le goût de la merde !" $) blurbsay
 				STAT_MORALE 1st-char .stat--
 			else
 				STAT_MORALE me .stat++
@@ -39,7 +39,7 @@
 	else
 		blurbslot 2 < if
 			cattitude- if
-				($ "Cest pas comme si nous avions le choix de toute façon ! Je deteste le froid !" $) blurbsay
+				($ "C'est pas comme si nous avions le choix de toute facon ! Je deteste le froid !" $) blurbsay
 				STAT_MORALE 1st-char .stat--
 			else
 				"Je suis daccord, en Floride l'air est parfois irrespirable sans climatisation." blurbsay
@@ -60,7 +60,7 @@
 	: optimist-oneline9 "Cette voiture ne devrait avoir aucun probleme pour se rendre au Canada." ;
 	: optimist-oneline10 "J'ai hate de rencontrer d'autres survivants sur le chemin du Canada." ;
 	: optimist-oneline11 "Nous ne devrions avoir aucun probleme pour nous rendre au Canada." ;
-	: optimist-oneline12 "Cest juste une navigation fluide a partir de maintenant!" ;
+	: optimist-oneline12 "C'est juste une navigation fluide a partir de maintenant!" ;
 	: optimist-oneline13 "Cela ne ferait pas de mal de faire equipe avec plus de survivants." ;
 	: optimist-oneline14 "C'est agreable d'avoir toute la route pour soi." ;
 	: optimist-oneline15 "Je prevoyais de demenager au Canada de toute facon!" ;

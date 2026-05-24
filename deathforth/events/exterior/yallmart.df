@@ -2,7 +2,7 @@
 cyoa{ road{
 
 cyoa: yallmart-easy
-	"Yall-Mart" cyoa-title!
+	"LIDL" cyoa-title!
 	($ Thegroup .. " spots an abandoned Y'all-Mart off in the distance. It looks like it's been looted, but maybe there's some untouched loot inside." $) cyoa-text! basic-tone
 	1 8 14 frnd 0 zforecast
 	"events/exterior/region/yallmart.df" $load-region
@@ -47,7 +47,7 @@ cyoa: rescuegrocery
 ;
 
 cyoa: yallmart-mid
-	"Crowded Yall-Mart" cyoa-title!
+	"LIDL envahi" cyoa-title!
 	($ Thegroup .. " sees a big Y'all-Mart. A large amount of undead protects the supplies scattered around inside." $) cyoa-text! basic-tone
 	1.3 1.5 frnd 6 16 frnd 0 2 rnd zforecast
 	"events/exterior/region/yallmart-mid.df" $load-region

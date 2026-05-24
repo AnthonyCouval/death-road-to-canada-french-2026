@@ -24,10 +24,10 @@ cyoa-choice: camp3-fire-pick
 	($ cname .. " essaie de rester calme et observateur." $) text!
 
 	ctemper- if
-		($ cHe .. " n'arrive pas du tout à garder son calme !" .. Thegroup .. " panics!" $) +crtext badfx morale2-all
+		($ cHe .. " n'arrive pas du tout a garder son calme !" .. Thegroup .. " panics!" $) +crtext badfx morale2-all
 	else
 		temper+roll if
-			($ cHe .. " reste très calme !" $) +crtext goodfx
+			($ cHe .. " reste tres calme !" $) +crtext goodfx
 		else
 			($ cHe .. " panique, ce qui lui fait perdre un temps preieux" $) +crtext morale--all badfx
 		then temperREV
@@ -82,7 +82,7 @@ cyoa-choice: camp3-grocery-pick
 			($ cname .. " dit qu'il n'y avait pas de nourriture la-dedans." $) +crtext cchar morale--all-except badfx
 			most-paranoid if choosechar
 				cloyalty- not if
-				($ cname .. " soupconne qu'il s'agit d'un mensonge !" .. cHe .. " commence à garder un oeil sur " .. bname .. "." $) +crtext bully .loyaltyREV
+				($ cname .. " soupconne qu'il s'agit d'un mensonge !" .. cHe .. " commence a garder un oeil sur " .. bname .. "." $) +crtext bully .loyaltyREV
 				then
 			then
 		then +cr fullcamp
@@ -191,7 +191,7 @@ cyoa: camp3-crowd
 			charchoice( " les vole et s'enfuie" )choice: camp3-crowd-rob
 		then
 		most-grating if
-			charchoice( " dis à tout le campe de se 'CALMER'" fcoolit )choice: camp3-crowd-coolit
+			charchoice( " dis a tout le campe de se 'CALMER'" fcoolit )choice: camp3-crowd-coolit
 		then
 		choice( "Reprendre la route sans dormir" )choice: camp3-crowd-tired
 ;
@@ -280,7 +280,7 @@ cyoa-choice: camp3-trap-pick
 		($ cHe .. " renforce rapidement les endroits les plus fragiles. Ça semble maintenant tres securise !" $) +crtext goodfx mechanicREV cchar .mechanical@ 4 < if mechanic++ then +cr fullcamp
 	then;
 	wits+roll if
-		($ cHe .. " improvise. Le resultat n'est pas tres esthetique, mais ça parvient a tenir les zombies a l'ecart." $) +crtext goodfx witsREV mechanicREV cchar .mechanical@ 3 < if mechanic++ then +cr fullcamp
+		($ cHe .. " improvise. Le resultat n'est pas tres esthetique, mais ca parvient a tenir les zombies a l'ecart." $) +crtext goodfx witsREV mechanicREV cchar .mechanical@ 3 < if mechanic++ then +cr fullcamp
 	then;
 		($ cHe .. " cloue quelques planches sur des portes, mais elles ne cessent de tomber." $) +crtext witsREV mechanicREV +cr fullcamp
 		($ Thegroup .. " est attaque durant la nuit." $) +crtext ouch--all bitefx
@@ -314,7 +314,7 @@ cyoa-bridge: camp3-trap-list
 
 cyoa: camp3-trap
 	"Barricader avant d'aller se coucher" cyoa-title!
-	($ "A la fin de la journée, " .. Thegroup .. " se cache dans une vieille maison pleine de courants d'air. Des zombies rodent a l'exterieur et les portes de la maison tiennent a peine dans leurs gonds.
+	($ "A la fin de la journee, " .. Thegroup .. " se cache dans une vieille maison pleine de courants d'air. Des zombies rodent a l'exterieur et les portes de la maison tiennent a peine dans leurs gonds.
 	Est-ce que quelqu'un devrait barricader la maison ?" $) cyoa-text!
 		numhums 4 < if
 			' camp3-trap-pick cyoa-human-choice

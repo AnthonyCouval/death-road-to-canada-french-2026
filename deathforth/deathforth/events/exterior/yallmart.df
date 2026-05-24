@@ -2,7 +2,7 @@
 cyoa{ road{
 
 cyoa: yallmart-easy
-	"Yall-Mart" cyoa-title!
+	"LIDL" cyoa-title!
 	($ Thegroup .. " repere un Y'all Mart abandonne au loin. On dirait qu'il a ete pille, mais peut etre qu'il reste des choses a l'interieur." $) cyoa-text! basic-tone
 	1 8 14 frnd 0 zforecast
 	"events/exterior/region/yallmart.df" $load-region

@@ -18,7 +18,7 @@ cyoa{ road{
 	"Les voitures plus petites ont une bonne consommation d'essence. Elles sont aussi fragiles. Evitez de les heurter contre quoi que ce soit !" +crtext
 ;
 : carinfo-grandpa
-	"On n'en fait plus des comme ça de nos jours ! Cette voiture ancienne est tres robuste. Elle est egalement facile a reparer maisa une consommation d'essence legerement plus elevee." +crtext
+	"On n'en fait plus des comme ca de nos jours ! Cette voiture ancienne est tres robuste. Elle est egalement facile a reparer maisa une consommation d'essence legerement plus elevee." +crtext
 ;
 : carinfo-van
 	"Les camions sont gros, lents, lourds et consommateurs d'essence. Ils se degradent lentement et sont construits comme des tanks ! Ils sont egalement faciles a reparer." +crtext
@@ -53,7 +53,7 @@ cyoa: find-car-starter
 		($ cname .. "  verifie les cles de voiture. Il ny en a pas. " .. cHe .. "  sort de la voiture un moment et met " .. chis .. "  le pied droit dans de la merde dalligator. Il y a des cles a linterieur !" $)
 	then
 		+crtext starting-car get-car
-		choice( " Cest reparti !" )choice: find-car-gas
+		choice( " C'est reparti !" )choice: find-car-gas
 ;
 
 cyoa: find-car-hybrid

@@ -410,7 +410,7 @@
 : cyoa-gachapon
 	cyoa-start
 	"Machine a capsules de recompenses" cyoa-title!
-	"'Cest une machine a capsules de recompenses. Laffichage est efface, il ny a donc pas de facon de savoir quoi contient les capsules avant den ouvrir une." cyoa-text!
+	"'C'est une machine a capsules de recompenses. Laffichage est efface, il ny a donc pas de facon de savoir quoi contient les capsules avant den ouvrir une." cyoa-text!
 	cyoa-add-choice
 		"Points gagnes aux zombies " cyoa-choice-text!
 		' gacharoll cyoa-choice-handler!

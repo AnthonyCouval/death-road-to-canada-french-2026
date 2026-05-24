@@ -2,7 +2,7 @@
 // Called once for each character
 : some-bullcrap
 	blurbslot 0= if // Conversation starter, then everyone in party responds
-		"Cest des conneries." blurbsay
+		"C'est des conneries." blurbsay
 	else
 		rnd5050 if
 			blurbslot 2 < if ($ "Je suis daccord, " .. 1st-char .name@ .. "." $) blurbsay

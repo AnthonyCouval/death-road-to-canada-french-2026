@@ -164,9 +164,9 @@ cyoa-bridge: trade-rare-lab-pick
 cyoa: trade-rare-lab
 	"'La machine a science de Kip" cyoa-title!
 	nearest .character@ choosechar cicon
-	($ "'Cest une sorte dextraterrestre lezard. Cela ne semble deranger personne." .. "Pour une somme modique je peux definitivement bousiller votre code genetique " pbold $) cyoa-text! basic-tone
+	($ "'C'est une sorte dextraterrestre lezard. Cela ne semble deranger personne." .. "Pour une somme modique je peux definitivement bousiller votre code genetique " pbold $) cyoa-text! basic-tone
 	kip-lab-zap 1 < if
-		($ "'75 % de reduction pour le premier zap ! Cest une affaire !" pbold $)
+		($ "'75 % de reduction pour le premier zap ! C'est une affaire !" pbold $)
 	else
 		($ "A FOND !" fbold $)
 	then +text

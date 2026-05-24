@@ -864,7 +864,7 @@ cyoa-choice: trade-polearm-3
 			The leverage also makes it take about half the effort to attack with compared to most other weapons!" pbold $) +crtext
 		then
 		polearm-spear 2 = if
-			($ "Cest le dernier que jai en stock. Jespere que votre phalange fonctionnera !" pbold $) +crtext
+			($ "C'est le dernier que jai en stock. Jespere que votre phalange fonctionnera !" pbold $) +crtext
 		then
 	1 WEAPON_MODSPEAR trunk.weapon+ -9 trunk-food+ someicon ' polearm-spear ++
 ;
@@ -929,7 +929,7 @@ cyoa-choice: trade-silent-1
 			($ "Jen ai encore quelques uns a vendre, si vous voulez des armes a feu silencieuses pour tout un groupe !" pbold $) +crtext
 		then
 		silent-pistol 3 = if
-			($ "Cest mon dernier pistolet. Profitez de votre nouvel arsenal silencieux mais mortel !" pbold $) +crtext
+			($ "C'est mon dernier pistolet. Profitez de votre nouvel arsenal silencieux mais mortel !" pbold $) +crtext
 		then
 	1 WEAPON_SILENTPISTOL trunk.weapon+ -3 trunk-food+ someicon ' silent-pistol ++
 ;
@@ -1030,7 +1030,7 @@ cyoa-choice: trade-heavy-1
 ;
 
 cyoa-choice: trade-heavy-2
-	($ Thegroup .. "  achete un bazooka et trois roquettes !	" .. "Cest Loutil pour faire exploser une foule de zombies, rapidement." pbold $) cyoa-text! goodfx
+	($ Thegroup .. "  achete un bazooka et trois roquettes !	" .. "C'est Loutil pour faire exploser une foule de zombies, rapidement." pbold $) cyoa-text! goodfx
 	3 WEAPON_BAZOOKA trunk.weapon+ -12 trunk-food+ someicon ' heavy-bazooka ++
 ;
 

@@ -223,7 +223,7 @@ roomgen{
 
 : .opp-clown args( char )
 	"Le clown est un artiste de cirque professionnel " <- char .name!
-	"Cest une etrange marionnette clown. " <- char .job!
+	"C'est une etrange marionnette clown. " <- char .job!
 	29 <- char .specialtype!
 	6 <- char .morale! 
 	0 <- char .attitude!

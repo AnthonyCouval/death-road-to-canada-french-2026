@@ -262,7 +262,7 @@ cyoa: malltest
 
 cyoa: rescuemall
 	"Urgence shopping" cyoa-title!
-	($ Thegroup .. "  voit un autre survivant fuir une grosse horde. Ils courent droit vers un centre commercial. Cest une tres mauvaise idee. Essayer de les sauver serait une tres mauvaise idee." $) cyoa-text! basic-tone
+	($ Thegroup .. "  voit un autre survivant fuir une grosse horde. Ils courent droit vers un centre commercial. C'est une tres mauvaise idee. Essayer de les sauver serait une tres mauvaise idee." $) cyoa-text! basic-tone
 	1.3 1.5 frnd 9 20 rnd 2 4 rnd zforecast
 	"events/inner/region/rescuemall.df" $load-region
 		choice( "Essayez de les sauver !" )choice: premission

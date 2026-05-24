@@ -119,7 +119,7 @@ cyoa-bridge: boxer-recruit
 		"  Lequipe fait de la place pour le boxeur en abandonnant :" $) cyoa-text!
 		sting-- badfx recruit-replace?
 	then;
-	($ rname  .. "  frappe ses gants lun contre lautre.	" .. "Cest lheure de lentrainement sur route !" pbold $) cyoa-text! goodfx
+	($ rname  .. "  frappe ses gants lun contre lautre.	" .. "C'est lheure de lentrainement sur route !" pbold $) cyoa-text! goodfx
 		recruited
 ;
 

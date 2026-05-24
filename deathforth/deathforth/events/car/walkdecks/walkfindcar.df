@@ -43,7 +43,7 @@ cyoa: carfind-gravel
 cyoa: carfind-country
 	" Longue marche dans la campagne" cyoa-title!
 	someicon
-	($ Thegroup .. "  marche a travers le paysage et tombe sur des voitures brulees, avec des zombies qui rodent autour delles. Cest une bonne occasion de verifier si une des voitures fonctionne encore." $) cyoa-text! basic-tone
+	($ Thegroup .. "  marche a travers le paysage et tombe sur des voitures brulees, avec des zombies qui rodent autour delles. C'est une bonne occasion de verifier si une des voitures fonctionne encore." $) cyoa-text! basic-tone
 		1.5 1.7 frnd 7 23 rnd 1 3 rnd zforecast
 		"events/car/region/car-country.df" $load-region
 		choice( "Enqueter sur les voitures" )choice: premission

@@ -317,7 +317,7 @@ then
 ;
 
 cyoa-choice: candyresult
-	"Cest vraiment amusant" cyoa-title!
+	"C'est vraiment amusant" cyoa-title!
 	cdog? if
 		($ "'La barre chocolatee etait au chocolat ! Les chiens ne sont pas censes manger de chocolat ! Qu'avez vous fait ?" $) text!
 		bitefx ouch-- morale2+

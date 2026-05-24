@@ -77,7 +77,7 @@
 
 : whiner // Picks two other people, lowers their morale
 	blurbslot 0= if
-		qmsg ($ me .name@ .. " se plain sans cesse a propos de " .. whinetopic .. "." $) txt
+		qmsg ($ me .name@ .. " se plaint sans cesse a propos de " .. whinetopic .. "." $) txt
 	else
 		blurbslot 3 < if
 			STAT_MORALE me .stat--
@@ -135,7 +135,7 @@
 	: one-line4 "Tout a une odeur differente de celle qu'on connaissait avant que le savon ne devienne rare." ;
 	: one-line5 "J'espere ne pas tomber sur d'autres bandits..." ;
 	: one-line6 ($ "Avec la civilisation disparue, ce qui me manque le plus, cest " .. civnoun .. "." $) ;
-	: one-line7 "Si seulement nous avions su que les chaises pouvaient etre lancees lorsque les zombies sont apparus pour la première fois..." ;
+	: one-line7 "Si seulement nous avions su que les chaises pouvaient etre lancees lorsque les zombies sont apparus pour la premiere fois..." ;
 	: one-line8 "Je me demande si je peux devenir assez fort pour lancer une voiture sur les zombies......" ;
 	: one-line9 "On y est presque ?" ;
 	: one-line10 "Esperons que la voiture ne tombe pas en panne..." ;
@@ -145,7 +145,7 @@
 	: one-line14 "J'ai hate de sortir de cette voiture et de me degourdir les jambes." ;
 	: one-line15 "Je me demande comment ca se passe plus au nord ?" ;
 	: one-line16 "Peut etre que les survivalistes avaient raison apres tout ! " ;
-	: one-line17 "Cest dans des moments comme celui-ci que je me demande si je n'aurais pas du etre survivaliste." ;
+	: one-line17 "C'est dans des moments comme celui-ci que je me demande si je n'aurais pas du etre survivaliste." ;
 	: one-line18 "Je me demande dans quelle galere ils sont sur la cote ouest ?" ;
 
 	: one-line19 "Noubliez pas de verifier chaque toilette pour le butin des toilettes." ;

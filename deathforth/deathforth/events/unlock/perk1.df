@@ -128,7 +128,7 @@ cyoa-blank: perk1-shieldofhope
 cyoa: perk1-dingus gstats{
 	"Les Avantages de l'Esprit" cyoa-title!
 
-	($ "La Debutante tient une petite tasse de thé.
+	($ "La Debutante tient une petite tasse de the.
 	" .. "Courir partout en s'agitant n'est pas gracieux ! Tu devrais utiliser l'intelligence et la bienseance." pbold .. "
 	Elle reduit la tasse de the en fine poussiere." $) text!
 

@@ -39,7 +39,7 @@ cyoa: walk-dirty
 
 
 cyoa-choice: walk-branchbreak-go
-	($ cname .. " monte dans larbre avec peu deffort. Cest une bonne exercice" $) cyoa-text!
+	($ cname .. " monte dans larbre avec peu deffort. C'est une bonne exercice" $) cyoa-text!
 	cfitness+ if
 		($ cHe .. " 'voit quelque chose a distance. " .. cHe .. " sur le chemin vers le haut la branche qui portait" $) +crtext morale++ goodfx fitnessREV
 	then;
@@ -61,7 +61,7 @@ cyoa: walk-branchbreak
 cyoa: walk-nicewalk
 	image-uneventful-way
 	"Belle promenade" cyoa-title!
-	($ "" .. Thegroup .. "  continue de marcher a travers la campagne. Cest tres calme mais au moins il ny a pas de zombies ou de dangers en vue. Pour la premiere fois depuis longtemps ils peuvent baisser leur garde et marcher dans une certaine forme de paix." $) cyoa-text! basic-tone
+	($ "" .. Thegroup .. "  continue de marcher a travers la campagne. C'est tres calme mais au moins il ny a pas de zombies ou de dangers en vue. Pour la premiere fois depuis longtemps ils peuvent baisser leur garde et marcher dans une certaine forme de paix." $) cyoa-text! basic-tone
 ;
 cyoa: walk-mold
 	image-white-van

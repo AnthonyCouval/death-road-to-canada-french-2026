@@ -112,7 +112,7 @@
 	: GOTH-oneline4 "Tout cela ira directement dans ma sombre poesie." ;
 	: GOTH-oneline5 "C'est exactement comme dans les films de Tim Burton." ;
 	: GOTH-oneline6 "Il est difficile de se tenir au courant de la mode gothique quand tous les magasins de vetements sont detruits." ;
-	: GOTH-oneline7 "Ma deuxième couleur preferee : le noir ordinaire." ;
+	: GOTH-oneline7 "Ma deuxieme couleur preferee : le noir ordinaire." ;
 
 	deck-new
 		card: GOTH-oneline1

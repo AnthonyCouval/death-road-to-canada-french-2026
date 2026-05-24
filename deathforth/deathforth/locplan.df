@@ -117,7 +117,7 @@ deck-new
 	"Hotel abandonne" choice-card: inner3-cyoa
 	"Maison sur la route" choice-card: inner5-cyoa
 	"Aire de repos" choice-card: rest-easy
-	"Yall-Mart" choice-card: yallmart-easy
+	"LIDL" choice-card: yallmart-easy
 	"Usine abandonnee" choice-card: indust-easy
 value easyloc-pick-stack-base
 

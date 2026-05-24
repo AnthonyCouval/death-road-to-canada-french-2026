@@ -12,7 +12,7 @@ cyoa{ road{
 	cyoa-choice: don-common-sasquatch-aintreal
 	($ Thegroup .. " accelere. " .. cname	.. " voulait vraiment y croire, mais il se dit qu'" .. chim .. " faut qu'" .. chim .. " se " .. "CALME" pbold .. "." $) cyoa-text! morale-- cool-it++ badfx
 	most-grating if choosechar
-	($ cname .. " en rajoute en se disant " .. "CALME TOI" pbold .. " une deuxième fois." $) +crtext cool-it++
+	($ cname .. " en rajoute en se disant " .. "CALME TOI" pbold .. " une deuxieme fois." $) +crtext cool-it++
 	then
 ;
 

@@ -105,7 +105,7 @@ cyoa-choice: halloween-cameos
 	choice( "Sans et Helvetica dUndertale" rbold )choice: sans2-test
 	choice( "Amogus de Among Us" rbold )choice: sans-test
 	choice( "Les Figurines Tombeaux ?" rbold )choice: sans-test
-	choice( "Cest insuffisant, JE " .. "DOIS" rbold .. " voir plus doptions" )choice: halloween-cameos2
+	choice( "C'est insuffisant, JE " .. "DOIS" rbold .. " voir plus doptions" )choice: halloween-cameos2
 ;
 
 cyoa-bridge: event-dracula

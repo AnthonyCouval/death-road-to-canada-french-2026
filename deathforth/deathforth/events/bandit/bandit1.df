@@ -359,7 +359,7 @@ cyoa-bridge: bandit-allofit-coolit
 	else cool-it++
 		($ "Ca n'amuse pas du tout les bandits. Ils ouvrent le feu alors que " .. thegroup .. " tente de s'enfuir." $) +crtext
 		notsolo if
-			($ "Le cote positif c'est que la plupart des balles ont touchées " .. cname .. "." $) +crtext
+			($ "Le cote positif c'est que la plupart des balles ont touchees " .. cname .. "." $) +crtext
 		then
 		ouch2- sting--all bitefx
 	then witsattREV

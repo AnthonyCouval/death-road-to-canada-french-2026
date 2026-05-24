@@ -144,7 +144,7 @@ cyoa: ugnome-note
 cyoa: tutorial
 	"Tutoriel" $upper cyoa-title!
 	someicon
-	($ "Vous pouvez repeter le tutoriel ici ! Cest pratique si vous avez manque des informations sur des choses comme le largage darmes ou le lancer de meubles. Cette option vous ramenera a lecran titre, appuyez simplement sur START pour revenir au tutoriel." $) cyoa-text! basic-tone
+	($ "Vous pouvez repeter le tutoriel ici ! C'est pratique si vous avez manque des informations sur des choses comme le largage darmes ou le lancer de meubles. Cette option vous ramenera a lecran titre, appuyez simplement sur START pour revenir au tutoriel." $) cyoa-text! basic-tone
 
 		choice( "SORTIE" )choice
 		choice( "Repeter le tutoriel" )choice: tutorial-repeat
@@ -425,7 +425,7 @@ cyoa: modguard-dingus
 	"Hutte dans une hutte" cyoa-title!
 	"Je suis le gardien de la hutte des contributeurs !	Passez moi les createurs qui ont apporte du nouveau contenu a la route de la mort ! Ce sont des createurs de mods Death Road to Canada, de notre Discord ! " text! "#mod showcase" pbold +text "  et " +text "#deathroad modding" pbold +text
 
-	"Entrez pour lire leurs paroles dinspiration et decouvrez ce quils ont ajoute dans chaque mise a jour !	Cest une hutte dans la plus grande hutte dinformation !" +crtext
+	"Entrez pour lire leurs paroles dinspiration et decouvrez ce quils ont ajoute dans chaque mise a jour !	C'est une hutte dans la plus grande hutte dinformation !" +crtext
 	choice( "'Allons voir cette cabane" )choice
 ;
 

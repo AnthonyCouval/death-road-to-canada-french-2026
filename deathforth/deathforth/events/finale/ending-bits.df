@@ -42,7 +42,7 @@
 	
 	gamedef{ ' longroad gamemode? } if
 	
-		rndchar , "Cest une longue route !" , 3 ,
+		rndchar , "C'est une longue route !" , 3 ,
 		
 	then;	
 	
@@ -67,7 +67,7 @@
 	
 	gamedef{ ' familiarcharsEX gamemode? } if
 	
-		rndchar , "Cest bien que jeusse tous mes amis avec moi !" , 3 ,
+		rndchar , "C'est bien que jeusse tous mes amis avec moi !" , 3 ,
 		
 	then;
 	

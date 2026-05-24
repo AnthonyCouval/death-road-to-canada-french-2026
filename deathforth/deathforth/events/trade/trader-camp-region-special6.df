@@ -129,7 +129,7 @@ cyoa: preptrader1
 0 value pt2-3
 
 cyoa-choice: trade-p2-3
-	($ Thegroup .. "  achete le " .. "Minigun !" fbold .. "  Cest le summum de la livraison de munitions pour fusil !" .. "Je lai vendu avec une remise massive parce que jai accidentellement eu des taches de beurre de cacahuete dessus." pbold $) cyoa-text! goodfx
+	($ Thegroup .. "  achete le " .. "Minigun !" fbold .. "  C'est le summum de la livraison de munitions pour fusil !" .. "Je lai vendu avec une remise massive parce que jai accidentellement eu des taches de beurre de cacahuete dessus." pbold $) cyoa-text! goodfx
 	1 WEAPON_MINIGUN trunk.weapon+ -35 trunk-food+ someicon ' pt2-3 ++
 ;
 	

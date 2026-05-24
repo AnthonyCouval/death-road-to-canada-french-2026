@@ -190,13 +190,13 @@ cyoa-choice: common6-computer-internet
 		($ cname .. "  obtient de maniere experte que lordinateur fonctionne. Cetait la chose la plus difficile " .. che .. "  ait jamais fait." $) +crtext mechanicREV mechanic++ mechanicREV morale++
 		"The internet seems to be down, though. How come???" +crtext cchar morale--all-except goodfx
 	else
-		($ cname .. "  tripote lancien ordinateur. Cest un mystere complet et absolu. " .. cname .. "  commence a progresser dans la comprehension des tres vieux ordinateurs et, dune maniere ou dune autre, dans la reparation de voitures." $) +crtext mechanic++
+		($ cname .. "  tripote lancien ordinateur. C'est un mystere complet et absolu. " .. cname .. "  commence a progresser dans la comprehension des tres vieux ordinateurs et, dune maniere ou dune autre, dans la reparation de voitures." $) +crtext mechanic++
 		"Puis le courant sarrete." +crtext morale--all
 	then badfx
 ;
 
 cyoa-choice: common6-computer-qbasic
-	($ Thegroup .. "  joue a un jeu sur des gorilles se lancant des bananes. Cest incroyable. Le pouvoir finit par sepuiser, mais jusque la, lexperience est magique." $) text! morale++all goodfx
+	($ Thegroup .. "  joue a un jeu sur des gorilles se lancant des bananes. C'est incroyable. Le pouvoir finit par sepuiser, mais jusque la, lexperience est magique." $) text! morale++all goodfx
 ;
 
 cyoa-choice: common6-computer-gas
@@ -316,7 +316,7 @@ cyoa-choice: common6-burg-pick
 	endcase bbold +text " CONFERE SA BENEDICTION" bbold +text
 	burgtype case
 		0 of cchar isfireproof? if 
-			"Cest a dire assez chaud pour toi ? Rush dendorphines a lepice !" fbold +crtext
+			"C'est a dire assez chaud pour toi ? Rush dendorphines a lepice !" fbold +crtext
 			strength++ vitality++ fitness++		
 		else 
 			cchar statmod{ .fireproof }
@@ -340,8 +340,8 @@ cyoa: common6-burg-rare
 	($ Thegroup .. " prend refuge dans un Wonkor Burger, qui etait une chaine de restaurants avant lapocalypse Malheureusement, ils servaient de la nourriture reelle, donc tout devrait etre spoile par maintenantPour" .. "*" rbold .. " grand surprise, il y a un Wonkor Burger inedit et encore chaud sur une table. " .. ghis .. " 'C'est le WONKOR MAXIMUM, une grosse edition limitee de burger de puissance " $) text!
 	burgtype case
 		0 of "It is the XTRA SPICY WONKOR, world famous as a burg of pain, but also... hope?" endof
-		1 of "Cest le SLIDER WONKOR GRASSE, un burger trompeur qui peut glisser entre vos mains." endof
-		2 of "Cest le MIRACLE WONKOR, concu comme le parfait burger pour la sante et le gout." endof
+		1 of "C'est le SLIDER WONKOR GRASSE, un burger trompeur qui peut glisser entre vos mains." endof
+		2 of "C'est le MIRACLE WONKOR, concu comme le parfait burger pour la sante et le gout." endof
 		3 of "Qui mangera ce burger" endof
 	endcase bbold +text 
 	solo not if " Qui mangera ce burg?" +text then

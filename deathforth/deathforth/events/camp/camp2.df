@@ -53,7 +53,7 @@ cyoa-choice: camp2-fore-fore
 			($ cname .. " ' tente de jouer au golf, mais cest difficile a faire en tant que " .. cdogcat .. ". " .. cHe .. " maybe could have done it with a caddy.
 			" .. cname .. "  est completement depasse." $) cyoa-text! morale3- ouch-- sting-- bitefx
 		else
-			($ cname .. " ' frappe un tas de balles de golf dans des tetes de zombies. Cest un assez bon exercice, mais bientot " .. che .. " is overwhelmed by them.
+			($ cname .. " ' frappe un tas de balles de golf dans des tetes de zombies. C'est un assez bon exercice, mais bientot " .. che .. " is overwhelmed by them.
 			" .. cHe .. "  sechappe, mais passe la nuit cache dans un placard " .. cHe .. "  est epuise le matin." $) cyoa-text! fitness++ fitnessREV morale-- sting-- bitefx
 		then someone choosechar alive? if +cr tiredcamp then
 	then;

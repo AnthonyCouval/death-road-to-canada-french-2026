@@ -149,7 +149,7 @@ cyoa: normcity3
 cyoa: normcity4
 	"Ville silencieuse" cyoa-title! 0 to cyoaicon cyoaicon
 	someicon
-	($ Thegroup .. " explorez une ville assez calme. Cest une bonne occasion de vous reapprovisionner en relative securite." $) cyoa-text! basic-tone
+	($ Thegroup .. " explorez une ville assez calme. C'est une bonne occasion de vous reapprovisionner en relative securite." $) cyoa-text! basic-tone
 	0.8 1.1 frnd 8 16 frnd 0 zforecast
 	citylayoutdeck $load-region
 		lot-draw

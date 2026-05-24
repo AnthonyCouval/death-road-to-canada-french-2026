@@ -112,7 +112,7 @@ cyoa-bridge: roller-recruit
 	ricon
 	team-count 3 > if
 		recruitee .strengthREV recruitee .fitnessREV recruitee .temperREV
-		($  rname .. " ' suggere de lui laisser attacher une corde au pare chocs de la voiture, et elle pourra simplement sy accrocher pendant que tu conduis. Comme ca, lespace dans la voiture ne sera pas un probleme.		Cest une idee terrible. Mettre quelquun dehors pour faire de la place :" $) cyoa-text! recruit-replace?
+		($  rname .. " ' suggere de lui laisser attacher une corde au pare chocs de la voiture, et elle pourra simplement sy accrocher pendant que tu conduis. Comme ca, lespace dans la voiture ne sera pas un probleme.		C'est une idee terrible. Mettre quelquun dehors pour faire de la place :" $) cyoa-text! recruit-replace?
 	then;
 	($ rname .. " ' accepte de se joindre a eux, tant quelle peut tout casser a sa guise." $) cyoa-text! goodfx
 		recruitee .strengthREV recruitee .fitnessREV recruitee .temperREV

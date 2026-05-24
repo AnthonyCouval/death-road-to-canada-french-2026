@@ -410,7 +410,7 @@ cyoa-blank: common5-signal-decode
 		wits-total 10 > if common5-signal-win then;
 	then
 	"La message dit quelque chose comme " +crtext "BUVEN PLUS DOVALTUMS" bbold +text
-	"'Cest juste de la balourdie! Quel dechet de temps!" +crtext morale--all
+	"'C'est juste de la balourdie! Quel dechet de temps!" +crtext morale--all
 ;
 
 cyoa-blank: common5-signal-drive
@@ -450,7 +450,7 @@ cyoa-choice: common5-repair-pick
 	($ cname .. " spends a day trying to fix something in the junk pile... " $) text!
 	cchar .mechanical@ case
 		0 of ($ cHe .. "  se fait accidentellement beaucoup de coupures, deraflures et decchymoses. " .. cHe .. "  apprend la reparation, a la dure." $) +text endof
-		1 of ($ cHe .. "  prend une raquette de tennis cassee et la transforme en " .. "Raquette de tennis ultra ergonomique de niveau 2 de la baleine" bbold .. ". Cest exactement la meme chose quune raquette de tennis ordinaire." $) +text 1 WEAPON_TENNIS trunk.weapon+ endof
+		1 of ($ cHe .. "  prend une raquette de tennis cassee et la transforme en " .. "Raquette de tennis ultra ergonomique de niveau 2 de la baleine" bbold .. ". C'est exactement la meme chose quune raquette de tennis ordinaire." $) +text 1 WEAPON_TENNIS trunk.weapon+ endof
 		2 of ($ cHe .. "  transforme une machette rouillee inutile en une " .. "Machette rouillee" bbold .. "'. C'est une nette amelioration." $) +text 1 WEAPON_MACHETE1 trunk.weapon+ endof
 		3 of ($ cHe .. "  a renforce une batte ebrechee avec des clous et du metal pour en faire une " .. "Batte cloutee" bbold .. "'! C'est genial jusqu'a ce que ca casse !" $) +text 1 WEAPON_SPIKEDBAT trunk.weapon+ endof
 		4 of ($ cHe .. "  aiguise un " .. "Taille branches" bbold .. "'! C'est une arme decente quoique legerement maladroite qui ne se brisera pas sur vous !" $) +text 1 WEAPON_BRANCHTRIM trunk.weapon+ endof // This was a sturdy machete until I chickened out

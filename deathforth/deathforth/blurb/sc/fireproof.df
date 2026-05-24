@@ -13,7 +13,7 @@
 	: FIREPROOF-oneline13 "Il fait chaud ici ou c'est juste mon epais costume ignifuge ?" ;
 	: FIREPROOF-oneline14 "Je refuse d'enlever ce costume, a jamais. Un incendie peut survenir a tout moment." ;
 	: FIREPROOF-oneline15 "L'essence est la ressource la plus precieuse, car les lance-flammes utilisent de l'essence." ;
-	: FIREPROOF-oneline16 "Je me demande à quel point le Canada est inflammable." ;
+	: FIREPROOF-oneline16 "Je me demande a quel point le Canada est inflammable." ;
 
 	deck-new
 		card: FIREPROOF-oneline1
