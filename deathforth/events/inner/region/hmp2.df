@@ -1,0 +1,781 @@
+
+"../deathforth/events/inner/region/prisoncells2.txt" $add-rooms
+
+map{ roomgen{
+
+
+2 constant prison_layout
+
+: set-theme-prison
+	0x 14 loc-ftheme!
+	0x 16 loc-wtheme!
+	wall-cinderblock
+	0 4 rnd loc-dtheme!
+	0 5 rnd to theme-num 
+; 
+
+
+: cellsink
+	spawn special_objects32_base_id 0x 6b + lt .spriteid! bbox
+	25 health! immovable as-metal
+;
+: cellcombine
+	spawn special_objects32_base_id 0x 6c + lt .spriteid! bbox
+	25 health! immovable as-metal
+;
+: cellbench
+	spawn special_objects32_base_id 0x 6d + lt .spriteid! bbox
+	25 health! immovable as-metal
+;
+: celltoilet
+	spawn special_objects32_base_id 0x 6e + lt .spriteid! bbox
+	25 health! immovable as-metal
+;
+: cellbed
+	spawn special_objects32_base_id 0x 6a + lt .spriteid!
+	bbox as-metal
+;
+
+: cellcombo cellbed 3 lt .vel.x! cellsink -1 lt .vel.y! ;
+
+: mesapc
+	spawn special_objects32_base_id 196 + lt .spriteid!
+	as-metal immovable 20 lt .hitpoints!
+;
+
+	: phonestand
+		spawn special_objects32_base_id 0x 49 + lt .spriteid!
+		25 health! bbox swolebolt as-metal 
+	;
+
+: diningset
+	table
+	95 %chance if chair -1 movey drift then
+	85 %chance if chair 1 movey drift then
+	70 %chance if chair -1 movex drift then
+	50 %chance if chair 1 movex drift then
+	\ 40 %chance if rainbowchair 1 movex drift then
+	phonestand -2 movex -0.5 movey
+;
+
+	
+	0 value alarmraised
+		0 value camsoff
+		0 value prisonkeys
+	
+	: rotatingabout args( me eventid )
+	
+		<- eventid THING_EVENT_TIMER = if
+		
+					30 <- me .timer!
+					// <- me .weapon_state.user@ print
+			
+			camsoff 1 = if then;
+					
+					<- me .weapon_state.user@ 0 > if 
+						<- me .weapon_state.user@ -15 + 0 280 clamp <- me .weapon_state.user!
+					then
+					
+			
+			<- me .pos.x@ <- me .pos.y@ 40 + 40 things-in-xyrad
+			depths for i picks .teammate? if
+			
+				sfx{ fm 150 d! 0.5 pitch! }
+			
+				BLUE "?" .. <- me .report
+				<- me .weapon_state.user@ 15 + <- me .weapon_state.user!
+				
+				<- me .weapon_state.user@ 150 > if 
+				RED "!" .. <- me .report
+				then
+				
+				alarmraised 1 = if
+				RED "!!!" .. <- me .report
+				then
+				
+					then
+				next drop
+	
+			<- me .weapon_state.user@ 240 > if 
+				1 to alarmraised
+			then
+
+					
+					
+		
+			30 %chance if
+			sfx{ -5 nextpri fm_sweep 20 a! 0 i! 1 j! 0.03 duty! 2 freq! 10000 filt_high! 8000 filt! 3 pitch! 0.5 q!
+				0.7 duty2!
+				1 1.5 frnd pitch!
+				<- me .adjust-vol
+			}
+			then
+		
+		// <- me .weapon_state.val@ print
+		// <- me .weapon_state.info@ print
+		
+
+			
+			<- me .weapon_state.val@ 0 = if // from 1st to centre
+				1 <- me .weapon_state.info!
+				1 <- me .weapon_state.val!
+				<- me .spriteid@ 1 + <- me .spriteid!
+			then;
+			
+			
+			<- me .weapon_state.val@ 2 = if // from 2nd to centre
+				0 <- me .weapon_state.info!
+				1 <- me .weapon_state.val!
+				<- me .spriteid@ -1 + <- me .spriteid!
+			then;
+			
+			<- me .weapon_state.val@ 1 = if
+				<- me .weapon_state.info@ 1 = if
+					<- me .spriteid@ 1 + <- me .spriteid!
+					<- me .weapon_state.val@ 1 + <- me .weapon_state.val! // centre, rotating towards 2nd
+					then;
+				
+				<- me .weapon_state.info@ 0 = if
+					<- me .spriteid@ -1 + <- me .spriteid!
+					<- me .weapon_state.val@ -1 + <- me .weapon_state.val! // centre, rotating towards 1st
+				then;
+			then
+			
+		then
+	;		
+	
+	: cctvcamera
+	spawn special_objects16_base_id 44 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! -2.5 lt .vel.y!  0 lt .rad.x! 0 lt .rad.y! 0.45 lt .vel.x!
+	 1 lt .timer! 1 lt .weapon_state.val! 1 lt .weapon_state.info! ' rotatingabout lt .events! 1 lt .nocollide! 1 lt .no_hit! -1 lt .layer!
+	;
+	
+	// -1 lt .vel.x!
+	
+	: alarmlights args( me eventid )
+		<- eventid THING_EVENT_TIMER = if 
+		
+		20 <- me .timer!
+		
+			alarmraised 1 = if
+			
+				<- me .weapon_state.val@ 1 = if
+					<- me .spriteid@ -1 + <- me .spriteid!
+					0 <- me .weapon_state.val!
+				then;
+				
+				<- me .weapon_state.val@ 0 = if
+					<- me .spriteid@ 1 + <- me .spriteid!
+					1 <- me .weapon_state.val!
+				then;
+				
+			then
+		then
+	
+	;
+	
+	
+	: alarmlight
+	spawn special_objects16_base_id 46 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! -1.5 lt .vel.y! 0 lt .rad.x! 0 lt .rad.y!
+	 1 lt .timer! ' alarmlights lt .events! 1 lt .nocollide! 1 lt .no_hit!
+	;
+	
+	: droplets args( me eventid )
+		<- eventid THING_EVENT_TIMER = if
+			12 <- me .timer!
+			
+			6 8 rnd for
+			
+			<- me .pos
+			particle{ new pos! 15 ticks! 
+			pos@ 0 2 3 frnd xyadd pos!
+			
+			particles_base_id 1+ spriteid!
+			160 200 frnd anglexy 0.5 1.2 frnd xymul vel!
+			
+			0 clr.r!
+			0.4 clr.g!
+			1 clr.b!
+			glowy
+
+			}
+			
+			next
+			
+		then
+	;
+	
+	: meleestuff? 33 %chance if meleeweapons then ;
+	
+	: wallshower
+	spawn special_objects16_base_id 48 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! -2.1 lt .vel.y! 0 lt .rad.x! 0 lt .rad.y!
+	 1 lt .timer! 1 lt .nocollide! 1 lt .no_hit! ' droplets lt .events!
+	;
+	
+	
+	// map{ lt .pos pos>tile tile@ 1 over .wet! }
+	
+	0 value alarmred
+	0 value maxzombs
+
+	: alarmcheck
+		alarmraised 1 = if
+			1 1 1 tint_near!
+			gameticks 1 * sin abs to alarmred
+			1 alarmred alarmred tint_far!
+			1 light_mode!
+			5 tint_trigger
+	
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_set_b!
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_tile_b!
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_thing_b!
+		
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_set_g!
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_tile_g!
+			// gameticks 1 * sin abs 0.4 1 clamp clr_near_thing_g!
+			
+			// "balls" player .report
+			
+			sfx{ pulse 90 d! 30 a! gameticks sin abs 3 * pitch! 0.25 scale! }
+			
+			// spooky-music
+			
+			16 %chance if
+				maxzombs 80 > if then;
+				1 zombs 0 lt .mapid! 3 lt .zomb.state!
+				' maxzombs ++ 
+			then
+
+			
+		then
+		
+		timer_retrigger
+	;
+
+
+	: needkeys args( me )
+	
+	prisonkeys 1 = if <- me silentkillit 	sfx{ noise 2 pitch! } then;
+	
+	"We need keys to open this." player .report
+	sfx{ thump }
+	;
+	
+	: lockdowndoor
+		spawn special_objects32_base_id 211 + lt .spriteid!
+		as-metal 4000 lt .hitpoints! 1 lt .tileflags! 40000 lt .mass! 1.3 lt .scale.x! 16 lt .rad.y! 1.5 lt .scale.y! 4 lt .rad.x!
+		' needkeys lt .cyoa!
+
+	-0.25 lt .vel.y!
+	;
+	
+	: prisonloot
+	1 9 rnd case
+		1 of book endof
+		2 of shovel endof
+		3 of wood endof
+		4 of knucks endof
+		5 of spoon spoon tfork endof
+		6 of magazine endof
+		7 of skel endof
+		8 of pistol endof
+		9 of dolt endof 
+		
+	endcase
+	-2 lt .vel.y!
+	;
+	
+	: celldoor
+	66 %chance if
+	spawn special_objects16_base_id 50 51 rnd + lt .spriteid!
+
+	1.35 lt .scale.y!
+	4 lt .rad.x!
+	8 lt .rad.y!
+	immovable
+	-0.5 lt .vel.y!
+	0.5 lt .vel.x!
+	' needkeys lt .cyoa!
+	then
+	;
+	
+	: showergrateA
+	spawn special_objects16_base_id 49 + lt .spriteid!
+
+	\ 1.35 lt .scale.y!
+	4 lt .rad.x!
+	8 lt .rad.y!
+	immovable
+	-0.5 lt .vel.y!
+	0.5 lt .vel.x!
+	
+	93 lt .pos.x! 
+	395 lt .pos.y!
+	1 lt .walkover!
+
+	
+	1 lt .bolted!
+	4 bolts!
+	
+	;
+	
+	: showergrateB
+	
+	spawn special_objects16_base_id 49 + lt .spriteid!
+
+	\ 1.35 lt .scale.y!
+	4 lt .rad.x!
+	8 lt .rad.y!
+	immovable
+	-0.5 lt .vel.y!
+	0.5 lt .vel.x!
+	
+	1 lt .walkover!
+	
+	811 lt .pos.x! 
+	395 lt .pos.y!
+
+	1 lt .bolted!
+	4 bolts!
+	
+	;
+	
+	: riflewhich? 1 2 rnd case
+		1 of huntcowboy endof
+		2 of hunting endof
+		endcase
+	;
+	
+	: pipebombbox spawn 0x 92 special_objects32_base_id + lt .spriteid! 10 lt .hitpoints! 687 lt .pos.x! 222 lt .pos.y! ;
+	
+	: tossout args( me )
+		<- me .spriteid@ 1 + <- me .spriteid!
+		3 for
+			riflewhich? 2 lt .vel.y! 1 -1 frnd lt .vel.x! -1 lt .vel.z! 50 lt .hitpoints! <- me .pos lt .pos!
+		clear-cyoa
+		next
+	;
+	
+	: ammout args( me )
+		0 <- me .clr.a! 
+		20 30 frnd LOOT_RIFLE_SHELL spawnscat <- me .pos lt .pos!
+		clear-cyoa
+		interactee silentkillit
+	;
+	
+: armsrackempty spawn special_objects32_base_id 209 + lt .spriteid! 22000 lt .mass! 1260 lt .hitpoints! 1 lt .unseen! 1 lt .tileflags! 12 lt .rad.x! 12 lt .rad.y! -1 lt .vel.y! ;
+: armsrack spawn special_objects32_base_id 208 + lt .spriteid! 22000 lt .mass! 1260 lt .hitpoints! 1 lt .unseen! 1 lt .tileflags! 12 lt .rad.x! 12 lt .rad.y! -1 lt .vel.y! ' tossout lt .cyoa! ;
+
+0 value racked 
+
+: fillarms 
+	racked 0 = if 
+		armsrack
+		1 to racked 
+	else 
+	25 %chance if armsrack else armsrackempty then
+	then 
+;
+\ 1 rack always filled; reliable rifles 
+
+: gasvend vending 1 rarefood ;
+
+: ammopileprison
+	spawn special_objects32_base_id 212 + lt .spriteid!
+	as-metal 4000 lt .hitpoints! 4000 lt .mass!
+	\ 1 lt .nocollide!
+	5 lt .vel.y!
+	1 lt .vel.x!
+	\ 3 lt .layer!
+	' ammout lt .cyoa!
+;
+
+: warden spawn THING_ZOMBIE lt .typeid! 50 lt .hitpoints! 13 lt .zombiebody! 13 lt .zombiehead! 363 lt .pos.x! 313 lt .pos.y! 3 lt .zomb.state! 1 lt .scale.x! 1 lt .scale.y! 4000 lt .mass! 0.4 lt .clr.g! ;
+
+: smallcrowd
+	7 for 
+	1 zombs
+	29 lt .pos.x! 295 lt .pos.y!
+	next
+;
+
+: consol
+	spawn special_objects32_base_id 210 + lt .spriteid!
+	bbox 12 lt .rad.x!
+	bbox 14 lt .rad.y!
+	immovable as-wood
+	5 lt .timer!
+
+	2000 health! 0 lt .friction!
+	421 lt .pos.x! 222 lt .pos.y!
+	chair 1 lt .vel.y! 5 lt .hitpoints! 421 lt .pos.x! 222 lt .pos.y!
+	
+	spawn special_objects32_base_id 210 + lt .spriteid!
+	bbox 12 lt .rad.x!
+	bbox 14 lt .rad.y!
+	immovable as-wood
+	5 lt .timer!
+
+	2000 health! 0 lt .friction!
+	440 lt .pos.x! 222 lt .pos.y!
+	chair 1 lt .vel.y! 5 lt .hitpoints! 440 lt .pos.x! 222 lt .pos.y!
+	3 for
+		skel 
+		410 450 frnd lt .pos.x!
+		240 250 frnd lt .pos.y!
+	next
+	
+	1 LOOT_FOOD spawnscat 410 450 frnd lt .pos.x! 255 260 frnd lt .pos.y!
+	\ warden 410 450 frnd lt .pos.x! 255 260 frnd lt .pos.y!
+;
+
+: turnon args( me )
+	special_objects16_base_id 42 + <- me .spriteid!
+	1 to camsoff
+	clear-cyoa
+	"CAMERAS DISABLED." <- me .report
+;
+
+: keys args( me )
+	1 to prisonkeys
+	clear-cyoa
+	<- me silentkillit
+;
+
+: levertouse
+	spawn special_objects16_base_id 41 + lt .spriteid! 1.35 lt .vel.x! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! 0.6 lt .vel.y!
+	 1 lt .timer! ' turnon lt .cyoa! 1 lt .flip! 372 lt .pos.x! 222 lt .pos.y!
+;
+
+: .friend? .typeid@ THING_HUMAN = ;		
+
+0 value bopen?
+0 value aopen?
+
+0 value norm_vent_A
+0 value norm_vent_B 
+
+0 value shadow_vent_A
+0 value shadow_vent_B 	
+
+: shadowtoventB args( me )
+
+	// bopen? 0 = if 1 to bopen? spawn icons16_id 108 + lt .spriteid! interactee .pos lt .pos! -4 lt .pos.z! then;
+	// cool open anim until it didn't make sense, haha.
+	
+	<- me .pos 2700 things-in-xyrad // nobody should be massively far away anyway.
+			depths for i picks .friend? if
+				i picks norm_vent_B #thing .pos.x@ swap .pos.x!
+				i picks norm_vent_B #thing .pos.y@ swap .pos.y!
+				sfx{ noise }
+			then
+		next drop
+;
+
+: normtoshadowB args( me )
+	<- me .pos 2700 things-in-xyrad // nobody should be massively far away anyway.
+			depths for i picks .friend? if
+				i picks shadow_vent_B #thing .pos.x@ swap .pos.x!
+				i picks shadow_vent_B #thing .pos.y@ swap .pos.y!
+				sfx{ noise }
+			then
+		next drop
+;	
+
+: shadowtoventA args( me )
+
+	// bopen? 0 = if 1 to bopen? spawn icons16_id 108 + lt .spriteid! interactee .pos lt .pos! -4 lt .pos.z! then;
+	// cool open anim until it didn't make sense, haha.
+	
+	<- me .pos 2700 things-in-xyrad // nobody should be massively far away anyway.
+			depths for i picks .friend? if
+				i picks norm_vent_A #thing .pos.x@ swap .pos.x!
+				i picks norm_vent_A #thing .pos.y@ swap .pos.y!
+				sfx{ noise }
+			then
+		next drop
+;
+
+: normtoshadowA args( me )
+	<- me .pos 2700 things-in-xyrad // nobody should be massively far away anyway.
+			depths for i picks .friend? if
+				i picks shadow_vent_A #thing .pos.x@ swap .pos.x!
+				i picks shadow_vent_A #thing .pos.y@ swap .pos.y!
+				sfx{ noise }
+			then
+		next drop
+;		
+	
+
+: shadowventB
+	spawn special_objects16_base_id 49 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! -4 lt .vel.y! 4 lt .rad.x! 4 lt .rad.y! 4 lt .layer! 1 lt .tileflags!
+	 1 lt .timer! 1 lt .nocollide! 1 lt .no_hit! 0 lt .clr.r! 0 lt .clr.b! 0 lt .clr.g! ' shadowtoventB lt .cyoa! lt thing# to shadow_vent_B
+	 
+	 	\ prison_layout 1 = if 
+			696 lt .pos.x! 292 lt .pos.y!
+		\ then 
+	 
+;
+
+: normventB
+	spawn special_objects16_base_id 49 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! 4 lt .rad.x! 4 lt .rad.y! 4 lt .layer!
+	 1 lt .timer! 1 lt .nocollide! 1 lt .no_hit! 1 lt .tileflags! ' normtoshadowB lt .cyoa! lt thing# to norm_vent_B
+	 
+	 	prison_layout 1 = if 
+			953 lt .pos.x! 124 lt .pos.y!
+		then 
+		
+		prison_layout 2 = if 
+			600 60 170 rnd lt .pos!
+		then 
+		\ to self : fix vents 
+		
+;
+
+: shadowventA
+	spawn special_objects16_base_id 49 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! 4 lt .rad.x! 4 lt .rad.y! 4 lt .layer! 1 lt .tileflags!
+	 1 lt .timer! 1 lt .nocollide! 1 lt .no_hit! 0 lt .clr.r! 0 lt .clr.b! 0 lt .clr.g! ' shadowtoventA lt .cyoa! lt thing# to shadow_vent_A
+	 
+	 	\ prison_layout 1 = if 
+			1051 0 2 rnd 112 * - lt .pos.x! 251 lt .pos.y!
+		\ then 
+;
+
+: normventA
+	spawn special_objects16_base_id 49 + lt .spriteid! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! 4 lt .rad.x! 4 lt .rad.y! 4 lt .layer!
+	 1 lt .timer! 1 lt .nocollide! 1 lt .no_hit! 1 lt .tileflags! ' normtoshadowA lt .cyoa! lt thing# to norm_vent_A
+	 	
+		prison_layout 1 = if 
+			953 lt .pos.x! 44 lt .pos.y!
+		then 
+		
+		prison_layout 2 = if 
+			1048 170 lt .pos!
+		then 
+;
+
+: allvents 
+	shadowventB 
+	
+	
+	normventB 
+	
+	
+	normventA 
+	
+	
+	shadowventA 
+	
+
+;
+
+: canteencounter
+	
+	prison_layout 1 = if 
+
+		5 for
+		chair 374 lt .pos.x! i 10 * 230 + lt .pos.y! -3 lt .vel.y!
+		33 %chance if
+		1 LOOT_FOOD spawnscat 374 lt .pos.x! i 10 * 230 + lt .pos.y! -3 lt .vel.y!
+		then
+		next
+	
+	else 
+		
+		5 for
+		33 %chance if
+			1 LOOT_FOOD spawnscat 110 180 rnd lt .pos.x! i 10 * 230 + lt .pos.y! -3 lt .vel.y!
+		then
+		next 
+	then 
+;
+
+: longtable
+
+	prison_layout 1 = if 
+		3 for
+		spawn special_objects32_base_id 101 + lt .spriteid! 30 health! 0 lt .angle! 452 lt .pos.x! i 10 * 42 + lt .pos.y! -1.2 lt .vel.y! bbox 12 lt .mass! 
+			66 %chance if
+			1 LOOT_FOOD spawnscat 374 lt .pos.x! i 10 * 42 + lt .pos.y! -3 lt .vel.y!
+			then
+		next
+		2 LOOT_FOOD spawnloot 374 lt .pos.x! 52 lt .pos.y! -3 lt .vel.y!
+	else
+	
+		3 for
+		spawn special_objects32_base_id 101 + lt .spriteid! 30 health! 0 lt .angle! 120 i 35 * + lt .pos.x! 230 lt .pos.y! -1.2 lt .vel.y! bbox 12 lt .mass! 
+			66 %chance if
+			1 LOOT_FOOD spawnscat 160 lt .pos.x! 230 lt .pos.y! -3 lt .vel.y!
+			then
+		next
+		2 LOOT_FOOD spawnloot 160 lt .pos.x! 230 lt .pos.y! -3 lt .vel.y!
+	
+	then 
+;
+
+
+: longtable2
+
+	prison_layout 1 = if 
+		3 for
+		spawn special_objects32_base_id 101 + lt .spriteid! 30 health! 0 lt .angle! 408 lt .pos.x! i 10 * 42 + lt .pos.y! -1.2 lt .vel.y! bbox 12 lt .mass! 
+		66 %chance if
+		1 LOOT_FOOD spawnscat 408 lt .pos.x! i 10 * 42 + lt .pos.y! -3 lt .vel.y!
+		then
+		next
+		2 LOOT_FOOD spawnloot 374 lt .pos.x! 52 lt .pos.y! -3 lt .vel.y!
+	else 
+	
+	
+	
+	
+	then 
+;
+
+
+: goldkeyprison spawn special_objects16_base_id 24 + spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! ' keys lt .cyoa! 0 lt .clr.b! 0 lt .clr.g! 
+
+	prison_layout 1 = if 
+		29 lt .pos.x! 295 lt .pos.y! 
+	then 
+	
+	prison_layout 2 = if 
+		25 lt .pos.x! 63 lt .pos.y! 
+	then 
+
+
+	\ warden 
+	prison_layout 1 = if 
+		29 lt .pos.x! 295 lt .pos.y! 
+	then 
+	
+	prison_layout 2 = if 
+		25 lt .pos.x! 63 lt .pos.y! 
+	then 
+	
+;
+
+
+
+: settingupeverythingdirector consol levertouse goldkeyprison showergrateA showergrateB allvents canteencounter smallcrowd longtable longtable2 ;  
+// We do things this way because there's only A-H scripts available. Gotta improvise.
+
+: settingupeverythingdirector2 consol levertouse goldkeyprison showergrateA showergrateB allvents canteencounter smallcrowd longtable longtable2 ;  
+
+: mesalock
+	spawn special_objects32_base_id 194 + lt .spriteid!
+	bbox as-metal immovable 900 lt .hitpoints! 
+;
+
+: mesacrate
+	spawn special_objects32_base_id 147 + lt .spriteid!
+	bbox as-metal 9 health!
+;
+
+: cellbath cellsink -1 movey celltoilet -1 movey -1 movex ;
+
+: wallbadge	special_objects32_base_id 0x 4d + tanchor 1- wallhang ;
+
+: hevcharger special_objects32_base_id 192 + tanchor 1- wallhang ;
+
+: hpcharger special_objects32_base_id 193 + tanchor 1- wallhang ;
+
+: hpcharger special_objects32_base_id 193 + tanchor 1- wallhang ;
+
+: hpcharger special_objects32_base_id 193 + tanchor 1- wallhang ;
+
+: mesatv special_objects32_base_id 195 + tanchor 1- wallhang ;
+
+: mesalogo special_objects32_base_id 197 + tanchor 1- wallhang ;
+
+
+
+
+
+// TODO: Once tile draw sorting is working... tile versions
+// : cellbars special_objects32_base_id 0x 60 + tanchor solidwall ;
+// : celldoor special_objects32_base_id 0x 61 + tanchor solidwall ;
+// : cellbars48
+//	special_objects32_base_id 0x 60 + tanchor solidwall
+//	special_objects32_base_id 0x 61 + tanchorx 1- tanchory solidwall
+// ;
+// : cellbars64
+//	special_objects32_base_id 0x 61 + tanchor solidwall
+//	special_objects32_base_id 0x 60 + tanchorx 1- tanchory solidwall
+//	special_objects32_base_id 0x 60 + tanchorx 1+ tanchory solidwall
+// ;
+
+
+: cellbarsphysical 
+	spawn
+	special_objects32_base_id 0x 60 + lt .spriteid!
+	5000 5000 * lt .mass!
+	5000 5000 * lt .hitpoints!
+	1 lt .no_hit!
+	1 lt .tileflags!
+	8 lt .rad.x!
+	2 lt .rad.y!
+	
+	-0.5 lt .vel.y!
+	
+;
+
+
+
+// I'm not sure what happened to the other stuff above. Broken copy/paste from crackmesa I guess.
+// And yeah, this location is a very loose cousin of crackmesa. Makes indoor locations from scratch so much easier.
+
+
+
+: policecounter
+		spawn special_objects32_base_id 0x 68 + lt .spriteid!
+		25 health! bbox immovable as-wood dropswood
+;	
+
+: evidenceloot
+	75 %chance if skelscat then
+	20 %chance if nightstick .scatter then
+	40 %chance if shiv .drift then
+	1 5 rnd case
+		1 of 90 %chance if snubnose .drift 12 LOOT_BULLET else autoshot .drift 15 LOOT_SHOTGUN_SHELL then spawnloot drift endof
+		2 of 20 LOOT_SHOTGUN_SHELL spawnloot drift endof
+		3 of 3 for pipebomb .drift next endof
+		4 of otaku .drift endof
+		5 of knucks .drift endof
+	endcase
+;
+} }
+
+location: prison
+		max-rooms: 1
+		entry-tags: prisonplaceB
+		pre-script: set-theme-prison
+		script: set-theme-prison
+//		post-script: 
+		post-script:
+		
+			room-choice: prisonplaceB
+			room-weight: 10
+			room-count: 1
+			room-script: ndx nad
+			room-post-script: 1 ' alarmcheck timer_add 10diff 2 * %zombs settingupeverythingdirector2 5 nightstick .scatter
+			filter-only 
+
+
+regiondef{
+
+
+	: site-setup "PRISON MAP 2" print ;
+
+	region: prison
+		script: timeofday o'clock
+		spooky-music
+		site-setup
+
+		inside
+
+		loc-choice: prison
+			loc-weight: 99
+			loc-count: 1
+
+		post-script: inspawn
+}

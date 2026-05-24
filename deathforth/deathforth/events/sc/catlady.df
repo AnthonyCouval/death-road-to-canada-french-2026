@@ -1,0 +1,27 @@
+cyoa{ road{
+
+cyoa: catlady-camp
+	sc-camper choosechar cicon
+	"La nourriture pour chats coute cher" cyoa-title!
+	trunk-food 4 < if
+		($ cname .. "  en a assez de la situation alimentaire. Elle prend son enorme essaim de chats et la nourriture restante, puis quitte lequipe." $) cyoa-text! decruit-bad-silent-takeweapons eat-all
+	else
+	($ "Avant de camper pour la journee, " .. cname .. "  met la main sur la nourriture et en jette une poignee par terre. Un grand essaim de chats apparait de nulle part et le consomme." $) cyoa-text!
+		trunk-food 7 > if -8 trunk-food+ else eat-all then
+	then
+	badfx team-count 0 > if +cr fullcamp then
+;
+
+
+cyoa: catlady-despair
+	bully choosechar cicon
+	"Fete des chats" cyoa-title!
+	($ cname .. "''s expression s'illumine." .. "Qui peut rester triste quand il a des chatons?" pbold .. "	Un essaim dadorables chats apparait!" $) cyoa-text!
+	' .morale2+ foreach-team-char goodfx
+	trunk-food 7 > if "Ils entrent dans la nourriture et mangent un tas." +crtext -8 trunk-food+ then;
+	trunk-food 0 > if "Ils mangent la nourriture restante." +crtext eat-all then;
+;
+	
+} }
+
+

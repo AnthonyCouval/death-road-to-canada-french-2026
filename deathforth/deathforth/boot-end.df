@@ -1,0 +1,57 @@
+// Last file in boot, for loading anything extra
+
+// cyoa-start
+
+cyoa{
+
+: wsnews-complete
+	gstats{ BRANCHNAME to newschecked save }
+;
+
+
+cyoa-blank: wsnews-yes sfx{ goodfx }
+
+	gstats{ 10 ' zombo-point +! save }
+	"Merci de verifier Wayward Souls !" text!
+	"10 POINTS ZOMBO gagnes!" rainbold +crtext
+	zombopfull? if
+		zombo-point ZOMBOP_CAP > if 
+			"You are over the maximum for Zombo Points!
+			Spend your excess ZP in the UNLOCKS section before starting a new game!" fbold +crtext
+		else
+			zombopfull rbold +crtext
+		then
+	then
+	"http://store.steampowered.com/app/559260/Wayward_Souls/" openurl
+	wsnews-complete
+;
+
+
+cyoa-blank: WSnews
+
+	"Lancement 1.0 de Wayward Souls !" cyoa-title!
+	($ "Rocketcat Games a termine le lancement 1.0 de " .. "Wayward Souls" bbold .. "!
+	" .. "Wayward Souls" bbold .. " est un jeu daction RPG au hasardement genere de dungeon crawler. Il se concentre sur lhistoire et plusieurs personnages, tous avec leurs propres styles de jeu. Decouvrez le plus en detail sur la boutique Steam !" $) text!
+	choice( "Peut etre prochainement" )choice
+	choice( "Decouvrez le sur Steam   " .. "Obtenez 10 POINTS ZOMBO" bbold )choice: wsnews-yes
+	choice( "Ne montrer plus cette fenetre de message dinformation" )choice: wsnews-complete
+	
+;
+
+
+0 value shown-in-session
+
+
+: WSnewscheck amend main-event-do-title 
+
+	// Only show once per game session
+	shown-in-session if then; 1 to shown-in-session
+
+	gstats{ newschecked } BRANCHNAME $= if then;
+	WSnews
+;
+
+// Comment below to disable the news announcement
+// last to main-event-do-title
+
+}

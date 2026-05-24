@@ -1,0 +1,51 @@
+	: BARD-oneline1 "'Je l'appellerai la prochaine : Chanson de Zombos" ;
+	: BARD-oneline2 "Avant detre un barde jetais un voleur. Avant cela je jettais des eclairs en papier." ;
+	: BARD-oneline3 "Jeu de role grandeur nature pour la vie" ;
+	: BARD-oneline4 "Les deux meilleures choses de ma vie : mon super-luth  et et mon super-butin." ;
+	: BARD-oneline5 "Vous pensez que le Canada en a des foires type la Renaissance ?" ;
+	: BARD-oneline6 "J'espere que le Canada a des chevaliers et des chateaux. C'est British, n'est ce pas ?" ;
+	: BARD-oneline7 "Je me sens comme un gueux." ;
+	: BARD-oneline8 "J\'ai besoin d'une cuisse de dinde a devorer." ;
+	: BARD-oneline9 "La nourriture en boite est anachronique ! Je veux manger quelque chose dautre !" ;
+	: BARD-oneline10 "Je ferai une chanson sur ces aventures." ;
+	: BARD-oneline11 "Cette chanson s\'intitule : La Ballade du Butin de Chiottes" ;
+	: BARD-oneline12 "Cette prochaine chanson est une ballade tragique a propos d'un homme trop muscle pour se controler." ;
+	: BARD-oneline13 "Je veux trouver une cape elegante." ;
+	: BARD-oneline14 "J\'ai entendu dire que le Canada etait comme une enorme foire de la Renaissance. Toute la journee et tous les jours." ;
+	: BARD-oneline15 "Cette derniere chanson s'appelait 'Bataille du Mont Gonflette'." ;
+	: BARD-oneline16 "J\'ai entendu dire que le roi du Canada vivait dans un vrai chateau." ;
+
+	deck-new
+		card: BARD-oneline1
+		card: BARD-oneline2
+		card: BARD-oneline3
+		card: BARD-oneline4
+		card: BARD-oneline5
+		card: BARD-oneline6
+		card: BARD-oneline7
+		card: BARD-oneline8
+		card: BARD-oneline9
+		card: BARD-oneline10
+		card: BARD-oneline11
+		card: BARD-oneline12
+		card: BARD-oneline13
+		card: BARD-oneline14
+		card: BARD-oneline15
+		card: BARD-oneline16
+	constant BARD-ONELINERS
+	BARD-ONELINERS var bard-oneliners
+	BARD-ONELINERS shuffles to bard-oneliners
+
+: bard-oneliner
+	bard-oneliners depths 0= if BARD-ONELINERS shuffles to bard-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: bard-oneliner
+
+	constant BLURB-BARD-DECK
+	BLURB-BARD-DECK var blurb-bard-deck
+	BLURB-BARD-DECK shuffles to blurb-bard-deck

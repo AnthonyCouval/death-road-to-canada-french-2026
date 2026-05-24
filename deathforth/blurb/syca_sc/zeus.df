@@ -1,0 +1,61 @@
+	: ZEUS-oneline1 "MAN SUPPOSES...ZEUS DISPOSES." ;
+	: ZEUS-oneline2 "OF ALL OF MOUNT OLYMPUS, I'M THE KINGPIN." ;
+	: ZEUS-oneline3 "QUICKER WITH THE BOLTS THAN USAIN!" ;
+	: ZEUS-oneline4 "A CURSE UPON...oh, wait, that's not my domain." ;
+	: ZEUS-oneline5 "A SCORE OF MORTAL PROGENY...no, wait, not my domain." ;
+	: ZEUS-oneline6 "ON THE FIRST DAY OF...nevermind, not my followship." ;
+	: ZEUS-oneline7 "THUNDERRRRRRRRRSTRUCK!" ;
+	: ZEUS-oneline8 "ATTACK!" ;
+	: ZEUS-oneline9 "DO YOU KNOW MY SON, MARS? SORRY FOR YOUR LOSS IF SO" ;
+	: ZEUS-oneline10 "I CHISELLED THESE ABS MYSELF." ;
+	: ZEUS-oneline11 "PERFECTION IS WHATEVER I REST MY GAZE UPON." ;
+	: ZEUS-oneline12 "WHEN YOU GET TO RIVER STYX...TELL MY DOG HE'S STINKY." ;
+	: ZEUS-oneline13 "WANT TO GET MARRIED? NO? OK." ;
+	: ZEUS-oneline14 "WANT TO DATE? NO? OK." ;
+	: ZEUS-oneline15 "COME BACK TO MY PLACE WITH ME. IT'S LTIERALLY HEAVEN." ;
+	: ZEUS-oneline16 "THESE ZOMBIES WOULD SLAY THEIR OWN MAKER?" ;
+	: ZEUS-oneline17 "NOBODY WILL EVER BELIEVE YOU." ;
+	: ZEUS-oneline18 "I DON'T NEED FOOD...BUT I SURE DO WANT FOOD." ;
+	: ZEUS-oneline19 "LESS ZOMBIES...MORE WOMEN!" ;
+	: ZEUS-oneline20 "IF YOU'RE EVER TEMPTED, DON'T GO TO VALHALLA. IT SUCKS." ;
+	: ZEUS-oneline21 "IF YOU THINK I'M HORRIBLE, YOU SHOULD MEET ODIN." ;
+
+	deck-new
+		card: ZEUS-oneline1
+		card: ZEUS-oneline2
+		card: ZEUS-oneline3
+		card: ZEUS-oneline4
+		card: ZEUS-oneline5
+		card: ZEUS-oneline6
+		card: ZEUS-oneline7
+		card: ZEUS-oneline8
+		card: ZEUS-oneline9
+		card: ZEUS-oneline10
+		card: ZEUS-oneline11
+		card: ZEUS-oneline12
+		card: ZEUS-oneline13
+		card: ZEUS-oneline14
+		card: ZEUS-oneline15
+		card: ZEUS-oneline16
+		card: ZEUS-oneline17
+		card: ZEUS-oneline18
+		card: ZEUS-oneline19
+		card: ZEUS-oneline20
+		card: ZEUS-oneline21
+	constant ZEUS-ONELINERS
+	ZEUS-ONELINERS var ZEUS-oneliners
+	ZEUS-ONELINERS shuffles to ZEUS-oneliners
+
+: ZEUS-oneliner
+	ZEUS-oneliners depths 0= if ZEUS-ONELINERS shuffles to ZEUS-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ZEUS-oneliner
+
+	constant BLURB-ZEUS-DECK
+	BLURB-ZEUS-DECK var blurb-ZEUS-deck
+	BLURB-ZEUS-DECK shuffles to blurb-ZEUS-deck

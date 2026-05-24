@@ -1,0 +1,130 @@
+: ignore-town
+	2nd-char choosechar
+	blurbslot 0= if
+		"Peut etre que nous devrions simplement ignorer la prochaine ville ?" blurbsay
+		"Je pense que nous avons deja suffisamment de fournitures." blurbsay
+	else
+		blurbslot 2 < if
+			ctemper- cwits- or if
+				($ "NON, NOUS AVONS BESOIN DE PLUS DE MUNITIONS POUR QUE JE PUISSE TIRER SUR PLUS DE ZOMBIES !" $) blurbsay
+				"ON NE PEUT JAMAIS AVOIR ASSEZ DE BALLES, ON NE PEUT JAMAIS TIRER SUR ASSEZ DE ZOMBIES !" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			($ "C'est peut-etre mieux ainsi, nous verrons d'ici la ou nous en sommes en matiere d'approvisionnement." $) blurbsay
+			STAT_MORALE 1st-char .stat++
+
+		then then
+	then
+;
+
+: leave-mein
+	2nd-char choosechar
+	blurbslot 0= if
+		"Peut etre devrais je attendre dans la voiture la prochaine fois que nous nous arreterons dans une ville pour, euh, tenir le fort ?" blurbsay
+	else
+		blurbslot 2 < if
+			ctemper-  if
+				($ "Quoi ? Tu ne veux pas aller ecraser des zombies ?" $) blurbsay
+				"QU'EST CE QUI NE VA PAS CHEZ TOI ? TU AS PEUR OU QUOI ?" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			($ "Ouais, bien sur. Comme tu veux." $) blurbsay
+
+		then then
+	then
+;
+
+: passive-turnback // Random first person, random single responder, stuff happens.
+	blurbslot 0= if
+		"Peut-etre qu'on devrait faire demi-tour..." blurbsay
+	else
+		blurbslot 2 < if
+			"Peut etre que tu devrais la fermer !" blurbsay
+			STAT_MORALE me .stat++
+			STAT_MORALE 1st-char .stat--
+		then
+	then
+;
+
+: slow-down
+	2nd-char choosechar
+	blurbslot 0= if
+		"Pourrions nous ralentir un peu ?" blurbsay
+	else
+		blurbslot 2 < if
+			ctemper+ not if
+				($ "Pourrais tu te taire un peu?" $) blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Oui, peu importe." blurbsay
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+	: passive-oneline1 "Est-ce la bonne route ?" ;
+	: passive-oneline2 "Il n'est plus possible de faire marche arriere maintenant." ;
+	: passive-oneline3 "Essayons d'eviter tout risque inutile..." ;
+	: passive-oneline4 "Peut etre que si on reste ici toute cette histoire de zombies va passer." ;
+	: passive-oneline5 "Il n'y a rien de mal a faire des detours s'ils sont plus surs." ;
+// VVVVVVVV JONZ BLURBZ VVVVVVVVV
+	: passive-oneline6 "On devrait peut etre simplement passer a cote de la prochaine ville." ;
+	: passive-oneline7 "On ne devrait peut etre pas trop attirer l'attention sur nous." ;
+	: passive-oneline8 "On s'infiltre, on prend ce qu'il nous faut et on se barre." ;
+	: passive-oneline9 "On devrait peut etre ralentir un peu." ;
+	: passive-oneline10 "Est ce que ca te semble etre une bonne idee ?" ;
+	: passive-oneline11 "On pourrait pas juste contourner les zombies ?" ;
+	: passive-oneline12 "On pourrait pas tous s'entendre ?" ;
+	: passive-oneline13 "Peut etre que si on laisse les zombies tranquilles ils nous laisseront tranquilles." ;
+	: passive-oneline14 "Je prefererais eviter de me battre si on peut." ;
+	: passive-oneline15 "Peut etre que ce n'est pas la meilleure idee d'aller tout buter ?" ;
+	: passive-oneline16 "Le plus important cest de trouver des provisions. On peut eviter les combats." ;
+	: passive-oneline17 "Parfois ca vaut le coup de payer les bandits." ;
+	: passive-oneline18 "Si la voiture est trop envahie par les zombies, on peut labandonner." ;
+	: passive-oneline19 "Les Molotovs sont tres dangereux ! Nous ne devrions pas jouer avec." ;
+	: passive-oneline20 "Les explosifs sont aussi dangereux pour nous que pour les zombies." ;
+// VVV 5/20 nothing yet
+
+
+
+	deck-new
+		card: passive-oneline1
+		card: passive-oneline2
+		card: passive-oneline3
+		card: passive-oneline4
+		card: passive-oneline5
+		card: passive-oneline6
+		card: passive-oneline7
+		card: passive-oneline8
+		card: passive-oneline9
+		card: passive-oneline10
+		card: passive-oneline11
+		card: passive-oneline12
+		card: passive-oneline13
+		card: passive-oneline14
+		card: passive-oneline15
+		card: passive-oneline16
+		card: passive-oneline17
+		card: passive-oneline18
+		card: passive-oneline19
+		card: passive-oneline20
+
+	constant PASSIVE-ONELINERS
+	PASSIVE-ONELINERS var passive-oneliners
+
+: passive-oneliner
+	passive-oneliners depths 0= if PASSIVE-ONELINERS shuffles to passive-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+		card: ignore-town
+		card: leave-mein
+		card: passive-turnback
+		card: slow-down
+		20 cards: passive-oneliner
+
+	constant BLURB-DECK-PASSIVE
+	BLURB-DECK-PASSIVE var blurb-deck-passive

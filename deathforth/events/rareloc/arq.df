@@ -1,0 +1,174 @@
+// uses paul/region-layout.df
+
+roomgen{
+: arq-fridge
+	fridge lt
+	LOOT_FOOD over .loot!
+	8 swap .amount!
+;
+: arq-desk
+	roomgen{
+	officedesk
+	special_objects32_base_id 0x 15 + spriteid!
+	lt .pos
+	officechair lt .pos! 1 movey
+	special_objects32_base_id 0x 12 + spriteid!
+	}
+;
+: arq-bed bed inside_objects_base_id 0x 7 + lt .spriteid! ;
+: arq-table
+	table inside_objects_base_id 0x 13 + lt .spriteid!
+	chair inside_objects_base_id 0x 16 + lt .spriteid!
+	0 lt .flip!
+	-1 lt .slidex
+;
+cyoa{
+cyoa-choice: arq-toilet-cyoa-go
+	picon
+	($ "The experience is reminiscent of the days before the world got destroyed by zombies. A relief washes over " .. pname .. "." $) cyoa-text! goodfx
+	pchar .morale3+ clear-cyoa
+;
+
+cyoa: arq-toilet-cyoa
+	pchar .arq? if
+		"Nothing Unusual Here" cyoa-title!
+		"It's a toilet." cyoa-text!
+		($ pname .. " doesn't need to use it right now." $) +crtext
+	then;
+	"FINALLY!" cyoa-title!
+	($ pname .. " can't believe " .. phis .. " eyes: " .. "An actual functioning toilet!
+	" rainbold .. "This opportunity mustn't be wasted. Should " .. pname .. " use it?" $) cyoa-text!
+	choice( "Leave it be" )choice
+	pchar charchoice( ": I've been holding it in too long!" )choice: arq-toilet-cyoa-go
+;
+
+cyoa-choice: arq-bath-cyoa-go
+	picon
+	($ pname .. " runs a warm water shower and gets all soapy. A pastime long forgotten, returned." $) cyoa-text! goodfx
+	pchar .morale++ clear-cyoa
+	1 1 1 pchar .tint.hair!
+	1 1 1 pchar .tint.skin!
+	1 1 1 pchar .tint.body!
+;
+
+cyoa: arq-bath-cyoa
+	pchar .arq? if
+		"Nothing Unusual Here" cyoa-title!
+		"It's a shower." cyoa-text!
+		($ pname .. " doesn't need to use it right now." $) +crtext
+	then;
+	"A Clean Shower" cyoa-title!
+	($ "There's a shower that runs with water here. Amazing!
+	Should " .. pname .. " use it?" $) cyoa-text!
+	choice( "Leave it be" )choice
+	pchar charchoice( ": I gotta get clean!" )choice: arq-bath-cyoa-go
+;
+}
+: arq-toilet
+	toilet lt
+		0 over .flies!
+		0 over .loot!
+		0 over .amount!
+		0 over .open!
+		0 over .action!
+	cyoa{ ' arq-toilet-cyoa swap .cyoa! }
+;
+: arq-bathtub
+	bathtub cyoa{ ' arq-bath-cyoa lt .cyoa! }
+	inside_objects_base_id 0x 94 + lt .spriteid!
+;
+}
+
+" 
+:map 1
+:tags arqroom
+:scriptA arq-fridge
+:scriptB arq-desk
+:scriptC arq-bed
+:scriptD arq-table
+:size 11 10
+:off 4 0 
+:tiles 
+22222222222
+23333333332
+211A111B112
+21111111112
+211111111C2
+21111111112
+211111111D2
+21111111112
+22222222222
+33333333333
+
+:map 2
+:tags arqtoilet
+:size 7 7
+:scriptA arq-bathtub
+:scribtB sink
+:scriptC arq-toilet
+:off 1 0
+:tiles
+2222222
+2333332
+2A1BC12
+2111112
+2111112
+2222222
+3333333
+" $parse-rooms
+
+cyoa{
+cyoa-bridge: arq-recruit
+	cchar to recruitee goodfx clear-cyoa
+	3 recruitee .morale!
+	ricon
+	"Alright, let's go." pbold cyoa-text! clear-cyoa
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
+	team-full? if
+		"Kick someone from the group:" +crtext recruit-replace?
+	then;
+	recruited
+;
+
+cyoa: arq-talk
+	"Some Guy" cyoa-title!
+	interactee .character@ choosechar cicon
+	($ pname .. " finds " .. "some guy" fbold .. " standing alone, here. 
+	" .. "Sup? I'm just relaxing here, I'll come with ya if you want me to." pbold $) cyoa-text! basic-tone
+	choice( "Leave him for now" )choice
+	choice( "Recruit him" )choice: arq-recruit
+;
+
+// i half want to make myself not recruitable if you raid the fridge first
+// idk something to ponder later - arq
+
+}
+
+: .arq dup .arqify .thing@ cyoa{ ' arq-talk swap .cyoa! } ;
+
+locdef{
+		
+location
+		tags: arqhouse
+		max-rooms: 2
+		entry-tags: arqroom
+		script: set-theme-house
+		pre-script: set-theme-house
+		
+		: arqroom-script
+			w random-edge-door "arqtoilet" only-with-door
+			still-npc .arq
+		;	
+		room-choice: arqroom
+			room-weight: 300
+			room-count: 1
+			room-post-script: arqroom-script
+			filter-only
+		
+		room-choice: arqtoilet
+			room-script: nad floor-bath
+			room-post-script:
+			room-weight: 1
+			room-count: 1
+			
+}

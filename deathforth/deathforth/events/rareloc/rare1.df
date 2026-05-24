@@ -1,0 +1,334 @@
+
+0 value rangerp
+0 value rangero
+0 value rangerg
+0 value rangerb
+
+0 value hazmat1
+0 value hazmata
+0 value hazmatb
+
+0 value mystfactory
+0 value museumtype
+
+0 value junkpal1
+0 value junkpal2
+
+cyoa{ road{
+
+// Lab Office
+
+cyoa: rare1-lab
+	"Laboratoire Sinistre" cyoa-title!
+	($ Thegroup .. " bureau de vente  Sales office " .. "LABORATOIRES OMNI BIO CORP" rbold .. "the company of the devil" $) cyoa-text! basic-tone
+	1.7 8 18 rnd 1 2 rnd zforecast // former 2.5, 2
+	"events/rareloc/region/laboffice.df" $load-region
+		choice( "Bureau dEnquete" )choice: premission
+		gas-draw
+;
+
+// Cabin Bunker
+
+cyoa: rare1-bunker
+	// image-cabin-in-woods
+	"Bunker en beton" cyoa-title!
+	($ Thegroup .. " voit une armee monstrueuse de zombs pres dune route forestiere! Ils tournent autour dune petite structure en beton qui sort du sol." $) cyoa-text! basic-tone
+	2.4 12 16 rnd 0 zforecast // former 3.5, 2.4
+	"events/rareloc/region/bunker.df" $load-region
+		choice( "Verifie ca" )choice: premission
+		gas-draw
+;
+
+// Junkyard Pals
+
+cyoa: junkpalsrescue
+	"Junkyard Rescue" cyoa-title!
+	($ Thegroup .. "  sechappe de la casse !" $) text! goodfx
+	junkpal1 0= not if
+		0 junkpal1 .party!
+		junkpal1 .alive? if
+			($ "Clementine" pbold .. "  survit et montre de super conseils de reparation en reparant la voiture !" $) +crtext
+			car-weld-rnd car-tune-rnd
+			' .mechanic++ foreach-team-char
+		else
+			($ "Clementine" pbold .. "  ne sest pas echappe avec toi." $) +crtext
+			morale--all
+		then
+	then
+	junkpal2 0= not if
+		0 junkpal2 .party!
+		junkpal2 .alive? if
+			($ "Tu as sauve " .. "Leonard" pbold .. ". En remerciement, il donne " .. thegroup .. "  des conseils de tir !" $) +crtext
+			30 trunk-rifle-shell+
+			' .shooting++ foreach-team-char
+		else
+			($ "Leonard" pbold .. "'les aventures de ' sont terminees." $) +crtext
+			morale--all
+		then
+	then
+;
+
+cyoa: rare1-junk
+	"Copains de la casse" cyoa-title!
+	char-gen to recruitee 67 recruitee .specialtype! ricon
+	($ Thegroup .. "  voit deux personnes coincees dans une casse par une foule massive de zombies. Ils pourraient etre sauves de leur sort si tu distrayais la horde !" $) text! basic-tone
+	2 12 16 rnd 3 zforecast // former 2.6
+	"events/rareloc/region/junkpals.df" $load-region
+		choice( "Sauve les !" )choice: premission
+		gas-draw
+;
+
+// Fishing
+
+cyoa: rare1-fish
+	"Cabines de peche" cyoa-title!
+	($ Thegroup .. " ' remarque une petite rangee de cabanes de peche au dela d'une riviere. Allons pecher ! Tu n'auras pas de chance si les creatures sous marines ont leur propre apocalypse zombie." $) text! basic-tone
+	1.3 8 18 rnd 1 2 rnd zforecast
+	"events/rareloc/region/fishing.df" $load-region
+		choice( "Essaye de pecher" )choice: premission
+		gas-draw
+;
+
+// Museum
+
+cyoa: rare1-museum
+	"Sortie scolaire au musee" cyoa-title!
+	someicon 0 3 rnd to museumtype
+	($ Thegroup .. "  conduit pres dun musee. Il devait etre populaire, car les morts vivants sont " .. "sortis en masse." rbold .. "  Signalisent exterieurement les " $) cyoa-text! basic-tone
+	museumtype case
+		0 of " MALLS DE KATANAS DES ETATS UNIS" endof
+		1 of " APPEL DE GUNS MODERN WARFARE 20" endof
+		2 of " ARMES DAXES MEDIEVALES" endof
+		3 of " ALIMENTATIONS MONDE" endof
+	endcase rbold +text " . Ils exposent." +text
+	2 8 18 rnd 1 2 rnd zforecast
+	"events/rareloc/region/museum.df" $load-region
+		choice( " Visitez le Musee" )choice: premission
+		gas-draw
+;
+
+// Mystery Factory
+
+cyoa: rare1-factory
+	"Usine mysterieuse" cyoa-title!
+	someicon 0 8 rnd to mystfactory
+	($ Thegroup .. "  repère une usine dont les enseignes sont rongees par la rouille. Les zombies " .. " ONT PRIS POSSESSION " rbold .. " des lieux. A l'interieur il reste probablement un peu de ce que l'usine fabriquait avant, quoi que ce soit.'," $) cyoa-text! basic-tone
+	1.5 8 18 rnd 1 2 rnd zforecast // former 1.8
+	"events/rareloc/region/industry.df" $load-region
+		choice( " Enqueter sur l'usine" )choice: premission
+		gas-draw
+;
+
+// Sacrificial Altar
+
+cyoa: rare1-altar
+	"Maison malveillante" cyoa-title!
+
+	($ Thegroup .. " tombe sur une maison au bout d'une impasse. Il s'en degage un sentiment d'effroi et de mechancete" .. "ECRASANTE" rbold .. "
+	Il y a peut-etre des boites de conserve a l'interieur !" $) cyoa-text! basic-tone
+	1.6 8 18 rnd 0 1 rnd zforecast // former 2.3
+	"events/rareloc/region/altar.df" $load-region
+		choice( "Investigate House" )choice: premission
+		gas-draw
+;
+
+// Giant Pig Car
+
+cyoa: rare1-hotdog
+	"Animal Geant" cyoa-title!
+
+	($ Thegroup .. "  apercoit un animal gigantesque sur le bord de la route, au milieu d'un ensemble de magasins. Peut-etre s'agit-il d'une hallucination ? Ou d'un piege ?" $) cyoa-text! basic-tone
+	2.3 8 18 rnd 0 1 rnd zforecast
+	"events/rareloc/region/hotdog.df" $load-region
+		choice( "Enqueter sur lanimal" )choice: premission
+		gas-draw
+;
+
+// Hermit
+
+cyoa: rare1-hermit
+	// image-cabin-in-woods
+	char-gen to recruitee 2 recruitee .specialtype! ricon
+	"Visite de Courtoisie" cyoa-title!
+	($ "Alors qu'ils tentent d'echapper a une horde, " .. thegroup .. " fait un detour par les bois. Apres s'etre trompe de route, ils reperent une cabane. Il y a de la fumee qui sort de la cheminee!" $) cyoa-text! basic-tone
+	3 12 16 rnd 1 siegecast // 2.2
+	"events/rareloc/region/hermit.df" $load-region
+		choice( "Verifie ca" )choice: premission
+		gas-draw
+;
+
+// Alien Car
+
+cyoa: rare1-ufo
+	"La Verite Est Ailleurs" cyoa-title!
+		char-gen to recruitee 51 recruitee .specialtype! ricon
+		($ "En conduisant a travers la foret, " .. thegroup .. " VOIT UN OVNI PARMI LES ARBRES ! WHOUAAAAAAA !!!!" rbold .. "
+		Attention! Il y a quelque chose qui bouge pres de lui!" $) cyoa-text!
+		2.8 14 19 rnd 2 siegecast // untouched
+		"events/rareloc/region/alien.df" $load-region
+		choice( "Enqueter sur l'OVNI" )choice: premission
+		gas-draw
+	 goodfx
+;
+
+// Hazmat Guys
+
+cyoa: hazmatrescue
+	"Sauvetage Hazmat" cyoa-title!
+	($ Thegroup .. "  sechappe des egouts!" $) text!
+	hazmat1 0= hazmata 0= hazmatb 0= or or if
+		($ Thegroup .. "  parti avant de retrouver tout le monde, donc il ny a pas eu de recompense." $) +crtext
+		morale--all badfx
+	then;
+		0 hazmat1 .party! 0 hazmata .party! 0 hazmatb .party!
+		hazmat1 .alive? hazmata .alive? hazmatb .alive? and and if
+			"Toute lequipe Hazmat est sortie vivante !" +crtext
+			morale2+all
+		else
+			"Tous les membres de lequipe Hazmat ne sont pas sortis, mais laide a quand meme ete appreciee." +crtext
+		then
+
+		hazmat1 .alive? if
+			($ "Matt" pbold .. "  revele une cache de fournitures medicales soigneusement scellees !" $) +crtext
+			10 trunk-medical+
+		else
+			($ "Matt" pbold .. " ' n'a pas survecu a sa mission de sauvetage." $) +crtext
+		then
+
+		hazmata .alive? if
+			($ "Matilda" pbold .. " shows off a cache of food. It may or may not have been stashed in the sewer..." $) +crtext
+			20 trunk-food+
+		else
+			($ "Matilda" pbold .. " ' n'est pas sorti des egouts." $) +crtext
+		then
+
+		hazmatb .alive? if
+			($ "Mattie" pbold .. "  mime quelques techniques medicales durgence." $) +crtext
+			' .medical++ foreach-team-char
+		else
+			($ "Mattie" pbold .. "  a ete laisse derriere." $) +crtext
+		then
+
+;
+
+cyoa: rare1-hazmat
+	"Matieres dangereuses" cyoa-title!
+	char-gen to recruitee 23 recruitee .specialtype! ricon
+	($ Thegroup .. "  traverse une ville vide lorsquil voit un homme sur la route. Il porte une combinaison hazmat et fait signe " .. thegroup .. "  de laide. Alors que la voiture sapproche, il ouvre un trou dhomme et entre dans legout." $) cyoa-text! basic-tone
+		1.5 19 22 rnd 2 3 rnd zforecast
+		// mission{ ' door-no-escape to main-event-mission-location-leave }
+		"events/rareloc/region/hazmat.df" $load-region
+		choice( "Poursuivez le !" )choice: premission
+		gas-draw
+;
+
+// Danger Rangers
+
+cyoa: rangerrescue
+	"Danger Ranger Fan Club" cyoa-title!
+	($ Thegroup .. "  sechappe qui a envahi la banlieue." $) text!
+	rangerp 0= not if
+		0 rangerp .party!
+		rangerp .alive? if
+			($ "Rose" pbold .. "  libere son Healing Ranger Ray !" $) +crtext
+			6 groupheal
+		else
+			($ "Rose" pbold .. "  nest plus la pour soutenir le groupe." $) +crtext
+		then
+	then
+	rangero 0= not if
+		0 rangero .party!
+		rangero .alive? if
+			($ "Orange" pbold .. "  accorde une partie de son energie et de sa forme physique." $) +crtext
+			' .fitness++ foreach-team-char
+		else
+			($ "Orange" pbold .. " ' n'a pas reussi. Leur equipe est diminuee." $) +crtext
+		then
+	then
+	rangerg 0= not if
+		0 rangerg .party!
+		rangerg .alive? if
+			($ "Vert" pbold .. "  accorde une partie de sa celebre force." $) +crtext
+			' .strength++ foreach-team-char
+		else
+			($ "Vert" pbold .. "' la puissante force nous manquera." $) +crtext
+		then
+	then
+	rangerb 0= not if
+		0 rangerb .party!
+		rangerb .alive? if
+			($ "Bleu" pbold .. "  donne un discours dencouragement inspirant !" $) +crtext
+			morale2+all
+		else
+			($ "Bleu" pbold .. "  ne fournira plus de leadership." $) +crtext
+		then
+	then
+	rangerp 0= rangero 0= rangerg 0= rangerb 0= or or or if
+		($ Thegroup .. "  se sent insuffisant de ne pas trouver tout le monde." $) +crtext
+		morale--all badfx
+	else
+		goodfx
+	then
+;
+
+cyoa: rare1-rangers
+	"Danger Rangers" cyoa-title!
+	char-gen to recruitee 44 recruitee .specialtype! ricon
+	($ Thegroup .. " ' voit quatre personnes dans des tenues brillantes et brillantes. Ils courent en train de frapper des zombies et de faire de petites poses. Ils sont submerges par l'essaim et fuient dans des directions differentes." $) cyoa-text! basic-tone
+	2.5 8 14 rnd 2 zforecast // former 3
+	"events/rareloc/region/city-rangers.df" $load-region
+		choice( "Essayez de les sauver" )choice: premission
+		gas-draw
+;
+
+// Bryce Li
+
+cyoa-choice: bruce-picked
+	cchar .weapon_default@ WEAPON_KUNG = if
+		($ cname .. "  se fait enseigner quelques techniques de niveau maitre! " .. cHe .. "  frappe maintenant encore plus fort! Maintenant " .. chis .. "  les mains peuvent toucher trois cibles par attaque!" $) text!
+		WEAPON_MASTERKUNG
+	else
+		($ cname .. "  obtient un cours accelere darts martiaux! " .. cHe .. "  est capable dapprendre un mouvement tres pratique. Maintenant " .. chis .. "  les mains sont des armes anti zombies!" $) text!
+		WEAPON_KUNG
+	then cchar .weapon_default! goodfx
+;
+
+cyoa: brucerescued
+	rescue to recruitee ricon
+	0 rescue .party!
+	recruitee .alive? if
+		"Entrez dans la route de la mort" cyoa-title!
+		($ rname .. "  sort de la voiture une fois quelle passe en toute securite devant la ville grouillante." $) text!
+		solohuman if
+			soloer choosechar
+			cchar .weapon_default@ WEAPON_KUNG = if
+				($ "En retour de laide, il enseigne " .. cname .. "  une forme encore plus avancee darts martiaux!" $) +crtext WEAPON_MASTERKUNG
+			else
+				($ "En retour de laide, il enseigne " .. cname .. "  comment ecraser des zombies avec " .. chis .. "  a mains nues !" $) +crtext WEAPON_KUNG
+			then cchar .weapon_default! goodfx
+		else
+			($ "En remerciement de son aide " .. rhim .. ", " .. rhe .. " offers to teach one person how to splat zombies bare-handed.
+			Who should get the training?" $) +crtext
+			' bruce-picked cyoa-human-choice
+		then
+	else
+		"Defaite ecrasante" cyoa-title!
+		($ Thegroup .. "  ressent un grand sentiment de perte pour " .. rname .. "  se faire manger. Ses connaissances en arts martiaux ont maintenant disparu." $) cyoa-text!
+		morale2-all badfx
+	then
+;
+
+cyoa: rare1-bruce
+	"Kung Fu au Canada" cyoa-title!
+	char-gen to recruitee 48 recruitee .specialtype! ricon
+	($ "En traversant une ville tres encombree, " .. thegroup .. " ' voit un survivant se faufiler dans la foule. Il fait du tres bon travail en etant sournois, malgre sa combinaison jaune vif." $) cyoa-text! basic-tone
+	2.2 10 12 rnd 0 1 rnd zforecast // formerly 3.5, 2.7 diff
+	"events/rareloc/region/city-bruce.df" $load-region
+		choice( "Essayez de le joindre" )choice: premission
+		gas-draw
+;
+
+} }
+
+
+

@@ -1,0 +1,1009 @@
+uses paul/region-layout.df
+
+"../deathforth/events/rareloc/region/arkswaresrooms.txt" $load-rooms
+"../deathforth/events/rareloc/region/arkswaresrooms.txt" $add-rooms
+
+uses paul/region-layout.df
+
+locdef{
+
+: tradermallsetup random-door map{ block-last-door } ;
+
+		
+location: nuclearstation
+		max-rooms: 1
+		entry-tags: mesa2
+		pre-script: set-theme-bookstore
+		script: set-theme-bookstore
+		post-script: 
+		
+		: control
+			n random-edge-door "xboxroom" only-with-door
+		;
+		
+		: controlcore
+			e random-edge-door "core" only-with-door
+		;
+		
+		: lotsajunk
+			30 for 
+				meleeweapons .scatter
+			next
+		;
+		
+		room-choice: mesa2
+			room-weight: 10
+			room-count: 1
+			room-script: ndx 
+			room-post-script: lotsajunk
+			filter-only
+		
+			
+}
+
+
+
+map{ roomgen{
+
+	
+	: electricbar
+	spawn special_objects48_base_id 98 + lt .spriteid!
+	bbox 6 lt .rad.x!
+	bbox 6 lt .rad.y!
+	immovable as-metal
+	150 health! 0 lt .friction! 
+	;
+	
+	: cellsink
+	spawn special_objects32_base_id 0x 6b + lt .spriteid! bbox
+	25 health! immovable as-metal
+	;
+	
+	: cellcombine
+	spawn special_objects32_base_id 0x 6c + lt .spriteid! bbox
+	25 health! immovable as-metal
+	;
+	
+	: cellbench
+	spawn special_objects32_base_id 0x 6d + lt .spriteid! bbox
+	25 health! immovable as-metal
+	;
+	
+	: celltoilet
+	spawn special_objects32_base_id 0x 6e + lt .spriteid! bbox
+	25 health! immovable as-metal
+	;
+	
+	: toiletsetup 
+	
+	celltoilet cellsink 
+	
+	25 for 
+		box
+		4 lt .mapid!
+		379 385 frnd lt .pos.x!
+		75 85 frnd lt .pos.y!
+	next
+	
+	;
+	
+	: nuclearloot
+	1 5 rnd case
+		1 of 2 LOOT_MEDICAL spawnloot drift endof
+		2 of 3 LOOT_FOOD spawnloot drift endof
+		3 of 10 LOOT_GAS spawnloot drift endof
+		4 of 1 LOOT_FOOD spawnloot drift endof
+		5 of 2 LOOT_MEDICAL spawnloot drift endof
+	endcase
+	;
+	
+	: pylonloot
+	1 5 rnd case
+		1 of 5 LOOT_GAS spawnloot drift endof
+		2 of 10 LOOT_GAS spawnloot drift endof
+		3 of 20 LOOT_GAS spawnloot drift endof
+		4 of 40 LOOT_GAS spawnloot drift endof
+		5 of 80 LOOT_GAS spawnloot drift endof
+	endcase
+	;
+	
+	: mechanicloot
+		1 2 rnd case
+		1 of wrench .drift endof
+		2 of metal .drift endof
+	endcase
+	;
+	
+
+cyoa{
+
+cyoa: wirecharge
+	"Wireless Recharging!" cyoa-title!
+	picon!
+	($ cname .. " watches the generator spin and whurr and he flicks a lever to bring it to life. Suddenly, their phone lights up! The electric field is so strong,
+	you might even get to CHARGE SOME WEAPONS." $) text!
+	choice( "NICE" )choice
+;
+
+cyoa: an-alde-time
+	"Strange Note" cyoa-title!
+	picon!
+	($ cname .. " reads the random page they found on the floor. It looks like it was ripped straight out of a journal.
+	THEY'RE COMING, it says, the writing scrawly and panicked. SEND HELP is appended at the bottom. What could it mean?" $) text!
+	choice( "What have we got ourselves into?" )choice
+;
+
+cyoa: an-alde-door
+	"Powered Door" cyoa-title!
+	picon!
+	($ cname .. " comes across a powered metal door. There's no way it'll budge without electricity. Maybe there's a way to power it?
+	Is it even worth powering? The growls the other side of the door are most discouraging." $) text!
+	choice( "WELP" )choice
+;
+
+cyoa: an-alde-gate
+	"Locked Gate" cyoa-title!
+	picon!
+	($ cname .. " sees a generator beyond the gate. You can destroy the gate by attacking it with your weapons!" $) text!
+	choice( "DANGNAMIT" )choice
+;
+
+}
+
+
+	: .is-weapon-type?
+		depths for
+			pops 2 pick = if -1 break then
+			i 1 = if 0 then
+		next
+		-rot 2drop 
+	;		
+
+	
+	: .zombie? .typeid@ THING_ZOMBIE = ;
+	
+	: .teammate? dup .character@ args( me chara ) <- me .charid@ 0= if 0 then;
+		<- chara .team_status@ TEAM_STATUS_RECRUITED =
+	;
+	
+	
+
+	
+
+	
+} }
+
+
+map{ regiondef{
+
+trade-camp-reset
+
+: sycatile tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	// 10 for regular walltop
+	// 9 for right-hand up turn
+	// 8 for right-hand end
+	// 7 for left-facing-junction
+	// 6 for downfacing left turn
+	// 5 for straight up
+	// 4 for upward end
+	// 3 for upward left turn
+	// 2 for lefthand end
+	// 1 for downward end
+	// 0 for tiny square
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreetblock tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+// using objs
+
+: streetlight-flicker args( me eventid )	
+	<- eventid THING_EVENT_TIMER = if
+			1 <- me .timer!		
+			
+		gameticks 200 360 frnd % if			
+			1 1 0.4 150 <- me .pos d-light
+				else
+				30 <- me .timer!
+				then
+			then
+	
+;
+
+: streetlamp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! ' streetlight-flicker lt .events! -1 lt .layer! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! 1 lt .tileflags! ;
+: streetlomp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! -1 lt .layer! 64 lt .rad.y! 6 lt .rad.x! 1 lt .no_hit! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! 1 lt .tileflags! ;
+
+
+0 value newcounter
+
+0 value posx0
+0 value posy0 
+
+0 value posx1 
+0 value posy1
+
+0 value posx2
+0 value posy2
+
+0 value posx3
+0 value posy3 
+
+: bldg2 tanchor!
+	"trashed" $picklocid addloc 
+		prefab{
+		0 3 rnd 11 4 shop }
+		
+		newcounter 0 = if 
+				last-build-doorxy
+			to posx0 
+			to posy0 
+		then 
+		
+		newcounter 1 = if 
+				last-build-doorxy
+			to posx1 
+			to posy1 
+		then 
+		
+		newcounter 2 = if 
+				last-build-doorxy
+			to posx2 
+			to posy2
+		then 
+		
+		newcounter 3 = if 
+				last-build-doorxy
+			to posx3 
+			to posy3
+		then 
+		
+		' newcounter ++ 
+		
+		
+;
+
+// tiles
+
+: bldg3 tanchor!
+	// "tradermall" $picklocid addloc 
+	"nuclearstation" $picklocid addloc 
+		prefab{
+		RED "ARK'S WARES" .. sign-text!
+		0 0 0 sign-bg!
+		0 0 0 sign-border!
+		1 1 1 sign-fg!
+		1 sign-glow!
+		0 3 rnd 9 5 shop }
+;
+
+// ark's wares shop
+0 value generatorpowered
+0 value leveron
+
+: rangewall tile@ args( spriteid t ) <- t LAYER_WALLSIDE <- spriteid .lspriteid! TILE_BLOCK_FLOOR <- t .id! ;
+
+: fencerange	args( x y s )
+
+	building_misc_tiles_base_id 14 7 * + 7 + <- s + -> s
+
+	2 for
+		<- s i 1- 14 * + <- x <- y rangewall
+		<- x <- y tile@ TILE_BLOCK_FLOOR 0 0 .tile_layer.off!
+		<- x <- y tile@ TILE_BLOCK_FLOOR rnd5050 .tile_layer.flipx!
+		<- y 1- -> y
+	next
+;
+
+: generator-2gas
+	spawn special_objects64_base_id 6 + lt .spriteid!
+	bbox 6 lt .rad.x!
+	bbox 6 lt .rad.y!
+	immovable as-wood
+;
+
+: trashblock tile@ tbwreck ;
+
+0 value distx 
+0 value disty 
+0 value distvolx 
+0 value distvoly 
+0 value distvol 
+0 value actualvol
+
+0 stack
+	WEAPON_LFDFUEL shove
+constant WEAPON_LIST_FUEL
+	
+		: .teammate? dup .character@ args( me chara ) <- me .charid@ 0= if 0 then;
+		<- chara .team_status@ TEAM_STATUS_RECRUITED =
+		;
+		
+		: .removegas dup .character@ args( me chara ) 
+			-5 <- me .wielded-stack+
+		;
+		
+		: .nogas dup .character@ args( me chara ) 
+			<- me .wielded-stack 0 =
+		;
+		
+		//				dup .wielded WEAPON_LIST_FUEL .is-weapon-type? if
+		//		  1 swap dup .wielded-stack+ 
+
+: genfuel-events args( me teid )
+    <- teid THING_EVENT_TIMER = if
+	
+		pchar .health@ 1 < not if
+		player .pos.x@ <- me .pos.x@ - abs to distx
+		player .pos.y@ <- me .pos.y@ - abs to disty
+		
+		distx distx * to distvolx
+		disty disty * to distvoly // kind of pythagorean 
+				
+			distvolx distvoly + to distvol
+			\ I used this before I knew what adjust-vol was. 
+		
+		5000 distvol / 0.0005 1 clamp to actualvol  // clamp is a range not a value
+		then
+		
+	
+	<- me .weapon_state.val@ 150 >= if	
+					1 to generatorpowered
+							
+							sfx{ noise
+								25 a!
+								100 freq!
+								50 freq2!
+								100 d!
+								0.25 s!
+								250 r!
+								0.5 q!
+								3 pitch!
+								1000 filt!
+									
+									pchar .health@ 1 < not if
+									player .mapid@ 4 = if
+									0.0005 scale!
+									else
+									actualvol scale!
+									then
+									then
+									
+								
+										
+							}
+							
+							
+						10 <- me .timer!
+					then;
+	
+	<- me .weapon_state.val@ 150 >= if then;
+	60 <- me .timer!
+		<- me .pos 50 things-in-xyrad
+			depths for i picks .teammate? if
+				i picks .wielded WEAPON_LIST_FUEL .is-weapon-type? if 
+				i picks .nogas if then;
+				 i picks .removegas
+					0 3 zwave-edge
+					sfx{ noise } goodfx
+				<- me .weapon_state.val@ <- me .report
+				<- me .weapon_state.val@ 5 + <- me .weapon_state.val!
+					then then
+				next drop
+		then
+;
+
+cyoa{
+
+cyoa-choice: startsiege
+	' genfuel-events interactee .events!
+	1 interactee .timer!
+	($ cname .. " gets on gassing that generator." $) text!
+	clear-cyoa
+;
+
+cyoa: wirecharge
+	"An Impasse" cyoa-title!
+	picon!
+	($ cname .. " realises that if they are to ever find something behind that door, this generator needs to be ON. They'll need gas, about 150 total, and it'll attract zombies, so be ready." $) text!
+	choice( "Go find that gas" )choice: startsiege
+	choice( "Not now" )choice
+;
+
+}
+
+map{ roomgen{ 
+
+: diningset
+	table
+	75 %chance if chair -1 movey drift then
+	75 %chance if chair 1 movey drift then
+	50 %chance if chair -1 movex drift then
+	50 %chance if chair 1 movex drift then
+;
+
+: generatortoturn
+	spawn special_objects64_base_id 6 + lt .spriteid!
+	1 lt .timer!
+	bbox 6 lt .rad.x!
+	bbox 6 lt .rad.y!
+	4000 lt .mass!
+	4000 lt .hitpoints!
+	as-wood
+	cyoa{ ' wirecharge lt .cyoa! }
+;
+
+: gasvend vending 1 rarefood ;
+
+
+
+: goldkey spawn special_objects16_base_id 24 + spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! ;
+: keychain spawn special_objects16_base_id 25 + spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! ;
+: safe spawn special_objects32_base_id 0 rnd5050 if 2 + then + lt .spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! ;
+
+: barcounter
+	spawn special_objects48_base_id 0x 3 + lt .spriteid! immovable 1 lt .no_hit! 16 lt .rad.x! 4 lt .rad.y! 0.5 lt .vel.x!
+;
+
+: genmaybeon args( me eventid )
+	<- eventid THING_EVENT_TIMER = if
+		1 <- me .timer!
+		generatorpowered 1 = if
+			<- me silentkillit
+		then
+	then
+;
+
+: turnon args( me )
+	<- me .spriteid@ 1 + <- me .spriteid! 
+	1 to leveron
+	clear-cyoa
+;
+
+: warelegionnaire
+	\ new-npc 0 lt .leaveok! lt .character@ .wareswraithify
+	\ new-npc 0 lt .leaveok! lt .character@ .wareswraithify
+	\ Special non-zomb enemies from DRTS...
+	\ Gutted them for this edition 
+;
+
+: megablockingdoor
+	spawn special_objects48_base_id 85 + lt .spriteid! 0.75 lt .scale.x! 1.3 lt .vel.y!
+	bbox immovable as-metal 40005 lt .mass! 1 lt .timer! ' genmaybeon lt .events! cyoa{ ' an-alde-door lt .cyoa! }
+;
+
+: megakeyneedingdoor
+	spawn special_objects48_base_id 84 + lt .spriteid! 0.75 lt .scale.x! 1.3 lt .vel.y! 3 lt .tileflags! 20 lt .hitpoints! -0.9 lt .vel.y! 0.6 lt .scale.x!
+	bbox immovable as-metal 40005 lt .mass! 1 lt .timer! cyoa{ ' an-alde-gate lt .cyoa! }
+;
+
+: levertouse
+	spawn special_objects16_base_id 41 + lt .spriteid! 0.6 lt .vel.x! 3 lt .tileflags! 2000 lt .hitpoints! 4000 lt .mass! 0.6 lt .vel.y!
+	 1 lt .timer! ' turnon lt .cyoa! 
+;
+
+: arkjournal spawn special_objects16_base_id 23 + spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! cyoa{ ' an-alde-time lt .cyoa! } ;
+
+
+\ You can find most things laying around here... 
+\ For next update. Unique or exclusive loot for here ? 
+
+: arkswares 1 11 rnd case \ Internal loot table. Full of cursed things! xD 
+	1 of 50 %chance if fairybat else goldspear then endof 
+	2 of 50 %chance if molotov lt else pipebomb then endof
+	3 of 50 %chance if mazer lt else sixshooter lt then endof 
+	4 of 50 %chance if huntcowboy else hunting then endof 
+	5 of 50 %chance if healspray lt else molotov then endof 
+	6 of 50 %chance if toy else vlamb lt then endof
+	7 of 50 %chance if rapier else whitesword then endof
+	8 of 50 %chance if flamethrower else red9 then endof
+	9 of 50 %chance if fosbury else dolt then endof 
+	10 of 50 %chance if plasmarifle lt else bonesaw then endof
+	11 of 50 %chance if halberd else cannon lt then endof 
+endcase
+;
+
+: randomarkwares
+	4 for 
+		arkswares -2 2 frnd lt .vel.x! -2 2 frnd lt .vel.y!
+	next
+;
+
+
+} }
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	 xyp.i char b = if xyp.xy sycatilestreet3 then;
+	 xyp.i char c = if xyp.xy sycatilestreet2 then;
+	 xyp.i char d = if xyp.xy sycatilestreet then;
+	 xyp.i char e = if xyp.xy sycatilestreet1 then;
+	 xyp.i char g = if xyp.xy sycatilestreet4 then;
+	 xyp.i char h = if xyp.xy sycatilestreet5 then;
+	 xyp.i char j = if xyp.xy sycatilestreet6 then;
+	 xyp.i char p = if xyp.xy sycatilestreet7 then;
+	 xyp.i char i = if xyp.xy sycatilestreet8 then;
+	 xyp.i char o = if xyp.xy sycatilestreet9 then;
+	 xyp.i char O = if xyp.xy sycatilewall then;
+	 xyp.i char E = if xyp.xy sycatilewalltop then;
+	 xyp.i char D = if xyp.xy sycatilewalltopend then;
+	 xyp.i char T = if xyp.xy trashblock xyp.xy sycatilestreet1 then;
+	 xyp.i char t = if xyp.xy trashblock xyp.xy sycatilestreet then;
+	 
+	 xyp.i char C = if xyp.xy streetlamp lt-here then;
+	 xyp.i char 4 = if xyp.xy streetlomp lt-here lfdfuel lt-here lfdfuel lt-here then;
+	 xyp.i char 5 = if xyp.xy streetlamp lt-here xyp.xy sycatilestreetblock then;	 
+	 xyp.i char 6 = if xyp.xy sycatilestreetblock then;	
+	 xyp.i char 7 = if xyp.xy megakeyneedingdoor lt-here fire 1 lt .vel.y! lt-here xyp.xy sycatilestreet then;	 
+	 xyp.i char J = if xyp.xy oldpine
+	 
+	 0.5 1 frnd lt .clr.r!
+	 0.5 1 frnd lt .clr.b!
+	 0.5 1 frnd lt .clr.g!
+	
+	 25 %chance if
+	 0.75 1.4 frnd lt .scale.x!
+	 0.74 1.5 frnd lt .scale.y!
+	 then 
+	 
+	 lt-here xyp.xy sycatilestreet then;
+	 
+	 xyp.i char B = if xyp.xy generatortoturn lt-here then;
+	 
+	 xyp.i char @ = if xyp.xy bldg2 xyp.xy sycatilestreet then;
+	 xyp.i char ! = if xyp.xy bldg3 xyp.xy sycatilestreet lfdfuel lt-here lfdfuel lt-here then;
+	 
+	xyp.i char 1 = if xyp.xy xyp.x 1 & if 2 else rnd5050 then fencerange xyp.xy sycatilestreet then;
+	xyp.i char 2 = if xyp.xy 3 fencerange xyp.xy sycatilestreet then;
+	xyp.i char 3 = if xyp.xy 4 fencerange xyp.xy sycatilestreet then;
+	 
+;
+
+"
+ddddddddddddddddddddddddddddddddddddddddb.....hdddddddddddddddd5dddddddddddddddddd
+ddddddddddddddddddddddddddddddddddddddddb.....hdddddddddddBddddddddddddddddddddddd
+ddddddddddddddddddddddddddddddddddddddddb.....hdddddddddddddddd66dddddddddddddJJJJ
+dddddddddddddJJddddddddddddJJdddddddddddb.....hdddddddddddddddd66dddddddddddddJJJJ
+dddddddddddddJJddddddddddddJJdddddddddddb.....hdddddddddddddddd66dddddddddddddJJJJ
+dddddddddddddJJddddddddddddJJddddddtttttb.....hddddddddd111273111111ddddddddddJJJJ
+tt@ttttddddddddd@tttttdttttttt@tttttttttb.....hd!dddddddddddddddddd@tttttttttttttt
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTc.....geeeeeeeeeeeeeeeeeeeeTTTTTTTTTTTTTTT
+..................................................................................
+..................................................................................
+..................................................................................
+.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj..
+..................................................................................
+..................................................................................
+...............C.................C.................4.................C............
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+
+
+
+
+: keep-colour 
+	1 weather!
+	1 wind_force!
+	
+	0 0.3 1 tint_near!
+	0 0.3 1 tint_far!
+	1 light_mode!
+	60 tint_trigger
+	
+		0 clr_near_set_r!
+		0 clr_near_tile_r!
+		0 clr_near_thing_r!
+		
+		// 0 clr_near_set_b!
+		// 0 clr_near_tile_b!
+		// 0 clr_near_thing_b!
+		
+		// 0 clr_near_set_g!
+		// 0 clr_near_tile_g!
+		// 0 clr_near_thing_g!
+		
+		timer_retrigger
+		
+		
+		generatorpowered 1 = if
+		leveron 1 = if
+		
+		player 0 = if then;
+		player .mapid@ 4 = if
+		105 gloom_lighting!
+		0 light_mode!
+		
+		then
+		then
+		then;
+		
+		generatorpowered 0 = if
+		leveron 0 = if
+		
+		player 0 = if then;
+		player .mapid@ 4 = if
+		0.1 gloom_lighting!
+		
+		then
+		then
+		then
+		
+;
+
+
+\ This took 4 hours to figure out. 4 hours!!!!!!!
+\ And it's the world's dumbest fix!!!!
+\ And it was all so we can have doors that don't glisten!!!!
+\ I hope you are happy basement skeleton xDDDDD 
+
+: blockeverything
+	map{ posx0 16 * posy0 16 * swap pos>tile blocked }
+	map{ posx1 16 * posy1 16 * swap pos>tile blocked }
+	map{ posx2 16 * posy2 16 * swap pos>tile blocked }
+	map{ posx3 16 * posy3 16 * swap pos>tile blocked } 
+; 
+
+: site-setup
+
+	' plotpave to ft
+
+	plotmap
+	
+	7 o'clock
+	1 no_time!
+	
+	1 ' keep-colour timer_add
+
+	// Put char and chars in middle of map
+	54 %mv-up 33 %chars-up
+	
+	10diff %zombs 
+	
+	map{ street-junk }
+	
+	losthope-music
+	
+	3 ' blockeverything timer_add
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+
+	post-script: site-setup
+
+} }

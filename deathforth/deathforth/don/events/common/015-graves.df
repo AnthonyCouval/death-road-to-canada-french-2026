@@ -1,0 +1,85 @@
+cyoa{ road{
+
+(*
+------------------------------------------------------------------------------------------------------------------------
+	015 - "Les Trois Tombes" - Don Thacker
+	The group passes through an abandoned graveyard emptied but for three undesturbed graves.
+	There's only time enough to search one.
+------------------------------------------------------------------------------------------------------------------------
+*)
+
+	cyoa-choice: don-common-graves-digup1
+		image-three-graves
+		($ Thegroup .. " trouve une collection de lettres d'amour d'un soldat a sa bien-aimee. Elles sont vraiment emouvantes !" $)  cyoa-text!
+		($ "Il y a aussi une boite de conserve pleine de harengs et une boîte de bonbons rassis entouree d'un noeud dore." $) +crtext
+			10 trunk-food+ goodfx
+			morale2+all
+	;
+
+	cyoa-choice: don-common-graves-digup2
+		someone choosechar
+		image-three-graves
+		($ Thegroup .. " creuse et creuse mais ne trouve rien d'interessant du tout. Quelle perte de temps." $) cyoa-text!
+		solo if
+		($ "Cependant, " .. cname .. " trouve un gros paquet rempli de " .. "fournitures medicales" pbold .. " dans une dependance voisine!" $) +crtext
+			9 trunk-medical+ goodfx
+		else
+		($ "Pendant que tout le monde creusait, " .. cname .. " a trouve un bidon dessence sous des feuilles, a cote dun " .. "tas de cranes" rbold .. "." $) +crtext
+			50 70 rnd trunk-gas+ goodfx
+		then
+		morale++all
+	;
+
+	cyoa-choice: don-common-graves-digup3
+		image-three-graves
+		($ Thegroup .. "  deterre un cercueil en chene avec des poignees en laiton rivetees et une plaque portant le texte suivant " $) cyoa-text!
+		($ "IL N'Y A PAS D'AUTRE DESTIN QUE CELUI QUE VOUS CREEZ " rbold $) +text
+        ($ "Le cercueil est lourd mais s'ouvre facilement.
+        Il est remplit de " .. "FLINGUES" pbold .. ". Une tonne de " .. "FLINGUES" pbold .. "." $) +text goodfx
+		80 %chance if
+			3 WEAPON_PISTOL trunk.weapon+
+			($ "A EU 3 PISTOLETS, " rbold $) +crtext
+		else
+			2 WEAPON_DOLT trunk.weapon+
+			($ "A EU 2 REVOLVERS " rbold $) +crtext
+		then
+		80 %chance if
+			2 WEAPON_SHOTGUN trunk.weapon+
+			($ "2 FUSILS A POMPE" rbold $) +text
+		else
+			1 WEAPON_AUTOSHOT trunk.weapon+
+			($ "UN FUSIL A POMPE" fbold $) +text
+		then
+		($ ", " rbold $) +text
+		80 %chance if
+			2 WEAPON_HUNTING trunk.weapon+
+			($ "ET 2 FUSILS DE CHASSE !" rbold $) +text
+		else
+			80 %chance if
+				1 WEAPON_AK47 trunk.weapon+
+				($ "ET UN FUSIL DASSAUT !" fbold $) +text
+			else
+				1 WEAPON_MINIGUN trunk.weapon+
+				($ "AND A MINIGUN!!!" fbold $) +text
+			then
+		then
+	;
+
+	cyoa-choice: don-common-graves-screwthat
+		image-three-graves
+		($ Thegroup .. "  decide que deterrer des tombes pendant " .. "l'apocalypse zombie" rbold .. " n'est peut-etre pas la meilleure idee et choisit plutot d'" ..  "ACCELERER LE RYTHME" pbold .. "." $) cyoa-text!
+	;
+
+	cyoa: don-common-graves
+		image-three-graves
+		"Les Trois Tombes" cyoa-title!
+		($ Thegroup .. "  traverse un cimetiere. Presque toutes les tombes ont ete deterrees, la plupart de l'interieur vers l'exterieur. " $) cyoa-text! basic-tone
+	 	($ "Il y a trois tombes, alignees, intactes avec les noms " .. "--GRID" pbold .. ", " .. "NICHOLAS" pbold .. "  et " .. "LUI--" pbold .. ". " $) +crtext
+	 	// ($ Thegroup .. " n'a le temps de deterrer qu'une seule tombe." $) +text
+
+		choice( "Deterrer --GRID" )choice: don-common-graves-digup1
+		choice( "Deterrer NICOLAS" )choice: don-common-graves-digup2
+		choice( "Deterrer LUI--" )choice: don-common-graves-digup3
+		choice( "Laissez-les tranquilles !" )choice: don-common-graves-screwthat
+	;
+} }

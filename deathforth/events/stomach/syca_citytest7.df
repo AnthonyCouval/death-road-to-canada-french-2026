@@ -1,0 +1,124 @@
+
+"../deathforth/rooms/city.txt" $load-rooms
+"../deathforth/rooms/office.txt" $add-rooms
+"../deathforth/rooms/shop.txt" $add-rooms
+"../deathforth/rooms/restroom.txt" $add-rooms
+
+"events/inner/shoploc.df" $load
+
+load? events/city/city-locations.df
+
+"events/stomach/syca_city_commons.df" $load 
+
+
+map{ regiondef{ 
+	
+	: try-special-build
+		special-lot-build not if false then;		// No build is set
+		special-lot curbuild <> if false then; 	// Is it the desired lot?
+
+		// ($ "SPECIAL LOT " .. curbuild $) print
+
+		special-lot-tags $picklocid addloc
+		special-lot-build execute
+
+		true
+	;
+
+	: grass-alleyway-plot2 add-a-path+ grass-lotw 50 %chance if hydrant then ;
+	
+
+	0 value trash_or_no
+
+	: make-prefab-building
+		' curbuild ++
+		try-special-build if then;
+
+		// auto-picklocid addloc
+		
+		0 to trash_or_no
+		
+		curbuild 2 <= if 
+			60 %chance if 0 else auto-picklocid 1 to trash_or_no then
+		else
+			curbuild 2 > curbuild 4 < and if
+				70 %chance if 0 else auto-picklocid 1 to trash_or_no then
+			else
+				auto-picklocid 1 to trash_or_no
+			then
+		then
+		
+		trash_or_no 1 = if 
+			50 %chance if citypost lt .pos -3 3 rnd -3 xyadd lt .pos! else 50 %chance if hydrant lt .pos -3 3 rnd -3 xyadd lt .pos! then then
+		then \ dont spawn these on trashed houses  
+
+	\	75 %chance if 
+		trashed-house-maker-new
+		\ else 
+		\					block-middle? 33 %chance and if
+					\	1 2 rnd grass-alleyway-plot2
+
+					\	lot-boundsw box-midy 1 -
+						
+
+		\				next-plot
+
+						\ canplot? if fencex-cind else 4drop then
+		\			then 
+		\ then 
+	;
+
+	// 0 make-apartments // EXAMPLE... apartments with no door!
+
+	: try-empty-lot try-grassy-lot-syca ;
+
+	: make-test-downtown
+			blocks-init
+				6 to blockh
+				1 to maxrows
+				5 to streeth
+				2 3 rnd to grassylots
+				35 to greenspace%
+				35 to grassylot%
+				6 to treemax 1 to roadsigns
+			blocks-start
+
+			0 begin 1+ canplot? while
+				try-empty-lot 0= if
+//					canplot? 0= if
+					0 if
+						grass-lot
+					else
+						make-prefab-building
+					then
+
+					next-plot
+
+					canplot? 0= if break then
+			
+
+				then
+				dup 100 > if break then
+			repeat drop
+		;
+	
+
+
+: downtown-setup 0 to curbuild  regiondef{ pavement make-test-downtown } map{ street-junk } 5diff %zombs 
+		\ 60 %chance if 
+		\	50 %chance if 78 else 42 then %mv-up
+		\ then 
+;
+
+
+	 region: burb1row
+
+		w: 72
+		h: 13
+
+		script: timeofday o'clock
+	
+		regcity_house
+		
+	post-script: downtown-setup 0 to curbuild 
+} }

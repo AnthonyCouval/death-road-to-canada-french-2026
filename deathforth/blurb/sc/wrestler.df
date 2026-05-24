@@ -5,7 +5,7 @@
 	else
 		blurbslot 2 < if
 			cwits+ cattitude- or if
-				($ "Lart de gaspiller des meubles !" $) blurbsay
+				($ "L\'art de gaspiller des meubles !" $) blurbsay
 				"La lutte est tellement fausse !" blurbsay
 				STAT_MORALE 1st-char .stat--
 		else
@@ -42,21 +42,21 @@
 
 : wrestler-beingunmasked
 	blurbslot 0= if
-		"'Je n'ai vraiment pas peur d'etre mange par des zombs." blurbsay
-		"Ma plus grande crainte est detre demasque." blurbsay
+		"Je n\'ai vraiment pas peur d\'etre mange par des zombs." blurbsay
+		"Ma plus grande crainte est d\'etre demasque." blurbsay
 		qmsg ($ me .name@ .. "  verse une larme virile." $) txt
 	then
 ;
 
 : wrestler-suethreat
 	blurbslot 0= if
-		"The EL SATAN ATOMIC PUNCH used to be called the EL SATAN **** ******." blurbsay
-		"Jai du le changer quand un autre lutteur a menace de me poursuivre en justice." blurbsay
+		"L\'EL SATAN ATOMIC PUNCH s\'appelait autrefois l\'EL SATAN **** ******." blurbsay
+		"J\'ai du le changer quand un autre lutteur a menace de me poursuivre en justice." blurbsay
 	then
 ;
 
-	: WRESTLER-oneline1 "'J'aimerais que les gens disent que la lutte n'est pas reelle MAINTENANT." ;
-	: WRESTLER-oneline2 "Jespere faire un mouvement de lutte qui merite detre appele ULTIMATE." ;
+	: WRESTLER-oneline1 "J'aimerais que les gens disent que la lutte n'est pas reelle MAINTENANT." ;
+	: WRESTLER-oneline2 "J\'espere faire un mouvement de lutte qui merite detre appele ULTIMATE." ;
 	: WRESTLER-oneline3 "Je souhaite que les arbitres soient toujours la pour que les zombs puissent etre disqualifies pour avoir mordu." ;
 	: WRESTLER-oneline4 "Meme apres la fin du monde, la lutte continue. Cela vous fait reflechir." ;
 	: WRESTLER-oneline5 "Jaime penser que les lutteurs de mon ancien equipage sont quelque part." ;

@@ -1,0 +1,630 @@
+// : statlist STAT_VITALITY for i 1- dup print statname print cr next ;
+: statlist STAT_VITALITY for i 1- dup type " - " type statname print next ;
+
+: quick-histat-check
+	0 #teamchar .histat-stack shuffles pops statname .
+	1 #teamchar .histat-stack shuffles pops statname .
+;
+
+: quick-hiskill-check
+	0 #teamchar .hiskill-stack shuffles pops statname .
+	1 #teamchar .hiskill-stack shuffles pops statname .
+;
+
+0 value epilogue-gender
+
+// : ehis .. epilogue-gender 1 < if "  son " else "  sa " then .. ;
+// : ehim .. epilogue-gender 1 < if "  le " else "  sa " then .. ;
+// : ehe .. epilogue-gender 1 < if "  il " else "  elle " then .. ;
+
+: ehis epilogue-gender 1 < if "son" else "son" then ;
+: ehim epilogue-gender 1 < if "lui" else "son" then ;
+: ehe epilogue-gender 1 < if "il" else "elle" then ;
+
+// THE REAL FUN BEGINS BELOW
+
+0 value EPILOGUE-PICK
+
+// Personality sayings
+
+0 stack
+	"Le Canada va etre genial !" shove
+	"Ca valait vraiment le coup tout ce carnage !" shove
+	"'C'etait pas si mal !" shove
+	"'Je suis desole que le voyage soit fini maintenant !" shove
+value att-high-endsay-base
+att-high-endsay-base shuffles var att-high-endsay
+
+0 stack
+	"'Il fait trop froid ici !" shove
+	"Mes pieds me font mal !" shove
+	"Je deteste deja le Canada! Le Canada sent mauvais!" shove
+	"Je n'arrive pas a croire que j'ai marche tout ce chemin!" shove
+	"Canada est mauvais! Downvoted!" shove
+value att-low-endsay-base
+att-low-endsay-base shuffles var att-low-endsay
+
+0 stack
+	"Beau travail." shove
+	"Bien." shove
+	"Quoi de neuf?" shove
+	"Facile." shove
+value comp-high-endsay-base
+comp-high-endsay-base shuffles var comp-high-endsay
+
+0 stack
+	"'Je suis pompe ! Je suis POMPE !" shove
+	"Woooooo!" shove
+	"Extreeeeeme!" shove
+	"AAAAAAAAAAAAAAAARGH! I DID IT!" shove
+value comp-low-endsay-base
+comp-low-endsay-base shuffles var comp-low-endsay
+
+0 stack
+	"Tout sest passe comme prevu !" shove
+	"Ma prediction etait une chance de 90% datteindre le Canada !" shove
+	"Jai beaucoup appris sur moi meme. Et les zombies." shove
+	"Je parie que je pourrais y arriver encore plus facilement, sachant ce que je fais maintenant." shove
+value wits-high-endsay-base
+wits-high-endsay-base shuffles var wits-high-endsay
+
+0 stack
+	"On y est presque?" shove
+	"Est ce le Canada ?" shove
+	"Huuuuuuh? Oh, I made it." shove
+	"'Ou suis je ? Je ne faisais pas attention." shove
+value wits-low-endsay-base
+wits-low-endsay-base shuffles var wits-low-endsay
+
+0 stack
+	"On la fait !" shove
+	"Tout cela grace au travail dequipe !" shove
+	"'Soyons amis pour toujours !" shove
+	"Lamitie est la raison pour laquelle nous avons reussi !" shove
+value loyal-high-endsay-base
+loyal-high-endsay-base shuffles var loyal-high-endsay
+
+0 stack
+	"'Non ! Je suis le seul !" shove
+	"'Voici a ceux qui n'ont pas reussi." shove
+	"Well uh... crap. Guess I'm alone." shove
+	"Euh oups. Bon, qui a besoin damis, je suppose." shove
+value loyal-high-endsay-solo-base
+loyal-high-endsay-solo-base shuffles var loyal-high-endsay-solo
+
+0 stack
+	"Nice, un tout nouveau pays a voler." shove
+	"I knew that I'd make it hhhhheh." shove
+	"Je vais regner sur cet endroit!" shove
+	"Regardez tous" shove
+value loyal-low-endsay-base
+loyal-low-endsay-base shuffles var loyal-low-endsay
+
+0 stack
+	"Jai frappe un orignal si fort quil a explose!" shove
+	"AAAAAAAAAARGH! AAAAARGH!" shove
+	"BERSEEEERKEEEEEEEER!" shove
+	"I love 'zerkin!!!" shove
+value berserk-personality-endsay-base
+berserk-personality-endsay-base shuffles var berserk-personality-endsay
+
+0 stack
+	"Je lai fait!" shove
+	"Cest le moment de profiter du mode de vie canadien!" shove
+	"'Ca suffit les zombies pour moi, merci" shove
+	"Attendez! Jai oublie ma brosse a dents en Floride!" shove
+	"Touchdooooown!" shove
+	"Ca faisait beaucoup de zombies." shove
+	"I'm going to need a new car..." shove
+	"Je me sens en insecurite sans aucune chaise de jet en vue." shove
+	"Jespere pouvoir piller plus de toilettes plus tard." shove
+	"Cest le moment de se detendre et de relaxer." shove
+	"Victoire!" shove
+	"Je merite des vacances." shove
+	"Est ce quil neige toujours ici?" shove
+	"Cest lheure de faire la fete!" shove
+	"Felicitations!" shove
+	"Whoaaaa!" shove
+	"Tout ca cest grace a moi!" shove
+value generic-personality-endsay-base
+generic-personality-endsay-base shuffles var generic-personality-endsay
+
+0 stack
+	"Cest exactement comme dans mes animes japonais!" shove
+	"Ils se moquaient de mes figurines d'anime mais qui rit maintenant?" shove
+	"Y a t il des animes canadiens?" shove
+	"Tout cela grace a la superiorite des armes japonaises!" shove
+value animefan-personality-endsay-base
+animefan-personality-endsay-base shuffles var animefan-personality-endsay
+
+0 stack
+	"= ^_^ =" shove
+	"La justice triomphe!" shove
+	"BEAM DE COEUR!" rainbold shove
+	"^O_O^" shove
+	"Bien, je n'ai pas explose cette fois, c'est deja ca." shove
+value animegirl-personality-endsay-base
+animegirl-personality-endsay-base shuffles var animegirl-personality-endsay
+
+0 stack
+	"TOO SWOLE TO CONTROL, BABY!!!" fbold shove
+	"JAI ATTEINT LE MAXIMUM DE LA FORCE!" fbold shove
+	"YEAH!!!!!! TOO SWOLE!" fbold shove
+	"I LOVE BEIN STRONG!!!" fbold shove
+value tstc-personality-endsay-base
+tstc-personality-endsay-base shuffles var tstc-personality-endsay
+
+0 stack
+	"'J'serai toujours votre gardien de corps." shove
+	"Iiiiii-I-Iiiiiii... wiiiilll always love yoooouuuuu." shove
+	"Allez bas, Monsieur le Premier ministre !" shove
+	"'Je suis encore en alerte. Je vais evaluer les menaces." shove
+value herotype-personality-endsay-base
+herotype-personality-endsay-base shuffles var herotype-personality-endsay
+
+0 stack
+	"Faut pas perdre de temps !" shove
+	"Cest bien cool." shove
+	"Mange ca, Docteur Robotnik !" shove
+	"'Je suis plus rapide que Sonic le Hedgehog !" shove
+value dex-personality-endsay-base
+dex-personality-endsay-base shuffles var dex-personality-endsay
+
+0 stack
+	"I've satisfied my hunger... for victory!" shove
+	"Jetais fatigue de manger des conserves." shove
+	"Je besoin dune autre repas." shove
+	"Tu mange ca ? Parce que je le ferai." shove
+value gourmand-personality-endsay-base
+gourmand-personality-endsay-base shuffles var gourmand-personality-endsay
+
+0 stack
+	"ABOYER !" shove
+	"Woof ! Woof !" shove
+	"Bork !" shove
+	"BIERK!" shove
+	"OUAF !" shove
+	"farts.*" shove
+	"se leche.*" shove
+value dog-personality-endsay-base
+dog-personality-endsay-base shuffles var dog-personality-endsay
+
+// Works like the skill check, but picks the personality stats.
+// Also instead of the highest, picks the numbers furthest away from 3. So 0 and 6 tie with each other.
+// Each one then has different lines for under 2 or over 4 checks. If it fails both, does a generic line.
+: epilogue-personality-check args( char )
+
+	// Gender check to ehis for less clumsy pronouns
+	// <- char .female@ 0 > if "femelle" . 1 else "male" . 0 then to epilogue-gender
+
+	<- char .female@ 0 > if
+ 		1 to epilogue-gender
+ 	else
+ 		0 to epilogue-gender
+	then
+
+	// Special Characters
+
+	<- char .mason? 		  if "... :D" then;
+	<- char .hermit? 		  if "'Feh! J'arrive pas a croire que j'ai ete convaincu de quitter ma cabane." then;
+	<- char .specialtype@ 3 = if "Joyeux Noel a tous !" then;
+	<- char .specialtype@ 4 = if "HO!HO!HO!HO!HO!HO!HO!HO!HO!HO!HO!HO!HO!" fbold then;
+	<- char .specialtype@ 5 = if "barboterbarboter" then;
+	<- char .specialtype@ 6 = if "Tout cet entrainement a ete utile !" then;
+	<- char .specialtype@ 7 = if "Cetait une bonne bataille. Je suppose." then;
+	<- char .specialtype@ 8 = if "Ca ma fait penser a un nouveau mouvement de catch ! La PRESSE MECHA !" then;
+	<- char .specialtype@ 9 = if "One-two... one-two... I'm brutal and ruthless!" then;
+	<- char .specialtype@ 10 = if "La connaissance triomphe a nouveau ! Je regne." then;
+	<- char .specialtype@ 11 = if "Jai besoin de plus de nourriture pour chat !" then;
+	<- char .specialtype@ 12 = if "I'm going to need some stylish winter clothes..." then;
+	<- char .specialtype@ 13 = if "Quel pays enchanteur !" then;
+	<- char .specialtype@ 14 = if "C'etait facile! Le roller derby est plus dangereux." then;
+	<- char .specialtype@ 19 = if "!!!!" then;
+	<- char .specialtype@ 20 = if "Je n'ai jamais cru que j'y arriverais!" then;
+	<- char .specialtype@ 21 = if "Hhhhheh I'll be running this place in a week, tops." then;
+	<- char .specialtype@ 22 = if "OUAF !" then;
+	<- char .specialtype@ 25 = if tstc-personality-endsay depths 0= if drop "SUIS JE ENFIN TROP MUSCLE?" else pops nip then then;
+	<- char .specialtype@ 26 = if "Oui!" then;
+	<- char .specialtype@ 27 = if "glou glou" then;
+	<- char .specialtype@ 29 = if "HA! CEST LE TEMPS POUR UNE NOUVELLE AVENTURE!" then;
+	<- char .specialtype@ 30 = if "Cest ma victoire !" then;
+	<- char .specialtype@ 31 = if "JE DETESTE LES LUNDIS !" then;
+	<- char .specialtype@ 33 = if "Ooo! Never forget me! Oooooo!" then;
+	<- char .specialtype@ 34 = if "HENNISSEMENT !" then;
+	<- char .specialtype@ 35 = if "EEEEEEEEEEEEEEEEE!" then;
+	<- char .specialtype@ 36 = <- char .specialtype@ 37 = or if "merci beaucoup" then;
+	<- char .specialtype@ 45 = if "We really.... cleaned up!" then;
+	<- char .specialtype@ 46 = if "I'm a mercenary.... a mercenary for hire." then;
+	<- char .specialtype@ 49 = if "...." then;
+	<- char .specialtype@ 50 = if "Half Life 3 ne sortira PAS, desole." then;
+	<- char .specialtype@ 52 = if "HYAAAAAAAAAAAAAAAAAAAAAAAAAAAGH!" fbold then;
+	<- char .specialtype@ 58 = if "pet" then;
+	<- char .specialtype@ 61 = if "Abracadabra, les nerds !" then;
+	<- char anime? if animegirl-personality-endsay depths 0= if drop "Suis je Kawaii ?" else pops nip then then;
+	<- char .specialtype@ 73 = <- char .specialtype@ 74 = or if "DON'T LOOK AT MEEEEEEE!" then;
+	<- char .specialtype@ 76 = if "GNORT !" then;
+	<- char .specialtype@ 77 = if "nurrrrrp!" then;
+	<- char .specialtype@ 81 = if "'INTERFEREZ AVEC LE PLAISIR DE LA SORCIERE, FAITES VOUS TIRER PAR LE PISTOLET DE LA SORCIERE !" then;
+	<- char .specialtype@ 82 = if "BLAUGH !" then;
+	<- char .specialtype@ 83 = if "blaugh" then;
+	<- char .perk@ "Reine Squelette" $= if "Je le dois tout aux squelettes !" then;
+	<- char .specialtype@ 88 = if "Jai entendu dire que Toronto a une scene LARP florissante !" then;
+	<- char .specialtype@ 90 = if "Wow ! Un nouvel endroit a bruler." then;
+	<- char .specialtype@ 91 = if "'Je suis toujours coince dans ce costume ! Au secours !" then;
+	<- char .specialtype@ 92 = if "'NE SOIS PAS VACHE MEC" then;
+	<- char .specialtype@ 93 = if "........." then;
+	<- char .specialtype@ 94 = if "EET PANT !" then;
+	<- char .specialtype@ 95 = if "Objectif de mission en vue !" then;
+	<- char .specialtype@ 96 = if "Parfait! Je peux terroriser bien plus dhumains ici!" then;
+	<- char .specialtype@ 97 = if "BON TRAVAIL, BUB!" then;
+	<- char .specialtype@ 98 = if "'Il fait trop froid ici pour cette tenue !" then;
+	<- char .specialtype@ 102 = if "Uuurrrrgh ice everywhere." then;
+	<- char .specialtype@ 104 = if "AMERICA #1! WOO! WOOOOOOOOOO!" then;
+	<- char .specialtype@ 105 = if "Encore une victoire pour le 100 % americain Can Do ism !" then;
+	<- char .specialtype@ 106 = if "Mon journal dit que cest un bon endroit pour rester." then;
+	<- char .specialtype@ 108 = if "Yarrrr!" then;
+	<- char .charbro? 		   if "'Bon sang ! NOTE DU TRADUCTEUR : CELA SIGNIFIE VAGUEMENT YARE YARE DAZE" then;
+	<- char .broom?            if "I have a confession to make... I was actually a broom the entire time." then;
+	<- char .saguts?		   if "I GER UPPERCUT !" then;
+	<- char .bryu?		   	   if "'HADOOK ! KADOOSHIN !" then;
+	<- char .hhell?		   	   if "Heh... all thanks to Sweet Lady Propane." then;
+	<- char .efudd?		   	   if "Je suis victorieux ! Moi ! E*FUDD !" then;
+
+	<- char dog? if dog-personality-endsay depths 0= if drop "bork." else pops nip then then;
+	<- char cat? if "MIAOU!" then;
+	<- char goat? if "BAAAAA!" then;
+	<- char pig? if "OINK !" then;
+	<- char ispet? if "HRONK !" then;
+
+	<- char .trait@ "CARL !" $= if "CAAARRRL!" then;
+	<- char .trait@ "EST CE QUE CA EST KEPA" $= if "Oh he, jy suis arrive. Merci davoir joue a Death Road to Canada !" then;
+
+	<- char .dexterity@ 2 > if dex-personality-endsay depths 0= if drop "Bien au dela de la fraicheur !" else pops nip then then;
+
+	<- char .trait@ "Fan danime" $= if animefan-personality-endsay depths 0= if drop "Je taime, Canada chan." else pops nip then then;
+	<- char .trait@ "Phenix" $= if "D" then;
+	<- char .perk@ "Force de la nature incontrolable" $= if tstc-personality-endsay depths 0= if drop "Suis je finalement trop gonfle ?" else pops nip then then;
+	<- char .trait@ "Type de heros" $= if herotype-personality-endsay depths 0= if drop "'J'serai toujours votre gardien de corps." else pops nip then then;
+	<- char .trait@ "Gourmand" $= if gourmand-personality-endsay depths 0= if drop "Delicieux !" else pops nip then then;
+
+	// If a character has the berserker trait, gives them an ending line for it.
+	<- char .trait@ "BERSERK !" $= if berserk-personality-endsay depths 0= if drop "BERSERKER !" else pops nip then then;
+
+	// Rare checks above, common checks below.
+
+	<- char .xtreme-stat-stack depths 0= if 0 else shuffles pops then to EPILOGUE-PICK drop
+
+	EPILOGUE-PICK STAT_ATTITUDE = if
+		<- char .cattitude+ if
+			att-high-endsay depths 0= if drop "Ouais !" else pops nip then
+		then;
+		<- char .cattitude- if
+			att-low-endsay depths 0= if drop "Pff." else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_COMPOSURE = if
+		<- char .ctemper+ if
+			comp-high-endsay depths 0= if drop "Ouf." else pops nip then
+		then;
+		<- char .ctemper- if
+			comp-low-endsay depths 0= if drop "Aie !" else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_WITS = if
+		<- char .cwits+ if
+			wits-high-endsay depths 0= if drop "Je le savais !" else pops nip then
+		then;
+		<- char .cwits- if
+			wits-low-endsay depths 0= if drop "Euh, quoi ?" else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_LOYALTY = if
+		<- char .cloyalty+ if
+			team-count-alive 1 > if loyal-high-endsay else loyal-high-endsay-solo then
+			depths 0= if drop "est devenu un citoyen modele du Canada.*" else pops nip then
+		then;
+		<- char .cloyalty- if
+			loyal-low-endsay depths 0= if drop "a continue detre un enorme connard.*" else pops nip then
+		then;
+	then
+
+	generic-personality-endsay depths 0= if drop "Hourra !" else pops nip then
+
+;
+
+
+// Skill sayings
+// Note: Needs 4 for each category, minimum, or you could run out of sayings
+
+0 stack
+	($ "a ete expulse du Canada apres avoir refuse de renoncer aux armes a feu.*" $) shove
+	($ "a canalise son obsession des armes a feu vers un passe temps productif : la collecte de pommes de pin.*" $) shove
+	"est devenu une attraction de tir de precision fameuse au Cirque Canadien.*" shove
+	($ "a accidentellement abattu son propre pied, cinq minutes apres son entree au Canada.*" $) shove
+	"abat par accident un pingouin, en violant la Directive Prime Canadienne.*" shove
+value shoot-endsay-base
+shoot-endsay-base shuffles var shoot-endsay
+
+0 stack
+	($ "est arrete apres avoir decouvert que sa pratique medicale dEHIS netait pas autorisee au Canada.*" $) shove
+	($ "diagnostique chaque patient dEHIS avec un probleme de flatulence.*" $) shove
+	"essaye de guerir linfection aux zombies, mais ne fait que rendre leurs cheveux un peu plus jolis.*" shove
+	($ "developpe un remede pour la flatulence, qui est ensuite nomme dapres EHIM .*" $) shove
+	"fait des innovations incroyables aux Mecha Mounties. Ils servent maintenant du cafe.*" shove
+value med-endsay-base
+med-endsay-base shuffles var med-endsay
+
+0 stack
+	"fabrique des innovations incroyables aux Mecha Mounties. Ils servent maintenant du cafe.*" shove
+	"concoit une ligne tres populaire de voitures a trois roues grotesques.*" shove
+	"est reconnu comme un heros apres avoir invente une chaineuse plus puissante.*" shove
+	"cree une nouvelle version de la chaineuse, equipee de lumieres colorees attachees a elle.*" shove
+	"im not sure if this is a joke or a reference to something." shove
+	"invente un meilleur piege a souris. Il a de la fibre de carbone et une cle USB.*" shove
+value mech-endsay-base
+mech-endsay-base shuffles var mech-endsay
+
+0 stack
+	($ "a cree un programme de remise en forme tres populaire base sur lexperience de survie des zombies EHIS.*" $) shove
+	"est devenu un athlete aux Jeux olympiques post zombocalypse, ou le Canada a remporte toutes les medailles!*" shove
+	"a vecu une longue et saine vie au Canada. A lage de 100 ans, a ete mordu par un orignal et a explose.*" shove
+	"a commence le hockey, y excellant apres tout cet entrainement a frapper les dents de zombies.*" shove
+	"a invente un nouvel art martial specifique aux zombies, puis la enseigne a de nombreux disciples.*" shove
+value fit-endsay-base
+fit-endsay-base shuffles var fit-endsay
+
+0 stack
+	($ "a consacre toute sa vie a aider a restaurer la musculation a son ancienne gloire.*" $) shove
+	// NOTE: below line is as long as you can get before hitting three lines
+	"a commence a flechir continuellement apres avoir traverse la frontiere, et na jamais cesse. Personne ne sen est soucie.*" shove
+	($ "est devenu un heros folklorique legendaire apres avoir suplexe un orignal avec lequel EHE se disputait.*" $) shove
+	"retournait souvent a la frontiere, juste pour lancer des meubles lourds sur plus de zombies.*" shove
+	($ "a ensuite ete elu president de tous les bucherons en raison de sa grande force.*" $) shove
+value str-endsay-base
+str-endsay-base shuffles var str-endsay
+
+0 stack
+	($ "a continue a courir sur cette route, jusqua ce quEHE disparaisse a lhorizon.*" $) shove
+	($ "'etait largement connu pour sa vitesse de course EHIS, ce qui lui a valu le surnom deSonic le Herisson.*" $) shove
+	($ "eHIS is a reference to the Eh Eh Eh sound effect that plays when the player uses the Super Fast Legs power up in the game." $) shove
+	"im not sure if this is the correct translation but its the best I could come up with." shove
+value dex-endsay-base
+dex-endsay-base shuffles var dex-endsay
+
+0 stack
+	($ "eHE is a sound of laughter in Swedish." $) shove
+	"the Bat in French." shove
+	"sest installe dans une vie tranquille. Cetait un peu ennuyeux, sans les zombies.*" shove
+	"a parcouru les frontieres du nord, ayant plus daventures mais avec moins de zombies.*" shove
+	"a ecrit un guide de survie aux zombies qui etait juste plein de mauvaises conseils.*" shove
+	"a eu du mal a sadapter au Canada, et a finalement retourne au sud pour plus daventures.*" shove
+	"a eu des difficultes a shabituer aux courses automobiles apres avoir detruit une par semaine.*" shove
+	"a essaye de devenir un Gendarme, mais n'avait vraiment pas les competences pour ca.*" shove
+	($ "na jamais pu shabituer a la nourriture, trop habitue aux gateaux de junk food EHE avait recoltes sur la Route Mortelle.*" $) shove
+	($ "n'avait pas de competences fortes, et EHE avait une vie tranquille mais sans evenements en Canada.*" $) shove
+value generic-skill-endsay-base
+generic-skill-endsay-base shuffles var generic-skill-endsay
+
+0 stack
+	"a plus tard pris le controle de parties du Canada avec une armee dchiens dentrainement.*" shove
+	"avait eu une longue vie avec beaucoup de chiens de compagnie.*" shove
+	($ "patrouillait la frontiere avec EHIS croisade de chiens de chasseurs de zombies a letat croissant.*" $) shove
+	($ "a passe sa vie essayer de faire elire lun de ses chiens de compagnie comme Premier ministre.*"	$) shove
+value dogpal-skill-endsay-base
+dogpal-skill-endsay-base shuffles var dogpal-skill-endsay
+
+0 stack
+	($ "fait un anime base sur les aventures dEHIS. Il a pris quelques libertes creatives en ce qui concerne la gentillesse.*" $) shove
+	($ "a consacre le reste de la vie dEHIS a lanime qui la sauve.*" $) shove
+	"a depasse lanime enfantin et est passe au manga.*" shove
+	"a ecrit un manga qui depeignait les zombies comme des filles danime. Les fans sont devenus un culte bizarre.*" shove
+value animefan-skill-endsay-base
+animefan-skill-endsay-base shuffles var animefan-skill-endsay
+
+0 stack
+	($ "sest spontanement enflamme. Exactement comme EHE le voulait !*" $) shove
+	"a ete mordu par un castor au pied. Les deux ont explose en morceaux.*" shove
+	"a ete aneanti lorsquil a ete touche par une boule de neige. Une sante.*" shove
+	"a ete exile apres avoir detruit une ville lors dun match de hockey amical.*" shove
+value berserk-skill-endsay-base
+berserk-skill-endsay-base shuffles var berserk-skill-endsay
+
+0 stack
+	"'est devenue la fille d'anime la plus kawaii du Canada. Note du traducteur : Kawaii signifie mignon.*" shove
+	"a continue a combattre le mal en faisant exploser des choses avec des rayons cardiaques geants.*" shove
+	"a rapidement atteint la forme Super Saiyan, ce qui lui a surtout donne une plus grosse coiffure.*" shove
+	"A ENFIN avoue a sempai.*" shove
+value animegirl-skill-endsay-base
+animegirl-skill-endsay-base shuffles var animegirl-skill-endsay
+
+0 stack
+	"sest bien integre dans la societe canadienne, bien quil soit un squelette ambulant.*" shove
+	"narretait pas detre chasse de la ville a cause de sa danse effrayante.*" shove
+	"a vecu une vie normale et heureuse, mais avec beaucoup de bruits de claquement inutiles.*" shove
+	($ "na jamais, jamais compris exactement pourquoi ou comment EHE avait besoin de manger de la nourriture.*" $) shove
+value skeleton-skill-endsay-base
+skeleton-skill-endsay-base shuffles var skeleton-skill-endsay
+
+0 stack
+	($ "'est devenu un chef expert, tres demande pour la cuisine en conserve d'EHIS.*" $) shove
+	"a obtenu un emploi de critique gastronomique, ce qui est peut etre le meilleur metier qui soit.*" shove
+	"'a enfin pu manger quelque chose qui n'etait pas de la vieille malbouffe ou des conserves.*" shove
+	"est parti pour un nouveau voyage afin de gouter a toute la gastronomie que le Canada a a offrir.*" shove
+value gourmand-skill-endsay-base
+gourmand-skill-endsay-base shuffles var gourmand-skill-endsay
+
+0 stack
+	"etait responsable dune serie de vols au Canada, avant detre exile.*" shove
+	"a etabli un syndicat du crime redoute. Un syndicat ou tout le monde portait des robes de soiree.*" shove
+	($ "a supprime lenvie dEHIS de voler des gens au Canada. Au lieu de cela, EHE netait quun enorme cretin.*" $) shove
+	"'a dirige un braquage pour voler les joyaux royaux du Premier ministre.*" shove
+value bandit-skill-endsay-base
+bandit-skill-endsay-base shuffles var bandit-skill-endsay
+
+0 stack
+	($ "rongeait surtout tout ce quEHE pouvait mettre dans SA bouche, vraiment.*" $) shove
+	"a marque autant de territoire que possible.*" shove
+	"the open road is a metaphor for freedom, and housebroken is a metaphor for being tamed or domesticated." shove
+	($ "im not sure if this is a typo or not. Im assuming it is but Im not sure what its supposed to be." $) shove
+	($ "eHIS is a typo it should be HIS" $) shove
+value dog-skill-endsay-base
+dog-skill-endsay-base shuffles var dog-skill-endsay
+
+
+: fix-pronouns ( text )
+	"EHIS" ehis $strrep
+	"EHE" ehe $strrep
+	"EHIM" ehim $strrep
+;
+
+
+// Main start of epilogue check below, further words above
+// then; will exit out of the word should the IF check pass
+
+// This checks for the "competences", which are things like strength and mechanical.
+// Takes whatever the highest skill is. If there's a tie, picks from the tied skills at random.
+// Finally, checks that the highest skill is over 4. If not, goes to a generic pool of phrases.
+
+
+: epilogue-skill-check args( char )
+
+	// Special Characters
+
+	<- char .mason? 		  if "sest fait une tonne damis et a ouvert un camp dete!*" then;
+	<- char .hermit? 		  if "est devenu un ermite au Canada. Au lieu detre un ermite en Amerique.*" then;
+	<- char .specialtype@ 3 = if "a pu repandre la joie de Noel dans tout le Canada.*" then;
+	<- char .specialtype@ 4 = if "'a deverse d'enormes tas de charbon de son traineau sur les maisons de tout le monde.*" then;
+	<- char .specialtype@ 5 = if "a continue a sagiter.*" then;
+	<- char .specialtype@ 6 = if "a atteint les plus hauts rangs dans le sport canadien bien aime de la lutte sumo.*" then;
+	<- char .specialtype@ 7 = if "est retournee au Valhalla, mais pas avant davoir lance son marteau sur de nombreux monuments importants.*" then;
+	<- char .specialtype@ 8 = if "a retrouve ses rivaux de lutte et a mene de nombreuses batailles passionnantes.*" then;
+	<- char .specialtype@ 9 = if "a couru partout en frappant des choses et en marmonnant. Des gens, des animaux, des statues, tout ce que vous voulez.*" then;
+	<- char .specialtype@ 10 = if "a installe un tres beau laboratoire secret au Canada, puis a cree une armee de castors mutants.*" then;
+	<- char .specialtype@ 11 = if "a extermine la plus grande partie de la faune canadienne a cause de son armee de chats.*" then;
+	<- char .specialtype@ 12 = if "a enfin trouve un endroit civilise ou sinstaller. Elle a developpe une ligne de vetements populaire.*" then;
+	<- char .specialtype@ 13 = if "a harcele le groupe sans arret, faisant regretter a tout le monde ce souhait damitie.*" then;
+	<- char .specialtype@ 14 = if "a fonde la division de patinage a roulettes de la GRC, redoutee de tous les malfaiteurs.*" then;
+	<- char .specialtype@ 19 = if "a entame un nouveau voyage pour se rendre en Colombie. Apres cela, dautres pays commencant par C.*" then;
+	<- char .specialtype@ 20 = if "a enfin pu ranger sa combinaison dapiculteur et la remplacee par un theme elan.*" then;
+	<- char .specialtype@ 21 = if "a rapidement ete expulse du pays pour avoir ete un immense cretin.*" then;
+	<- char .specialtype@ 22 = if "a reussi dans la vie. Personne na jamais decouvert quil sagissait de trois chiens empiles les uns sur les autres.*" then;
+	<- char .specialtype@ 25 = if "a attire de nombreux disciples culturistes. Il netait plus le dernier culturiste.*" then;
+	<- char .specialtype@ 26 = if "est devenu celebre pour son spectacle dhumour tres populaire et perspicace.*" then;
+	<- char .specialtype@ 27 = if "a survecu contre toute attente. Joyeux Thanksgiving!*" then;
+	<- char .specialtype@ 29 = if "a inflige toutes sortes dhorreurs liees aux clowns au Canada.*" then;
+	<- char .specialtype@ 30 = if "errait au Canada a la recherche dadversaires de qualite pour le piquet de fer.*" then;
+	<- char .specialtype@ 31 = if "continuait a detester les lundis.*" then;
+	<- char .specialtype@ 33 = if "disait des adieux. Avec des larmes dans ses yeux, il sest transforme en arbre.*" then;
+	<- char .specialtype@ 34 = if "rassembla une grande foule de personnes, toutes qui courraient autour portant des masques identiques.*" then;
+	<- char .specialtype@ 35 = if "fut mis en zoo apres que tout le monde eut realise quelle etait un vrai panda.*" then;
+	<- char .specialtype@ 36 = <- char .specialtype@ 37 = or if "'devint une chanteuse celebre, avec sa chanson phare: 'La route mortelle vers le Canada" then;
+	<- char .specialtype@ 45 = if "'s'est enrichi en vendant un nouveau type de balai qui ne se brise pas lorsqu'on le fracasse contre des zombies.*" then;
+	<- char .specialtype@ 46 = if "a reussi a garder son mitrailleuse dans le Canada. Personne nvoulait la prendre de lui.*" then;
+	<- char .specialtype@ 49 = if "est retourne etre un chercheur. Cela implique principalement des choses qui consistent a frapper des choses avec une barre a corbeau.*" then;
+	<- char .specialtype@ 50 = if "a libere Half Life 3.*" then;
+	<- char .specialtype@ 52 = if "sest beche pour le reste de sa vie, brisant la poterie.*" then;
+	<- char .specialtype@ 58 = if "a finalement trouve une salle de bain dans laquelle il pouvait faire caca en toute securite.*" then;
+	<- char .specialtype@ 61 = if "'avait predit quil arriverait au Canada sans encombre, et regardez ou il est maintenant.*" then;
+	<- char anime? if animegirl-skill-endsay depths 0= if drop "est devenu True Anime!*" else pops nip then then;
+	<- char .specialtype@ 73 = <- char .specialtype@ 74 = or if "se cachait dans la campagne comme une abomination, effrayant parfois les villageois. Sympa!*" then;
+	<- char .specialtype@ 76 = if "'est une sorte de gerbille ou quelque chose comme ca? Je ne sais pas.*" then;
+	<- char .specialtype@ 77 = if "est retourne dans sa famille au Canada, apres une longue absence.*" then;
+	<- char .specialtype@ 78 = if skeleton-skill-endsay depths 0= if drop "Jadore le skeletoning!" else pops nip then then;
+	<- char .specialtype@ 81 = if "a construit une maison en pain depice vraiment cool.*" then;
+	<- char .specialtype@ 82 = if "a continue a passer sa non vie a faire BOUM et a se transformer en chauve souris.*" then;
+	<- char .specialtype@ 83 = if "est reste coince sous forme de chauve souris, dune maniere ou dune autre.*" then;
+	<- char .perk@ "Reine Squelette" $= if "a fait pousser une enorme armee de squelettes. Ils nont jamais fait grand chose, elle aimait juste les collectionner.*" then;
+	<- char .specialtype@ 88 = if "est devenu un barde populaire a la cour royale du roi du Canada.*" then;
+	<- char .specialtype@ 90 = if "quitte le Canada apres avoir decouvert que tout etait plus difficile a bruler a cause de la glace.*" then;
+	<- char .specialtype@ 91 = if "im not sure if this is the correct translation." then;
+	<- char .specialtype@ 92 = if "bort is a reference to the Simpsons episode Bart vs. Australia where Bart prank calls" then;
+	<- char .specialtype@ 93 = if "im not sure if this is a typo or not. Im guessing its supposed to be Bizarro Krankor but Im not sure." then;
+	<- char .specialtype@ 94 = if "bart Simpson is a character from the TV show The Simpsons." then;
+	<- char .specialtype@ 95 = if "went on to complete his secret mission: stealing the Tim Hortons coffee recipe." then;
+	<- char .specialtype@ 96 = if "a deniche un donjon rempli de monstres. Il y avait des orcs des gobelins et des pieges. Sympa!*" then;
+	<- char .specialtype@ 97 = if "'a ete pris pour une rare sous espece de carcajou et a ete jete dans un zoo. Ca ne le derangeait pas.*" then;
+	<- char .specialtype@ 98 = if "a change son cosplay pour un personnage qui portait des vetements dhiver epais au lieu de collants.*" then;
+	<- char .specialtype@ 102 = if "a fait une sieste ce jour la et a ete immediatement enfermee dans la glace. Elle sest reveillee dans un avenir lointain.*" then;
+	<- char .specialtype@ 104 = <- char .specialtype@ 105 = or if "a demande la citoyennete canadienne discretement et timidement.*" then;
+	<- char .specialtype@ 106 = if "a aide la police montee a developper une puissante technologie anti zombie basee sur les rondins.*" then;
+	<- char .specialtype@ 108 = if "'ne peut pas courir aussi vite a cause de sa jambe de bois antique prisee." then;
+	<- char .charbro? 		   if "peut enfin, ENFIN botter un ballon de football.*" then;
+	<- char .broom?			   if "se retrouve coince dans un placard a balais, mais au Canada cette fois.*" then;
+	<- char .saguts?		   if "quitte son travail de combattant de tournoi et commence a vendre des cache ils de createur populaires.*" then;
+	<- char .bryu?		   	   if "lance un tournoi de combat au Canada, ou il tire principalement des boules de feu sur des elans" then;
+	<- char .hhell?		   	   if "ouvre une entreprise de propane au Canada. Le hic : il vend aussi des accessoires pour le propane.*" then;
+	<- char .efudd?		   	   if "forme une equipe de basket ball, juste au cas ou les extraterrestres defient la terre a un match de cerceaux.*" then;
+
+	<- char dog? if dog-skill-endsay depths 0= if drop "a vecu cette vie de chien.*" else pops nip then then;
+	<- char cat? if "a commence une campagne de meurtres de masse sur la faune locale, comme le font les chats.*" then;
+	<- char goat? if "est devenu une chevre canadienne. Ce qui est comme une chevre non canadienne.*" then;
+	<- char pig? if "a ete largement reconnu au Canada comme etant UN COCHON!*" then;
+	<- char ispet? if "etait enfin redevenu un animal libre et setait evanoui dans la nature.*" then;
+
+	<- char .trait@ "CARL !" $= if "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRL!" then;
+	<- char .trait@ "EST CE QUE CA EST KEPA" $= if "Conseil secret : cherchez le puits des souhaits dans la crypte de la decadence !" then;
+
+	<- char .dexterity@ 2 > if dex-endsay depths 0= if drop "est alle vite.*" else pops nip then then;
+
+	<- char .perk@ "Ami des chiens" $= if dogpal-skill-endsay depths 0= if drop "est reste un veritable ami des chiens.*" else pops nip then then;
+	<- char .trait@ "BERSERK !" $= if berserk-skill-endsay depths 0= if drop "est reste fou furieux!*" else pops nip then then;
+	<- char .trait@ "Voleur" $= if bandit-skill-endsay depths 0= if drop "a vecu une longue vie de vols et de rapines.*" else pops nip then then;
+	<- char .trait@ "Fan d'anime" $= if animefan-skill-endsay depths 0= if drop "a poursuivi ses etudes d'anime.*" else pops nip then then;
+	<- char .trait@ "Gourmand" $= if gourmand-skill-endsay depths 0= if drop "a bu et dine au Canada.*" else pops nip then then;
+
+	// Above, rare case checks that prevent the common checks from happening.
+	// Common checks below.
+
+	<- char .hiskill-stack depths 0= if 0 else shuffles pops then to EPILOGUE-PICK drop
+
+	EPILOGUE-PICK STAT_SHOOTING = if
+		<- char .cshooting+ if
+			shoot-endsay depths 0= if drop ($ "est reste en forme pendant sa retraite EHIS.*" $) else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_MECHANICAL = if
+		<- char .cmechanic+ if
+			mech-endsay depths 0= if drop ($ "est reste en forme pendant sa retraite EHIS.*" $) else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_MEDICAL = if
+		<- char .cmedical+ if
+			med-endsay depths 0= if drop ($ "est reste en forme pendant sa retraite EHIS.*" $) else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_DEXTERITY = if
+		<- char .dexterity@ 0 > if
+		// Extra dexterity ending check if it's their highest skill, which is unlikely.
+			dex-endsay depths 0= if drop "est devenu plus rapide que Sonic.*" else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_STRENGTH = if
+		<- char .cstrength+ if
+			str-endsay depths 0= if drop "continue a etre gonfle au Canada.*" else pops nip then
+		then;
+	then
+
+	EPILOGUE-PICK STAT_FITNESS = if
+		<- char .cfitness+ if
+			fit-endsay depths 0= if drop ($ "est reste en forme pendant sa retraite EHIS.*" $) else pops nip then
+		then;
+	then
+
+	// Failsafe placeholder below, this should instead be a generic pool it draws from
+	// Like blurb/blogic draws from blurb/blurbdeck.df for generic sayings
+
+	generic-skill-endsay depths 0= if drop "a commence une nouvelle vie au Canada, avec moins de zombies.*" else pops nip then
+
+	// Old test, made each character say their gender
+	// <- char .female@ 0 = if	"HOMME" else	"FEMME" then
+;
+
+: epilogue-personality-check-fixed epilogue-personality-check fix-pronouns ;
+: epilogue-skill-check-fixed epilogue-skill-check fix-pronouns ;

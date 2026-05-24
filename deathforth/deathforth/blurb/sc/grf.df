@@ -1,0 +1,95 @@
+: grf-hatemondays
+	blurbslot 0= if
+		"JE DETESTE LES LUNDIS" blurbsay
+		"MAIS *etouffe* JE ME DETESTE" blurbsay
+	then
+;
+
+: grf-suitsmell
+	blurbslot 0= if
+		qmsg ($ me .name@ .. "  emet une odeur terrible." $) txt
+	else
+		blurbslot 2 < if
+			50 %chance if
+				($ "Lave ton costume deja !" $)
+			else
+				($ "Beurk! Pourquoi dois-je etre a cote de toi ?" $)
+			then
+			blurbsay STAT_MORALE me .stat--
+		then
+	then
+;
+
+: grf-megasmell
+	blurbslot 0= if
+		qmsg ($ me .name@ .. "  emet une odeur indescriptible." $) txt
+	else
+		STAT_MORALE me .stat--
+	then
+;
+
+	: GRF-oneline1 "*sons etouffes a travers le manteau de fourrure*" ;
+	: GRF-oneline2 "*bruits gutturaux etouffes derangeants*" ;
+	: GRF-oneline3 "*etouffe* HRRRRRRRRRRRNG" ;
+	: GRF-oneline4 "*bruits sourds de gemissements*" ;
+	: GRF-oneline5 "*etouffe* ... J'AIME LES LASAGNES [sic] ..." ;
+	: GRF-oneline6 "JE NE SUIS.. PAS HEUREUX... JON" ;
+	: GRF-oneline7 "... JE HAIS VRAIMENT LES [mot qui sonne comme LUNDIS ?] ..." ;
+	: GRF-oneline8 "*respiration sifflante etouffee*" ;
+	: GRF-oneline9 "*grognements incomprehensibles a travers le manteau de fourrure*" ;
+	: GRF-oneline10 "*bruits etranges et etouffes*" ;
+
+	deck-new
+		card: GRF-oneline1
+		card: GRF-oneline2
+		card: GRF-oneline3
+		card: GRF-oneline4
+		card: GRF-oneline5
+		card: GRF-oneline6
+		card: GRF-oneline7
+		card: GRF-oneline8
+		card: GRF-oneline9
+		card: GRF-oneline10
+	constant GRF-ONELINERS
+	GRF-ONELINERS var grf-oneliners
+	GRF-ONELINERS shuffles to grf-oneliners
+
+: grf-oneliner
+	grf-oneliners depths 0= if GRF-ONELINERS shuffles to grf-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	: GRF-emote1 " enleve de la crasse sur la combinaison." ;
+	: GRF-emote2 " regarde fixement dans le vide." ;
+	: GRF-emote3 " se met a sangloter." ;
+	: GRF-emote4 " caresse son manteau de fourrure." ;
+
+	deck-new
+		card: GRF-emote1
+		card: GRF-emote2
+		card: GRF-emote3
+		card: GRF-emote4
+
+	constant GRF-EMOTES
+	GRF-EMOTES var GRF-emotes
+	GRF-EMOTES shuffles to GRF-emotes
+
+: GRF-emote
+	GRF-emotes depths 0= if GRF-EMOTES shuffles to GRF-emotes then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. GRF-emotes drawcard $) txt
+	then
+;
+
+	deck-new
+	card: grf-hatemondays
+	card: grf-suitsmell
+	card: grf-megasmell
+	10 cards: grf-oneliner
+	4 cards: GRF-emote
+
+	constant BLURB-GRF-DECK
+	BLURB-GRF-DECK var blurb-grf-deck
+	BLURB-GRF-DECK shuffles to blurb-grf-deck

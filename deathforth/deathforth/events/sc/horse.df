@@ -1,0 +1,24 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: horse-despair
+	bully choosechar cicon
+
+		"'Horsin' Around" cyoa-title!
+		($ cname .. "  decide simplement de commencer a courir.		Il court et court dans une direction et ne semble jamais sarreter." $) cyoa-text! 
+		solo if 
+			"'Sans personne pour le retenir, il est enfin a nouveau libre." +cr +text
+		else
+			($ Theothers .. "  de lequipe ne peut que rester en retrait et le regarder disparaitre a lhorizon." $) +cr +text
+		then
+		($ cname .. "  a quitte lequipe." $) +cr +text
+		decruit-bad-silent-takeweapons goodfx
+;
+
+} }
+
+

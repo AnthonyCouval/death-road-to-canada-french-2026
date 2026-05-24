@@ -1,0 +1,63 @@
+uses paul/region-road-layout.df
+
+cyoa{
+
+cyoa: mountie-temp
+	rescue choosechar cicon
+	clear-cyoa
+	"Gendarme" cchar .name!
+	"'Nous sommes tous a court de route de la mort" cyoa-title!
+	cchar .alive? if
+		"'Les vetements du Mountie sont impeccables, malgre ses massacres de zombies." 
+	else
+		"Le Mountie est simplement essouffle. Dune maniere ou dune autre meme ses vetements ne sont pas dechires de sa bataille avec les zombies."
+	then cyoa-text!
+	($ "ET BIEN, CEST TOUT CE QUE NOUS AVONS POUR LE MOMENT, EH ? FELICITATIONS POUR AVOIR GAGNE LALPHA !" pbold .. "veuillez publier vos commentaires jusqua present sur Kickstarter, soit par message direct, soit en utilisant la section des commentaires pour la derniere mise a jour privee." $) +crtext
+		choice( "Je lai fait!" )choice: quit-to-title
+;
+
+}
+
+map{ mission{ regiondef{
+
+	: .mountiefy
+		38 over .specialtype!
+		6 over .strength!
+		6 over .fitness!
+		80 over .vitality!
+		80 over .health!
+		0 over .female!
+		WEAPON_XTREME over .weapona!
+		drop
+	;
+
+	: spawn-end-mountie  
+		new-npc lt .character@ .mountiefy
+		lt .character@ to rescue
+		cyoa{ ' mountie-temp cyoa! }
+		pixelh 0.5 * lt .pos.y! pixelw 100 - lt .pos.x! ;
+
+	// The stuff below is all you need to do
+	: rg-setup
+		0 mission-bottom-leave!
+		0 mission-top-leave!
+		0 mission-left-leave!
+		0 mission-right-leave!
+		timeofday o'clock
+		50 region.zombie_basespawn!
+		
+		// The prefab road options so far
+		cityroad some-car-wrecks spawn-end-mountie
+
+		// some-car-wrecks is random car wrecks with one-in-5-chance of general-loot. Edit in region-road-layout.df if you need
+		
+	;
+
+	region: road-gauntlet
+		w: 120
+		h: 15
+		on-foot
+
+	post-script: rg-setup 5diff %zombs
+
+} } }

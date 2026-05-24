@@ -1,0 +1,194 @@
+(* uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+uses charstatmods.df *)
+
+// Mason, Octodad, Boxer, Mad Scientist, Sumo, Valkyrie, Rambeux
+
+road{
+
+0 value madsci-countdown
+0 value mason-countdown
+0 value mason-curse
+
+}
+
+cyoa{ road{
+
+cyoa-bridge: ramb-recruit
+	ricon recruitee .strengthREV recruitee .fitnessREV recruitee .shootingREV
+	team-count 3 > if
+		($  rname .. " ' remarque que l'equipe est deja pleine.		Vous devrez ejecter quelqu'un de l'equipe pour faire de la place. Vous devriez, puisque vous avez deja abandonne la nourriture." $) cyoa-text! -10 trunk-food+ recruit-replace?
+	then;
+	($ rname  .. "  se gave lui meme et sa mitrailleuse dans la voiture. Il refuse categoriquement de mettre " .. "BERTHA" pbold .. "  dans le coffre, et dit que personne ne pourra jamais le lui arracher." $) cyoa-text! goodfx
+		-10 trunk-food+	recruited
+;
+
+cyoa: ramb-test
+	"RAMBEUX: PREMIER CUL" cyoa-title!
+	char-gen to recruitee
+	"Rambeux" recruitee .name!
+	ricon
+	4 recruitee .morale! recruitee .rambify
+	($ Thegroup .. "  entend des tirs massifs en approchant dune ville.	Au milieu de la ville se trouve un homme tenant une mitrailleuse. Autour de lui se trouvent des foules de morts vivants reanimes.	Il dit quil est un mercenaire a louer, paye davance." $) cyoa-text! basic-tone
+	trunk-food 9 > if
+		choice( "Recrutez le pour 10 unites de nourriture" )choice: ramb-recruit
+	then
+		choice( "'Ne peut pas se passer de la nourriture" )choice
+;
+
+cyoa-choice: valk-recruit
+	ricon
+	team-count 3 > if
+		($  rname .. "  remarque que votre groupe est plein.		" .. "'Eh bien, quelqu'un va devoir partir." pbold .. 
+		" Elle lance son marteau et fait un bruit sourd " .. cname .. " 	en plein dans le mille." .. cname .. " a quitte lequipe !" $) cyoa-text! cchar .kill
+	else
+		($ rname  .. " d hours." $) cyoa-text! goodfx
+	then
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+cyoa: valk-test
+	"Pont Arc en ciel vers Valhalla" cyoa-title!
+	char-gen to recruitee
+	someone choosechar
+	"Valkyrie" recruitee .name!
+	ricon
+	4 recruitee .morale! recruitee .valkify
+	($ "	Les nuages se dissipent et un arc en ciel apparait. Une valkyrie chevauche une licorne sur larc en ciel." .. "X" pbold $) cyoa-text! basic-tone
+		choice( "Acceptez son offre" )choice: valk-recruit
+		choice( "Rejette son offre" )choice
+;
+
+cyoa-bridge: sumo-recruit
+	ricon recruitee .strengthREV recruitee .fitnessREV
+	team-count 3 > if 
+		($  rname .. " 'apprecie l'offre au debut, mais il devient ensuite tres evident qu'il n'y a aucune chance que 5 personnes puissent tenir dans la voiture. Encore moins 4 personnes et un lutteur de sumo.		Remplacer quelqu'un:" $) cyoa-text! recruit-replace?
+	then;
+	($ rname  .. "  entre dans la voiture. La suspension descend tres, tres bas dun cote, mais la voiture parvient quand meme a rouler sur la route." $) cyoa-text! goodfx
+		recruited
+;
+
+cyoa: sumo-test
+	"'FAISONS DU SUMO" cyoa-title!
+	char-gen to recruitee
+	ricon
+	4 recruitee .morale! recruitee .sumoify
+	($ Thegroup .. " ' essaie de trouver des provisions et tombe sur un dojo d'arts martiaux fortifie. A l'interieur se trouve un lutteur de sumo.	Il explique qu'il survit, mais qu'il veut voyager. Tout le monde a quitte sa ville il y a longtemps. Meme avant cela, il n'y avait pas une enorme demande pour l'entrainement de lutteur de sumo sur la cote est des Etats Unis.	" .. "Jai entendu dire que le sumo est assez important au Canada! Plus que le hockey!" pbold $) cyoa-text! basic-tone
+		choice( "Recruter" )choice: sumo-recruit
+		choice( "Laissez le tranquille" )choice
+;
+
+cyoa-choice: madsci-give
+	ricon
+		(*  Here, take one of my old experiments! It'll work a couple times."  pgras .. 		rnom .. " hands you a TELEPORTER MK 1! *)
+	($ "Super, cela fera vraiment avancer la science!	Tiens, prends lune de mes anciennes experiences! 	" pbold .. rname .. "  vous remet un TELEPORTEUR MK 1!	Elle sen va pour continuer son voyage de decouverte." $) cyoa-text! goodfx
+		-20 LOOT_SHOTGUN_SHELL trunk.loot+
+		7 WEAPON_SMOKEBOMB trunk.weapon+
+;
+
+cyoa-bridge: madsci-recruit
+	ricon 2 4 rnd to madsci-countdown recruitee .witsREV recruitee .mechanicREV recruitee .shootingREV
+	($  "Apres avoir parle avec la scientifique, il savere que son laboratoire est sur le chemin.	" .. "'Merci. Je donnerai ton nom a la prochaine invention." pbold $) cyoa-text! goodfx
+		team-count 3 > if
+			"'Le groupe est trop grand pour la recruter! Remplacer quelqu'un:" +crtext
+			recruit-replace?
+		then; recruited
+;
+
+cyoa: madsci-test
+	"Don a la recherche scientifique" cyoa-title!
+	char-gen to recruitee
+	ricon
+	"Doc" recruitee .name! 4 recruitee .morale! recruitee .madscify
+	($ Thegroup .. " ' fait une pause pour verifier son equipement lorsqu'un eclair de lumiere apparait soudainement!	Un scientifique se materialise de nulle part.	" .. "Merde, maintenant je dois retourner a mon labo. Je pourrais avoir besoin dun moyen de transport, ou disons, 20 obus pour mon fusil a pompe scientifique." pbold $) cyoa-text! basic-tone
+		choice( "Lui proposer de la raccompagner" )choice: madsci-recruit
+		trunk-shotgun-shell 19 > if
+		choice( "Lui donner 20 obus de fusil a pompe" )choice: madsci-give
+		then
+		choice( "'Desole, je ne peux pas aider" )choice
+;
+
+// boxer-recruit sometimes gives a stack error that I haven't been able to track down yet
+cyoa-bridge: boxer-recruit
+	ricon "Contender" recruitee .name! recruitee .strengthREV recruitee .fitnessREV recruitee .attitudeREV
+	team-count 3 > if
+		($  rname .. "  senerve vraiment quand tout le monde se precipite sur elle pour lui demander de se joindre a eux. Elle declenche un gros uppercut directement sur " .. cname .. "' le menton.		" .. "'Ouais, c'est un vrai coup de grace !" pbold .. 
+		"  Lequipe fait de la place pour le boxeur en abandonnant :" $) cyoa-text!
+		sting-- badfx recruit-replace?
+	then;
+	($ rname  .. "  frappe ses gants lun contre lautre.	" .. "Cest lheure de lentrainement sur route !" pbold $) cyoa-text! goodfx
+		recruited
+;
+
+cyoa: boxer-test
+	"Le grand combat" cyoa-title!
+	char-gen to recruitee
+	someone choosechar
+	ricon
+	4 recruitee .morale! recruitee .boxerify
+	($ Thegroup .. " " $) cyoa-text! basic-tone
+		choice( "La recruter" )choice: boxer-recruit
+		choice( "Laisser la tranquille" )choice
+;
+
+cyoa-choice: octodad-recruit
+	ricon
+	team-count 3 > if
+		($ "Le nouveau recrue savere plutot compacte, et se glisse dans la voiture !" .. rname .. " " .. rname .. " quitte lequipe!" $) cyoa-text!
+	then;
+	($ " Il faut " .. rname .. " 15 minutes" $) cyoa-text! badfx
+	recruitee .temperREV recruitee .attitudeREV
+	recruited
+;
+
+: octodadname 1 5 rnd case
+	1 of "*blub*" endof
+	2 of "*glouglou*" endof
+	3 of "*bloub*" endof
+	4 of "Nouveau Type" endof
+	5 of "Recrute" endof
+endcase ;
+
+cyoa: octodad-test
+	"Personne Normale" cyoa-title!
+	char-gen to recruitee
+	ricon
+	octodadname recruitee .name!
+	4 recruitee .morale! recruitee .octodadify
+	($ Thegroup .. " 'trouve un survivant assez anodine dans un aquarium abandonne. Il semble etre une personne agreable. A la vue de plus pres, il porte un claymore avec lui et une grosse sac a dos!" $) cyoa-text! basic-tone
+		choice( "Recruter" )choice: octodad-recruit
+		choice( "Laissez le tranquille" )choice
+;
+
+cyoa-choice: mason-recruit
+	ricon 2 3 rnd to mason-countdown 1 to mason-curse
+	team-count 3 > if
+		($ "Sarrete au bord de la route pour rencontrer le vagabond. Au depart, il y avait trop de personnes pour integrer une nouvelle personne dans la voiture, mais ensuite " .. cname .. " disparait de la face de la terre.		Quelque chose de curieux!" $) cyoa-text!
+		cchar .kill
+	else
+		($ rname  .. " ouvre la porte de la voiture et sied, ne disant rien. Il semble que vous avez un nouvel ami!" $) cyoa-text! goodfx
+	then
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+cyoa: mason-test
+	"Rencontrez de Nouveaux Amis" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	"???" recruitee .name!
+	5 recruitee .morale! recruitee .masonify
+	($ Thegroup .. " observe un vagabond. Il porte un masque de hockey et se tient immobile le long de la route, comme une statue, regardant rien en particulier. Alors que la voiture approche, le vagabond tourne legerement la tete pour regarder " .. thegroup .. "." $) cyoa-text! basic-tone
+		choice( "Arrete pour lui, quelle que soit" )choice: mason-recruit
+		choice( "Conduise beaucoup plus vite" )choice
+;
+
+
+
+} }
+
+

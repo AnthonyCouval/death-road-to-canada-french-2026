@@ -1,0 +1,96 @@
+
+weapondef{
+
+WEAPON_SHOTGUN clone-to: Assault Shotgun
+	weapon: assault
+	spriteid: MELEE7 69 +
+	ammo_max: 60
+	shot_power: 2.5
+	reload: 0.8
+	spread_factor: 2
+	projectiles: 7
+	wielder_handler: 0 
+
+custom: FireEx
+	weapon: fireex
+	name: Fire Extinguisher
+	spriteid: MELEE7 70 +
+	melee_shift.x: 0
+	melee_shift.y: -2
+	melee_off.x: -3
+	melee_off.y: -2
+	melee_weapon_angle: 0
+	melee_aiming: 1
+	stack_as_charges: 1
+	stack_max: 100
+	
+	: fireex-cloud-events 0 args( thing eventid overlap )
+		<- eventid
+		THING_EVENT_TIMER ?(
+			<- thing silentkillit
+		);
+		THING_EVENT_OVERLAP ?(
+			<- thing dup .overlap_id@ swap .shooterid@ = ?;
+			<- thing .overlap -> overlap
+			<- overlap .zomb? if
+				<- thing .vel <- overlap .vel! // push only zombies
+			then
+			<- overlap .burning@ if
+				<- overlap .burning@ 2 / >int 90 min dup 90 <= if drop 0 then
+				<- overlap .burning! // set burning value to something where it extinuishes by itself, or to 0
+			then
+		);
+		drop
+	;
+	
+	: spawn-fireex-cloud args( thing )
+		spawn
+		1 lt .nocollide!
+		1 lt .no_hit!
+		1 lt .nopick!
+		0 lt .clr.a!
+		10 lt .rad.x!
+		10 lt .rad.y!
+		' fireex-cloud-events lt .events!
+		120 lt .timer!
+		<- thing thing# lt .throwerid!
+		<- thing lt-to-thing
+		<- thing .aim_angle@ anglexy 5 xymul lt .vel!
+		3 for
+			particle{ new <- thing .pos pos! glowy
+				particles_base_id 0x 2c + spriteid!
+				60 5 / i 1- * wait!
+				rndsign 2 * rotate!
+				<- thing .aim_angle@ anglexy 1 xymul vel!
+				vel@ 10 * pos@ xyadd pos!
+				50 ticks! 15 fade_in! 15 fade_out!
+				1.5 scale!
+				0.99 grow!
+			}
+		next
+	;
+	
+	: spray-fireex args( thing )
+		<- thing .ammocount 0?;
+		<- thing .action_cooldown@ ?;
+		<- thing
+			10 over .shudder!
+			-6 over .pos.z!
+			60 over .action_cooldown!
+			0 over .anim.weapon_counter!
+			0 over .cooldown!
+		60 swap .stun!
+		<- thing .useanammo
+		<- thing spawn-fireex-cloud
+		sfx{ noise 1 freq! 3000 freq2! 2500 filt_high! 50 a! 700 d! 0.9 s! 50 r! 0.5 scale! 4 pitch! player .adjust-vol }
+	;
+	
+	:noname args( thing eventid )
+		<- thing .carryid@ ?;
+		<- thing .anim.state@ 1 > ?;
+		<- eventid THING_EVENT_SWING <> ?;
+		<- thing spray-fireex
+	;
+	wielder_handler: last
+}
+: fireex fireex 10 over .item.charges! ;

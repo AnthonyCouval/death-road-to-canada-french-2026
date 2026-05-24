@@ -1,0 +1,158 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+// Magazines: Popular After the Apocalypse
+
+cyoa-choice: magazine1-butts
+	"Deception" cyoa-title!
+	"" cyoa-text!
+	solo not if ($ "Ce choix etrange de lecture offense " .. theothers .. " du groupe. Malgre cela " $) +text then
+	($ cname .. " donne un coup de pied et lit Giant Butts Monthly. Il savere etre une lourde revue medicale a nom trompeur." $) +text 2 400 tone
+		attitude-- medical++ cchar morale--all-except
+;
+
+cyoa-choice: magazine1-guns
+	"American G*U*N*S" cyoa-title!
+	($ "Le magazine est plein de photos darmes, dinfos sur les armes, de conseils sur les armes, et de discours hyper patriotiques bizarres. " .. cname .. " absorbe toutes ces choses." $) cyoa-text! 1 400 tone
+		temper-- shooting++
+;
+
+cyoa-choice: magazine1-mech
+	"Pret a partir" cyoa-title!
+	($ "Ceci etait LE magazine automobile avant que la societe explose. Les articles reflechis ont un effet apaisant sur " .. cname .. "." $) cyoa-text! 2 300 tone
+		temper++ mechanic++
+;
+
+cyoa-choice: magazine1-cats
+	" videos chat" cyoa-title!
+	"'C'est ce qu'il dit, juste des images de videos chat. Il etait inutile dans les temps meilleurs, mais est devenu tres populaire apres que l'Internet est tombe." cyoa-text! goodfx
+		morale++ attitude++
+;
+
+cyoa: magazine1-cyoa
+	"Magazines : Popular apres lApocalypse" cyoa-title!
+	choosehuman cicon
+	($ Thegroup .. " tente de voler dans un magasin dalimentation, mais il a ete vide absolument " .. cname-He .. " trouve une rack de magazines, et decide de prendre un pour lire." .. "choisissez un magazine:" $) cyoa-text! basic-tone
+		choice( "American G*U*N*S" )choice: magazine1-guns
+		choice( "Pret a partir" )choice: magazine1-mech
+		choice( " videos chat" )choice: magazine1-cats
+		choice( "GIANT BUTTS MONTHLY" )choice: magazine1-butts
+;
+
+// END Magazines: Popular after the Apocalpyse
+
+// Dentist Office
+
+: magazine2-loot morale++ 2 LOOT_FOOD trunk.loot+ 2 3 rnd LOOT_MEDICAL trunk.loot+ ;
+
+cyoa-choice: magazine2-glu
+	"Anecdotes Inspirantes" cyoa-title!
+	($ cname .. "  se rend compte que ce magazine a toujours ete ringard, mais apprecie toujours les histoires optimistes. Une histoire parle dun chat qui sauve son proprietaire de letouffement lors dun buffet. Inspirant." $) cyoa-text! 2 300 tone attitude++ magazine2-loot
+;	
+cyoa-choice: magazine2-sci
+	"Science douteuse" cyoa-title!
+	($ cname .. " ' se sent pessimiste quant a la prediction du magazine concernant les aeroglisseurs volants dans quelques annees, maintenant que la civilisation est plus ou moins detruite. C'etait quand meme un magazine assez divertissant." $) cyoa-text! 1 300 tone attitude-- magazine2-loot
+;
+cyoa-choice: magazine2-celeb
+	"Actualites des celebrites" cyoa-title!
+	($ "Ce magazine a toujours ete incroyablement mechant, peut etre plus encore maintenant que la plupart des gens qui sy trouvent sont maintenant manges " .. cname .. "  est une personne un peu pire pour lavoir meme lu." $) cyoa-text! 2 300 tone loyalty-- wits-- morale2+ magazine2-loot
+;	
+cyoa: magazine2-cyoa
+	"Cabinet dentaire" cyoa-title!
+	choosehuman cicon
+	($ Thegroup .. "  pille un cabinet dentaire, trouvant des restes de fournitures medicales et de nombreux tubes de dentifrice techniquement comestibles " .. cname-He .. "  se rend dans la salle dattente et prend un magazine dans leur maigre selection." .. "choisissez un magazine:" $) cyoa-text! basic-tone
+		choice( "Glurge pour lame sensible" )choice: magazine2-glu
+		choice( "Science douteuse" )choice: magazine2-sci
+		choice( "Nouvelles des CELEBZ" )choice: magazine2-celeb
+;
+
+// END Dentist Office
+
+// Prepper Magazine - Person Pick CYOA if you have people, Instant Result if you don't.
+
+: mag3roll 30 %chance if .medical++ else 50 %chance if .shooting++ else .mechanic++ then then ;
+: mag3share cyoa-good-dialog "Tout le monde se passe le magazine, lisant les articles qui les interessent. Comme toujours, quelquun finit par mettre des taches de beurre de cacahuete partout sur le mag, au point quil devient illisible." cyoa-text! 
+	' mag3roll foreach-team-char someone 100 LOOT_GAS trunk.loot+ ; 
+
+: mag3solo shooting++ medical++ mechanic++ 100 LOOT_GAS trunk.loot+ ;
+: mag3result cyoa-good-dialog
+	($ "Il sagissait dun numero special hypothetique sur lapocalypse zombie, a lepoque " .. cname .. "  etudie attentivement les conseils sur les armes a feu, larticle sur la medecine durgence et les astuces de reparation courantes inhabituelles mais efficaces." $) cyoa-text! cicon mag3solo
+;
+
+cyoa-bridge: mag3share-pick 
+	someicon
+	"Qui devrait lire le magazine Preppared Preppers ?" cyoa-text!
+	' mag3result cyoa-team-choice
+;
+
+: magazine3-cyoa
+	cyoa-start "Magazine Prepared Preppers" cyoa-title! 
+	0 to cyoaicon cyoaicon
+	($ Thegroup .. " ' siphonne l'essence de certains vehicules abandonnes, puis repere un magazine dans l'une des voitures. C'est un numero de Prepared Preppers, l'edition speciale, en parfait etat ! " $) cyoa-text!
+	solo if 
+		soloer choosechar ($ cHe .. "  etudie sa sagesse desormais justifiee." $) +text 
+		mag3solo goodfx
+	then;
+	+cr "Qui peut le lire ?" +text basic-tone 
+	team-count 3 > if
+		choice( "Choisissez quelquun pour la lire" )choice: mag3share-pick 
+	else
+		' mag3result 3 #cyoa-team-choice
+	then
+	choice( "Partagez avec tout le monde" )choice: mag3share 
+; 
+
+// END Prepper Magazine
+
+// Burnt Library
+
+cyoa-choice: books-are-for-nerds 
+	"LES LIVRES SONT POUR LES NERDS" cyoa-title!
+	cpet? if
+		($ cname .. "  bondit, arrache le livre dans " .. chis .. "  machoires, et " .. "LE DECHIRE EN MORCEAUX" rbold .. "  comme " .. che .. "  secoue le livre dun cote a lautre. Prends CA, nerd." $) 
+	else
+		($ cname .. "  attrape le livre et " .. "il la coupe en deux" rbold .. " en roulant des gros grognons " .. "'		OUI C'EST CA CE QUE J'EN PENSE AUX LIVRES." pbold $) 
+	then cyoa-text! goodfx
+	morale2+ temper-- strength++ attitude++ cchar morale--all-except
+;
+: book1-helproll 50 %chance if .attitude++ else .temper++ then ;
+: book1-mechroll 50 %chance if .mechanic++ then ;
+cyoa-choice: book1-improve
+	"Changer votre vie grace a la positivite" cyoa-title!
+	($ Thegroup .. " apprend beaucoup sur le pouvoir de rester positif !" $) cyoa-text! 1 300 tone
+		attitude++ temper++ morale++ cchar ' book1-helproll foreach-team-char-except
+;
+cyoa-choice: book1-mechanic
+	"Encyclopedie du Tinkering" cyoa-title!
+	"'Ce livre est plein dinformations sur la reparation ou la modification de beaucoup de choses quotidiennes. Il est egalement probablement lourd assez pour tuer quelquun. C'est un bonus !" cyoa-text! 2 300 tone
+		mechanic++ cchar ' book1-mechroll foreach-team-char-except
+;
+cyoa-choice: book1-morale
+	"'Docteur Dink le temps des vers" cyoa-title!
+	($ "Ce livre est plein de images colorees et est excellent pour les enfants de tous ages " .. thegroup .. " qui reellement aime avoir quelque chose, nimporte quoi, neuf a lire." $) cyoa-text! goodfx morale2+ cchar morale++all-except
+;
+: book1-swole 
+	// cchar angrystrong-revealed? not if then;	cchar angrystrong? if
+		most-angrystrong if
+			charchoice( "rAGE DE LIVRE" )choice: books-are-for-nerds
+	then
+;
+cyoa: book1-cyoa
+	"Bibliotheque brulee" cyoa-title!
+	choosehuman cicon
+	($ Thegroup .. " rencontre une bibliotheque dans une ville qui semble avoir en grande partie brule. " .. cname-He .. " the Bible" $) cyoa-text! basic-tone
+		book1-swole
+		choice( "Manuel de reparation gigantesque" )choice: book1-mechanic
+		choice( "Livre de developpement personnel sur la positivite" )choice: book1-improve
+		choice( "Livre pour enfants en rimes" )choice: book1-morale
+;
+
+// END Burnt Library
+
+} }
+
+

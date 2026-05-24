@@ -1,0 +1,39 @@
+	: ANIME-oneline1 "Je me demande ce que fait le reste de LOVE BEAM SQUADRON en ce moment ?" ;
+	: ANIME-oneline2 "Est ce que senpai me remarquera maintenant que tout le monde est mort vivant ?" ;
+	: ANIME-oneline3 "Aucun de ces zombies nest kawaii du tout." ;
+	: ANIME-oneline4 "Nabandonnez jamais !" ;
+	: ANIME-oneline5 "Allez les gars! Faisons la difference!" ;
+	: ANIME-oneline6 "Gardons tous le moral!" ;
+	: ANIME-oneline7 "Le pouvoir de tout faire exploser etait en toi, tout ce temps!" ;
+	: ANIME-oneline8 "Je parie que la Reine Darkspore est derriere tout ca." ;
+	: ANIME-oneline9 "Amour et Paix !" ;
+	: ANIME-oneline10 "'Nous reussirons grace au pouvoir de mon FEU DE L'AMOUR !" ;
+
+	deck-new
+		card: ANIME-oneline1
+		card: ANIME-oneline2
+		card: ANIME-oneline3
+		card: ANIME-oneline4
+		card: ANIME-oneline5
+		card: ANIME-oneline6
+		card: ANIME-oneline7
+		card: ANIME-oneline8
+		card: ANIME-oneline9
+		card: ANIME-oneline10
+	constant ANIME-ONELINERS
+	ANIME-ONELINERS var anime-oneliners
+	ANIME-ONELINERS shuffles to anime-oneliners
+
+: anime-oneliner
+	anime-oneliners depths 0= if ANIME-ONELINERS shuffles to anime-oneliners then
+	blurbslot 0= if
+		drawcard rainbold blurbsay
+	then
+;
+
+	deck-new
+	10 cards: anime-oneliner
+
+	constant BLURB-ANIME-DECK
+	BLURB-ANIME-DECK var blurb-anime-deck
+	BLURB-ANIME-DECK shuffles to blurb-anime-deck

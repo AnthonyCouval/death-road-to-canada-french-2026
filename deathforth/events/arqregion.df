@@ -1,0 +1,63 @@
+
+uses paul/region-layout.df
+load events/rareloc/arq.df
+load events/rareloc/johnny.df
+
+map{ regiondef{
+' plotgrass >defer ft
+
+: arqhut tanchor!
+	"arqhouse" $picklocid addloc "ARQ" sign-text! prefab{ 3 1 0 shop2 } 
+;
+: johnnyhut tanchor!
+	"johnny-house" $picklocid addloc "JOHNNY" sign-text! prefab{ 3 1 0 shop2 } 
+;
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+	
+	xyp.i char R = if ' plotpave to ft then;
+	xyp.i char r = if xyp.xy grassedge then;
+	
+	xyp.i char g = if ' plotpave to ft xyp.xy ft xyp.xy grassedge then;
+	xyp.i char G = if ' plotpave to ft xyp.xy grassedge then;
+	
+	xyp.i char B = if still-npc lt-here regiondef{ ' camp-rec-brck lt .cyoa! } .brckify lt-here then;
+	xyp.i char C = if still-npc regiondef{ ' camp-rec-cart lt .cyoa! } .cartify lt-here then;
+	
+	xyp.i char f = if campfire-simple then;
+	
+	xyp.i char 1 = if xyp.xy arqhut then;
+	xyp.i char 2 = if xyp.xy johnnyhut then;
+;
+
+"
+.....................
+.....................
+...B..f..C...........
+.....................
+.............1..2....
+gGGGGGGGGGGGGGGGGGGGG
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+: site-setup
+	1 no_time! 12 o'clock
+	plotmap
+	mission{ no-edge-spawns }
+	// 50 %mv-up 48 %chars-up
+;
+
+trade-camp-reset
+region: arq-testing-loc
+	w: maplayout layoutw
+	h: maplayout layouth
+	trade-mode
+	post-script: site-setup
+} }

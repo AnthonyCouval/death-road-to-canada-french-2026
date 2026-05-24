@@ -1,0 +1,61 @@
+	: RUBICK-oneline1 "What wonders shall I see this day?" ;
+	: RUBICK-oneline2 "SOOO...YOU CAN DRIVE THE CAR? WONDERFUL." ;
+	: RUBICK-oneline3 "Where shall I go next? Ultimyr University? Canada? Hmm..." ;
+	: RUBICK-oneline4 "Oh, if I had father's skill in construction..." ;
+	: RUBICK-oneline5 "No, the mask does not come off." ;
+	: RUBICK-oneline6 "Do you mind if I copy the steering wheel?" ;
+	: RUBICK-oneline7 "I'm coming, Canadians! Wait for me!" ;
+	: RUBICK-oneline8 "My thirst for knowledge cannot be quenched." ;
+	: RUBICK-oneline9 "No sorcery lies beyond my grasp." ;
+	: RUBICK-oneline10 "I am no thief. I merely borrow. The police...disagree." ;
+	: RUBICK-oneline11 "Hmmm. What a test this shall be..." ;
+	: RUBICK-oneline12 "Mind if I copy your hair? I'm missing some." ;
+	: RUBICK-oneline13 "No no no, it's not 'counterfeit' money, it's..." ;
+	: RUBICK-oneline14 "Excellent idea!" ;
+	: RUBICK-oneline15 "I could cast a portal, but where's the fun in that?" ;
+	: RUBICK-oneline16 "What is this...'music' that keeps playing?" ;
+	: RUBICK-oneline17 "WHO is the ulimate magus? That's right. I am." ;
+	: RUBICK-oneline18 "What's mine is mine and what's yours is also mine." ;
+	: RUBICK-oneline19 "I had the strangest dream, that I was standing in a river..." ;
+	: RUBICK-oneline20 "We'd best hope we don't find the anti-magus. He's a real jerk." ;
+	: RUBICK-oneline21 "Zombies everywhere, Obama, no games...I almost feel bad." ;
+
+	deck-new
+		card: RUBICK-oneline1
+		card: RUBICK-oneline2
+		card: RUBICK-oneline3
+		card: RUBICK-oneline4
+		card: RUBICK-oneline5
+		card: RUBICK-oneline6
+		card: RUBICK-oneline7
+		card: RUBICK-oneline8
+		card: RUBICK-oneline9
+		card: RUBICK-oneline10
+		card: RUBICK-oneline11
+		card: RUBICK-oneline12
+		card: RUBICK-oneline13
+		card: RUBICK-oneline14
+		card: RUBICK-oneline15
+		card: RUBICK-oneline16
+		card: RUBICK-oneline17
+		card: RUBICK-oneline18
+		card: RUBICK-oneline19
+		card: RUBICK-oneline20
+		card: RUBICK-oneline21
+	constant RUBICK-ONELINERS
+	RUBICK-ONELINERS var RUBICK-oneliners
+	RUBICK-ONELINERS shuffles to RUBICK-oneliners
+
+: RUBICK-oneliner
+	RUBICK-oneliners depths 0= if RUBICK-ONELINERS shuffles to RUBICK-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: RUBICK-oneliner
+
+	constant BLURB-RUBICK-DECK
+	BLURB-RUBICK-DECK var blurb-RUBICK-deck
+	BLURB-RUBICK-DECK shuffles to blurb-RUBICK-deck

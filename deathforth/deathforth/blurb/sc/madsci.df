@@ -1,0 +1,58 @@
+	: MADSCI-oneline1 "A faire: Fabriquer une sorte de chaise qui se jette automatiquement." ;
+	: MADSCI-oneline2 "A faire: Fabriquer une voiture anti-zombie invincible qui permet egalement de retrouver des survivants." ;
+	: MADSCI-oneline3 "Techniquement, je ne suis pas un vrai scientifique, mais d'un autre cote ferme-la" ;
+	: MADSCI-oneline4 "Cette apocalypse ne me derange pas tant que ça. Moins d'imeciles a detruire, j'imagine." ;
+	: MADSCI-oneline5 "Mes soi-disant collegues ! Des imbéciles oui ! Je vais leur montrer a tous !" ;
+	: MADSCI-oneline6 "Je m'inquiete parfois des effets de la teleportation sur la sante, mais peu importe." ;
+	: MADSCI-oneline7 "Rien de tout cela ne serait arrive si Obama m'avait laisse construire mes rayons de la mort en paix." ;
+	: MADSCI-oneline8 "Il est difficile d'obtenir des pieces detachees de nos jours, a moins que ces pieces soit des pieces de zombies." ;
+	: MADSCI-oneline9 "He, ne me blame pas pour toute cette histoire de zombies. Ce n'etait pas moi !" ;
+	: MADSCI-oneline10 "Je me demande si j'aurais du quitter mon laboratoire..." ;
+	: MADSCI-oneline11 "Si nous ne nous en sortons pas, j'espere au moins pouvoir recuperer quelques meubles pour mon laboratoire." ;
+	: MADSCI-oneline12 "Si j'arrive a aller jusqu'au Canada, j'y creerai un autre laboratoire." ;
+	: MADSCI-oneline13 "J'aurais peut-etre du prendre les robots avec moi..." ;
+	: MADSCI-oneline14 "Aucun de ces zombies n'apprecie mon GENIE." ;
+	: MADSCI-oneline15 "A faire : Une tronconneuse qui tue les zombies toute seule ? Je prends note." ;
+	: MADSCI-oneline16 "Avec le recul, j'aurais probablement du fabriquer un teleporteur pour le Canada." ;
+	: MADSCI-oneline17 "Ces zombies sont une bande de nerds." ;
+	: MADSCI-oneline18 "Les rayons de la mort sont plutot cool." ;
+	: MADSCI-oneline19 "Ma these de doctorat portait sur les rayons mortels." ;
+	: MADSCI-oneline20 "Je repete que je ne suis pas medecin. Ne vous faites pas eclater l'appendice." ;
+
+	deck-new
+		card: MADSCI-oneline1
+		card: MADSCI-oneline2
+		card: MADSCI-oneline3
+		card: MADSCI-oneline4
+		card: MADSCI-oneline5
+		card: MADSCI-oneline6
+		card: MADSCI-oneline7
+		card: MADSCI-oneline8
+		card: MADSCI-oneline9
+		card: MADSCI-oneline10
+		card: MADSCI-oneline11
+		card: MADSCI-oneline12
+		card: MADSCI-oneline13
+		card: MADSCI-oneline14
+		card: MADSCI-oneline15
+		card: MADSCI-oneline16
+		card: MADSCI-oneline17
+		card: MADSCI-oneline18
+		card: MADSCI-oneline19
+		card: MADSCI-oneline20
+	constant MADSCI-ONELINERS
+	MADSCI-ONELINERS var madsci-oneliners
+	MADSCI-ONELINERS shuffles to madsci-oneliners
+
+: madsci-oneliner
+	madsci-oneliners depths 0= if MADSCI-ONELINERS shuffles to madsci-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	10 cards: madsci-oneliner
+
+	constant BLURB-MADSCI-DECK
+	BLURB-MADSCI-DECK var blurb-madsci-deck

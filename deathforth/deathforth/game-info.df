@@ -1,0 +1,183 @@
+
+: branchinfo "Death Road " BRANCHNAME ..
+	TEST_BRANCH if " " .. then;
+	DEBUG_BUILD if " " .. then;
+;
+
+: specialthanks3
+	cyoa-start
+	"Remerciements Speciaux" cyoa-title!
+	$( "Remerciements Speciaux : " .. "Jetro K, Kelvin M, Britt S, Mikael B, Lorissa B, Marius W, Hinterland, Per Kristian B, Cybolt, Chankit P, Thomas S, Noel, Matthew C, Dalton H, Sean, Gary M, Richie B, Seth, Brando, Nick E, Fraser W, Mcmotu, Yousif A, Emerson G, Ben S, Dashiell S, Kerri C, Conatus Creative, Adrian A, Nick K, Richie191, Alex V, Luca F, Nerve Software, Ronald G, Ian M" bbold $) text!
+	choice( "MERCI A TOUS !" )choice
+;
+
+: specialthanks2
+	cyoa-start
+	"Remerciements Speciaux" cyoa-title!
+	$( "Remerciements Speciaux : " .. "'Smoochie Walrus, Thadeus 'ilikain' Dietzen, Keith Shepherd, LuiB, Cansin Akcasoy, Chris Lundin, Sir Baldhasir, Joshua Skelton, Matt Rix, AbdulAziz Al Kaboor, James McEneely, Jeff Sulz, Hellblazer1138, Matt 'Zebe' Lee, Gustav Wedholm, Trace, James H, Kirbogon, Dustin Mierau" bbold $) text!
+	choice( "MORE... " )choice: specialthanks3
+;
+
+: specialthanks
+	cyoa-start
+	"Remerciements Speciaux" cyoa-title!
+	($ "'Death Road to Canada n'aurait pas vu le jour sans tous nos contributeurs Kickstarter !	Remerciements Speciaux : " .. "MagicalTux" fbold .. "  et " bbold .. "Kevin Clark" fbold .. "'	Lena Cardell, Jonas Winje, Ahmed Al Mutawa	Sean R Parker, Asten Yeo, Black Pants Studio, Christopher Gauss, Arlin 'FeXd' Schaffel, Greg Matyola, Chris 'Rosuav' Angelico, Mr S Zegar, Christopher Wilson" bbold $) text!
+	choice( "MORE... " )choice: specialthanks2
+;
+
+: infocredits
+
+	cyoa-start
+	"Credits !" cyoa-title!
+	($ "Developpeur " .. "Paul Jardin" bbold .. "conception " .. "Kepa Auwae" bbold .. "artistes : " .. "'G.P. Lackey et Conzeit Camilo Arturo" bbold .. "art supplementaire : " .. "'Sven ptoing Ruthner, Madgarden et Lyndsay Riches" bbold .. "musician : " .. "Joey Grady" bbold .. " prise en charge supplementaire : " .. "P1XL Games, Don Thacker, Jon Auwae" bbold $) text!
+
+
+	choice( "Remerciements Speciaux" )choice: specialthanks
+;
+
+defer statsback
+
+: winstotal
+	gstats{
+		wins-normal wins-long wins-special wins-family wins-specialEX
+		wins-familyEX wins-kepa wins-short wins-marathon wins-deadlier
+		wins-endless wins-opp wins-quickdeath wins-4jerks wins-4jerksEX
+	} + + + + + + + + + + + + + +
+;
+
+: backtostats
+	choice( "RETOUR" )choice: statsback
+;
+
+: streakstats
+	cyoa-start
+	"*** WIN STREAK STATS ***" cyoa-title!
+	($ "Series gagnantes totales : " bbold .. gstats{ wins-streak } $) text!
+		// ($ "*** Win Streak Stats ***" bbold $) +crtext
+		($ "Mode normal : " bbold .. gstats{ wins-normal-streak } $) +crtext
+		($ "   Deadlier Road: " rbold .. gstats{ wins-deadlier-streak } $) +text
+
+		($ "Personnages rares : " bbold .. gstats{ wins-special-streak } $) +crtext
+		($ "   Rare Chars EX: " rbold .. gstats{ wins-specialEX-streak } $) +text
+
+		($ "Personnages Familiers: " bbold .. gstats{ wins-family-streak } $) +crtext
+		($ "   Familiar EX: " rbold .. gstats{ wins-familyEX-streak } $) +text
+
+		($ "Long et Sinueux: " bbold .. gstats{ wins-long-streak } $) +crtext
+		($ "   Marathon Mode: " rainbold .. gstats{ wins-marathon-streak } $) +text
+
+		($ "Court Trajet: " bbold .. gstats{ wins-short-streak } $) +crtext
+		($ "   K*E*P*A Mode: " fbold .. gstats{ wins-kepa-streak } $) +text
+
+		($ "Mort Rapide: " rainbold .. gstats{ wins-quickdeath-streak } $) +crtext
+		($ "   OverPowered: " rainbold .. gstats{ wins-opp-streak } $) +text
+
+		($ "Quatre Cretins: " rainbold .. gstats{ wins-4jerks-streak } $) +crtext
+		($ "   Four Jerks EX: " rainbold .. gstats{ wins-4jerksEX-streak } $) +text
+
+		gstats{ wins-endless-streak } 0 > if ($ "Sans Fin? Bien Sur: " fbold .. gstats{ wins-endless-streak } $) +crtext then
+		// ($ "   Quick Death: " fbold .. gstats{ wins-quickdeath-streak } $) +text
+	backtostats
+;
+
+defer infoback
+
+: infostats
+
+	cyoa-start
+	"STATISTIQUES DE DEATH ROAD" cyoa-title!
+	($ "Toilettes Ouvertes: " bbold .. gstats{ toilets-opened } $) text!
+	($ "   Zombies splatted: " bbold .. gstats{ total-kills } $) +text
+
+	($ "Force Entrainee: " bbold .. gstats{ total-str+ } $) +crtext
+	($ "   Fitness trained: " bbold .. gstats{ total-fit+ } $) +text
+
+	($ "Tir Entraine: " bbold .. gstats{ total-shoot+ } $) +crtext
+	($ "   Mechanical trained: " bbold .. gstats{ total-mech+ } $) +text
+
+		($ "Medecine Entrainee: " bbold .. gstats{ total-med+ } $) +crtext
+	($ "   Teammates healed: " bbold .. gstats{ total-heal } $) +text
+
+	($ "Morts Alliees: " bbold .. gstats{ total-dead } $) +crtext
+
+
+	($ "Victoires Totales: " bbold .. winstotal $) +crtext
+	($ "   Total Losses: " bbold .. gstats{ total-losses } $) +text
+	($ "Victoires Consecutives: " bbold .. gstats{ wins-streak } $) +crtext
+
+	choice( "OK" )choice
+	// choice( "RETOUR" )choice: infoback
+	// : main-event-do-info - Old, now this would reset the ZOMBO TOWN level
+	gstats{ wins-streak } 1 > if
+		choice( "STREAK STATS" )choice: streakstats
+	then
+
+;
+
+
+// FIXME: This is unused
+: zombotown-end
+	quit-to-title
+	gstats{ save }
+;
+
+' infostats to statsback
+
+: ztownhelp
+
+cyoa-start
+"Instructions pour Zombo Town" cyoa-title!
+"Choses a faire a Zombo Town:" bbold text!
+"Le batiment a droite vous permet de consulter vos stats et dautres informations. Le batiment central vous permet dameliorer et de debloquer des bonus et des traits. Vous pouvez ensuite les utiliser pour creer de puissants personnages de depart ou personnalises!" +crtext
+"Attention au gnome a debloquer!" fbold +crtext
+
+choice( "SORTIE" )choice
+choice( "RETOUR" )choice: infoback
+// choice( "STATS" )choice: infostats
+// choice( "ZOMBO TOWN" )choice: zombotown
+
+;
+
+: gameinfo
+
+cyoa-start
+"Informations sur Death Road" cyoa-title!
+"Bienvenue sur la Death Road to Canada!" text! BLUE
+touch_controls@ 1 < if
+	"http://www.deathroadtocanada.com
+	Follow us at www.twitter.com/rocketcatgames/
+	More news: www.facebook.com/rocketcatgames/"
+else
+	"http://www.deathroadtocanada.com
+	Leave an App Store review if you enjoy this game!
+	Constant news: www.twitter.com/rocketcatgames/"
+then .. +crtext
+
+PURPLE branchinfo .. " " .. pbold RED .. buildstamp .. +crtext
+
+choice( "OK" )choice
+choice( "Mode normal : " )choice: ztownhelp
+choice( "CREDITS" )choice: infocredits
+// choice( "STATS" )choice: infostats
+// choice( "ZOMBO TOWN" )choice: zombotown
+
+;
+
+' gameinfo to infoback
+// last to main-event-do-info
+
+: zombotown
+
+	gstats{ load }
+	gamedef{ modedefs }
+
+	mission{ 1 to ZOMBOTOWN }
+	1 no_time!
+
+	' noop to delete-the-game
+
+	0 saveslot! MAIN_EVENT_NEW main-post-event "events/unlock/zombotown.df" $load-region to-mission
+
+;
+
+last to main-event-do-info

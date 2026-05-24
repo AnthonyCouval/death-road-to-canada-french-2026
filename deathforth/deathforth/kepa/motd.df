@@ -1,0 +1,31 @@
+
+// MOTD
+
+: motd-notes
+	cyoa-start
+	"Route mortelle vers le Canada Build 15MAI12 alpha" cyoa-title!
+	"You can configure controls on title screen, CTRL-Q.
+	F5 to restart/randomize the test map.
+	Send your feedback to the Kickstarter thread for this build. We will add more information to this section as the builds continue." cyoa-text-cr cyoa-text!
+	cyoa-show
+;
+
+: motd
+	cyoa-start
+	"Route mortelle vers le Canada Build 15MAI12 alpha" cyoa-title!
+	"	Thanks for your help!	  The team at Harebrained Schemes" cyoa-text-cr cyoa-text!
+	cyoa-add-choice
+	cyoa-add-choice
+		"Controls / Feedback" cyoa-choice-text!
+		' motd-notes cyoa-choice-handler!
+	cyoa-show
+;
+
+0 value message-shown
+
+: test-mission-start
+	message-shown ?;
+	motd
+	true to message-shown ;
+
+events{ ' test-mission-start to main-event-mission-start }

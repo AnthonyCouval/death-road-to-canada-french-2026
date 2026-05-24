@@ -1,0 +1,136 @@
+: wrestler-sharp1
+	2nd-char choosechar
+	blurbslot 0= if
+		"La lutte nest pas seulement un sport, cest un art !" blurbsay
+	else
+		blurbslot 2 < if
+			cwits+ cattitude- or if
+				($ "Lart de gaspiller des meubles !" $) blurbsay
+				"La lutte est tellement fausse !" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Je suis daccord!" blurbsay
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+: wrestler-tude1
+	2nd-char choosechar
+	blurbslot 0= if
+		"Y'A PAS DE ZOMBIES QUI PEUVENT ARRETER EL SATAN!" blurbsay
+	else
+		blurbslot 2 < if
+			cattitude- or if
+				($ "Pourquoi tu dois toujours tout ecraser?" $) blurbsay
+				"Pourquoi ne pas utiliser un flingue ?!" blurbsay
+				STAT_MORALE 1st-char .stat++
+		else
+			"DARN STRAIGHT !" blurbsay
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+
+: wrestler-carriedaway
+	blurbslot 0= if
+		"TEMPS POUR LE FINISHER EL SATAN INFERNO ENFLAMME!" blurbsay
+		"Oh, desole, je me suis emporte la." blurbsay
+	then
+;
+
+: wrestler-beingunmasked
+	blurbslot 0= if
+		"'Je n'ai vraiment pas peur d'etre mange par des zombs." blurbsay
+		"Ma plus grande crainte est detre demasque." blurbsay
+		qmsg ($ me .name@ .. "  verse une larme virile." $) txt
+	then
+;
+
+: wrestler-suethreat
+	blurbslot 0= if
+		"The EL SATAN ATOMIC PUNCH used to be called the EL SATAN **** ******." blurbsay
+		"Jai du le changer quand un autre lutteur a menace de me poursuivre en justice." blurbsay
+	then
+;
+
+	: WRESTLER-oneline1 "'J'aimerais que les gens disent que la lutte n'est pas reelle MAINTENANT." ;
+	: WRESTLER-oneline2 "Jespere faire un mouvement de lutte qui merite detre appele ULTIMATE." ;
+	: WRESTLER-oneline3 "Je souhaite que les arbitres soient toujours la pour que les zombs puissent etre disqualifies pour avoir mordu." ;
+	: WRESTLER-oneline4 "Meme apres la fin du monde, la lutte continue. Cela vous fait reflechir." ;
+	: WRESTLER-oneline5 "Jaime penser que les lutteurs de mon ancien equipage sont quelque part." ;
+	: WRESTLER-oneline6 "Sur le ring et en dehors du ring, les chaises sont larme ultime." ;
+	: WRESTLER-oneline7 "If I could get my hands on a really big ladder as a weapon... man..." ;
+	: WRESTLER-oneline8 "'Ces zombs ne se sont pas entraines ou n'ont pas mange leurs legumes." ;
+	: WRESTLER-oneline9 "'La veritable source de puissance d'un mouvement de lutte est le nom du mouvement." ;
+	: WRESTLER-oneline10 "'Si nous nous en sortons, je cree ma propre ligue de catch." ;
+	: WRESTLER-oneline11 "Echecs en bois sont agreables et tout a fait bien, mais je prefere les echelles en aluminium." ;
+	: WRESTLER-oneline12 "Les mouvements de lutte que jutilise ont ete transmis dans ma famille depuis des generations!" ;
+	: WRESTLER-oneline13 "'Je me soucie pas des zombies ! Je me soucie plutot de mon titre de champion!" ;
+	: WRESTLER-oneline14 "'J'aimerais voir ces zombies survivre au ring de lutte!" ;
+	: WRESTLER-oneline15 "'J'en ai ete par dessus et par dessous ! Cela ne vaut rien compare a un match en cage!" ;
+	
+	deck-new
+		card: WRESTLER-oneline1
+		card: WRESTLER-oneline2
+		card: WRESTLER-oneline3
+		card: WRESTLER-oneline4
+		card: WRESTLER-oneline5
+		card: WRESTLER-oneline6
+		card: WRESTLER-oneline7
+		card: WRESTLER-oneline8
+		card: WRESTLER-oneline9
+		card: WRESTLER-oneline10
+		card: WRESTLER-oneline11
+		card: WRESTLER-oneline12
+		card: WRESTLER-oneline13
+		card: WRESTLER-oneline14
+		card: WRESTLER-oneline15
+	constant WRESTLER-ONELINERS
+	WRESTLER-ONELINERS var wrestler-oneliners
+	WRESTLER-ONELINERS shuffles to wrestler-oneliners
+
+: wrestler-oneliner
+	wrestler-oneliners depths 0= if WRESTLER-ONELINERS shuffles to wrestler-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	
+	: wrestler-emote1 " 'il s'occupe soigneusement de son masque pour que sa identite ne soit pas revelee." ;
+	: wrestler-emote2 " il soccupe soigneusement de sa ceinture de championnat de lutte." ;
+	: wrestler-emote3 " il parle des meilleurs fabricants dechelles." ;
+	: wrestler-emote4 " il parle de quelques uns de ses rivaux." ;
+	
+	deck-new
+		card: wrestler-emote1
+		card: wrestler-emote2
+		card: wrestler-emote3
+		card: wrestler-emote4
+
+	constant wrestler-EMOTES
+	wrestler-EMOTES var wrestler-emotes
+	wrestler-EMOTES shuffles to wrestler-emotes
+
+: wrestler-emote
+	wrestler-emotes depths 0= if wrestler-EMOTES shuffles to wrestler-emotes then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. wrestler-emotes drawcard $) txt
+	then
+;
+
+
+	deck-new
+	card: wrestler-carriedaway
+	card: wrestler-suethreat
+	card: wrestler-beingunmasked
+	card: wrestler-sharp1
+	card: wrestler-tude1
+	15 cards: wrestler-oneliner
+	4 cards: wrestler-emote
+
+	constant BLURB-WRESTLER-DECK
+	BLURB-WRESTLER-DECK var blurb-wrestler-deck
+	BLURB-WRESTLER-DECK shuffles to blurb-wrestler-deck

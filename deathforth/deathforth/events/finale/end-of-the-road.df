@@ -1,0 +1,527 @@
+(*
+	SCRIPT SYNTAX: <command> followed by ,
+	<integer> , 			pause
+	<string> , 				event blurb
+	<chara> , <string> , 	character blurb
+	<chara> , <string*> , 	character emit ('*' appended to character's text)
+
+	CHARACTER COMMANDS:
+	rndchar 				picks a random team character as char1
+	char1					last character picked is char1
+	char2					relative to char1
+	char3					relative to char1
+	char4					relative to char1
+
+	To execute the road finale sequence, construct a script stack as in the example, and then pass it to
+	road{ do-road-finale }
+*)
+
+
+road{ 
+
+: 1stchar 0 #teamchar ;
+
+0 value canuck_
+0 value lastchar_
+
+: char1 lastchar_ #teamchar ;
+: char2 lastchar_ 1 + team-count % #teamchar ;
+: char3 lastchar_ 2 + team-count % #teamchar ;
+: char4 lastchar_ 3 + team-count % #teamchar ;
+: rndchar 0 team-count 1- rnd dup to lastchar_ #teamchar ;
+
+: canuck canuck_ #character ;
+
+0 var script-stack
+
+particle{ : new new 0 global_colour! ; }
+
+: penguin
+	particle{ new animtype 4 frames! 8 10 rnd framerate!
+	particles_base_id 0x 60 + spriteid!
+	0 layer!
+	view_w 96 + pos.x!
+	-16 -2 2 frnd + pos.y!
+	-1 vel.x!
+	view_w 90 + ticks!
+	}
+;
+
+: create-mountie
+	char-gen dup .mountiefy character# to canuck_
+	canuck_ road.special_charid!
+	1 canuck .party!
+	0 canuck .female!
+	"Gendarme" canuck .name!
+;
+
+// New for calculating best-gamemode-streak for hat unlocking
+: gamemodestreak-current
+	gstats{
+	wins-normal-streak 0 > if 1 else 0 then
+	wins-long-streak  0 > if 1 else 0 then
+	wins-special-streak  0 > if 1 else 0 then
+	wins-family-streak  0 > if 1 else 0 then
+	wins-specialEX-streak 0 > if 1 else 0 then
+	wins-familyEX-streak 0 > if 1 else 0 then
+	wins-kepa-streak 0 > if 1 else 0 then
+	wins-short-streak 0 > if 1 else 0 then
+	wins-marathon-streak 0 > if 1 else 0 then
+	wins-deadlier-streak 0 > if 1 else 0 then
+	wins-endless-streak 0 > if 1 else 0 then
+	wins-opp-streak 0 > if 1 else 0 then
+	wins-quickdeath-streak 0 > if 1 else 0 then
+	wins-4jerks-streak 0 > if 1 else 0 then
+	wins-4jerksEX-streak 0 > if 1 else 0 then
+	} + + + + + + + + + + + + + +
+;
+
+: gamemodestreak-calc
+	gamemodestreak-current gstats{ best-gamemode-streak } > if
+		gstats{ gamemodestreak-current to best-gamemode-streak }
+	then
+;
+
+: modedefeated
+	gstats{ ' wins-streak ++ }
+	gamedef{ ' defaultmode gamemode? } if 
+		gstats{ ' wins-normal ++ ' wins-normal-streak ++ }
+		($ "Mode normal de Death Road termine" ..
+		gstats{ wins-normal } 1 > if
+			": " .. gstats{ wins-normal }
+		else
+			"!"
+		then $)
+	then
+
+	gamedef{ ' longroad gamemode? } if
+		gstats{ ' wins-long ++ ' wins-long-streak ++ }
+		($ "Mode Long Winding Road termine" ..
+		gstats{ wins-long } 1 > if
+			": " .. gstats{ wins-long }
+		else
+			"!"
+		then $)
+	then	
+	
+	gamedef{ ' specialchars gamemode? } if 
+		gstats{ ' wins-special ++ ' wins-special-streak ++ }
+		($ "Mode personnages rares termine" ..
+		gstats{ wins-special } 1 > if
+			": " .. gstats{ wins-special }
+		else
+			"!"
+		then $)
+	then	
+	
+	gamedef{ ' familiarchars gamemode? } if
+		gstats{ ' wins-family ++ ' wins-family-streak ++ }
+		($ "Mode personnages familiers termine" ..
+		gstats{ wins-family } 1 > if
+			": " .. gstats{ wins-family }
+		else
+			"!"
+		then $)
+	then	
+	
+	gamedef{ ' specialcharsEX gamemode? } if
+		gstats{ ' wins-specialEX ++ ' wins-specialEX-streak ++ }
+		($ "Personnages rares EXTREME termine" ..
+		gstats{ wins-specialEX } 1 > if
+			": " .. gstats{ wins-specialEX }
+		else
+			"!"
+		then $)
+	then	
+
+	gamedef{ ' familiarcharsEX gamemode? } if
+		gstats{ ' wins-familyEX ++ ' wins-familyEX-streak ++ }
+		($ "Personnages familiers EXTREME termine" ..
+		gstats{ wins-familyEX } 1 > if
+			": " .. gstats{ wins-familyEX }
+		else
+			"!"
+		then $)
+	then	
+	
+	gamedef{ ' kepamode gamemode? } if
+		gstats{ ' wins-kepa ++ ' wins-kepa-streak ++ }
+		cheevo: kepa
+		($ "Mode K*E*P*A termine" ..
+		gstats{ wins-kepa } 1 > if
+			": " .. gstats{ wins-kepa }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' shortroad gamemode? } if
+		gstats{ ' wins-short ++ ' wins-short-streak ++ }
+		($ "Mode court voyage a Heck termine" ..
+		gstats{ wins-short } 1 > if
+			": " .. gstats{ wins-short }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' marathonmode gamemode? } if
+		gstats{ ' wins-marathon ++ ' wins-marathon-streak ++ }
+		($ "Mode marathon termine" ..
+		gstats{ wins-marathon } 1 > if
+			": " .. gstats{ wins-marathon }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' deadlier gamemode? } if
+		gstats{ ' wins-deadlier ++ ' wins-deadlier-streak ++ }
+		($ "Mode Route Mortelle termine" ..
+		gstats{ wins-deadlier } 1 > if
+			": " .. gstats{ wins-deadlier }
+		else
+			"!"
+		then $)
+	then
+	
+	// HUMERUS
+	
+	gamedef{ ' endlessmode gamemode? } if
+		gstats{ ' wins-endless ++ ' wins-endless-streak ++ 0 to best-endless }
+		($ "Mode sans fin termine" ..
+		gstats{ wins-endless } 1 > if
+			": " .. gstats{ wins-endless }
+		else
+			"!?!"
+		then $)
+	then
+	
+	gamedef{ ' OPPmode gamemode? } if
+		gstats{ ' wins-opp ++ ' wins-opp-streak ++ ' wins-streak -- }
+		($ "Mode fete surpuissant termine" ..
+		gstats{ wins-opp } 1 > if
+			": " .. gstats{ wins-opp }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' quicknightmare gamemode? } if
+		gstats{ ' wins-quickdeath ++ ' wins-quickdeath-streak ++ }
+		($ "Mode Mort Rapide termine" ..
+		gstats{ wins-quickdeath } 1 > if
+			": " .. gstats{ wins-quickdeath }
+		else
+			"!"
+		then $)
+	then
+	
+	// KIDNEY
+	
+	gamedef{ ' 4jerksmode gamemode? } if
+		gstats{ ' wins-4jerks ++ ' wins-4jerks-streak ++ }
+		($ "Mode des quatre abrutis termine" ..
+		gstats{ wins-4jerks } 1 > if
+			": " .. gstats{ wins-4jerks }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+		gstats{ ' wins-4jerksEX ++ ' wins-4jerksEX-streak ++ }
+		($ "Mode des quatre abrutis termine" ..
+		gstats{ wins-4jerksEX } 1 > if
+			": " .. gstats{ wins-4jerksEX }
+		else
+			"!"
+		then $)
+	then
+		
+	gamemodestreak-calc
+		
+	filesave{ save-global-stats }
+;
+
+: generalwinstreak
+	gamedef{ ' OPPmode gamemode? } if 
+		"Le mode O*P*P ne permet pas daugmenter votre serie de victoires totale !"
+	then;
+	($ "Serie de victoires consecutives " rainbold .. gstats{ wins-streak } $)
+;
+
+: modewinstreak
+	gamedef{ ' defaultmode gamemode? } if 
+		($ "Serie de victoires sur la route de la mort en mode normal " .. gstats{ wins-normal-streak } $)
+	then
+	
+	gamedef{ ' longroad gamemode? } if
+		($ "Serie de victoires sur la longue route sinueuse " .. gstats{ wins-long-streak } $)
+	then	
+	
+	gamedef{ ' specialchars gamemode? } if 
+		($ "Rare Characters Win Streak: " .. gstats{ wins-special-streak } $)
+	then	
+	
+	gamedef{ ' familiarchars gamemode? } if
+		($ "Serie de victoires de personnages familiers: " .. gstats{ wins-family-streak } $)
+	then	
+	
+	gamedef{ ' specialcharsEX gamemode? } if
+		($ "Serie de victoires en EX personnages rares: " .. gstats{ wins-specialEX-streak } $)
+	then	
+
+	gamedef{ ' familiarcharsEX gamemode? } if
+		($ "Serie de victoires en EX personnages connus: " .. gstats{ wins-familyEX-streak } $)
+	then	
+	
+	gamedef{ ' kepamode gamemode? } if
+		($ "Serie de victoires en K*E*P*A: " .. gstats{ wins-kepa-streak } $)
+	then
+	
+	gamedef{ ' shortroad gamemode? } if
+		($ "Serie de victoires en Court voyage en enfer: " .. gstats{ wins-short-streak } $)
+	then
+	
+	gamedef{ ' marathonmode gamemode? } if
+		($ "Serie de victoires en Marathon: " .. gstats{ wins-marathon-streak } $)
+	then
+	
+	gamedef{ ' deadlier gamemode? } if
+		($ "Serie de victoires en Route plus meurtriere: " .. gstats{ wins-deadlier-streak } $)
+	then
+	
+	gamedef{ ' endlessmode gamemode? } if
+		($ "Serie de victoires en Mode infini: " .. gstats{ wins-endless-streak } $)
+	then
+	
+	gamedef{ ' OPPmode gamemode? } if
+		($ "Serie de victoires en Groupe surpuissant: " .. gstats{ wins-opp-streak } $)
+	then
+	
+	gamedef{ ' quicknightmare gamemode? } if
+		($ "Serie de victoires en Mort rapide: " .. gstats{ wins-quickdeath-streak } $)
+	then
+	
+	gamedef{ ' 4jerksmode gamemode? } if
+		($ "Serie de victoires en Quatre abrutis: " .. gstats{ wins-4jerks-streak } $)
+	then
+	
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+		($ "Serie de victoires en Quatre abrutis EX: " .. gstats{ wins-4jerksEX-streak } $)
+	then
+		
+;
+
+
+// New Ending Stuff Begins here
+// Check the finale folder for the two ending-bits and epilogue-check df files
+
+uses events/finale/ending-bits.df
+
+: ending-final-line
+	
+	gamedef{ ' defaultmode gamemode? } if 
+		"Essayez un autre mode de jeu!"
+	then;
+	
+	gamedef{ ' longroad gamemode? } if
+		"Continuez a conduire!"
+	then;	
+	
+	gamedef{ ' specialchars gamemode? } if
+		"Jespere que vous avez un personnage surpuissant!"
+	then;
+	
+	gamedef{ ' familiarchars gamemode? } if
+		"Les zombies netaient pas de taille pour votre groupe!"
+	then;
+	
+	gamedef{ ' specialcharsEX gamemode? } if
+		"Personnage Rare EXTREME Complet!" rbold
+	then;
+	
+	gamedef{ ' familiarcharsEX gamemode? } if
+		"Personnages Familiers EXTREME Termine !" rbold
+	then;
+	
+	gamedef{ ' kepamode gamemode? } if
+		"K*E*P*A TERMINE !" fbold
+	then;
+
+	gamedef{ ' 4jerksmode gamemode? } if
+		"Felicitations ! Maintenant essayez Quatre Imbeciles EXTREME !"
+	then;
+	
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+		"Mode Quatre Imbeciles EXTREME Termine !" fbold
+	then;
+	
+	gamedef{ ' shortroad gamemode? } if
+		"Felicitations pour votre victoire rapide !"
+	then;
+	
+	gamedef{ ' marathonmode gamemode? } if
+		"MODE MARATHON TERMINE !" rainbold
+	then;
+	
+	gamedef{ ' deadlier gamemode? } if
+		"Felicitations ! Maintenant essayez les modes ULTRA DIFFICILES !"
+	then;
+	
+	gamedef{ ' endlessmode gamemode? } if
+		"ENDLESS MODE COMPLETE!!!!!" fbold
+	then;
+	
+	gamedef{ ' OPPmode gamemode? } if
+		"MODE FETE SURPUISSANT TERMINE !" rainbold
+	then;
+	
+	gamedef{ ' quicknightmare gamemode? } if
+		"MODE MORT RAPIDE TERMINE !" fbold
+	then;
+		
+	// Failsafe if a mode somehow isn't picked above
+		"AAAAAAAAAARGH"
+	
+;
+
+uses events/finale/epilogue-check.df
+
+: .charemit args( msg ch ) WHITE <- msg .. <- ch .blurbemit ;
+
+: epilogue-bits-checker
+
+	char1 , char1 epilogue-personality-check-fixed , 2 ,
+	char1 , char1 epilogue-skill-check-fixed , 5 ,
+	
+	team-count-alive 1 > if
+		char2 , char2 epilogue-personality-check-fixed , 2 ,
+		char2 , char2 epilogue-skill-check-fixed , 5 ,
+	then
+	
+	team-count-alive 2 > if
+		char3 , char3 epilogue-personality-check-fixed , 2 ,
+		char3 , char3 epilogue-skill-check-fixed , 5 ,
+	then
+	
+	team-count-alive 3 > if
+		char4 , char4 epilogue-personality-check-fixed , 2 ,
+		char4 , char4 epilogue-skill-check-fixed , 5 ,
+	then
+	
+;
+
+: epilogue-bits
+	
+	team-count-alive 1 > if
+		BLUE "BUT... WHAT BECAME OF THEM IN CANADA?" .. ,	
+	else
+		char1 .female@ 1 = if
+			BLUE "BUT... WHAT BECAME OF HER IN CANADA?" .. ,
+		else
+			BLUE "BUT... WHAT BECAME OF HIM IN CANADA?" .. ,
+		then
+	then 3 ,
+		
+	epilogue-bits-checker
+		
+;
+
+: fin-script
+
+	filesave{ save-global-stats }
+	delete-the-game
+
+	create-mountie
+
+	0 stack
+
+	// Test for doing the ending lines over and over
+	// 60 for epilogue-bits-checker next
+			
+	modedefeated , 2 ,
+	($ "Total de Zombies Tues " .. road{ kills-this-game } $) , 2 ,
+	
+	cheevcheck-end
+	cheevcheck-mode
+	
+	gstats{ wins-streak } 1 > if 
+		generalwinstreak , 1 ,
+		modewinstreak , 3 ,
+	then
+	
+	FLASHY "DEATH ROAD TO CANADA" .. ,
+	($ "Un jeu par " .. BLUE "Rocketcat Games & Madgarden" .. $) , 5 ,
+	
+	ending-bit-1
+	
+// Single credits
+
+	($ "Conception " .. BLUE "Kepa Auwae" .. $) , 2 ,
+	($ "Developpeur " .. BLUE "Paul Jardin" .. $) , 2 ,
+	($ "Artistes: " .. BLUE "'G.P. Lackey et Conzeit Camilo Arturo" .. $) , 2 ,
+	($ "Musicien " .. BLUE "Joey Grady" .. $) , 5 ,
+
+	ending-bit-2
+	epilogue-bits
+
+	BLUE "MERCI DAVOIR JOUE!" .. ,	
+	FLASHY "DEATH ROAD TO CANADA" .. , 3 ,
+	BLUE ending-final-line .. , 5 ,
+	
+;
+
+: the-end 20 1000 debug-tone 
+	' noop to main-event-road-periodic quit-to-title ( go back to title )
+;
+
+: decode-char-cmd args( str chara )
+	<- str <- chara
+	<- str 1 $right "*" $= if swap $$len 1- $left swap .charemit else .blurbsay then
+;
+
+: end-road-handler locals( cmd )
+	begin
+
+		script-stack depths 0= if drop the-end then;
+
+		dequeues -> cmd <- cmd >type case
+
+			FORTH_USERTYPE_CHARACTER of dequeues <- cmd decode-char-cmd endof
+
+			FORTH_STRING of <- cmd blurbevent endof
+			FORTH_INT of <- cmd road-delay exit endof
+			FORTH_FLOAT of <- cmd road-delay exit endof
+			FORTH_WORDREF of <- cmd execute endof
+		endcase
+
+	again
+
+;
+
+: end-road-setup
+	0 vehicle.which!
+	4 road_theme!
+	to-road
+	-30 fade_to
+	create-mountie
+	fin-script to script-stack
+	1 60 / road-delay
+	' end-road-handler to main-event-road-periodic
+	16 1000 debug-tone
+	// MUSIC_DEATHROAD $music-load - Original music
+	MUSIC_ONEMORE $music-load
+;
+
+// THE END
+: death-road-finale
+	180 ' end-road-setup timer_add
+	180 fade_to
+	180 player .stun!
+;
+
+} 
+
+

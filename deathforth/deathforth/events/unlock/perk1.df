@@ -1,0 +1,197 @@
+
+gstats{
+
+(* Isn't used
+0 stack
+	perk-mechanic shove
+	perk-healthcare shove
+	perk-dogfriend shove
+	perk-carnut shove
+	perk-explorer shove
+	perk-pathfinder
+	perk-haggler
+	perk-shieldofhope
+	// perk1-
+constant perk1-perklist
+
+: perk1-totals
+	// 0 stack perk1-perklist for i dup print next
+	perk1-perklist depths for pops print next drop
+; *)
+
+: perk1-upgradetally
+	0
+	perk-mechanic 1 max +
+	perk-healthcare 1 max +
+	perk-dogfriend 1 max +
+	perk-carnut 1 max +
+	perk-explorer 1 max +
+	perk-pathfinder 1 max +
+	perk-haggler 1 max +
+	perk-shieldofhope 1 max +
+;
+
+: perk1-upgradecalc
+	// Total number of perks * 3 = possible upgrades
+	// Subtract by values of all perks added together with 1 max, floor of 1
+	8 3 * perk1-upgradetally -
+;
+
+: perk1-unlocktally
+	0
+	perk-mechanic 0 > if 1 else 0 then +
+	perk-healthcare 0 > if 1 else 0 then +
+	perk-dogfriend 0 > if 1 else 0 then +
+	perk-carnut 0 > if 1 else 0 then +
+	perk-explorer 0 > if 1 else 0 then +
+	perk-pathfinder 0 > if 1 else 0 then +
+	perk-haggler 0 > if 1 else 0 then +
+	perk-shieldofhope 0 > if 1 else 0 then +
+;
+
+: perk1-unlockcalc
+	// Total number of perks, subtracted by total number of perks that are above 0
+	8 perk1-unlocktally -
+;
+
+: perk1-remaining
+	perk1-upgradecalc 0 > if ($ "   AMELIORATIONS RESTANTES : " pbold .. perk1-upgradecalc $) +text then
+	perk1-unlockcalc 0 > if ($ "  DEVERROUILLEES : " pbold .. perk1-unlockcalc $) +text then
+;
+
+: perk1-stockleft
+	perk1-unlockcalc perk1-upgradecalc +
+;
+
+}
+
+
+
+// This NPC handles all the perks for support skills, mostly non-combat, with Anime Fan in there for fun
+
+cyoa: perk1-mechanic-buy
+	"LA VOITURE EST UN SYMBOLE D'ESPOIR" cyoa-title!
+	"Mecanicien" "perk mecanicien" gstats{ perk-mechanic } perk-buy! ;
+cyoa-blank: perk1-mechanic
+	"Mecanicien" MECHANIC_COST gstats{ perk-mechanic } ' perk1-mechanic-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-healthcare-buy
+	"JE NE PEUX PAS MOURIR AVEC TOUS CES BANDAGES" cyoa-title!
+	"Expert en soins" "perk sante" gstats{ perk-healthcare } perk-buy! ;
+cyoa-blank: perk1-healthcare
+	"Expert en soins" HEALTHC_COST gstats{ perk-healthcare } ' perk1-healthcare-buy ' perk1back perk-confirm! ;
+
+(*
+cyoa: perk1--buy
+	"OUI" cyoa-title!
+	"" "perk" gstats{ perk- } perk-buy! ;
+cyoa-blank: perk1-
+	"" _COST gstats{ perk- } ' perk1--buy ' perk1back perk-confirm! ;
+*)
+
+cyoa: perk1-dogfriend-buy
+	"PRECIEUX TOUTOUS" cyoa-title!
+	"Ami des Chiens" "perk ami des chiens" gstats{ perk-dogfriend } perk-buy! ;
+cyoa-blank: perk1-dogfriend
+	"Ami des Chiens" DOGPAL_COST gstats{ perk-dogfriend } ' perk1-dogfriend-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-carnut-buy
+	"Plaque d'immatriculation : PUTAINDEVOITURE" cyoa-title!
+	"Fan de bagnoles" "perk fan de bagnoles" gstats{ perk-carnut } perk-buy! ;
+cyoa-blank: perk1-carnut
+	"Fan de bagnoles" CARNUT_COST gstats{ perk-carnut } ' perk1-carnut-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-explorer-buy
+	"REMUER CIEL ET TERRE, TOUT PILLER MEME LES CHIOTTES" cyoa-title!
+	"Explorateur" "explorateur" gstats{ perk-explorer } perk-buy! ;
+cyoa-blank: perk1-explorer
+	"Explorateur" EXPLORER_COST gstats{ perk-explorer } ' perk1-explorer-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-pathfinder-buy
+	"Aie mes pieds me font mal" cyoa-title!
+	"Eclaireur" "perk eclaireur" gstats{ perk-pathfinder } perk-buy! ;
+cyoa-blank: perk1-pathfinder
+	"Eclaireur" PATHFINDER_COST gstats{ perk-pathfinder } ' perk1-pathfinder-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-haggler-buy
+	"CHEF DES VENTES DANS LA ZOMBOCALYPSE" cyoa-title!
+	"Meilleur vendeur" "perk haggler" gstats{ perk-haggler } perk-buy! ;
+cyoa-blank: perk1-haggler
+	"Meilleur vendeur" HAGGLER_COST gstats{ perk-haggler } ' perk1-haggler-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-shieldofhope-buy
+	"LE POUVOIR DE LA PENSEE POSITIVE" cyoa-title!
+	"Bouclier d'espoir" "perk shieldofhope" gstats{ perk-shieldofhope } perk-buy! ;
+cyoa-blank: perk1-shieldofhope
+	"Bouclier d'espoir" SHIELDOFHOPE_COST gstats{ perk-shieldofhope } ' perk1-shieldofhope-buy ' perk1back perk-confirm! ;
+
+cyoa: perk1-dingus gstats{
+	"Les Avantages de l'Esprit" cyoa-title!
+
+	($ "La Debutante tient une petite tasse de thé.
+	" .. "Courir partout en s'agitant n'est pas gracieux ! Tu devrais utiliser l'intelligence et la bienseance." pbold .. "
+	Elle reduit la tasse de the en fine poussiere." $) text!
+
+	perk1-stockleft 15 < if
+		($ "Je suis acours de tasses de the !
+		Bon, je pourrai en recuperer plus tard." pbold .. "
+		Elle hausse les epaules avec elegance." $) text!
+	then
+
+	perk1-stockleft 12 < if
+		($ "Je pense qu'etre explorateur est sous-estime.
+		Vous pouvez utiliser l'option moins onereuse de la 'balade en voiture' pour trouver les meilleurs emplacements, ce qui vous permettra de rester bien approvisionne !" pbold $) text!
+	then
+
+	perk1-stockleft 9 < if
+		($ "L'une de mes strategies preferees est de me concentrer sur les competences mecaniques et medicales, puis de remplir mon groupe de chair a canon !" pbold $) text!
+	then
+
+	perk1-stockleft 6 < if
+		($ "Restez calmes et vigilants !
+		Gardez votre voiture en mouvement et votre chair a canon en vie !" pbold $) text!
+	then
+
+	perk1-stockleft 1 < if
+		($ "Je n'ai plus rien a t'apprendre !
+		Continuez a reflechir et vous y arriverez !" pbold .. "
+		Elle ramasse une poignee de poussiere par terre qui, lorsqu'elle ouvre les mains, s'est transformee en tasse de the." $) text!
+	then
+
+	+cr zpwallet perk1-remaining
+
+	choice( "Partir pour linstant" )choice
+
+	perk-healthcare 3 < if
+		"EXPERT EN SOINS" HEALTHC_COST perk-healthcare zpview ' perk1-healthcare perk-view!
+	then
+	perk-mechanic 3 < if
+		"MECANICIEN" MECHANIC_COST perk-mechanic zpview ' perk1-mechanic perk-view!
+	then
+	perk-dogfriend 3 < if
+		"Ami des Chiens" DOGPAL_COST perk-dogfriend zpview ' perk1-dogfriend perk-view!
+	then
+	perk-carnut 3 < if
+		"Fan de bagnoles" CARNUT_COST perk-carnut zpview ' perk1-carnut perk-view!
+	then
+	perk-explorer 3 < if
+		"Explorateur" EXPLORER_COST perk-explorer zpview ' perk1-explorer perk-view!
+	then
+	perk-pathfinder 3 < if
+		"Eclaireur" PATHFINDER_COST perk-pathfinder zpview ' perk1-pathfinder perk-view!
+	then
+	perk-haggler 3 < if
+		"Meilleur vendeur" HAGGLER_COST perk-haggler zpview ' perk1-haggler perk-view!
+	then
+	perk-shieldofhope 3 < if
+		"Bouclier d'espoir" SHIELDOFHOPE_COST perk-shieldofhope zpview ' perk1-shieldofhope perk-view!
+	then
+	(*
+	perk- 3 < if
+		"" _COST perk- zpview ' perk1- perk-view!
+	then
+	*)
+
+} ;
+
+' perk1-dingus to perk1back

@@ -1,0 +1,66 @@
+	: DOG-oneline1 "OUAF !" ;
+	: DOG-oneline2 "OUAF ! OUAF !" ;
+	: DOG-oneline3 "WOUF !" ;
+	: DOG-oneline4 "GRRRRRR !" ;
+
+	deck-new
+		card: DOG-oneline1
+		card: DOG-oneline2
+		card: DOG-oneline3
+		card: DOG-oneline4
+	constant DOG-ONELINERS
+	DOG-ONELINERS var dog-oneliners
+	DOG-ONELINERS shuffles to dog-oneliners
+
+	: DOG-emote1 " regarde autour de lui avec excitation." ;
+	: DOG-emote2 " baisse la tete." ;
+	: DOG-emote3 " halete." ;
+	: DOG-emote4 " sort la tete par la fenetre." ;
+	: DOG-emote5 " mache un jouet qui couine." ;
+	: DOG-emote6 " mache un os qui n'est pas celui d'un zombie." ;
+	: DOG-emote7 " commence a baver." ;
+	: DOG-emote8 " aboie sur la faune sauvage au hasard." ;
+	: DOG-emote9 " aboie apres un chat." ;
+	: DOG-emote10 " s'endort." ;
+	: DOG-emote11 " commence a renifler l'air." ;
+	: DOG-emote12 " pleurniche." ;
+
+
+	deck-new
+		card: DOG-emote1
+		card: DOG-emote2
+		card: DOG-emote3
+		card: DOG-emote4
+		card: DOG-emote5
+		card: DOG-emote6
+		card: DOG-emote7
+		card: DOG-emote8
+		card: DOG-emote9
+		card: DOG-emote10
+		card: DOG-emote11
+		card: DOG-emote12
+	constant DOG-EMOTES
+	DOG-EMOTES var dog-emotes
+	DOG-EMOTES shuffles to dog-emotes
+
+: dog-oneliner
+	dog-oneliners depths 0= if DOG-ONELINERS shuffles to dog-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+: dog-emote
+	dog-emotes depths 0= if DOG-EMOTES shuffles to dog-emotes then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. dog-emotes drawcard $) txt
+	then
+;
+
+	deck-new
+	12 cards: dog-emote
+	4 cards: dog-oneliner
+
+	constant BLURB-DOG-DECK
+	BLURB-DOG-DECK var blurb-dog-deck
+	BLURB-DOG-DECK shuffles to blurb-dog-deck

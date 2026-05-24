@@ -1,0 +1,21 @@
+
+cyoa{ road{
+
+cyoa: dsyp-despair
+	bully choosechar cicon
+
+		"DSYP" cyoa-title!
+		($ cname .. "  leve les bras vers le ciel en signe de desespoir.		Il vient de commettre lerreur ultime.		" .. "Il a fait caca dans son pantalon." rbold .. "'		Il n'y a pas de redemption pour celui ci." $) cyoa-text! 
+		solo if 
+			($ "His only consolation was that no one was around to see it.
+			" .. "LE VOYAGE AU CANADA EST TERMINE" rbold $) +cr +text
+		else
+			($ "He runs away before anyone else notices.
+			" .. cname .. " a quitte lequipe !" $) +cr +text
+		then
+		decruit-bad
+;
+
+} }
+
+

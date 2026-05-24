@@ -1,0 +1,603 @@
+
+\ Just load this file after the QUADRICEPS file, like last time. 
+
+\ Note: after using any of the "ify" words, use the "to-mission" command. 
+\ Some events take one mission to kick in, so to speak. (Technical hitch.) 
+
+\ I'm probably going to make these road chars again? 
+\ Perhaps one of them can go in a new rare location or something 
+
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ ISABELLE "SMITE ME OH MIGHTY SMITER" STUFF BELOW 
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+: isabelle-smite args( me ) 
+
+10 20 frnd for
+	<- me .pos  
+		particle{ new pos! 30 ticks! 
+				pos@ -15 5 frnd + swap -3 2 frnd + swap pos!
+					
+				particles_base_id 1+ spriteid!
+				330 390 frnd anglexy 2 3 frnd xymul vel!
+				
+				30 fade_out! 
+				1 clr.r!
+				0.8 1 frnd clr.g!
+				0 clr.b!
+				glowy
+
+				}
+	next 
+		<- me .pos3 
+		particle{ 
+			new
+		pos3!
+
+		0 wait!
+		12 ticks!
+		5 fade_out!
+		0.75 scaley!
+		0.5 scale!
+		1.1 grow!
+		0 vel.y!
+		1 clr.r! 1 clr.g! 0 clr.b! 
+		particles32_base_id 4 + spriteid! } 
+		
+				<- me .pos3 
+		particle{ 
+			new
+		pos3!
+
+		0 wait!
+		12 ticks!
+		5 fade_out!
+		0.85 scaley!
+		0.55 scale!
+		1.1 grow!
+		0 vel.y!
+		1 clr.r! 1 clr.g! 1 clr.b! 
+		particles32_base_id 4 + spriteid! } 
+		
+	sfx{ thump 1 scale! 0.4 0.6 frnd pitch! 350 r! 600 d! 40 a! } 
+	\ YELLOW "DIVINE SMITE" .. <- me .report 
+
+;
+
+\ Isabelle changes from Scepter Mode Smite:
+\
+\ - Higher max % chance for smite 
+\ - Damage formula considers STR stat bonus as well as base STR 
+\ - Minimum chance to proc smite is 10% not 0% 
+\ - Smite can proc on ranged attacks! 
+
+: smiting_bullet  
+	
+	lt .typeid@ THING_PROJECTILE = if 
+		
+		lt .hitcheck.power@ 1.5 * lt .hitcheck.power!  \ 150% dmg 
+		3 lt .anim.substate! 
+		lt .anim.counter@ 1.25 * lt .anim.counter! \ 125% range 
+		lt .vel 1.25 xymul lt .vel! \ 150% speed 
+		lt .anim.extra@ 0.3 + lt .anim.extra! \ 0.3+ bounce  
+		
+		sfx{ thump 1 scale! 0.4 0.6 frnd pitch! 350 r! 600 d! 40 a! } 
+		then 
+;
+
+: izzyquips 1 18 rnd case 
+	1 of YELLOW "BEGONE, UNDEAD!" .. endof
+	2 of YELLOW "SUNDER THE FIEND." .. endof
+	3 of YELLOW "PERISH, CREATURE!" .. endof
+	4 of YELLOW "FOR VENGEANCE!" .. endof
+	5 of YELLOW "MY OATH. YOUR SOUL." .. endof
+	6 of YELLOW "SLAYYYY THE FIEND!" .. endof
+	7 of YELLOW "VANQUISH THE UNDEAD!" .. endof
+	8 of YELLOW "BEGONE FROM THIS PLANE!" .. endof
+	9 of YELLOW "RADIANT AS THE DAWN!" .. endof
+	10 of YELLOW "SYCAMORE - KILL THIS MAN!" .. endof 
+	11 of YELLOW "BEGONE, FOUL CRETIN!" .. endof 
+	12 of YELLOW "PERISH!" .. endof 
+	13 of YELLOW "BEGONE!" .. endof 
+	14 of YELLOW "NONE SHALL RESIST!" .. endof 
+	15 of YELLOW "SILVER STEEL!" .. endof 
+	16 of YELLOW "MY SILVER EDGE!" .. endof
+	17 of YELLOW "PERISH, WRETCHED ENTITY!" .. endof 
+	18 of YELLOW "VANQUISHED!" .. endof 
+	endcase
+;	
+
+: paladin-events args( me eventid ) 
+
+	<- eventid THING_EVENT_DIED = if 
+		"WHY DO YOU FORSAKE ME SYCAMORE" <- me .yellmsg
+	then 
+
+	<- eventid THING_EVENT_SHOOT = if 
+		<- me .character@ .morale@ 7 * 10 + %chance if
+			weapondef{ <- me .wielded sel projectiles@ } 2 < weapondef{ <- me .wielded sel shell_count@ } 1 = or if \ not for shotguns
+				weapondef{ <- me .wielded sel stack_as_charges@ } 1 <> weapondef{ <- me .wielded sel ammo_type@ } LOOT_GAS <> and if 
+				\ STOMACH : specifically no rocket launchers, chainsaws, things of this nature 
+				
+			1 ' smiting_bullet timer_add \ Post-firing bullet modification from DRTS, works fine 99% of the time
+			\ note to self, replace using new boot-end.df bigshot logic at some point 
+			
+				3 4 rnd for
+					<- me .pos
+					particle{
+						new pos!
+						15 ticks!
+						<- me .aim_angle@ angle!
+						glowy
+						0.8 grow!
+						3 fade_out!
+						particles_base_id 0x 51 + spriteid!
+						i 20 40 rnd * 90 - angle@ + anglexy 2 3 frnd xymul vel!
+						pos@ angle@ anglexy 15 xymul xyadd pos!
+						gameticks angle!
+						1 scale!
+						1 0.1 0.1 rgb!
+					}
+				next
+				
+					then 
+				then
+			then 
+		then 
+	
+	<- eventid THING_EVENT_DID_HIT = if
+		<- me .character@ .morale@ 7 * 10 + %chance if \ Formula not solely dependent on morale; ~50% chance to smite @ maximum morale  
+				<- me .just_hit_id@ #thing isabelle-smite 
+				
+				weapondef{ <- me .wielded sel power@ } <- me .character@ .strength@ STAT_STRENGTH <- me .character@ .bonus@ 0.05 + + * 0.33 swap anyexpo <- me .just_hit_id@ #thing .hitpoints@ >= if 
+					-6 <- me .just_hit_id@ #thing .vel.z! 
+				then 
+				\ Consider STR bonus for endless mode chicanery 
+				
+				<- me .just_hit_id@ #thing .hitpoints@ weapondef{ <- me .wielded sel power@ } <- me .character@ .strength@ STAT_STRENGTH <- me .character@ .bonus@ 0.05 + + * 0.33 swap anyexpo - <- me .just_hit_id@ #thing .hitpoints! 
+				\ (STR * WEP_DMG)**0.33 
+				
+				YELLOW "SMITTEN FOR:" .. print 
+				YELLOW weapondef{ <- me .wielded sel power@ } <- me .character@ .strength@ STAT_STRENGTH <- me .character@ .bonus@ 0.05 + + * 0.33 swap anyexpo .. print 
+				
+				16 %chance if 
+					izzyquips <- me .yellmsg
+				then 
+				
+			then 
+		then 
+
+	
+;
+
+
+: paladin-main-events args( chara eventid ) 
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then; 
+	
+	<- chara .location@ 1 = if \ stops rest bug 
+		1 <- chara .thing@ .timer!
+		<- chara .thing@ swap paladin-events
+	then 
+; 
+
+
+
+: .paladinify args( chara ) 
+	
+	"Paladin" <- chara .name!
+	WEAPON_IZZYLONGSWORD <- chara .weapona! 
+	1 <- chara .weapon_nodropa! 
+	3 <- chara .strength!
+	3 <- chara .shooting!
+	3 <- chara .fitness!
+	2 <- chara .carrying.slot_count! 
+	"accidentally smites the toilet every time she tries to flush it." <- chara .job! 
+	6 <- chara .wits! 
+	6 <- chara .loyalty! \ "You are my home" <3 
+	
+	2 <- chara .attitude!
+	0 <- chara .composure! 
+	
+	144 <- chara .specialtype! 
+	20 <- chara .hairtype!
+	3 <- chara .headtype!
+	1 <- chara .female!
+	6 <- chara .morale! 
+	' paladin-main-events <- chara .main_events! 
+	"Oath of Sunlight" <- chara .perk!
+	"Radiant Paladin" <- chara .trait! 
+	
+; 
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ LASIJA "DEFINITELY NOT ZA WARUDO" CHRONOMANCER STUFF BELOW 
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+\ If I have to hear 'Za Warudo!' one more time, I'm going to eat a brick. 
+
+
+: echoattack args( me teid )
+	<- teid THING_EVENT_TIMER = if 
+		1 <- me .timer!
+		6 <- me .character@ .health! \ DONT DIE 
+		"" <- me .report \ SHUTUP 
+		
+		<- me .cooldown@ 0 = if 
+			<- me .attack
+		then; 
+		
+		<- me .cooldown@ 1 = if
+			sfx{ glass 0.25 scale! } 
+			5 <- me .smashybits
+			<- me silentkillit
+		then;	
+	then 
+	
+	<- teid THING_EVENT_SWING <> if 
+		<- me .timer@ 29 = if 
+			\ This is stupid beyond words
+				<- me .character@ .user.special_counter@ #thing .aim_angle@ <- me .aim_angle!
+				<- me .character@ .user.special_counter@ #thing .move_angle@ <- me .move_angle!
+			then 
+		then 
+	
+;
+
+: spawn-lasija-echo args( me ) 
+	dummy-npc 
+	lt .character@ lobotomise
+	
+	0.66 lt .clr.a!
+	0 lt .clr.r! 
+	
+	<- me .character@ .specialtype@ lt .character@ .specialtype! 
+	
+	1 lt .character@ .carrying.slot_count!  
+	<- me  .wielded lt .character@ .weapona! 
+	
+	<- me .id@ lt .character@ .user.special_counter! 
+
+	1 lt .character@ .weapon_nodropa!
+	1 lt .character@ .weapon_nodropb!
+	1 lt .character@ .weapon_nodropc!
+	0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z! 0 lt .mass!
+	1 lt .unseen! 
+	
+	<- me .pos <- me .aim_angle@ anglexy -3 xymul xyadd lt .pos!
+	
+	<- me lt .turn-toward
+	
+	0 lt .cooldown!
+	0 lt .action_cooldown!
+	0 lt .stun! 
+	
+	<- me .aim_angle@ lt .aim_angle!
+	<- me .move_angle@ lt .move_angle!
+
+	1 lt .unseen!
+	3 lt .tileflags!
+	1 lt .nocollide!
+	1 lt .nopush! 
+	' echoattack lt .events! 
+	30 lt .timer!
+	
+	lt .move_angle@ anglexy 2 xymul lt .vel! 
+	
+;
+
+: chronomancerreal-thing-events args( me teid )
+
+	\ o'clock advances 0.016666... every 20 ticks 
+	
+	<- teid THING_EVENT_SWING = if
+		<- me .fatigued? not if 
+			<- me .wielded WEAPON_TIMESTOP = not if 
+				<- me spawn-lasija-echo
+	then then then 
+	\ BEHOLD...ME AND ME AGAIN 	
+
+	<- teid THING_EVENT_DIED = if 
+		"Time grinds...even mountains to dust..." <- me .yellmsglong
+	then 
+
+;
+
+\ Originally, E-Lasija was able to spawn an echo of herself every time she performed an attack.
+\ Unsure if you would also like this, but I'm going to try w/ keeping it in, for now.
+\ Let me know if you want to keep it in or not. 
+
+\ Originally she could also alter the flow of time, making all objects faster or slower. I think I will keep that out, for now. 
+
+: chronomancerreal-main-events ( teid ) args( chara eventid )
+
+	<- eventid MAIN_EVENT_MISSION_END = if 
+		0 to DID_STOP
+	then \ Reset after timestop usage 
+	 	
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+	
+	<- chara .location@ 1 = if 
+		<- chara .thing@ swap ( teid ) chronomancerreal-thing-events
+		1 <- chara .thing@ .timer!
+	then 
+	
+;
+
+
+: .chronomancerify args( chara ) 
+
+	145 <- chara .specialtype!
+	1 <- chara .dexterity! 
+	1 <- chara .health! 
+	"Clock King" <- chara .name! 
+	"talks about you behind your back during Time Stop...especially if you make Za Warudo jokes!" <- chara .job! 
+	\ NO MORE WARUDOOOOOOOOOO
+	
+	1 <- chara .health!
+	1 <- chara .vitality! 
+	
+	4 <- chara .shooting!
+	<- chara .shootingREV 
+	
+	WEAPON_HUNTING <- chara .weapona! 
+	WEAPON_TIMESTOP <- chara .weaponc!
+	1 <- chara .weapon_nodropc! 
+	
+	20 LOOT_RIFLE_SHELL <- chara .lootamt! 
+	
+	3 <- chara .carrying.slot_count!
+	
+	2 <- chara .headoff.y! 
+	
+	2 <- chara .wits!	
+	0 <- chara .attitude!
+	0 <- chara .composure!
+	3 <- chara .loyalty!
+	\ 2-0-0-3...my birth year xP 
+	
+	"Chronomancer" <- chara .perk!
+	"Timeweaver" <- chara .trait! 
+	
+	' chronomancerreal-main-events <- chara .main_events!
+
+; 
+
+
+
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ THE DEFECTIVE "ELDRITCH ENTITY TELEPORTER-CLONER" BELOW 
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+
+: defectivenamescase 1 8 rnd case 
+	1 of "Defective" endof 
+	2 of "D3fect1ve" endof 
+	3 of "D#fe-t!ve" endof 
+	4 of "D3f*ct1ve" endof 
+	5 of "Defec*!ve" endof 
+	6 of "D-f3ct1ve" endof 
+	7 of "Defe-t*ve" endof 
+	8 of "D#fec*ive" endof 
+	endcase
+; 
+
+: defectivejobcase 1 6 rnd case 
+	1 of "is the planeswalker, a defect; forever a lost broken soul." endof 
+	2 of "can simply phase through the car door to leave the car." endof 
+	3 of "responds only in jumbled, incoherent sounds, as if through TV static." endof 
+	4 of "is all that remains of somebody who time forgot." endof 
+	5 of "teleports behind you. Nothing personell, kid." endof 
+	6 of "doesn't know anything about the origin of the split down their face." endof 
+	endcase
+; 
+
+
+
+
+: xerespoof args( me )  
+	\ intended for AI defective. 
+		player if 
+		player .mapid@ <- me .mapid@ = if 
+		<- me .action_cooldown@ 0 > if then; 
+		45 3 * <- me .action_cooldown! \ ~ 4s 
+			<- me .pos <- me .pos <- me .targetpos.x@ <- me .targetpos.y@ xysub xyangle anglexy 30 xymul xyadd <- me .pos! \ defensive poof! 
+			1 rumble 
+			sfx{ growl 1000 r! 100 ramp_start! 1500 ramp_end! } \ weeeeawwwww 
+			
+			12 for 
+			<- me .pos
+            particle{
+                new pos!
+                30 ticks!
+                0 360 frnd angle!
+                glowy
+                0.99 grow!
+                25 fade_out!
+                particles_base_id 149 + spriteid!
+                // angle@ anglexy 0.04 0.08 frnd xymul vel!
+                pos@ -21 10 frnd + swap -8 8 frnd + swap pos!
+                0.25 0.4 frnd scale!
+                1 0.1 0 rgb!
+            }
+			next 
+		then then 
+;
+
+: exeres-thing-events args( me teid )
+	<- teid THING_EVENT_TIMER = if
+		2 <- me .timer!
+		<- me .inside_id@ 0 > if then;
+		    <- me .pos
+            particle{
+                new pos!
+                10 ticks!
+                0 360 frnd angle!
+                glowy
+                0.99 grow!
+                5 fade_out!
+                particles_base_id 149 + spriteid!
+                // angle@ anglexy 0.04 0.08 frnd xymul vel!
+                pos@ -20 10 frnd + swap -6 5 frnd + swap pos!
+                0.25 0.4 frnd scale!
+                1 0 0 rgb!
+            }
+			
+			gameticks 0.1 * sin abs 0.8 1 clamp <- me .clr.a!
+		then
+		
+	<- teid THING_EVENT_AI_ASSESS = if 
+		<- me .anim.extra@ 0 > if 
+			<- me xerespoof
+		then 
+	then 
+	
+	<- teid THING_EVENT_DIED = if 
+		"h0me?..." <- me .yellmsglong
+		' kill_all_defects foreach-char
+		sfx{ creepy 0.995 q! } 
+	then 
+		
+		
+;
+
+: echoxeres-events args( chara eventid )
+
+	<- eventid MAIN_EVENT_MISSION_START <> if 
+		defectivenamescase <- chara .name! 
+	then 
+	
+	<- eventid MAIN_EVENT_MISSION_START = if
+	
+		0 to clones-created
+		15 <- chara .thing@ .ai.assess!
+		
+		defectivejobcase <- chara .job! 
+		
+		then
+	
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if
+			2 <- chara .thing@ .timer!
+			<- chara .thing@ swap ( teid ) exeres-thing-events
+		then 
+
+;
+
+: .ruined_soulify args( chara ) 
+	146 <- chara .specialtype! 
+	6 <- chara .fitness! 
+	\ 1 <- chara .dexterity!
+	
+	\ No throwing objects for your silly ethereal arms. 
+	0 <- chara .strength!
+	\ -6 STAT_STRENGTH <- chara .bonus! 
+	
+	0 <- chara .shooting! 
+	1 <- chara .vitality!
+	1 <- chara .health! 
+	1 <- chara .weapon_nodropa!
+	
+	' echoxeres-events <- chara .main_events!
+	
+	1 <- chara .carrying.slot_count!
+	
+	-1 <- chara .breathescale! 
+	
+	0 <- chara .composure! 
+	0 <- chara .wits! 
+	2 <- chara .attitude!
+	2 <- chara .loyalty! 
+	
+	"Eldritch" <- chara .perk! 
+	"Planeswalker" <- chara .trait! 
+	
+	"Defective" <- chara .name! 
+	"appears to fade in and out of existence, as if at will." <- chara .job! 
+	
+	WEAPON_RAHJL <- chara .weapona! 
+	
+	statmod{ MOD_SWAPACTION <- chara .setmod } <- chara .swapspecial 
+	
+
+; 
+
+cyoa{ road{ 
+
+cyoa: defective-scget
+	"H.P LOVECRAFT'S WIFE" cyoa-title! 
+	char-gen to recruitee ricon 2 recruitee .morale! recruitee .ruined_soulify
+	($ Thegroup .. " approaches some kind of eldritch entity clenching its wounds. When beckoned, it momentarily splits into two, but does not respond." $) cyoa-text! basic-tone
+	($ "
+	Reughhh...*whine*...reuuughhh..." rbold $) +text 
+	($ "
+	What a friendly looking face!"  $) +text
+	($ "
+	This extraplanar creature can blink with the SWAP button every so often." $) +text 	
+	($ "
+	The creature locks eyes with them suddenly. It tilts its head, as if curious, almost." rbold $) +text 
+		choice( "Tentatively ask " .. rname .. " to join" )choice: recruit-yes
+		choice( "NOPE. NO. THANK YOU" )choice
+;
+
+cyoa: isabelle-scget
+	"ROLLING A NATURAL 20 IN EVERY STAT" cyoa-title! 
+	char-gen to recruitee ricon 6 recruitee .morale! recruitee .paladinify 
+	($ rname .. " rushes up to the group, silver sword in hand. A blinding flash of yellow light follows, as she brings her sword down upon a wandering zombie!" $) cyoa-text! basic-tone
+	
+	-20 fade_to 1 1 0 fade_clr 20 fade_count!
+	sfx{ thump 2 scale! 0.5 pitch! 350 r! 600 d! 40 a! } 
+	
+	($ YELLOW "
+	Oh, hello hun. Can I help you? I'm Isabelle. It's my job to protect people like you. Let me join, I can get you out of here." .. $) +text 
+	($ WHITE "
+	At a first glance, it's impossible to tell whether she's merely a cosplayer or an actual paladin from the old world." .. $) +text
+	($ "
+	Isabelle can smite enemies on melee hits for extra damage." $) +text 	
+		choice( "Allow " .. rname .. " to join" )choice: recruit-yes
+		choice( "Leave this phony behind" )choice
+;
+
+cyoa: lasija-scget
+	"A RACE AGAINST THE CLOCK...CLOCK(S)?" cyoa-title! 
+	char-gen to recruitee ricon 3 recruitee .morale! recruitee .chronomancerify 
+	($ "Time seems to slow to a halt. Sound grows dull. Color seems to unsaturate. Suddenly, out of nowhere, a stranger appears.
+	" $) cyoa-text! basic-tone
+	($ 
+	rname .. " turns towards the group, pocketwatch in hand. A short time later, his silhouette seems to do the same thing." $) +text 
+	($ "
+	...drat. I've must've set my machine wrong again...I'd better join you, or I'm toast. And you'd better let me, or else YOU'RE toast." pbold $) +text 
+	($ "
+	This must be some kind of traveller from the future! Or possibly just someone who COOL'D IT successfully."  $) +text
+	($ "
+	Once per mission, Clock King can stop time itself." $) +text 	
+		choice( "Let " .. rname .. " join" )choice: recruit-yes
+		choice( "GO BACK TO THE FUTURE NERD" )choice
+;
+\ "Why does he have a hunting rifle"? CLOCK KING KILLED JFK 
+
+} } 
+
+: to_the_viaduct
+	"events/retina/viaduct.df" $load-region premission 
+;  
+
+: to_the_marshes
+	"events/retina/marshes.df" $load-region premission 
+;  
+
+: to_the_treasury
+	"events/retina/treasury.df" $load-region premission 
+;  
+
+: to_the_testregion
+	"events/testregion.df" $load-region premission 
+; 
+

@@ -1,5 +1,5 @@
 	: CAVEMAN-oneline1 "Je ne comprends pas votre folie des 'chaises' du futur. Je comprends tout le reste." ;
-	: CAVEMAN-oneline2 "Nous n'avons pas de zombos la d'ou je viens. Qu'avez-vous fait pour en faire venir ?" ;
+	: CAVEMAN-oneline2 "Nous n'avons pas de zombos la d'ou je viens. Qu'avez-vous fait pour en faire venir autant ?" ;
 	: CAVEMAN-oneline3 "PEUT-ETRE que j'ai fait exprès de dormir dans cette glace ! Peut-etre que j'aime la glace." ;
 	: CAVEMAN-oneline4 "Ces zombos sont lents, mais la glace l'est aussi et elle peut surprendre." ;
 	: CAVEMAN-oneline5 "J'ai besoin d'une plus grosse arme." ;
@@ -11,9 +11,9 @@
 	: CAVEMAN-oneline11 "Pour des monstres, les zombies sont vraiment lents. Je vais me ramollir en les combattant." ;
 	: CAVEMAN-oneline12 "Les dinosaures etaient tous recouverts de plumes. Ils avaient l'air ridicules." ;
 	: CAVEMAN-oneline13 "Au moins, je n'ai pas voyage dans un futur tres lointain cette fois-ci." ;
-	: CAVEMAN-oneline14 "Je me demande combien d'autres se sont retrouves pris dans la glace. Moi, ça m'est arrive tellement de fois." ;
+	: CAVEMAN-oneline14 "Je me demande combien d'autres humains se sont retrouves pris dans la glace. Moi, ça m'est arrive tellement de fois." ;
 	: CAVEMAN-oneline15 "Courir, c'est mieux que d'etre mange. C'est moins bien que de se faire ecraser." ;
-	: CAVEMAN-oneline16 "I can't get used to your 'guns' fad. Give me a tree trunk, any day." ;
+	: CAVEMAN-oneline16 "Je n'arrive pas a m'habituer a votre mode des 'flingues'. Donnez-moi un tronc d'arbre n'importe quand et vous verrez." ;
 
 	deck-new
 		card: CAVEMAN-oneline1

@@ -1,0 +1,118 @@
+
+voc{ news
+
+: news-off? gstats{ newschecked } BRANCHNAME $= ;
+
+// TITLE INFO
+
+		($ "Mon Nouveau Jeu:" .. cr$ .. "Passage du Cannibale" $) news_title!
+
+// NEWSBOX IMAGE INFO
+
+8 value imagecount
+3 sec>tick newsbox_ticker_dur!
+
+// BUTTONS INFO
+
+"See Trailer / Buy / Wishlist" value b0_text
+"http://www.cannibalcrossing.com" urlopener: b0_url
+
+"Discord Officiel" value b1_text
+"https://discord.gg/J7HChAa" urlopener:  b1_url
+
+"Options des infos" value b2_text
+
+
+0 value index
+
+: ticker_handler
+	($ "deathforth/news/" .. index .. ".png" $) newsbox_load_image
+
+	' index ++ index imagecount % to index
+;
+
+last newsbox_ticker_handler!
+
+
+b0_text		0 #news_btn_text!
+' b0_url	0 #news_btn_handler!
+b1_text 	1 #news_btn_text!
+' b1_url	1 #news_btn_handler!
+b2_text 	2 #news_btn_text!
+
+"http://www.twitter.com/rocketcatgames/" 	urlopener: rocketcat-twitter
+"http://www.facebook.com/rocketcatgames/" 	urlopener: rocketcat-facebook
+"http://www.twitter.com/madgarden/" 		urlopener: madgarden-twitter
+
+: show-news
+	gstats{ 0 to newschecked save }
+	0 newsbox_disable!
+	0 0 #news_btn_disable!
+	0 1 #news_btn_disable!
+	0 2 #news_btn_disable!
+
+	1 refresh_layout!
+;
+
+: hide-news
+	gstats{ BRANCHNAME to newschecked save }
+	// 0 news_enable!
+
+	1 newsbox_disable!
+	1 0 #news_btn_disable!
+	0 1 #news_btn_disable!
+	0 2 #news_btn_disable!
+
+	1 refresh_layout!
+;
+
+cyoa{
+
+cyoa-blank: social
+	"TWITTER AND FACEBOOK" cyoa-title!
+
+	"Suivez les mises a jour de Rocketcat Games sur Twitter ou Facebook pour les nouvelles de Death Road et les prochains jeux! Lisez le Twitter de Madgarden pour de vraies Sagesse Canadienne!" bbold text!
+	"Nous sommes rapides a repondre aux commentaires et suggestions sur Twitter!" +crtext
+
+	choice( "Retour" )choice
+	choice( "Rocketcat Twitter" )choice: rocketcat-twitter
+	choice( "Madgarden Twitter" )choice: madgarden-twitter
+	choice( "Rocketcat Facebook" )choice: rocketcat-facebook
+
+;
+
+cyoa-blank: weblinks
+	"OPTIONS DES INFOS" cyoa-title!
+
+	"Voici dautres facons de nous contacter, de faire part de vos commentaires et suggestions, et de voir ce que nous faisons pour les mises a jour et les nouveaux projets! Nous sommes tres actifs sur le Discord officiel de Rocketcat, ou vous pouvez nous parler ainsi qua dautres fans de nos jeux." bbold text!
+	"Vous pouvez egalement masquer le panneau dactualites jusqua la prochaine mise a jour majeure." +crtext
+
+	choice( "Retour" )choice
+	choice( "Twitter/Facebook" )choice: social
+	choice( "Discorde officielle de Rocketcat" )choice: b1_url
+	news-off? if
+		choice( "Afficher les actualites" )choice: show-news
+	else
+		choice( "Masquer les actualites" )choice: hide-news
+	then
+;
+
+}
+
+last 2 #news_btn_handler!
+
+: newschecker
+	1 news_enable! // Changing this to 0 shuts off news AND other stuff
+
+	news-off? if hide-news then;
+
+	show-news
+
+	// Uncomment below to hide news but not hide the news options and Discord buttons
+	hide-news
+
+;
+
+newschecker
+
+}

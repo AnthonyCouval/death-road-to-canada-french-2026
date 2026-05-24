@@ -1,0 +1,47 @@
+	: WOODWOMAN-oneline1 "Mon journal de bord dit que nous arriverons au Canada." ;
+	: WOODWOMAN-oneline2 "Mon journal dit quun grand danger nous attend!" ;
+	: WOODWOMAN-oneline3 "Mon journal dit de faire attention." ;
+	: WOODWOMAN-oneline4 "'Mon journal dit que nous ne pouvons pas laisser nos petites querelles nous separer." ;
+	: WOODWOMAN-oneline5 "Mon journal dit que nous devons garder notre moral haut." ;
+	: WOODWOMAN-oneline6 "Mon journal dit quil veut plus despace dans la voiture." ;
+	: WOODWOMAN-oneline7 "Mon journal dit que nous devrions collecter plus de journaux, pour les batailles futures." ;
+	: WOODWOMAN-oneline8 "Mon journal dit que les armes a feu sont trop dangereuses." ;
+	: WOODWOMAN-oneline9 "Mon journal dit quil veut eclabousser des zombies." ;
+	: WOODWOMAN-oneline10 "Mon journal dit que nous devrions nous concentrer sur lentrainement de notre force et de notre forme physique." ;
+	: WOODWOMAN-oneline11 "Mon journal dit que nous devrions essayer dutiliser plus darmes contondantes." ;
+	: WOODWOMAN-oneline12 "Mon journal dit que les tronconneuses consomment trop dessence pour etre efficaces." ;
+	: WOODWOMAN-oneline13 "'Mon journal me defendra, ne vous inquietez pas pour nous." ;
+	: WOODWOMAN-oneline14 "Mon journal dit quil existe un journal encore plus puissant que lui." ;
+
+	deck-new
+		card: WOODWOMAN-oneline1
+		card: WOODWOMAN-oneline2
+		card: WOODWOMAN-oneline3
+		card: WOODWOMAN-oneline4
+		card: WOODWOMAN-oneline5
+		card: WOODWOMAN-oneline6
+		card: WOODWOMAN-oneline7
+		card: WOODWOMAN-oneline8
+		card: WOODWOMAN-oneline9
+		card: WOODWOMAN-oneline10
+		card: WOODWOMAN-oneline11
+		card: WOODWOMAN-oneline12
+		card: WOODWOMAN-oneline13
+		card: WOODWOMAN-oneline14
+	constant WOODWOMAN-ONELINERS
+	WOODWOMAN-ONELINERS var woodwoman-oneliners
+	WOODWOMAN-ONELINERS shuffles to woodwoman-oneliners
+
+: woodwoman-oneliner
+	woodwoman-oneliners depths 0= if WOODWOMAN-ONELINERS shuffles to woodwoman-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: woodwoman-oneliner
+
+	constant BLURB-WOODWOMAN-DECK
+	BLURB-WOODWOMAN-DECK var blurb-woodwoman-deck
+	BLURB-WOODWOMAN-DECK shuffles to blurb-woodwoman-deck

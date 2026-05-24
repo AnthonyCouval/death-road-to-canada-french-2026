@@ -1,0 +1,57 @@
+cyoa{ road{
+
+(*
+------------------------------------------------------------------------------------------------------------------------
+	001 -"Et Soudain un Bigfoot" - Don Thacker
+	The group comes across bigfoot himself.
+	Will they drive on, investigate or WRESTLE HIM?
+------------------------------------------------------------------------------------------------------------------------
+*)
+
+// Sasquatch aint real
+	cyoa-choice: don-common-sasquatch-aintreal
+	($ Thegroup .. " accelere. " .. cname	.. " voulait vraiment y croire, mais il se dit qu'" .. chim .. " faut qu'" .. chim .. " se " .. "CALME" pbold .. "." $) cyoa-text! morale-- cool-it++ badfx
+	most-grating if choosechar
+	($ cname .. " en rajoute en se disant " .. "CALME TOI" pbold .. " une deuxième fois." $) +crtext cool-it++
+	then
+;
+
+// Investigate the sasquatch
+	cyoa-choice: don-common-sasquatch-investigate
+	($ Thegroup .. " fait demi tour pour enqueter " .. Thegroup ..
+		"  ne trouve qu'une seule grande empreinte de pas la ou le sasquatch etait cense etre." .. cname .. " prend une " ..
+		"photo instantanee" rbold .. ". " .. cHe .. " veut y croire." $) cyoa-text! morale2+ goodfx
+;
+
+// Beat the sasquatch at a wrestling match
+: don-common-sasquatch-beat
+	notsolo if ($ Thegroup .. " applaudis la victoire de " .. cname .. "." $) +crtext then goodfx morale2+all
+;
+
+// Challange the sasquatch to wrestle
+cyoa-choice: don-common-sasquatch-wrestle
+	($ cname .. " saute de la voiture et saisit le bigfoot par les bras. " $) cyoa-text!
+		cstrength+ if
+			($ "Le bigfoot ne fait pas le poids et se rend facilement." $) +text don-common-sasquatch-beat
+		then;
+		strengthroll if
+			($ "Apres ce qui semble etre des heures de " .. "lutte" rbold .. ", le sasquatch finit par se rendre." $) +text
+			don-common-sasquatch-beat fitnessREV fitness++
+		else
+			($ cHe .. "  est immediatement pris par une cle de bras. Ce bigfoot connait le judo. " .. cname ..
+				"  est contraint de se rendre au plus fort." $) +text badfx morale--
+		then strengthREV strength++
+;
+
+// The group sees a sasquatch
+cyoa: don-common-sasquatch
+	image-sasquatch
+	"Et soudain un Bigfoot" cyoa-title!
+	someone choosechar
+	($ cname .. " apercoit un bigfoot sur le bord de la route, vaquant a ses occupations." $) cyoa-text! basic-tone
+		choice( "Les Bigfoot n'existent pas" )choice: don-common-sasquatch-aintreal
+		choice( "Faire demi-tour et enqueter" )choice: don-common-sasquatch-investigate
+		strongest charchoice( " essayer de lutter contre lui" )choice: don-common-sasquatch-wrestle
+;
+
+} }

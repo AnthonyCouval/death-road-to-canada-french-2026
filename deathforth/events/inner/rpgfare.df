@@ -1,0 +1,512 @@
+uses paul/region-layout.df
+uses paul/region-road-layout.df
+uses charmisc.df
+
+
+"events/inner/baseapts.df" $load
+
+map{ roomgen{
+
+	
+	: .zombie? .typeid@ THING_ZOMBIE = ;
+	
+	: .teammate? dup .character@ args( me chara ) <- me .charid@ 0= if 0 then;
+		<- chara .team_status@ TEAM_STATUS_RECRUITED =
+	;
+	
+
+: no-zombs args( me eventid )
+	
+	<- eventid THING_EVENT_TIMER = if
+			1 <- me .timer!
+			<- me .pos 500 things-in-xyrad
+			depths for i picks .zombie? if
+				i picks 0 swap .hitpoints!
+					then
+				next drop
+				
+			0.4 0.4 0.4 1200 <- me .pos d-light
+			
+			then
+	
+;
+
+: get-shot args( me eventid )
+	
+	<- eventid THING_EVENT_SHOOT <> if
+		<- me .hitpoints@ 4000 = if then;
+			special_objects32_base_id 221 + <- me .spriteid!
+			sfx{ glass }
+			then
+	
+;
+
+
+// mage hat is 28 for female
+// and 30 for male
+
+
+
+
+: mage args( chara )
+	137 <- chara .specialbody!
+	3 <- chara .carrying.slot_count!
+	1 <- chara .weapon_nodropa!
+	1 <- chara .weapon_nodropb!
+	WEAPON_FADEBOLT_EXP <- chara .weapona!
+	WEAPON_MAGECLASSTWO <- chara .weaponb!
+	0 <- chara .weaponc!
+	"has an assortment of fiery spells!" <- chara .job!
+	1 <- chara .vitality!
+	1 <- chara .health!
+	1 <- chara .stackeda!
+	1 <- chara .stackedb!
+	
+	<- chara .showitall
+	
+	1 STAT_STRENGTH <- chara .bonus+
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+	
+	
+;
+
+\ Now will be called marksman 
+: ranger args( chara )
+	136 <- chara .specialbody!
+	3 <- chara .carrying.slot_count!
+	
+	100 LOOT_BULLET <- chara .lootamt!
+	100 LOOT_RIFLE_SHELL <- chara .lootamt!
+	100 LOOT_SHOTGUN_SHELL <- chara .lootamt! 
+	"can dance on the head of a pin as well." <- chara .job!
+	1 STAT_DEXTERITY <- chara .bonus+
+	1 <- chara .stackeda!
+	1 <- chara .stackedb!
+	
+	<- chara .showitall
+	
+	-1 STAT_STRENGTH <- chara .bonus+
+	3 STAT_SHOOTING <- chara .bonus+
+	-2 STAT_FITNESS <- chara .bonus+
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+
+;
+
+: bombardier args( chara )
+	138 <- chara .specialbody!
+	2 <- chara .carrying.slot_count!
+	0 <- chara .weapona! 
+	WEAPON_BOMBERCLASSTWO <- chara .weaponb!
+	-1 STAT_DEXTERITY <- chara .bonus+
+	12 <- chara .stackedb!
+	"is ever so slightly accident-prone, which is not great for an explosives-wielder." <- chara .job!
+	' bomber-recharge <- chara .main_events!
+	0 <- chara .thing@ .events!
+	
+	<- chara .showitall
+	\ 1 WEAPON_POLEAXE trunk.weapon+
+	1 STAT_MECHANICAL <- chara .bonus+ 
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+	
+;
+
+: meleer args( chara )
+	139 <- chara .specialbody!
+	3 <- chara .carrying.slot_count!
+
+	"is going to have an unpleasant time on the toilet." <- chara .job!
+
+	WEAPON_WARRIORSHIELD <- chara .weaponb! 
+	1 <- chara .weapon_nodropb!
+	1 STAT_STRENGTH <- chara .bonus+ 
+	1 STAT_FITNESS <- chara .bonus+ 
+	<- chara .vitality@ 2 + 0 6 clamp <- chara .vitality! 
+	-1 STAT_DEXTERITY <- chara .bonus+ 
+	
+	<- chara .nocanshoot
+	
+	<- chara .showitall
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+	
+;
+
+: archer args( chara )
+	140 <- chara .specialbody!
+	2 <- chara .carrying.slot_count!
+	1 <- chara .weapon_nodropa!
+	0 <- chara .weapon_nodropb!
+	WEAPON_WARBOW <- chara .weapona!
+	"thinks they're in a Lord Of The Dinks remake." <- chara .job!
+	' archer-recharge <- chara .main_events!
+	0 <- chara .thing@ .events!
+	
+	1 STAT_DEXTERITY <- chara .bonus+
+	50 <- chara .stackeda!
+	1 <- chara .stackedb!
+	
+
+	<- chara .showitall
+	
+	2 STAT_STRENGTH <- chara .bonus+
+	\ 1 STAT_SHOOTING <- chara .bonus+
+	1 STAT_FITNESS <- chara .bonus+
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+	
+	
+;
+
+: swordmagemale args( chara )
+	141 <- chara .specialbody!
+	2 <- chara .carrying.slot_count!
+	
+	1 WEAPON_ELONGSWORD trunk.weapon+ 
+
+	"doesn't sleep so well due to the glow of their sword." <- chara .job!
+
+	1 <- chara .vitality!
+	1 <- chara .health!
+	
+	<- chara .showitall
+	
+	4 STAT_STRENGTH <- chara .bonus+
+	2 STAT_SHOOTING <- chara .bonus+
+	4 STAT_FITNESS <- chara .bonus+
+
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+;
+
+: grenadier args( chara )
+	142 <- chara .specialbody!
+	2 <- chara .carrying.slot_count!
+	
+	WEAPON_GRENADE <- chara .weapona!
+	6 <- chara .stackeda!
+	
+	"is really good at tossing grenades." <- chara .job!
+	
+	' grenadier-recharge <- chara .main_events!
+	0 <- chara .thing@ .events!
+
+	<- chara .showitall
+	
+	\ 1 WEAPON_POLEAXE trunk.weapon+
+	
+	3 STAT_MEDICAL <- chara .bonus+
+	3 STAT_MECHANICAL <- chara .bonus+
+	1 STAT_FITNESS <- chara .bonus+
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+	
+;
+
+\ Reworked into Samurai. 
+: hammerer args( chara )
+	143 <- chara .specialbody!
+	3 <- chara .carrying.slot_count!
+	\ WEAPON_MELEEALT <- chara .weapona!
+	1 WEAPON_SAMURAI_SWORD trunk.weapon+
+	"is something similar to Oda Nobunaga, sometimes scarily so." <- chara .job!
+	
+	4 STAT_STRENGTH <- chara .bonus+ 
+	2 STAT_FITNESS <- chara .bonus+ 
+
+	<- chara .showitall
+	<- chara .nocanshoot
+	
+	1 <- chara .user.special_counter! \ RPG mode rework; one class per character
+;
+ 
+
+
+0 value meleestande
+0 value rangerstande
+0 value magicstande
+0 value bomberstande
+
+cyoa{
+
+cyoa-choice: melee
+		($ cname .. " puts the final piece of their armour on, only to find a part of it is REALLY chafing. Deus Vult! " $) cyoa-text!
+		($ RED "Don't let zombies get past your shield!" .. $) +crtext
+		pchar meleer
+;
+
+cyoa-choice: hammer
+		($ cname .. " heaves the katana into their hands. They nearly fall over from the weight. Time to make ZOMBO SALAD!" $) cyoa-text!
+		($ RED "You can find your samurai sword in the trunk. Make sure to use it!" .. $) +crtext
+		pchar hammerer
+;
+
+cyoa-choice: range
+		($ cname .. " becomes one with the way of the ranger, spinning their revolver and tying their coat with pleasure. It's highhhhh nooooon! " $) cyoa-text!
+		($ RED "You can find your MAMBA and SLUG SHOTGUN in the trunk. Make sure to use them!" .. $) +crtext
+		pchar ranger
+		1 WEAPON_BLACKMAMBA trunk.weapon+
+		1 WEAPON_SLUG trunk.weapon+ 
+;
+
+cyoa-choice: archer
+		($ cname .. " twirls their bow around in their hands, before nearly dropping the bow on their foot. Go for the eyes! " $) cyoa-text!
+		($ RED "Juggle your bow and other weapons where necessary!" .. $) +crtext
+		pchar archer
+;
+
+cyoa-choice: mage
+		($ cname .. " silently recites a spell known for GREAT GLUTES under their breath. May your magic be potent, and your spells deadly! " $) cyoa-text!
+		($ RED "Get trained up! Your weapons are powerful...but heavy." .. $) +crtext
+		pchar mage 
+;
+
+cyoa-choice: longswordsman
+		($ cname .. " binds their weapon to their patron, who promptly rewards them with a massively inflated ego. Dolor! " $) cyoa-text!
+		($ RED "You can find your hexblade sword in the trunk. Make sure to use it!" .. $) +crtext
+		pchar swordmagemale
+;
+
+cyoa-choice: bomber
+		($ cname .. " tinkers with the fuse of one of their bombs, only to realise it's a DUD. Blow em all to heck! " $) cyoa-text!
+		($ RED "Don't be afraid to lob your dynamite everywhere! Your poleaxe is in the trunk." .. $) +crtext
+		pchar bombardier
+		1 WEAPON_POLEAXE trunk.weapon+
+
+;
+
+cyoa-choice: grenader
+		($ cname .. " excitedly lights a handful of grenades, before realising this is a terrible idea and putting them out. Molon Labe! " $) cyoa-text!
+		($ RED "Get those support stats increased to help your team! Your poleaxe is in the trunk." .. $) +crtext
+		pchar grenadier
+		1 WEAPON_POLEAXE trunk.weapon+
+
+;
+
+
+cyoa: melees
+	"The Melee Class" cyoa-title!
+	picon!
+	
+	pchar .user.special_counter@ 1 = if 
+		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+	then; 
+	
+	($ "The melee classes are generally tougher and receive bonuses to STR and FIT. They cannot shoot guns. Samurais start with a good sword that can crit, whereas the Knight starts with more health and a shield that can REPEL ZOMBIES in the direction you are facing/moving." $) text!
+	
+	pchar .main_events@ 0 = not if 
+		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+	then 
+	
+	($ BLUE "The melee classes have FITNESS as their most important stat." .. $) +crtext 
+	
+	choice( "No, thanks!" )choice
+	choice( "[Pick The Knight]" )choice: melee
+	choice( "[Pick The Samurai]" )choice: hammer
+;
+
+cyoa: rangers
+	"The Ranger Class" cyoa-title!
+	picon!
+	
+	pchar .user.special_counter@ 1 = if 
+		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+	then; 
+	
+	($ "The ranged classes are reliable ways to deal with hordes. Marksman is ammo-dependent but powerful, and the only major source of SHOOTING. Archer is only STR/FIT dependent, but limited by their bow." $) text!
+	
+	pchar .main_events@ 0 = not if 
+		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+	then 
+	
+	($ BLUE "The ranged classes have SHOOTING as their most important stat." .. $) +crtext 
+	
+	choice( "No, thanks!" )choice
+	choice( "[Pick The Marksman]" )choice: range
+	choice( "[Pick The Archer]" )choice: archer
+;
+
+cyoa: mages
+	"The Mage Class" cyoa-title!
+	picon!
+	
+	pchar .user.special_counter@ 1 = if 
+		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+	then; 
+	
+	($ "Magic classes can obliterate hordes but are fragile. Mages can cast fireballs, or chain deadly damage with scorching ray. Picking mage will likely replace most of your held weapons. Spellblades have excellent stats and even a bit of control, but must remain in melee range." $) text!
+	
+	pchar .main_events@ 0 = not if 
+		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+	then 
+	
+	($ BLUE "The magic classes have STRENGTH as their most important stat." .. $) +crtext 
+	
+	choice( "No, thanks!" )choice
+	choice( "[Pick The Mage]" )choice: mage
+	choice( "[Pick The Spellblade]" )choice: longswordsman
+;
+
+cyoa: bombards
+	"The Bombardier Class" cyoa-title!
+	picon!
+	
+	pchar .user.special_counter@ 1 = if 
+		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+	then; 
+	
+	($ "The bombardier is a safe but limited explosive option. Bombardier bombs cause no self damage, whereas grenadier grenades are better but have self-damage. Grenadiers receive large bonuses to MED and MECH." $) text!
+	($ "Both classes also receive a poleaxe for when they are not tossing bombs." $) +crtext
+	
+	pchar .main_events@ 0 = not if 
+		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+	then 
+	
+	($ BLUE "The bombard classes have MECH or MED as their most important stat." .. $) +crtext 
+	
+	choice( "No, thanks!" )choice
+	choice( "[Pick The Bombardier]" )choice: bomber
+	choice( "[Pick The Grenadier]" )choice: grenader
+;
+
+
+}
+	
+: meleestand
+spawn special_objects48_base_id 64 + lt .spriteid!
+	bbox
+	3000 lt .mass!
+	100 lt .hitpoints!
+	immovable as-wood
+	lt to meleestande
+;
+
+: rangerstand
+spawn special_objects48_base_id 66 + lt .spriteid!
+	bbox
+	3000 lt .mass!
+	100 lt .hitpoints!
+	immovable as-wood
+	lt to rangerstande
+;
+
+: magicstand
+spawn special_objects48_base_id 68 + lt .spriteid!
+	bbox
+	3000 lt .mass!
+	100 lt .hitpoints!
+	immovable as-wood
+	lt to magicstande
+;
+
+: bomberstand
+spawn special_objects48_base_id 70 + lt .spriteid!
+	bbox
+	3000 lt .mass!
+	100 lt .hitpoints!
+	immovable as-wood
+	lt to bomberstande
+;
+
+ 
+	
+} }
+
+
+map{ regiondef{
+
+trade-camp-reset
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	xyp.i char < = if xyp.xy to gby to gbx then;
+	xyp.i char > = if gbx 1- gby xyp.xy swap 1+ swap gravellot then;
+	xyp.i char ( = if xyp.xy to gby2 to gbx2 then;
+	xyp.i char ) = if gbx2 1- gby2 xyp.xy swap 1+ swap gravellot then;
+		
+	xyp.i char P = if ' plotpave to ft xyp.xy ft then;
+	
+	xyp.i char x = if ' plotdirt to ft then;
+	xyp.i char G = if ' plotgrass to ft xyp.xy ft then;
+	xyp.i char $ = if xyp.xy grassedge then;
+	xyp.i char { = if dirtstart then;
+	xyp.i char } = if dirtend then;
+
+	\ xyp.i char t = if backpack lt-here then;		
+	xyp.i char F = if chair 0 90 rnd lt .angle! lt-here then;
+	
+	xyp.i char A = if meleestand lt-here new-npc meleestande 133 lt .character@ .specialtype! lt .follow cyoa{ ' melees lt .cyoa! } then;
+	xyp.i char B = if rangerstand lt-here new-npc rangerstande lt .follow cyoa{ ' rangers lt .cyoa! }  lt .character@ ranger then;
+	xyp.i char C = if magicstand lt-here new-npc magicstande lt .follow cyoa{ ' mages lt .cyoa! }  lt .character@ mage 0 lt .character@ .female! then;
+	xyp.i char D = if bomberstand lt-here new-npc bomberstande lt .follow cyoa{ ' bombards lt .cyoa! }  lt .character@ bombardier then;
+	xyp.i char E = if oldpine lt-here then;
+	xyp.i char Q = if stockpile-boxes-food lt-here then; 
+
+;
+
+
+
+"
+P(..................................
+....................................
+E..A..E...B...E..C..E...D...E..E....
+.FF.F...............................
+..............Q..............Q......
+....................................)
+.....................................
+.....................................
+.....................................
+.....................................
+....................................."
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	10 11 rnd o'clock // maybe random in future
+	1 no_time!
+
+	' plotgrass to ft
+
+	30 %chance if 0 0.2 frnd weather! -1 2 frnd wind_force! else -1 1 frnd wind_force! then
+	mission{ no-edge-spawns }
+	
+
+	plotmap
+	
+	\ 1 weather!
+	1 wind_force!
+	
+	
+	2 for
+	new-npc
+	lt .character@ .recruit
+	next
+
+	// Put char and chars in middle of map
+	12 %mv-up 12 %chars-up
+	kill-zombies-here
+	kill-zombies-outside
+	120 player .stun!
+	"Oh hey, free items." player .yellmsg	
+
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+	on-foot no-rest
+	post-script: site-setup 
+
+} }

@@ -1,0 +1,61 @@
+	: ROHOA-oneline1 "No, I don't believe in 'Kepa', shut up." ;
+	: ROHOA-oneline2 "Yes, yes I know the goop smells. Okay, well, if you die, I don't want to hear complaining." ;
+	: ROHOA-oneline3 "What a ruin...so much knowledge wasted." ;
+	: ROHOA-oneline4 "I wander what pa would be up to now..." ;
+	: ROHOA-oneline5 "I keep other things in my satchel too you know. Ever played poker?" ;
+	: ROHOA-oneline6 "You don't want to know how the goop is made. TRUST ME." ;
+	: ROHOA-oneline7 "Shall I make us something to eat?" ;
+	: ROHOA-oneline8 "You've never been hit round the head with a satchel before, have you?" ;
+	: ROHOA-oneline9 "I almost prefer things this way. There's less screaming, more groaning." ;
+	: ROHOA-oneline10 "Wonder if we'll meet any other doctors around here..." ;
+	: ROHOA-oneline11 "I already can't wait for this catastrophe to be over." ;
+	: ROHOA-oneline12 "We need to stockpile medicine. We never know what's around the corner." ;
+	: ROHOA-oneline13 "I know I go on, sometimes, but I'm here for you." ;
+	: ROHOA-oneline14 "Come on. Chin up. We can make it, still." ;
+	: ROHOA-oneline15 "Look, look. It's not my fault you stink of purple reeds." ;
+	: ROHOA-oneline16 "Hmm...got a spare flint and steel around?" ;
+	: ROHOA-oneline17 "We're gonna make it through this. Come on. We've got this." ;
+	: ROHOA-oneline18 "Did you try the medicine drug? Only stupid people try the medicine drug." ;
+	: ROHOA-oneline19 "Make sure you're changing your socks often, please." ;
+	: ROHOA-oneline20 "This is our burden to bear, because we're the only ones who can carry it." ;
+	: ROHOA-oneline21 "In this world the only people we can trust is us." ;
+
+	deck-new
+		card: ROHOA-oneline1
+		card: ROHOA-oneline2
+		card: ROHOA-oneline3
+		card: ROHOA-oneline4
+		card: ROHOA-oneline5
+		card: ROHOA-oneline6
+		card: ROHOA-oneline7
+		card: ROHOA-oneline8
+		card: ROHOA-oneline9
+		card: ROHOA-oneline10
+		card: ROHOA-oneline11
+		card: ROHOA-oneline12
+		card: ROHOA-oneline13
+		card: ROHOA-oneline14
+		card: ROHOA-oneline15
+		card: ROHOA-oneline16
+		card: ROHOA-oneline17
+		card: ROHOA-oneline18
+		card: ROHOA-oneline19
+		card: ROHOA-oneline20
+		card: ROHOA-oneline21
+	constant ROHOA-ONELINERS
+	ROHOA-ONELINERS var ROHOA-oneliners
+	ROHOA-ONELINERS shuffles to ROHOA-oneliners
+
+: ROHOA-oneliner
+	ROHOA-oneliners depths 0= if ROHOA-ONELINERS shuffles to ROHOA-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ROHOA-oneliner
+
+	constant BLURB-ROHOA-DECK
+	BLURB-ROHOA-DECK var blurb-ROHOA-deck
+	BLURB-ROHOA-DECK shuffles to blurb-ROHOA-deck

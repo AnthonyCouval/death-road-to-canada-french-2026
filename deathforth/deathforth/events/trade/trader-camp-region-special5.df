@@ -1,0 +1,353 @@
+uses paul/region-layout.df
+
+"events/inner/arcadeloc.df" $load
+
+"
+:map 1
+:tags traderarcade  
+:scriptA arcademachine -1 movey 
+:scriptB cashcounter -1 movey 0.2 movex
+:scriptC traderarcade-npc -0.5 movey 0.4 movex
+:scriptD traderarcade-shoot -1 movey 
+:scriptE traderarcade-rp -1 movey 
+:scriptF clawmachine -1 movey
+:scriptG traderarcade-fire -1 movey
+:scriptH traderarcade-axe -1 movey
+:size 14 9 
+:off 8 0 
+:tiles 
+22222222222000
+23333333332222
+2AEADFGAHA3332
+21111111111112
+2111111111BC12
+21111111111112
+21111111111112
+22222222222222
+33333333333333
+"
+value TRADERARCADE
+TRADERARCADE $parse-rooms
+
+locdef{
+
+location: traderarcade
+		max-rooms: 1
+		entry-tags: traderarcade
+		pre-script: yall-theme
+		script: yall-theme
+		post-script: 
+		
+		room-choice: traderarcade
+			room-weight: 10
+			room-count: 1
+			room-script: ndx 
+			room-post-script:
+			filter-only
+
+}
+
+cyoa{
+
+// Shooting Arcade Machine
+
+0 value traderarcade-shoot+
+
+: traderarcade-amt traderarcade-shoot+ 2 * 2 + ;
+: traderarcade-pay? trunk-food traderarcade-amt 1 - > ;
+: traderarcade-pay traderarcade-amt -1 * trunk-food+ ;
+
+cyoa-choice: traderarcade-mech
+	($ "HEY! LAISEZ ALONE LA BORNE DARCADE, TU NERD!" bbold $) text!
+	"Le travailleur de larcade nest pas heureux." +crtext
+	($ cname .. " recoille." $) +crtext 
+	mechanicREV badfx
+;
+
+cyoa-choice: traderarcade-shoot-go
+	($ cname .. " 'continue le jeu d'arcade. L'ecran est plein de formes en mouvement. C'est vraiment impossible a savoir quoi se passe, et pourtant " .. che .. " se sent totalement engonconne.	Le jeu sacheve en un rien de temps, mais il est grave dans " .. cname .. "'de l'esprit. On ne sait toujours pas comment s'appelle le jeu." $) cyoa-text!
+		shootingREV shooting++ goodfx traderarcade-pay ' traderarcade-shoot+ ++
+;
+
+cyoa: traderarcade-shoot
+	"Jeu darcade mystere" cyoa-title!
+	picon!
+	($ "Cette borne darcade a sa fente a pieces remplacee par une grande poubelle sur laquelle est ecrit " .. "METTEZ DE LA NOURRITURE ICI" rbold .. " ' au dessus. On ne sait meme pas a quel jeu elle est censee etre, la seule chose a l'ecran est un message qui dit : " $) cyoa-text!
+	($ "CONTINUER : " fbold .. traderarcade-amt rainbold .. "  NOURRITURE" rainbold $) +text
+	+cr foodamt
+	chumany? not if
+		($ pname .. " ' regarde la borne d'arcade avec confusion. Les animaux ne jouent generalement pas aux jeux video, a quelques exceptions pres. Par exemple, les vers plats peuvent jouer a des simulateurs de marche, meme s'ils ne peuvent pas comprendre le sublime genie de la narration." $) +crtext
+	then;
+		traderarcade-pay? not if
+			"'Tu n'as pas les moyens." +crtext 
+		then;
+	choice( "Laisser pour le moment" )choice
+	pchar charchoice( "  joue pendant " .. traderarcade-amt .. " nourriture" )choice: traderarcade-shoot-go
+	cmechanic+ if
+		pchar charchoice( " demonte la machine darcade" )choice: traderarcade-mech
+	then
+;
+
+// Road Punchers Machine
+
+0 value rp-saguts
+0 value rp-bryu
+
+cyoa-choice: traderarcade-rp-done2
+	rp-saguts 0 > rp-bryu 0 > and if
+		clear-cyoa
+		"Cette borne darcade tombe soudainement en panne !" text!
+		"NO! WHAT DID YOU DOOOOOOOOOO?" bbold +crtext
+		"Lemploye de la salle darcade est encore moins content que ce que lon pensait possible." +crtext badfx
+	then 
+;
+
+: traderarcade-rp-done
+	 // -10 add-food pchar .loot-to-trunk 
+	 -10 trunk-food+ rp-saguts 0 > rp-bryu 0 > and if traderarcade-rp-done2 then 
+;
+
+cyoa-bridge: rp_recruit
+	nearest .character@ choosechar cchar to recruitee ricon clear-cyoa
+	($ cname .. "  est pret a tester sa force sur la route du punching." $) text!
+	recruitee .strengthREV recruitee .fitnessREV
+	cchar .name@ "BRYU" $= if "'HADOOK ! HADOOK ! KADOOSHIN' !" else "I GER ! I GER ! I GER UPPERCUT !" then fbold +crtext recruit-yesno
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!	
+;
+
+: rp_pop_share
+	lt mission{ .smokepoof }
+	0.01 lt .character@ .ai.wander_chance! 0 lt .character@ .ai.loot_chance! 1 lt .unseen!
+	-30 lt .fade!
+	90 lt .stun!
+	180 lt .aim_angle! goodfx
+	' rp_recruit cyoa!
+;
+
+: bryu_pop
+	new-npc lt .character@ .bryuify rp_pop_share
+;
+
+: saguts_pop
+	new-npc lt .character@ .sagutsify rp_pop_share
+;
+
+: traderarcade-bryu	bryu_pop ' rp-bryu ++ traderarcade-rp-done ;
+: traderarcade-saguts saguts_pop ' rp-saguts ++ traderarcade-rp-done ;
+
+cyoa: traderarcade-rp
+	"Road Punchers 2 : Les nouveaux punchers" cyoa-title!
+	picon!
+	($ "Il sagit dune vieille borne darcade pour le celebre jeu de combat classique : " .. "ROAD PUNCHERS" bbold .. "
+	This machine has been converted to run on food instead of quarters. It's 10 food to pick a character. For reasons unknown, it looks like almost all the characters are grayed out..." $) cyoa-text!
+	+cr foodamt
+		trunk-food 10 < if
+			"'Vous n'avez pas la nourriture necessaire pour jouer!" +crtext 
+		then;
+	choice( "Laisser pour le moment" )choice
+	rp-saguts 1 < if
+		choice( "Choisir SAGUTS   10 aliments" )choice: traderarcade-saguts
+	then
+	rp-bryu 1 < if
+		choice( "Choisir BRYU   10 aliments" )choice: traderarcade-bryu
+	then
+;
+	
+// Fireproofing Arcade
+
+cyoa-choice: traderarcade-fire-go
+	"Forge dans le feu" cyoa-title!
+	($ "En mettant la nourriture et en appuyant sur le bouton, la borne darcade " .. "EXPLOSE IMMEDIATEMENT!" fbold .. "  Vraiment mature!" $) cyoa-text!
+	cchar statmod{ .fireproof? } not if
+		($ cname .. "  se consume dans une grosse boule de feu! Cependant, " .. che .. "  est vivant et seulement legerement irrite.		" .. cname .. "' la peau de 's est etrangement fraiche." bbold $) +crtext
+		cchar statmod{ .fireproof } sting-- bitefx
+		choice( "Aie! BON SANG!" )choice
+	else
+		($ cname .. " ' se retrouve englouti dans une boule de feu! Bien sur, cela ne fait rien." .. cname .. "  se sent plutot suffisant a ce sujet." bbold $) +crtext
+		goodfx morale2+
+	then
+	-10 trunk-food+ clear-cyoa deleteme
+;
+
+cyoa: traderarcade-fire
+	"Machine a jeu etrange" cyoa-title!
+	picon!
+	($ "Ceci est une nouvelle machine a jeu qui a lair de neuf. Il y a des lettres geantes sur lecran qui disent : " .. "EXPLODERS DE FEU" rainbold .. "
+	This machine has been converted to run on food, so the coin slot is enormous. There's only one button. Instead of any sort of gameplay, the machine displays a roaring fire behind the title..." $) cyoa-text!
+	+cr foodamt
+		trunk-food 10 < if
+			"'Vous n'avez pas la nourriture necessaire pour jouer!" +crtext 
+		then;
+	choice( "Laisser pour le moment" )choice
+		pchar charchoice( " joue pendant 10 aliments" )choice: traderarcade-fire-go
+;
+
+cyoa-choice: traderarcade-axe-go
+	($ "Une hache volante se rapproche et se rapproche, puis " .. "PASSE A TRAVERS LECRAN!" fbold .. " Ils ne fabriquent plus de jeux comme ca !" $) cyoa-text!
+	cfitness+ cstrength+ or if
+		($ cname .. " est assez fort pour devier lhache. " .. cHe .. " se sent tres heurex que lhache a ete geree dabord, pas la pointe dabord." $) +crtext morale++ goodfx fitnessREV strengthREV
+	else
+		($ cname .. " est ecrase droit dans le visage par l'hache, manche en premier ! Le travailleur de l'arcade est assez heurex a propos de cela, car cela necessite moins de nettoyage que l'autre extremite aurait requis." $) +crtext ouch-- bitefx
+		alive? if morale-- then fitnessREV strengthREV
+	then
+	"Lecran glisse en panne lorsque lhache retombe au sol." +crtext
+	clear-cyoa
+;
+
+: traderarcade-axe-hard goldenaxe2 drop southofcyoa drop traderarcade-axe-go ;
+: traderarcade-axe-normal goldenaxe1 drop southofcyoa drop traderarcade-axe-go ;
+
+cyoa: traderarcade-axe
+	"SELECTEUR DE NIVEAU DE DIFFICULTE" cyoa-title!
+	picon!
+	($ "Welcome to the 80's  " .. "HACHE*BRILLANTE" rainbold .. "	La borne darcade semble fonctionner avec des jetons dune autre chaine darcades. " .. pname .. "  remarque cela et se tourne pour regarder lemploye de larcade, qui hausse les epaules avec indifference et detourne le regard." $) cyoa-text!
+	($ "Quelquun a du mettre un jeton avant que vous narriviez, lecran indique " .. "UN CREDIT RESTANT !" fbold .. "  et " .. "SELECTIONNEZ UNE DIFFICULTE :" rbold $) +crtext
+	choice( "Laisser pour le moment" )choice
+	pchar charchoice( "  joue en mode NORMAL" )choice: traderarcade-axe-normal
+	pchar charchoice( "  joue en mode DIFFICILE" )choice: traderarcade-axe-hard
+;
+
+
+// NPC
+
+cyoa: traderarcade
+	"Employe de larcade" cyoa-title!
+	"'Je ramene les arcades ! Elles vont devenir tres populaires maintenant que l'internet a ete detruit.		Aucun remboursement." bbold text!
+;
+
+}
+
+roomgen{
+
+: tradercade-box
+	gasarcademachine
+	' arcade-events events!
+	5 lt .timer!
+;
+
+: traderarcade-shoot
+	tradercade-box cyoa{ ' traderarcade-shoot cyoa! }
+;
+
+: traderarcade-rp
+	tradercade-box cyoa{ ' traderarcade-rp cyoa! }
+;
+
+: traderarcade-fire
+	tradercade-box cyoa{ ' traderarcade-fire cyoa! }
+;
+
+: traderarcade-axe
+	tradercade-box cyoa{ ' traderarcade-axe cyoa! }
+;
+
+: .arcadify args( chara )
+	"Arcader" <- chara .name!
+;
+
+: traderarcade-npc
+	still-npc .arcadify cyoa{ ' traderarcade cyoa! } ;
+	// regiondef{ ' trader-event lt .events! 1 lt .timer! }
+}
+
+map{ regiondef{
+
+trade-camp-reset
+
+: bldg tanchor!
+	"traderarcade" $picklocid addloc 
+		prefab{
+		BLINKY "LA DERNIERE " .. FLASHY .. "ARCADE" .. sign-text!
+		0 0 0 sign-bg!
+		0 1 0 sign-border!
+		1 1 1 sign-fg!
+		1 sign-glow!
+		0 3 rnd 8 4 shop }
+	
+;
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	xyp.i char < = if xyp.xy to gby to gbx then;
+	xyp.i char > = if gbx 1- gby xyp.xy swap 1+ swap gravellot then;
+	xyp.i char ( = if xyp.xy to gby2 to gbx2 then;
+	xyp.i char ) = if gbx2 1- gby2 xyp.xy swap 1+ swap gravellot then;
+		
+	xyp.i char P = if ' plotpave to ft xyp.xy ft then;
+	
+	xyp.i char x = if ' plotdirt to ft then;
+	xyp.i char G = if ' plotgrass to ft xyp.xy ft then;
+	xyp.i char $ = if xyp.xy grassedge then;
+	xyp.i char { = if dirtstart then;
+	xyp.i char } = if dirtend then;
+
+	xyp.i char t = if pictable2 lt-here 8 rdrift then;		
+	xyp.i char w = if pine lt-here drift then;
+	xyp.i char V = if tradercarhere then;
+	xyp.i char f = if campfirehere then;
+		
+	xyp.i char W = if trader-weapon-buyer then;
+	xyp.i char T = if traderhere then;
+	xyp.i char Z = if tnomey-spawn then;
+	xyp.i char g = if trader-food-for-gas then;
+	
+	xyp.i char @ = if xyp.xy bldg then;
+;
+
+"
+P........................
+(........................
+.........................
+.........................
+.........................
+.........................
+.........................
+....W....@.........g..Z.)
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+........................."
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	1 no_time!
+	17 19 rnd o'clock
+
+	' plotdirt to ft
+
+	30 %chance if 0 0.2 frnd weather! -1 2 frnd wind_force! else -1 1 frnd wind_force! then
+
+	plotmap
+	mission{ no-edge-spawns }
+
+	// Put char and chars in middle of map
+	25 %mv-up
+	45 %chars-up
+	
+	map{ street-junk }
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+
+	trade-mode
+
+	post-script: site-setup
+
+} }

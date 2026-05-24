@@ -1,0 +1,453 @@
+cyoa{ road{ regiondef{
+
+cyoa: info-dingus
+	"wugh" cyoa-title!
+	"'Salut, je suis l'Info Abruti" text!
+;
+
+uses events/unlock/perktrait.df
+uses events/unlock/perk1.df
+uses events/unlock/perk2.df
+uses events/unlock/perk3.df
+uses events/unlock/trait1.df
+uses events/unlock/gnome.df
+uses events/unlock/twitter.df
+
+: challenge-gamemodecheck
+
+	// Increment this 0 by 1 for each game mode with wins
+	0 gstats{
+		wins-normal		if 1+ then
+		wins-long		if 1+ then
+		wins-special	if 1+ then
+		wins-family		if 1+ then
+		wins-specialEX	if 1+ then
+		wins-familyEX	if 1+ then
+		wins-kepa		if 1+ then
+		wins-short		if 1+ then
+		wins-marathon	if 1+ then
+		wins-deadlier	if 1+ then
+		wins-endless	if 1+ then
+		wins-opp		if 1+ then
+		wins-quickdeath	if 1+ then
+		wins-4jerks		if 1+ then
+		wins-4jerksEX	if 1+ then
+	}
+;
+
+cyoa: challenge-statue1
+	gstats{ challenge-statue1 } 1 < if
+		"DEFI DES MODES I" cyoa-title!
+		challenge-gamemodecheck 6 < if
+			($ "Battez 6 modes de jeu differents pour " .. "debloquer" rainbold .. "  un assortiment de " .. "9 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnages Personnalises !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
+		else
+			($ "You've beaten 6 different game modes!
+			" .. "CHALLENGE REUSSIE!" rainbold $) text!
+			goodfx gstats{ 1 to challenge-statue1 } filesave{ save-global-stats }
+			"De nouvelles casquettes sont desormais verrouillees. Regardez les dans le Createur de Personnages Personnalises !" +crtext
+			extrahatcheck
+		then
+	else
+		"CHALLENGE DES MODES I   REUSSIE!" cyoa-title!
+		($ "Apres avoir battu 6 modes de jeu differents, vous avez gagne une serie de 9 nouvelles casquettes pour le Createur de Personnages Personnalises ! Cela comprend des casquettes tres recherchees telles que :		," .. "TOILETTE A urine AVEC COUVERCLE		Tete DE Cheval		CROWN DOREE" rbold .. "eT PLUS !		" fbold $) text!
+		extrahatcheck
+	then
+	choice( "RETOUR" )choice
+;
+
+cyoa: challenge-statue2
+	gstats{ challenge-statue1 } 2 < if
+		"CHALLENGE DES MODES II" cyoa-title!
+		challenge-gamemodecheck 10 < if
+			($ "Battez 10 modes de jeu differents pour " .. "debloquer" rainbold .. "  un assortiment de " .. "6 NOUES CASQUETTES" rainbold .. "  et " .. "8 NOUVELLES NUANCES" rainbold .. " pour le Createur de Personnages Personnalises !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
+		else
+			($ "You've beaten 10 different game modes!
+			" .. "CHALLENGE REUSSIE!" rainbold $) text!
+			goodfx gstats{ 2 to challenge-statue1 } filesave{ save-global-stats }
+			"De nouveaux chapeaux et lunettes de soleil ont ete debloques en permanence. Decouvrez les dans le createur de personnage personnalise!" +crtext
+			extrahatcheck extraglassescheck
+		then
+	else
+		"DEFI DES MODES II   TERMINE!" cyoa-title!
+		($ "Apres avoir battu 10 modes de jeu differents, vous avez gagne un lot de 6 nouveaux chapeaux et 8 nouvelles lunettes de soleil pour le createur de personnage personnalise! Cela comprend des accessoires tres recherches tels que:		" .. "CHAPEAU DE PRINCESSE" rbold .. "eT PLUS !		" fbold $) text!
+		extrahatcheck extraglassescheck
+	then
+	choice( "RETOUR" )choice
+;
+
+cyoa: challenge-statue3
+	gstats{ challenge-statue1 } 3 < if
+		"CHALLENGE OF MODES III" cyoa-title!
+		challenge-gamemodecheck 14 < if
+			($ "Battez 14 modes de jeu differents pour " .. "debloquer" rainbold .. "  un assortiment de " .. "12 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnages Personnalises !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
+		else
+			($ "You've beaten 14 different game modes!
+			" .. "CHALLENGE REUSSIE!" rainbold $) text!
+			goodfx gstats{ 3 to challenge-statue1 } filesave{ save-global-stats }
+			"De nouvelles casquettes sont desormais verrouillees. Regardez les dans le Createur de Personnages Personnalises !" +crtext
+			extrahatcheck
+		then
+	else
+		"CHALLENGE OF MODES III - COMPLETE!" cyoa-title!
+		($ "Apres avoir battu 14 modes de jeu differents, vous avez gagne un lot de 12 nouveaux chapeaux pour le createur de personnage personnalise! Cela comprend des chapeaux tres recherches tels que:		" .. "'GROS POISSON		BERET ECOSSAIS		BOTTE DE TETE		CASQUETTE DE CUISINIER" rbold .. "eT PLUS !		" fbold $) text!
+		extrahatcheck
+	then
+	choice( "RETOUR" )choice
+;
+
+cyoa: challenge-statue4
+	gstats{ challenge-statue1 } 4 < if
+		"DEFI DES MODES IV" cyoa-title!
+		gstats{ best-gamemode-streak 4 } > challenge-gamemodecheck 13 > and if
+			($ "You've streaked 5 different game modes!
+			" .. "CHALLENGE REUSSIE!" rainbold $) text!
+			goodfx gstats{ 4 to challenge-statue1 } filesave{ save-global-stats }
+			"De nouvelles casquettes sont desormais verrouillees. Regardez les dans le Createur de Personnages Personnalises !" +crtext
+			extrahatcheck
+		else
+			($ "Apres avoir battu les defis precedents, obtenez une sequence de victoires dans 5 modes de jeu differents pour " .. "debloquer" rainbold .. "  un assortiment de " .. "18 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnages Personnalises !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
+			($ "Meilleure sequence de modes de jeu differents: " bbold .. gstats{ best-gamemode-streak } $) +crtext
+		then
+	else
+		"DEFI DES MODES IV   TERMINE!" cyoa-title!
+		($ "Apres avoir enchaine 5 modes de jeu differents, vous avez gagne un lot de 18 nouveaux chapeaux pour le Createur de Personnages! Cela inclut des chapeaux tres recherches tels que:" .. "GNOME Y CAP		TIN FOIL HAT		CARDBOARD MASK		CHAPAU DE SORCIER" rbold .. "eT PLUS !		" fbold $) text!
+		extrahatcheck
+	then
+	choice( "RETOUR" )choice
+;
+
+cyoa: jerk-dingus
+	"Le magasin de labruti a appele" cyoa-title!
+	"'T'ES UN CON OK, CA FERA CINQ DOLLARS ! MERCI D'AVOIR FAIT VOS ACHATS AU MAGASIN DE CONS" text!
+	choice( "IL N'Y A PLUS DE VOUS" )choice
+;
+
+cyoa: roaming-capyrun
+	"Le rongeur errant" cyoa-title!
+	($ "Le truc du rongeur " .. "capybara? Tres grand gerbille?" pbold .. "  senfuit lorsque vous lapprochez. Il court vers le " .. "NORD EST !" rainbold $) text!
+	clear-cyoa deleteme
+;
+
+cyoa: ugnome-note
+	"Du bureau dUnomey" cyoa-title!
+	($ "La note se lit comme suit :" $) cyoa-text!
+	"SORS DE MA MAISON, NERD !" pbold +crtext
+;
+
+// : tutorial-repeat 0 saveslot! MAIN_EVENT_NEW main-post-event "events/tutorial.df" $load-region to-mission ;
+: tutorial-repeat 0 saveslot! gstats{ 0 to tutorial-done save } sys_reset ;
+
+cyoa: tutorial
+	"Tutoriel" $upper cyoa-title!
+	someicon
+	($ "Vous pouvez repeter le tutoriel ici ! Cest pratique si vous avez manque des informations sur des choses comme le largage darmes ou le lancer de meubles. Cette option vous ramenera a lecran titre, appuyez simplement sur START pour revenir au tutoriel." $) cyoa-text! basic-tone
+
+		choice( "SORTIE" )choice
+		choice( "Repeter le tutoriel" )choice: tutorial-repeat
+;
+
+: dingus-deleted-dialog
+	FLASHY "SUPPRIME !" .. $cyoa-ok-dialog "Dingus" $upper cyoa-title!
+;
+
+: deletedata-gstats gstats{ gstats-clear } sys_reset 5 0.95 2dup rumble-camera rumble-gui sfx{ rumble } dingus-deleted-dialog ;
+: deletedata-custchars filesave{ custchars-clear save-custchars load-custchars } dingus-deleted-dialog sfx{ creepy } ;
+: deletedata-both deletedata-custchars deletedata-gstats ;
+
+cyoa-blank: deletedata-gstats-confirm
+	"Etes vous sur de vouloir supprimer vos statistiques, vos avantages et vos traits ? Cela supprimera egalement des elements tels que la progression du mode de jeu." text!
+	"REMARQUE : La selection de cette option quittera lecran titre." pbold +crtext
+	choice( "NON" )choice
+	choice( "OUI, SUPPRIMEZ LES" )choice: deletedata-gstats
+;
+
+cyoa-blank: deletedata-custchars-confirm
+	"Etes vous sur de vouloir supprimer tous vos personnages personnalises ?" text!
+	choice( "NON" )choice
+	choice( "OUI, SUPPRIMEZ LES" )choice: deletedata-custchars
+;
+
+cyoa-blank: deletedata-both-confirm
+	"Etes vous sur de vouloir supprimer les statistiques, les avantages, les traits et vos personnages personnalises ? Cela supprimera egalement des elements tels que la progression du mode de jeu." text!
+	"REMARQUE : La selection de cette option quittera lecran titre." pbold +crtext
+	choice( "NON" )choice
+	choice( "OUI, SUPPRIMER TOUT" )choice: deletedata-both
+;
+
+// Do ARE YOU SURE? choices too
+cyoa: deletedata
+	"Effacement des donnees" $upper cyoa-title!
+	"'JE SUIS LE DINGUS DE SUPPRESSION DE DONNEES JE SUPPRIMERAI TOUTES VOS DONNEES !" rbold text!
+	"'Le squelette fait des bruits de cliquetis. Vous pouvez supprimer vos donnees de jeu ici ! Cependant, vous ne devriez probablement pas." +crtext
+	choice( "SORTIE" )choice
+	choice( "Personnages personnalises" )choice: deletedata-custchars-confirm
+	choice( "Statistiques et avantages" )choice: deletedata-gstats-confirm
+	choice( "Effacer les deux" )choice: deletedata-both-confirm
+;
+
+cyoa-blank: freeZP-give-go
+	iicon
+	"Points ZOMBO augmentes a 99!" rainbold text!
+	goodfx gstats{ 99 to zombo-point save }
+
+;
+
+cyoa: freeZP-give
+	"Concours Zombo Point !" cyoa-title! iicon
+	"BIEN C'EST LA BRANCHE DE TESTS ALORS JE PEUX TE DONNER DES POINTS ZOMBO" bbold text!
+	gstats{ zombo-point } 99 < if
+		choice( "Donnez moi ces points Zombo" )choice: freeZP-give-go
+	else
+		"REVIENS QUAND TU AURAS MOINS DE 99 ZP!" bbold
+	then +crtext
+	choice( "Partir pour linstant" )choice
+
+;
+
+} } }
+
+map{ regiondef{
+
+: info-dingus
+	nomove-npc
+	40 lt .character@ .specialtype!
+	' infostats lt .cyoa!
+;
+
+: tutorial-dingus
+	nomove-npc
+	10 lt .character@ .specialtype!
+	' tutorial lt .cyoa!
+;
+
+: delete-dingus
+	nomove-npc
+	78 lt .character@ .specialtype!
+	' deletedata lt .cyoa!
+;
+
+: perk-event args( me eventid perk ) THING_EVENT_TIMER <- eventid <> if then;
+
+	<- me .cyoa@ 0= if then; // Just time out, don't display icon anymore
+
+	15 <- me .repeating_timer
+
+	<- me .nearest? if "" <- me .report then;
+
+	// <- me .loot@ dup 0= if drop 1 GREEN "$" .. else looticon then
+	// <- me GREEN "11" .. looticon - a ?
+
+	<- perk 1 < if
+		<- me "?" pbold
+	else
+		<- me <- perk bbold
+	then 1 swap <- me .reportdurnow
+;
+
+
+(*
+	EXAMPLE USAGE: Create a new event handler for the specified value
+
+	gstats{ toilets-opened } pe: perk-event-toilet
+*)
+
+: pe: token $create last >body ! does> @ execute perk-event ;
+
+: gstat: postpone gstats{ postpone ' postpone } ;
+
+gstats{ ' perk1-stockleft } pe: perk1-stockleft-event
+gstat: perk2-stockleft pe: perk2-stockleft-event
+gstat: perk3-stockleft pe: perk3-stockleft-event
+gstat: trait1-stockleft pe: trait1-stockleft-event
+gstat: gnome-stockleft pe: gnome-stockleft-event
+gstat: twitter-twitsleft pe: twitter-twitsleft-event
+
+: total-unlocktally gstats{ perk1-unlocktally perk2-unlocktally perk3-unlocktally trait1-unlocktally + + + } ;
+// 14 right now without any unlocked, has to be increased if new perks are added that are pre-unlocked
+
+: total-upgradetally gstats{ perk1-upgradetally perk2-upgradetally perk3-upgradetally + + } ;
+// 23 with nothing unlocked currently.
+// Need to upgrade zombotown.df if either upgradetally or unlocktally changes.
+
+: unlocker-shared
+	// new-camper
+	nomove-npc
+	// 0.01 lt .character@ .ai.wander_chance!
+	1 lt .timer!
+;
+
+: perk-dingus unlocker-shared
+
+	57 lt .character@ .specialtype!
+	' perk1-stockleft-event lt .events!
+	' perk-dingus lt .cyoa!
+;
+
+: perk1-dingus unlocker-shared
+
+	12 lt .character@ .specialtype!
+	' perk1-stockleft-event lt .events!
+	' perk1-dingus lt .cyoa!
+;
+
+: perk2-dingus unlocker-shared
+
+	25 lt .character@ .specialtype!
+	' perk2-stockleft-event lt .events!
+	' perk2-dingus lt .cyoa!
+;
+
+: perk3-dingus unlocker-shared
+
+	46 lt .character@ .specialtype!
+	' perk3-stockleft-event lt .events!
+	' perk3-dingus lt .cyoa!
+;
+
+: trait1-dingus unlocker-shared
+
+	24 lt .character@ .specialtype!
+	' trait1-stockleft-event lt .events!
+	' trait1-dingus lt .cyoa!
+;
+
+: jerk-dingus
+	// new-camper
+	nomove-npc
+	21 lt .character@ .specialtype!
+
+	' trader-event lt .events!
+	1 lt .timer!
+
+	' jerk-dingus lt .cyoa!
+;
+
+: challenge-statue1
+	spawn special_objects48_base_id 0x 24 + 2 + lt .spriteid! bbox immovable
+	' challenge-statue1 lt .cyoa!
+;
+
+: challenge-statue2
+	spawn special_objects48_base_id 0x 24 + 1 + lt .spriteid! bbox immovable
+	' challenge-statue2 lt .cyoa!
+;
+
+: challenge-statue3
+	spawn special_objects48_base_id 0x 24 + 3 + lt .spriteid! bbox immovable
+	' challenge-statue3 lt .cyoa!
+;
+
+: challenge-statue4
+	spawn special_objects48_base_id 0x 24 + 0 + lt .spriteid! bbox immovable
+	' challenge-statue4 lt .cyoa!
+;
+
+: generalinfo-duder
+	nomove-npc
+	' gameinfo lt .cyoa!
+;
+
+: unlockgnome unlocker-shared
+	lt .character@ .gnomify2
+	' gnome-stockleft-event lt .events!
+	' unlockgnome lt .cyoa!
+;
+
+: ugnome-note wrotenote cyoa{ ' ugnome-note cyoa! } ;
+
+: unlockgnome-hut gstats{ ugnome-found } 1 < if unlockgnome else ugnome-note then ;
+: capy-gnort args( me )
+	<- me ($ "*GNORT*" rbold $) <- me
+	.sprayit
+	// statmod{ .report } clear-cyoa
+	sfx{ sing 500 fx .d! 2.25 fx .pitch! 0.9 fx .q! <- me .adjust-vol }
+;
+
+: capy-chat args( me )
+	gstats{ ugnome-found } 0 > if
+		<- me capy-gnort
+	else
+		cyoa{ roaming-capyrun }
+	then
+	;
+
+: roaming-capybara
+	new-camper lt .character@ .gerbilfy
+	// 0.06 lt .character@ .ai.wander_chance!
+	' capy-chat lt .cyoa!
+;
+
+: hut-capybara
+	new-npc lt .character@ .gerbilfy
+	' capy-gnort lt .cyoa!
+;
+
+: freeZP-dingus
+	nomove-npc
+	40 lt .character@ .specialtype!
+
+	' trader-event lt .events!
+	1 lt .timer!
+	' freeZP-give lt .cyoa!
+;
+
+: twitter-chicken
+	nomove-npc
+	lt .character@ .chickenify
+	300 angle-colour 2 rgb* lt .clr!
+
+	' twitter-twitsleft-event lt .events!
+	1 lt .timer!
+	' twitterbird lt .cyoa!
+;
+
+} }
+
+// MANDIBLE
+
+cyoa{ regiondef{
+
+cyoa: sycamore-dingus
+	"Professeur Sycamore" cyoa-title!
+	"'Ne pas dire le bois, il me donne de mauvais souvenirs." pbold text!
+	"--- Professor Sycamore
+	Creator of: Death Road to Sycamore" +crtext
+	"Contributions pour MANDIBLE Mise a jour: " rbold +crtext
+	"Punch Bot et Speed Bot dans le camp commercial mecanique special" bbold +crtext
+	choice( "Tres beaux robots" )choice
+;
+
+cyoa: modguard-dingus
+	"Hutte dans une hutte" cyoa-title!
+	"Je suis le gardien de la hutte des contributeurs !	Passez moi les createurs qui ont apporte du nouveau contenu a la route de la mort ! Ce sont des createurs de mods Death Road to Canada, de notre Discord ! " text! "#mod showcase" pbold +text "  et " +text "#deathroad modding" pbold +text
+
+	"Entrez pour lire leurs paroles dinspiration et decouvrez ce quils ont ajoute dans chaque mise a jour !	Cest une hutte dans la plus grande hutte dinformation !" +crtext
+	choice( "'Allons voir cette cabane" )choice
+;
+
+} }
+
+map{ regiondef{
+
+: sycamore-dingus
+	// new-camper
+	nomove-npc
+	121 lt .character@ .specialtype!
+
+	' sycamore-dingus lt .cyoa!
+;
+
+: modder-dingus
+	// new-camper
+	nomove-npc
+	120 lt .character@ .specialtype!
+
+	' modguard-dingus lt .cyoa!
+;
+
+
+} }

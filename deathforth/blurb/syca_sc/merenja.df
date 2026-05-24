@@ -1,0 +1,61 @@
+	: MERENJA-oneline1 "Bit of a departure from my original commission, I admit." ;
+	: MERENJA-oneline2 "If you kick me out of my own car, I'm gonna be pissed." ;
+	: MERENJA-oneline3 "We need a better car with even more armor and guns." ;
+	: MERENJA-oneline4 "And then came my ship, charging in from the fog..." ;
+	: MERENJA-oneline5 "I did not care for the Admiral's pie." ;
+	: MERENJA-oneline6 "Less ear-shattering booms, a lot more undead." ;
+	: MERENJA-oneline7 "Want a can of eels?" ;
+	: MERENJA-oneline8 "That's ADMIRAL Merenja Raven, to you." ;
+	: MERENJA-oneline9 "Here, have this handbook. You can wipe your butt with it." ;
+	: MERENJA-oneline10 "Need to find myself a chainsaw or two..." ;
+	: MERENJA-oneline11 "Haha, you think zombies are bad? Try the open ocean." ;
+	: MERENJA-oneline12 "Sure, this is bad, but not as bad as having your hull breached." ;
+	: MERENJA-oneline13 "It - it doesn't matter how large my vessel was or wasn't!" ;
+	: MERENJA-oneline14 "Best thing about the road? Less barnacles." ;
+	: MERENJA-oneline15 "Hang on, I didn't realise we had heated seats!" ;
+	: MERENJA-oneline16 "My old vessel even had sonar. They really thought of everything." ;
+	: MERENJA-oneline17 "What do you mean all your rivers have bridges across them?" ;
+	: MERENJA-oneline18 "Wanderers are as wanderers be..." ;
+	: MERENJA-oneline19 "Shall I open a beer bottle?" ;
+	: MERENJA-oneline20 "A good captain goes down with her ship. A better captain sinks the other ship first." ;
+	: MERENJA-oneline21 "Need to attach some harpoons to this thing..." ;
+
+	deck-new
+		card: MERENJA-oneline1
+		card: MERENJA-oneline2
+		card: MERENJA-oneline3
+		card: MERENJA-oneline4
+		card: MERENJA-oneline5
+		card: MERENJA-oneline6
+		card: MERENJA-oneline7
+		card: MERENJA-oneline8
+		card: MERENJA-oneline9
+		card: MERENJA-oneline10
+		card: MERENJA-oneline11
+		card: MERENJA-oneline12
+		card: MERENJA-oneline13
+		card: MERENJA-oneline14
+		card: MERENJA-oneline15
+		card: MERENJA-oneline16
+		card: MERENJA-oneline17
+		card: MERENJA-oneline18
+		card: MERENJA-oneline19
+		card: MERENJA-oneline20
+		card: MERENJA-oneline21
+	constant MERENJA-ONELINERS
+	MERENJA-ONELINERS var MERENJA-oneliners
+	MERENJA-ONELINERS shuffles to MERENJA-oneliners
+
+: MERENJA-oneliner
+	MERENJA-oneliners depths 0= if MERENJA-ONELINERS shuffles to MERENJA-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: MERENJA-oneliner
+
+	constant BLURB-MERENJA-DECK
+	BLURB-MERENJA-DECK var blurb-MERENJA-deck
+	BLURB-MERENJA-DECK shuffles to blurb-MERENJA-deck

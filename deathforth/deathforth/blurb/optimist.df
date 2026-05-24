@@ -1,0 +1,114 @@
+
+: good-weather
+	2nd-char choosechar
+	blurbslot 0= if
+		"Finalement, aujourd'hui s'est avere être une belle journee !" blurbsay
+	else
+		blurbslot 2 < if
+			cattitude- if
+				($ "PFFT, ET ALORS ? QU'EST-CE QUI EST SI BIEN A CE SUJET ?" $) blurbsay
+				"Rien de bon a propos des zombies, c'est sûr " blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Tu as raison ! Quelle belle journee pour un road trip." blurbsay
+			STAT_MORALE me .stat++
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+: taste-like
+	2nd-char choosechar
+	blurbslot 0= if
+		"Si tu fermes les yeux, cette nourriture pour chat a presque le goût du thon !" blurbsay
+	else
+		blurbslot 2 < if
+			cattitude+ not if
+				($ "Si tu fermes les yeux, ça a presque le goût de la merde !" $) blurbsay
+				STAT_MORALE 1st-char .stat--
+			else
+				STAT_MORALE me .stat++
+		then then
+	then
+;
+
+: canada-weather
+	2nd-char choosechar
+	blurbslot 0= if
+		"Il fait peut-être froid au Canada, mais j'attends avec impatience ce temps !" blurbsay
+	else
+		blurbslot 2 < if
+			cattitude- if
+				($ "Cest pas comme si nous avions le choix de toute façon ! Je deteste le froid !" $) blurbsay
+				STAT_MORALE 1st-char .stat--
+			else
+				"Je suis daccord, en Floride l'air est parfois irrespirable sans climatisation." blurbsay
+				STAT_MORALE me .stat++
+		then then
+	then
+;
+
+	: optimist-oneline1 "Je me sens plutot bien a ce sujet. Je veux dire, dans l'ensemble." ;
+	: optimist-oneline2 "Je pense toujours que les chances sont bonnes, ici." ;
+	: optimist-oneline3 "La chance est de mon cote!" ;
+	: optimist-oneline4 "Le monde n'est pas si mal. Bien sûr, il pourrait être ameliore..." ;
+	: optimist-oneline5 "Je peux le sentir, nous allons tomber sur quelque chose de bien!" ;
+// VVVVVVVV JONZ BLURBZ VVVVVVVVV
+	: optimist-oneline6 "Cette nourriture pour chat n'est pas si mauvaise!" ;
+	: optimist-oneline7 "Je ne pense pas que je pourrais jamais me lasser de la viande en conserve." ;
+	: optimist-oneline8 "Si vous ignorez les zombies cest comme un road trip ordinaire!" ;
+	: optimist-oneline9 "Cette voiture ne devrait avoir aucun probleme pour se rendre au Canada." ;
+	: optimist-oneline10 "J'ai hate de rencontrer d'autres survivants sur le chemin du Canada." ;
+	: optimist-oneline11 "Nous ne devrions avoir aucun probleme pour nous rendre au Canada." ;
+	: optimist-oneline12 "Cest juste une navigation fluide a partir de maintenant!" ;
+	: optimist-oneline13 "Cela ne ferait pas de mal de faire equipe avec plus de survivants." ;
+	: optimist-oneline14 "C'est agreable d'avoir toute la route pour soi." ;
+	: optimist-oneline15 "Je prevoyais de demenager au Canada de toute facon!" ;
+	: optimist-oneline16 "J'ai hate au froid canadien." ;
+	: optimist-oneline17 "Je me vois bien me mettre au hockey !" ;
+	: optimist-oneline18 "Pas de nourriture ? Au moins je perdrai du poids d'ici mon arrivee au Canada !" ;
+	: optimist-oneline19 "Je nai jamais aime tous ces moustiques en Floride de toute facon." ;
+	: optimist-oneline20 "Je ne pars jamais de chez moi sans mon fidele ouvre boite !" ;
+
+
+
+	deck-new
+		card: optimist-oneline1
+		card: optimist-oneline2
+		card: optimist-oneline3
+		card: optimist-oneline4
+		card: optimist-oneline5
+		card: optimist-oneline6
+		card: optimist-oneline7
+		card: optimist-oneline8
+		card: optimist-oneline9
+		card: optimist-oneline10
+		card: optimist-oneline11
+		card: optimist-oneline12
+		card: optimist-oneline13
+		card: optimist-oneline14
+		card: optimist-oneline15
+		card: optimist-oneline16
+		card: optimist-oneline17
+		card: optimist-oneline18
+		card: optimist-oneline19
+		card: optimist-oneline20
+
+	constant OPTIMIST-ONELINERS
+	OPTIMIST-ONELINERS var optimist-oneliners
+
+: optimist-oneliner
+	optimist-oneliners depths 0= if OPTIMIST-ONELINERS shuffles to optimist-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+		card: good-weather
+		card: taste-like
+		card: canada-weather
+		20 cards: optimist-oneliner
+
+	constant BLURB-DECK-OPTIMIST
+	BLURB-DECK-OPTIMIST var blurb-deck-optimist

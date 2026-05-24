@@ -1,0 +1,1441 @@
+cyoa{ road{
+
+: image-bison-def 79 cyoa-image-icon! ;
+
+
+cyoa-choice: drts-bison-calmshot
+	($ Thegroup .. " gathers, firearms in hand. Maybe if they simply scare the bison with their guns, they can get on with the day." $) text!
+
+	($ cname .. " fires off a few rounds. One pings off of a lamppost and nails a nearby bison. Woops!" $) +crtext 
+
+	($ "The bison disperse, fleeing in rapid terror! At least it's over quickly." $) +crtext
+	morale++all 
+	goodfx 
+	
+	($ cname .. " thinks that was a pretty good shot." $) +crtext
+	cchar .shooting++ 
+	cchar .morale++ 
+	
+	($ "Some spare meat is scavenged from the fallen bison after the rest of the horde is gone." $) +crtext
+	4 trunk-food+
+	
+;
+
+cyoa-choice: drts-bison-angrystrong
+	($ cname .. " steps forward to take on the horde, all on " .. chis .. " own. For most this would be suicide; bison are dangerous creatures." $) cyoa-text! 
+	
+	cchar .trait@ "BERSERK!" $= if 
+		($ PURPLE "BERSERRRRRKKKKKKKKKKKK!!!" .. $) +crtext  1 rumble 
+	then 
+	
+	STAT_STRENGTH cchar .effstat 11 < if 
+		($ WHITE "For " .. cname .. ", it IS suicide. Even though " .. che .. " is fairly strong, they'll never be as strong as a multi-tonne horde of beese (plural for bison.)" .. $) +crtext 
+	else 
+		($ "...but " cname .. " is built different. As hardy and manical as any bison, they tear through the horde one-by-one, suplexing and batting away several of the herd's members." .. $) +crtext
+		($ "The herd disperses. They know their superior. They know the tale of the " RAINBOW "MEGABUFF!!!" .. .. $) +crtext
+		($ "The group is able to get past, without even damaging their car!" $) +crtext
+		10 trunk-food+
+		morale++all morale++all goodfx    
+	then;
+	
+	($ "Unfortunately, " .. cname .. " gets mauled pretty bad." rbold $) +crtext 
+	
+	badfx 
+	morale-- 
+	morale-- 
+	ouch--
+	ouch--
+	
+	cchar .trait@ "BERSERK!" $= if
+		cchar .health@ 0 > if 
+		($ cname .. WHITE "TRIUMPHS!?" .. $) +crtext
+		($ FLASHY "MAX STRENGTH INCREASED?!" .. $) +crtext 
+		1 STAT_STRENGTH cchar .bonus+ 
+		\ nice reward... if you can survive!! ;3 
+		then 
+	then 
+	
+	($ WHITE "The car survives without damage, at least." .. $) +crtext
+	cchar .strength++
+	
+;
+
+cyoa-choice: drts-bison-coolit 
+
+	cchar .pet@ 0 = if 
+		($ cname .. " stands atop of a footstool and proudly proclaims " .. chis .. " speech: " $) cyoa-text!
+	else 
+		($ cname .. " sits atop of a footstool and proudly yaps " .. chis .. " speech: " $) cyoa-text!
+	then 
+	
+	($ "HI BISON PEOPLE. I THINK YOU SHOULD COOL IT. THAT WOULD BE AWESOME. I THINK." rbold $) +crtext
+	
+	($ "MOOO. MOOOOOO. HEY, WE'RE WALKIN' HERE. (American bison famously have urban dialects.)" bbold $) +crtext
+	
+	cool-it 3 > if 
+		($ "Round the group the bison gather. This must be them... " $) +crtext
+		($ "THE CHOSEN ONE" fbold $) +crtext
+		($ "(Bison tales speak of a chosen individual they are duty-bound to help! What a rich and profound culture.)" bbold $) +crtext
+		($ WHITE "The bison carry the group to a nearby gas station! It's loaded with supplies!" .. $) +crtext
+		cooled-it 
+		
+		50 trunk-gas+ 
+		8 trunk-food+ 
+		2 trunk-medical+ 
+		morale++all
+		morale++all 
+	then; 
+
+	($ "To absolutely nobody's surprise, this doesn't work. How embarassing! Hours pass before the car finally has enough space to get through." $) +crtext
+	
+	cool-it++
+	badfx
+	
+	morale--all
+	morale--all
+	
+;
+
+: drtc-terror-check args( chara )
+	<- chara .composure@ 3 > if 
+		($ <- chara .name@ pbold " is able to remain calm despite the loud noises." .. $) +crtext 
+		<- chara .temperREV 
+	else
+		50 %chance if 
+			($ <- chara .name@ pbold " FREAKS OUT! This is terrifying!" .. $) +crtext
+			<- chara .attitudeREV
+			<- chara .morale--
+		else
+			($ <- chara .name@ pbold " shrieks like a child!" .. $) +crtext
+			<- chara .attitudeREV
+			<- chara .morale--
+		then 
+	then 
+;
+
+cyoa-choice: drts-bison-massacre
+	($ Thegroup .. " decides to just book it through the horde. Herds and hordes aren't so different, right?" $) text!
+	
+	($ "Two bison are knocked out the way before the rest start to angrily maul the car! Terror ensues." $) +crtext
+	
+	' drtc-terror-check  foreach-team-char
+	
+	morale--all
+	
+	($ "
+	The group survives, but not before hours of mauling. Eventually, the bison lose interest, and retreat back to whence they came." $) +text
+	
+	car-plowthrough
+
+	($ RED "
+	...that could have been much, much worse!" .. $) +text
+	badfx 
+	
+;
+
+: drtc-bison-check args( @ )
+	<- @ .cattitude+ if 
+		($ <- @ .colourname .. " thinks the whole experience was beautiful, in a way." $) +crtext 
+		<- @ .attitudeREV
+	else
+		50 %chance if 
+			($ <- @ .colourname .. " hates waiting around! Waiting around is for dinks!" $) +crtext 
+			<- @ .attitudeREV
+			<- @ .morale--
+		else
+			($ <- @ .colourname .. " waits so long they pee themselves!" $) +crtext 
+			<- @ .attitudeREV
+			<- @ .morale--
+			<- @ .morale--
+		then 
+	then 
+;
+
+
+cyoa-choice: drts-bison-wait
+	($ Thegroup .. " decides to sit in the car and just wait the herd out; simply let nature take its course." $) text!
+	
+	($ "Hours pass..." $) +crtext
+	
+	($ "And then more hours pass..." $) +crtext
+
+	($ "...And even more. " $) +crtext
+	
+	badfx 
+	
+	' drtc-bison-check  foreach-team-char +cr
+	
+;
+
+cyoa-choice: drts-bison-nearby
+	($ Thegroup .. " decides to go for a walk while the bison are crossing. Why spend all that time waiting?" $) text!
+	
+	($ "There's fields and fields of bison. All in one line, all politely crossing one-by-one." $) +crtext
+	
+	\ wits-total 6 > if 
+	\	($ "This must be the annual trans-continental bison crossing! Yes, that MUST be it." $) +crtext
+    \	then 
+	
+	\ waaaa theres no explorer interaction waaaa 
+	\ NO there is NOTHING here its just FIELDS and BISON and a rest stop 
+
+		($ "A few minutes after leaving their car, a bandit finds it and attempts to break in. Leaving your car alone is a perilous decision!" $) +crtext
+	
+		most-paranoid if choosechar
+		\ car-stolen trunk.killer bandit-gas bandit-food bandit-med bandit-ammo2 morale3-all
+			goodfx 
+			($ cname .. " had a bad feeling about this place and went to check up on the car half-way through." $) +crtext
+			($ "The carjacking is prevented! The bandit drops his crowbar and runs." $) +crtext
+			1 WEAPON_CROWBAR trunk.weapon+ 
+		else 
+			badfx 
+			($ "The bandit breaks in!" " The entire car is prime for the taking!" rbold .. $) +crtext
+			car-stolen trunk.killer bandit-gas bandit-food bandit-med bandit-ammo2 morale3-all
+		then 
+	
+	($ "By walking around for a bit, the group find a location or two nearby. If desired, they could loot the location while they wait." pbold $) +crtext
+	($ "Pick a new location to explore:" bbold $) +crtext
+	
+	choice( "Rest Stop" )choice: rest-easy
+	choice( "Quiet Yallmart" )choice: yallmart-easy
+	choice( "Give up exploring" )choice 
+	\ deja vu... 
+;
+
+: bicoolit 
+	cool-it 3 > if 
+	"!!!" fbold .. 
+	then
+;
+
+cyoa: drts-bison 
+	"Wish We Had A Lasso" cyoa-title!
+	image-bison-def
+	($ Thegroup .. " happens upon a herd crossing the road. The road is narrow and has hedges and walls either side. Something must be done quickly; the bison herd is already becoming " .. "irate." rbold $) text!
+		most-angrystrong if
+			charchoice( ": I'll take 'em!" )choice: drts-bison-angrystrong
+		then
+		most-grating if
+			charchoice( ": TELL BISON TO COOL IT" bicoolit )choice: drts-bison-coolit 
+		then
+		calmshot-check if
+			charchoice( ": Calmly scare them away" )choice: drts-bison-calmshot
+		then
+		vehicle.which@ 0 > if 
+			choice( "Run them over" )choice: drts-bison-massacre
+			choice( "Explore nearby on foot" )choice: drts-bison-nearby
+		then 
+		choice( "Wait them out" )choice: drts-bison-wait
+	\ 	choice( "Explore nearby" )choice: drts-bison-nearby
+;
+
+\ uses extra/sycamore_events.df
+
+: image-submarine-def 78 cyoa-image-icon! ;
+
+: forge_insult 1 21 rnd case 
+	1 of "SCURVY-RIDDEN " endof 
+	2 of "TWINKLING " endof 
+	3 of "BOTTOMFEEDER " endof 
+	4 of "LITTLE MAMA'S BOY " endof 
+	5 of "LANDGRUBBER " endof 
+	6 of "DINKFEST " endof 
+	7 of "TWO-TONGUE " endof 
+	8 of "POOPDECK SHIRTSTAIN " endof 
+	9 of "DINGUS " endof 
+	10 of "OBSERVER-UN-MEMBER-STATE " endof 
+	11 of "GOATLICKIN' SWINE " endof 
+	12 of "PIGSTY " endof 
+	13 of "HORSEMOUTH " endof 
+	14 of "COLDPLAY-ENJOYIN' " endof 
+	15 of "TIMES-TABLES STRUGGLING " endof 
+	16 of "SCRUNGLEBERRY " endof 
+	17 of "MOULDY TWITTER-POSTIN' " endof 
+	18 of "BITE-OF-87 VICTIM SON OF A " endof
+	19 of "COMPLETE FAILURE " endof 
+	20 of "OUTDATED GAME ENGINE " endof
+	21 of "SYCAMORE " endof 
+	endcase
+; 
+
+0 value DUE_INSULT 
+
+\ In future: construct random insult each time
+
+cyoa-choice: drts-sub-rob
+	($ cname .. " draws their weapons and demands the captain hand over his stuff. The captain has other ideas." $) cyoa-text!
+	
+	($ "OH YOU SCURVY-RIDDEN TWINKLING LITTLE MAMA'S BOY DIRTY ROTTEN LANDGRUBBER DINKFEST TWO-TONGUE POOPDECK SHIRTSTAIN OBSERVER-UN-MEMBER-STATE GOATLICKIN' SWINE." pbold $) +crtext 
+	
+	($ "There is no competition. No resistance. This captain has a mouth like a machine gun. " $) +crtext
+	
+	($ cname .. " doesn't even want to carry on with the robbery anymore. These insults hurt in places they didn't even know existed." $) +crtext
+	
+	sfx{ badfx }
+	
+	($ cname .. " has a crisis. Was this the sum of their entire life? Is this all they are? Had the skeleton been right, all along?" $) +crtext
+	morale4- 
+		
+	($ "The survivors of this VERBAL BOMB decide to flee before the captain can undo their egos any further." $) +crtext
+	
+;
+
+cyoa-choice: drts-sub-kill
+	($ cname .. " launches at the undead creature with their weapons! Fragile knuckles be damned! " $) cyoa-text!
+	
+	($ "Skeletons are for losers! Also, I WANT YOUR HAT!" fbold $) +text
+	
+	\ cchar .strength@ STAT_STRENGTH cchar .bonus@ + 16 * print 
+	cstrength+ if
+	
+	($ cname .. " fights the skeleton, tearing it limb from limb! Bones crack on both sides! The fight is intense. " $) +crtext
+	
+	($ cname .. " emerges victorious! The captain's hat is plucked from the viscera, along with other valuables." $) +crtext
+		cchar .strength++ 
+		sting--
+		47 cchar .hattype!
+		cchar .name@ "Cpt. " swap .. cchar .name! 
+		4 WEAPON_FEMUR trunk.weapon+ 
+		6 trunk-food+ 
+		10 20 rnd trunk-gas+ 
+		3 4 rnd trunk-medical+ 
+		1 WEAPON_CUTLASS trunk.weapon+ 
+	
+	else 
+	
+	($ cname .. " fights the skeleton! It's not close. This captain is a seasoned combat veteran! Those boney fingers hurt!" $) +crtext
+	
+	sfx{ badfx } 
+	
+	sting--
+	sting--
+	morale-- 
+	
+	($ cname .. " yelps so loudly that nearby glass shatters. " $) +crtext
+	
+	($ "BEGONE WITH YE, FICKLE, FRAIL FLESHLING!" fbold $) +crtext
+	
+		most-calmshot if choosechar
+			($ "And for most fights, that would be the end of it. Rather than let the captain get away, however, " cname .. " spies an opportunity." .. $) +crtext
+			($ cname .. " grabs a nearby rock and lobs it squarely at the captain's head! The captain falls over into a limp pile." $) +crtext
+			($ "The House of Undead Skeleton Fights would ordinarily look down upon such a timid victory, but this is the apocalypse. Who cares? Free loot!" $) +crtext
+			
+			4 WEAPON_FEMUR trunk.weapon+ 
+			6 trunk-food+ 
+			10 20 rnd trunk-gas+ 
+			3 4 rnd trunk-medical+ 
+			1 WEAPON_CUTLASS trunk.weapon+ 
+			morale++all 
+		then 
+		\ No hat without first beating the captain in combat. The House says so! 
+
+	then 
+	
+;
+
+cyoa-choice: drts-sub-locker
+	($ cname .. " decides to ask about the DANDY BONES FOOT LOCKER that they'd heard so much about. " $) cyoa-text!
+	
+	10 %chance if 
+	\ "Sycamore - WTF is this?" 
+	\ I don't know! xD I thought a copypasta would be fitting/funny. 
+	($ "ARH, SO YOU BE WANTING TO KNOW MY TALE? I'VE SEEN THE LOCKER MY LAD. NAE, I OWN IT. COMMON MISCONCEPTION ABOUT THE LOCKER: TIS ACTUALLY MY WEBSITE. I SETS IT UP MYSELF SO I DID. TIS THE FINEST WEBSITE IN ALL THE ATLANTIC OCEAN, WHICH IS NOT AS IMPRESSIVE NOW I SAY IT ALOUD. I BE SELLIN' KOREAN POP MUSIC. VERY POPULAR DOWN THERE! I MAKE A KILLIN' OFF IT TOO. ALL ILLEGAL OBVIOUSLY, BUT WHO'S TO STOP ME? I'M TEN BILLION FEET UNDER THE FLOOR ME HEARTY. NO POLICE DOWN THERE." pbold $) +crtext
+	\ ($ "ERRR...WHAT WERE YOU ASKING AGAIN? OH YES, THE LOCKER. I KNOW ABOUT IT. I HOST IT. GOOD DOMAIN TOO, I CALL 'ER THELOCKEROFJONES.COM. BOUGHT THE WEBSITE OFF SOME BLOKE IN FLORIDA. YOU SEE HE USED TO SELL OTHER STUFF. NOT ANYMORE OF COURSE. HE'S DEAD. I PUT HIM IN THE LOCKER. OH, FORGOT TO MENTION! THAT'S MY OTHER SERVICE. KILLING RANDOM STRANGERS. DON'T WORRY THOUGH, YOU GUYS ARE FINE. UNLESS YOU CALL THE POLICE, IN WHICH CASE, I'LL THINK ABOUT KILLING YOU." pbold $) +crtext
+	($ " KILLING ISN'T THAT MUCH FUN. NOT AS FUN AS JPOP OR KPOP. YOU SHOULD TRY BOTH AT ONCE. I RECOMMEND IT. ANYWAY, JPOP. NO. KPOP. WANT MY ADVICE? OPEN A KPOP STORE. THEN OPEN A REGULAR POP STORE. THAT'S CALLED BRANDING." pbold $) +text 
+	\ ($ "FIRST RULE OF BUSINESS: DON'T DO BUSINESS. OPEN A WEBSITE INSTEAD AND DO THAT. I OPENED MY WEBSITE AND NOW I'M KNOWN BY ABOUT THREE PEOPLE ONLINE. ANYWAY, VISIT MY WEBSITE. YOU'LL LIKE IT THERE. UNLESS YOU DON'T LIKE IT, IN WHICH CASE, PLEASE LET ME KNOW. UNFORTUNATELY DUE TO COMPANY POLICY, I WILL HAVE YOU TO KILL YOU IN THAT CASE. BUT WE DO HAVE A NICE REFUND POLICY. OH AND A NICE WEBSITE." pbold $) +crtext 
+	($ "Months later, long, long after the group is gone, the skeleton captain is still ranting about his website. He's been set in motion, and he won't stop until the last syllable of recorded time." $) +crtext
+	($ "Who knows how long they might've been there otherwise?" $) +crtext
+	morale++all 
+	
+	choice( "COOL WEBSITE BRO" )choice
+	then; 
+	
+	($ "AYE. TIS A SAD TALE. I WAS SUNK IN ME PRIME. ALAS, TIS THE WAY IT GOES. MAYBE IT WASN'T FOR ME. " pbold $) +crtext
+	($ "BUT MAYBE IT'LL BE FOR YOU. YOU KNOW WHAT? HAVE THIS." pbold $) +crtext
+	
+	($ "The captain gives the group a spare weapon as thanks for listening to him!" $) +crtext
+	
+	morale++all 
+	
+	50 %chance if 
+		50 %chance if 
+			1 WEAPON_PISTOL trunk.weapon+ 
+			($ "PISTOL GET!" rbold $) +crtext
+		else
+			1 WEAPON_SHOTGUN trunk.weapon+ 
+			($ "SHOTGUN GET!" rbold $) +crtext
+		then 
+	else 
+		50 %chance if 
+			1 WEAPON_DOLT trunk.weapon+ 
+			($ "DOLT GET!" rbold $) +crtext
+		else
+			1 WEAPON_RIFLE trunk.weapon+ 
+			($ "RIFLE GET!" rbold $) +crtext
+		then
+	then 
+	
+;
+
+
+cyoa-choice: drts-sub-sink
+	($ cname .. " decides to ask how the submarine sank. " $) cyoa-text!
+	
+	($ "WELL, IT'S A LONG STORY. TO CUT IT SHORT, I POOPED MY PANTS REAL BAD. DON'T LAUGH. I SEE YOU LAUGHING. ARGH." pbold $) +crtext
+	
+	\ This is inspired by a real life event where a ww2 submarine captain had his ship sunk coz he pooped and flushed it incorrectly. 
+	\ Lesson learned: never poop. 
+	
+	($ "HA. HAHAHAHA. LOSER. sorry." bbold $) +crtext 
+	
+	($ cname .. " learns a valuable but honestly only vaguely related lesson in naval warfare...and shooting!" $) +crtext
+	
+	($ cname .. " silently wonders where the submarine is now." $) +crtext
+	
+	cchar .shooting++ 
+	morale++ 
+;
+
+
+: subcoolit 
+	cool-it 6 > if 
+	"!!!" fbold .. 
+	then
+;
+
+\ Surprise!!! cooling it is actually ok!!! hes the original cool-it guy!!!
+ 
+cyoa-choice: drts-sub-coolit 
+	($ cname .. " tells the submarine captain to " "COOL IT..." rbold .. $) cyoa-text! 
+	($ "COOL IT YE SAY? WHAT, LIKE ICE? GOOD IDEA. WE CAN COOL IT AT MY HIDEOUT. YARGH." pbold $) +crtext
+	($ "The captain invites the group to his personal hideout and offers them drinks! This is great!" $) +crtext
+	morale2+all 
+	($ "I'VE TOLD PEOPLE TO COOL IT MY WHOLE LIFE. THE MOMENT I DO, THEY STOP BEING FRIENDS. COULDN'T POSSIBLY KNOW WHY. YARGH." pbold $) +crtext
+	($ "How tragic. After a few hours of relaxing and talking, they say their farewells and head back onto their journey." $) +crtext
+
+	cool-it 6 > if 
+		($ "YARRRGGHHHHHH!!! WAIT! WAITTTT!!!" pbold $) +crtext
+		($ "As the group exits, the captain chases after them, captain's hat in-hand." $) +crtext
+		($ "HERE. TAKE THIS. YOU'RE THE FIRST FRIENDS I'VE HAD IN DECADES." pbold $) +crtext
+		($ cname .. " puts the hat on. They feel strangely more powerful!" $) +crtext
+		cooled-it
+		morale2+ 
+		($ "MAX STRENGTH & VITALITY INCREASED!" rbold $) +crtext
+		STAT_STRENGTH cchar .bonus@ 1 + cchar .bonus! 
+		cchar .vitality@ 1 + 0 6 clamp cchar .vitality! 
+		47 cchar .hattype!
+		cchar .name@ "Cpt. " swap .. cchar .name! 
+		cooled-it
+	then; 
+	
+	cool-it++ 
+;
+
+0 value THE_OFFER 
+
+: take_car_give_food 
+	THE_OFFER trunk-food+ 
+	0 vehicle.which! 
+	car-lost
+; 
+
+: take_food_give_car 
+	THE_OFFER -1 * trunk-food+ 
+	1 26 rnd vehicle.which!
+; 
+
+cyoa-choice: drts-sub-trade
+	($ Thegroup .. " asks if the captain would like to trade. He proposes an offer: " $) cyoa-text!
+	
+	5 15 rnd to THE_OFFER
+	
+
+	
+	vehicle.which@ 0 = if 
+		($ "YE BE IN NEED OF A VEHICKLE VESSEL? YARGH. I CAN OFFER YE ONE, IF YE HAVE THE FUNDS!" pbold $) +crtext
+		($ "The captain offers to take " THE_OFFER rbold " food " rbold .. .. "in exchange for giving you a (random) vehicle. You will keep your weapons and loot." .. $) +crtext 
+		
+		trunk-food 1 - THE_OFFER > not if
+			($ "The group can't spare the food!" rbold $) 
+		then 
+
+		choice( "Reject offer" )choice 
+		trunk-food 1 - THE_OFFER > if 
+			choice( "Accept offer" )choice: take_food_give_car
+		then 
+	else 	
+		($ "YARGH, WHY NOT. TIS A FINE LAND VESSEL YE POSSESS. I'LL TRADE YOU FOOD FOR IT." pbold $) +crtext
+		($ "The captain offers " THE_OFFER rbold " food " rbold .. .. "in exchange for your vehicle. You will keep your weapons and loot." .. $) +crtext 
+		choice( "Reject offer" )choice 
+		choice( "Accept offer" )choice: take_car_give_food
+	then 
+	
+	morale++ 
+;
+
+cyoa: drts-submarine  
+	"THE U.S.S RUSTOLEUM" cyoa-title!
+	image-submarine-def
+	($ Thegroup .. " is exploring near the coast when they meet a skeleton captain of an old, withered submarine that sunk nearby! The apocalypse brought him out of his home." $) cyoa-text!
+	($ "HI THERE. I'M NOT EVIL. PINKIE PROMISE!" pbold $) +crtext
+	($ "His boney pinkie then falls off." $) +crtext 
+	($ "What was the topic of their discussion?" $) +crtext 
+	most-ahole if
+	 	charchoice( ": Your loot, please!" )choice: drts-sub-rob
+	then
+	strongest charchoice( ": WANNA FIGHT?" )choice: drts-sub-kill 
+	
+	most-grating if
+		charchoice( ": TELL HIM TO COOL IT" subcoolit )choice: drts-sub-coolit 
+	then
+	
+	numhaggler 0 > if 
+		choice( "Trade with him" )choice: drts-sub-trade 
+	then 
+
+	smartest charchoice( ": D*VY JONES LOCKER" )choice: drts-sub-locker
+	calmest charchoice( ": How'd you sink?" )choice: drts-sub-sink
+;
+
+
+cyoa-choice: drts-carnival-strong
+	($ cname .. " plays " "THE STRONGMANN GAME! " fbold .. "It's one of those old games where you smash a button with a hammer to see how SWOLE you are." .. $) cyoa-text! 
+
+	strengthroll if 
+		($ "DING DING DING DING DING" fbold $) +crtext
+		($ "YOU'RE A REAL SWOLE MOLE!" fbold $) +crtext
+		morale++ goodfx 
+	else 
+		($ "DING DING DING DING DING" fbold $) +crtext
+		($ "FINAL VERDICT: MID-MUSCLE" fbold $) +crtext
+		morale-- badfx 
+	then 
+		($ "These carnival games are really getting out of hand." $) +crtext
+		($ "Smashing that button repeatedly was great exercise! " cname .. " feels so much stronger already!" .. $) +crtext
+		cchar .strength++ 
+; 
+
+
+cyoa-choice: drts-carnival-shoot
+	($ cname .. " plays " "THE CLAY BIRD SHOOTING GAME! " fbold .. "There's a clay disk launcher and an intact double-barrel shotgun." .. $) cyoa-text! 
+	($ cname .. " finds some ammo and takes the shotgun for themselves." $) +crtext
+	8 12 rnd LOOT_SHOTGUN_SHELL trunk.loot+ 
+	1 WEAPON_DSHOTGUN trunk.weapon+ 
+
+	($ "BANG BANG BANG!" fbold $) +crtext
+	($ "WOW, NICE SHOT, YA DINGUS!" fbold $) +crtext
+	($ "These carnival games are really getting out of hand." $) +crtext
+
+	shootingroll if 
+		($ cname .. " missed nearly every disk except the last! The launcher machine dispenses a singular can of beans." $) +crtext
+		2 trunk-food+ 
+		morale++ goodfx 
+	else 
+		($ cname .. " missed every single shot and almost fell over in the process! At least it was good shooting practice." $) +crtext
+		morale-- badfx 
+	then 
+		($ "That was a tough challenge! " cname .. " is already a better shot as a result." .. $) +crtext
+		cchar .shooting++ 
+; 
+
+
+cyoa-choice: drts-carnival-mech
+	($ cname .. " plays " "THE DODGEMS SMASHING GAME! " fbold .. "There's a series of dinky iittle dodgem cars left to rot." .. $) cyoa-text! 
+	($ cname .. " finds some gas and a wrench in the backrooms of the dodgems circuit." $) +crtext
+	20 30 rnd LOOT_GAS trunk.loot+ 
+	1 WEAPON_WRENCH trunk.weapon+ 
+
+	($ "BOUNCE BOUNCE BOUNCE BOUNCE CRAAASSSSSSH!" fbold $) +crtext
+	($ "AMAZING! YOU DRIVE LIKE A DRUNKEN SQUIRREL!" fbold $) +crtext
+	($ "These carnival games are really getting out of hand." $) +crtext
+
+	mechanicroll if 
+		($ cname .. " bashes around on the dodgems for a while. They even manage to avoid breaking any bones!" $) +crtext 
+		morale2+ goodfx 
+	else 
+		($ cname .. " crashes into a wall at high speed halfway through! Something cracks in their back. Youch!" $) +crtext
+		morale-- sting-- badfx 
+	then 
+		($ "Driving around with some janky controls is difficult, but " cname .. " gains a slightly better understanding of machines as a result." .. $) +crtext
+		cchar .mechanic++ 
+; 
+
+
+cyoa-choice: drts-carnival-fit
+	($ cname .. " jumps on " "THE GIANT HAMPSTER WHEEL! " fbold .. "There's a bunch of wires attached that seem to lead everywhere." .. $) cyoa-text! 
+	($ cname .. " finds a leather whip nearby. Whatever was this used for?" $) +crtext
+	1 WEAPON_MIDWHIP trunk.weapon+ 
+
+	($ "WHIRRRRR WHIRRRRR WHIRRRRRRRRRRR!" fbold $) +crtext
+	($ "The rest of the carnival briefly illuminates! The wheel is a generator!" bbold $) +crtext
+	($ "The lights look amazing!" $) +crtext
+	morale++ 
+
+	fitnessroll if 
+		($ cname .. " runs like the wind! The wheel turns at blistering speeds!" $) +crtext 
+		morale++ goodfx 
+	else 
+		($ cname .. " loses their balance and slips off the wheel. They pull something in their leg!" $) +crtext
+		morale-- badfx 
+	then 
+		($ "All that running was great exercise! " cname .. " feels their glutes stregthen." .. $) +crtext
+		cchar .fitness++ 
+; 
+
+
+
+cyoa: drts-carnival 
+	"DARK CARNIVAL" cyoa-title!
+	($ Thegroup .. " arrives at an old forgotten carnival grounds. Amidst many empty stalls, some barely functional games remain." $) cyoa-text!
+	($ "Although many of them were just well-disguised scams before the apocalypse, there's nobody to stop them having fun now." $) +crtext
+	($ "There's enough time to play a game. Which?" $) +crtext  
+
+	strongest charchoice( ": Strongman Hammer!" )choice: drts-carnival-strong 
+	shootest charchoice( ": Clay Shooting!" )choice: drts-carnival-shoot
+	mechanicest charchoice( ": Dodgems!" )choice: drts-carnival-mech 
+	fittest charchoice( ": Hampster Wheel!" )choice: drts-carnival-fit 
+
+;
+
+cyoa-choice: drts-cult-calmshot
+	($ "Alone, " cname .. " faces down the alley, weapons drawn. They glance between each bandit; the bandits stare." .. $) cyoa-text! 
+	($ "The bandits rush down the alleyway towards " cname .. "! " .. cname .. " quickly aims at each!" .. $) +crtext
+	($ cHe .. " blasts the approaching bandits easily! The rest" " flee in terror!" fbold .. $) +crtext
+	($ "ITS FLYYYYY MOON. No, wait that's not how it goes..." bbold $) +crtext
+	($ "The group is able to get through unscathed!" $) +crtext
+	morale2+all 
+	morale++ 
+	goodfx
+	\ bonus morale for being so peak 
+; 
+
+cyoa-choice: drts-cult-paranoid
+	($ "The plan is simple: charge down the alleyway at full speed, and take the distracted bandits by surprise." $) cyoa-text! 
+	($ Thegroup .. " rushes down the alleyway, weapons ready! Combat ensues, but the group has the upper hand!" $) +crtext
+ 
+	team-count 1 = strength-total 10 < or if 
+		($ Thegroup .. " takes some hits. The fighting is intense! Perhaps the plan would've worked better if they'd been more swole." $) +crtext
+		sting--all 
+	else	
+		($ "The bandits are beaten! They stood no chance against the team's strength!" $) +crtext
+	then 
+	goodfx 
+	
+	($ "The rest of the bandits flee! Everybody makes it safely through the remainder of the alleyway." $) 
+	morale++all 
+
+; 
+
+cyoa-choice: drts-cult-ahole
+	($ "Whilst most would fall victim to this bandit group, " cname .. " understands this is one of the oldest tricks in the book." .. $) cyoa-text! 
+	($ cname .. " disguises themselves as a bandit, creating a hood with a nearby trash bag. Casually, " che .. " approaches the cultists." .. $) +crtext
+	 
+	($ "HEY FELLOW CULTISTS. COME WITH ME. I FOUND SOME LOSERS TO ROB!" bbold $) +crtext
+	
+	witsroll if 
+		($ "The bandits believe the shoddy disguise! " cname .. " leads them right into their carefully planned trap!" .. $) +crtext 
+		
+		solo if 
+			($ "Whilst the bandits are distracted, " che .. " slips away!" .. $) +crtext
+		else 
+			($ "The group robs the cultists instead! Free loot! Revenge!" $) +crtext
+			5 trunk-food+ 
+			20 trunk-gas+ 
+			4 trunk-medical+ 
+			18 32 rnd LOOT_SHOTGUN_SHELL trunk.loot+ 
+			18 32 rnd LOOT_RIFLE_SHELL trunk.loot+ 
+			18 32 rnd LOOT_BULLET trunk.loot+ 
+			($ "The cultists are embarassed by their stupidity!" $) +crtext
+			morale2+all
+			goodfx 
+		then 
+	else 
+		($ "The bandits see through the disguise almost immediately." $) +crtext
+		($ "They beat up " cname .. " pretty bad with their weapons!" .. $) +crtext
+		morale2-
+		ouch--
+		sting-- 
+		sting--
+		badfx 
+		($ "The bandits finally disperse, allowing the group to traverse through." $) +crtext
+	then 
+
+; 
+
+: revoke_weapons args( chara ) 
+	0 <- chara .weapona! 
+	0 <- chara .weaponb! 
+	0 <- chara .weaponc! 
+	
+	0 <- chara .weapon_nodropa! 
+	0 <- chara .weapon_nodropb! 
+	0 <- chara .weapon_nodropc! 
+; 
+
+cyoa-choice: drts-cult-smart 
+	($ cname .. " tries to reason with the bandits. Surely pure " "LOGIC AND REASON" fbold .. " can dispel their bandit ways?" .. $) cyoa-text!
+	
+	50 %chance if 
+		($ "The bandits laugh at this zany attempt to disparage their " "SACRED OBAMA, THE FORETOLD GREAT CREATOR!" fbold .. $) +crtext
+		($ "Then they rob the group for everything they're carrying." $) +crtext
+		($ "CHARACTER WEAPONS LOST!" rbold $) +crtext
+		' revoke_weapons foreach-team-char
+		badfx 
+		bandit-most
+		($ "Having taken enough for themselves, the cultists let the group through." $) +crtext
+	else 
+		($ "WE...WE WERE WRONG? ALL THIS TIME? THE GREAT CREATOR WAS NOT OBAMA AFTER ALL?" pbold $) +crtext
+		($ "YEAH HE'S JUST THE PRESIDENT OR SOMETHING. I DON'T KNOW, I DIDN'T PASS HISTORY." bbold $) +crtext
+		($ "The bandits look at one another awkwardly. Obama...a mere president? They believed a lie, all this time?" $) +crtext
+		($ "The group of bandits go their separate ways, clearing the way for the group to pass through the alleyway. That was easy!" $) +crtext
+		morale++all
+		goodfx
+		cname witsREV 
+	then 
+; 
+
+: composure-total 0 ' sum-composures foreach-team-char ;
+
+cyoa-choice: drts-cult-sneak
+	($ Thegroup .. " try to sneak around the cultists. This means going the whole long way around the edge of town, a lengthy and dangerous prospect." $) cyoa-text! 
+	($ "Whilst trying to dodge the cultist patrols, they're forced to hide away in a dilapidated house." $) +crtext
+	
+	composure-total team-count / >int 2 > if 
+	\ if the group is, on average, average-ly composed, 
+		($ "Everybody keeps calm! The bandits are successfully evaded. Nobody even so much as squealed!" $) +crtext
+		($ "Still, knowing that imminent death might be around the corner is mildly terrifying!" $) +crtext
+		morale--all
+		goodfx 
+	else 
+		($ Thegroup .. " is quickly discovered thanks to incessant " "shrieking and screaming!" fbold .. $) +crtext
+		($ "Then bandits rob them for everything they're carrying." $) +crtext
+		($ "CHARACTER WEAPONS LOST!" rbold $) +crtext
+		' revoke_weapons foreach-team-char
+		morale2-all
+		bandit-most
+		badfx 
+		($ "The team is eventually allowed to pass and escape." $) +crtext
+	then 
+; 
+
+cyoa-choice: drts-cult-fight
+	($ "In the alleyway there's little cover for the fight. The fighting is brutal on both sides." $) cyoa-text!
+	($ "After a protracted fight, the bandits flee down the alleyway. The path ahead is clear!
+	" $)  +crtext bitefx ouch--all ouch--all
+;
+
+
+: image-cult-def 80 cyoa-image-icon! ;
+
+cyoa: drts-cultists
+	image-cult-def
+	"OOGA CHAKA OOGA CHAKA" cyoa-title!
+	($ "Whilst adventuring through a town, " Thegroup .. " gets lost. The only way back is through a single, dark alleyway." .. $) cyoa-text!
+	($ "Down the alleyway, a group of " "hooded cult-like individuals " rbold .. "gather round burning drums, chanting some kind of horrible mantra." .. $) +crtext
+	($ "These cultists look dangerous. Who knows what they're capable of?" rbold $) +crtext  
+	($ "There's no way out but through. Something MUST be done:" $) +crtext  
+
+	calmshot-check if 
+		charchoice( ": SHOWDOWN TIME" )choice: drts-cult-calmshot 
+	then 
+	
+	most-paranoid if 
+		charchoice( ": Catch them off-guard!" )choice: drts-cult-paranoid 
+	then 
+	
+	most-ahole if 
+		charchoice( ": I know their tricks!" )choice: drts-cult-ahole 
+	then  
+	
+	smartest charchoice( ": Reason with them" )choice: drts-cult-smart 
+	
+	choice( "Try to sneak around" )choice: drts-cult-sneak 
+	choice( "Fight the bandits" )choice: drts-cult-fight 
+;
+
+\ ----------------------------------------
+\ NEW EVENTS FOR TRACHEA BELOW -----------
+\ ----------------------------------------
+
+cyoa-choice: t-mech-disassemble
+	($ cname .. " stands before the mech, gazing up at it to study it for weaknesses. " $) cyoa-text!
+		cwits+ if 
+			($ cname .. " quickly deduces that the 'mech' is actually just made of really compact cardboard." $) +text 
+			
+			cmechanic+ if
+				($ "They kick the mech in the shins, where the glue and joints are weakest!" $) +crtext
+				($ "The mech crumbles like a tower of blocks into rubble, followed by a loud CRASH. " $) +crtext
+				($ "Usually, this wouldn't have worked. But the tinker-engineer type is always watching your craftsmanship. They know your sins. ALWAYS." $) +text 
+				morale++ morale++ goodfx mechanicREV 
+			else 
+				($ cname .. " doesn't know what to do next! The robot picks them up and launches them into the ground. The group is forced to flee!" $) +crtext
+				morale2-all ouch-- sting-- badfx mechanicREV 
+			then 
+		
+		else 
+			($ cname .. " awkwardly tries for several minutes to deduce a weakness." $) +text
+			($ "The bandit mech becomes bored and kicks them at high velocity into a tree!" $) +crtext  
+				morale2- ouch-- ouch-- badfx 
+		then
+		witsREV
+;
+
+cyoa-choice: t-mech-coolit 
+	($ cname .. " yells " "COOL IT!!!" rbold .. $) cyoa-text! 
+
+	cool-it 6 > if 
+		($ "COOL...COOL IT? HMMM. MAYBE YOU'RE RIGHT. I DO NEED BETTER COOLING SYSTEMS...GREAT IDEA!" pbold $) +crtext
+		($ "The mech gives the group payment for their ingenious idea!" $) +crtext
+		65 165 rnd trunk-gas+ 
+		50 LOOT_SHOTGUN_SHELL trunk.loot+ 
+		50 LOOT_RIFLE_SHELL trunk.loot+ 
+		50 LOOT_BULLET trunk.loot+ 
+		cooled-it goodfx witsattREV
+	then; 
+	
+	($ cname .. " and the robot hold a stare for several seconds before the mech starts attacking the team!" $) +crtext
+		ezbandit? if 
+			ouch--all
+		else
+			ouch12rnd--all
+		then		
+		
+	car-break cool-it++ 
+	
+	team-count 0 > if 
+		($ Thegroup .. " is forced to flee!" $) +crtext witsattREV
+	else 
+		($ "The group would flee...if there was anybody left." $) +crtext
+	then 
+	
+;
+
+cyoa-choice: t-mech-paranoid 
+	($ cname .. " genuinely believed there was an enormous mech! You never know what's around the corner in the zombocalypse. They quickly form a plan!" $) cyoa-text!
+	($ "EJECT! EJECT EJECT EJECT!" pbold $) +crtext
+	($ "The robot makes a creaking, whirring noise. It can't tell the difference between the bandit's voice and " cname .. "! It ejects the bandit high into the atmosphere!" .. $) +crtext
+	($ "CURSEEEE YOUUUUUU EJECTTTT BUTTONNNNNNNNNNNnnnnnnnn......" rbold $) +crtext
+	morale++all morale++ goodfx
+	
+	cchar .perk@ "Pyromaniac" $= if 
+		($ cname .. " sets fire to it anyway." $) +crtext
+		morale++ 
+	then 
+
+;
+
+
+cyoa-choice: t-mech-calmshot  
+	($ cname .. " draws their weapons and aims for the knees of the robot!" $) cyoa-text!
+	($ "They destroy the knees of the robot in a hail of bullet fury!" $) +crtext
+	($ cname .. " is too quick for the mech bandit! It wobbles back and forth dramatically, before falling flat into a heap." $) +crtext 
+	morale++all morale++ goodfx shootingREV temperREV shooting++
+	
+	12 38 rnd LOOT_SHOTGUN_SHELL trunk.loot+ 
+	12 38 rnd LOOT_RIFLE_SHELL trunk.loot+ 
+	12 38 rnd LOOT_BULLET trunk.loot+ 
+;
+
+: bandit-mechtakestuff
+	trunk-gas 0 > if trunk-gas -1 * trunk-gas+ then
+	trunk-bullet 0 > if trunk-bullet -1 * trunk-bullet+ then
+	trunk-rifle-shell 0 > if trunk-rifle-shell -1 * trunk-rifle-shell+ then
+	trunk-shotgun-shell 0 > if trunk-shotgun-shell -1 * trunk-shotgun-shell+ then
+	
+;
+
+cyoa-choice: t-mech-paytoll
+	($ Thegroup .. " decides to play it safe. " .. gThey .. " give" .. g1s .. " into the bandits' demands." $) cyoa-text! badfx
+	bandit-mechtakestuff haggler-morale 
+;
+
+\ TODO: TEST EVENT, FIX PAYTOLL 
+
+\ THE MECHA BANDIT  
+cyoa: t-mechabandit 
+	"BANDFORMERS...BANDITS IN DISGUISE" cyoa-title!
+	\ image-submarine-def
+	($ Thegroup .. " is travelling steadily along a stretch of road when a bandit in some kind of mech steps out from behind an apartment. Through a dry text-to-speech voice, it speaks:" $) cyoa-text!
+	($ "ALL YOUR LOOT IS BELONG TO US." rbold $) +crtext 
+	($ "The mech demands all of your gas and ammunition to pass." rbold $) +crtext 
+	
+	mechanicest charchoice( ": Dismantle it!" )choice: t-mech-disassemble  
+	
+	most-grating if
+		charchoice( ": TELL HIM TO COOL IT" subcoolit )choice: t-mech-coolit  
+	then
+	
+	most-paranoid if
+		charchoice( " thought a giant mech might be nearby" )choice: t-mech-paranoid   
+	then
+
+	calmshot-check if
+		charchoice( " blasts the mech's knees" )choice: t-mech-calmshot 
+	then
+	
+	choice( "Pay the toll" )choice: t-mech-paytoll 
+	bandit-fight
+	
+;
+
+: copbanditcoolit 
+	cool-it 3 > if 
+	"!!!" fbold .. 
+	then
+;
+
+0 stack
+	WEAPON_PIPEBOMB shove
+	WEAPON_MOLOTOV shove
+	WEAPON_GRENADE shove 
+constant WEAPON_LIST_ARSON
+
+: team-has-arson? WEAPON_LIST_ARSON roadtrip-has-weapontype? ;
+
+cyoa-choice: t-cop-ahole 
+	($ cname .. " has no fear of cops. They reach into the pocket." $) cyoa-text! 
+		
+		team-has-arson? if 
+			($ cname .. " pulls out a bomb and casually threatens the bandits with it!" $) +crtext
+			($ "TAKE A LOOK AT THIS! IT'S US OR YOU, NERDS! YOUR CHOICE!" pbold $) +crtext
+			($ "The bandits reluctantly agree to let " Thegroup .. " pass so they aren't blown to smithereens." .. $) +crtext
+		else 
+			($ cname .. " doesn't actually own anything pocket-sized and explosive enough, so is forced to pretend." $) +crtext
+			($ "Luckily, " cname .. " is an amazing liar. " .. cHe .. " successfully fools the bandits with a bottle of juice!" .. $) +crtext
+			($ "The bandits reluctantly agree to let " thegroup .. " pass so they aren't blown to smithereens." .. $) +crtext
+		then 
+			loyaltyREV morale++all morale++ goodfx
+
+		cchar .perk@ "Pyromaniac" $= if 
+			($ cname .. " sets fire to the police station anyway." $) +crtext
+			morale++ 
+		then 
+
+;
+
+cyoa-choice: t-cop-paranoid 
+	($ cname .. " knew this would go awry and so prepared a plan in advance." $) cyoa-text! 
+	($ cname .. " crashes through the walls of the police station with their car! Rubble flies everywhere! The car takes some damage." $) +crtext
+	sting-- -2 -3 rnd car-chassis+
+	($ "The bandits are terrified and begin to flee! " Thegroup .. " gets to pass for free!" .. $) +crtext 
+	morale++all goodfx
+;
+
+cyoa-choice: t-cop-disguise 
+	($ cname .. " insists that they were a cop too, just like they are!" $) cyoa-text! 
+	($ "OH YEAH? PROVE IT THEN." rbold $) +crtext
+	
+		cwits+ cshooting+ and if 
+			($ "Remembers reading a police training manual years ago. They shoot a couple of cans and accurately recite some of the manual!" $) +crtext 
+			($ "SO YOU'RE A REAL HOTSHOT COP EH? GOOD ENOUGH. YOU CAN GO." rbold $) +crtext
+			($ cname .. " can't believe that actually worked!" $) +crtext 
+			($ "The bandits let the group go without fuss!" $) +crtext morale++all morale++ goodfx 
+		else 
+			witsroll shootingroll or if 
+				($ "Doesn't actually know much about policing, and instead parrots random things from old TV shows." $) +crtext
+				($ "YEAH SO IT'S REALLY IMPORTANT TO TURN THE SIRENS ON ALL THE TIME AND SAY 'OVER' REPEATEDLY. OVER." pbold $) +crtext
+				($ "The cops pause and look at one another for a moment. Close enough!" $) +crtext
+				($ "The bandits let the group go without fuss!" $) +crtext morale++all morale++ goodfx 
+			else 
+				($ "Splurts random lines from old cop films that sound cool to say." $) +crtext
+				($ "ARE YOU FEELING PLUCKY...DINK?" pbold $) +crtext
+				($ "The cop bandits look confused at one another momentarily and then start blasting! The group is caught in a bad spot!" $) +crtext
+				ouch-- ouch--all badfx morale--all morale--
+			then 
+		then 
+
+;
+
+cyoa-choice: t-cop-grating 
+	($ cname .. " screams " "COOL IT!" rbold .. " at the top of " .. chis .. " lungs." .. $) cyoa-text! 
+			cool-it 3 > if 
+				($ "OH, YOU MUST BE THE NEW CAPTAIN! WE DIDN'T RECOGNISE YOU. HERE, TAKE THIS!" pbold $) +crtext
+				($ "The bandits deem that " cname .. " will be their new captain! They hand over many weapons!" .. $) +crtext
+				cooled-it goodfx witsattREV
+				
+				1 WEAPON_CHROMESHOTGUN trunk.weapon+
+				1 WEAPON_MP5 trunk.weapon+
+				($ "CHROME SHOTGUN GET! MACHINEPISTOL GET!" rbold $) +crtext
+				morale2+ 
+				morale++all 
+			then; 
+		
+		($ "The cops mistake this for some kind of super secret criminal dialect! This must be the most wanted criminal in history! They start blasting " cname .. " straight away!" .. $) +crtext
+		ouch-- ouch-- sting-- badfx morale--all morale--  
+		cool-it++  
+			
+;
+
+cyoa-choice: t-cop-calmshot
+	($ cname .. " draws " chis .. " firearms at blistering speed, trapping everybody in..." .. $) cyoa-text! 
+	($ "THE GREAT (ONLY VAGUELY) MEXICAN SORT-OF-SITTING-ACTUALLY STANDOFF" fbold $) +crtext
+	($ "For several hours, " thegroup .. " and the bandits point guns at one another awkwardly with some noises." .. $) +crtext
+	
+	composure-total team-count / >int 2 > if 
+	\ if the group is, on average, average-ly composed, 
+		($ Thegroup .. " is so patient that the bandits become bored and retreat! " Thegroup .. " passes the cop bandits for free!" .. $) +crtext
+		morale++all
+		morale++ 
+		
+	else 
+	
+		($ Thegroup .. " becomes bored and starts blasting! A fight ensues, but " thegroup .. " has the advantage!" .. $) +crtext 
+		sting--all
+		\ only a little bit of damage...almostttt meaningless 
+	
+	then 
+	
+	
+;
+
+: bandit-coptakestuff
+	trunk-bullet 0 > if trunk-bullet -1 * trunk-bullet+ then
+	trunk-rifle-shell 0 > if trunk-rifle-shell -1 * trunk-rifle-shell+ then
+	trunk-shotgun-shell 0 > if trunk-shotgun-shell -1 * trunk-shotgun-shell+ then
+	
+;
+
+cyoa-choice: t-cop-paytoll
+	($ Thegroup .. " decides to play it safe. " .. gThey .. " give" .. g1s .. " into the bandits' demands." $) cyoa-text! badfx
+	bandit-coptakestuff haggler-morale 
+	trunk.killer 
+	
+	\ ($ "TRUNK WEAPONS LOST!" rbold $) +crtext
+;
+
+\ TODO: OTHER OPTIONS 
+
+\ THE COP BANDITS 
+cyoa: t-copbandits 
+	"DIRTY HAROLD 8: SHOOTING MORE CRIMINALS AGAIN" cyoa-title!
+	\ image-submarine-def
+	($ Thegroup .. " comes across what seems to be a police station. As soon as they enter, cop bandits encircle them!" $) cyoa-text!
+	($ "They're all in shoddy stolen uniforms, positioned behind overturned tables with their revolvers ready." $) +crtext 
+	($ "The bandit cops demand all your spare weapons and ammunition." rbold $) +crtext 
+	
+	most-ahole if
+		charchoice( " has a surprise..." )choice: t-cop-ahole  
+	then
+	
+	most-paranoid team-count 1 > vehicle.which@ 0 > and and if 
+		charchoice( " knew there would be trouble!" )choice: t-cop-paranoid 
+	then 
+	
+	most-grating if 
+		charchoice( " screams COOL IT" copbanditcoolit )choice: t-cop-grating
+	then 
+	
+	roadtrip-has-firearm? if
+		smartest charchoice( " is DEFINITELY a cop!" )choice: t-cop-disguise
+	then 
+	
+	calmshot-check if 
+		charchoice( ": MEXICAN STANDOFF" )choice: t-cop-calmshot 
+	then 
+	
+	choice( "Give up ammo and weapons" )choice: t-cop-paytoll 
+	bandit-fight
+	
+;
+
+
+: .pyroperson? args( chara ) 
+
+	<- chara .perk@ "Pyromaniac" $= 
+; 
+
+: ispyroperson? .pyroperson? ;
+: numpyroppl team-stack ' ispyroperson? stack-filter ;
+: pyroperson? numpyroppl 0 > ;
+
+
+cyoa-choice: t-pyro-paranoid
+	($ cname .. " is always prepared for a fire! They brought an improvised fire extinguisher with them the moment they saw burnt buildings." $) cyoa-text!
+	
+	($ "The bandits weapons are extinguished! " cname .. " looks pleased. Somebody could've gotten SERIOUSLY hurt." .. $) +crtext
+
+	($ cname .. " extinguished their special campfire! The bandits attack, but at a disadvantage." $) +crtext
+	
+	2 WEAPON_FIREEX trunk.weapon+ 
+	
+	goodfx
+	morale++ 
+	sting--all
+
+;
+
+cyoa-choice: t-pyro-ception
+	($ Thegroup .. " recognises the bandits as fellow pyromaniacs!" $) cyoa-text!
+	
+	($ Thegroup .. " and the bandits get lost in a conversation about" " arson, fire safety, and the advantages of kerosene as fuel." pbold .. $) +crtext
+
+	($ "In the midst of this conversation, the bandits completely forget about robbing! They give the group an honorary molotov." $) +crtext
+	
+	($ "MOLOTOV GET!" rbold $) +crtext
+	
+	1 WEAPON_MOLOTOV trunk.weapon+ 
+	goodfx
+	
+	morale2+all 
+
+;
+
+cyoa-choice: t-pyro-angrystrong
+	($ "Out of nowhere, " cname .. " runs up to a bandit and hurls him away like a bowling ball!" .. $) cyoa-text!
+	
+	($ "Then, as the bandits are still in shock, " che .. " picks up another bandit and slams them down onto their back!" .. $) +crtext
+
+	($ "The bandits are terrified! They back away slowly from the carnage. " Thegroup .. " gets to pass for free!" ..  $) +crtext
+	
+	goodfx
+	morale++all
+	morale++ 
+
+;
+
+
+0 value gourmand_number 
+0 value chara_gourmand
+
+: count_gourmands args( chara )
+	<- chara .trait@ "Gourmand" $= if
+			<- chara .party@ 1 = if 
+					<- chara .health@ 0 > if 
+						gourmand_number 1 + to gourmand_number
+					<- chara to chara_gourmand
+	then then then 
+;
+
+cyoa-choice: t-pyro-gourmand
+	($ cname .. " produces something from their pocket, a vaguely shiny deep red pepper." $) cyoa-text!
+	
+	($ "YOU WANNA SEE FIRE? CHECK THIS OUT." pbold $) +crtext
+	
+	($ cname .. " swallows the ENTIRE " "GASTGANO DELUXE ULTRA CALIFORNIA REAPER!" rainbold .. " They breathe fire in a rehearsed display!" .. $) +crtext
+
+	($ "The bandits are extremely impressed! " cname .. " however is upset to have used their special chilli." .. $) +crtext
+	
+	morale-- 
+
+;
+
+cyoa-choice: t-pyro-coolit
+	($ cname .. " yells " "COOL IT!" rbold .. " at the top of " .. chis .. " lungs." .. $) cyoa-text! 
+			cool-it 3 > if 
+				($ "COOL IT? I SUPPOSE YOU'RE RIGHT...WE'VE RUINED SO MUCH OF THIS TOWN." rbold $) +crtext
+				($ "The bandits feel guilty for their trail of destruction! They resolve to make things right!" $) +crtext
+				cooled-it goodfx witsattREV
+			
+				4 10 rnd trunk-food+ 
+				20 40 rnd trunk-gas+ 
+				2 5 rnd trunk-medical+ 
+			
+				morale2+all
+			then; 
+		
+		($ "This message is highly antithetical to the bandit's philosophy! They torch " thegroup .. " in revenge!" .. $) +crtext
+		ouch-- ouch-- badfx morale--all morale--  
+		cool-it++  
+;
+
+: bandit-pyrotakestuff
+	trunk-gas 0 > if trunk-gas -1 * trunk-gas+ then
+;
+
+cyoa-choice: t-pyrobandits-paytoll
+	($ Thegroup .. " decides to play it safe. " .. gThey .. " give" .. g1s .. " into the bandits' demands." $) cyoa-text! badfx
+	bandit-pyrotakestuff haggler-morale 
+	trunk.killer 
+	
+	\ ($ "TRUNK WEAPONS LOST!" rbold $) +crtext
+;
+
+
+cyoa: t-pyrobandits 
+	"THROUGH THE FIRE AND FLAMES" cyoa-title!
+	\ image-submarine-def
+	($ "When exploring a burnt down town, " thegroup .. " is ambushed by a group of bandits!" .. $) cyoa-text!
+	($ "They're all wielding lit flamethrowers, torches, and tiny little cigarette lighters. One of them is quite literally just on fire." $) +crtext 
+	($ "The bandits demand all your gas and spare weapons!" rbold $) +crtext 
+	
+	most-paranoid if 
+		charchoice( " is always prepared for a fire!" )choice: t-pyro-paranoid 
+	then 
+
+	numpyroppl 0 > if 
+		choice( "Greet your fellow pyromaniacs" )choice: t-pyro-ception 
+	then 
+	
+	most-angrystrong if
+		charchoice( ": SUPLEX!" )choice: t-pyro-angrystrong
+	then
+	
+	' count_gourmands foreach-team-char
+	
+	gourmand_number 0 > if
+		chara_gourmand 
+		charchoice( ": JALAPENO BONANZA" )choice: t-pyro-gourmand
+	then 
+	\ "but numgourmands exists" yes i know. but im doing it this way coz i want
+	\ to actually pick a gourmand character for cname and such 
+	
+	most-grating if 
+		charchoice( ": COOL IT" copbanditcoolit )choice: t-pyro-coolit 
+	then 
+	
+	choice( "Give up gas and weapons" )choice: t-pyrobandits-paytoll
+	
+	bandit-fight
+	
+;
+
+: random_mystery_weapon 
+	
+	
+	
+; 	
+
+cyoa-choice: t-mystery-food 
+	($ Thegroup .. " inserts " "8 food" rbold .. " into the specially designed receptacle." $) cyoa-text!
+	-8 trunk-food+ 
+	
+	($ "The weapon makes a variety of loud churning noises, emits sparks everywhere and stops suddenly." $) +crtext
+	($ "A panel opens and a weapon flies out!" $) +crtext
+	
+	
+	
+;
+
+\ TODO: FINISH THIS 
+
+cyoa: t-mystery
+	"...WONDER WHO IT'S FROM?" cyoa-title!
+	\ image-submarine-def
+	($ "In the middle of an abandoned store, " thegroup .. " comes across a huge metal box." .. $) cyoa-text!
+	($ "Nailed down. Metal exterior. Official DINKSCO branding. The full package." $) +crtext 
+	($ "It seems to have some kind of food insertion system." $) +crtext
+	($ "PRICE: 8 FOOD || WEAPON: ...PROBABLY" rbold $) +crtext
+
+	trunk-food 7 > if 
+		choice( "Deposit food - 8 food" )choice: t-mystery-food 
+	then 
+	
+;
+
+\ STOMACH cities rework to add more variety 
+
+\ WIP... for trachea, probably. 
+
+cyoa: sycacity_test1 
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest.df" $load-region
+		lot-draw
+;
+\ mix 4x2
+
+cyoa: sycacity_test2 
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest1.df" $load-region
+		lot-draw
+;
+
+\ ??? 
+
+cyoa: sycacity_test3 
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest2.df" $load-region
+		lot-draw
+;
+
+\ 4x3 apartments 
+
+cyoa: sycacity_test4 
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest3.df" $load-region
+		lot-draw
+;
+
+\ 4x3 apt narrow 
+
+cyoa: sycacity_test5 
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest4.df" $load-region
+		lot-draw
+;
+\ unused bigcity port 
+
+cyoa: sycacity_test6
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest5.df" $load-region
+		lot-draw
+;
+\ mix 3x4 
+
+cyoa: sycacity_test7
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest6.df" $load-region
+		lot-draw
+;
+\ mix 2xY, long, new 
+
+cyoa: sycacity_test8
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest7.df" $load-region
+		lot-draw
+;
+\ burb1-row 
+
+cyoa: sycacity_test9
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest8.df" $load-region
+		lot-draw
+;
+\ burb narrow 3x3 
+
+cyoa: sycacity_test10
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest9.df" $load-region
+		lot-draw
+;
+\ burb 2x4 vary 
+
+cyoa: sycacity_test11
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest10.df" $load-region
+		lot-draw
+;
+\ burb 3x2 vary 
+
+cyoa: sycacity_test12
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest11.df" $load-region
+		lot-draw
+;
+\ aparts 3x3 wide 
+
+cyoa: sycacity_test13
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest12.df" $load-region
+		lot-draw
+;
+\ ?
+
+cyoa: sycacity_test14
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest13.df" $load-region
+		lot-draw
+;
+\ burb vary 3x4
+
+cyoa: sycacity_test15
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest14.df" $load-region
+		lot-draw
+;
+\ mixed rnd 3x2 
+
+cyoa: sycacity_test16
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest15.df" $load-region
+		lot-draw
+;
+
+cyoa: sycacity_test17
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_citytest16.df" $load-region
+		lot-draw
+;
+\ mixed rnd 3x3
+
+cyoa: easysycacity_test
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_easycitytest.df" $load-region
+		lot-draw
+;
+\ EASY burb 3x3
+
+cyoa: easysycacity_test1
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_easycitytest1.df" $load-region
+		lot-draw
+;
+\ EASY burb 4x2
+
+cyoa: easysycacity_test2
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_easycitytest2.df" $load-region
+		lot-draw
+;
+\ EASY burb 3x2
+
+cyoa: easysycacity_test3
+	"Rush Hour" cyoa-title!
+	someicon
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
+	1 1.3 frnd 16 17 frnd 2 zforecast
+	"events/stomach/syca_easycitytest3.df" $load-region
+		lot-draw
+;
+\ EASY burb 3x2
+
+} } 

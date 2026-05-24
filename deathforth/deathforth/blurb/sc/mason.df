@@ -1,0 +1,77 @@
+: mason-stareat
+	blurbslot 0= if
+		solo if
+			($ "regarde dans le vide tout en aiguisant sa machette." $) blurbdo
+		then;
+		($ "fixe " ..  2nd-char .name@ .. " tout en aiguisant sa machette." $) blurbdo
+	else
+		blurbslot 2 < if
+			50 %chance if
+				($ "Uhhh... merde." $) blurbsay
+			else
+				($ "se tortille de douleur." $) blurbdo
+			then
+			99 %chance if
+				($ "continue a le fixer." $) 1st-char .blurbdo
+			else
+				($ "SALUT JE SUIS MASON MOORHIZ" $) 1st-char .blurbsay
+			then
+			STAT_MORALE me .stat--
+		then
+	then
+;
+
+	: MASON-oneline1 " le fixe en silence." ;
+	: MASON-oneline2 " est en proie a la rage." ;
+	: MASON-oneline3 " emet une aura de mechancete." ;
+	: MASON-oneline4 " regarde dans le vide." ;
+	: MASON-oneline5 " emet une respiration menacante." ;
+	: MASON-oneline6 " est assis, completement immobile, avec un hachoir a la main." ;
+	: MASON-oneline7 " pense a quelque chose, probablement a un meurtre." ;
+	: MASON-oneline8 " s'interroge sur le sens de la vie." ;
+	: MASON-oneline9 " grogne sur lui-meme." ;
+	: MASON-oneline10 " commence a avoir des crampes a force de rester assis." ;
+	: MASON-oneline11 " essuie le sang sur son hachoir." ;
+	: MASON-oneline12 " essuie le sang sur son masque." ;
+	: MASON-oneline13 " tient son hachoir au-dessus de sa tete, pret a frapper n'importe quoi." ;
+	: MASON-oneline14 " a plus de sang sur lui qu'il n'en avait il y a quelques minutes." ;
+
+	deck-new
+		card: MASON-oneline1
+		card: MASON-oneline2
+		card: MASON-oneline3
+		card: MASON-oneline4
+		card: MASON-oneline5
+		card: MASON-oneline6
+		card: MASON-oneline7
+		card: MASON-oneline8
+		card: MASON-oneline9
+		card: MASON-oneline10
+		card: MASON-oneline11
+		card: MASON-oneline12
+		card: MASON-oneline13
+		card: MASON-oneline14
+	constant MASON-ONELINERS
+	MASON-ONELINERS var mason-oneliners
+	MASON-ONELINERS shuffles to mason-oneliners
+
+: mason-oneliner
+	mason-oneliners depths 0= if MASON-ONELINERS shuffles to mason-oneliners then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. mason-oneliners drawcard $) txt
+	then
+;
+
+: ...say
+	blurbslot 0= if
+		"..." blurbsay
+	then
+;
+
+	deck-new
+	14 cards: mason-oneliner
+	5 cards: ...say
+
+	constant BLURB-MASON-DECK
+	BLURB-MASON-DECK var blurb-mason-deck
+	BLURB-MASON-DECK shuffles to blurb-mason-deck

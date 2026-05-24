@@ -1,0 +1,239 @@
+
+// First ending text shown, after the kill count and streak count
+
+: ending-bit-1
+
+	// See Line 57, modedefeated, to see how all the game modes are called
+	
+	gamedef{ ' defaultmode gamemode? } if 
+
+		rndchar , "Sooooo... this is Canada eh" , 3 ,
+		solo if
+			char1 , "Jai devine que je lai fait seul." , 3 ,
+		else	
+			char2 , "Ouais." , 2 , 
+		then
+	
+		char1 , "It's a bit... brisk" , 2 ,
+	
+		solo if
+			char1 , "Hein, bien sur." , 2 ,	
+		else
+			char2 , "Tu penses peut etre?" , 3 ,
+		then
+
+		5 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		rndchar , "Regardez ca ! Des manchots !" ,
+
+		3 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		0.5 , canuck , "Attends quoi" , 2 ,
+		char1 , "Quoi ?" , 1 ,
+		canuck , "There are no penguins in Canada..." , 2 ,
+		char1 , "But... ice, snow... PENGUINS! " 0x e6 $chr $cat , 3 ,
+		canuck , "...sigh" , 1 ,
+		
+	then;
+	
+	gamedef{ ' longroad gamemode? } if
+	
+		rndchar , "Cest une longue route !" , 3 ,
+		
+	then;	
+	
+	gamedef{ ' specialchars gamemode? } if
+	
+		rndchar , "Jai rencontre une troupe de gens bizarres !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' familiarchars gamemode? } if
+	
+		rndchar , "Je me suis rendu compte que jy reconnaissais beaucoup de visages familiers !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' specialcharsEX gamemode? } if
+	
+		rndchar , "Je lai fait!" , 2 ,
+		char1 , "Et jai rencontre tant de personnes interessantes sur le chemin !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' familiarcharsEX gamemode? } if
+	
+		rndchar , "Cest bien que jeusse tous mes amis avec moi !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' kepamode gamemode? } if
+	
+		rndchar , "I have defeated... K*E*P*A MODE!" rainbold , 3 ,
+		
+	then;
+	
+	gamedef{ ' shortroad gamemode? } if
+	
+		rndchar , "La course a record est terminee !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' marathonmode gamemode? } if
+	
+		rndchar , "Cetait un sacre detour !" , 3 ,
+		
+	then;
+	
+	gamedef{ ' deadlier gamemode? } if
+	
+		rndchar , "Cetait assez mortel!" , 3 ,
+		
+	then;
+
+	gamedef{ ' 4jerksmode gamemode? } if
+	
+		rndchar , "Road triiiiip!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+	
+		rndchar , "ROAAAD TRIIIIP EXTREEEEME!" fbold , 3 ,
+		
+	then;
+	
+	// Below just as a failsafe in case the player is somehow playing a game mode not covered above
+	
+		rndchar , "JADORE ETRE FORT" , 3 ,
+		
+;
+
+// Second ending text shown, after the credits
+
+: ending-bit-2
+
+	gamedef{ ' defaultmode gamemode? } if 
+
+		3 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		1 , char1 , "Plus de pingouins!" , 2 ,
+		canuck , "...sigh" , 1 ,
+		
+	then;
+	
+	gamedef{ ' longroad gamemode? } if
+	
+		canuck , "'Vous avez reussi, mais il y a un mode Route encore plus long!" , 3 ,
+		
+	then;	
+	
+	gamedef{ ' specialchars gamemode? } if
+	
+		canuck , "Beaucoup de personnes interessantes sur la Route de la mort!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' familiarchars gamemode? } if
+	
+		canuck , "Bienvenue au Canada!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' specialcharsEX gamemode? } if
+	
+		canuck , "FEH" rbold , 2 ,
+		canuck , "QUOI DE SI RARE CHEZ CES PERSONNAGES?" rbold , 3 ,
+		
+	then;
+	
+	gamedef{ ' familiarcharsEX gamemode? } if
+		50 %chance if
+			canuck , "OUAH! QUELLE BANDE DE CONS!" rbold , 2 ,
+		else
+			canuck , "WITH FRIENDS LIKE THESE..." , 2 ,
+			canuck , "QUI A BESOIN DENNEMIS??" , 2 ,
+		then
+	then;
+	
+	gamedef{ ' kepamode gamemode? } if
+			
+		cheevo{ team-stack ' kepa? stack-filter } nip 0 > if
+			canuck , "Felicitations! Vous avez sauve Kepa!" , 2 ,
+			canuck , "Vous etes un veritable adepte de la Route de la mort!" , 2 ,
+		else
+			canuck , "But... did you truly win?" , 2 ,
+			canuck , "Ou avez vous perdu Kepa?" , 2 ,
+		then
+		
+	then;
+	
+	gamedef{ ' shortroad gamemode? } if
+	
+		canuck , "J'espere que le voyage ne vous a pas paru trop long!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' marathonmode gamemode? } if
+	
+		canuck , "Tu as pris le chemin panoramique, hein?" , 3 ,
+		
+	then;
+	
+	gamedef{ ' deadlier gamemode? } if
+	
+		rndchar , "Ca aurait pu etre pire!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' endlessmode gamemode? } if
+	
+		rndchar , "Cetait cense etre sans fin!" , 3 ,
+		rndchar , "Quelle arnaque!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' OPPmode gamemode? } if
+	
+		canuck , "WOW! TELLEMENT SURPUISSANT!" , 3 ,
+		
+	then;
+	
+	gamedef{ ' quicknightmare gamemode? } if
+	
+		canuck , "Tu as pris le raccourci, hein?" , 3 ,
+		
+	then;
+	
+	gamedef{ ' 4jerksmode gamemode? } if
+	
+		solo if
+			canuck , "Tu as ton passeport ?" , 3 ,
+		else
+			canuck , "Vous avez vos passeports ?" , 3 ,
+		then
+		
+	then;
+	
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+	
+		canuck , "'J'arrive pas a croire qu'on a encore des touristes !" , 3 ,
+		
+	then;
+	
+	// Below just as a failsafe in case the player is somehow playing a game mode not covered above
+		
+		solo if
+			char1 , "NNNNNNNNNNG." , 2 ,	
+		else
+			char2 , "WHOA ! NICE ?" , 3 ,
+		then
+	
+;
+

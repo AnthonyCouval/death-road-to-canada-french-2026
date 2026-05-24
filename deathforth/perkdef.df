@@ -24,7 +24,7 @@ perkdef{
 
 // WEAPON_ <- chara .trademarkwep
 : .trademarkwep args( weapon chara )
-	<- chara .perk@ "Trademark Weapon" $= if
+	<- chara .perk@ "Arme de marque" $= if
 		<- weapon <- chara .weapona!
 		1 <- chara .weapon_nodropa!
 		
@@ -55,20 +55,20 @@ perkdef{
 // Traits
 
 : paranoidtrait args( chara )
-	"PARANOID APPLIED ON CHAR " type <- chara .name@ print
+	"PARANOIA APPLIQUE AU PERSO " type <- chara .name@ print
 	6 <- chara .wits! 0 <- chara .attitude!
 	<- chara .witsREV <- chara .attitudeREV
 ;
 
 : oblivtrait args( chara )
-	"OBLIVIOUS APPLIED ON CHAR " type <- chara .name@ print
+	"INCONSCIENT APPLIQUE AU PERSO " type <- chara .name@ print
 	0 <- chara .wits! 6 <- chara .attitude!
 	<- chara .witsREV <- chara .attitudeREV
 	WEAPON_WALLOFHAM <- chara .trademarkwep
 ;
 
 : bandittrait args( chara )
-	"BANDIT APPLIED ON CHAR " type <- chara .name@ print
+	"BANDIT APPLIQUE AU PERSO " type <- chara .name@ print
 	0 <- chara .composure! 0 <- chara .loyalty!
 	boring <- chara .wits! boring <- chara .attitude!
 	<- chara .temperREV <- chara .loyaltyREV
@@ -77,7 +77,7 @@ perkdef{
 ;
 
 : charmtrait args( chara )
-	"CHARMING APPLIED ON CHAR " type <- chara .name@ print
+	"CHARMEUR APPLIQUE AU PERSO " type <- chara .name@ print
 	6 <- chara .wits! 6 <- chara .attitude!
 	<- chara .witsREV <- chara .attitudeREV
 	
@@ -93,11 +93,11 @@ perkdef{
 ;
 
 : gratingtrait args( chara )
-	"GRATING APPLIED ON CHAR " type <- chara .name@ print
+	"AGACANT APPLIQUE AU PERSOR " type <- chara .name@ print
 	0 <- chara .wits! 0 <- chara .attitude!
 	<- chara .witsREV <- chara .attitudeREV
 	WEAPON_SPORTSHORN <- chara .trademarkwep
-	<- chara .perk@ "Trademark Weapon" $= if
+	<- chara .perk@ "Arme de marque" $= if
 		' tmgrating-main-events <- chara .main_events!
 	then
 ;
@@ -136,7 +136,7 @@ perkdef{
 ;
 *)
 : fiercetrait args( chara )
-	"FIERCE TEMPERED APPLIED ON CHAR " type <- chara .name@ print
+	"CARACTERE IMPULSIF APPLIQUE AU PERSO " type <- chara .name@ print
 	0 <- chara .composure!
 	1 STAT_STRENGTH <- chara .stat+
 	<- chara .temperREV <- chara .strengthREV
@@ -145,7 +145,7 @@ perkdef{
 ;
 
 : calmtrait args( chara )
-	"CALM UNDER FIRE APPLIED ON CHAR " type <- chara .name@ print
+	"SANG-FROID APPLIQUEE AU PERSO " type <- chara .name@ print
 	6 <- chara .composure!
 	1 STAT_SHOOTING <- chara .stat+
 	<- chara .temperREV <- chara .shootingREV
@@ -153,7 +153,7 @@ perkdef{
 ;
 
 : nurturetrait args( chara )
-	"NURTURING APPLIED ON CHAR " type <- chara .name@ print
+	"BIENVEILLANT APPLIQUE AU PERSO " type <- chara .name@ print
 	boring <- chara .wits! 6 <- chara .attitude!
 	1 STAT_MEDICAL <- chara .bonus+
 	1 STAT_MEDICAL <- chara .stat+
@@ -171,19 +171,19 @@ perkdef{
 ;
 
 : inventtrait args( chara )
-	"INVENTIVE APPLIED ON CHAR " type <- chara .name@ print
+	"INVENTIF APPLIQUE AU PERSONNAGE " type <- chara .name@ print
 	6 <- chara .wits! boring <- chara .attitude!
 	1 STAT_MECHANICAL <- chara .bonus+
 	1 STAT_MECHANICAL <- chara .stat+
 	<- chara .witsREV <- chara .mechanicREV
 	WEAPON_EBLOWER <- chara .trademarkwep
-	<- chara .perk@ "Trademark Weapon" $= if
+	<- chara .perk@ "Arme de marque" $= if
 		' tminvent-main-events <- chara .main_events!
 	then
 ;
 
 : frantictrait args( chara )
-	"FRANTIC WHINER APPLIED ON CHAR " type <- chara .name@ print
+	"PLEURNICHARD APPLIQUE AU PERSO " type <- chara .name@ print
 	boring <- chara .wits! 0 <- chara .attitude!
 	1 STAT_DEXTERITY <- chara .stat+ 
 	-1 STAT_VITALITY <- chara .stat+ <- chara .health--
@@ -192,7 +192,7 @@ perkdef{
 ;
 
 : toughtrait args( chara )
-	"RESILIENT TYPE APPLIED ON CHAR " type <- chara .name@ print
+	"RESILIENT APPLIQUE AU PERSO " type <- chara .name@ print
 	boring <- chara .attitude! 0 <- chara .wits!
 	\ 1 STAT_VITALITY <- chara .stat+ <- chara .health++nostat
 	<- chara .witsREV
@@ -200,7 +200,7 @@ perkdef{
 ;
 
 : berserktrait args( chara )
-	"BERSERK! APPLIED ON CHAR " type <- chara .name@ print
+	"FURIE! APPLIQUEE AU PERSO " type <- chara .name@ print
 	0 <- chara .wits! 0 <- chara .attitude! 0 <- chara .composure! 0 <- chara .loyalty!
 	1 STAT_STRENGTH <- chara .bonus+
 	1 STAT_FITNESS <- chara .bonus+
@@ -216,7 +216,7 @@ perkdef{
 ;
 
 : civiltrait args( chara )
-	"CIVILIZED! APPLIED ON CHAR " type <- chara .name@ print
+	"CIVILISE! APPLIQUE AU PERSO " type <- chara .name@ print
 	6 <- chara .wits! 6 <- chara .attitude! 6 <- chara .composure! 6 <- chara .loyalty!
 	1 STAT_MEDICAL <- chara .stat+ 1 STAT_MECHANICAL <- chara .stat+
 	-3 STAT_MORALE <- chara .bonus+ 4 <- chara .morale!
@@ -226,7 +226,7 @@ perkdef{
 ;
 
 : mysterytrait args( chara )
-	"MYSTERIOUS APPLIED ON CHAR " type <- chara .name@ print
+	"MYSTERIEUX APPLIQUE AU PERSO " type <- chara .name@ print
 	hilow <- chara .wits! hilow <- chara .attitude! hilow <- chara .composure!
 	<- chara .perk@ "Martial Artist" $= if
 		3 for 50 %chance if 1 STAT_STRENGTH <- chara .stat+ else 1 STAT_FITNESS <- chara .stat+ then next
@@ -249,7 +249,7 @@ perkdef{
 ;
 
 : warriortrait args( chara )
-	"WARRIOR APPLIED ON CHAR " type <- chara .name@ print
+	"GUERRIER APPLIQUE AU PERSO " type <- chara .name@ print
 	2 STAT_STRENGTH <- chara .stat+ 2 STAT_FITNESS <- chara .stat+
 	boring <- chara .wits! boring <- chara .attitude! boring <- chara .composure!
 	<- chara .strengthREV <- chara .fitnessREV
@@ -258,7 +258,7 @@ perkdef{
 ;
 
 : spectrait args( chara )
-	"SPECIALIST APPLIED ON CHAR " type <- chara .name@ print
+	"SPECIALISTE APPLIQUE AU PERSONNAGE " type <- chara .name@ print
 	// boring <- chara .wits! boring <- chara .attitude! boring <- chara .composure!
 	1 STAT_STRENGTH <- chara .bonus+
 	1 STAT_FITNESS <- chara .bonus+
@@ -268,7 +268,7 @@ perkdef{
 	1 STAT_SHOOTING <- chara .stat+
 	1 <- chara .carrying.slot_count!
 	<- chara .shootingREV <- chara .strengthREV <- chara .fitnessREV
-	<- chara .perk@ "Bow and Arrows" $= if
+	<- chara .perk@ "Arc et Fleches" $= if
 		"WEAPON_WARBOW" evaluate <- chara .weapona! \ Q update: special bow specialist 
 		\ BE CAREFUL WITH WEAPON ID ORDER! 
 		
@@ -278,7 +278,7 @@ perkdef{
 	then
 	(*
 	// Arq fix for getting supplies for not recruiting them
-	<- chara .perk@ "Gun Collector" $= if
+	<- chara .perk@ "Collectionneur d'armes" $= if
 		gstats{ perk-guncrazy } 3 >= if 1 WEAPON_SHOTGUN trunk.weapon+ then
 		gstats{ perk-guncrazy } 2 >= if 1 WEAPON_RIFLE trunk.weapon+ then
 		gstats{ perk-guncrazy } 3 < if 1 WEAPON_PISTOL trunk.weapon+ then
@@ -286,7 +286,7 @@ perkdef{
 		0 <- chara .weaponc!
 	then
 	*)
-	<- chara .perk@ "Pyromaniac" $= if
+	<- chara .perk@ "Pyromane" $= if
 		WEAPON_NAPALM <- chara .weapona!
 		1 <- chara .weapon_nodropa!
 		0 <- chara .weaponb!
@@ -296,12 +296,12 @@ perkdef{
 ;
 
 : travellighttrait args( chara )
-	"TRAVELLIGHT APPLIED ON CHAR " type <- chara .name@ print
+	"VOYAGE LEGER APPLIQUE AU PERSO " type <- chara .name@ print
 	1 STAT_DEXTERITY <- chara .stat+ 
 	1 STAT_FITNESS <- chara .stat+
 	2 <- chara .carrying.slot_count!
 	(*
-	<- chara .perk@ "Gun Collector" $= if
+	<- chara .perk@ "Collectionneur d\'armes" $= if
 		gstats{ perk-guncrazy } 2 >= if 1 WEAPON_RIFLE trunk.weapon+ then
 		0 <- chara .weaponc!
 	then

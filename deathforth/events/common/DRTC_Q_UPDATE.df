@@ -1,0 +1,780 @@
+
+
+
+\ Just load this file after the PANCREAS file, like last time. 
+
+\ Note: after using any of the "ify" words, use the "to-mission" command. 
+\ Some events take one mission to kick in, so to speak. (Technical hitch.) 
+
+\ Btw - rare trader camp saturation aside - this is why the new chars will be road events.
+\ I will modify the decks at a later date ^W^ 
+
+\ ------------------------------------------------
+\ ------------------------------------------------
+\ ROHOA ("DR. HAWKE") HAWKE CHARACTER STUFF BELOW
+\ ------------------------------------------------
+\ ------------------------------------------------
+
+: rohoalines 1 16 rnd case 
+	1 of BLUE "Be more careful next time!" .. endof
+	2 of BLUE "Let me fix ya up, hon." .. endof
+	3 of BLUE "Expertise! From the expert." .. endof
+	4 of BLUE "Come here a moment." .. endof
+	5 of BLUE "What'd you do this time?" .. endof
+	6 of BLUE "That looked nasty." .. endof
+	7 of BLUE "I can fix that, hang on..." .. endof
+	8 of BLUE "No, I don't keep whiskey in it." .. endof
+	9 of BLUE "Let me help, hold on..." .. endof
+	10 of BLUE "Right as rain!" .. endof 
+	11 of BLUE "Steady on there." .. endof 
+	12 of BLUE "I've got just the thing for that." .. endof 
+	13 of BLUE "Will you stop dying, please?" .. endof 
+	14 of BLUE "Let me patch you up." .. endof 
+	15 of BLUE "Stand still a moment..." .. endof 
+	16 of BLUE "Hang on- I can help." .. endof 
+	endcase
+;	
+\ Flavour dialogue. 
+
+
+: rohoa-thing-events args( me teid )
+
+	<- teid THING_EVENT_DIED = if 
+		"No, no, wait! If I can just reach into-" <- me .yellmsg
+	then 
+
+	<- teid THING_EVENT_SWING = if
+		<- me .cooldown@ 1.5 * <- me .cooldown! \ Melee CD penalty 
+	then
+	
+	<- teid THING_EVENT_SHOOT = if
+		<- me .cooldown@ 1.5 * <- me .cooldown! \ Ranged CD penalty 
+	then
+	
+	<- teid THING_EVENT_TIMER = if 
+		1 <- me .timer!
+
+		<- me .character@ .mod_flags2@ 2 = if \ Scepter powerup 
+			LOOT_MEDICAL <- me .character@ .lootamt@ 10 * 0 50 clamp %chance if \ Scepter powerup...
+
+				2 <- me .invincible_counter! \ Makes character harder to grapple based on medicine loot count 
+			then 
+		then 	
+		
+		\ Don't worry too much about the scepter; mod_flags2 is never set in gameplay, so. 
+		
+		<- me .character@ .health@ 1 < if then; \ If i'm not dead ,
+		\ "NUMBER 1" print \ debug 
+		<- me .wielded dup WEAPON_MEDICBAG = if \ And I have my bag held ,  
+		<- me .ammocount 0 > if \ And there's medicine in the bag, 
+		\ "NUMBER 2" print 
+		
+		<- me .action_cooldown@ 0 = if \ and i've not healed in 30 ticks 
+			<- me .pos 70 things-in-xyrad 
+				depths for i picks .teammate? if \ and there's friends nearby, 
+			\		"NUMBER 2.1" print 
+					i picks .fullheal? not if \ and they're not fully healed, 
+			\		"NUMBER 2.2" print 
+					i picks .longgone? not if  \ but also not dead, 
+			\		"NUMBER 2.3" print 
+					gameticks print
+					\ <- me .action_cooldown@ 0 > if then; 
+					i picks dup .character@ .health@ 1 + swap .character@ .health! \ heal said friend! 
+					i picks .report-health \ the healing is working guys i promise 
+					i picks heartz \ <3 effect 
+					i picks 50 swap .invincible_counter! \ temporary invulnerability!
+ 					30 <- me .action_cooldown! \ short cooldown, can help chars tank damage! 
+					<- me .useanammo \ use some medical.. 
+					
+					50 %chance if 
+						rohoalines <- me .yellmsg \ yell at the patient 
+					then 
+			\		"NUMBER 3" print 
+					\ "ewwweeew" <- me .report 
+					\ me silentkillit
+					sfx{ fm } \ auditory confirmation 
+					break 
+					then then then 
+				next drop
+			then 
+		then  
+	then 
+		\ <- me .interact_id@ #thing .wielded dup <- me .character@ .weapona!
+		
+	then
+	
+
+;
+
+: rohoa-main-events ( teid ) args( chara eventid )
+	 	
+		<- eventid MAIN_EVENT_MISSION_START = if 
+			<- chara .location@ 0 = if then; \ resting 
+			1 <- chara .thing@ .timer! \ basic timer stuff 
+		then 
+		
+		<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		\ <- chara .thing@ .timer@ 0 = if 
+		\ 	1 <- chara .thing@ .timer!
+		\ then 
+		 <- chara .thing@ swap ( teid ) rohoa-thing-events
+		\ "WOWA" print 
+;
+
+
+\ ------------------------------------------------
+\ ------------------------------------------------
+\ EMBER THE GASGUZZLER ROBOT EXTRAORDINAIRE BELOW 
+\ ------------------------------------------------
+\ ------------------------------------------------
+
+
+
+45 constant CHARGEINTERVAL \ Duration of one charge segment in seconds 
+6 CHARGEINTERVAL * 10 * constant LOWCHARGE \ Lowest charge threshold
+12 CHARGEINTERVAL * 10 * constant MODCHARGE  \ Med charge threshold 
+18 CHARGEINTERVAL * 10 * constant HIGHCHARGE \ High charge threshold 
+24 CHARGEINTERVAL * 10 * constant MAXCHARGE \ Max charge threshold 
+-39 constant CHARGE_OFFSET \ Position of charge meter over head 
+
+\ Change these if you want. 
+
+
+: lichtsmash args( me )   \ Bonus damage + stun from high charge! 
+	<- me .hitpoints@ 2 - <- me .hitpoints! 
+	<- me .stun@ 75 + <- me .stun! 
+	8 <- me .vel.z! 
+	sfx{ thump 0.96 q! 0.66 scale! pitch@ 0.8 1.2 frnd * pitch! 150 1500 frnd filt!  } \ THUNK 
+; 
+
+: licht-thing-events args( me eventid )
+	
+	<- eventid THING_EVENT_DIED = if 
+	
+		RED "WHERE DID THE LIGHTS GO" .. <- me .yellmsg \ just coz it doesnt play through mission-events-human sometimes 
+	
+	then 
+
+	<- eventid THING_EVENT_AI_ASSESS = if \ This entire eventid basically handles getting the AI to fuel itself.
+		
+		<- me .character@ .weaponc@ WEAPON_ROBOFUEL = if 
+		
+		orders_tactic@ 2 = not if \ How aggressively the AI fuels itself is based on FIGHTING or not. 
+		
+			<- me .character@ .user.special_counter@ LOWCHARGE <= if 
+				LOOT_GAS <- me .character@ .lootamt@ 0 > if 
+					
+		weapondef{ <- me .character@ .weaponc@ sel ammo_type@ } <- me .character@ .lootamt@ -1 + 0 999 clamp weapondef{ <- me .character@ .weaponc@ sel ammo_type@ } <- me .character@ .lootamt!
+		
+		<- me .character@ .user.special_counter@ REFILL_AMOUNT  + <- me .character@ .user.special_counter! 
+		\ sfx{ goodfx } 
+			then then 
+		
+		else 
+		
+		<- me .character@ .user.special_counter@ MODCHARGE <= if 
+				LOOT_GAS <- me .character@ .lootamt@ 0 > if 
+					
+		weapondef{ <- me .character@ .weaponc@ sel ammo_type@ } <- me .character@ .lootamt@ -1 + 0 999 clamp weapondef{ <- me .character@ .weaponc@ sel ammo_type@ } <- me .character@ .lootamt!
+		
+		<- me .character@ .user.special_counter@ REFILL_AMOUNT  + <- me .character@ .user.special_counter! 
+		
+			then then 
+		
+	then then then 
+
+
+	<- eventid THING_EVENT_DID_HIT = if 
+	
+	
+		\ Overcharge code used to go here. If you want it back, let me know. I have disabled it for now. 
+		
+		<- me .character@ .user.special_counter@ MODCHARGE > if  
+			<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
+				<- me .just_hit_id@ #thing lichtsmash \ Award bonus damage @ high charge 
+				then 
+			then 
+		then 
+	\ then 
+	
+	<- me .character@ .user.special_counter@ LOWCHARGE < if 
+		<- me .anim.extra@ 0 > if 
+			gameticks 2 % 0 = if 
+				1 <- me .stun! \ Harder to escape at low charge 
+			then 
+		then 
+	then 
+	
+	<- eventid THING_EVENT_TIMER = if 
+		1 <- me .timer! 
+		
+		5 <- me .flammability! \ Basically as-metal but for the robot..he is metal after all 
+		
+		<- me .inside_id@ 0 = if 
+			<- me .character@ .user.special_counter@ 1 - 0 10800 clamp <- me .character@ .user.special_counter! \ Don't drain inside the car 
+			
+			\ Other scepter code used to be here. Again, LMK. 
+			
+			<- me .character@ .user.special_counter@ MODCHARGE > if  
+				<- me .character@ statmod{ dup MOD_COFFEE swap .setmod } \ High charge also applies bonuses to SHT, FIT, STR 
+				<- me .character@ statmod{ dup MOD_TIRED swap .clrmod }
+				particle{ new <- me .pos pos! weapons_base_id 285 + spriteid! pos.y@ CHARGE_OFFSET  + pos.y! 1 ticks! 0 fade_in! 0 fade_out! 0 global_colour! }
+				0.10 <- me .character@ .speed_bonus!
+				
+				16 %chance if 
+				 <- me .pos
+					particle{
+						new pos!
+						10 ticks!
+						0 360 frnd angle!
+						glowy
+						0.99 grow!
+						5 fade_out!
+						particles_base_id 149 + spriteid!
+						// angle@ anglexy 0.04 0.08 frnd xymul vel!
+						pos@ -20 10 frnd + swap -6 5 frnd + swap pos!
+						0.25 0.4 frnd scale!
+						1 0 1 rgb!
+					}
+				then 
+			then; 
+			
+			<- me .character@ .user.special_counter@ LOWCHARGE > if 
+				<- me .character@ statmod{ dup MOD_COFFEE swap .clrmod }
+				<- me .character@ statmod{ dup MOD_TIRED swap .clrmod }
+				particle{ new <- me .pos pos! weapons_base_id 284 + spriteid! pos.y@ CHARGE_OFFSET  + pos.y! 1 ticks! 0 fade_in! 0 fade_out! 0 global_colour! }
+				0 <- me .character@ .speed_bonus! \ Do literally nothing of merit when med charge 
+			then; 
+			
+			<- me .character@ .user.special_counter@ 0 > if 
+				<- me .character@ statmod{ dup MOD_COFFEE swap .clrmod }
+				<- me .character@ statmod{ dup MOD_TIRED swap .setmod }
+				particle{ new <- me .pos pos! weapons_base_id 283 + spriteid! pos.y@ CHARGE_OFFSET  + pos.y! 1 ticks! 0 fade_in! 0 fade_out! 0 global_colour! }
+				-0.10 <- me .character@ .speed_bonus! \ Lose all speed at low charge 
+			then; 
+			
+			<- me .character@ .user.special_counter@ 100 = if 
+				1 RED "THE END DRAWS NEAR" .. <- me .character@ .reportdurnow \ # Am I really going to die? # 
+			then 
+			
+			<- me .character@ .user.special_counter@ 0 = if 
+				0 <- me .character@ .health! 
+			\	0 <- me .character@ .main_events! 
+			then; 
+		then 
+
+	then 
+;
+
+: licht-main-events args( chara eventid ) 
+
+	
+<- eventid MAIN_EVENT_MISSION_START = if 
+		\ 1 <- chara .thing@ .timer!
+		\ 1 to ihateyou
+	\	HIGHCHARGE <- chara .user.special_counter!
+	
+		<- chara .location@ 1 = if 
+			1 <- chara .thing@ .timer!
+			' licht-thing-events <- chara .thing@ .events! 
+		then 	
+		\ used to do this the old way 
+		
+		\ Personality is always hidden!
+		\ Ember has mood swings. 
+		0 6 rnd <- chara .wits!
+		0 6 rnd <- chara .attitude!
+		0 6 rnd <- chara .composure!
+		0 6 rnd <- chara .loyalty! 
+		
+		0 STAT_WITS <- chara .knownstat!
+		0 STAT_COMPOSURE <- chara .knownstat!
+		0 STAT_ATTITUDE <- chara .knownstat!
+		0 STAT_LOYALTY <- chara .knownstat! 
+		
+	then 
+
+;
+
+
+: .rohoaify args( chara )
+	132 <- chara .specialtype!
+	"Dr. Hawke" <- chara .name!
+	"aggressively insists to passersby that she invented gel handwash." <- chara .job!
+	' rohoa-main-events <- chara .main_events!
+	3 <- chara .carrying.slot_count!
+	WEAPON_MEDICBAG <- chara .weapona!
+	WEAPON_HAWKEJUICE <- chara .weaponb!
+	70 <- chara .stackedb! 
+	5 <- chara .attitude!
+	3 <- chara .wits!
+	6 <- chara .loyalty! 
+	5 <- chara .medical! 
+	<- chara .nocanshoot 
+	1 <- chara .female!
+	2 <- chara .vitality!
+	2 <- chara .health! 
+	3 LOOT_MEDICAL <- chara .lootamt! 
+;
+
+\ Note: after using either of this "ify" words, use the "to-mission" command. 
+\ Some events take one mission to kick in, so to speak. (Technical hitch.) 
+
+: .emberify args( chara )
+	133 <- chara .specialtype!
+	"Ember" <- chara .name!
+	"keeps glancing flirtatiously at the car's gas tank." <- chara .job!
+	' licht-main-events <- chara .main_events! \ ember was originally going to be called "Licht". 
+	3 <- chara .carrying.slot_count!
+	WEAPON_ROBOFUEL <- chara .weaponc!
+	WEAPON_SLEDGESLAMMER <- chara .weapona! 
+	1 <- chara .weapon_nodropc! 
+	70 <- chara .stackedb! 
+	5 <- chara .attitude!
+	3 <- chara .wits!
+	6 <- chara .loyalty! 
+	1 <- chara .female!
+	1 <- chara .health!
+	1 <- chara .vitality!
+	2 <- chara .strength!
+	2 <- chara .shooting! 
+	HIGHCHARGE <- chara .user.special_counter! 
+	20 LOOT_GAS <- chara .lootamt! 
+;
+
+cyoa{ road{ 
+
+cyoa: rohoa-scget
+	"THE MEDICINE DRUG" cyoa-title! \ current cultural reference xd 
+	char-gen to recruitee ricon 5 recruitee .morale! recruitee .rohoaify
+	($ rname .. " is tasting some strange purple liquid from the tip of her finger when she notices the group nearby." $) cyoa-text! basic-tone
+	($ "
+	You look rough. If you let me join, I can patch you up." bbold $) +text 
+	($ "
+	Dr. Hawke can heal other chars with her satchel, if her satchel is loaded with MEDICAL and held!"  $) +text
+	($ "
+	She can even revive dead characters by pouring her own special brew on them! She's not carrying any weapons, though." $) +text 	
+	// team-count 4 < if recruited then
+		choice( "Ask " .. rname .. " to join" )choice: recruit-yes
+		choice( "BIOLOGY IS FOR NERDS" )choice
+;
+
+\ road{ cyoa{ rohoa-scget } } 
+
+cyoa: ember-scget
+	"THIS JULY...A DIESEL LOVE STORY" cyoa-title!
+	char-gen to recruitee ricon 5 recruitee .morale! recruitee .emberify
+	($ rname .. " is repeatedly smashing a power box with a hammer when the group finds her." $) cyoa-text! basic-tone
+	($ "
+	HELLO, ENTRY-LEVEL AUTOMATONS. YOU SHOULD HIRE ME. I BEAT UP A SENTIENT TREE ON THE WAY HERE." rbold $) +text 
+	($ "
+	What a convincing argument."  $) +text
+	($ "
+	Ember drinks gas! You can refuel her manually or let the AI handle it. The FIGHTIN' tactic will make her refuel more."  $) +text
+	($ "
+	Ember's combat power is dependent on her charge meter." $) +text 	
+	// team-count 4 < if recruited then
+		choice( "Ask " .. rname .. " to join" )choice: recruit-yes
+		choice( "Leave this gas-addled maniac" )choice
+;
+
+} }
+
+\ ----------------------------------------------------------
+\ ----------------------------------------------------------
+\ Several additional minor features were suggested/sought, so those will go below <3
+\ -----------------------------------------------------------
+\ ----------------------------------------------------------
+
+
+
+
+ 
+ 
+\ ----------------------------------------------------------
+\ ----------------------------------------------------------
+\ RINGMASTER CHARACTER AND ALL ASSOCIATED STUFF BELOWWWWWW.
+\ -----------------------------------------------------------
+\ ----------------------------------------------------------
+ 
+
+
+
+
+\ Arq taught me this trick. <3 
+: make-alias: constant does> @ execute ;
+
+' .voice.fhi! 			make-alias: .creature_size!
+' .voice.fhi@ 			make-alias: .creature_size@ 
+
+' .voice.vol! 			make-alias: .creature_power!
+' .voice.vol@ 			make-alias: .creature_power@
+
+' .voice.k! 			make-alias: .creature_feed!
+' .voice.k@ 			make-alias: .creature_feed@
+
+' .voice.q! 			make-alias: .creature_health!
+' .voice.q@ 			make-alias: .creature_health@  
+
+' .user.special_counter! 		make-alias: .creature_id!
+' .user.special_counter@ 		make-alias: .creature_id@ 
+
+' .voice.duty! 			make-alias: .creature_targetid!
+' .voice.duty@ 			make-alias: .creature_targetid@ 
+
+: 2dp 100 * >int 100 / ;
+
+\ ... this is a bit problematic if the ringmaster ever gets the fly head...it would be good to add a failsafe against that...
+\ thoughts?
+
+\ I use these variables to ensure data pertaining to the creature is transient between missions and save loads. 
+
+\ Ordinarily you would feed this creature over the course of a DRTS playthrough to make it more powerful.
+\ You said we should simplify the character, so I have not included the character ability that would otherwise allow for this. 
+
+: econdor-creature-thing-event  args( me teid ) 
+
+
+	<- teid THING_EVENT_OVERLAP = if 
+		<- me .overlapper .typeid@ THING_ZOMBIE = if 
+			gameticks 12 % 0 = if 
+				<- me .vel xymag 0.2 > if 
+					<- me .character@ .mod_flags2@ 2 = if 
+				
+				<- me .pos xyblast -1 lt .hitcheck.blast! 9 12 rnd lt .hitcheck.rad! 0.2 0.4 frnd lt .hitcheck.power! 1 2 frnd lt .hitcheck.knockback! 
+				\ RAMMING SPEED!!!
+				\ Scepter powerup. Disabled by default 
+			
+					then 
+				then 
+			then 
+		then 
+	then 
+
+
+	<- teid THING_EVENT_DID_HIT = if
+		
+			<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
+				<- me .just_hit_id@ #thing .hitpoints@ <- me .character@ .creature_size@ 0.5 * >int - <- me .just_hit_id@ #thing .hitpoints! \ Bonus damage on attack based on size 
+			
+			then 
+	then 
+	
+	
+	<- teid THING_EVENT_SWING = if 
+	
+		<- me .character@ .creature_size@ -0.1 * 1 + <- me .cooldown@ * <- me .cooldown! \ Bonus cooldown based on size 
+			\ -0.1x+1 
+	
+	then 
+	
+
+	<- teid THING_EVENT_TIMER = if 
+		1 <- me .timer!
+		
+		0.2 0.8 frnd <- me .character@ .bounceval! 
+		
+			<- me .weapon_state.val@ -1 + 0 900 clamp <- me .weapon_state.val! \ Aggro timer, set on-whip 
+		
+				gameticks 30 % 0 = if 				\ Teleport to owner every 0.5s if the two are apart...
+
+					\ I can disable this if you want. 
+				
+					<- me .character@ .creature_id@ #thing .mapid@ <- me .mapid@ = not if 
+						<- me .character@ .creature_id@ #thing .pos <- me .pos!
+						<- me .character@ .creature_id@ #thing .mapid@ <- me .mapid!
+						0 <- me .weapon_state.val! 
+					then 
+				then 
+		
+				
+				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.x! 
+				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.y! 
+				<- me .character@ .creature_size@ 0.33 * <- me .character@ .speed_bonus! \ Speed ALSO based on size 
+
+			\	<- me .scale.x@ 7 * <- me .rad.x!
+				
+				<- me .character@ .creature_size@ 2 * dup <- me .character@ .strength! <- me .character@ .fitness! \ Stats based on size... 
+			
+			\	<- me .rad.x@ <- me .rad.y!
+			\	1 <- me .nopush!
+			\	0 <- me .mass! 
+				
+				0 <- me .wallbox.x!
+				0 <- me .wallbox.y!
+				\ tile collision 
+
+			\	<- me .character@ .creature_id@ #thing <- me .follow
+		
+		
+		<- me .weapon_state.val@ 0 > <- me .anim.extra@ 0 = <- me .character@ .creature_id@ #thing .anim.extra@ 0 = and and if 
+		\ If i have an active aggro timer (recent whip), am not being bitten and my master is also not being bitten, 
+		
+			<- me .character@ .creature_targetid@ #thing if
+				<- me .character@ .creature_targetid@ #thing .hitpoints@ 0 = if 
+					0 <- me .character@ .creature_targetid! 
+					0 <- me .targetid! \ If what I'm targeting dies, give up 
+				else
+					<- me .character@ .creature_targetid@ #thing <- me .follow \ relentlessly follow target 
+					
+					<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 2dp 0.00035 * 0.9 + 0.9 0.97 clamp <- me .friction!
+					<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 3 100 clamp <- me .mass! 
+						\ Skid mode! like a cat on wood
+						
+					<- me .character@ .mod_flags2@ 2 = if 
+					
+						<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 10 * 100 1000 clamp <- me .mass! 
+						7 <- me .rad.y! \ for RAMMING SPEED scepter powerup 
+						
+					then 
+					
+					10 <- me .character@ .ai.follow_leash!  
+					10 <- me .character@ .ai.safety_leash!	\ run to target & kill 
+					
+			then then then;
+		
+		<- me .character@ .creature_id@ #thing <- me .follow
+		20 <- me .character@ .ai.follow_leash!  
+		20 <- me .character@ .ai.safety_leash!	\ ccome back to me bibi 
+		0 <- me .rad.y! 
+		
+	then
+
+	\ <- teid THING_EVENT_WAS_HIT = if 
+		\ <- me .character@ .health@ -1 > if 
+			
+			\ <- me .character@ .creature_id@ #thing .character@ .health@ -1 +  <- me .character@ .creature_id@ #thing .character@ .health!
+			
+			
+			
+			\ <- me .character@ .creature_id@ #thing .report-health
+			\ sfx{ bite } 
+		\ then 
+	\ then 
+	
+	\ *********************************************
+	
+	\ in DRTS, Ringmaster shares damage with his creature.
+	\ I have disabled this for the sake of simplicity. 
+
+; 
+
+: econdor-creature-main-event args( chara eventid ) 
+
+	<- eventid MAIN_EVENT_MISSION_END = if 
+	
+		
+		<- chara .health@ <- chara .creature_id@ #thing .character@ .creature_health! 
+		<- chara .creature_size@ <- chara .creature_id@ #thing .character@ .creature_size! 
+		\ <- chara .weapons-to-trunk
+		<- chara .loot-to-trunk
+	
+	then 
+
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if 
+			1 <- chara .thing@ .timer!
+			 <- chara .thing@ swap ( teid ) econdor-creature-thing-event 
+		then 
+
+; 
+
+: spawn-econdor-creature args( me ) 
+		new-npc
+		<- me .pos lt .pos!
+		<- me lt .follow
+		
+		135 lt .character@ .specialtype! 
+		-6 lt .character@ .headoff.x!
+		
+			-1 lt .character@ .ai.attack_level! 
+			0 lt .character@ .ai.loot_chance!
+			500 lt .character@ .ai.attack_dist!
+			1 lt .character@ .ai.attack_chance!
+			1 lt .character@ .ai.rush_chance!
+			-1 lt .character@ .ai.attack_level!
+			1	lt .character@ .ai.threat_respond_chance!
+			0	lt .character@ .ai.threat_threshold!
+			0	lt .character@ .ai.threat_relax_chance!
+			40 lt .character@ .ai.follow_leash!  
+			40 lt .character@ .ai.safety_leash!
+		
+		mission.vehicle@ if
+		mission.vehicle@ lt .enter
+		then
+		
+		lt .id@ <- me .character@ .creature_id! \ referencing me, 
+		<- me .id@ lt .character@ .creature_id! \ referencing you
+												\ uh huhhhhh. 
+												
+		<- me .character@ .mod_flags2@ lt .character@ .mod_flags2! \ inherit my scepter 
+		
+		6 STAT_FITNESS lt .character@ .bonus! 
+		\ And still somehow less busted than nuggs...
+		\ did this coz it gets tired quickly 
+		
+		lt .character@ .nopickups
+		
+		<- me .character@ .creature_health@ lt .character@ .health! 
+		<- me .character@ .creature_size@ 1 10 clamp lt .character@ .creature_size! 
+		' econdor-creature-main-event lt .character@ .main_events! 	
+		' econdor-creature-thing-event lt .events! 
+		1 lt .timer! 
+		
+		WEAPON_CREATUREMAUL lt .character@ .weapona! 
+		1 lt .character@ .carrying.slot_count! 
+		1 lt .character@ .weapon_nodropa! 
+			
+; 
+
+: echocondor-thing-events args( me teid ) 
+
+		\ <- teid THING_EVENT_TIMER = if 
+		\
+		\	<- me .anim.extra@ 0 > if 
+		\		gameticks 2 % 0 = if 
+		\			1 <- me .stun!
+		\		then 
+		\	then 
+		
+		\ then  
+		
+		\ Difficult-escaping-grapple trait from DRTS... will disable for now 
+		
+		<- teid THING_EVENT_DID_HIT = if
+			<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
+				\ <- me .just_hit_id@ #thing .hitpoints@ 1 999 clamp <- me .just_hit_id@ #thing .hitpoints! 
+				0 <- me .anim.weapon_counter! 
+			then
+		then 
+		
+		\ Originally, E-Condor had two melee downsides:
+		\ No lethal hits, and no multi-hit, even if the weapon has multi-hit.
+		\ I have only left the no multi-hit in. 
+; 
+
+: echocondor-events args( chara eventid )
+
+		\ <- eventid MAIN_EVENT_MISSION_END = if 
+		\
+		\	<- chara .loot-to-trunk
+		\
+		 \ then 
+
+	
+	<- eventid MAIN_EVENT_MISSION_START = if
+	
+	<- chara .team_status@ TEAM_STATUS_RECRUITED $= if
+		<- chara .location@ 1 = if 
+			<- chara .creature_health@ 0 > if 
+				<- chara .thing@ spawn-econdor-creature 
+				"SPAWNED UR FRIEND" print 
+			then 
+	
+			then
+		then
+	then 
+		
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if 
+			1 <- chara .thing@ .timer!
+			 <- chara .thing@ swap ( teid ) echocondor-thing-events
+		then 
+	
+;
+
+: .ringmasterify args( chara )
+	134 <- chara .specialtype!
+	"Johannes" <- chara .name! \ Johannes Condor... 
+	"knows all the words to Entrance of the Gladiators. All of them!" <- chara .job!
+	' echocondor-events <- chara .main_events! 
+	3 <- chara .carrying.slot_count!
+	WEAPON_ECONDORWHIP <- chara .weapona! 
+	
+	6 <- chara .attitude!
+	6 <- chara .wits!
+	6 <- chara .loyalty! 
+	6 <- chara .composure! 
+	1 <- chara .dexterity! 
+	
+	3 <- chara .strength!
+	3 <- chara .fitness!
+	-3 STAT_STRENGTH <- chara .bonus!
+	-3 STAT_FITNESS <- chara .bonus! 
+	
+	2 <- chara .health!
+	2 <- chara .vitality!
+	
+	2 <- chara .creature_health! \ determines initial creature HP 
+	2 <- chara .creature_size! \ determines creature stats, damage, size, speed 
+
+;
+
+
+
+cyoa{ road{ 
+
+cyoa: ringmaster-scget
+	"I ALREADY KNOW YOU'RE HUMMING THE TUNE" cyoa-title! 
+	char-gen to recruitee ricon 5 recruitee .morale! recruitee .ringmasterify
+	($ rname .. " is gazing into a walk-in mirror when the group finds him, completely ensnared by his own grandeur. Not far from him, his pet is 'playing fetch' with zombies." $) cyoa-text! basic-tone
+	($ "
+	Aren't I magnificent?...I mean, uh, can I join?" pbold $) +text 
+	($ "He's some kind of well-dressed circus leader." $) +crtext
+	
+	($ "
+	Johannes' pet follows the crack of his whip. On closer inspection, his muscles appear atrophied - unsuitable for heavy loads or weapons."  $) +text
+	// team-count 4 < if recruited then
+		choice( "Ask " .. rname .. " to join" )choice: recruit-yes
+		choice( "Say NO to this gangly freak show" )choice
+;
+
+} } 
+
+
+
+
+: new_weapons_please
+	blackmamba 
+	200 LOOT_BULLET spawnloot 
+	
+	fosbury 
+	200 LOOT_BULLET spawnloot
+	
+	flet 
+	200 LOOT_SHOTGUN_SHELL spawnloot
+; 
+
+\ Fuel canisters for the warehouse location.
+\ Maybe we should exchange these with something else instead?
+\ They probably need a new sprite, that's for shure. 
+
+
+: to_the_beach
+	"events/inner/region/beach.df" $load-region premission 
+; 
+
+: to_the_depot
+	"events/rareloc/region/busdepot.df" $load-region premission 
+;
+
+: to_the_prison
+	"events/inner/region/hmp.df" $load-region premission 
+;  
+
+: to_the_warehouse
+	"events/rareloc/region/arkwares.df" $load-region premission 
+;  
+
+: to_the_fare
+	"events/inner/region/rpgfare.df" $load-region premission 
+;  
+
+: to_the_range
+	"events/inner/region/scepter-range.df" $load-region premission 
+;  
+
+cyoa{ road{ 
+
+
+} }

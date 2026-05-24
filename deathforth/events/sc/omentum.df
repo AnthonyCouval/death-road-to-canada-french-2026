@@ -1,0 +1,98 @@
+cyoa{ road{
+
+cyoa: cart-despair
+	bully choosechar cicon
+	"Where am I?" cyoa-title! badfx
+	($ cname .. " loses a complete sense of direction, having no idea where " .. che .. " is." $) cyoa-text!
+	solo if
+		($ cHe .. " wanders off into uncharted territory on her maps, not even bothering to mark it. " .. cHe .. " was never seen again." $) +crtext
+	else
+		regiondef{ cartmap-bought } if
+			"You don't deserve this, I'm taking it back!" pbold +crtext
+			($ cHe .. " angrily swipes the map " .. thegroup .. " bought from " .. chim .. " and stomps off!" $) +crtext
+			regiondef{ 0 to cartmap-bought }
+		else
+			($ cHe .. " tells " .. theothers .. " that she is charting another map, and wanders off into a random direction.
+			After many hours, it's clear " .. che .. " has no intention of coming back." $) +crtext
+		then
+	then
+	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+;
+
+// 0 value brck-countdown <- value in events/trade/camp-recruit.df
+
+cyoa-bridge: brck-mon-recruit
+	THEBRCKMON #character to recruitee ricon
+	"Pukeymon?" cyoa-title!
+	($ "Woah! " .. rname .. " managed to survive. Nice!
+	Its owner may be dead, but it seems like it wants to stick around anyway.
+	What should " .. thegroup .. " do?" $) cyoa-text! goodfx
+	recruit-yesno
+;
+
+// :noname THEBRCKMON dup if choosechar brck-mon-recruit else drop then ; last to get-brckmon
+:noname
+	THEBRCKMON 0?; // valid char id?
+	THEBRCKMON #character .brckmon? 0?; // is it the pukeymon?
+	// THEBRCKMON #character choosechar brck-mon-recruit
+	brck-mon-recruit
+; last to get-brckmon
+
+cyoa: brck-timeup
+	4 6 rnd to brck-countdown
+	stpick-brck if choosechar else ($ "Looks like " .. "Brick" fbold .. " disappeared! How odd." $) text! exit then
+	"Huh? Something's happening..." cyoa-title!
+	($ "Congratulations! " fbold .. cname .. "'s Pukeymon evolved! It looks stronger than before." $) text! goodfx
+	cchar .charm@ 0= if
+		char-gen to recruitee 127 recruitee .specialtype! ricon
+		1 cchar .charm!
+	else
+		cchar .charm@ 2 < if
+			char-gen to recruitee 128 recruitee .specialtype! ricon
+			2 cchar .charm!
+		else
+			"It makes a low growl, ready to fight!" +crtext
+		then
+	then
+	morale++
+	cchar charchoice( ": Alright!" )choice
+;
+
+cyoa: brck-despair
+	bully choosechar cicon
+	"Whiting Out" cyoa-title! badfx
+	($ cname .. " doesn't seem satisfied with how " .. chis .. " training of " .. chis .. " Pukeymon is going." $) cyoa-text!
+	solo if
+		($ cHe .. " withdraws it back into its Pukeyball, and wanders off somewhere, never to be seen again." $)
+	else
+		"I'm sorry guys, but my buddy and I need to part ways now. I'm sure we'll meet again down the road!" pbold
+	then +crtext
+	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+;
+
+cyoa: johnny-despair
+	bully choosechar cicon
+	"THAT'S ENOUGH" rbold cyoa-title!
+	($ cname .. " explodes in a fit of rage, unable to control " .. chim .. "self and see any reason." $) cyoa-text! badfx
+	solo if
+		($ cHe .. " runs off guns blazing, attracting a horde, never to be seen again." $) +crtext
+	else
+		($ cHe .. " swears profusely at " .. theothers .. " before stomping off. This is a family friendly game, so we won't be writing what " .. che .. " said." $) +crtext
+		cchar ' .morale2- foreach-team-char-except
+	then
+	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+;
+
+cyoa: arq-despair
+	bully choosechar cicon
+	"Not cool, man" cyoa-title! badfx
+	($ cname .. " feels upset with " .. chim .. "self. Not to mention, " .. che .. " hasn't had a good bite to eat." $) cyoa-text!
+	($ cHe .. " decides the best course of action is to return to the house " .. che .. " was standing in when " .. che .. " was recruited into the team." $) +crtext
+	solo if
+		($ cHe .. " turns the car around and finds " .. chis .. " home once again!" $)
+	else
+		($ cHe .. " starts walking back until " .. theothers .. " see " .. chim .. " disappear into the horizon." $)
+	then +crtext
+	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+;
+} }

@@ -1,0 +1,61 @@
+	: CLOCKKING-oneline1 "Remind me, which one of us controls time, again?" ;
+	: CLOCKKING-oneline2 "TEMPUS...nah, just kidding." ;
+	: CLOCKKING-oneline3 "My father was a digital clock. And before that, a grandfather clock." ;
+	: CLOCKKING-oneline4 "I take a lot of offense to TICK TOCK actually." ;
+	: CLOCKKING-oneline5 "You're really WINDING ME UP, haha...HAHAHAHAHA" ;
+	: CLOCKKING-oneline6 "DING DONG. Who does the bell toll for? YOU." ;
+	: CLOCKKING-oneline7 "ASK NOT FOR WHOM THE BELL TOLLS..." ;
+	: CLOCKKING-oneline8 "FOR WHOM...DOES THAT BELL NOW TOLL?" ;
+	: CLOCKKING-oneline9 "DON'T SAY ZA WARUDO. I'M WATCHING YOU! DON'T DO IT!" ;
+	: CLOCKKING-oneline10 "WHO IS THIS 'JO-JO'?" ;
+	: CLOCKKING-oneline11 "I HAVE A WHOLE HOST OF ESOTERIC HEROES TO FIGHT STILL!" ;
+	: CLOCKKING-oneline12 "The crown marks the king." ;
+	: CLOCKKING-oneline13 "Oh, I just can't wait to be king." ;
+	: CLOCKKING-oneline14 "i've a bone to pick with caesium-133." ;
+	: CLOCKKING-oneline15 "AND WHEN I'M KING OF CANADA, TIME WILL STOP FOREVER!" ;
+	: CLOCKKING-oneline16 "Einstein's problem was that he wasn't born as a deity." ;
+	: CLOCKKING-oneline17 "I trust this will all make sense in the course of...nevermind." ;
+	: CLOCKKING-oneline18 "Oh? A race against the CLOCK? YEAH. HAHA. VERY FUNNY." ;
+	: CLOCKKING-oneline19 "Wonder if anybody would notice if I timestopped to pick my nose..." ;
+	: CLOCKKING-oneline20 "It's a good thing I don't have a neck. My crown would crush it." ;
+	: CLOCKKING-oneline21 "IF I COULD TURRRRNNNNN BACK TIMEEEEEEE..." ;
+
+	deck-new
+		card: CLOCKKING-oneline1
+		card: CLOCKKING-oneline2
+		card: CLOCKKING-oneline3
+		card: CLOCKKING-oneline4
+		card: CLOCKKING-oneline5
+		card: CLOCKKING-oneline6
+		card: CLOCKKING-oneline7
+		card: CLOCKKING-oneline8
+		card: CLOCKKING-oneline9
+		card: CLOCKKING-oneline10
+		card: CLOCKKING-oneline11
+		card: CLOCKKING-oneline12
+		card: CLOCKKING-oneline13
+		card: CLOCKKING-oneline14
+		card: CLOCKKING-oneline15
+		card: CLOCKKING-oneline16
+		card: CLOCKKING-oneline17
+		card: CLOCKKING-oneline18
+		card: CLOCKKING-oneline19
+		card: CLOCKKING-oneline20
+		card: CLOCKKING-oneline21
+	constant CLOCKKING-ONELINERS
+	CLOCKKING-ONELINERS var CLOCKKING-oneliners
+	CLOCKKING-ONELINERS shuffles to CLOCKKING-oneliners
+
+: CLOCKKING-oneliner
+	CLOCKKING-oneliners depths 0= if CLOCKKING-ONELINERS shuffles to CLOCKKING-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: CLOCKKING-oneliner
+
+	constant BLURB-CLOCKKING-DECK
+	BLURB-CLOCKKING-DECK var blurb-CLOCKKING-deck
+	BLURB-CLOCKKING-DECK shuffles to blurb-CLOCKKING-deck

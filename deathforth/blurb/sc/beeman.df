@@ -2,13 +2,13 @@
 	: BEEMAN-oneline2 "Croyez en vous !" ;
 	: BEEMAN-oneline3 "Les abeilles sont toujours la donc je pense que ce monde peut redevenir comme avant." ;
 	: BEEMAN-oneline4 "Chaque fois que tu es seul et effraye, souviens-toi juste de continuer a avancer." ;
-	: BEEMAN-oneline5 "Ça ira mieux si nous pouvons avancer un peu plus sur la route !" ;
+	: BEEMAN-oneline5 "Ca ira mieux si nous pouvons avancer un peu plus sur la route !" ;
 	: BEEMAN-oneline6 "Un petit pas a la fois..." ;
 	: BEEMAN-oneline7 "Vous pouvez le faire si vous essayez." ;
 	: BEEMAN-oneline8 "Continuez a faire vibrer vos ailes !" ;
-	: BEEMAN-oneline9 "'Nous serons au Canada avant que vous vous en rendiez compte." ;
+	: BEEMAN-oneline9 "Nous serons au Canada avant que vous vous en rendiez compte." ;
 	: BEEMAN-oneline10 "Je suis une abeille!" ;
-	: BEEMAN-oneline11 "Les abeilles ont les pouvoirs de la nature!" ;
+	: BEEMAN-oneline11 "Les abeilles ont les pouvoirs de la nature !" ;
 	: BEEMAN-oneline12 "Je ne sais pas non plus comment j'ai survecu aussi longtemps." ;
 
 	deck-new

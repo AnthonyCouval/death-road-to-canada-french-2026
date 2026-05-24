@@ -1,0 +1,140 @@
+: dull-werewolf
+	blurbslot 0= if
+		"'Pourquoi n'aurait ce pas pu etre une apocalypse de loup garou?" blurbsay
+		"'Au moins il y aurait des LOUPS GAROUS." blurbsay
+	then
+;
+
+	: dull-oneline19 "Si tout le monde m'ecoutait, nous serions deja au Canada!" ;
+	: dull-oneline22 "Personne ne m'ecoute jamais!" ;
+
+	: dull-oneline1 "Tout ca ne se serait jamais produit si nous avions empeche Obama d'acceder a la Maison Blanche." ;
+	: dull-oneline2 "Merci beaucoup zombie Obama." ;
+	: dull-oneline3 "Nous devrions essayer de mettre le feu aux zombies plus souvent. C'est le moyen le plus simple." ;
+	: dull-oneline4 "Qu'est ce que c'est que tous ces trucs de zombies?" ;
+	: dull-oneline5 "Pourquoi ces zombies ne courent ils pas vite comme dans les films?" ;
+// VVVVVVVV JONZ BLURBZ VVVVVVVVV
+	: dull-oneline6 "Ou sont les zombies qui explosent et ceux qui ont une langue?" ;
+	: dull-oneline7 "On y est presque ?" ;
+	: dull-oneline8 "Soins medicaux gratuits... dans l'Amerique d'Obama." ;
+	: dull-oneline9 "Je sais ce que je fais, j'ai joue a beaucoup de jeux de zombies." ;
+	: dull-oneline21 "Je ne veux pas aller au Canada! Il fait trop froid!" ;
+// VVVVVVVV DONZ BLURBZ VVVVVVVVV
+	: dull-oneline10 "J'aimerais bien faire n'importe quoi d'autre en ce moment." ;
+	: dull-oneline11 "L'apocalypse n'etait-elle pas censee etre synonyme de voitures radioactives, de cuir et de moins d'attente ?" ;
+	: dull-oneline12 "Zombies. Beurk. Tellement depasse. On est en quelle annee deja, 2004 ?" ;
+	: dull-oneline13 "Je voudrais plus jouer aux jeux video et moins me cacher des zombies." ;
+	: dull-oneline14 "Je me demande si on peut en garder un comme animal de compagnie." ;
+	: dull-oneline15 "Tu te souviens du plaisir ? Je me souviens du plaisir. Mec, le plaisir me manque." ;
+	: dull-oneline16 "Je suppose que ce sera comme ça pour toujours maintenant. Ca semble etre eternel maintenant." ;
+	: dull-oneline17 "On devrait abandonner la voiture et trouver un gros zombie qu'on pourrait monter comme un cheval." ;
+	: dull-oneline18 "Aucun de ces zombies n'a rien dinteressant a dire." ;
+	: dull-oneline20 "Ce dont on a besoin c'est de BEAUCOUP de tronconneuses." ;
+
+	deck-new
+		card: dull-oneline1
+		card: dull-oneline2
+		card: dull-oneline3
+		card: dull-oneline4
+		card: dull-oneline5
+		card: dull-oneline6
+		card: dull-oneline7
+		card: dull-oneline8
+		card: dull-oneline9
+		card: dull-oneline10
+		card: dull-oneline11
+		card: dull-oneline12
+		card: dull-oneline13
+		card: dull-oneline14
+		card: dull-oneline15
+		card: dull-oneline16
+		card: dull-oneline17
+		card: dull-oneline18
+		card: dull-oneline19
+		card: dull-oneline20
+		card: dull-oneline21
+		card: dull-oneline22
+
+	constant DULL-ONELINERS
+	DULL-ONELINERS var dull-oneliners
+
+: dull-oneliner
+	dull-oneliners depths 0= if DULL-ONELINERS shuffles to dull-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+: dull-question
+	blurbslot 0= if
+		"On y est presque?" blurbsay
+	else
+		blurbslot 2 < if
+			"NON, ARRETEZ DE DEMANDER !" blurbsay
+			STAT_MORALE 1st-char .stat--
+		then
+	then
+;
+
+: obama-this
+2nd-char choosechar
+	blurbslot 0= if
+		"This wouldn't have happened if Obama..." blurbsay
+	else
+		blurbslot 2 < if
+			cwits- not if
+				($ "Ca n'a plus d'importance, " .. 1st-char .name@ .. "." $) blurbsay
+				"PARLEZ DAUTRE CHOSE !" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Je sais ! Merci beaucoup, Obama !" blurbsay
+			STAT_MORALE me .stat++
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+: zombie-games
+	2nd-char choosechar
+	blurbslot 0= if
+		"Tout ca ressemble a mes jeux video de zombies en ligne !" blurbsay
+	else
+		blurbslot 2 < if
+			cwits- if
+				($ "J'adore ces jeux, " .. 1st-char .name@ .. "!" $) blurbsay
+			else
+				STAT_MORALE me .stat--
+			then
+		then
+	then
+;
+
+: dull-dullaggro1
+2nd-char choosechar
+	blurbslot 0= if
+		"La prochaine fois quon s'arrete j'aimerais utiliser la batterie de la voiture pour alimenter ma console de jeu !" blurbsay
+	else
+		blurbslot 2 < if
+			ctemper+ cwits- or if
+				($ "Si tu me 1v1, " .. 1st-char .name@ .. "." $) blurbsay
+				"Pas d'objet, pas de connerie." blurbsay
+				STAT_MORALE me .stat++
+				STAT_MORALE 1st-char .stat++
+			else
+				"Non." blurbsay
+				STAT_MORALE 1st-char .stat--
+			then
+		then
+	then
+;
+
+	deck-new
+		card: zombie-games
+		card: obama-this
+		card: dull-question
+		card: dull-dullaggro1
+		card: dull-werewolf
+		22 cards: dull-oneliner
+
+	constant BLURB-DECK-DULL
+	BLURB-DECK-DULL var blurb-deck-dull

@@ -1,0 +1,41 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+: ninja-restock
+	15 stpick if choosechar then
+	WEAPON_SHURIKEN cchar .weapona! 7 cchar .stackeda!
+	1 cchar .weapon_nodropa!
+	WEAPON_SMOKEBOMB cchar .weaponb! 5 cchar .stackedb! 
+	1 cchar .weapon_nodropb!
+;
+
+cyoa: ninja-timeup
+	15 stpick if choosechar cicon else ($ "Le ninja" pbold .. "  prevoyait de quitter le groupe maintenant, mais il semble quelle soit partie un peu tot." $) text! exit then
+	"Ninja disparait !" cyoa-title!
+	solo if 
+		($ "Le ninja" pbold .. " ' etait sur le point de claquer une bombe fumigene et de disparaitre mysterieusement, mais il n'y a personne pour en etre temoin. Quel est le plaisir la dedans ? Elle decide de rester un peu plus longtemps." $) cyoa-text!
+		4 to ninja-countdown goodfx
+	then;
+	($ "Le ninja" pbold .. "  prend une pose dramatique les bras croises. Son bandeau flotte au vent." .. "Looks like... my work is done." pbold .. " elle jette une bombe fumigene dans le sol et disparait, laissant derriere elle une petite sacoche. La sacoche est pleine de bombes fumigenes !" .. "A OBTENU 7 BOMBES FUMIGENES !" rbold $) cyoa-text! 7 WEAPON_SMOKEBOMB trunk.weapon+ goodfx
+		decruit-good-silent
+;
+
+cyoa: ninja-despair
+	bully choosechar cicon
+	"Ninja Tantrum!" cyoa-title!
+	($ cname .. "  ouvre la porte dun coup de pied.	" .. "Au diable tout ca !" pbold .. "	Elle degringole de la voiture, fait un salto arriere, atterrit en position accroupie, se leve, puis lance une bombe fumigene et disparait." $) cyoa-text!
+	decruit-bad-silent badfx
+	team-count 0 = if
+		"La voiture roule un peu mais finit par sarreter." +cr +text
+	else
+		($ Thegroup .. " est a la fois surpris et impressionne par cela." $) +cr +text
+	then
+;
+
+} }
+
+

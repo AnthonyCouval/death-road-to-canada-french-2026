@@ -1,0 +1,61 @@
+	: PEWTER-oneline1 "Hehehe...I probably shouldn't have done that." ;
+	: PEWTER-oneline2 "Hey guys, remember when this wasn't my fault?" ;
+	: PEWTER-oneline3 "Ow. Ow. Still ow." ;
+	: PEWTER-oneline4 "This is worse than that time I fought a chicken." ;
+	: PEWTER-oneline5 "Don't worry. I've got a thing. I dunno what it is yet." ;
+	: PEWTER-oneline6 "I don't wanna alarm anybody, but I'm doing my best." ;
+	: PEWTER-oneline7 "Alright, nobody freak out. I already did." ;
+	: PEWTER-oneline8 "I HATE YOU BEES, I HATE YOU BEES, I HATE YOU..." ;
+	: PEWTER-oneline9 "I've got a whole CARTON OF CIGARETTES!" ;
+	: PEWTER-oneline10 "WELLLLLLLP 'BOUT TIME FOR ME TO BE HITTIN' THE OLD DUSTY TRAIL..." ;
+	: PEWTER-oneline11 "I can't believe we're goin' to Canada!" ;
+	: PEWTER-oneline12 "My alphabits have a mysterious message. It says ooooooooo." ;
+	: PEWTER-oneline13 "ROADHOUSE." ;
+	: PEWTER-oneline14 "When you poop in your dreams... You poop for real." ;
+	: PEWTER-oneline15 "Yeah I'm a DINGUS. A real DINK. Whaddya mean I can't say that?" ;
+	: PEWTER-oneline16 "This is worse than that one time I went to Canada." ;
+	: PEWTER-oneline17 "I bet...5 dollars that J*e is still in a wheelchair." ;
+	: PEWTER-oneline18 "You know what really grinds my gears?" ;
+	: PEWTER-oneline19 "Do you, or do you not know about the bird?" ;
+	: PEWTER-oneline20 "This is like that time I was on daytime TV." ;
+	: PEWTER-oneline21 "Hehehehehehehehe." ;
+
+	deck-new
+		card: PEWTER-oneline1
+		card: PEWTER-oneline2
+		card: PEWTER-oneline3
+		card: PEWTER-oneline4
+		card: PEWTER-oneline5
+		card: PEWTER-oneline6
+		card: PEWTER-oneline7
+		card: PEWTER-oneline8
+		card: PEWTER-oneline9
+		card: PEWTER-oneline10
+		card: PEWTER-oneline11
+		card: PEWTER-oneline12
+		card: PEWTER-oneline13
+		card: PEWTER-oneline14
+		card: PEWTER-oneline15
+		card: PEWTER-oneline16
+		card: PEWTER-oneline17
+		card: PEWTER-oneline18
+		card: PEWTER-oneline19
+		card: PEWTER-oneline20
+		card: PEWTER-oneline21
+	constant PEWTER-ONELINERS
+	PEWTER-ONELINERS var PEWTER-oneliners
+	PEWTER-ONELINERS shuffles to PEWTER-oneliners
+
+: PEWTER-oneliner
+	PEWTER-oneliners depths 0= if PEWTER-ONELINERS shuffles to PEWTER-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: PEWTER-oneliner
+
+	constant BLURB-PEWTER-DECK
+	BLURB-PEWTER-DECK var blurb-PEWTER-deck
+	BLURB-PEWTER-DECK shuffles to blurb-PEWTER-deck

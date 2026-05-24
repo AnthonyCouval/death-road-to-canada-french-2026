@@ -1,0 +1,70 @@
+	: HHECK-oneline1 "Yep..." ;
+	: HHECK-oneline2 "J'ai un bon sens de l'humour ! J'aime Tony Danza !" ;
+	: HHECK-oneline3 "Laissez-moi vous parler des bienfaits du propane..." ;
+	: HHECK-oneline4 "BWAAAAAAAAAAAAAAH!" ;
+	: HHECK-oneline5 "Il y avait de la suie sous les ongles de mon garcon ! Ca, ca n'arrive pas avec un combustible propre !" ;
+	: HHECK-oneline6 "Dale, espece de cretin !" ;
+	: HHECK-oneline7 "Je veux acheter un putain de marteau ! Pouvez-vous me dire ou se trouvent les marteaux ?" ;
+	: HHECK-oneline8 "Nous nous amusons beaucoup, mais parlons d'un sujet serieux : la securite du propane." ;
+	: HHECK-oneline9 "Mmm-hmm..." ;
+
+	deck-new
+		card: HHECK-oneline1
+		card: HHECK-oneline2
+		card: HHECK-oneline3
+		card: HHECK-oneline4
+		card: HHECK-oneline5
+		card: HHECK-oneline6
+		card: HHECK-oneline7
+		card: HHECK-oneline8
+		card: HHECK-oneline9
+	constant HHECK-ONELINERS
+	HHECK-ONELINERS var hheck-oneliners
+	HHECK-ONELINERS shuffles to hheck-oneliners
+
+: hheck-oneliner
+	hheck-oneliners depths 0= if HHECK-ONELINERS shuffles to hheck-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	9 cards: hheck-oneliner
+
+	constant BLURB-HHECK-DECK
+	BLURB-HHECK-DECK var blurb-hheck-deck
+	BLURB-HHECK-DECK shuffles to blurb-hheck-deck
+
+
+	: EFUDD-oneline1 "Je chasse le laping !" ;
+	: EFUDD-oneline2 "Huhuhuhuhuhuhuhuh" ;
+	: EFUDD-oneline3 "Je deteste ce laping" ;
+	: EFUDD-oneline4 "Nuggs Chungus est ma benediction et ma malediction." ;
+	: EFUDD-oneline5 "Parfois, je m'inquiete que mon chapeau soit trop grand. Mais ensuite, je me souviens que c'est simplement le symbole de ma puissance !" ;
+	: EFUDD-oneline6 "Le pouvoir de mon Sceau me permet d'arreter le temps ! Vous ne vous rendez compte de rien puisque le temps est arrete pour vous." ;
+
+	deck-new
+		card: EFUDD-oneline1
+		card: EFUDD-oneline2
+		card: EFUDD-oneline3
+		card: EFUDD-oneline4
+		card: EFUDD-oneline5
+		card: EFUDD-oneline6
+	constant EFUDD-ONELINERS
+	EFUDD-ONELINERS var efudd-oneliners
+	EFUDD-ONELINERS shuffles to efudd-oneliners
+
+: efudd-oneliner
+	efudd-oneliners depths 0= if EFUDD-ONELINERS shuffles to efudd-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	6 cards: efudd-oneliner
+
+	constant BLURB-EFUDD-DECK
+	BLURB-EFUDD-DECK var blurb-efudd-deck
+	BLURB-EFUDD-DECK shuffles to blurb-efudd-deck

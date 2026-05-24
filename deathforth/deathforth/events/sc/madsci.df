@@ -1,0 +1,39 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: madsci-timeup
+	10 stpick if choosechar cicon else ($ "On dirait que le " .. "savant fou" pbold .. "  narrivera jamais a destination, maintenant." $) text! exit then
+	notcchar to victim
+	"Retour au laboratoire" cyoa-title!
+	solo if 
+		($ "Le scientifique" pbold .. " ' arrive seul a son laboratoire.		Elle ne faisait pas partie du plan du Canada, donc on dirait que le voyage est termine." $) cyoa-text!
+		decruit-good-silent
+	then;
+	($ "Le scientifique" pbold .. "  est livre a son laboratoire !		Elle remercie " .. thegroup .. "  et donne un " .. "teleporteur surcharge" rbold .. "  comme recompense !" $) cyoa-text! goodfx decruit-good-silent 10 WEAPON_DOODAD trunk.weapon+
+			choice( "SYMPA" )choice
+;
+
+: madsci-lash
+"Si javais su que tu allais etre " .. "saucisse" aVSs .. "  a propos de tout ca je naurais jamais accepte le trajet !" ;
+
+cyoa: madsci-despair
+	bully choosechar cicon
+	solo if 
+		"Regarde le bon cote des choses" cyoa-title!
+		($ cname .. "  se demande comment ca a pu devenir si mauvais SI vite.		" .. "'J'ai juste accepte le trajet et tout le monde est mort !		Bon, au moins j'ai cette super voiture maintenant." pbold $) cyoa-text!
+		morale3+ goodfx
+	then;
+	"Analyse scientifique" cyoa-title!
+	// Maybe add a chance to teleport out of the car, destroying it
+	($ cname .. "  sen prend a " .. everyone .. ".
+	" .. PURPLE .. madsci-lash .. "'	A mon avis professionnel tu es " .. "botte" aVSs .. "." .. WHITE $) cyoa-text!
+	cchar ' .morale-- foreach-team-char-except badfx
+;
+
+} }
+
+

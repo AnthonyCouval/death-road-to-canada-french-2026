@@ -1,0 +1,1269 @@
+
+
+uses paul/region-layout.df
+uses paul/region-road-layout.df
+
+
+"events/inner/baseapts.df" $load
+"../deathforth/events/stomach/harbour.txt" $load-rooms
+
+locdef{
+
+: bathroomplz 
+	50 %chance if 
+		n random-edge-door "bathroom" only-with-door
+	else 
+		n random-edge-door "bedroom" only-with-door
+	then 
+; 
+
+: lead2nexthall 
+	e random-edge-door "hall2" only-with-door 
+; 
+
+: lead2stairwell  
+	n random-edge-door "stairwell" only-with-door 
+; 
+
+: lead2landing 
+	n random-edge-door "landing" only-with-door 
+; 
+
+: gsx
+		e edge-inc e random-inset-door "minorroom"  only-with-door
+		w edge-inc w random-inset-door "minorroom"  only-with-door
+; 
+
+: gsm
+
+		n edge-inc n random-inset-door "minorroom"  only-with-door
+		s edge-inc s random-inset-door "minorroom"  only-with-door
+; 
+
+: hmcert 
+	n edge-inc n random-inset-door "minorroom"  only-with-door
+	s edge-inc n random-inset-door "masterroom"  only-with-door
+; 
+
+: melwep 
+	meleeweapons
+; 
+\ script char limit again... 
+
+: set-theme-harbourmaster
+	0x 13 12 - loc-ftheme!
+	
+	wall-wood
+	0 4 rnd loc-dtheme!
+	0 5 rnd to theme-num 
+;
+
+location: harbourmaster
+		max-rooms: 17
+		entry-tags: hall1
+		pre-script: set-theme-harbourmaster
+		script:  set-theme-harbourmaster
+		post-script: nad 5 %zombs 
+			
+		room-choice: bathroom
+			room-weight: 1
+			room-count: 1
+			room-script:
+			filter-only
+
+		room-choice: landing
+			room-weight: 1
+			room-count: 1
+			room-script:
+			room-post-script: lead2nexthall
+			
+		room-choice: masterroom
+			room-weight: 1
+			room-count: 1
+			room-script:
+			room-post-script: lead2nexthall	
+			
+		room-choice: minorroom 
+			room-weight: 1 
+			room-count: 12 
+			room-script: nad 
+			room-post-script: melwep melwep
+			filter-only
+
+		room-choice: stairwell
+			room-weight: 1
+			room-count: 1
+			room-script:
+			room-post-script: lead2landing
+			
+		room-choice: hall2
+			room-weight: 1
+			room-count: 1
+			room-script:
+			room-post-script: bathroomplz gsm gsm hmcert
+			filter-only		
+
+		room-choice: hall1 
+			room-weight: 1
+			room-count: 1
+			room-script:
+			room-post-script: lead2stairwell gsx gsx gsx
+				
+
+}
+
+\ hazel rules for room generation 
+\ 1. dont make a room that is only stairs. always include normal tile space. 
+\ 2. be careful when making rooms that are not square or rectangles. 
+\ 3. try to avoid putting random walls as pillars. not impossible, just makes stuff harder. 
+\ 4. try to make use of forceful scripting as much as possible 
+\ 5. always inspect the output of the room editor, as even spaces or TABs can make rooms not gen 
+\ 6. nad = "no auto door", ndx = "no exit door" 
+
+map{ regiondef{
+
+0 value harbkey
+
+: wave-events args( me eventid )
+	<- eventid THING_EVENT_TIMER = if 
+	
+	<- me .scale.y@ 0.4 < if 
+		<- me silentkillit
+	then;
+	
+		-1.4 <- me .vel.y!
+			particle{ new <- me .pos 0 360 frnd anglexy 2 -30 frnd xymul xyadd pos!
+				15 fade_in!
+				5 fade_out!
+				30 ticks!
+				-0.1 0.1 frnd vel.y!
+				-0.1 0.1 frnd vel.x!
+		//		waterclr 3 for 0.5 * 0.5 + rot next rgb!
+		//		waterclr rgb!
+
+				0.75 scale!
+				1.01 grow!
+				particles_base_id 0x 5d + spriteid!
+				1 layer!
+			}
+			
+		8 <- me .timer!
+		
+		<- me .scale.x@ -0.025 + <- me .scale.x!
+		<- me .scale.y@ -0.025 + <- me .scale.y!
+		
+	then
+	
+	<- eventid THING_EVENT_OVERLAP = if
+		<- me .overlapper .mass@ 1000001 = if then;
+			<- me .scale.x@ -2 * <- me .overlapper .vel.y!
+	
+	then
+	
+;
+
+
+: water_wave 
+	spawn
+	special_objects64_base_id 20 + lt .spriteid!
+	1 lt .layer!
+	1 lt .nocollide!
+	1 lt .walkover! 
+	1 1.25 rnd lt .scale.x!
+	1 1.25 rnd lt .scale.y!
+	0.8 lt .clr.a!
+	' wave-events lt .events!
+	8 lt .timer!
+	40000000 lt .mass!
+	16 lt .wallbox.x! 
+	16 lt .wallbox.y! 
+;
+
+0 value playerbound1
+0 value playerbound2
+
+: wave_spawning args( me eventid )
+	<- eventid THING_EVENT_TIMER = if 
+	
+	pchar .health@ 0 > if 
+	
+	player .pos.x@ -210 + 0 1200 clamp to playerbound1
+	player .pos.x@ 210 + 0 1200 clamp to playerbound2
+	
+			30 <- me .timer!
+			
+				water_wave 
+				map{ pixelh } lt .pos.y!
+				playerbound1 playerbound2 rnd lt .pos.x!
+				
+			then
+			
+	then
+;
+
+: wave_spawner
+	spawn
+	400000 lt .mass!
+	1 lt .invisible!
+	1 lt .walkover!
+	6 lt .timer!
+	' wave_spawning lt .events!
+;
+	
+
+: sycatile tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	// 10 for regular walltop
+	// 9 for right-hand up turn
+	// 8 for right-hand end
+	// 7 for left-facing-junction
+	// 6 for downfacing left turn
+	// 5 for straight up
+	// 4 for upward end
+	// 3 for upward left turn
+	// 2 for lefthand end
+	// 1 for downward end
+	// 0 for tiny square
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreetblock tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilesand tile@ // SAND. COARSE. ROUGH.
+	dup LAYER_FLOOR street_tiles_base_id 512 516 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilesandedge tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 527 530 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 536 + .lspriteid!
+
+	// 1 over .wet!
+	
+	drop
+;
+
+: sycatileseawalledge tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 517 + .lspriteid!
+
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+	
+	drop
+;
+
+: sycatileseawalledgetele tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 517 + .lspriteid!
+	dup LAYER_FLOORTOP street_tiles_base_id 540 + .lspriteid!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+	
+	drop
+;
+
+: sycatileseawallmain tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 518 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	// 1 over .wet!
+
+	drop
+;
+
+: sycatileseawallbot tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 519 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallbotdanger tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 520 521 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallstairs tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 537 539 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallpier tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 540 542 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatilesea tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 522 526 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	1 over .wet!
+
+	drop
+;
+
+: sycatiledeepsea tile@ // deeper sea for swimming! =D
+	dup LAYER_FLOOR street_tiles_base_id 531 534 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	1 over .wet!
+	TILE_BLOCK over .id!
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatile_harbconc tile@
+	dup LAYER_FLOOR inside_tiles_floors_id
+		25 %chance if 
+			153 154 rnd + 
+		else 
+			152 + 
+		then .lspriteid! 
+	
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	drop
+;
+
+: sycatile_harbwall tile@ 
+	dup LAYER_WALLTOP street_tiles_base_id 543 545 rnd + .lspriteid!
+	dup LAYER_WALLTOP 0 0 .tile_layer.off!
+	dup LAYER_WALLTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+
+	drop
+;
+
+: sycatile_harbwalldip tile@ 
+	dup LAYER_WALLTOP street_tiles_base_id 584 587 rnd + .lspriteid!
+	dup LAYER_WALLTOP 0 0 .tile_layer.off!
+	dup LAYER_WALLTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+
+	drop
+;
+
+: sycatile_harbwalledge tile@ 
+	dup LAYER_WALLTOP street_tiles_base_id 542 + .lspriteid!
+	dup LAYER_WALLTOP 0 .tile_layer.flipx!
+	
+	TILE_BLOCK_FLOOR over .id!
+	
+	drop
+;
+
+: sycatile_harbwall_nofalloff_L tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 590 + .lspriteid!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	
+		dup LAYER_FLOOR inside_tiles_floors_id
+		25 %chance if 
+			153 154 rnd + 
+		else 
+			152 + 
+		then .lspriteid! 
+	
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK_FLOOR over .id!
+	
+	drop
+;
+
+: sycatile_harbwall_nofalloff_R tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 590 + .lspriteid!
+	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
+	
+	TILE_BLOCK_FLOOR over .id!
+	
+		dup LAYER_FLOOR inside_tiles_floors_id
+		25 %chance if 
+			153 154 rnd + 
+		else 
+			152 + 
+		then .lspriteid! 
+	
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	drop
+;
+
+
+: sycatile_harb_moorpost tile@ 
+	dup LAYER_FLOOR inside_tiles_floors_id
+		25 %chance if 
+			153 154 rnd + 
+		else 
+			152 + 
+		then .lspriteid! 
+	
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	dup LAYER_WALLTOP street_tiles_base_id 588 589 rnd + .lspriteid!
+	dup LAYER_WALLTOP 0 0 .tile_layer.off!
+	dup LAYER_WALLTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+
+	drop
+;
+\ "this doesnt look like the mooring posts ive seen" well it looks like one IVE seen 
+
+
+: sycatiledeepsea tile@
+	dup LAYER_FLOOR street_tiles_base_id 522 526 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	1 over .wet!
+	TILE_BLOCK_FLOOR over .id!
+
+	drop
+;
+
+: streetlight-flicker args( me eventid )	
+	<- eventid THING_EVENT_TIMER = if
+			1 <- me .timer!		
+			
+		gameticks 200 360 frnd % if			
+			1 1 0.4 150 <- me .pos d-light
+				else
+				30 <- me .timer!
+				then
+			then
+	
+;
+
+: streetlamp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! ' streetlight-flicker lt .events! -1 lt .layer! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! -4 lt .vel.y! -1 lt .vel.x! 1 lt .nocollide! 3 lt .tileflags! 0.12 lt .vel.x!  ;
+: streetlomp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! -1 lt .layer! 64 lt .rad.y! 6 lt .rad.x! 1 lt .no_hit! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! 3 lt .tileflags! 0.12 lt .vel.x! ;
+
+: bldg2 tanchor!
+	"harbourmaster" $picklocid addloc 
+	WHITE "HARBOUR" .. RED .. BLINKY .. "MASTER" ..   sign-text!
+		0 0 0 sign-bg!
+		1 1 1 sign-border!
+		1 1 1 sign-fg!
+		1 sign-glow!
+	prefab{ mrand 12 0 building }
+;
+
+0 value totalcollected
+
+
+: collectthis
+	' totalcollected ++
+	totalcollected interactee .report
+	clear-cyoa
+	
+	totalcollected 8 = if
+	0 2 RAINBOW "YIPPEE!" .. popup_dis 1 popup_mode!
+	
+	niceweapons
+	player .pos lt .pos!
+	
+	then
+;
+
+: roadsign1
+	spawn special_objects32_base_id 194 + lt .spriteid!
+	bbox
+	20000 lt .mass!
+	100 lt .hitpoints!
+	1 lt .unseen!
+	-3.2 lt .vel.y!
+;
+
+: roadsign2
+	spawn special_objects32_base_id 195 + lt .spriteid!
+	bbox
+	20000 lt .mass!
+	100 lt .hitpoints!
+	1 lt .unseen!
+	-3.2 lt .vel.y!
+;
+
+cyoa{ 
+
+
+cyoa: recruit-doakes-yes
+
+	($ rname .. " mumbles something about " "lizards" bbold .. " and " .. "ice" bbold .. ". A birthday plan turned awry?" .. $) cyoa-text! 
+	
+	team-full? if
+		($ "The group is full.
+		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		recruit-replace?
+	then;
+	ricon
+	($ Thegroup .. " accepts " .. rname .. " to the team!" $) +crtext 2 300 tone
+		recruited
+	recruitee .showitall 
+;
+
+
+\ SURPRISE MFER 
+\ dexter easter egg because of that one harbour scene 
+cyoa: doakes_surprise 
+	"DEXTEROUS MORNING" cyoa-title! 
+	interactee .character@ to recruitee
+	($ "SURPRISE, DINKFATHER! I wanted to surprise you. For your birthday. What do you mean it's not your birthday?" bbold  $) cyoa-text! 
+	($ "Since this guy went to all that trouble to surprise you for your alleged birthday, it might be a nice gesture to recruit him." $) +crtext
+	choice( "Cautiously recruit" )choice: recruit-doakes-yes
+	choice( "Leave him behind" )choice 
+; 	
+
+} 
+
+: doakes_easter_egg
+	new-npc 
+	player .pos lt .pos! 
+	"Sgt. Oates" lt .character@ .name! 
+	"really just wanted to surprise you, then the apocalypse happened." lt .character@ .job! 
+	0 lt .character@ .female! 
+	2 lt .character@ .bodytype!
+	27 lt .character@ .headtype!
+	39 lt .character@ .torsotype!
+	50 lt .character@ .legstype!
+	6 lt .character@ .facetype!
+	0 lt .character@ .hairtype!
+	0 lt .character@ .hattype!
+	0 lt .character@ .glassestype!
+	15 lt .character@ .skincolour!
+	9 lt .character@ .haircolour!
+	WEAPON_THE1911 lt .character@ .weapona! 
+	20 LOOT_BULLET lt .character@ .lootamt!
+	3 lt .character@ .shooting! 
+	0 lt .character@ .composure! 
+	cyoa{ ' doakes_surprise } lt .cyoa! 
+; 
+	
+
+: crate_loot_harbour 1 10 rnd case 
+	1 of 2 LOOT_FOOD spawnloot endof 
+	2 of 2 3 rnd LOOT_MEDICAL spawnloot endof 
+	3 of 20 25 rnd LOOT_RIFLE_SHELL spawnloot endof 
+	4 of 20 25 rnd LOOT_BULLET spawnloot endof 
+	5 of 20 25 rnd LOOT_SHOTGUN_SHELL spawnloot endof 
+	6 of 66 %chance if pistol else dolt then endof 
+	7 of 66 %chance if hunting else fn_fal then endof
+	8 of 66 %chance if shotgun else chromeshotgun then endof 
+	9 of 66 %chance if the1911 else mp5 then endof 
+	10 of healspray 2 3 rnd lt .item.charges! endof 
+	endcase
+	
+; 
+	
+: open_crate args( me ) 
+	<- me .spriteid@ 1 + <- me .spriteid! 
+; 
+
+: check_key_then_loot args( me ) 
+	harbkey 1 = if 
+		<- me open_crate 
+		clear-cyoa
+		sfx{ goodfx } 
+		crate_loot_harbour <- me .pos -32 0 xyadd lt .pos!
+		
+			1 %chance if 
+				doakes_easter_egg sfx{ goodfx } 
+			then 
+		
+	else 
+		"I'd need the masterkey to open it." <- me .interact_id@ #thing .yellmsg 
+	then 
+; 
+
+\ these all correspond to cars i think are actually worth having. 
+: car_loot_harbour 1 13 rnd case 
+	1 of 1 endof 
+	2 of 4 endof 
+	3 of 5 endof 
+	4 of 6 endof 
+	5 of 7 endof 
+	6 of 8 endof 
+	7 of 9 endof
+	8 of 10 endof 
+	9 of 11 endof 
+	10 of 12 endof 
+	11 of 25 endof 
+	12 of 26 endof 
+	13 of 27 endof 
+	endcase
+; 
+	
+
+: check_key_then_car args( me ) 
+	harbkey 1 = if 
+		<- me open_crate 
+		clear-cyoa
+		sfx{ goodfx } 
+		car_loot_harbour spawncar <- me .pos 81 0 xyadd lt .pos! 2 lt .vel.x! -1 lt .vel.y! 
+		lt .hitpoints@ 1.5 * lt .hitpoints! 
+		lt .engine@ 1.5 * lt .engine! 
+		\ Harbour vehicles are sturdier, because they have been preserved in their containers. 
+	else 
+		"I'd need the masterkey to open it." <- me .interact_id@ #thing .yellmsg 
+	then 
+; 
+
+: rail_box
+
+	spawn 
+	special_objects96_base_id 6 + lt .spriteid! 
+	bbox 
+	15 lt .mass!
+	80 lt .hitpoints!
+	42 lt .rad.x! 
+	19 lt .rad.y! 
+	64 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	' check_key_then_loot lt .cyoa! 
+; 
+
+: rail_box_car 
+
+	spawn 
+	special_objects96_base_id 6 + lt .spriteid! 
+	bbox 
+	15 lt .mass!
+	80 lt .hitpoints!
+	42 lt .rad.x! 
+	19 lt .rad.y! 
+	64 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	' check_key_then_car lt .cyoa! 
+	1 lt .flip!
+; 
+
+: rail_box_rusty
+
+	spawn 
+	special_objects96_base_id 8 + lt .spriteid! 
+	bbox 
+	15 lt .mass!
+	80 lt .hitpoints!
+	42 lt .rad.x! 
+	19 lt .rad.y! 
+	64 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	\ ' check_crowbar_then_loot lt .cyoa! 
+; 
+
+: rail_box_chooser 
+	25 %chance if 
+		rail_box
+	else 
+		rail_box_rusty
+	then 
+; 
+
+0 value obj_in_question 
+
+: %some-anyobj ( num, obj_word_name ) 
+
+	to obj_in_question
+	
+	w h + 4 / * 
+		for
+			obj_in_question evaluate scatter
+		next 
+
+;
+
+\ example usage:
+\ 1 "tire" %some-anyobj 
+
+map{ roomgen{ 
+
+: diningset
+	table
+	75 %chance if chair -1 movey drift then
+	75 %chance if chair 1 movey drift then
+	50 %chance if chair -1 movex drift then
+	50 %chance if chair 1 movex drift then
+;
+
+: obs spawn special_objects32_base_id 1 + lt .spriteid! 50 lt .hitpoints! bbox 50 lt .mass! ;
+
+\ 0 value harbkey
+
+: keys_harb args( me ) 
+	regiondef{ 1 to harbkey }  
+	"It's the harbour master key." interactee .yellmsg 
+	<- me silentkillit
+; 
+
+: harbourkey spawn special_objects16_base_id 24 + spriteid! 50 lt .hitpoints! bbox 1 lt .mass! 1 lt .walkover! ' keys_harb lt .cyoa! masterkey ; 
+
+\ todo : doakes funny easter egg @ 1% 
+\ harbour key system
+\ car spawning system
+\ not krilling myself 
+
+: harbourweapons 1 5 rnd case 
+	1 of clawhammer endof 
+	2 of lowwhip endof 
+	3 of metal endof 
+	4 of blackhammer endof 
+	5 of meleeweapons endof 
+	endcase
+; 
+
+: fishstuff 
+	fishing skel 
+	33 %chance if 
+	1 LOOT_FOOD spawnloot
+	then 
+; 
+
+: ledger spawn special_objects16_base_id 69 + spriteid! 2 health! bbox 3 mass! ;
+
+: execdesk
+	spawn special_objects32_base_id 0x 69 + lt .spriteid!
+	bbox as-wood
+;
+
+: execdeskup
+	spawn special_objects32_base_id 0x 5d + lt .spriteid!
+	bbox as-wood
+;
+
+: execdesk
+	spawn special_objects32_base_id 0x 69 + lt .spriteid!
+	bbox as-wood
+;
+
+: execdeskup
+	spawn special_objects32_base_id 0x 5d + lt .spriteid!
+	bbox as-wood
+;
+
+: filecabinet_bank
+	66 %chance if 
+		filecabinet
+	else
+		ledger 0 360 rnd lt .angle!
+	then
+
+	10 %chance if 
+		skel 
+	then 
+; 
+
+
+} }
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	 xyp.i char b = if xyp.xy sycatilestreet3 then;
+	 xyp.i char c = if xyp.xy sycatilestreet2 then;
+	 xyp.i char d = if xyp.xy sycatilestreet then;
+	 xyp.i char e = if xyp.xy sycatilestreet1 then;
+	 xyp.i char g = if xyp.xy sycatilestreet4 then;
+	 xyp.i char h = if xyp.xy sycatilestreet5 then;
+	 xyp.i char j = if xyp.xy sycatilestreet6 then;
+	 xyp.i char p = if xyp.xy sycatilestreet7 then;
+	 xyp.i char i = if xyp.xy sycatilestreet8 then;
+	 xyp.i char o = if xyp.xy sycatilestreet9 then;
+	 xyp.i char O = if xyp.xy sycatilewall then;
+	 xyp.i char E = if xyp.xy sycatilewalltop then;
+	 xyp.i char D = if xyp.xy sycatilewalltopend then;
+	 
+	 xyp.i char C = if xyp.xy streetlamp lt-here then;
+	\  xyp.i char 5 = if xyp.xy streetlamp lt-here xyp.xy sycatilestreetblock then;
+	 xyp.i char 8 = if xyp.xy sycatilestreetblock then;	 
+	
+	xyp.i char H = if xyp.xy sycatile_harbwall then;
+	xyp.i char A = if xyp.xy sycatile_harbconc then;
+	xyp.i char B = if xyp.xy sycatile_harbwalldip then;
+	xyp.i char G = if xyp.xy sycatile_harbwalledge then;
+	xyp.i char L = if xyp.xy sycatile_harbwall_nofalloff_L then;
+	xyp.i char R = if xyp.xy sycatile_harbwall_nofalloff_R then;
+	
+	xyp.i char M = if xyp.xy sycatile_harbwall_nofalloff_L xyp.xy sycatile_harb_moorpost then;
+	xyp.i char N = if xyp.xy sycatile_harbwall_nofalloff_R xyp.xy sycatile_harb_moorpost then;
+	xyp.i char s = if xyp.xy sycatiledeepsea then;
+	
+	xyp.i char S = if xyp.xy sycatilesea then;
+	xyp.i char ! = if xyp.xy sycatileseawalledge then;
+	xyp.i char | = if xyp.xy sycatileseawallmain then;
+	xyp.i char - = if xyp.xy sycatileseawallbot then;
+	xyp.i char > = if xyp.xy sycatileseawallstairs then;
+	xyp.i char q = if xyp.xy sycatileseawallbotdanger then;
+	xyp.i char I = if xyp.xy sycatileseawallpier then;
+	
+	// decor
+	xyp.i char F = if xyp.xy fishstuff lt-here xyp.xy sycatile_harbconc then;
+	xyp.i char 1 = if xyp.xy roadsign2 lt-here xyp.xy sycatile_harbconc then;
+	xyp.i char 2 = if xyp.xy roadsign1 lt-here xyp.xy sycatilestreet then;
+	
+	xyp.i char 5 = if xyp.xy rail_box_chooser lt-here xyp.xy sycatile_harbconc then;
+	xyp.i char 6 = if xyp.xy rail_box_car lt-here xyp.xy sycatile_harbconc then;
+	xyp.i char 7 = if 3 for xyp.xy indcrate lt-here -1 1 frnd -1 1 frnd lt .vel! next 20 %chance if harbourweapons lt-here then xyp.xy sycatile_harbconc then;
+	
+	xyp.i char @ = if xyp.xy bldg2 xyp.xy sycatile_harbconc then;
+	
+;
+
+"
+eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeec......geeeeeeeeee
+..................................................................................
+..................................................................................
+.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj.....jjj..
+..................................................................................
+..................................................................................
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd2ddddddddddddddddd
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+!!!!!!!!!!!!!!!!!!>>!!!!!!!!!!!!!!!!!!!!>>!!!!!!!!!!!!!!!!!!!>>!!!!!!!!!!!!!!!!!!!
+-----q---q-------->>------q-----q------->>------q------q----->>------q-------q----
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAA
+AAAA5AAAAAAAAA5AAAAAAAAAA@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAA7AAAAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAAAAAAAAAAAAAAAAA7AAAAAAA6AAAAAAAAAAAAAAAAA
+AAAAA7AAAAA5AAAAAAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAA5AAAAAAAAAAAAAAAAAAA5AAAAAAAA7AAAAAAAAAAAAAAAAAAAA6AAAAAAAAAA
+AAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+GGGGGGGGGAAAAGGGGGGGGGGGGGGGGGGGGGGGAAAAGGGGGGGGGGGGGGGGGGGGGGGAAAAGGGGGGGGGGGGGGG
+HHHHHHHHHAAAAHHHHHHHHHHHHHHHHHHHHHHHAAAAHHHHHHHHHHHHHHHHHHHHHHHAAAAHHHHHHHHHHHHHHH
+HHHHHHHHLAAAARHHHHHHHHHHHHHHHHHHHHHLAAAARHHHHHHHHHHHHHHHHHHHHHLAAAARHHHHHHHHHHHHHH
+HHHHHHHHLAAAARHHHHHHHHHHHHHHHHHHHHHLAAAARHHHHHHHHHHHHHHHHHHHHHLAAAARHHHHHHHHHHHHHH
+BBBBBBBBLAAAARBBBBBBBBBBBBBBBBBBBBBLAAAARBBBBBBBBBBBBBBBBBBBBBLAAAARBBBBBBBBBBBBBB
+SSSSSSSsMAAAANsSSSSSSSSSSSSSSSSSSSsMAAAANsSSSSSSSSSSSSSSSSSSSsMAAAANsSSSSSSSSSSSSS
+SSSSSSSsLAAAARsSSSSSSSSSSSSSSSSSSSsLAAAARsSSSSSSSSSSSSSSSSSSSsLAAAARsSSSSSSSSSSSSS
+SSSSSSSsLAAAARsSSSSSSSSSSSSSSSSSSSsLFAAARsSSSSSSSSSSSSSSSSSSSsLAAAARsSSSSSSSSSSSSS
+SSSSSSSsMAAFANsSSSSSSSSSSSSSSSSSSSsMAAAANsSSSSSSSSSSSSSSSSSSSsMAAAANsSSSSSSSSSSSSS
+SSSSSSSsHHHHHHsSSSSSSSSSSSSSSSSSSSsHHHHHHsSSSSSSSSSSSSSSSSSSSsHHHHHHsSSSSSSSSSSSSS
+SSSSSSSsHHHHHHsSSSSSSSSSSSSSSSSSSSsHHHHHHsSSSSSSSSSSSSSSSSSSSsHHHHHHsSSSSSSSSSSSSS
+SSSSSSSsBBBBBBsSSSSSSSSSSSSSSSSSSSsBBBBBBsSSSSSSSSSSSSSSSSSSSsBBBBBBsSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+
+
+
+
+: keep-colour 
+	
+	0 weather!
+		
+	timer_retrigger
+		
+;
+
+: site-setup
+
+	' plotpave to ft
+
+	plotmap
+	
+	11 o'clock
+	\ 1 no_time!
+	
+	10 %zombs 
+		
+	95 %chars-up
+	95 %mv-up 
+	
+	map{ 1 water_colour_r! 1 water_colour_b! 1 water_colour_g! }
+	
+	1 "skel" %some-anyobj
+	
+	wave_spawner
+	
+	"Zombonita Beach.mp3" $music-load
+	
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+	\ on-foot no-rest 
+	post-script: site-setup 
+
+} }

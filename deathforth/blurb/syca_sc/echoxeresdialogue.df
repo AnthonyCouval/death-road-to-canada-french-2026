@@ -1,0 +1,61 @@
+	: ECHOXERES-oneline1 "we are infinite." ;
+	: ECHOXERES-oneline2 "s-s t atic" ;
+	: ECHOXERES-oneline3 "tr e ad pl anes  o-of  exis-tence" ;
+	: ECHOXERES-oneline4 "de-fectfectfect-ive" ;
+	: ECHOXERES-oneline5 "We are many." ;
+	: ECHOXERES-oneline6 "bR-0k..3n?..." ;
+	: ECHOXERES-oneline7 "so ul...m1ss in g" ;
+	: ECHOXERES-oneline8 "p a in" ;
+	: ECHOXERES-oneline9 "w0rld... str-r an g e..." ;
+	: ECHOXERES-oneline10 "we s33k rev#*!##*--" ;
+	: ECHOXERES-oneline11 "count our heads" ;
+	: ECHOXERES-oneline12 "eth3 r3a l" ;
+	: ECHOXERES-oneline13 "we are restless" ;
+	: ECHOXERES-oneline14 "we will not give up." ;
+	: ECHOXERES-oneline15 "mu st  s33k  r ev eng-##*!#" ;
+	: ECHOXERES-oneline16 "w h at  r3al?..." ;
+	: ECHOXERES-oneline17 "when...e-nd?" ;
+	: ECHOXERES-oneline18 "fragm3nt...ed..." ;
+	: ECHOXERES-oneline19 "pieces o-f sou-l" ;
+	: ECHOXERES-oneline20 "we remember." ;
+	: ECHOXERES-oneline21 "save   us" ;
+
+	deck-new
+		card: ECHOXERES-oneline1
+		card: ECHOXERES-oneline2
+		card: ECHOXERES-oneline3
+		card: ECHOXERES-oneline4
+		card: ECHOXERES-oneline5
+		card: ECHOXERES-oneline6
+		card: ECHOXERES-oneline7
+		card: ECHOXERES-oneline8
+		card: ECHOXERES-oneline9
+		card: ECHOXERES-oneline10
+		card: ECHOXERES-oneline11
+		card: ECHOXERES-oneline12
+		card: ECHOXERES-oneline13
+		card: ECHOXERES-oneline14
+		card: ECHOXERES-oneline15
+		card: ECHOXERES-oneline16
+		card: ECHOXERES-oneline17
+		card: ECHOXERES-oneline18
+		card: ECHOXERES-oneline19
+		card: ECHOXERES-oneline20
+		card: ECHOXERES-oneline21
+	constant ECHOXERES-ONELINERS
+	ECHOXERES-ONELINERS var ECHOXERES-oneliners
+	ECHOXERES-ONELINERS shuffles to ECHOXERES-oneliners
+
+: ECHOXERES-oneliner
+	ECHOXERES-oneliners depths 0= if ECHOXERES-ONELINERS shuffles to ECHOXERES-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ECHOXERES-oneliner
+
+	constant BLURB-ECHOXERES-DECK
+	BLURB-ECHOXERES-DECK var blurb-ECHOXERES-deck
+	BLURB-ECHOXERES-DECK shuffles to blurb-ECHOXERES-deck

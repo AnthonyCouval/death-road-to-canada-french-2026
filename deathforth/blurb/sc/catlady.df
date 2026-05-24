@@ -1,20 +1,20 @@
 	: CATLADY-oneline1 "Comment peut on etre triste quand il y a tant de chatons ?" ;
-	: CATLADY-oneline2 "Jadore mes minous !" ;
-	: CATLADY-oneline3 "On na jamais assez de chats !" ;
+	: CATLADY-oneline2 "J'adore mes minous !" ;
+	: CATLADY-oneline3 "On n'a jamais assez de chats !" ;
 	: CATLADY-oneline4 "On devrait prendre un tout petit peu de notre nourriture pour nourrir les chats !" ;
 	: CATLADY-oneline5 "Pincher est le rebelle de ma bande de chats !" ;
-	: CATLADY-oneline6 "Mes chats ne mordent pas ce sont juste des bisous !" ;
+	: CATLADY-oneline6 "Mes chats ne mordent pas, ils ne font que des bisous !" ;
 	: CATLADY-oneline7 "les *bonnes* personnes ne sont jamais allergiques aux chats." ;
 	: CATLADY-oneline8 "Les chats me remontent toujours le moral !" ;
 	: CATLADY-oneline9 "Je crois que je suis peut etre la reine des chats !" ;
 	: CATLADY-oneline10 "Les autres dames a chats ne sont que des *imposteurs*." ;
 	: CATLADY-oneline11 "Heeeere kitty kitty." ;
 	: CATLADY-oneline12 "Les chats sont aussi des gens !" ;
-	: CATLADY-oneline13 "'Je me mefie de tous ceux qui n'aiment pas les chats." ;
-	: CATLADY-oneline14 "'Si mes chats ne vous aiment pas, je ne vous aime pas !" ;
-	: CATLADY-oneline15 "Ca doit etre un signe daffection quand ils vomissent sur le tapis." ;
+	: CATLADY-oneline13 "Je me mefie de tous ceux qui n'aiment pas les chats." ;
+	: CATLADY-oneline14 "Si mes chats ne vous aiment pas, je ne vous aime pas !" ;
+	: CATLADY-oneline15 "Ca doit etre un signe d'affection quand ils vomissent sur le tapis." ;
 	: CATLADY-oneline16 "Euh, mes chats ne mangent que de la nourriture humide en conserve." ;
-	: CATLADY-oneline17 "Quelques uns de mes chats sont lactosse intolerants.  Some of my cats are lactose intolerant." ;
+	: CATLADY-oneline17 "Quelques uns de mes chats sont intolerants au lactose." ;
 
 	deck-new
 		card: CATLADY-oneline1

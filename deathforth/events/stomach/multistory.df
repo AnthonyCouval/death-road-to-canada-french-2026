@@ -1,0 +1,452 @@
+
+"../deathforth/events/stomach/multistory.txt" $load-rooms
+"../deathforth/events/stomach/multistory.txt" $add-rooms
+"../deathforth/rooms/restroom.txt" $add-rooms
+
+\ This map is a tribute to Madgarden.
+\ Not only did he ask for something like this, 
+\ But he's pretty forgotten about a lot of the time. 
+\ So, this one's for you Madgarden. 
+	
+
+map{ roomgen{
+
+
+: leavenabler 
+	// hacky solution
+	mission.vehicle@ if 
+		3 mission.vehicle@ .tileflags!
+	then
+	
+	timer_retrigger
+;
+
+cyoa{ 
+
+	cyoa: leaveonfoot 
+	"The Way Out" cyoa-title!
+	"You've found the exit to the parking lot. You can either leave the lot on foot and return to your current car, or stay and take the car in the parking lot." cyoa-text!
+	choice( "Stay for Now" )choice
+	cyoa-add-choice
+		"Return to Current Car" cyoa-choice-text!
+		mission{ ' walk-try-end-mission cyoa-choice-handler! }
+;
+
+: foot_leave_zone 
+	spawn 
+	0 lt .clr.a! 
+	1 lt .nocollide! 
+	1 lt .walkover!
+	100000 lt .mass! 
+	3 lt .mass! 
+	26 lt .rad.y! 
+	8 lt .rad.x! 
+	3 lt .tileflags! 
+	' leaveonfoot lt .cyoa! 
+; 
+
+cyoa: lot_car_choice
+	"Let's Roll!" cyoa-title!
+		($ "This car isn't even locked, and is in pristine condition." $) cyoa-text!
+		($ "Don't enter the car unless you intend to drive away in it." rbold $) +crtext 
+			choice( "Get in the car" )choice: get-into-car
+			choice( "Leave it be for now" )choice
+			interactee .car-cyoa-default
+; 
+
+: lot_car 
+	75 %chance if 
+		1 16 rnd spawncar 
+	else 
+		25 28 rnd spawncar 
+	then 
+	' lot_car_choice lt .cyoa! 
+; 
+
+} 
+
+
+
+: white_line_tile 
+	\ I CAN'T WIN AGAINST ROOMGEN >:((( 
+	
+	spawn 
+	lt .pos pos>tile 
+	tile@ 
+	LAYER_FLOORTOP street_tiles_base_id 398 + .lspriteid! 
+
+;
+
+: arrow_line_tile 
+	spawn 
+	lt .pos pos>tile 
+	tile@ 
+	LAYER_FLOORTOP street_tiles_base_id 598 16 - + .lspriteid! 
+	
+	lt .pos pos>tile 1 0 xyadd 
+	tile@ 
+	LAYER_FLOORTOP street_tiles_base_id 599 16 - + .lspriteid! 
+
+;
+
+: arrow_alt_tile 
+	spawn 
+	lt .pos pos>tile 
+	tile@ 
+	LAYER_FLOORTOP street_tiles_base_id 598 16 - + .lspriteid! 
+	
+	lt .pos pos>tile -1 0 xyadd 
+	tile@ 
+	LAYER_FLOORTOP street_tiles_base_id 599 16 - + .lspriteid! 
+	
+	lt .pos pos>tile -1 0 xyadd 
+	tile@ 
+	LAYER_FLOORTOP 1 .tile_layer.flipx! 
+
+
+;
+
+: lt-s 
+	lt silentkillit 
+; 
+\ character limit in scripts
+
+: mvx 
+	movex 
+;
+
+: mvy 
+	movey 
+; 
+
+
+0 value obj_in_question 
+\ probably belongs in globals or things someday 
+
+: %some-anyobj ( num, obj_word_name ) 
+
+	to obj_in_question
+	
+	w h + 4 / * 
+		for
+			obj_in_question evaluate scatter
+		next 
+
+;
+
+: mltilot 
+
+	1 "tire" %some-anyobj
+	0.5 "cinderblock" %some-anyobj
+	0.25 "skel" %some-anyobj
+	
+	88 %chance if 
+		2 3 rnd meleeweapons .scatter
+	else 
+		1 2 rnd meleeweapons .scatter 
+		1 tireiron .scatter 
+	then 
+
+
+;
+
+: car-loot-lot
+	40 %chance if 5 10 rnd pumpgas else general-loot then
+;
+
+: parkwreck
+	33 %chance if 
+		carwreck 
+	else 
+		carwreck lootable car-loot-lot
+	then 
+; 
+
+
+: emptywreck 
+	66 %chance if 
+		carwreck 
+	else 
+		33 %chance if 
+			carwreck lootable car-loot-lot
+			\ coz otherwise, why go to the factory? 
+		else
+			then 
+	then 
+; 
+: randew 50 %chance if e else w then ; 
+: force_carlot 
+
+	rooms-left 1 > if then;
+	n edge-inc random-door 
+	"main12fin" with-door
+
+; 
+
+
+: vending_empty spawn special_objects32_base_id 0x 9 + 1 + spriteid! bbox as-metal 25 health! 20 mass! ; 
+\ at HAM's request 
+
+: blocking_door_stopper args( me eventid ) 
+	<- eventid THING_EVENT_TIMER = if 
+	4 <- me .timer!
+	\ 1 map{ <- me .pos pos>tile tile@ .id@ } <- me .reportdurnow 
+		map{ <- me .pos pos>tile tile@ .id@ } map{ TILE_LINK_DOOR } = if 
+			<- me .pos -16 0 xyadd <- me .pos! sfx{ fm } 
+		then 
+	then 
+; 
+\ stops them spawning on top of doors 
+
+: floor_A1 
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 84 + lt .spriteid!
+	4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+: floor_B1 
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 85 + lt .spriteid!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+: floor_C1 
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 86 + lt .spriteid!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+: floor_A2
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 87 + lt .spriteid!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+: floor_B2
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 88 + lt .spriteid!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+: floor_C2
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 89 + lt .spriteid!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+;
+
+
+: lot_messages case 
+	1 of "''PARKING FEE: 50 DOLLAR''" endof 
+	2 of "''NO DINKS AT ANY TIME''" endof 
+	3 of "''JERKS STRICTLY FORBIDDEN''" endof 
+	4 of "''BOY OH BOY. WHERE IS THAT CAR?''" endof 
+	5 of "''MAXIMUM STAY: 30 SECONDS''" endof 
+	6 of "''WE'LL CLAMP YOUR CAR FOR A LAUGH''" endof 
+	7 of "''NICE CAR BRO. NOT FOR LONG''" endof 
+	8 of "''MAINTAINENCE FROM 23:59 to 00:01''" endof 
+	9 of "''YEARLY PASS: 100,000 DOLLAR''" endof 
+	10 of "''MAXIMUM LOAD: 30 GRAMS''" endof 
+	11 of "''MAXIMUM HEIGHT: YOUR MOM''" endof 
+	12 of "''CCTV IN OPERATION...SOMETIMES''" endof 
+	13 of "''IN EMERGENCY: GET JIGGY WITH IT ''" endof 
+	14 of "''YA FEEL LUCKY, PUNK?''" endof 
+	15 of "''FOR MORE INFO, DO A FUNNY DANCE''" endof 
+	16 of "''PONDWEED IS TASTY ACTUALLY''" endof 
+	17 of "''IMAGINE A UFO IN HERE''" endof 
+	18 of "''PARKING-LOT-MAN: FIND MY 10 PARKING SPACES''" endof 
+	19 of "''YOUR CAR WILL PROBABLY EXPLODE''" endof 
+	20 of "''WELCOME TO THE JERKLOT. SPACES: YOU''" endof 
+	endcase 
+; 
+
+: announce_message  
+	2 interactee .weapon_state.val@ lot_messages interactee .reportdurnow 
+; 
+
+: lot_decor
+	spawn special_objects16_base_id 81 83 rnd + spriteid!
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+		4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+	1 20 rnd lt .weapon_state.val! 
+	' announce_message lt .cyoa! 
+;
+
+0 value designations 
+\ so you can have your numbered floors :p 
+
+: floor_designation 
+	spawn 
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
+	special_objects16_base_id 84 + designations + spriteid!
+	4 lt .timer! 
+	' blocking_door_stopper lt .events! 
+	' designations ++ 
+; 
+\ Yes I know this can yield the wrong numbers if you progress through the map the wrong way.
+\ Frankly I do not want to make and script 9 individual rooms and then fight the roomgen system to make them all work. 
+
+}
+
+
+locgen{ 
+
+: set-theme-multistory
+
+	0x 13 3 + loc-ftheme! \ fun fact: this accepts negative arguments. can you guess what i tried to do first? 
+	
+	wall-cinderblock
+	0 4 rnd loc-dtheme!
+	0 5 rnd to theme-num 
+;
+
+} 
+
+: well_n  
+	rooms-left 4 < if 
+		"NO WELL HERE" print  
+	else
+		n random-edge-door "well" only-with-door
+	then 
+;
+
+: upwell 
+	rooms-left 1 = if 
+		extra-room
+		n edge-door "main12fin" only-with-door 
+	else
+		n edge-door "main13" only-with-door
+	then 
+	1.25 "skel" %some-anyobj
+;
+
+: sidelots 
+	rooms-left 3 > if 
+		e edge-door "sidelot" only-with-door
+		w edge-door "sidelot" only-with-door
+	else 
+		50 %chance if 
+			e edge-door "main12fin" only-with-door
+			w edge-door "sidelot" only-with-door
+		else 
+			n edge-door "main12fin" only-with-door
+			e edge-door "sidelot" only-with-door
+		then 
+	then 
+;
+
+: add_restrooms 
+		50 %chance if 
+			extra-room
+			50 %chance if 
+				n edge-door "restroom" only-with-door
+			else 
+				s edge-door "restroom" only-with-door
+			then 
+		then 
+;
+	
+\ notes for any modders trying to expand or change this map 
+\ Main12fin - the lot with the driveable car - cannot be entered from the eastern side of its room 
+\ this is because that wall has a gap 
+\ and the game freaks out trying to place a door there 
+
+location: parkinglot
+		max-rooms: 12
+		entry-tags: main11
+		pre-script: set-theme-multistory
+		post-script: 1.5 %zombs 
+		1 allow-inset-doors! 
+		
+		room-choice: restroom
+			room-weight: 5
+			room-count: 3
+			room-script:
+			room-post-script: mltilot nad
+			filter-only
+		
+		room-choice: main13
+			room-weight: 10
+			room-count: 3
+			room-script:
+			room-post-script: well_n mltilot sidelots 
+			filter-only
+		
+		room-choice: well
+			room-weight: 10
+			room-count: 2
+			room-script: set-theme-bunker nad
+			room-post-script: upwell force_carlot
+			filter-only 
+
+		room-choice: sidelot
+			room-weight: 10
+			room-count: 6
+			room-script:
+			room-post-script: mltilot nad add_restrooms		
+			filter-only
+			
+		room-choice: main12fin
+			room-weight: 3
+			room-count: 1
+			room-script:
+			room-post-script: mltilot 2.5 %zombs 
+		
+		room-choice: main11
+			room-weight: 10
+			room-count: 1
+			room-script:
+			room-post-script: well_n mltilot sidelots
+
+
+regiondef{
+
+	: site-setup
+		
+		1 ' leavenabler timer_add
+		12 o'clock
+		\ vehicle.which@ to PRIOR_CAR
+
+	;
+	
+
+	region: parkinglotwe
+		script: timeofday o'clock
+
+		inside
+
+		loc-choice: parkinglot
+			loc-weight: 99
+			loc-count: 1
+
+		post-script: 4 %zombs inspawn site-setup
+}
+}

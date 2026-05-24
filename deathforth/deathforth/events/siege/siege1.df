@@ -1,0 +1,155 @@
+cyoa{ road{
+
+cyoa: siege1-farm
+	"Cachette dans les bois" cyoa-title!
+	someicon
+	($ cname .. "  conduit a travers la foret la nuit. " .. cHe .. "  prend un mauvais virage et atteint le bout de la route. Tout pres au nord, " .. che .. "  peut a peine voir la forme dune cabane." $) cyoa-text! basic-tone
+	0.4 1 frnd 20 22 frnd 2 zforecast
+	"events/exterior/region/cabin1-night.df" $load-region
+		choice( "Enqueter sur la cabine" )choice: premission
+		gas-draw
+;
+
+cyoa: siege1-openhouse
+	"Siege de maison" cyoa-title!
+	($ Thegroup .. "  est surpris par une grande horde de zombies alors quil fouillait " .. gThey .. " courir" .. g1s .. "  dans une maison pour sabriter et planifier " .. ghis .. "  prochain mouvement." $) cyoa-text! basic-tone
+		1.8 ( 1.3 ) 9 16 rnd 1 siegecast
+		"events/siege/region/midopen1.df" $load-region
+		choice( "Essayez de survivre" )choice: premission
+;
+
+cyoa: siege1-openhouseeasy
+	"Piege dans une maison" cyoa-title!
+	($ Thegroup .. "  est sur le point dexplorer une petite maison quand " .. gthey .. "  remarque" .. g1s .. "  quune horde se faufile a proximite. " .. Thegroup .. "  devra tenir " .. ghis .. "  terrain pendant un moment avant de " .. gthey .. "  peut sechapper." $) cyoa-text! basic-tone
+		1.5 ( 1 ) 9 16 rnd 1 siegecast
+		"events/siege/region/midopen1.df" $load-region
+		choice( "Essayez de survivre" )choice: premission
+;
+
+cyoa: siege1-gas
+	"Siege de la station service" cyoa-title!
+	($ Thegroup .. "  repere une station service qui semble assez intacte. " .. gThey .. "  remarque" .. g1s .. "  une horde pres de la station. La verifier pour le butin signifierait y rester coince pendant un certain temps." $) cyoa-text! basic-tone
+		1.6 ( 1 ) 9 16 rnd 1 siegecast
+		"events/siege/region/gasbar.df" $load-region
+		choice( "Combattre le siege" )choice: premission
+		gas-draw
+;
+
+cyoa: siege1-cabin
+	image-old-house
+	"Siege de la cabane" cyoa-title!
+	($ Thegroup .. "  est encercle par une horde qui approche. " .. gThey .. " chercher un abri dans une cabane voisine." $) cyoa-text! basic-tone
+		2 ( 1.2 ) 1 7 rnd 1 siegecast
+		"events/siege/region/cabin.df" $load-region
+		choice( "Essayez de survivre" )choice: premission
+;
+
+cyoa: siege1-cabineasy
+	image-old-house
+	"1 Heure de Vacances en cabane" cyoa-title!
+	($ Thegroup .. " se perd en conduisant a travers une forêt. " .. gThey .. " s'arretent " .. g1s .. " a une cabane pour determiner ou " .. gtheyare .. ", mais " .. g1s .. " mais ils se font pieger par une horde errante." $) cyoa-text! basic-tone
+		1.4 ( 1 ) 6 14 rnd 1 siegecast
+		"events/siege/region/cabin-easy.df" $load-region
+		choice( "Try to Survive" )choice: premission
+;
+
+cyoa: siege1-rescuecabin
+	image-cabin-in-woods
+	"Camping en detresse" cyoa-title!
+	($ "En conduisant le long dune route rurale, " .. thegroup .. " il entend des tirs venant dune cabane a distance. La foret pres de la cabane tremble de la mobilite dune horde invisible." $) cyoa-text! basic-tone
+	2.3 ( 1.2 ) 7 20 rnd 1 siegecast
+	"events/siege/region/rescuecabin.df" $load-region
+		choice( "Tentez de sauver!" )choice: premission
+		gas-draw
+;
+
+cyoa: siege1-rescuegas
+	"Secours pour une gasoline" cyoa-title!
+	($ Thegroup .. " voit une horde avant quelle devienne sale, quand " .. gthey .. " vient voir une station service. Quelquun y est bloque." $) cyoa-text! basic-tone
+	2.5 ( 1.2 ) 9 20 rnd 1 siegecast
+	"events/siege/region/rescuegas.df" $load-region
+		choice( "Tentez de sauver!" )choice: premission
+		gas-draw
+;
+
+cyoa: siege1-rescuerest
+	"Recuperation routiere" cyoa-title!
+	($ Thegroup .. " voit une personne fuir dans une aire de repos, poursuivie par une horde. Cette personne pourrait encore etre sauvee !" $) cyoa-text! basic-tone
+	2.5 ( 1.2 ) 9 20 rnd 1 siegecast
+	"events/siege/region/rescuerest.df" $load-region
+		choice( "Tentez de sauver!" )choice: premission
+		gas-draw
+;
+
+cyoa: siege1-dirtroadeasy
+	"Coince dans un fosse" cyoa-title!
+	($ "La voiture reste coincee dans le fosse pres dun chemin de terre pourri " .. Thegroup .. " is close to getting the car out when a roaming horde draws near. " .. gthey .. " doit distraire les zombies pour quils ne sapprochent pas trop." $) cyoa-text! basic-tone
+	1.8 ( 1.1, then 2 ) 9 20 rnd 0.3 + 0.7 siegecast
+	"events/siege/region/road-dirt.df" $load-region
+		choice( "Essayez de survivre" )choice: premission
+;
+
+// Endgame Canada sieges
+
+cyoa: canada-siege2
+	"Derniere Bataille sur la Route de la Mort" cyoa-title!
+	($ "Presque a la frontiere du Canada, " .. thegroup .. "  est encercle par une horde infinie de morts vivants. Pour survivre, " .. gthey .. "  doit affronter un dernier siege. " .. "Cest le siege final, mais pas la derniere bataille !" rbold $) cyoa-text! basic-tone heal-event
+	2.1 12 14 rnd 3 siegecast // prev 2.3, 2.6 and 2 hours ... 2.3 at 2x difficulty still gives NO HOPE
+	// At 0.8 siegediff scale, need 2.9 diff for NO HOPE ... at 0.9 need 2.546 so 2.6
+	"events/siege/region/midopen1.df" $load-region
+		choice( "TOUT OU RIEN!" )choice: premission
+;
+
+cyoa: canada-siege1
+	"Le Matin difficile" cyoa-title!
+	($ Thegroup .. "  quitte le camp et est attaque par un gigantesque mur de morts vivants. " .. gTheyare .. "  force de se preparer a une bataille totale. " .. "Cest juste le premier siege de la journee !" rbold $) cyoa-text! basic-tone heal-event
+	3 7 8 rnd 1 siegecast // prev 2, and 3 hours
+	"events/siege/region/midopen1.df" $load-region
+		choice( "Survis !" )choice: premission
+;
+
+cyoa: canada-city
+	"Cite des espoirs brises" cyoa-title!
+	($ "Apres cet enorme siege, " .. Thegroup .. "  a pu avancer vers le nord en direction de la frontiere canadienne. Sur le chemin se trouve une ville remplie dessaims de morts vivants et dos blanchis dautres qui ont failli y arriver." $) cyoa-text! basic-tone
+	2.7 10 12 rnd 0 zforecast // formerly 3.5 diff
+	"events/city/building-pick-test-region-canada.df" $load-region
+		choice( "Chercher des munitions" )choice: premission
+		choice( "Laisser passer" )choice
+;
+
+cyoa: canada-deathcity
+	"Cite des espoirs brises" cyoa-title!
+	($ "Presque a la frontiere du Canada, " .. thegroup .. "  est encercle par une horde infinie de morts vivants. Pour survivre, " .. gthey .. "  doit affronter un dernier siege. " .. "Cest le siege final, mais pas la derniere bataille !" rbold $) cyoa-text! basic-tone heal-event
+	2.3 12 14 rnd 4 siegecast // Tried 2.7 also and 2.4
+	"events/finale/deathcity.df" $load-region
+		choice( "TOUT OU RIEN!" rbold )choice: premission
+;
+
+: precanada-cabin
+	2.2 13 19 rnd 0.5 + 1.5 siegecast // prev 2.5, 1.5 ... normal: 2 prev 1.2
+	"events/siege/region/cabin.df" $load-region
+	choice( "Cherchez refuge dans la cabane" )choice: premission
+;
+: precanada-openhouse
+	2.2 14 20 rnd 0.5 + 1.5 siegecast // prev 2.4, 2.7, 1.7 ... normal: 1.8 prev 1.3
+	"events/siege/region/midopen1.df" $load-region
+	choice( "Cachez vous dans la maison" )choice: premission
+;
+
+: precanada-picker
+	0 stack
+		' precanada-cabin shove
+		' precanada-openhouse shove
+	shuffles pops nip execute
+;
+
+cyoa: precanada-siege
+	"Proche de la frontiere" cyoa-title!
+	($ "Des armees geantes de morts vivants rodent perpetuellement autour de la frontiere canadienne, incapables de la franchir " .. Thegroup .. "  se fait attraper dans un essaim plus petit avant " .. gthey .. "  de trouver un campement sur." $) cyoa-text! basic-tone
+		precanada-picker
+;
+
+} }
+
+
+

@@ -1,0 +1,67 @@
+	: IZZY-oneline1 "We'll get there. For sure!" ;
+	: IZZY-oneline2 "Call me 'sunflower', the way my armor's so yellow." ;
+	: IZZY-oneline3 "I wonder how things are up north?" ;
+	: IZZY-oneline4 "SYCAMORE...HEED MY CALL!" ;
+	: IZZY-oneline5 "MY OATH COMPELS ME...to drive for a bit." ;
+	: IZZY-oneline6 "SUNDER THE HERETICAL!" ;
+	: IZZY-oneline7 "I'm not giving up. Not now. Not yet." ;
+	: IZZY-oneline8 "^W^" ;
+	: IZZY-oneline9 "'The dawn shall be radiant!'...so sayeth the wise sun." ;
+	: IZZY-oneline10 "Hungry work, lugging this armor about." ;
+	: IZZY-oneline11 "MY OATH COMPELS ME...to stop the car for a loo break." ;
+	: IZZY-oneline12 "SMITE THE FIENDS! SLAY THE FIENDS! FOR SUNLIGHT!" ;
+	: IZZY-oneline13 "I once had a puppy. I hope she survived..." ;
+	: IZZY-oneline14 "I'd sooner die than let the zombies win." ;
+	: IZZY-oneline15 "Sorry about all the blinding lights. It kinda just happens." ;
+	: IZZY-oneline16 "THIS CAR NEEDS MORE LIGHTS!" ;
+	: IZZY-oneline17 "Okay. I'll tell you what. You carry a sword around for 20 years and we'll compare notes." ;
+	: IZZY-oneline18 "For sure!" ;
+	: IZZY-oneline19 "If you see any dresses, they're mine. What, a paladin gal can't dress nice, too?" ;
+	: IZZY-oneline20 "NO FIEND TOO BIG, NO MONSTER TOO BIG, unless it's about 8 foot tall or so." ;
+	: IZZY-oneline21 "I love sunflowers. They're so adorable." ;
+
+	// road{ qmsg } for on the road stuff
+
+	// : IZZY-oneline21 qmsg ($ me .name@ .. " really loves cheese." $) txt ;
+	// example for actions characters can perform
+
+
+	deck-new
+		card: IZZY-oneline1
+		card: IZZY-oneline2
+		card: IZZY-oneline3
+		card: IZZY-oneline4
+		card: IZZY-oneline5
+		card: IZZY-oneline6
+		card: IZZY-oneline7
+		card: IZZY-oneline8
+		card: IZZY-oneline9
+		card: IZZY-oneline10
+		card: IZZY-oneline11
+		card: IZZY-oneline12
+		card: IZZY-oneline13
+		card: IZZY-oneline14
+		card: IZZY-oneline15
+		card: IZZY-oneline16
+		card: IZZY-oneline17
+		card: IZZY-oneline18
+		card: IZZY-oneline19
+		card: IZZY-oneline20
+		card: IZZY-oneline21
+	constant IZZY-ONELINERS
+	IZZY-ONELINERS var IZZY-oneliners
+	IZZY-ONELINERS shuffles to IZZY-oneliners
+
+: IZZY-oneliner
+	IZZY-oneliners depths 0= if IZZY-ONELINERS shuffles to IZZY-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: IZZY-oneliner
+
+	constant BLURB-IZZY-DECK
+	BLURB-IZZY-DECK var blurb-IZZY-deck
+	BLURB-IZZY-DECK shuffles to blurb-IZZY-deck

@@ -1,17 +1,17 @@
-	: BARD-oneline1 "'Je l'appellerai la prochaine : Chanson de Zombos" ;
-	: BARD-oneline2 "Avant detre un barde jetais un voleur. Avant cela je jettais des eclairs en papier." ;
+	: BARD-oneline1 "Je l'appellerai la prochaine : Chanson de Zombos" ;
+	: BARD-oneline2 "Avant d'etre un barde j'etais voleur. Avant cela je jetais des eclairs en papier." ;
 	: BARD-oneline3 "Jeu de role grandeur nature pour la vie" ;
-	: BARD-oneline4 "Les deux meilleures choses de ma vie : mon super-luth  et et mon super-butin." ;
-	: BARD-oneline5 "Vous pensez que le Canada en a des foires type la Renaissance ?" ;
+	: BARD-oneline4 "Les deux meilleures choses de ma vie : mon super-luth et mon super-butin." ;
+	: BARD-oneline5 "Vous pensez que le Canada en a des foires type Puy du Fou ?" ;
 	: BARD-oneline6 "J'espere que le Canada a des chevaliers et des chateaux. C'est British, n'est ce pas ?" ;
 	: BARD-oneline7 "Je me sens comme un gueux." ;
 	: BARD-oneline8 "J\'ai besoin d'une cuisse de dinde a devorer." ;
-	: BARD-oneline9 "La nourriture en boite est anachronique ! Je veux manger quelque chose dautre !" ;
+	: BARD-oneline9 "La nourriture en boite est anachronique ! Je veux manger quelque chose d'autre !" ;
 	: BARD-oneline10 "Je ferai une chanson sur ces aventures." ;
 	: BARD-oneline11 "Cette chanson s\'intitule : La Ballade du Butin de Chiottes" ;
 	: BARD-oneline12 "Cette prochaine chanson est une ballade tragique a propos d'un homme trop muscle pour se controler." ;
 	: BARD-oneline13 "Je veux trouver une cape elegante." ;
-	: BARD-oneline14 "J\'ai entendu dire que le Canada etait comme une enorme foire de la Renaissance. Toute la journee et tous les jours." ;
+	: BARD-oneline14 "J\'ai entendu dire que le Canada etait comme une enorme foire genre Puy du Fou. Toute la journee et tous les jours." ;
 	: BARD-oneline15 "Cette derniere chanson s'appelait 'Bataille du Mont Gonflette'." ;
 	: BARD-oneline16 "J\'ai entendu dire que le roi du Canada vivait dans un vrai chateau." ;
 
