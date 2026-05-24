@@ -1,24 +1,24 @@
-	: IZZY-oneline1 "We'll get there. For sure!" ;
-	: IZZY-oneline2 "Call me 'sunflower', the way my armor's so yellow." ;
-	: IZZY-oneline3 "I wonder how things are up north?" ;
-	: IZZY-oneline4 "SYCAMORE...HEED MY CALL!" ;
-	: IZZY-oneline5 "MY OATH COMPELS ME...to drive for a bit." ;
-	: IZZY-oneline6 "SUNDER THE HERETICAL!" ;
-	: IZZY-oneline7 "I'm not giving up. Not now. Not yet." ;
-	: IZZY-oneline8 "^W^" ;
-	: IZZY-oneline9 "'The dawn shall be radiant!'...so sayeth the wise sun." ;
-	: IZZY-oneline10 "Hungry work, lugging this armor about." ;
-	: IZZY-oneline11 "MY OATH COMPELS ME...to stop the car for a loo break." ;
-	: IZZY-oneline12 "SMITE THE FIENDS! SLAY THE FIENDS! FOR SUNLIGHT!" ;
-	: IZZY-oneline13 "I once had a puppy. I hope she survived..." ;
-	: IZZY-oneline14 "I'd sooner die than let the zombies win." ;
-	: IZZY-oneline15 "Sorry about all the blinding lights. It kinda just happens." ;
-	: IZZY-oneline16 "THIS CAR NEEDS MORE LIGHTS!" ;
-	: IZZY-oneline17 "Okay. I'll tell you what. You carry a sword around for 20 years and we'll compare notes." ;
-	: IZZY-oneline18 "For sure!" ;
-	: IZZY-oneline19 "If you see any dresses, they're mine. What, a paladin gal can't dress nice, too?" ;
-	: IZZY-oneline20 "NO FIEND TOO BIG, NO MONSTER TOO BIG, unless it's about 8 foot tall or so." ;
-	: IZZY-oneline21 "I love sunflowers. They're so adorable." ;
+    : IZZY-oneline1 "On va y arriver. C'est sur !" ;
+    : IZZY-oneline2 "Appelez-moi 'tournesol', vu comment mon armure est jaune." ;
+    : IZZY-oneline3 "Je me demande comment sont les choses la-haut au nord ?" ;
+    : IZZY-oneline4 "SYCAMORE... ECOUTE MON APPEL !" ;
+    : IZZY-oneline5 "MON SERMENT M'OBLIGE... a conduire un petit moment." ;
+    : IZZY-oneline6 "TERRASSEZ LES HERETIQUES !" ;
+    : IZZY-oneline7 "Je n'abandonne pas. Pas maintenant. Pas encore." ;
+    : IZZY-oneline8 "^W^" ;
+    : IZZY-oneline9 "'L'aube sera radieuse !'... ainsi parle le sage soleil." ;
+    : IZZY-oneline10 "Ca donne faim de trimballer cette armure partout." ;
+    : IZZY-oneline11 "MON SERMENT M'OBLIGE... a arreter la voiture pour une pause pipi." ;
+    : IZZY-oneline12 "CHATIEZ LES MONSTRES ! TUEZ LES MONSTRES ! POUR LA LUMIERE DU SOLEIL !" ;
+    : IZZY-oneline13 "J'avais un chiot autrefois. J'espere qu'elle a survecu..." ;
+    : IZZY-oneline14 "Je prefererais mourir plutot que de laisser les zombies gagner." ;
+    : IZZY-oneline15 "Desolee pour toutes ces lumieres aveuglantes. Ca arrive comme ca." ;
+    : IZZY-oneline16 "CETTE VOITURE A BESOIN DE PLUS DE LUMIERES !" ;
+    : IZZY-oneline17 "Ok. Je vais vous dire un truc. Portez une epee pendant 20 ans et on comparera nos notes." ;
+    : IZZY-oneline18 "C'est sur !" ;
+    : IZZY-oneline19 "Si vous voyez des robes, elles sont a moi. Quoi, une fille paladin n'a pas le droit de bien s'habiller ?" ;
+    : IZZY-oneline20 "AUCUN MONSTRE N'EST TROP GRAND, AUCUNE CREATURE N'EST TROP GRANDE, a moins de faire plus de 2 metres 50." ;
+    : IZZY-oneline21 "J'adore les tournesols. Ils sont trop adorables." ;
 
 	// road{ qmsg } for on the road stuff
 

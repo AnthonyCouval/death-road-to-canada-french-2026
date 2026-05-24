@@ -96,8 +96,8 @@ cyoa{ road{
         "En comparant tous les fusils, le cowboy rifle a la pire progression de penetration, gagnant 1 pierce tous les 3 points de tir." shove
         "En comparant tous les fusils, le M.O.A.R a le nombre maximum de pierce le plus eleve, atteignant 11 cibles par tir." shove
         "Quelques bons combos de stats : haut wits avec bas attitude, haut attitude avec bas wits, bas composure et bas loyalty." shove
-        "Si tes coequipiers ne font pas ce que tu veux, essaie de changer ta TACTIC dans le menu pause." shove
-        "Mettre la TACTIC sur RUNNIN est souvent un bon moyen de faire rentrer les PNJ dans la voiture." shove
+        "Si tes coequipiers ne font pas ce que tu veux, essaie de changer ta TACTIQUE dans le menu pause." shove
+        "Mettre la TACTIQUE sur RUNNIN est souvent un bon moyen de faire rentrer les PNJ dans la voiture." shove
         "Beaucoup d armes cassables compensent leur fragilite en etant de bonnes armes de debut de partie." shove
         "Utilise les fouets sur les personnages avec de faibles stats pour aider tes autres coequipiers a maintenir le nombre de kills." shove
         "Les zombies peuvent envahir un lieu si tu restes apres 21H. Assure-toi de partir a temps, ou prepare-toi a un combat !" shove

@@ -1,24 +1,24 @@
-	: PEWTER-oneline1 "Hehehe...I probably shouldn't have done that." ;
-	: PEWTER-oneline2 "Hey guys, remember when this wasn't my fault?" ;
-	: PEWTER-oneline3 "Ow. Ow. Still ow." ;
-	: PEWTER-oneline4 "This is worse than that time I fought a chicken." ;
-	: PEWTER-oneline5 "Don't worry. I've got a thing. I dunno what it is yet." ;
-	: PEWTER-oneline6 "I don't wanna alarm anybody, but I'm doing my best." ;
-	: PEWTER-oneline7 "Alright, nobody freak out. I already did." ;
-	: PEWTER-oneline8 "I HATE YOU BEES, I HATE YOU BEES, I HATE YOU..." ;
-	: PEWTER-oneline9 "I've got a whole CARTON OF CIGARETTES!" ;
-	: PEWTER-oneline10 "WELLLLLLLP 'BOUT TIME FOR ME TO BE HITTIN' THE OLD DUSTY TRAIL..." ;
-	: PEWTER-oneline11 "I can't believe we're goin' to Canada!" ;
-	: PEWTER-oneline12 "My alphabits have a mysterious message. It says ooooooooo." ;
-	: PEWTER-oneline13 "ROADHOUSE." ;
-	: PEWTER-oneline14 "When you poop in your dreams... You poop for real." ;
-	: PEWTER-oneline15 "Yeah I'm a DINGUS. A real DINK. Whaddya mean I can't say that?" ;
-	: PEWTER-oneline16 "This is worse than that one time I went to Canada." ;
-	: PEWTER-oneline17 "I bet...5 dollars that J*e is still in a wheelchair." ;
-	: PEWTER-oneline18 "You know what really grinds my gears?" ;
-	: PEWTER-oneline19 "Do you, or do you not know about the bird?" ;
-	: PEWTER-oneline20 "This is like that time I was on daytime TV." ;
-	: PEWTER-oneline21 "Hehehehehehehehe." ;
+    : PEWTER-oneline1 "Hehehe... J'aurais probablement pas du faire ca." ;
+    : PEWTER-oneline2 "Hey les gars, vous vous rappelez quand ce n'etait pas de ma faute ?" ;
+    : PEWTER-oneline3 "Aïe. Aïe. Toujours aïe." ;
+    : PEWTER-oneline4 "C'est pire que la fois ou j'ai battu un poulet." ;
+    : PEWTER-oneline5 "Ne vous inquietez pas. J'ai un truc. Je sais pas encore ce que c'est." ;
+    : PEWTER-oneline6 "Je veux alarmer personne, mais je fais de mon mieux." ;
+    : PEWTER-oneline7 "C'est bon, que personne ne panique. Je l'ai deja fait." ;
+    : PEWTER-oneline8 "JE VOUS DETESTE LES ABEILLES, JE VOUS DETESTE, JE VOUS DETESTE..." ;
+    : PEWTER-oneline9 "J'ai une CARTOUCHE ENTIERE DE CIGARETTES !" ;
+    : PEWTER-oneline10 "BEEEEN VOUILAAAAA IL EST TEMPS POUR MOI DE PRENDRE LE VIEUX CHEMIN POUSSIEREUX..." ;
+    : PEWTER-oneline11 "Je peux pas croire qu'on va au Canada !" ;
+    : PEWTER-oneline12 "Mes cerebres Alphabet ont un message mysterieux. Ca dit ooooooooo." ;
+    : PEWTER-oneline13 "ROADHOUSE." ;
+    : PEWTER-oneline14 "Quand tu fais caca dans tes reves... Tu fais caca pour de vrai." ;
+    : PEWTER-oneline15 "Ouais je suis un DEBILE. Un vrai GOGO. Comment ca j'ai pas le droit de dire ca ?" ;
+    : PEWTER-oneline16 "C'est pire que la seule fois ou je suis alle au Canada." ;
+    : PEWTER-oneline17 "Je parie... 5 dollars que J*e est toujours en fauteuil roulant." ;
+    : PEWTER-oneline18 "Vous savez ce qui me broute vraiment les engrenages ?" ;
+    : PEWTER-oneline19 "Est-ce que tu es, oui ou non, au courant pour l'oiseau ?" ;
+    : PEWTER-oneline20 "C'est comme la fois ou je suis passe a la tele l'apres-midi." ;
+    : PEWTER-oneline21 "Hehehehehehehehe." ;
 
 	deck-new
 		card: PEWTER-oneline1

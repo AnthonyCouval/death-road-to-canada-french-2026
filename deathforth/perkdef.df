@@ -550,7 +550,7 @@ perkdef{
 	endcase trunk-medical+
 ;
 : healthcare-blurb args( chara )
-	($ ICON_UP textclr$ .. <- chara .name@ .. " brings some medical supplies!" .. 0 textclr$ $) blurbevent ICON_UP blurbicon <- chara character# road{ charid } blurb-last-to-cyoa
+	($ ICON_UP textclr$ .. <- chara .name@ .. "  apporte du materiel medical !" .. 0 textclr$ $) blurbevent ICON_UP blurbicon <- chara character# road{ charid } blurb-last-to-cyoa
 	healthcare-calc
 ;
 : healthcareperk args( chara )

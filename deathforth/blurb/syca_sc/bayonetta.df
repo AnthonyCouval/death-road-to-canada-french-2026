@@ -1,24 +1,24 @@
-	: BAYONET-oneline1 "BAYY-OH-NETTIIII!" ;
-	: BAYONET-oneline2 "No such thing as driving too fast!~" ;
-	: BAYONET-oneline3 "There were these vampires, once..." ;
-	: BAYONET-oneline4 "Nobody keeps up with me!~" ;
-	: BAYONET-oneline5 "PARRY THRUST SMASH BANG BANG BANG BANG!" ;
-	: BAYONET-oneline6 "One time, my gun heels when off while sleeping." ;
-	: BAYONET-oneline7 "I tied these heels on...my foot is one big blister." ;
-	: BAYONET-oneline8 "Curiously - I've never held an actual musket or bayonet." ;
-	: BAYONET-oneline9 "Zombies! Why did it have to be zombies?!" ;
-	: BAYONET-oneline10 "Look at what those zombies have done to my outfit. So impatient..." ;
-	: BAYONET-oneline11 "You know what I need? Some heels without guns." ;
-	: BAYONET-oneline12 "You know, I try to avoid doing this in my Sunday best." ;
-	: BAYONET-oneline13 "Women of our caliber don't need invitations, darling." ;
-	: BAYONET-oneline14 "One day, a kid offered to skip with me. Last time I EVER do that." ;
-	: BAYONET-oneline15 "Whaaaaaat, you didn't like my choir performance?" ;
-	: BAYONET-oneline16 "IT'S MY SYMPHONY OF DESTRUCTION!" ;
-	: BAYONET-oneline17 "Try 4 wheels for size!~" ;
-	: BAYONET-oneline18 "Do I smell like gunpowder to you yet?" ;
-	: BAYONET-oneline19 "It's the witching hour~" ;
-	: BAYONET-oneline20 "BAY-AHHH-NETTII!!!" ;
-	: BAYONET-oneline21 "BAYYYYYOOOOONETTTTIIIIIII!" ;
+    : BAYONET-oneline1 "BAYY-OH-NETTIIII!" ;
+    : BAYONET-oneline2 "On ne roule jamais trop vite !~" ;
+    : BAYONET-oneline3 "Il y avait ces vampires, une fois..." ;
+    : BAYONET-oneline4 "Personne ne peut me suivre !~" ;
+    : BAYONET-oneline5 "PARADE BOTTE FRACAS PAN PAN PAN PAN !" ;
+    : BAYONET-oneline6 "Une fois, mes talons-flingues se sont declenches pendant mon sommeil." ;
+    : BAYONET-oneline7 "J'ai attache ces talons... mon pied n'est plus qu'une enorme ampoule." ;
+    : BAYONET-oneline8 "Curieusement - je n'ai jamais tenu de vrai mousquet ou de baïonnette." ;
+    : BAYONET-oneline9 "Des zombies ! Pourquoi a-t-il fallu que ce soit des zombies ?!" ;
+    : BAYONET-oneline10 "Regardez ce que ces zombies ont fait a ma tenue. Si impatients..." ;
+    : BAYONET-oneline11 "Vous savez ce dont j'ai besoin ? De talons sans flingues." ;
+    : BAYONET-oneline12 "Vous savez, j'essaie d'eviter de faire ca dans mes habits du dimanche." ;
+    : BAYONET-oneline13 "Les femmes de notre calibre n'ont pas besoin d'invitations, cherie." ;
+    : BAYONET-oneline14 "Un jour, un enfant m'a propose de sauter a la corde. C'est la DERNIERE fois que je fais ca." ;
+    : BAYONET-oneline15 "Quuuoiiii, vous n'avez pas aime ma performance a la chorale ?" ;
+    : BAYONET-oneline16 "C'EST MA SYMPHONIE DE LA DESTRUCTION !" ;
+    : BAYONET-oneline17 "Essaie un peu de gouter a mes 4 roues !~" ;
+    : BAYONET-oneline18 "Est-ce que je sens deja la poudre a canon selon toi ?" ;
+    : BAYONET-oneline19 "C'est l'heure des sorcieres~" ;
+    : BAYONET-oneline20 "BAY-AHHH-NETTII!!!" ;
+    : BAYONET-oneline21 "BAYYYYYOOOOONETTTTIIIIIII!" ;
 
 	deck-new
 		card: BAYONET-oneline1

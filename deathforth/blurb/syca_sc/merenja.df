@@ -1,24 +1,24 @@
-	: MERENJA-oneline1 "Bit of a departure from my original commission, I admit." ;
-	: MERENJA-oneline2 "If you kick me out of my own car, I'm gonna be pissed." ;
-	: MERENJA-oneline3 "We need a better car with even more armor and guns." ;
-	: MERENJA-oneline4 "And then came my ship, charging in from the fog..." ;
-	: MERENJA-oneline5 "I did not care for the Admiral's pie." ;
-	: MERENJA-oneline6 "Less ear-shattering booms, a lot more undead." ;
-	: MERENJA-oneline7 "Want a can of eels?" ;
-	: MERENJA-oneline8 "That's ADMIRAL Merenja Raven, to you." ;
-	: MERENJA-oneline9 "Here, have this handbook. You can wipe your butt with it." ;
-	: MERENJA-oneline10 "Need to find myself a chainsaw or two..." ;
-	: MERENJA-oneline11 "Haha, you think zombies are bad? Try the open ocean." ;
-	: MERENJA-oneline12 "Sure, this is bad, but not as bad as having your hull breached." ;
-	: MERENJA-oneline13 "It - it doesn't matter how large my vessel was or wasn't!" ;
-	: MERENJA-oneline14 "Best thing about the road? Less barnacles." ;
-	: MERENJA-oneline15 "Hang on, I didn't realise we had heated seats!" ;
-	: MERENJA-oneline16 "My old vessel even had sonar. They really thought of everything." ;
-	: MERENJA-oneline17 "What do you mean all your rivers have bridges across them?" ;
-	: MERENJA-oneline18 "Wanderers are as wanderers be..." ;
-	: MERENJA-oneline19 "Shall I open a beer bottle?" ;
-	: MERENJA-oneline20 "A good captain goes down with her ship. A better captain sinks the other ship first." ;
-	: MERENJA-oneline21 "Need to attach some harpoons to this thing..." ;
+    : MERENJA-oneline1 "C'est un peu different de ma mission d'origine, je l'admets." ;
+    : MERENJA-oneline2 "Si vous me virez de ma propre voiture, je vais vraiment etre en petard." ;
+    : MERENJA-oneline3 "On a besoin d'une meilleure voiture avec encore plus de blindage et de flingues." ;
+    : MERENJA-oneline4 "Et c'est la que mon navire est arrive, foncant a travers le brouillard..." ;
+    : MERENJA-oneline5 "Je n'ai pas du tout aime la tarte de l'Amiral." ;
+    : MERENJA-oneline6 "Moins d'explosions a vous peter les tympans, beaucoup plus de morts-vivants." ;
+    : MERENJA-oneline7 "Tu veux une boite d'anguilles ?" ;
+    : MERENJA-oneline8 "C'est l'AMIRALE Merenja Raven pour toi." ;
+    : MERENJA-oneline9 "Tiens, prends ce manuel. Tu peux te torcher le cul avec." ;
+    : MERENJA-oneline10 "Faut que je me trouve une tronconneuse ou deux..." ;
+    : MERENJA-oneline11 "Haha, vous croyez que les zombies c'est terrible ? Essayez la haute mer." ;
+    : MERENJA-oneline12 "Bien sur que la situation est mauvaise, mais pas autant qu'une breche dans la coque." ;
+    : MERENJA-oneline13 "Ca - ca n'a pas d'importance de savoir si mon vaisseau etait grand ou pas !" ;
+    : MERENJA-oneline14 "Le meilleur truc avec la route ? Moins de bernacles." ;
+    : MERENJA-oneline15 "Attendez, je n'avais pas remarque qu'on avait des sieges chauffants !" ;
+    : MERENJA-oneline16 "Mon ancien navire avait meme un sonar. Ils ont vraiment pense a tout." ;
+    : MERENJA-oneline17 "Comment ca, toutes vos rivieres ont des ponts pour les traverser ?" ;
+    : MERENJA-oneline18 "Les vagabonds font ce que font les vagabonds..." ;
+    : MERENJA-oneline19 "Je decapsule une biere ?" ;
+    : MERENJA-oneline20 "Un bon capitaine coule avec son navire. Un meilleur capitaine coule le navire adverse en premier." ;
+    : MERENJA-oneline21 "Faut qu'on installe des harpons sur cet engin..." ;
 
 	deck-new
 		card: MERENJA-oneline1

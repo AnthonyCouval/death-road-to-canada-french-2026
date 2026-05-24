@@ -1,24 +1,24 @@
-	: CLOCKKING-oneline1 "Remind me, which one of us controls time, again?" ;
-	: CLOCKKING-oneline2 "TEMPUS...nah, just kidding." ;
-	: CLOCKKING-oneline3 "My father was a digital clock. And before that, a grandfather clock." ;
-	: CLOCKKING-oneline4 "I take a lot of offense to TICK TOCK actually." ;
-	: CLOCKKING-oneline5 "You're really WINDING ME UP, haha...HAHAHAHAHA" ;
-	: CLOCKKING-oneline6 "DING DONG. Who does the bell toll for? YOU." ;
-	: CLOCKKING-oneline7 "ASK NOT FOR WHOM THE BELL TOLLS..." ;
-	: CLOCKKING-oneline8 "FOR WHOM...DOES THAT BELL NOW TOLL?" ;
-	: CLOCKKING-oneline9 "DON'T SAY ZA WARUDO. I'M WATCHING YOU! DON'T DO IT!" ;
-	: CLOCKKING-oneline10 "WHO IS THIS 'JO-JO'?" ;
-	: CLOCKKING-oneline11 "I HAVE A WHOLE HOST OF ESOTERIC HEROES TO FIGHT STILL!" ;
-	: CLOCKKING-oneline12 "The crown marks the king." ;
-	: CLOCKKING-oneline13 "Oh, I just can't wait to be king." ;
-	: CLOCKKING-oneline14 "i've a bone to pick with caesium-133." ;
-	: CLOCKKING-oneline15 "AND WHEN I'M KING OF CANADA, TIME WILL STOP FOREVER!" ;
-	: CLOCKKING-oneline16 "Einstein's problem was that he wasn't born as a deity." ;
-	: CLOCKKING-oneline17 "I trust this will all make sense in the course of...nevermind." ;
-	: CLOCKKING-oneline18 "Oh? A race against the CLOCK? YEAH. HAHA. VERY FUNNY." ;
-	: CLOCKKING-oneline19 "Wonder if anybody would notice if I timestopped to pick my nose..." ;
-	: CLOCKKING-oneline20 "It's a good thing I don't have a neck. My crown would crush it." ;
-	: CLOCKKING-oneline21 "IF I COULD TURRRRNNNNN BACK TIMEEEEEEE..." ;
+    : CLOCKKING-oneline1 "Rappelez-moi, lequel d'entre nous controle le temps, deja ?" ;
+    : CLOCKKING-oneline2 "TEMPUS... non, je deconne." ;
+    : CLOCKKING-oneline3 "Mon pere etait une horloge digitale. Et avant ca, une horloge grand-pere." ;
+    : CLOCKKING-oneline4 "En vrai, je prends tres mal le TICK TOCK." ;
+    : CLOCKKING-oneline5 "Je commence vraiment a etre REMONTER, haha... HAHAHAHAHA" ;
+    : CLOCKKING-oneline6 "DING DONG. Pour qui sonne le glas ? POUR TOI." ;
+    : CLOCKKING-oneline7 "NE DEMANDE PAS POUR QUI SONNE LE GLAS..." ;
+    : CLOCKKING-oneline8 "POUR QUI... SONNE CE GLAS A PRESENT ?" ;
+    : CLOCKKING-oneline9 "NE DIS PAS ZA WARUDO. JE TE SURVEILLE ! NE LE FAIS PAS !" ;
+    : CLOCKKING-oneline10 "C'EST QUI CE 'JO-JO' ?" ;
+    : CLOCKKING-oneline11 "J'AI ENCORE TOUT UN TAS DE HEROS ESOTERIQUES A COMBATTRE !" ;
+    : CLOCKKING-oneline12 "La couronne fait le roi." ;
+    : CLOCKKING-oneline13 "Oh, je voudrais deja etre roi." ;
+    : CLOCKKING-oneline14 "j'ai un compte a regler avec le cesium-133." ;
+    : CLOCKKING-oneline15 "ET QUAND JE SERAI LE ROI DU CANADA, LE TEMPS S'ARRETERA A JAMAIS !" ;
+    : CLOCKKING-oneline16 "Le probleme d'Einstein, c'est qu'il n'est pas ne en tant que divinite." ;
+    : CLOCKKING-oneline17 "J'ose esperer que tout ca fera sens avec le... peu importe." ;
+    : CLOCKKING-oneline18 "Oh ? Une course contre la MONTRE ? OUAIS. HAHA. TRES MARRANT." ;
+    : CLOCKKING-oneline19 "Je me demande si quelqu'un remarquerait si j'arretais le temps pour me curer le nez..." ;
+    : CLOCKKING-oneline20 "C'est une bonne chose que je n'aie pas de cou. Ma couronne le broierait." ;
+    : CLOCKKING-oneline21 "IF I COULD TURRRRNNNNN BACK TIMEEEEEEE..." ;
 
 	deck-new
 		card: CLOCKKING-oneline1

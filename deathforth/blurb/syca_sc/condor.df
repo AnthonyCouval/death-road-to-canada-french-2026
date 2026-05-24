@@ -1,24 +1,24 @@
-	: CONDOR-oneline1 "STEPPPPPP RIGHT UP or don't, I don't care. It's not like its a big deal..." ;
-	: CONDOR-oneline2 "A CRACK OF THE WHIP SHALL MAKE THE BANDIT QUIT!" ;
-	: CONDOR-oneline3 "These RAPSCALLIONS do not know DISCIPLINE as I do." ;
-	: CONDOR-oneline4 "Don't worry, I know I'm better than you." ;
-	: CONDOR-oneline5 "BY JOVE I need the loo." ;
-	: CONDOR-oneline6 "AND THE CONFECTIONARY STAND shall be open in approximately NEVER." ;
-	: CONDOR-oneline7 "I'm so tired of performing all the time." ;
-	: CONDOR-oneline8 "'The show must go on'...to heck with the damn show." ;
-	: CONDOR-oneline9 "Blast, Spidey's spoiled the seat again." ;
-	: CONDOR-oneline10 "The world seems so bent on pulling itself apart." ;
-	: CONDOR-oneline11 "AND FOR MY NEXT TRICK...HANDLESS DRIVING" ;
-	: CONDOR-oneline12 "AND FOR OUR FIRST ACT...BREAKING THE SPEED LIMIT" ;
-	: CONDOR-oneline13 "PLEASE WELCOME TO THE STAGE...CRIPPLING SADNESS!" ;
-	: CONDOR-oneline14 "At least the audiences are larger. A bit more dead than usual though." ;
-	: CONDOR-oneline15 "Spidey's got a good taste for zombie. Which is great, since he won't eat me." ;
-	: CONDOR-oneline16 "Wonder if I can whip zombies from the car..." ;
-	: CONDOR-oneline17 "The plight of our audience is ours." ;
-	: CONDOR-oneline18 "A smidge of makeup might help. Also: showering." ;
-	: CONDOR-oneline19 "Rather makes me miss my dress collection." ;
-	: CONDOR-oneline20 "Cigarette? Just kidding, smoking is BANNED in my circus." ;
-	: CONDOR-oneline21 "I feel so tired...like I could sleep a million years, and still not be rested." ;
+    : CONDOR-oneline1 "APPPROCHEEZ, APPRROCHEEZ ou pas, je m'en fous. C'est pas comme si c'etait capital..." ;
+    : CONDOR-oneline2 "UN CLAQUEMENT DE FOUET FERA FUIR LE BANDIT !" ;
+    : CONDOR-oneline3 "Ces CHENAPANS ne connaissent pas la DISCIPLINE comme moi." ;
+    : CONDOR-oneline4 "Ne t'inquiete pas, je sais que je vaux mieux que toi." ;
+    : CONDOR-oneline5 "PAR JUPITER j'ai besoin d'aller aux toilettes." ;
+    : CONDOR-oneline6 "ET LE STAND DE CONFISERIES ouvrira approximativement JAMAIS." ;
+    : CONDOR-oneline7 "Je suis tellement fatigue de faire le spectacle tout le temps." ;
+    : CONDOR-oneline8 "'The show must go on'... au diable ce foutu spectacle." ;
+    : CONDOR-oneline9 "Flute, Spidey a encore sali le siege." ;
+    : CONDOR-oneline10 "Le monde semble tellement determine a s'autodetruire." ;
+    : CONDOR-oneline11 "ET POUR MON PROCHAIN TOUR... CONDUITE SANS LES MAINS" ;
+    : CONDOR-oneline12 "ET POUR NOTRE PREMIER NUMERO... DEPASSER LA LIMITATION DE VITESSE" ;
+    : CONDOR-oneline13 "ACCUEILLEZ SUR SCENE S'IL VOUS PLAIT... UNE TRISTESSE DEPRIMANTE !" ;
+    : CONDOR-oneline14 "Au moins, le public est plus nombreux. Un peu plus mort que d'habitude cela dit." ;
+    : CONDOR-oneline15 "Spidey a un bon gout pour le zombie. Ce qui est super, vu qu'il ne va pas me manger." ;
+    : CONDOR-oneline16 "Je me demande si je peux fouetter les zombies depuis la voiture..." ;
+    : CONDOR-oneline17 "La detresse de notre public est la notre." ;
+    : CONDOR-oneline18 "Un soupcon de maquillage pourrait aider. Et aussi : une douche." ;
+    : CONDOR-oneline19 "Tout ca me ferait presque regretter ma collection de robes." ;
+    : CONDOR-oneline20 "Cigarette ? Je deconne, fumer est INTERDIT dans mon cirque." ;
+    : CONDOR-oneline21 "Je me sens si fatigue... comme si je pouvais dormir un million d'annees et ne pas etre repose." ;
 
 	deck-new
 		card: CONDOR-oneline1

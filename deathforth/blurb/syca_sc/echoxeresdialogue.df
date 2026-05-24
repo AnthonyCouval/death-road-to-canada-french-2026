@@ -1,24 +1,24 @@
-	: ECHOXERES-oneline1 "we are infinite." ;
-	: ECHOXERES-oneline2 "s-s t atic" ;
-	: ECHOXERES-oneline3 "tr e ad pl anes  o-of  exis-tence" ;
-	: ECHOXERES-oneline4 "de-fectfectfect-ive" ;
-	: ECHOXERES-oneline5 "We are many." ;
-	: ECHOXERES-oneline6 "bR-0k..3n?..." ;
-	: ECHOXERES-oneline7 "so ul...m1ss in g" ;
-	: ECHOXERES-oneline8 "p a in" ;
-	: ECHOXERES-oneline9 "w0rld... str-r an g e..." ;
-	: ECHOXERES-oneline10 "we s33k rev#*!##*--" ;
-	: ECHOXERES-oneline11 "count our heads" ;
-	: ECHOXERES-oneline12 "eth3 r3a l" ;
-	: ECHOXERES-oneline13 "we are restless" ;
-	: ECHOXERES-oneline14 "we will not give up." ;
-	: ECHOXERES-oneline15 "mu st  s33k  r ev eng-##*!#" ;
-	: ECHOXERES-oneline16 "w h at  r3al?..." ;
-	: ECHOXERES-oneline17 "when...e-nd?" ;
-	: ECHOXERES-oneline18 "fragm3nt...ed..." ;
-	: ECHOXERES-oneline19 "pieces o-f sou-l" ;
-	: ECHOXERES-oneline20 "we remember." ;
-	: ECHOXERES-oneline21 "save   us" ;
+    : ECHOXERES-oneline1 "nous sommes infinis." ;
+    : ECHOXERES-oneline2 "s-s t atique" ;
+    : ECHOXERES-oneline3 "p ar cou rir les pl ans  d-de  l'exis-tence" ;
+    : ECHOXERES-oneline4 "de-fectueuxueuxueux-ive" ;
+    : ECHOXERES-oneline5 "Nous sommes nombreux." ;
+    : ECHOXERES-oneline6 "bR-0s..3?..." ;
+    : ECHOXERES-oneline7 "a m e...m1ss in g" ;
+    : ECHOXERES-oneline8 "d o u l e u r" ;
+    : ECHOXERES-oneline9 "m0nde... étr-r an g e..." ;
+    : ECHOXERES-oneline10 "nous ch3rchons v3ng#*!##*--" ;
+    : ECHOXERES-oneline11 "comptez nos tetes" ;
+    : ECHOXERES-oneline12 "eth3 r e a l" ;
+    : ECHOXERES-oneline13 "nous sommes sans repos" ;
+    : ECHOXERES-oneline14 "nous n'abandonnerons pas." ;
+    : ECHOXERES-oneline15 "f a u t  ch3rch3r  v 3ng eanc-##*!#" ;
+    : ECHOXERES-oneline16 "qu ' e s t  r3el?..." ;
+    : ECHOXERES-oneline17 "quand...f-in?" ;
+    : ECHOXERES-oneline18 "fragm3nt...e..." ;
+    : ECHOXERES-oneline19 "morceaux d-de l'a-me" ;
+    : ECHOXERES-oneline20 "nous nous souvenons." ;
+    : ECHOXERES-oneline21 "sauvez   nous" ;
 
 	deck-new
 		card: ECHOXERES-oneline1

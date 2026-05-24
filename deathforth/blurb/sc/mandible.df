@@ -1,11 +1,11 @@
 
 
 	: SPEEDB-oneline1 "#LA VOITURE EST LENTE, MOI JE SUIS RAPIDE#" ;
-	: SPEEDB-oneline2 "#TRO LENT#" ;
+	: SPEEDB-oneline2 "#2 FOIS TROP LENT#" ;
 	: SPEEDB-oneline3 "#TUT TUT#" ;
 	: SPEEDB-oneline4 "#VROUM#" ;
 	: SPEEDB-oneline5 "#NEED 4 SPEED#" ;
-	: SPEEDB-oneline6 "#ALLER VITE#" ;
+	: SPEEDB-oneline6 "#ON TRACE#" ;
 
 	deck-new
 		card: SPEEDB-oneline1
@@ -34,12 +34,12 @@
 
 
 
-	: PUNCHB-oneline1 "#DOIT FRAPPER#" ;
-	: PUNCHB-oneline2 "#EXeCUTER LES DIRECTIVES DE COUP DE POING#" ;
-	: PUNCHB-oneline3 "#VIVRE POUR FRAPPER#" ;
-	: PUNCHB-oneline4 "#TEMPS 2 FRAPPE#" ;
-	: PUNCHB-oneline5 "#A L'AFFUT D'UN COUP#" ;
-	: PUNCHB-oneline6 "#FRAPPER FRAPPER FRAPPER#" ;
+    : PUNCHB-oneline1 "#FAUT COGNER#" ;
+    : PUNCHB-oneline2 "#EXECUTION DES DIRECTIVES DE COGNAGE#" ;
+    : PUNCHB-oneline3 "#VIE AMOUR COGNER#" ;
+    : PUNCHB-oneline4 "#L'HEURE 2 COGNER#" ;
+    : PUNCHB-oneline5 "#CA VA CHIER DES COUPS DE POING#" ;
+    : PUNCHB-oneline6 "#COGNER COGNER COGNER#" ;
 
 	deck-new
 		card: PUNCHB-oneline1
@@ -112,7 +112,7 @@
 	: GOTH-oneline4 "Tout cela ira directement dans ma sombre poesie." ;
 	: GOTH-oneline5 "C'est exactement comme dans les films de Tim Burton." ;
 	: GOTH-oneline6 "Il est difficile de se tenir au courant de la mode gothique quand tous les magasins de vetements sont detruits." ;
-	: GOTH-oneline7 "Ma deuxième couleur preferee : le noir ordinaire." ;
+	: GOTH-oneline7 "Ma deuxieme couleur preferee : le noir ordinaire." ;
 
 	deck-new
 		card: GOTH-oneline1

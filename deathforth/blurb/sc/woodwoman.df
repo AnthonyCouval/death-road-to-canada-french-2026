@@ -1,16 +1,16 @@
 	: WOODWOMAN-oneline1 "Mon journal de bord dit que nous arriverons au Canada." ;
-	: WOODWOMAN-oneline2 "Mon journal dit quun grand danger nous attend!" ;
+	: WOODWOMAN-oneline2 "Mon journal dit qu'un grand danger nous attend!" ;
 	: WOODWOMAN-oneline3 "Mon journal dit de faire attention." ;
 	: WOODWOMAN-oneline4 "'Mon journal dit que nous ne pouvons pas laisser nos petites querelles nous separer." ;
 	: WOODWOMAN-oneline5 "Mon journal dit que nous devons garder notre moral haut." ;
-	: WOODWOMAN-oneline6 "Mon journal dit quil veut plus despace dans la voiture." ;
+	: WOODWOMAN-oneline6 "Mon journal dit qu'il veut plus d'espace dans la voiture." ;
 	: WOODWOMAN-oneline7 "Mon journal dit que nous devrions collecter plus de journaux, pour les batailles futures." ;
 	: WOODWOMAN-oneline8 "Mon journal dit que les armes a feu sont trop dangereuses." ;
-	: WOODWOMAN-oneline9 "Mon journal dit quil veut eclabousser des zombies." ;
-	: WOODWOMAN-oneline10 "Mon journal dit que nous devrions nous concentrer sur lentrainement de notre force et de notre forme physique." ;
-	: WOODWOMAN-oneline11 "Mon journal dit que nous devrions essayer dutiliser plus darmes contondantes." ;
-	: WOODWOMAN-oneline12 "Mon journal dit que les tronconneuses consomment trop dessence pour etre efficaces." ;
-	: WOODWOMAN-oneline13 "'Mon journal me defendra, ne vous inquietez pas pour nous." ;
+	: WOODWOMAN-oneline9 "Mon journal dit qu'il veut eclabousser des zombies." ;
+	: WOODWOMAN-oneline10 "Mon journal dit que nous devrions nous concentrer sur l'entrainement de notre force et de notre forme physique." ;
+	: WOODWOMAN-oneline11 "Mon journal dit que nous devrions essayer d'utiliser plus d'armes contondantes." ;
+	: WOODWOMAN-oneline12 "Mon journal dit que les tronconneuses consomment trop d'essence pour etre efficaces." ;
+	: WOODWOMAN-oneline13 "Mon journal me defendra, ne vous inquietez pas pour nous." ;
 	: WOODWOMAN-oneline14 "Mon journal dit quil existe un journal encore plus puissant que lui." ;
 
 	deck-new

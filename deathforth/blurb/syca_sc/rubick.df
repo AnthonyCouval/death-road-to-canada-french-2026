@@ -1,24 +1,24 @@
-	: RUBICK-oneline1 "What wonders shall I see this day?" ;
-	: RUBICK-oneline2 "SOOO...YOU CAN DRIVE THE CAR? WONDERFUL." ;
-	: RUBICK-oneline3 "Where shall I go next? Ultimyr University? Canada? Hmm..." ;
-	: RUBICK-oneline4 "Oh, if I had father's skill in construction..." ;
-	: RUBICK-oneline5 "No, the mask does not come off." ;
-	: RUBICK-oneline6 "Do you mind if I copy the steering wheel?" ;
-	: RUBICK-oneline7 "I'm coming, Canadians! Wait for me!" ;
-	: RUBICK-oneline8 "My thirst for knowledge cannot be quenched." ;
-	: RUBICK-oneline9 "No sorcery lies beyond my grasp." ;
-	: RUBICK-oneline10 "I am no thief. I merely borrow. The police...disagree." ;
-	: RUBICK-oneline11 "Hmmm. What a test this shall be..." ;
-	: RUBICK-oneline12 "Mind if I copy your hair? I'm missing some." ;
-	: RUBICK-oneline13 "No no no, it's not 'counterfeit' money, it's..." ;
-	: RUBICK-oneline14 "Excellent idea!" ;
-	: RUBICK-oneline15 "I could cast a portal, but where's the fun in that?" ;
-	: RUBICK-oneline16 "What is this...'music' that keeps playing?" ;
-	: RUBICK-oneline17 "WHO is the ulimate magus? That's right. I am." ;
-	: RUBICK-oneline18 "What's mine is mine and what's yours is also mine." ;
-	: RUBICK-oneline19 "I had the strangest dream, that I was standing in a river..." ;
-	: RUBICK-oneline20 "We'd best hope we don't find the anti-magus. He's a real jerk." ;
-	: RUBICK-oneline21 "Zombies everywhere, Obama, no games...I almost feel bad." ;
+    : RUBICK-oneline1 "Quelles merveilles vais-je voir aujourd'hui ?" ;
+    : RUBICK-oneline2 "ALOOORS... TU SAIS CONDUIRE LA VOITURE ? MERVEILLEUX." ;
+    : RUBICK-oneline3 "Ou devrais-je aller ensuite ? L'Universite d'Ultimyr ? Le Canada ? Hmmm..." ;
+    : RUBICK-oneline4 "Oh, si seulement j'avais le talent de mon pere pour la construction..." ;
+    : RUBICK-oneline5 "Non, le masque ne s'enleve pas." ;
+    : RUBICK-oneline6 "Ca te derange si je copie le volant ?" ;
+    : RUBICK-oneline7 "J'arrive, les Canadiens ! Attendez-moi !" ;
+    : RUBICK-oneline8 "Ma soif de connaissances ne peut etre étanchee." ;
+    : RUBICK-oneline9 "Aucune sorcellerie n'est hors de ma portee." ;
+    : RUBICK-oneline10 "Je ne suis pas un voleur. J'emprunte, simplement. La police... n'est pas d'accord." ;
+    : RUBICK-oneline11 "Hmmm. Quel test ce sera..." ;
+    : RUBICK-oneline12 "Ca te derange si je copie tes cheveux ? Il m'en manque un peu." ;
+    : RUBICK-oneline13 "Non non non, ce n'est pas de la 'fausse' monnaie, c'est..." ;
+    : RUBICK-oneline14 "Excellente idee !" ;
+    : RUBICK-oneline15 "Je pourrais invoquer un portail, mais ou serait le plaisir ?" ;
+    : RUBICK-oneline16 "Qu'est-ce que c'est que cette... 'musique' qui passe en boucle ?" ;
+    : RUBICK-oneline17 "QUI est le mage ultime ? C'est exact. C'est moi." ;
+    : RUBICK-oneline18 "Ce qui est a moi est a moi, et ce qui est a toi est a moi aussi." ;
+    : RUBICK-oneline19 "J'ai fait le reve le plus etrange, j'etais debout au milieu d'une riviere..." ;
+    : RUBICK-oneline20 "On ferait mieux d'esperer ne pas croiser l'anti-mage. C'est un vrai crétin." ;
+    : RUBICK-oneline21 "Des zombies partout, Obama, pas de jeux... j'en serais presque triste." ;
 
 	deck-new
 		card: RUBICK-oneline1

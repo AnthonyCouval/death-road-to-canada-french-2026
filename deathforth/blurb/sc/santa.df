@@ -6,7 +6,7 @@
 		"HO HO HO! HO HO HO! HO HO HO!" blurbsay
 	else
 		50 %chance if
-			blurbslot 2 < if ($ "Tais toi, " .. 1st-char .name@ .. "." $) blurbsay
+			blurbslot 2 < if ($ "TAIS TOI, " .. 1st-char .name@ .. "." $) blurbsay
 			STAT_MORALE me .stat--
 			then
 		else
@@ -20,7 +20,7 @@
 		"HO HO HO! MEEEEEERRY CHRISTMAS!" blurbsay
 	else
 		50 %chance if
-			blurbslot 2 < if ($ "Peut etre, " .. 1st-char .name@ .. "!" $) blurbsay
+			blurbslot 2 < if ($ "PEUT ETRE, " .. 1st-char .name@ .. "!" $) blurbsay
 			then
 		else
 			STAT_MORALE me .stat++
@@ -29,15 +29,15 @@
 ;
 
 	: SANTA-oneline1 "JOYEUX NOEL A TOUS !" ;
-	: SANTA-oneline2 "Nous allons tous aller chercher du lait et des biscuits au pole Nord !" ;
+	: SANTA-oneline2 "NOUS ALLONS TOUS CHERCHER DES COOKIES ET DU LAIT AU POLE NORD" ;
 	: SANTA-oneline3 "HE HO HE !" ;
-	: SANTA-oneline4 "'JE ESPERE QUE TOUT LE MONDE A ETE BON CE ANNEE !" ;
+	: SANTA-oneline4 "J'ESPERE QUE TOUT LE MONDE A ETE GENTIL CETTE ANNEE !" ;
 	: SANTA-oneline5 "MAINTENANT FONCEZ! FONCEZ! FONCEZ TOUS!" ;
-	: SANTA-oneline6 "AVANCE, COMETE! AVANCE, CUPIDON! AVANCE, TONNERRE ET ECLAIR!" ;
+	: SANTA-oneline6 "EN AVANT, COMETE! EN AVANT, CUPIDON! EN AVANT, TONNERRE ET ECLAIR!" ;
 	: SANTA-oneline7 "HO HO HO! HO HO HO!" ;
 	: SANTA-oneline8 "HO, HO, HO !," ;
-	: SANTA-oneline9 "CEST LE MEILLEUR NOEL DE TOUS LES TEMPS!" ;
-	: SANTA-oneline10 "ET PAIX SUR LA TERRE!" ;
+	: SANTA-oneline9 "C'EST LE MEILLEUR NOEL DE TOUS LES TEMPS!" ;
+	: SANTA-oneline10 "ET QUE LA PAIX SOIT SUR LA TERRE!" ;
 
 	deck-new
 		card: SANTA-oneline1
@@ -77,10 +77,10 @@
 
 : santa-whocares
 	blurbslot 0= if
-		"WHO EVEN CARES ABOUT CHRISTMAS ANYMORE? NOT ME..." blurbsay
+		"MAIS QUI S'INTERESSE ENCORE A NOEL DE NOS JOURS ? PAS MOI..." blurbsay
 	else
 		blurbslot 2 < if 
-			rnd5050 if ($ "'Pere Noel, non! N'abandonnez pas!" $) blurbsay 
+			rnd5050 if ($ "Pere Noel, non ! N'abandonnez pas!" $) blurbsay
 			else
 				me .morale--
 			then
@@ -90,7 +90,7 @@
 
 : santa-allover
 	blurbslot 0= if
-		"'NOEL EST FINI POUR TOUJOURS! J'ANNULE NOEL POUR TOUJOURS!" blurbsay
+		"NOEL EST FINI POUR TOUJOURS! J'ANNULE NOEL POUR TOUJOURS!" blurbsay
 	else
 		50 %chance if
 			blurbslot 2 < if "NON!" blurbsay then
@@ -100,14 +100,14 @@
 ;
 
 	: SANTA-oneline1-sad "TRISTE NOEL! TRISTE NOEL!" ;
-	: SANTA-oneline2-sad "'RUDOLPH A ETE MANGE ET JE NE RETOURNERAI JAMAIS AU POLE NORD!" ;
-	: SANTA-oneline3-sad "JOYEUX NOEL, PLUTOT JOYEUX NOEL DE POISSON!" ;
-	: SANTA-oneline4-sad "THIS DOESN'T LOOK LIKE CHRISTMAS TO ME..." ;
+	: SANTA-oneline2-sad "RUDOLPH A ETE MANGE ET JE NE RETOURNERAI JAMAIS AU POLE NORD!" ;
+	: SANTA-oneline3-sad "JOYEUX NOEL ? PLUTOT JOYEUX MAQUEREAU-NEL!" ;
+	: SANTA-oneline4-sad "CA N'A PAS FRANCHEMENT L'AIR DE NOEL TOUT CA..." ;
 	: SANTA-oneline5-sad "ho ho ... ho ..." ;
-	: SANTA-oneline6-sad "'IL N'Y A PLUS D'ESPOIR DANS LE VIEUX PERE NOEL!" ;
-	: SANTA-oneline7-sad "PLUS JAMAIS DE BISCUITS POUR LE PERE NOEL!" ;
-	: SANTA-oneline8-sad "TOUT CELA PARCE QUE TROP DE GENS ONT ETE MECHANTS LANNEE DERNIERE!" ;
-	: SANTA-oneline9-sad "PLUS PERSONNE NE DECORE LARBRE ! QUI SEN SOUCIE ?" ;
+    : SANTA-oneline6-sad "IL N'Y A PLUS AUCUN ESPOIR CHEZ CE VIEUX PERE NOEL !" ;
+    : SANTA-oneline7-sad "PLUS JAMAIS DE COOKIES POUR LE PERE NOEL, PLUS JAMAIS !" ;
+    : SANTA-oneline8-sad "TOUT CA C'EST PARCE QUE TROP DE GENS N'ONT PAS ETE SAGES L'AN DERNIER !" ;
+    : SANTA-oneline9-sad "PLUS PERSONNE NE DECORE LE SAPIN DE TOUTE FACON ! TOUT LE MONDE S'EN FOUT !" ;
 	: SANTA-oneline10-sad "... ho ho ho ..." ;
 
 	deck-new

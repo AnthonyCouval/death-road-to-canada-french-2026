@@ -1,23 +1,23 @@
-	: MADSCI-oneline1 "A faire: Fabriquer une sorte de chaise qui se jette automatiquement." ;
-	: MADSCI-oneline2 "A faire: Fabriquer une voiture anti-zombie invincible qui permet egalement de retrouver des survivants." ;
-	: MADSCI-oneline3 "Techniquement, je ne suis pas un vrai scientifique, mais d'un autre cote ferme-la" ;
-	: MADSCI-oneline4 "Cette apocalypse ne me derange pas tant que ça. Moins d'imeciles a detruire, j'imagine." ;
-	: MADSCI-oneline5 "Mes soi-disant collegues ! Des imbéciles oui ! Je vais leur montrer a tous !" ;
-	: MADSCI-oneline6 "Je m'inquiete parfois des effets de la teleportation sur la sante, mais peu importe." ;
-	: MADSCI-oneline7 "Rien de tout cela ne serait arrive si Obama m'avait laisse construire mes rayons de la mort en paix." ;
-	: MADSCI-oneline8 "Il est difficile d'obtenir des pieces detachees de nos jours, a moins que ces pieces soit des pieces de zombies." ;
-	: MADSCI-oneline9 "He, ne me blame pas pour toute cette histoire de zombies. Ce n'etait pas moi !" ;
-	: MADSCI-oneline10 "Je me demande si j'aurais du quitter mon laboratoire..." ;
-	: MADSCI-oneline11 "Si nous ne nous en sortons pas, j'espere au moins pouvoir recuperer quelques meubles pour mon laboratoire." ;
-	: MADSCI-oneline12 "Si j'arrive a aller jusqu'au Canada, j'y creerai un autre laboratoire." ;
-	: MADSCI-oneline13 "J'aurais peut-etre du prendre les robots avec moi..." ;
-	: MADSCI-oneline14 "Aucun de ces zombies n'apprecie mon GENIE." ;
-	: MADSCI-oneline15 "A faire : Une tronconneuse qui tue les zombies toute seule ? Je prends note." ;
-	: MADSCI-oneline16 "Avec le recul, j'aurais probablement du fabriquer un teleporteur pour le Canada." ;
-	: MADSCI-oneline17 "Ces zombies sont une bande de nerds." ;
-	: MADSCI-oneline18 "Les rayons de la mort sont plutot cool." ;
-	: MADSCI-oneline19 "Ma these de doctorat portait sur les rayons mortels." ;
-	: MADSCI-oneline20 "Je repete que je ne suis pas medecin. Ne vous faites pas eclater l'appendice." ;
+    : MADSCI-oneline1 "A faire : creer une sorte de chaise qui se balance toute seule." ;
+    : MADSCI-oneline2 "A faire : creer une voiture anti-zombie invincible qui repere aussi les beaux gosses survivants." ;
+    : MADSCI-oneline3 "Bon, techniquement je ne suis pas un vrai scientifique, mais d'un autre cote ferme-la." ;
+    : MADSCI-oneline4 "Cette apocalypse ne me derange pas tant que ca. Moins d'imbeciles a detruire j'imagine." ;
+    : MADSCI-oneline5 "Mes soi-disant collegues ! Des imbeciles ! Je vais tous leur montrer qui je suis !" ;
+    : MADSCI-oneline6 "Parfois je m'inquiete des effets de la teleportation sur la sante, mais bon, 'on s'en fout'." ;
+    : MADSCI-oneline7 "Rien de tout ca ne serait arrive si Obama m'avait laisse construire mes rayons de la mort en paix." ;
+    : MADSCI-oneline8 "C'est difficile de trouver des pieces detachees de nos jours, sauf si on cherche des morceaux de zombie." ;
+    : MADSCI-oneline9 "Hey, ne me blamez pas pour toutes ces conneries de zombies. C'etait pas moi !" ;
+    : MADSCI-oneline10 "Je me demande si j'aurais du quitter mon labo..." ;
+    : MADSCI-oneline11 "Si on ne s'en sort pas, j'espere au moins pouvoir recuperer des meubles pour mon labo." ;
+    : MADSCI-oneline12 "Si je reussis a aller jusqu'au Canada, j'y ouvrirai un autre labo." ;
+    : MADSCI-oneline13 "J'aurais peut-etre du emmener les robots avec moi..." ;
+    : MADSCI-oneline14 "Aucun de ces zombies n'est capable d'apprecier mon GENIE." ;
+    : MADSCI-oneline15 "A faire : une tronconneuse qui tue les zombies toute seule ? Je note ca." ;
+    : MADSCI-oneline16 "Avec le recul, j'aurais probablement du fabriquer un teleporteur vers le Canada." ;
+    : MADSCI-oneline17 "Ces zombies sont une bande de geeks." ;
+    : MADSCI-oneline18 "Les rayons de la mort, c'est super cool." ;
+    : MADSCI-oneline19 "Ma these de doctorat portait sur les Rayons de la Mort." ;
+    : MADSCI-oneline20 "Je devrais rappeler que je ne suis pas medecin. N'allez pas vous faire peter l'appendice." ;
 
 	deck-new
 		card: MADSCI-oneline1
