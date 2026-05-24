@@ -10,6 +10,10 @@ madtime to starttime
 
 : debugcheck DEBUG_BUILD console! ; debugcheck
 
+\ 1 console!
+\ Remove for final release 
+
+
 \ "roomdef.txt" $load-rooms - Old on-start room loader
 
 \ Set up some base words to use for stuff (including a new "load")
@@ -17,7 +21,7 @@ madtime to starttime
 load base.df
 
 "" 			to TEST-PREFIX
-"NERVE" to BRANCHNAME
+"STOMACH" to BRANCHNAME
 "UNLOCKS" menu_info_text!
 
 \ Check for unclosed vocabulary after loading game code
@@ -113,6 +117,7 @@ USES events/finale/end-of-the-road.df
 USES bugfix.df
 USES boot-end.df
 
+
 load? news/news.df
 
 transcheck
@@ -129,3 +134,7 @@ load? hack/hack.df
 "READY." print
 
 check-stack-empty
+
+
+
+

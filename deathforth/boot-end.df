@@ -12,8 +12,8 @@ cyoa{
 cyoa-blank: wsnews-yes sfx{ goodfx }
 
 	gstats{ 10 ' zombo-point +! save }
-	"Merci de verifier Wayward Souls !" text!
-	"10 POINTS ZOMBO gagnes!" rainbold +crtext
+	"Thanks for checking out Wayward Souls!" text!
+	"10 ZOMBO POINTS earned!" rainbold +crtext
 	zombopfull? if
 		zombo-point ZOMBOP_CAP > if 
 			"You are over the maximum for Zombo Points!
@@ -29,12 +29,12 @@ cyoa-blank: wsnews-yes sfx{ goodfx }
 
 cyoa-blank: WSnews
 
-	"Lancement 1.0 de Wayward Souls !" cyoa-title!
-	($ "Rocketcat Games a termine le lancement 1.0 de " .. "Wayward Souls" bbold .. "!
-	" .. "Wayward Souls" bbold .. " est un jeu daction RPG au hasardement genere de dungeon crawler. Il se concentre sur lhistoire et plusieurs personnages, tous avec leurs propres styles de jeu. Decouvrez le plus en detail sur la boutique Steam !" $) text!
-	choice( "Peut etre prochainement" )choice
-	choice( "Decouvrez le sur Steam   " .. "Obtenez 10 POINTS ZOMBO" bbold )choice: wsnews-yes
-	choice( "Ne montrer plus cette fenetre de message dinformation" )choice: wsnews-complete
+	"WAYWARD SOULS 1.0 LAUNCH!" cyoa-title!
+	($ "Rocketcat Games has finished the 1.0 launch of " .. "Wayward Souls" bbold .. "!
+	" .. "Wayward Souls" bbold .. " is a randomly generated action RPG dungeon crawler. It focuses on story and multiple characters, all with their own playstyles. Check it out on the Steam Store for more info!" $) text!
+	choice( "Maybe next time" )choice
+	choice( "Check it out on Steam - " .. "Get 10 Zombo Points" bbold )choice: wsnews-yes
+	choice( "Don't show this news message again" )choice: wsnews-complete
 	
 ;
 
@@ -55,3 +55,844 @@ cyoa-blank: WSnews
 // last to main-event-do-title
 
 }
+
+uses cyoa-charstats.df
+uses mission-events.df
+uses locgen.df
+
+\ copied code from charfilt 
+\ this stuff shouldnt change, so 
+\ should be okay to copy 
+
+\ uses charfilt.df wouldnt play ball for some reason 
+
+: foreach-char >r 1 #character >r
+	begin r@ while
+	r@ rover execute
+	r> character# 1+ #character >r repeat
+	r> drop r> drop
+;
+
+: #teamchar #teamcharid #character ;
+: .dead? .health@ 1 < ;
+// See if two characters are the same
+: character= character# swap character# = ;
+
+: mission-team-stack team-count dup stack swap
+	for i 1- #teamchar dup .location@ LOCATION_MISSION =
+		if dup .dead? not if pushs else drop then
+		else drop then
+	next
+;
+
+: party-team-stack team-count dup stack swap
+	for i 1- #teamchar dup .party@ if pushs else drop then next
+;
+
+: team-stack-living team-count dup stack swap for
+	i 1- #teamchar dup .dead? not if pushs else drop then
+	next
+;
+
+: team-stack team-count dup stack swap for i 1- #teamchar pushs next ;
+
+: team-stack-except ( character -- stack )
+	team-count dup stack swap
+	for
+		over i 1- #teamchar character= not
+		if
+			i 1- #teamchar pushs
+		then
+	next nip
+;
+
+: #team-stack-shuffled team-stack shuffles swap resizes ;
+: #team-stack-shuffled-except ( character number -- )
+	swap team-stack-except shuffles swap resizes 
+;
+
+: foreach-team-char ( ' word -- ) team-stack swap popeach ;
+: foreach-mission-char ( ' word -- ) mission-team-stack swap popeach ;
+
+: coldtint
+	0 0.8 1 tint_near!
+	0 0.8 1 tint_far!
+	1 light_mode!
+	60 tint_trigger
+;	
+
+: 3dp 1000 * >int 1000 / ;
+
+0 value randomweather
+
+: zombo-turn args( chara )
+
+	5 for
+
+	<- chara .thing@ .pos 5 xypowboom
+	0 <- chara .health!
+	-400 rumble // neutralises the titanic camera shake
+
+	next
+
+;
+
+: ohdearme ' zombo-turn foreach-team-char ;
+
+: countdowner 
+	
+	road{ kills-this-game } 0 = if
+	3 for
+	
+		ohdearme
+		
+	next
+
+	then;
+
+	road{ kills-this-game -1 + to kills-this-game }
+	($ " Time [secs]: " .. road{ kills-this-game } $) 61 view_w 0.825 * view_h 0.75 * msgtickxy
+	timer_retrigger
+;
+
+
+	
+: slipslide args( chara )
+
+<- chara .team_status@ 3 = if then;
+<- chara .pet@ 0 = not if then;
+
+0.97 <- chara .thing@ .friction!
+
+ <- chara .thing@ .vel.x@ abs 1.9 > <- chara .thing@ .vel.y@ abs 1.9 > or if 
+	60 <- chara .thing@ .stun!
+	<- chara .thing@ .thing_liedown
+	-2 <- chara .thing@ .vel.z!
+	-1 1 rnd <- chara .thing@ .vel.x!
+	-1 1 rnd <- chara .thing@ .vel.y!
+	"OW!" <- chara .thing@ .yellmsg 
+	
+	
+	30 %chance if 
+	<- chara .thing@ .hitpoints@ -1 + <- chara .thing@ .hitpoints!
+	then
+
+
+	then
+
+
+;
+
+: iceslide ' slipslide foreach-mission-char ;
+
+	
+
+: bitter-outside args( chara )
+
+	<- chara .team_status@ 3 = if then;
+	
+	mission.vehicle@ not if 	
+		0.84 <- chara .thing@ .friction!
+	then;
+	
+	mission.vehicle@ .pos <- chara .thing@ .pos xysub xymag 26 < if 
+		0.9 <- chara .thing@ .friction! 
+	else
+		0.84 <- chara .thing@ .friction!
+	then 
+	\ Should help AI get into the car 
+
+;
+
+: socold ' bitter-outside foreach-mission-char ;
+
+: warm-inside args( chara )
+
+	<- chara .team_status@ 3 = if then;
+
+	0.9 <- chara .thing@ .friction!
+
+;
+
+: sowarm ' warm-inside foreach-mission-char ;
+
+: thunderstrike args( me eventid )
+	
+	<- eventid THING_EVENT_TIMER = if
+		1 <- me .timer!
+		
+		
+		<- me .pos.z@ -40 > if 
+		
+		5 <- me .smashybits
+		0 <- me .spriteid! 
+		0 <- me .hitpoints!
+	
+		then
+	then
+	
+	
+	<- eventid THING_EVENT_BREAK = if
+						<- me .pos xyblast
+			1 lt .hitcheck.blast! 20 lt .hitcheck.rad!
+			2 lt .hitcheck.power!
+	then
+;
+	
+: warninglight args( me )
+	<- me .pos
+		particle{ 
+			new pos! 
+			particles32_base_id 4 + spriteid!
+			1 clr.r!
+			0 clr.b!
+			0 clr.g!
+			30 fade_out! 
+			1 layer!
+			0.5 clr.a!
+			1.5 scalex!
+			1.5 scaley!
+		}
+; 
+	
+
+: colddirector
+
+	coldtint
+	
+	player not if then;
+	
+	randomweather 0 = if
+	($ "*WARNING: Flash Flood!*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
+	($ "*Seek Shelter!*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
+		coldtint
+		player .mapid@ 0 = if 
+			map{ wetfloor } // awful outside
+			0 1 1 waterclr
+			1.25 1.98 weather!
+			1 wind_force!
+			socold
+		else
+			sowarm // ok inside
+		then
+	then
+	
+	randomweather 1 = if
+	($ "*WARNING: Thunderstorm!*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
+	($ "*Seek Shelter!*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
+		2.5 wind_force!
+			coldtint
+		0.5 weather!
+		1 gloom_lighting!
+			player .mapid@ 0 = if 
+				2 %chance if
+					spawn special_objects96_base_id 5 + lt .spriteid! 1 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z! 
+					' thunderstrike lt .events!
+					0.5 gloom_lighting!
+					1 lt .timer!
+					3 lt .tileflags!
+					1 lt .anim.info!
+					\ special_objects96_base_id 22 + lt .spriteid!
+					sfx{ thump 3 scale! 2.5 3.5 frnd pitch! 100 a! 700 d! 120 r! }
+					-450 lt .pos.z!
+					3 lt .vel.z!
+					173 185 rnd lt .angle!
+					5 lt .anim.substate!
+					player .pos.y@ lt .pos.y!
+					player .pos.x@ lt .pos.x!
+					lt .pos.x@ -125 125 rnd + dup lt .pos.x!
+					lt .pos.y@ -125 125 rnd + dup lt .pos.y!
+					
+					lt warninglight
+					
+					
+				then
+			then
+		else
+			0.5 %chance if
+			sfx{ thump 3 scale! 2.5 3.5 frnd pitch! 100 a! 700 d! 120 r! 1 j! 0.5 scale! }
+			then
+		then
+		
+	randomweather 2 = if
+		
+		0 clr_near_set_r!
+		0 clr_near_tile_r!
+		0 clr_near_thing_r!
+		($ "*WARNING: Slippery Ice!*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
+		($ "*Don't Rush!*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
+		iceslide
+		
+	then	
+	
+	randomweather 3 = if
+	
+		($ "*Clear weather!*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
+		($ "*No Active Effects*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
+		
+	then	
+;
+
+
+: coldtrigger
+	colddirector
+	timer_retrigger
+;
+\ weather mode director object 
+
+: shieldingit args( me ) 
+
+	<- me .anim.extra@ 0 > if 
+		4 <- me .invincible_counter!
+			 
+		HERO_TYPE_FUND -1 + to HERO_TYPE_FUND
+	then 
+; 
+
+50 constant DEPSHIELD_RADIUS
+
+: .longgone? dup .character@ args( me chara ) 
+	<- chara .health@ 1 <
+;
+
+: defend_team args( me ) 
+
+		\ "HAR HAR 1" print 
+		
+	<- me .inside_id@ 0 = if 
+		
+		<- me .nearest_enemy_dist2@ 10000 > if then; 
+		
+		\ <- me .pos DEPSHIELD_RADIUS things-in-xyrad 
+			\ depths for i picks .teammate? if
+				\ i picks .longgone? not if
+					\ i picks shieldingit 
+					\ then then 
+				\ next drop
+				
+			team-count for 
+				i 1 - #teamcharid #character .location@ 1 = if 
+					i 1 - #teamcharid #character .health@ 0 > if 
+						<- me .pos i 1 - #teamcharid #character .thing@ .pos xysub xymag 51 < if 
+							<- me .mapid@ i 1 - #teamcharid #character .thing@ .mapid@ = if 
+								i 1 - #teamcharid #character .thing@ shieldingit
+							then 
+						then
+					then
+				then 
+			next 
+			\ Absolutely horrible awful cursed logic 
+			\ Works offscreen tho.
+
+				\ "HAR HAR 2" print 
+			<- me .mapid@ curmapview = if 
+				6 HERO_TYPE_FUND 30 / + for 
+					<- me .pos i 360 6 HERO_TYPE_FUND 30 / + / * gameticks + sin DEPSHIELD_RADIUS * i 360 6 HERO_TYPE_FUND 30 / + / * gameticks + cos DEPSHIELD_RADIUS -1 * * xyadd 
+						particle{ new pos!
+						2 ticks!
+						0 fade_out!
+						0.15 scale!
+						0 vel.y!
+						0 layer! 
+						particles_base_id 4 + spriteid!
+						0 clr.b!
+						0.8 clr.a! 
+					}
+					HERO_TYPE_FUND 90 > if 
+						1 HERO_TYPE_FUND 90 - 90 / -1 * + particle{ clr.r! }  
+					else
+						1 particle{ clr.r! }
+					then 
+					HERO_TYPE_FUND 90 < if 
+						 HERO_TYPE_FUND 90 / 0 1 clamp particle{ clr.g! } 
+					else
+						1 particle{ clr.g! }
+					then 
+
+				next 
+			then 
+		then 
+
+; 
+
+: run_hero_type args( chara )
+	<- chara .health@ 0 > if 
+		\ "Hero Type" print 
+		\ <- chara .trait@ print 
+		<- chara .trait@ "Hero Type" $= <- chara .specialtype@ 156 = or if
+			\ Swiss Guard does this too 
+			HERO_TYPE_FUND 0 > if 
+				\ "WIENOR" print 
+				<- chara .thing@ defend_team
+				\ "HAR HAR" print 
+			then 
+		then 
+	then 
+; 		
+
+: run_hero_type_def 
+	' run_hero_type foreach-mission-char
+	timer_retrigger
+; 
+
+
+
+\ Buff banner extended logic due to weapondef files not recognising statmods 
+
+0 value ACTIVE_BANNERS
+
+: minicrits_on args( chara ) 
+	<- chara statmod{ MOD_INJURED swap .setmod }
+; 
+
+: minicrits_off args( chara ) 
+	<- chara statmod{ MOD_INJURED swap .clrmod }
+; 
+
+: has_buff_banners? args( chara )
+	
+		<- chara .thing@ .wielded WEAPON_BUFFBANNER = if 
+			<- chara .thing@ .wielded-stack 0 > if
+				<- chara .thing@ .inside_id@ 0 = if 
+				1 to ACTIVE_BANNERS
+				\ "active banner!" print 
+				then 
+			then
+		then
+		
+; 
+
+
+: run_buff_banners
+	0 to ACTIVE_BANNERS
+
+	' has_buff_banners? foreach-mission-char 
+	
+	ACTIVE_BANNERS 0 > if 	
+	' minicrits_on foreach-mission-char
+		else
+	' minicrits_off foreach-mission-char
+	then 
+	
+	
+	timer_retrigger
+; 
+
+: evolveadjust
+	
+	1 to mutationhpmult
+	\ Not relevant unless EX mode.
+	
+	-0.24 mutationhpmult * 1 + to mutationcolour
+	
+	road{ road-trip-days } 0.07 * 3dp to mutationfireproofing
+	
+	road{ road-trip-days } 0.1 * 1 + 3dp to mutationgrippy
+	
+	road{ road-trip-days } 0.5 * 1 + to mutationmass
+	
+	timer_retrigger
+	
+;
+
+
+: display-parameters 
+
+	($ "* Current Parameters *" $) 50 view_w 0.825 * 25 msgtickxy
+	\ ($ " Health Multplier: " rbold .. mutationhpmult $) 50 view_w 0.825 * 25 msgtickxy
+	($ " Grip Strength: " bbold .. mutationgrippy $) 50 view_w 0.825 * 35 msgtickxy
+	($ " Fireproofing (%): " pbold .. mutationfireproofing 100 * $) 50 view_w 0.825 * 45 msgtickxy
+	($ " Zombie Mass: " rbold .. mutationmass $) 50 view_w 0.825 * 55 msgtickxy
+	
+	
+	timer_retrigger
+	
+;
+
+
+: evolution-apply args( me )
+	<- me .typeid@ THING_ZOMBIE = if 
+		\ <- me .hitpoints@ mutationhpmult * 1 20 clamp <- me .hitpoints!
+		<- me .flammability@ mutationfireproofing 100 * - <- me .flammability!
+		mutationcolour <- me .clr.b!
+		
+		\ OK...they're yellOH 
+		
+		mutationmass <- me .mass!
+		mutationgrippy grapple_strength!
+	then 
+;
+
+: evolve_director 
+
+	' evolution-apply foreach-active-thing 
+
+	timer_retrigger
+;
+
+
+
+: evolveadjustEX
+	
+	road{ road-trip-days } road{ road-trip-days } road{ road-trip-days } * * 1700 / 1 + 3dp to mutationhpmult
+	
+	-0.24 mutationhpmult * 1 + to mutationcolour
+	
+	road{ road-trip-days } 0.1 * 3dp to mutationfireproofing
+	
+	road{ road-trip-days } 0.1 * 1 + 1 2 clamp 3dp to mutationgrippy \ used to cap at 3 
+	
+	road{ road-trip-days } 0.65 * 1 + to mutationmass \ used to be 0.8 
+	
+	timer_retrigger
+	
+;
+
+
+: display-parametersEX 
+
+	($ "* Current Parameters *" $) 50 view_w 0.825 * 25 msgtickxy
+	($ " Health Multplier: " fbold .. mutationhpmult $) 50 view_w 0.825 * 65 msgtickxy
+	($ " Grip Strength: " bbold .. mutationgrippy $) 50 view_w 0.825 * 35 msgtickxy
+	($ " Fireproofing (%): " pbold .. mutationfireproofing 100 * $) 50 view_w 0.825 * 45 msgtickxy
+	($ " Zombie Mass: " rbold .. mutationmass $) 50 view_w 0.825 * 55 msgtickxy
+	
+	
+	timer_retrigger
+	
+;
+
+: evolution-applyEX args( me )
+	<- me .typeid@ THING_ZOMBIE = if 
+		
+		<- me .clr.b@ 1 = if 
+			<- me .hitpoints@ mutationhpmult * 1 20 clamp <- me .hitpoints!
+		then 
+		\ Apply only one to any given zombie.
+		\ 1 <- me .hitpoints@ <- me .reportdurnow
+		
+		<- me .flammability@ mutationfireproofing 100 * - 0 100 clamp <- me .flammability!
+		mutationcolour <- me .clr.b!
+		
+		\ OK...they're yellOH 
+		
+		mutationmass <- me .mass!
+		mutationgrippy grapple_strength!
+	then 
+;
+
+: evolve_directorEX 
+
+	' evolution-applyEX foreach-active-thing 
+
+	timer_retrigger
+;
+
+: horror_alert 
+	100 100 camera.pos alertlcxy
+	regiondef{ 3 region.zombie_alertscale! }  
+	regiondef{ 4 region.zombie_aggro! }  
+; 
+
+: horror_zombs
+	player not if then;  
+	
+	game_is_over? 0 = if 
+		1 2 rnd for 
+			player .pos xyzombdig
+		next 
+	then 
+	
+	timer_retrigger
+; 
+
+: horror_lights 
+	region.zombie_pickletime@ 9999 = if \ only during sieges 
+	
+	1 0 0 tint_near!
+	1 0 0 tint_far!
+	1 light_mode!
+	60 tint_trigger
+	\ EEEEVVVIILLLLLLLLLL
+		timer_retrigger
+	then 
+; 
+
+: filter-proj ( 'word thing -- 'word )
+	dup .id@ 0= if drop exit then
+	dup .typeid@ THING_PROJECTILE = not if drop exit then 
+	over execute ;	
+
+: foreach-active-projectile ' filter-proj foreach-thing drop ;
+
+: checkbigshot args( me ) 
+	
+	<- me .shooterid@ 0 = not if 
+		<- me .shooterid@ #thing .character@ .perk@ "The Big Shot" $= if 
+			<- me .clr.r@ 0 = if
+				"APPLIED NEW BIGSHOT DAMAGE." print 
+				0.90 <- me .clr.r! \ bullets are not affected by this, but it allows me to check which have been upgraded by bigshot 
+				"NEW BIGSHOT DAMAGE: " <- me .hitcheck.power@ STAT_SHOOTING <- me .shooterid@ #thing .character@ .bonus@ <- me .shooterid@ #thing .character@ .shooting@ + 0.17 * 1 + * .. print 
+				<- me .hitcheck.power@ STAT_SHOOTING <- me .shooterid@ #thing .character@ .bonus@ <- me .shooterid@ #thing .character@ .shooting@ + 0.17 * 1 + * <- me .hitcheck.power! 
+				 \ "NEW MULTIPLIER: " STAT_SHOOTING <- me .shooterid@ #thing .character@ .bonus@ <- me .shooterid@ #thing .character@ .shooting@ + 0.17 * 1 + .. print 
+				4 <- me .anim.substate!  
+			then 
+		then 
+	then 
+; 
+
+: run_bigshotlogic ' checkbigshot foreach-active-projectile timer_retrigger ; 
+
+: loot_target? args( me ) 
+	<- me .loot@ 0 > 
+; 
+
+\ 1 #teamcharid #character .thing@
+
+\ <- me .ai.follow@ <- me .ai.assess!
+
+\ Note to self : presence of zombies makes this work. Need to somehow simulate zombies? 
+\ Safety time sets them into panic mode and gets them near 
+: ai_loot_experimental_test args( me ) 
+
+	<- me .pos 100 things-in-xyrad
+		depths for i picks loot_target? if
+			<- me .threat_level@ 4 < if 
+				i picks .mapid@ <- me .mapid@ = if 
+				
+					i picks <- me .follow 
+					i picks .pos <- me .destpos.y! <- me .destpos.x! 
+					i picks .pos <- me .ai.followpos.y! <- me .ai.followpos.x! 
+					30 <- me .ai.follow! 
+					4 <- me .character@ .ai.follow_leash! 
+					2 <- me .ai.follow_flags!
+					i picks "I'M HERE!!!" swap .report 
+					1 <- me .character@ .ai.loot_chance! 
+					4 <- me .ai.safety_time!
+					3 <- me .threat_level! 
+			then then 
+		then; next drop 
+			player if 
+				player <- me .follow
+				"BACK TO WORK" <- me .report 
+			then 
+			<- me .character@ mission{ .default-ai-setup } 
+			<- me .character@ mission{ .char-update-tactic-ai } 
+			<- me .character@ mission{ .char-update-combat-ai } 
+
+; 
+
+: ai_rush_for_loot args( chara ) 
+\ TODO... WTF ? 
+	<- chara .health@ 0 > if 
+		<- chara .location@ 1 = if 
+			<- chara .thing@ .teammate? if 
+				<- chara .thing@ ai_loot_experimental_test
+		then then 
+	then 
+	
+; 
+
+: ai_do_loot_rush 
+	
+	' ai_rush_for_loot foreach-mission-char 
+	
+	timer_retrigger
+; 
+	
+
+: gamemode_modification amend main-event-mission-start	
+
+		mission{ statmod{ ' zombie-thing-events zombie-default-events! } }
+		\ Allows powerups to drop in RPG mode. 
+		
+		0 to FRIENDS_OF_DOG_ACTIVE
+		
+		1 ' run_hero_type_def timer_add 
+		2 ' run_buff_banners timer_add 
+		
+		\ 2 ' ai_do_loot_rush timer_add
+		\ "Syca, what's this?" 
+		\ I'm playing around with trying to get the AI to loot more actively. 
+		\ Let me know what you think 
+		
+		1 ' run_bigshotlogic timer_add
+		\ STOMACH : this is better for bigshot consistency overall 
+		\ however, if the bullet is used on frame 1, the dmg bonus does not apply.
+		\ Not sure how to fix this without making a mess of everything. 
+		
+		1 grapple_strength! \ now necessary to specify due to mutation mode 
+		
+		gamedef{ ' mutationmode gamemode? } if 
+			8 ' evolveadjust timer_add
+			10 ' evolve_director timer_add
+		then 
+		
+		gamedef{ ' mutationmodeEX gamemode? } if 
+			8 ' evolveadjustEX timer_add
+			10 ' evolve_directorEX timer_add
+		then 
+		
+		gamedef{ ' horrormode gamemode? } if 
+			4 60 * ' horror_zombs timer_add
+			2 ' horror_alert timer_add
+			1 ' horror_lights timer_add 
+		then 
+		
+		vehicle.which@ 24 = if 
+			1 to TURRET_ACTIVE
+		then 
+		
+		gamedef{ ' theinfection gamemode? } gamedef{ ' theinfectionEX gamemode? } or if	
+			60 ' countdowner timer_add
+		then
+		
+		gamedef{ ' weathermode gamemode? } if
+			0 3 rnd to randomweather
+			3 ' coldtrigger timer_add
+		then
+		
+;
+last to main-event-mission-start
+
+: recharge_traits args( chara )
+
+	<- chara .trait@ "Phoenix" $= if 
+		<- chara .health@ 0 > if 
+			<- chara .weaponc@ WEAPON_HOTSAUCE = if 
+				<- chara .stackedc@ 1 + 0 3 clamp <- chara .stackedc! 
+					"RECHARGED!" print 
+			then 
+		then 
+	then 
+	
+	\ STOMACH : 
+	\ I would like to do all recharging like this from now on if possible
+	\ Completely negates then need for a main_events 
+	
+	<- chara .perk@ "Trademark Weapon" $= if
+		<- chara .trait@ "Hyperfixated" $= if 
+			<- chara .health@ 0 > if 
+				<- chara .weapona@ WEAPON_PHASEBLADE = if 
+					<- chara .stackeda@ 20 + <- chara .stackeda! 
+				then 
+			then 
+		then 
+	then 
+				
+; 
+
+: mission_end_hack amend main-event-mission-end	
+
+	' recharge_traits foreach-team-char
+	\ Could try to do all recharging this way
+	\ That way, some traits/perks dont need a main_events
+	\ Bow + arrow comes to mind... 
+;
+last to main-event-mission-end 
+
+: road_start_setup amend main-event-road-start
+
+
+	gamedef{ ' mutationmode gamemode? } if 
+		5 ' evolveadjust timer_add
+		24 ' display-parameters timer_add
+	then
+	\ Displays current params whilst on the road.
+	
+	gamedef{ ' mutationmodeEX gamemode? } if 
+		5 ' evolveadjustEX timer_add
+		24 ' display-parametersEX timer_add
+	then
+
+	
+; 
+last to main-event-road-start
+
+\ hello modders i am repurposing the charm stat. 
+\ this is the slightly nicer fix out of the two 
+\ the other being "modify like 18 events for compatibility's sake" 
+\ which frankly is not great either. 
+
+: do_charm_resilient_check args( chara ) 
+
+	game.location 0 = if \ ONLY ON THE ROAD, 
+		<- chara .health@ 0 > if  \ if im not dead 
+			<- chara .specialtype@ 125 <> if \ and not brock, who is not resilient anyway 
+				<- chara .trait@ "Resilient Type" $= if \ and i am actually resilient 
+					\ sfx{ growl } 
+					"RESILIENT COUNTER RESET!" print 
+					0 <- chara .charm! 
+					\ Use charm to track whether resilient has proced for an event 
+				then 
+			then 
+		then 
+	then 
+; 
+
+: road_start_setup2 amend main-event-cyoa-end 
+
+	' do_charm_resilient_check foreach-team-char
+
+; 
+
+last to main-event-cyoa-end 
+
+
+: merenjasupply-events args( me teid )
+	
+	
+	<- teid THING_EVENT_BREAK = if
+		20 30 rnd LOOT_GAS spawnloot
+		<- me .pos lt .pos! 
+		then
+
+	<- teid THING_EVENT_TIMER = if
+		1 <- me .timer!
+		<- me .vel.z@ abs 0.05 < <- me .pos.z@ -10 > and if 
+			special_objects32_base_id 53 + <- me .spriteid!
+			0 <- me .timer! 
+			"BREAK ME!" <- me .report
+			2 <- me .hitpoints! 
+			4 <- me .rad.x! 
+		then
+	then
+			
+;
+
+
+:noname spawn special_objects32_base_id 221 + lt .spriteid! bbox ' merenjasupply-events events! 10 health! 4 lt .timer! -210 lt .pos.z! 0.04 lt .gravity! 
+; weapondef{ last to request-a-supplies }
+
+\ For Raven's supply gun.
+\ I didn't want to modify charmisc. 
+
+
+0 stack
+	0 shove 
+	WEAPON_TIMESTOP shove 
+	WEAPON_COPYCOPY shove
+	WEAPON_MJOLNIR shove 
+constant WEAPON_LIST_FORBIDDENSTEAL
+\ mjolnir
+
+weapondef{ last to WEAPON_LIST_FORBIDDEN } 
+
+\ Rubick spell steal forbidden list 
+\ may not copy these weapons . 
+\ was a bigger issue in DRTS... timestop is all im really worried for 
+
+
+\ DO NOT USE THESE IN MISSIONS! OR IF ANOTHER CYOA IS OCCURING!
+\ you may get the dreaded "washing machine error". 
+
+: PANTEST1 road{ cyoa{ isabelle-scget } }  ;
+last 1 hotkey!
+: PANTEST2 road{ cyoa{ lasija-scget } }  ;
+last 2 hotkey!
+: PANTEST3 road{ cyoa{ defective-scget } }  ;
+last 3 hotkey!
+
+: PANTEST4 1 console! console-open "HELLO THERE!" print "YOU CAN CLOSE THE CONSOLE BY TYPING:" print "console-close" print "THIS IS MAINLY FOR DEBUGGING!" print  ;
+last 9 hotkey!
+\ for testing 

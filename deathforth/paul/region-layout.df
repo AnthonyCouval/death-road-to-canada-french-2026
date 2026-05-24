@@ -54,6 +54,7 @@ drop
 	0 value lastbuild
 	1 value grassylots
 	0 value grassylot%
+	1 value roadsigns 
 
 	: try-special-build
 		special-lot-build not if false then;		// No build is set
@@ -96,13 +97,13 @@ drop
 
 	: make-pub
 		( locationid )
-		"'PUB DE MOE" sign-text!
+		"MOE'S PUB" sign-text!
 		prefab{ 2 3 rnd 9 0 shop }
 	;
 
 	: make-diner
 		( locationid )
-		"LE RESTAURANT DE JOE" sign-text!
+		"JOE'S DINER" sign-text!
 		1 1 1 sign-fg!
 		0.5 0.125 0.35 sign-bg!
 		0.25 0.125 0.15 sign-border!
@@ -117,7 +118,7 @@ drop
 
 	: make-pd
 		( locationid )
-		0x 12 $chr " FRICKTON Police Department" .. sign-text!
+		0x 12 $chr " FRICKTON P.D." .. sign-text!
 		1 1 1 sign-fg!
 		0.25 0.25 0.75 sign-bg!
 		1 1 1 sign-border!
@@ -496,7 +497,8 @@ drop
 					' xyp.x ++
 			endcase
 
-			depth 1 rpick - dup if "X " type PRINTSTACK then remove
+			depth 1 rpick - dup if "PLOT STACK DIRTY " type then remove
+			
 		next
 		r> drop
 	;

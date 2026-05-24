@@ -5,22 +5,22 @@ voc{ news
 
 // TITLE INFO
 
-		($ "Mon Nouveau Jeu:" .. cr$ .. "Passage du Cannibale" $) news_title!
+		($ "Spiritual Sequel" .. cr$ .. "With Online Co-op!" $) news_title!
 
 // NEWSBOX IMAGE INFO
 
-8 value imagecount
+9 value imagecount
 3 sec>tick newsbox_ticker_dur!
 
 // BUTTONS INFO
 
-"See Trailer / Buy / Wishlist" value b0_text
-"http://www.cannibalcrossing.com" urlopener: b0_url
+"Trailer + Wishlist Now! [Steam]" value b0_text
+"http://www.spacedingus.com" urlopener: b0_url
 
-"Discord Officiel" value b1_text
-"https://discord.gg/J7HChAa" urlopener:  b1_url
+"Official Discord" value b1_text
+"https://discord.gg/z6bjr6MKbK" urlopener:  b1_url
 
-"Options des infos" value b2_text
+"News Options" value b2_text
 
 
 0 value index
@@ -44,7 +44,7 @@ b2_text 	2 #news_btn_text!
 "http://www.facebook.com/rocketcatgames/" 	urlopener: rocketcat-facebook
 "http://www.twitter.com/madgarden/" 		urlopener: madgarden-twitter
 
-: show-news
+: show-news 
 	gstats{ 0 to newschecked save }
 	0 newsbox_disable!
 	0 0 #news_btn_disable!
@@ -54,7 +54,7 @@ b2_text 	2 #news_btn_text!
 	1 refresh_layout!
 ;
 
-: hide-news
+: hide-news 
 	gstats{ BRANCHNAME to newschecked save }
 	// 0 news_enable!
 
@@ -71,10 +71,11 @@ cyoa{
 cyoa-blank: social
 	"TWITTER AND FACEBOOK" cyoa-title!
 
-	"Suivez les mises a jour de Rocketcat Games sur Twitter ou Facebook pour les nouvelles de Death Road et les prochains jeux! Lisez le Twitter de Madgarden pour de vraies Sagesse Canadienne!" bbold text!
-	"Nous sommes rapides a repondre aux commentaires et suggestions sur Twitter!" +crtext
+	"Read updates from Rocketcat Games on Twitter or Facebook for Death Road news and upcoming games!
+	Read Madgarden's Twitter for real Canadian Wisdom!" bbold text!
+	"We're quick to respond to feedback and suggestions on Twitter!" +crtext
 
-	choice( "Retour" )choice
+	choice( "Back" )choice
 	choice( "Rocketcat Twitter" )choice: rocketcat-twitter
 	choice( "Madgarden Twitter" )choice: madgarden-twitter
 	choice( "Rocketcat Facebook" )choice: rocketcat-facebook
@@ -82,21 +83,22 @@ cyoa-blank: social
 ;
 
 cyoa-blank: weblinks
-	"OPTIONS DES INFOS" cyoa-title!
+	"NEWS OPTIONS" cyoa-title!
 
-	"Voici dautres facons de nous contacter, de faire part de vos commentaires et suggestions, et de voir ce que nous faisons pour les mises a jour et les nouveaux projets! Nous sommes tres actifs sur le Discord officiel de Rocketcat, ou vous pouvez nous parler ainsi qua dautres fans de nos jeux." bbold text!
-	"Vous pouvez egalement masquer le panneau dactualites jusqua la prochaine mise a jour majeure." +crtext
+	"Here are more ways to contact us, give feedback and suggestions, and see what we are up to for updates and new projects! 
+	We are very active on the Official Rocketcat Discord, where you can talk to us and other fans of our games." bbold text!
+	"You can also hide the news panel until the next major update." +crtext
 
-	choice( "Retour" )choice
+	choice( "Back" )choice
 	choice( "Twitter/Facebook" )choice: social
-	choice( "Discorde officielle de Rocketcat" )choice: b1_url
-	news-off? if
-		choice( "Afficher les actualites" )choice: show-news
+	choice( "Official Rocketcat Discord" )choice: b1_url
+	news-off? if 
+		choice( "Show News" )choice: show-news
 	else
-		choice( "Masquer les actualites" )choice: hide-news
+		choice( "Hide News" )choice: hide-news
 	then
 ;
-
+	
 }
 
 last 2 #news_btn_handler!
@@ -105,12 +107,14 @@ last 2 #news_btn_handler!
 	1 news_enable! // Changing this to 0 shuts off news AND other stuff
 
 	news-off? if hide-news then;
-
+	
 	show-news
-
+	
 	// Uncomment below to hide news but not hide the news options and Discord buttons
-	hide-news
-
+	// I typically uncomment this if we haven't had a new update in awhile
+	// NOTE: Need to manually set 0 to newschecked if I work on update before wanting to show news again
+	// hide-news
+	
 ;
 
 newschecker

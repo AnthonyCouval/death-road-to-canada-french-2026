@@ -44,8 +44,9 @@
 
 : zombieclowns
 	zombiedefaults
-	zombie_head_count@ 12 - zombie_min_heads!
-	zombie_last_head zombie_max_heads!
+	56 zombie_min_heads! 
+	68 zombie_max_heads!
+	\ replaced w/ actual values coz of new milzombs
 	14 zombie_min_bodies!
 	19 zombie_max_bodies!
 ;
@@ -57,6 +58,18 @@
 : zombs-cop zombiecops zombs zombiedefaults ;
 : zombs-yall zombieyall zombs zombiedefaults ;
 : zombs-clowns zombieclowns zombs zombiedefaults ;
+
+: zombie_mil 
+	zombiedefaults
+	20 zombie_min_bodies!
+	20 zombie_max_bodies!
+	69 zombie_min_heads! 
+	71 zombie_max_heads!
+;
+
+: %zombs-mil zombie_mil %zombs zombiedefaults ;
+: zombs-mil zombie_mil zombs zombiedefaults ;
+: mil-zombsplit dup 0.25 * %zombs-mil 0.25 * %zombs ;
 
 : yall-zombsplit dup 0.5 * %zombs-yall 0.5 * %zombs ;
 // post-script: 10diff dup 0.8 * %zombs-cop 0.2 * %zombs nad ndx - Cop zombies

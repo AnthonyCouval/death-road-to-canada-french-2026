@@ -18,6 +18,8 @@ uses events/sc/gnomey.df
 uses events/sc/horse.df
 uses events/sc/lnk.df
 
+uses events/sc/omentum.df
+
 // Main road event handler code
 events{ road{
 

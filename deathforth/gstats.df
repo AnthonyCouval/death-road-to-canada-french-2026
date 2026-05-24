@@ -48,6 +48,26 @@ voc{ gstats } filesave{ gstats{
 0 value wins-4jerks
 0 value wins-4jerksEX
 
+\ more q stuff... 
+0 value wins-weathermode
+0 value wins-sceptermode
+0 value wins-rpgmode
+0 value wins-infectionmode
+
+\ rectum stuff 
+0 value wins-mutationmode 
+0 value wins-mutationmode-streak 
+
+\ stomach stuff 
+0 value wins-mutationmodeEX 
+0 value wins-mutationmodeEX-streak 
+
+0 value wins-horrormode 
+0 value wins-horrormode-streak
+
+0 value wins-infectionmodeEX
+0 value wins-infectionmodeEX-streak 
+
 0 value wins-streak
 0 value wins-normal-streak
 0 value wins-long-streak
@@ -66,6 +86,12 @@ voc{ gstats } filesave{ gstats{
 
 0 value wins-4jerks-streak
 0 value wins-4jerksEX-streak
+
+\ Q update stuff... 
+0 value wins-weathermode-streak
+0 value wins-sceptermode-streak
+0 value wins-rpgmode-streak
+0 value wins-infectionmode-streak 
 
 0 value best-gamemode-streak
 
@@ -128,6 +154,18 @@ voc{ gstats } filesave{ gstats{
 0 value perk-homerun
 0 value perk-fierce // Maybe a trait instead
 
+0 value perk-support
+0 value perk-jackall
+
+\ Quadricep additions
+0 value perk-tavern 
+0 value perk-kensai
+0 value perk-ranger 
+
+\ rectum additions 
+0 value perk-fencer 
+0 value perk-bigshot
+
 0 value trait-specialist
 0 value trait-animefan
 0 value trait-travellight
@@ -140,6 +178,9 @@ voc{ gstats } filesave{ gstats{
 0 value trait-phoenix
 0 value trait-fireproof
 0 value trait-fastlearn
+
+0 value trait-rand
+0 value trait-backwall
 // 0 value trait-
 // 0 value perk-
 
@@ -218,6 +259,29 @@ voc{ gstats } filesave{ gstats{
 	' wins-4jerks-streak save-val
 	' wins-4jerksEX-streak save-val
 	
+	\ q update... 
+	' wins-weathermode save-val
+	' wins-sceptermode save-val
+	' wins-rpgmode save-val
+	' wins-infectionmode save-val
+	
+	' wins-weathermode-streak save-val
+	' wins-sceptermode-streak save-val
+	' wins-rpgmode-streak save-val
+	' wins-infectionmode-streak save-val 
+	
+	\ rectum ...
+	' wins-mutationmode save-val 
+	' wins-mutationmode-streak save-val
+	' wins-infectionmodeEX save-val
+	' wins-infectionmodeEX-streak save-val
+	
+	\ stomach 
+	' wins-mutationmodeEX save-val 
+	' wins-mutationmodeEX-streak save-val
+	' wins-horrormode save-val 
+	' wins-horrormode-streak save-val
+	
 	' best-gamemode-streak save-val
 
 	' cheevo-list save-val
@@ -268,6 +332,19 @@ voc{ gstats } filesave{ gstats{
 	' perk-archer save-val
 	' perk-pyro save-val
 	
+	' perk-fierce save-val
+	' perk-support save-val
+	' perk-jackall save-val
+	
+	\ Quadricep
+	' perk-tavern save-val
+	' perk-kensai save-val
+	' perk-ranger save-val
+	
+	\ rectum 
+	' perk-fencer save-val
+	' perk-bigshot save-val 
+	
 	' trait-specialist save-val
 	' trait-animefan save-val
 	' trait-travellight save-val
@@ -280,6 +357,9 @@ voc{ gstats } filesave{ gstats{
 	' trait-phoenix save-val
 	' trait-fireproof save-val
 	' trait-fastlearn save-val
+	
+	' trait-rand save-val
+	' trait-backwall save-val
 	
 	' ugnome-unlocks save-val
 	' ugnome-found save-val
@@ -316,7 +396,7 @@ voc{ gstats } filesave{ gstats{
 
 : load STATS_FILE $load-savefile ;
 
-// : load ' loadraw runr if "ERREUR" print else "OK!" print then ;
+// : load ' loadraw runr if "ERROR" print else "OK!" print then ;
 
 // : load ' loadraw execute ;
 

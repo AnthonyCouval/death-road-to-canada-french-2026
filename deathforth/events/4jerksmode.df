@@ -27,6 +27,8 @@ cyoa{
 
 0 value 4j-recruit-count
 
+: 4j-recruit-calc solo if -1 else 0 then to 4j-recruit-count ; 4j-recruit-calc
+
 : 4j-recruit-left 2 4j-recruit-count - rbold ;
 
 
@@ -53,39 +55,40 @@ cyoa{
 ;
 
 cyoa-bridge: 4j-campyes-familiar
-	($ rname .. "  est impatient dy aller !" $) cyoa-text! basic-tone
+	($ rname .. " is raring to go!" $) cyoa-text! basic-tone
 	clear-cyoa
 	team-full? if
-		($ "Le groupe est plein. Qui souhaitez vous remplacer pour faire de la place a " .. rname .. "?" $) +crtext
+		($ "The group is full.
+		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
 		road{ ' recruit-familiarreplace cyoa-team-choice }
 	else
 		recruited goodfx
 		road{ familiar-recruit-check }
-		' 4j-recruit-count ++
 	then
+	' 4j-recruit-count ++
 ;
 
 cyoa: 4j-rec-familiar
-	"Choisissez vos canards" cyoa-title!
+	"Pick Your Jerks" cyoa-title!
 	nearest .character@ choosechar
 	cchar to recruitee ricon
 		
-	($ rname .. " est pret pour un road trip!" $) cyoa-text! basic-tone
+	($ rname .. " is ready for a road trip!" $) cyoa-text! basic-tone
 	
-	4j-recruit-count 1 > if ($ "'Vous avez recrute assez de canards! La voiture est pleine!" bbold $) +crtext then;
+	4j-recruit-count 1 > if ($ "You've recruited enough jerks! The car is full!" bbold $) +crtext then;
 	
 	recruitee .trait@ $len 0= if
 		($ rHe .. " claims to know you, but you swear you've never seen this person before..." $) +crtext
 	else
-		($ "TRAIT : " pbold .. recruitee .trait@ $) +crtext 
+		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
 		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
 	then
 
-	($ "Vous pouvez recruter " bbold .. 4j-recruit-left .. "  plus de canards!" bbold $) +crtext
+	($ "You can recruit " bbold .. 4j-recruit-left .. " more jerks!" bbold $) +crtext
 	
-	choice( "Laissez " .. rname .. "  pour le moment" )choice
+	choice( "Leave " .. rname .. " for now" )choice
 
-		choice( "Recruter " .. rname .. "!" )choice: 4j-campyes-familiar
+		choice( "Recruit " .. rname .. "!" )choice: 4j-campyes-familiar
 ;
 
 deck-new
@@ -142,7 +145,7 @@ location: familiar
 map{ roomgen{
 
 : 4j-familiar familiar-stack depths 0= if drop then;
-	4j-camper cyoa{ 4j-familiar-last }
+	4j-camper cyoa{ 4j-familiar-last } drop
 	// regiondef{ new-familiar-recruit }
 ;
 	

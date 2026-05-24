@@ -45,7 +45,7 @@ location: altarhouse
 			room-script: nad floor-bath commonranged
 		
 		room-choice: altar
-			room-weight: 20
+			room-weight: 99
 			room-count: 1
 			room-script: nad 4 for skelscat next
 					

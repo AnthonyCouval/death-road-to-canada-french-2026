@@ -2,7 +2,8 @@
 events{ road{
 
 : despair-start!
-	// saddest to bully - Covered by road.df already
+	// saddest to bully
+	// Covered by road.df already, uncomment above for easy despair event testing
 	bully choosechar cicon
 ;
 	
@@ -16,20 +17,20 @@ events{ road{
 cyoa{ road{
 
 cyoa-choice: card-UGH
-	"ALLONS Y" cyoa-text! ;
+	"COME ON" cyoa-text! ;
 
 cyoa-choice: bully-kick
-($ cname .. "  se fait expulser du groupe au lieu de " .. vname .. ".
+($ cname .. " gets kicked out of the group instead of " .. vname .. ".
 " $) cyoa-text!
 decruit-bad-silent-takeweapons 0.5 600 tone
 40 %chance if
-		($ vname .. "  sourit un peu." $) +text
+		($ vname .. " smiles a little." $) +text
 		victim .morale++
 else
 	30 %chance if
-		($ vname .. "  hausse les epaules." $) +text
+		($ vname .. " shrugs." $) +text
 	else
-		($ Thegroup .. "  se sent soulage que " .. bhe .. "'' est parti." $) +text
+		($ Thegroup .. " feels relieved that " .. bhe .. "'s gone." $) +text
 		bully ' .morale++ foreach-team-char-except
 	then
 then
@@ -37,85 +38,92 @@ then
 
 cyoa-choice: bully-all-kick
 team-count 2 = if	
-	($ notcname .. "  recommande que " .. cname .. "  parte, a la place.	" $) cyoa-text!
+	($ notcname .. " recommends that " .. cname .. " leave, instead.
+	" $) cyoa-text!
 else
-	($ Thegroup .. "  expulse " .. cname .. "  pour avoir ete un dingus.	" $) cyoa-text!
+	($ Thegroup .. " kicks " .. cname .. " out for being a dingus.
+	" $) cyoa-text!
 then
 70 %chance if
-	($ cname .. "  sen va dans un acces de colere.	" $) +text 0.5 600 tone
+	($ cname .. " storms off in a huff.
+	" $) +text 0.5 600 tone
 else
-	($ cname .. " ' dit quelque chose comme VIENS JE PLAISANTAIS HA HA'.	" .. cHe .. "  se fait quand meme expulser.	" $) +text 3 300 tone
+	($ cname .. " says something along the lines of 'COME ON I WAS JUST JOKING HA HA'.
+	" .. cHe .. " still gets kicked out.
+	" $) +text 3 300 tone
 then
 decruit-bad-silent-takeweapons 
 40 %chance if
-		($ notcname .. "  sourit un peu." $) +text
+		($ notcname .. " smiles a little." $) +text
 		notcchar .morale++
 else
 	30 %chance if
-		($ notcname .. "  hausse les epaules." $) +text
+		($ notcname .. " shrugs." $) +text
 	else
-		($ Thegroup .. "  se sent soulage que " .. bhe .. "'' est parti." $) +text
+		($ Thegroup .. " feels relieved that " .. bhe .. "'s gone." $) +text
 		bully ' .morale++ foreach-team-char-except
 	then
 then
 ;
 
 cyoa-choice: victim-kick
-($ cname .. "  a ete expulse du groupe en raison de " .. bname .. ".
+($ cname .. " was kicked from the group due to " .. bname .. ".
 " $) cyoa-text!
-($ bname .. "  se sent plutot suffisant a ce sujet." $)
+($ bname .. " feels pretty smug about this." $)
 +text bully .morale3+
 decruit-bad-silent-takeweapons 0.5 600 tone
 ;
 
 cyoa-choice: bully-charm
-	($ cname .. "  tente de raisonner avec " .. bname .. "." $) cyoa-text!
+	($ cname .. " tries to reason with " .. bname .. "." $) cyoa-text!
 	charmroll if
-		($ cname .. "  convainc " .. bname .. " pour se calmer les uns les autres. Ils arrivent a une entente, pour le moment." $) cyoa-text! bully .morale++ morale++ goodfx
+		($ cname .. " convinces " .. bname .. " to calm down. They come to an understanding with each other, for now." $) cyoa-text! bully .morale++ morale++ goodfx
 	else
-		($ bname .. "  est enrage par " .. cname .. "' tentative de manipuler " .. bully xhim .. "! " .. bully xHe .. "  jette un coup de poing a " .. cname .. "  et sen va dans la nuit." $)
+		($ bname .. " is infuriated by " .. cname .. "'s attempt to manipulate " .. bully xhim .. "! " .. bully xHe .. " throws a punch at " .. cname .. " and stomps off into the night." $)
 		+crtext sting-- bully .weapons-to-trunk TEAM_STATUS_BAD_LEFT bully .decruit bitefx
 	then
 ;
 
 cyoa-choice: bully-sprayit
-	($ cname .. "  raconte " .. bname .. " vers" .. " ' DIRE CA, PAS LE SPRAYER.'," pbold $) cyoa-text!
+	($ cname .. " tells " .. bname .. " to" .. " SAY IT, DON'T SPRAY IT." pbold $) cyoa-text!
 	cool-it-7 if
-		($ bname .. "  prend cela a coeur. Quest ce quil advient de " .. bully xhe .. "  si etait toujours retarde par son habitude de " .. bully xhis .. " ' de le faire plutot que de le dire'? Une brise emotionnelle survient.'" $)
+		($ bname .. " takes this advice to heart. What if " .. bully xhe .. " was always held back by " .. bully xhis .. " habit of 'spraying it instead of saying it'? A tearful emotional breakthrough happens." $)
 		+crtext bully .morale4+ morale4+ cooled-it goodfx
 	else cool-it++
-		($ bname .. "  se fait si enrage a ce sujet que " .. bully xhe .. " ne peut meme pas parler." $)
+		($ bname .. " gets so angry about this that " .. bully xhe .. " can't even talk." $)
 		+crtext bully .morale-- morale2+ badfx
 	then
 ;
 
 : bully-charm?
 	victim charming? if
-		victim charchoice( " parle " .. bname .. "  en bas" )choice: bully-charm
+		victim charchoice( " talks " .. bname .. " down" )choice: bully-charm
 	then
 ;
 
 : bully-sprayit?
 	victim grating? if
-		victim charchoice( "': DIS LE NE LE PULVERISE PAS" fcoolit )choice: bully-sprayit
+		victim charchoice( ": SAY IT DON'T SPRAY IT" fcoolit )choice: bully-sprayit
 	then
 ;
 
 : haze-siege
 	9 16 rnd 2 siegecast
 	"events/siege/region/midopen1.df" $load-region
-	choice( "Combattez larmee de zombies" )choice: premission
+	choice( "Fight Army of Zombies" )choice: premission
 ;
 
 cyoa: solo-haze-won
-	"Retour sur la route de la mort!" cyoa-title! someicon
-	($	"	Comment diable avez vous survecu a cela?" .. cname .. " obtenir " .. "TOTALEMENT GONFLE" fbold $) cyoa-text!
+	"Back on the Death Road!" cyoa-title! someicon
+	($	"How in the world did you survive that?
+		" .. cname .. " gets " .. "COMPLETELY PUMPED UP" fbold $) cyoa-text!
 			morale4+ goodfx
 ;
 
 cyoa: group-haze-won
-	"Retour sur la route de la mort!" cyoa-title! someicon
-	($	"	In french Peut etre que cette equipe n'est pas si mauvaise apres tout!" .. Thegroup .. " obtenir " .. "TOTALEMENT GONFLE" fbold $) cyoa-text!
+	"Back on the Death Road!" cyoa-title! someicon
+	($	"Maybe this team isn't so bad after all!
+		" .. Thegroup .. " gets " .. "COMPLETELY PUMPED UP" fbold $) cyoa-text!
 			morale4+all goodfx
 ;
 

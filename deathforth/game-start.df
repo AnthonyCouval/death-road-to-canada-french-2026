@@ -67,15 +67,29 @@ filesave{
 last to start-the-game
 
 : familiartest cyoa-start
-	draw-familiar dup not if drop "PAS DE PLUS DE PERSONNES!" text! then;
+	draw-familiar dup not if drop "NO MORE PEOPLE!" text! then;
 	#savechar-clone #character to recruitee ricon recruitee .applyperk recruitee .applytrait
-	($ "'WOW C'EST " .. rname .. "!" $) text! recruited
+	($ "WHOA IT'S " .. rname .. "!" $) text! recruited
 ;
 
 : game-start-new
 	"GAME START NEW!!!!!!" print
 	start-the-game
 	need-to-save
+	gamedef{ ' theinfection gamemode? } if 
+		road{ kills-this-game 840 + to kills-this-game }
+	then
+	\ quadriceps 
+
+	gamedef{ ' theinfectionEX gamemode? } if 
+		road{ kills-this-game 600 + to kills-this-game }
+	then
+	\ retina 
+	
+	\ Leftover DRTS workaround; INFECTION mode uses zombie kills as the timer 
+	\ Zombie kills do also extend timer, so...
+	\ 840s approx. equal to 14 minutes 
+	
 ;
 last to main-event-new-session
 }

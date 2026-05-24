@@ -5,12 +5,13 @@
 :scriptB barcounter 
 :scriptC bottle-scatter 
 :scriptD pooltable 
+:scriptE jukebox 
 :size 10 12 
 :off 8 1 
 :tiles 
 2222222222
 2333333332
-2111111112
+2E11111112
 211B11B112
 21AAAAAA12
 2111111112
@@ -323,12 +324,13 @@
 :scriptC bottle-scatter 
 :scriptD only-chosen; lovetest -1 movey 
 :scriptE diningset 
+:scriptF jukebox 
 :size 14 14 
 :off 5 1 
 :tiles 
 00222222222200
 00233333333200
-00211111111200
+0021F111111200
 00211111111200
 00211B11B11200
 0021AAAAAA1200

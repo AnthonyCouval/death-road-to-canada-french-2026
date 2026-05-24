@@ -1,4 +1,4 @@
-"charge boot.df" to eval-buf
+"load boot.df" to eval-buf
 
 
 : empty depth remove ;
@@ -38,13 +38,13 @@
 	50 %chance if chair 1 movex drift then
 ;
 
-: dbasement UP column-door "salle de bain" with-door ;
+: dbasement UP column-door "bathroom" with-door ;
 
 // Weapon and bullet spawning
 
 // Deprecated alt words for weapons
 
-: huntcowboy 90 %chance if rifle else hunting then ;
+: huntcowboy 80 %chance if 10 %chance if targetrifle else rifle then else 50 %chance if hunting else fn_fal then then ;
 
 0 value broom-found
 
@@ -52,23 +52,23 @@ cyoa{
 
 cyoa-bridge: broomy-recruit
 	cchar to recruitee goodfx clear-cyoa
-	($ cname .. " evite toute tentative detre ramasse." $) text!
-	($ "Arrete ca ! Je te suivrai, bien sur, juste arrete de me chercher !" pbold $) +crtext
-	($ pname .. " voit cela comme une occasion de se procurer un balai gratuitment, sans meme prendre despace dans linventaire !" $) +crtext
+	($ cname .. " evades any attempt to be picked up." $) text!
+	($ "Stop that! I'll follow you, fine, just stop trying to pick me up!" pbold $) +crtext
+	($ pname .. " sees this as an opportunity to get a free broom, without even taking up an inventory slot!" $) +crtext
 	// recruitee .strengthREV recruitee .fitnessREV
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
 	recruit-yesno
 ;
 
 cyoa: broomy-cyoa
-	"Demineur Zombie" cyoa-title!
+	"Zombie Sweeper" cyoa-title!
 	nearest .character@ choosechar cicon
 	1 to broom-found
-	($ pname .. " essaie de saisir ce balai " .. phe .. "  trouve, mais il se met soudain a parler !" $) text!
-		($ "'HEI ! Arrete de m'attraper, GROS DINGUE ! Je ne suis pas un balai !" pbold $) +crtext
-	"Cest etrange quun balai dise ca." +crtext
-		choice( "Fais comme si tu navais jamais vu ce balai" )choice
-		choice( "Prends ce balai" )choice: broomy-recruit
+	($ pname .. " tries to grab this broom " .. phe .. " found, but it suddenly starts talking!" $) text!
+		($ "HEY! Stop grabbing me, you DINGUS! I'm not a broom!" pbold $) +crtext
+	"This seems like an odd thing for a broom to say." +crtext
+		choice( "Pretend like you never saw this broom" )choice
+		choice( "Grab this broom" )choice: broomy-recruit
 ;
 
 }
@@ -88,7 +88,7 @@ cyoa: broomy-cyoa
 : baseball 90 %chance if baseball else spikedbat then ;
 : aluminum 90 %chance if aluminum else megaspikedbat then ;
 : nightstick 80 %chance if nightstick else tacticop then ;
-: pistol 80 %chance if pistol else snubnose then ;
+: pistol 70 %chance if pistol else 50 %chance if snubnose else the1911 then then ;
 : shotgun 90 %chance if shotgun else dshotgun then ;
 
 : nicer-meleeweapons 1 6 rnd case 
@@ -101,7 +101,7 @@ cyoa: broomy-cyoa
 	endcase
 ;
 
-: meleeweapons 1 11 rnd case 
+: meleeweapons 1 12 rnd case 
 	1 of 95 %chance if nail else cardboard then endof 
 	2 of 30 %chance if cleaver else kitch then endof
 	3 of 25 %chance if cricket else baseball then endof 
@@ -113,13 +113,15 @@ cyoa: broomy-cyoa
 	9 of 50 %chance if mallet else screwdriver then endof
 	10 of 60 %chance if tennis else hockey then endof
 	11 of 70 %chance if scissors else golf then endof
+	12 of 90 %chance if lowwhip else midwhip then endof  
 	endcase 
 ;
 
-: nicercommon-gun 40 %chance if 1 8 rnd sshot shotgun else 80 %chance if 2 15 rnd srifle huntcowboy else 1 12 rnd sbullet dolt then then .scatter ;
+: nicercommon-gun 40 %chance if 1 8 rnd sshot shotgun else 80 %chance if 2 15 rnd srifle huntcowboy else 90 %chance if 1 12 rnd sbullet dolt else 1 12 rnd sbullet fosbury then then then .scatter ;
+\ tiny chance for upgrade 
 
 : commonranged
-1 2 rnd case
+	1 2 rnd case
 1 of 
 95 %chance if 
 	10 30 rnd sbullet pistol 
@@ -131,17 +133,36 @@ else
 	then 
 then endof
 2 of 
-	50 %chance if 10 20 rnd srifle huntcowboy else 6 15 rnd sshot shotgun then
+	50 %chance if 10 20 rnd srifle huntcowboy else 66 %chance if 6 15 rnd sshot shotgun else 6 15 rnd sshot flet then then \ q update: flechette, mamba, autorevolver 
 endof
+\ 3 of 
+\	50 %chance if 
+\		80 %chance if 6 15 rnd sshot shotgun else 6 15 rnd sshot chromeshotgun then 
+\	else 
+\		80 %chance if 10 30 rnd sbullet pistol else 10 30 rnd sbullet mp5 then 
+\	then 
+\ endof 
 endcase ;
 
 : niceranged
 1 2 rnd case
 1 of commonranged endof
-2 of 20 %chance if 8 30 rnd srifle ak47 else 50 %chance if 17 40 rnd sbullet uzi else 8 16 rnd sshot shotgun then then endof
+2 of 20 %chance if 8 30 rnd srifle ak47 else 50 %chance if 17 40 rnd sbullet uzi else 75 %chance if 17 40 rnd sbullet fosbury else 17 40 rnd sbullet blackmamba then then then endof
 endcase ;
 
-: exoticweapons 50 %chance if 20 50 rnd sgas chainsaw else woodclub then ;
+\ Quadricep update...
+\ I think it's slightly odd to have the shotgun in the niceranged table. 
+\ Niceranged appears infrequently at best in loot tables, so it seems unfair to roll a shotgun here, or indeed a normal ranged weapon 
+\ ... I have henceforth replaced the shotgun in niceranged with some of the new weps 
+\ Feel free to comment & discuss 
+
+
+: exoticweapons 75 %chance if 50 %chance if 20 50 rnd sgas chainsaw else woodclub then else 50 %chance if blackmamba else fosbury then then ;
+
+\ 75 percent change for the chainsaw/club, else ranged, which is 50-50 split between mamba and fosbury. 
+\ Exoticweapons generally only appears as part of niceweapons anyway 
+\ What else should go there?
+
 : niceweapons 30 %chance if meleeweapons else 30 %chance if commonranged else 90 %chance if niceranged else exoticweapons then then then ;
 
 : tableware
@@ -165,6 +186,7 @@ endcase ;
 	else 
 		cleaver 
 	then
+	10 %chance if fireex .scatter then
 ;
 
 : cheapweapons 60 %chance if meleeweapons else 50 %chance if commonranged else 50 %chance if niceweapons else kitchenweapons then then then ;
@@ -179,20 +201,20 @@ endcase ;
 
 : hsmalltable spawn 0x 10 themed spriteid! rndflip bbox as-wood ;
 
-: dkitchen random-door "cuisine" with-door ;
-: dbathroom random-door "salle de bain" only-with-door empty ;
+: dkitchen random-door "kitchen" with-door ;
+: dbathroom random-door "bathroom" only-with-door empty ;
 : dhall random-door "hall" with-door empty ;
-: dliving random-door "salon" with-door ;
-: dcloset random-door "placard" only-with-door empty ;
+: dliving random-door "living" with-door ;
+: dcloset random-door "closet" only-with-door empty ;
 : beddoor 50 %chance if dcloset then 50 %chance if dbathroom then ;
-: dnapt n edge-inc n random-door "chambre" with-door empty ;
+: dnapt n edge-inc n random-door "bedroom" with-door empty ;
 : dwrand w edge-inc w random-door empty ;
 : derand e edge-inc e random-inset-door empty ;
 
 : trashdoor map{ add-blocked-up-door } ;
 // OLD: -1 column-door map{ block-last-door }
 
-: dsewerhall random-door "hall egout" with-door empty ;
+: dsewerhall random-door "sewer-hall" with-door empty ;
 : dsewerloot
 	50 %chance if
 		50 %chance if 
@@ -200,7 +222,7 @@ endcase ;
 		else
 			e edge-inc random-door 
 		then
-		"tresor" only-with-door
+		"treasure" only-with-door
 	then 
 ;
 
@@ -211,11 +233,11 @@ endcase ;
 		e edge-inc random-door 
 	then
 	3 250 tone
-	"egout fin" only-with-door
+	"sewer-end" only-with-door
 ;
 
-: indhall random-door "hall industriel" with-door ;
-: indroom random-door "salle industrielle" with-door ;
+: indhall random-door "indust-hall" with-door ;
+: indroom random-door "indust-room" with-door ;
 : industbranch 30 %chance if indhall then 50 %chance if indroom then ; 
 	
 : flippy rndsign dup -1 * ;	
@@ -399,15 +421,20 @@ roomgen{
 	bathtoilet drift -10 movey rndsign 5 * movex
 ;
 
+\ Community fixes from HAM. Thanks bud! <3 
 : rndshelf
-40 %chance if smallshelf exit then
-40 %chance if bigshelf exit then
-60 %chance if drawers exit then 
+	100 %chance if smallshelf exit then
+	0 %chance if bigshelf exit then
+	0 %chance if drawers exit then 
 ;
 
 : rndhshelf
 only-chosen;
-rndshelf
+	1 3 rnd case 
+	1 of drawers endof 
+	2 of bigshelf endof 
+	3 of smallshelf endof 
+	endcase
 ;
 
 : hallset
@@ -471,7 +498,14 @@ rndshelf
 
 // LIVINGROOM STUFF
 
-: livingdeco 1 4 rnd case 1 of lazyboy endof 2 of 20 %chance if drawers else lazyboy then endof 3 of endtable endof 4 of 50 %chance if lazyboy then endof endcase ;
+: livingdeco 1 4 rnd case 
+	1 of lazyboy endof 
+	2 of 20 %chance if drawers else lazyboy then endof 
+	3 of endtable endof 
+	4 of 100 %chance if lazyboy then endof endcase 
+;
+\ STOMACH : Not sure what the nature of the bug here is. Underflow from lt ? 
+
 : ldecopair livingdeco 1 movex dup movey 30 %chance if drift then livingdeco -1 movex dup movey 30 %chance if drift then ;
 : ldecopairdrift livingdeco 1 movex dup movey drift livingdeco -1 movex dup movey drift ;
 

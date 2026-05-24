@@ -16,6 +16,36 @@
 0 value need-save
 0 value last-saved
 
+
+\ retina : 
+\ hero type rework 
+\ needed due to access in multiple files 
+
+0 value HERO_TYPE_FUND 
+
+0 value FRIENDS_OF_DOG_ACTIVE
+
+0 value TURRET_ACTIVE
+\ carboat 
+
+\ mutation mode args 
+0 value mutationhpmult
+0 value mutationcolour
+0 value mutationfireproofing
+0 value mutationmass
+0 value mutationgrippy 
+
+
+\ stomach 
+\ timestop variable here for train and stuff 
+\ so called moving maps 
+
+
+0 value game_is_over? 
+\ TRACHEA : PM horrors mode fix 
+
+0 value TIMESTOP_ACTIVE
+
 // ===============
 // Dates and stuff
 // ===============

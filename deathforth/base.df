@@ -448,4 +448,95 @@ drop
 // Creates a var that is always 0 unless DEBUG_BUILD is true
 : debugvar constant does> DEBUG_BUILD if @ else drop 0 then ;
 
+
 3.14159265358979323846 constant PI		
+
+
+\ math stuff should hve been here to begin with 
+
+0 value base
+0 value expot
+
+: natlog dup dup -1 + rot rot dup * 2 / swap dup dup * * 6 / rot - + ;
+
+: factorial 
+dup 
+2 < if 
+	drop 1 exit 
+then 
+
+dup 1- recurse * ;
+
+// : expo over for swap dup * next swap drop ;
+
+0 value exp
+\ unused i think 
+: expo ( exp, base )
+	swap to exp
+		exp for
+			dup
+		next
+		
+		exp 1 - for
+		*
+		next
+		swap drop	
+;
+
+
+0 value divi
+
+: bi_root ( n1 -- n2 )
+to divi 
+100 dup
+30 for
+		divi swap / + 0.5 *
+			dup next drop ; 
+
+\ should probably massively tone down the precision here
+
+: lnapprox
+	20 for 
+		bi_root
+	next
+	1048576 * 1048576 - 
+;
+
+\ approximation, good enough for 99% of scenarios 
+
+2.71828182846 constant EULER
+
+0 value eulerinp
+0 value eulerbase
+
+: eulerexpo ( inp ) 
+	0 to eulerinp
+	to eulerinp
+	0 to eulerbase
+	10 for
+		i eulerinp expo i factorial / eulerbase + to eulerbase
+	next
+	eulerbase 1 +
+;
+
+\ e^x 
+
+: anyexpo ( exp, base ) 
+	
+	lnapprox * eulerexpo
+;
+
+\ x^a where a is any float or int 
+
+0 value arctaninp
+0 value arctanbase
+
+: arctan ( rad ) // for between 0 and 1 ONLY
+	0 to arctaninp
+	to arctaninp
+	0 to arctanbase
+	30 for
+		i arctaninp expo i 1 + -1 expo * 2 i * -1 + / arctanbase + to arctanbase
+	next
+	arctanbase
+;

@@ -1,8 +1,8 @@
-cyoa{ road{
+cyoa{ road{ 
 
 (*
 ------------------------------------------------------------------------------------------------------------------------
-	007 - "Des ailes de poulet a n'en plus finir" - Don Thacker
+	007 - "Wings for DAYS" - Don Thacker
 	The group happens onto a cargo container full of freshly cooked chicken wings.
 	So they win, right?
 ------------------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ cyoa{ road{
 
 : ouch-wings-all args( chara )
 	<- chara isfireproof? if
-		($ <- chara .name@ pbold .. "  adore cette sauce !" $) +crtext
+		($ <- chara .name@ pbold .. " is loving this sauce!" $) +crtext
 		<- chara .morale2+
 	else
 		<- chara .ouch--
@@ -20,31 +20,31 @@ cyoa{ road{
 // GET THOSE WINGS!
 cyoa-choice: don-common-wings-get
     image-crate-of-wings
-	($  Thegroup .. "  s'approche du conteneur de fret. " .. gThey .. "  ouvrent la porte et des quantites gigantesques de sauce bouillante s'ecoulent en un raz de maree." $) text!
+	($  Thegroup .. " approaches the cargo container. " .. gThey .. " open" .. g1s .. " the door and GIANT AMOUNTS of boiling hot sauce pours out in a tidal wave." $) text!
 		' ouch-wings-all foreach-team-char
 	choosehuman alive? if
-		($ Thegroup .. "  prend ce qu'" .. gthey .. "  pensent pouvoir manger avant que les ailes de poulet ne pourrissent sur la route. Cela en valait la peine !" $) +crtext
+		($ Thegroup .. " takes what " .. gthey .. " figure" .. g1s .. " " .. gthey .. " can eat before the chicken wings spoil on the road. It was all worth it!" $) +crtext
 			team-count 8 * trunk-food+ goodfx morale3+all
 	else
-		($ "Encore un cas ou des ailes de poulet super epicees ont cause des deces ! On n'en entend jamais parler a cause de " .. "LA GRANDE INDUSTRIE DU POULET" rbold .. "." $) +crtext
+		($ "Yet another case of super spicy chicken wings causing deaths! You never hear about this due to the " .. "BIG CHICKEN" rbold .. " industry." $) +crtext
 	then
 ;
 
 // Leave the wings. Man that sucks.
 cyoa-choice: don-common-wings-leave
-    ($ Thegroup .. " decide que c'est trop risque, meme pour des ailes de poulet." $) cyoa-text!
-    ($ "Mais, qu'est-ce qu'elles sentaient bon, quand meme." $) +crtext
+    ($ Thegroup .. " decides it's too risky, even for wings." $) cyoa-text!
+    ($ "Man, they sure smelled good, though." $) +crtext
 ;
 
 // The group comes across an overturned cargo container. OF WINGS.
 cyoa: don-common-wings
     image-crate-of-wings
-    "Ailes a Gogo!" cyoa-title!
-    ($ Thegroup .. "  trouve un etrange " .. "conteneur" pbold .. " renverse sur le cote, au milieu de la route. " $) cyoa-text! basic-tone
-    ($ "Il y a un tuyau avec une valve qui en sort, degageant de la vapeur et l'odeur des " .. "ailes de poulet chaudes et fraiches" fbold .. ". " $) +crtext
+    "Wings for DAYS!" cyoa-title!
+    ($ Thegroup .. " finds a " .. "strange looking cargo container" pbold .. " flipped onto its side, lying in the middle of the road. " $) cyoa-text! basic-tone
+    ($ "It's got a valved exhaust port sticking out of it, venting steam and the smell of " .. "fresh hot wings" fbold .. ". " $) +crtext
 
-    choice( "PRENDRE LES AILES DE POULET - ATTENTION : TRES CHAUD" )choice: don-common-wings-get
-    choice( "Partir" )choice: don-common-wings-leave
+    choice( "GET WINGS - WARNING: HOT" )choice: don-common-wings-get
+    choice( "Leave it" )choice: don-common-wings-leave
 ;
 
 

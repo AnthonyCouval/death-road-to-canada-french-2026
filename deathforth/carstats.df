@@ -25,6 +25,11 @@
 	enum CAR_RUSTY_TRUCK
 	enum CAR_SNOWPLOW
 	enum CAR_BUS
+	enum CAR_BOAT
+	enum CAR_AMBY
+	enum CAR_CAMPER
+	enum CAR_TAXI 
+	enum CAR_LORRY 
 constant CAR_COUNT
 
 CAR_COUNT array var car-list
@@ -110,7 +115,7 @@ CAR_STARTER value starting-car
 	mission.vehicle@ 0= if then;
 	mission.vehicle@ .id@ 0= if 0 vehicle.which! then;
 
-	mission.vehicle@ .hitpoints@ CAR_HEALTH_SCALAR / "SANTE DE LA Voiture : " type dup print to car-chassis
+	mission.vehicle@ .hitpoints@ CAR_HEALTH_SCALAR / "CAR HEALTH: " type dup print to car-chassis
 	car-update-display
 ;
 
@@ -299,6 +304,16 @@ CAR_STARTER value starting-car
 	400 0.75 * vehicle.motor.freq2!
 	0.99 vehicle.motor.duty1!
 	0.5 vehicle.motor.duty2!
+;
+
+: motor-bus
+	motor-default
+	40 vehicle.motor.freq1!
+	115 vehicle.motor.freq2!
+	1000 vehicle.motor.filt_low!
+	0.975 vehicle.motor.duty1!
+	0.125 vehicle.motor.duty2!
+	0.9 vehicle.motor.q!
 ;
 
 : get-car-suv
@@ -516,6 +531,91 @@ CAR_STARTER value starting-car
 	4 to car-repair
 ;
 
+: get-car-bus
+	motor-bus
+	
+	6 to car-chassis
+	8 to car-max-chassis
+	40 50 rnd to car-engine
+	60 to car-max-engine
+	0 to car-armor
+	1 to car-speed
+	1.4 to car-mpg
+	3 to car-repair
+;
+
+: get-car-boat
+	motor-bus
+	
+	10 to car-chassis
+	10 to car-max-chassis
+	30 40 rnd to car-engine
+	40 to car-max-engine
+	1 to car-armor
+	2 to car-speed
+	1.1 to car-mpg
+	3 to car-repair
+;
+
+\ STOMACH cars 
+\ These are unique to the parking lot loc 
+
+: get-car-amby
+	motor-truck
+	4 to car-chassis
+	4 to car-max-chassis
+	25 to car-engine
+	25 to car-max-engine
+	0 to car-armor
+	3 to car-speed
+	1.4 to car-mpg
+	5 to car-repair
+;
+\ hard to repair, takes a lot of gas, is fragile-er 
+\ but moves fast, engine lasts slightly longer, and +1 med skill bonus 
+
+: get-car-camper 
+	motor-puttputt
+	5 to car-chassis
+	5 to car-max-chassis
+	10 to car-engine
+	10 to car-max-engine
+	0 to car-armor
+	1 to car-speed
+	1.3 to car-mpg
+	1 to car-repair
+;
+\ really easy to repair! but breaks down quickly and eats gas and is slow 
+\ also provides chance to dodge TIRED debuff  
+
+: get-car-taxi
+	motor-default
+	5 to car-chassis
+	5 to car-max-chassis
+	15 20 rnd to car-engine
+	20 to car-max-engine
+	0 to car-armor
+	2 to car-speed
+	1.2 to car-mpg
+	4 to car-repair
+;
+\ TAXIIIIIII
+\ additional city looting location to choose from 
+
+: get-car-lorry	
+	motor-wiener
+	25 to car-chassis
+	25 to car-max-chassis
+	10 15 rnd to car-engine
+	15 to car-max-engine
+	0 to car-armor
+	1 to car-speed
+	1.6 to car-mpg
+	5 to car-repair
+;
+
+
+
 : cartype car-list -rot poke drop ;
 
 : car-list-init
@@ -527,7 +627,7 @@ CAR_STARTER value starting-car
 	CAR_SUV 		' get-car-suv 		cartype
 	CAR_HYBRID2 	' get-car-hybrid2 	cartype
 	CAR_MUSCLE2 	' get-car-muscle2 	cartype
-
+	
 	CAR_VAN			' get-car-van 		cartype
 	CAR_PUTTPUTT	' get-car-putt 		cartype
 	CAR_STATIONWAGON ' get-car-wagon 	cartype
@@ -546,9 +646,13 @@ CAR_STARTER value starting-car
 	CAR_WIENER		' get-car-wiener	cartype
 	CAR_RUSTY_TRUCK	' get-car-rusty		cartype
 	CAR_SNOWPLOW	' get-car-rusty		cartype
-
-	CAR_BUS			' get-car-rusty		cartype
-
+	
+	CAR_BUS			' get-car-bus 		cartype
+	CAR_BOAT		' get-car-boat		cartype
+	CAR_AMBY		' get-car-amby		cartype
+	CAR_CAMPER		' get-car-camper	cartype 
+	CAR_TAXI		' get-car-taxi		cartype 
+	CAR_LORRY		' get-car-lorry		cartype 
 ; car-list-init
 
 : use-cartype
@@ -583,56 +687,74 @@ DOT1 value DOT
 
 // TODO: Maybe put different text in here depending on bar values
 : +repairstatus +purple "chassis" +text +white ;
-: +wearstatus +purple "moteur" +text +white ;
-: +armourstatus +purple "blindage" +text +white ;
-: +carspeed
-	car-speed 2 < if
-		+red "Lentement"
+: +wearstatus +purple "engine" +text +white ;
+: +armourstatus +purple "armour" +text +white ;
+: +carspeed 
+	car-speed 2 < if 
+		+red "Slow"
 	else
 		car-speed 2 = if
-		+blue "Moyen"
+		+blue "Average"
 		else
-		+green "Rapide"
+		+green "Fast"
 		then
-	then +text +white
+	then +text +white 
 ;
 
 // TODO: Days left to CANADA
 : +canadadays +red road{ nearcanada-day 1 + road-trip-days - } +text +white ;
 
-: zombop-cr "Points Zombo : " pbold +text gstats{ zombo-point } +text " / " +text gstats{ ZOMBOP_CAP } +text +cr ;
+: zombop-cr "Zombo Points: " pbold +text gstats{ zombo-point } +text " / " +text gstats{ ZOMBOP_CAP } +text +cr ;
 
 : vehicle-tab-text
 
-	"Mode de jeu : " pbold +text
+	"Game Mode: " pbold +text 
 
-	"MODE DE JEU NULLE" // Default case
+	"NO GAME MODE" // Default case
 	gamedef{ ' defaultmode gamemode? } if drop "Death Road Normal" then
-	gamedef{ ' longroad gamemode? } if drop "Route Sinueuse" then
-	gamedef{ ' specialchars gamemode? } if drop "Personnages Rares" then
-	gamedef{ ' familiarchars gamemode? } if	drop "Personnages Familiers" then
-	gamedef{ ' specialcharsEX gamemode? } if drop "Personnages Rares EXTREME" rainbold then
-	gamedef{ ' familiarcharsEX gamemode? } if drop "FAMILIARES EXTREMEMENTS" rainbold then
-	gamedef{ ' kepamode gamemode? } if drop "Six cent quarante quatre" fbold then
-	gamedef{ ' shortroad gamemode? } if drop "Court Sejour en Enfer" then
+	gamedef{ ' longroad gamemode? } if drop "Long Winding Road" then
+	gamedef{ ' specialchars gamemode? } if drop "Rare Characters" then
+	gamedef{ ' familiarchars gamemode? } if	drop "Familiar Characters" then
+	gamedef{ ' specialcharsEX gamemode? } if drop "Rare Characters EXTREME" rainbold then
+	gamedef{ ' familiarcharsEX gamemode? } if drop "Familiar Characters EXTREME" rainbold then
+	gamedef{ ' kepamode gamemode? } if drop "K*E*P*A" fbold then
+	gamedef{ ' shortroad gamemode? } if drop "Short Trip to Heck" then
 	gamedef{ ' marathonmode gamemode? } if drop "Marathon" fbold then
-	gamedef{ ' endlessmode gamemode? } if drop "Mode Infini" fbold then
-	gamedef{ ' deadlier gamemode? } if drop "Route plus Dangereuse" then
-	gamedef{ ' OPPmode gamemode? } if drop "OPP Mode" fbold then
-	gamedef{ ' quicknightmare gamemode? } if drop "Mode Mort Subite" fbold then
-	gamedef{ ' 4jerksmode gamemode? } if drop "Mode des quatre abrutis" then
-	gamedef{ ' 4jerksmodeEX gamemode? } if drop "Jerks Mode EXTREME" rainbold then
+	gamedef{ ' endlessmode gamemode? } if drop "Endless Mode" fbold then
+	gamedef{ ' deadlier gamemode? } if drop "Deadlier Road" then
+	gamedef{ ' OPPmode gamemode? } if drop "O*P*P Mode" fbold then
+	gamedef{ ' quicknightmare gamemode? } if drop "Quick Death Mode" fbold then
+	gamedef{ ' 4jerksmode gamemode? } if drop "Four Jerks Mode" then
+	gamedef{ ' 4jerksmodeEX gamemode? } if drop "Four Jerks Mode EXTREME" rainbold then
+	
+	\ q update 
+	
+	gamedef{ ' weathermode gamemode? } if drop "Extreme Weather Mode" bbold then 
+	gamedef{ ' theinfection gamemode? } if drop "Infection Mode" rbold then 
+	gamedef{ ' thelongsiege gamemode? } if drop "RPG Mode" rainbold then 
+	gamedef{ ' sceptermode gamemode? } if drop "4 Jerks Scepter Mode" pbold then 
+	
+	\ retina 
+	
+	gamedef{ ' mutationmode gamemode? } if drop "Mutation Mode" rbold then
+	gamedef{ ' theinfectionEX gamemode? } if drop "Infection Mode EXTREME" rainbold then 	
+	
+	\ stomach 
+	
+	gamedef{ ' mutationmodeEX gamemode? } if drop "Mutation Mode EXTREME" rbold then
+	gamedef{ ' horrormode gamemode? } if drop "The Horrors Mode" rbold then
+	
 
-//	0 gamemode? not if drop "MODE DE JEU PERSONNALISE" then
+//	0 gamemode? not if drop "CUSTOM GAME MODE" then
 
 	+text +cr
 
-	zombop-cr +cr
+	zombop-cr +cr	
 
 	road_theme@ 4 = if
 		"YOU MADE IT TO CANADA!!!" fbold +text
 	then;
-
+	
 	road{ nearcanada-day 1 + road-trip-days - } 0= if
 		"YOU ARE ABOUT TO CROSS INTO CANADA!!!" rainbold +text
 	then;
@@ -644,42 +766,42 @@ DOT1 value DOT
 			+repairstatus +cr
 		DOT3 to STAR
 		0x 1b +chr " " +text car-engine car-max-engine +%starbar 3 +gaps
-			+wearstatus +cr
+			+wearstatus +cr 
 
 		car-armor if
 			0x 1a +chr " "  +text car-armor +dots 5 car-armor - +gaps 3 +gaps
 			+armourstatus +cr
 		then
-
-		+purple 2 +gaps "Vitesse de la voiture:" +text 2 +gaps +carspeed +cr
-
+		
+		+purple 2 +gaps "Car Speed:" +text 2 +gaps +carspeed +cr
+		
 		gamedef{ ' endlessmode gamemode? } if
-
-			road{ road-trip-days } 2 < if
-				+cr "Viens de commencer le voyage sans fin!" +text +cr
+		
+			road{ road-trip-days } 2 < if 
+				+cr "Just started the Endless journey!" +text +cr
 			then;
-
-			road{ road-trip-days } 3 < if
-				+cr "Survecu au premier jour du mode sans fin!" +text +cr
+			
+			road{ road-trip-days } 3 < if 
+				+cr "Survived the first day of Endless Mode!" +text +cr
 			then;
-
-			+cr "Encore en vie apres " +text +red road{ road-trip-days } 1 - +text +white " days on the road!!!" +text +cr
-
+		
+			+cr "Still alive after " +text +red road{ road-trip-days } 1 - +text +white " days on the road!!!" +text +cr
+				
 		then;
-
-		+cr "Plus que " +text +canadadays " de conduite avant d'arriver au CANADA!!!" +text +cr
-
+		
+		+cr "Only " +text +canadadays " driving days until CANADA!!!" +text +cr
+		
 	then;
 
 	road{ road-trip-days nearcanada-day < } if
-
-	"Plus que " +text +canadadays " de conduite avant d'arriver au CANADA..." +text +cr
-	+cr "...SI NOUS AVIONS UNE VOITURE " +text DX +text +cr
-
+	
+	"Only " +text +canadadays " driving days until CANADA..." +text +cr
+	+cr "...IF WE HAD A CAR " +text DX +text +cr
+	
 	then;
-
-	"Plus que " +text +canadadays " de conduite avant d'arriver au CANADA!!!" +text +cr
-
+	
+	"Only " +text +canadadays " days until CANADA!!!" +text +cr	
+	
 ;
 
 }
@@ -690,11 +812,11 @@ last to textfill-vehicle-tab
 : mv! mission.vehicle! ;
 
 : car-motor-dump
-	"MOTEUR DE VOITURE" print
-	" " type vehicle.motor.freq1@ print
-	"  frequence2 " type vehicle.motor.freq2@ print
-	"  devoir1 " type vehicle.motor.duty1@ print
-	"  devoir2 " type vehicle.motor.duty2@ print
+	"CAR MOTOR:" print
+	"  freq1 " type vehicle.motor.freq1@ print
+	"  freq2 " type vehicle.motor.freq2@ print
+	"  duty1 " type vehicle.motor.duty1@ print
+	"  duty2 " type vehicle.motor.duty2@ print
 	"  filt_low " type vehicle.motor.filt_low@ print
 	"  filt_high " type vehicle.motor.filt_high@ print
 	"  q " type vehicle.motor.q@ print

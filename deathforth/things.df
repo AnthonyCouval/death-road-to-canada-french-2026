@@ -1,7 +1,7 @@
 // uses mission.df
 
 40 value theme-stride		\ number of sprite frames in each theme
-0 value theme-num			\ current theme number, use "<num> vers theme num" to set it
+0 value theme-num			\ current theme number, use "<num> to theme-num" to set it
 
 
 // Putting these here for now because uses things.df just errored it anyway
@@ -309,7 +309,7 @@ voc{ mission
 : them them# #thing ;
 
 : store-event-info // FOR THING EVENTS ONLY
-//	"STOCKER INFO EVENEMENT" type PRINTSTACK
+//	"STORE EVENT INFO" type PRINTSTACK
 	to eventid
 	thing# to me#
 	me .interact_id@ to them#
@@ -402,7 +402,7 @@ thing-event: pump-event
 
 : fridge
 	spawn					\ spawns a blank object to the current anchor point
-	0x 22 themed spriteid!	\ sets its sprite to 0x22 (hex) and applies the "theme" modifier to the value to use whatever the theme is (set in theme-num)
+	0x 22 themed spriteid!	\ sets its sprite to 0x22 (hex) and applies the "themed" modifier to the value to use whatever the theme is (set in theme-num)
 	rnd5050 flip!			\ randomly flips the sprite
 	bbox					\ sets up a bounding box for collision, and mass estimated by size
 	\ TODO: Add loot into the fridge!
@@ -956,6 +956,16 @@ mission{
 		32 <- me .timer!
 		<- thing silentkillit
 	then;
+	
+	<- eventid THING_EVENT_OVERLAP = if
+		<- me ".overlapper" evaluate .typeid@ THING_HUMAN = <- me ".overlapper" evaluate .typeid@ THING_ZOMBIE = or if 
+		0 <- me .layer!
+	else 
+		-4 <- me .layer!
+	then then 
+	\ STOMACH : should make keys more obvious when hidden 
+	
+	\ TODO : Maybe make keys project "KEYS", note projects "NOTE" ? 
 
 	// Times up, no more deleting stuff
 	<- eventid THING_EVENT_TIMER = if
@@ -1156,9 +1166,15 @@ mission{
 	}
 ;
 
-
+: burnpatch-events args( thing eventid )
+	<- eventid THING_EVENT_TIMER <> ?;
+	<- thing .retrigger_timer
+	<- thing .burning@ ?;
+	0 <- thing .events! <- thing silentkillit
+;
 1000000000 constant PRACTICALLY_FOREVER
-: burnpatch ( duration radius ) spawn lt .rad.x! lt .burning! lt .invisible 100 lt .flammability! 1 lt .no_hit! ;
+: burnpatch ( duration radius ) spawn immovable lt .rad.x! lt .burning! ( lt .invisible ) 100 lt .flammability! 1 lt .no_hit!
+	0 lt .clr.a! 1 lt .nocollide! ' burnpatch-events lt .events! 1 lt .repeating_timer ;
 : lilburnpatch PRACTICALLY_FOREVER 8 burnpatch ;
 : medburnpatch PRACTICALLY_FOREVER 16 burnpatch ;
 : bigburnpatch PRACTICALLY_FOREVER 32 burnpatch ;

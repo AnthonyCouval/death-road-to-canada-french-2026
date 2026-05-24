@@ -10,7 +10,8 @@ cyoa: hazmatb
 	"Mattie" cchar .name!
 	dead? if npc-died then;
 	"Hazmattie" cyoa-title!
-	($ cname .. " ' dit quelque chose, mais son gros respirateur etouffe ce qu'elle dit. Il est probable qu'elle veuille sortir d'ici, des que possible. Ou peut etre qu'elle aime vivre dans les egouts. Qui peut le dire?" $) cyoa-text!
+	($ cname .. " says something, but her big respirator muffles what she is saying.
+	It's likely she wants out of here, as soon as possible. Or maybe she likes sewer living. Who can say?" $) cyoa-text!
 		road{ ' hazmatrescue to post-mission-cyoa }
 ;
 
@@ -19,8 +20,9 @@ cyoa: hazmata
 	hazmata choosechar cicon
 	"Matilda" cchar .name!
 	dead? if npc-died then;
-	"Matilda la dangereuse" cyoa-title!
-	($ cname .. " 	est pret a sortir de cette egout!" .. "Vivre ici a bien fonctionne au debut! Bien sur, les lits etaient humides, mais sinon, cetait bien!" pbold $) cyoa-text!
+	"Hazmatilda" cyoa-title!
+	($ cname .. " is ready to get out of this sewer! 
+	" .. "Living here worked at first! Sure the beds were soggy, but otherwise it was fine!" pbold $) cyoa-text!
 		road{ ' hazmatrescue to post-mission-cyoa }
 ;
 
@@ -28,8 +30,9 @@ cyoa: hazmat1
 	nearestget nearest .character@ to hazmat1
 	hazmat1 choosechar cicon
 	dead? if npc-died then;
-	"Matieres dangereuses" cyoa-title!
-	($ cname .. " " .. thegroup .. "  peut laider a secourir ses deux coequipiers, puis a sortir de cet egout par la porte.	" .. "Nous avons essaye de vivre ici pendant un moment. Il sest avere que ce netait pas une si bonne idee." pbold $) cyoa-text!
+	"Hazmatt" cyoa-title!
+	($ cname .. " asks for help! He offers a reward if " .. thegroup .. " can help him rescue his two team members, then get out of this sewer through the door.
+	" .. "We tried living down here for awhile. It turned out to not be such a great idea." pbold $) cyoa-text!
 		road{ ' hazmatrescue to post-mission-cyoa }
 ;
 
@@ -73,12 +76,12 @@ locdef{
 		post-script: 10diff %zombs map{ wetfloor } nad ndx
 		
 		: hazmatstart
-			e random-edge-door "hall egout" only-with-door
-			w random-edge-door "hall egout" only-with-door
+			e random-edge-door "sewer-hall" only-with-door
+			w random-edge-door "sewer-hall" only-with-door
 		;
 		
 		: hazmathall
-			random-door "hall egout" only-with-door
+			random-door "sewer-hall" only-with-door
 			random-door "hazmatrescue" only-with-door
 		;
 		
@@ -86,7 +89,7 @@ locdef{
 			1 allow-inset-doors!
 			randns dup edge-inc random-inset-door
 //			random-door
-			"tresor" only-with-door
+			"treasure" only-with-door
 			0 allow-inset-doors!
 		;
 		
@@ -132,7 +135,7 @@ regiondef{
 		no-prefab 
 		inside
 
-		"Regions LOCATIONS" print
+		"REGION LOCATIONS" print
 					
 		loc-choice: hazmat
 			loc-weight: 99

@@ -4,7 +4,7 @@ filesave{
 	DATE-SAVING WORDS:
 
 		' somevalue save-val
-		"francais" save-prop
+		"propname" save-prop
 		save-prop: propname
 		"commandtext" save-cmd
 		save-voc( 				// saves current vocabulary path
@@ -57,6 +57,7 @@ filesave{
 	' tnome-reward-1-deck save-val
 	' tnome-reward-2-deck save-val
 	' tnome-reward-3-deck save-val
+	' cartmap-bought save-val
   }
   road{ 
 	' road-trip-days save-val
@@ -131,7 +132,8 @@ filesave{
 	' burgtype save-val
 	
 	' stampuser-countdown save-val
-
+	
+	' brck-countdown save-val
   }
  cyoa{ 
 	' rescue-skill-deck save-val
@@ -160,9 +162,9 @@ voc{ savetest
 
 : data-save-example
 	savetest{
-		0 stack map{ prefab{ ' cabin } } shove 1 shove 2 shove "trois" shove ' dumpstack shove ' fooz shove 4 shove
+		0 stack map{ prefab{ ' cabin } } shove 1 shove 2 shove "three" shove ' dumpstack shove ' fooz shove 4 shove
 			to stackz
-		"GROS" to buttz
+		"BIG" to buttz
 
 		save-voc(
 

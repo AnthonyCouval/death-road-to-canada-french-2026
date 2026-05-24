@@ -46,6 +46,7 @@ uses blurb/sc/cupid.df
 uses blurb/sc/moody.df
 uses blurb/sc/liver.df
 uses blurb/sc/mandible.df
+uses blurb/sc/omentum.df
 
 // Regular personalities
 uses blurb/blurbdeck.df
@@ -55,6 +56,21 @@ uses blurb/optimist.df
 uses blurb/pessimist.df
 uses blurb/aggressive.df
 uses blurb/passive.df
+
+\ PANC onwards chars - stomach update 
+
+uses blurb/syca_sc/rohoa.df 
+uses blurb/syca_sc/ember.df 
+uses blurb/syca_sc/condor.df
+uses blurb/syca_sc/echoxeresdialogue.df
+uses blurb/syca_sc/clockking.df
+uses blurb/syca_sc/izzydialogue.df
+uses blurb/syca_sc/merenja.df
+uses blurb/syca_sc/zeus.df 
+uses blurb/syca_sc/bayonetta.df 
+uses blurb/syca_sc/rubick.df 
+uses blurb/syca_sc/pewter.df 
+
 
 BLURB-DECK shuffles to blurb-deck
 ONE-LINERS shuffles to one-liners
@@ -216,7 +232,28 @@ defer blurbcard
 	
 	1st-st 119 = if blurb-speedb-deck depths 0= if BLURB-SPEEDB-DECK shuffles to blurb-speedb-deck then then;
 	1st-st 120 = if blurb-punchb-deck depths 0= if BLURB-PUNCHB-DECK shuffles to blurb-punchb-deck then then;
-	
+
+	1st-char .cart? if cart-deck then;
+	1st-char .johnny? if johnny-deck then;
+	1st-char .brck? if brck-deck then;
+
+	\ STOMACH UPDATE
+	\ most previous chars get new dialogue
+
+	1st-st 132 = if blurb-ROHOA-deck depths 0= if BLURB-ROHOA-DECK shuffles to blurb-ROHOA-deck then then;
+	1st-st 133 = if blurb-EMBER-deck depths 0= if BLURB-EMBER-DECK shuffles to blurb-EMBER-deck then then;
+	1st-st 134 = if blurb-CONDOR-deck depths 0= if BLURB-CONDOR-DECK shuffles to blurb-CONDOR-deck then then;
+
+	1st-st 144 = if blurb-IZZY-deck depths 0= if BLURB-IZZY-DECK shuffles to blurb-IZZY-deck then then;
+	1st-st 145 = if blurb-CLOCKKING-deck depths 0= if BLURB-CLOCKKING-DECK shuffles to blurb-CLOCKKING-deck then then;
+	1st-st 146 = if blurb-ECHOXERES-deck depths 0= if BLURB-ECHOXERES-DECK shuffles to blurb-ECHOXERES-deck then then;
+
+	1st-st 148 = if blurb-BAYONET-deck depths 0= if BLURB-BAYONET-DECK shuffles to blurb-BAYONET-deck then then;
+	1st-st 149 = if blurb-ZEUS-deck depths 0= if BLURB-ZEUS-DECK shuffles to blurb-ZEUS-deck then then;
+	1st-st 150 = if blurb-MERENJA-deck depths 0= if BLURB-MERENJA-DECK shuffles to blurb-MERENJA-deck then then;
+	1st-st 151 = if blurb-RUBICK-deck depths 0= if BLURB-RUBICK-DECK shuffles to blurb-RUBICK-deck then then;
+	1st-st 152 = if blurb-PEWTER-deck depths 0= if BLURB-PEWTER-DECK shuffles to blurb-PEWTER-deck then then;
+
 	blurb-deck 
 ;
 
@@ -230,19 +267,19 @@ defer blurbcard
 		then
 	then;
 		
-	cchar .trait@ "CARL !" $= if
+	cchar .trait@ "CARL!" $= if
 		blurb-carl-deck depths 0= if BLURB-CARL-DECK shuffles to blurb-carl-deck then
 	then;
 	
-	cchar .trait@ "Gothique" $= if
+	cchar .trait@ "Goth" $= if
 		blurb-goth-deck depths 0= if BLURB-GOTH-DECK shuffles to blurb-goth-deck then
 	then;
 	
-	cchar .name@ "Obama" $= if
+	cchar .name@ $upper "OBAMA" $= if
 		onesaying-start // Could expand this later to sc/mandible.df
 	then;
 	
-	cchar .perk@ "Reine Squelette" $= if
+	cchar .perk@ "Skeleton Queen" $= if
 		blurb-samedi-deck depths 0= if BLURB-SAMEDI-DECK shuffles to blurb-samedi-deck then
 	then;
 		
@@ -296,7 +333,7 @@ defer blurbcard
 		blurblogic
 	then
 	
-	pops to blurbcard	// Just one card per conversation
+	pops nip to blurbcard	// Just one card per conversation
 
 // end commenting on line above
 	team-count for
@@ -319,5 +356,3 @@ defer blurbcard
 ;
 
 } }
-
-

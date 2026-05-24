@@ -1,12 +1,48 @@
 "../deathforth/rooms/city.txt" $load-rooms
 "events/inner/basehouses.df" $load
 
+0 value safegen1
+0 value keygen1 
+
+: kis 
+	1 to keygen1
+; 
+
+\ "key is safe", "safe is safe" 
+
+: sis 
+	1 to safegen1
+; 
+
+\ "force safe & key" 
+\ with weight changes, should guarantee safe & key gen 
+\ even if - in this case - they are in the same room. 
+: fsk 
+	rooms-created 13 = if 
+		keygen1 0 = if 
+			combonote
+			1 to keygen1
+	\		sfx{ growl } 
+		then 
+		
+		safegen1 0 = if 
+			metalsafe
+			1 to safegen1
+	\		sfx{ growl } 
+		then 
+	then 
+; 
+
+\ for TRACHEA, could maybe rework this entirely 
+\ scaling %based chance to spawn based on number of rooms created so far 
+\ will think about it ... 
+
 location: safehouse
 		max-rooms: 13
 		entry-tags: open1
 		script: set-theme-house
 		pre-script: set-theme-house
-		post-script: 10diff %zombs
+		post-script: 10diff %zombs fsk
 		
 		room-choice: hall
 			room-weight: 360
@@ -16,9 +52,9 @@ location: safehouse
 		2bed2bath9open evaluate
 		
 		room-choice: bathroom
-			room-weight: 1
+			room-weight: 99
 			room-count: 1
-			room-script: nad floor-bath combonote
+			room-script: nad floor-bath combonote kis
 		
 		room-choice: closet
 			room-weight: 10
@@ -26,10 +62,10 @@ location: safehouse
 			room-script: nad
 					
 		room-choice: bedroom
-			room-weight: 10
+			room-weight: 99
 			room-count: 1
 			room-script: nad		
-			room-post-script: metalsafe looseloot
+			room-post-script: metalsafe looseloot sis
 			
 
 regiondef{			

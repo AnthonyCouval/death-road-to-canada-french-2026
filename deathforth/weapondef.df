@@ -7,7 +7,7 @@ WEAPON_CUSTOM value custom
 : last-weapon custom 1- ;
 
 : WEAPON_NEW
-	custom WEAPON_COUNT >= if abort"  TROP DE DEFINITIONS DARMES" then;
+	custom WEAPON_COUNT >= if abort" TOO MANY WEAPONDEFS" then;
 	custom ' custom ++
 ;
 
@@ -215,8 +215,30 @@ WEAPON_CUSTOM value custom
 MELEE7 16 + constant MISC1
 : SHEET_ROW 16 * ;
 
+1 constant GUN_ANIMS 
+358 constant GUNS_ANIM_SPRITE
+\ For Stomach, some of the guns have been animated and resprited. 
+\ If you are a modder and hate my guts for this, you can turn off the anims specifically
+\ by setting this constant to 0. 
+
+\ "why didnt you animate the (X)?"
+\ either couldnt figure out a nice way to, couldnt figure out what gun it was xD, 
+\ or assumed the ejection port was on the underside
+
+\ Weapons affected:
+\ Hunting rifle, pistol, slug shotgun, shotgun, uzi, ak47, minigun, silenced pistol, flechette, double-barrel shotgun, dolt, snubnose 
+\ Some were also animated before this date: autorevolver, M.O.A.R
 
 
+\ Problem : axes are unviable.
+\ Problem : the multihit limit prevents them from fulfilling their purpose.
+\ Solution : make them ""single target"" but give them an AoE on hit 
+
+\ This allows me to control precisely the number of targets hit and circumvents the aoe limit 
+\ also...reducing their CD a bit. 
+
+\ Weapons affected: 
+\ Fireaxe, bardiche, medieval axe, golden axe, golden axe (heavy) 
 
 }
 
@@ -441,7 +463,8 @@ WEAPON_FLAMETHROWER clone-to: blowtorch
 
 		<- eventid THING_EVENT_SHOOT = if
 			<- me .anim.counter@ 0= if // Only do a new jet if not currently jetting
-				18 <- me .anim.counter! // 18 as default
+				27 <- me .anim.counter! // 18 as default
+				\ Increased by 1.5x for Q update. 
 			then 1 <- me .timer!
 		then;
 	;
@@ -568,6 +591,25 @@ custom: Hatchet
 	
 // Before was estimating 2 clips for each gun, now more like 6
 
+0 value RIFLE_REWORK
+1 to RIFLE_REWORK
+
+\ NOTE: setting RIFLE_REWORK to 0 will mean the rifles fire no shells at all,
+\ because i also had to modify their projectile count to make this work.
+\ (total number of projectiles unchanged.)
+
+\ See the cowboy rifle for an example on how this new rework functions 
+
+\ RIFLES AFFECTED:
+\ Slug, Sniper, Cowboy, Hunting 
+
+\ Pen ranges:
+\ COWBOY : 1-3 , slow scaling 
+\ HUNTING: 2-6 , norm scaling 
+\ SNIPER: 2-5 , norm scaling 
+\ SLUG: 3-8 , norm scaling 
+\ Pen count depending on total shooting stat. 
+
 custom: Cowboy rifle
 	spriteid: GUNS1 10 +
 	gun_muzzle_height: 2
@@ -592,6 +634,133 @@ custom: Cowboy rifle
 	badmelee
 	pointblank_far
 	Drangedtier
+	projectiles: 0 \ Rifle fires new projectile manually; total projectile count unchanged 
+	\ length: 2
+
+defer penshotD
+	
+		: fire-penshot args( me )
+		
+					bullet
+
+
+			<- me .aim_angle@ lt .angle!
+
+
+			<- me .pos lt .angle@ anglexy 11 xymul xyadd lt .pos!
+		
+			1 lt .timer! 
+			' penshotD lt .events! 
+			 
+			
+			0 lt .anim.extra! \ No ricochets. 
+			
+	;
+	
+
+	
+	: continue_pen args( me eventid )
+	
+	\ <- me .anim.counter@ 1 = if 
+	
+	<- me .weapon_state.val@ 0 = if <- me silentkillit then; 
+	
+	<- eventid THING_EVENT_FREE = if
+			
+			map{ <- me .pos pos>tile tile@ 0 } = not if \ This entire conditional segment basically says "don't penetrate wall or blocked tiles, unless the tile is a shelf" 
+				map{ <- me .pos pos>tile tile@ .id@ TILE_BLOCK } = map{ <- me .pos pos>tile tile@ .id@ TILE_LINK_DOOR } = map{ <- me .pos pos>tile tile@ .id@ TILE_BLOCK_FLOOR } = map{ <- me .pos pos>tile tile@ .id@ TILE_WRECKAGE } = map{ <- me .pos pos>tile tile@ .id@ TILE_WALLTOP } = or or or or if 
+					0 <- me .anim.counter! 
+				then 
+			then 
+			
+			
+			\ Damage graphs & curves are available upon request. Just ask! 
+			
+					<- me .anim.counter@ 0 = not if 
+						<- me .angle@ <- me .aim_angle!
+						<- me fire-penshot \ create new bullet, ensure old bullet properties are transient...
+						<- me .weapon_state.val@ 1 - lt .weapon_state.val! \ Penetration counter 
+						<- me .hitcheck.power@ 0.82 * lt .hitcheck.power! \ 18% stat loss per penetration 
+						<- me .hitcheck.knockback@ 0.82 * lt .hitcheck.knockback! 
+						<- me .hitcheck.shoot_thru@ 0.82 * lt .hitcheck.shoot_thru! 
+						<- me .vel lt .vel! \ No velocity reduction yet...unnecessary? 
+						<- me .anim.counter@ lt .anim.counter! \ No duration reduction yet, either 
+						<- me .anim.info@ lt .anim.info! \ Preserve bullet sprite state
+						<- me .spriteid@ lt .spriteid! \ and sprite... 
+						<- me .shooterid@ lt .shooterid! \ and owner stats 
+						<- me .clr.r@ lt .clr.r! \ big shot stuff... 
+						<- me .anim.substate@  lt .anim.substate! \ colour... 
+				\		break 
+
+						"PIERCED!" print 
+						"Power:" lt .hitcheck.power@ .. print 
+						"KB: " lt .hitcheck.knockback@ .. print 
+						"SHOOT-THRU: " lt .hitcheck.shoot_thru@ .. print 
+
+			
+				then \ then 
+			\	else
+			\		<- me silentkillit
+			\	then 
+			\ next drop 
+			
+		then
+
+	
+	;
+	
+	last to penshotD \ cursed recursion logic 
+
+
+: fire-cowbolt args( me )
+		
+			bullet
+			
+			\ sfx{ growl } 
+			
+			<- me thing# lt .throwerid!
+			<- me thing# lt .shooterid!
+			<- me .aim_angle@ lt .angle!
+
+			map{ <- me .pos <- me .angle@ anglexy 17 xymul xyadd pos>tile tile@ 0 } <> <- me .mapid@ 0 <> and not if 
+				<- me .pos lt .angle@ anglexy 7 xymul xyadd lt .pos!
+			else
+				<- me .pos lt .pos!
+				\ no shooting out the map!
+			then 
+
+			' continue_pen lt .events! 
+			 
+			0.05 lt .hitcheck.shoot_thru! \ Shoot_thru acts as normal for other weapons; provides mere occasional boon here 
+			1.5 lt .hitcheck.knockback!
+			3 lt .hitcheck.power! 		
+
+			30 lt .anim.counter! \ As part of the rework, higher tier rifle shots also last longer (probably not that big a deal) 
+
+			lt .angle@ anglexy 8 xymul lt .vel! \ As part of this rework, higher tier rifle shots move faster. 
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+			<- me .character@ .shooting@ STAT_SHOOTING <- me .character@ .bonus@ + 2 / >int 1 3 clamp lt .weapon_state.val! 
+
+			\ weapon_state.val determines the maximum number of penetrations, which does also affect wallbreak (since this counts as a penetration.) 
+			\ Cowboy rifle uses SHOOTING/2 rounded down. Every other rifle in the rework uses SHOOTING/1.5 rounded down. 
+			\ You may change the formulae if it pleases you so. 
+
+;
+
+
+: always_pen args( me eventid ) 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		RIFLE_REWORK 1 = if 
+			<- me fire-cowbolt
+		then
+	then 
+
+;
+
+wielder_handler: last	
+
 
 custom: Hunting rifle
 	spriteid: GUNS1 1 +
@@ -618,7 +787,83 @@ custom: Hunting rifle
 	skill_angle_range: 22
 	badmelee
 	pointblank_far
+	\ length: 2
+	lengthscale: 0.0001
 	Crangedtier
+	projectiles: 0 
+	
+	\ Stomach : new sprite 
+	spriteid: GUNS_ANIM_SPRITE 0 +
+	
+	
+: fire-huntbolt args( me )
+		
+			bullet
+			
+			\ sfx{ growl } 
+			
+			<- me thing# lt .throwerid!
+			<- me thing# lt .shooterid!
+			<- me .aim_angle@ lt .angle!
+
+			map{ <- me .pos <- me .angle@ anglexy 17 xymul xyadd pos>tile tile@ 0 } <> <- me .mapid@ 0 <> and not if 
+				<- me .pos lt .angle@ anglexy 7 xymul xyadd lt .pos!
+			else
+				<- me .pos lt .pos!
+				\ no shooting out the map!
+			then 
+
+			' continue_pen lt .events! 
+			 
+			0.05 lt .hitcheck.shoot_thru!
+			2 lt .hitcheck.knockback!
+			4 lt .hitcheck.power! 		
+
+			40 lt .anim.counter!
+
+			lt .angle@ anglexy 9.5 xymul lt .vel! // Speed
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+			<- me .character@ .shooting@ STAT_SHOOTING <- me .character@ .bonus@ + 1.5 / >int 1 + 2 6 clamp lt .weapon_state.val! 
+
+
+;
+
+
+: always_pen args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			<- me .character@ .perk@ "Ranger" $= if 
+				<- me .cooldown@ 2 / <- me .anim.counter! 
+			else 
+				<- me .character@ .perk@ "The Big Shot" $= if 
+					<- me .cooldown@ 0.825 / <- me .anim.counter! 
+				else 
+					<- me .cooldown@ 1.2 / <- me .anim.counter!
+				then 
+			then 
+		then 
+		
+		RIFLE_REWORK 1 = if 
+			<- me fire-huntbolt
+		then
+	then 
+
+;
+
+wielder_handler: last		
 
 // Knockback is PER BULLET
 custom: Shotgun
@@ -646,6 +891,41 @@ custom: Shotgun
 	skill_angle_range: 25
 	pointblank_near
 	Drangedtier
+	
+	\ stomach resprite ... pump action 
+	spriteid: GUNS_ANIM_SPRITE 2 + 
+	
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			<- me .character@ .perk@ "Ranger" $= if 
+				<- me .cooldown@ 2 / <- me .anim.counter! 
+			else 
+				<- me .character@ .perk@ "The Big Shot" $= if 
+					<- me .cooldown@ 0.825 / <- me .anim.counter! 
+				else 
+					<- me .cooldown@ 1.2 / <- me .anim.counter!
+				then 
+			then 
+		then 
+	then 
+
+;
+
+wielder_handler: last		
+	
 	
 custom: Autoshotgun
 	spriteid: GUNS1 9 +
@@ -700,6 +980,83 @@ custom: Slug Shotgun
 	badmelee
 	pointblank_far
 	Brangedtier
+	projectiles: 0 
+	
+	\ stomach resprite:
+	spriteid: GUNS_ANIM_SPRITE 14 + 
+	
+: fire-slugbolt args( me )
+		
+			bullet
+			
+			\ sfx{ growl } 
+			
+			<- me thing# lt .throwerid!
+			<- me thing# lt .shooterid!
+			<- me .aim_angle@ lt .angle!
+
+			map{ <- me .pos <- me .angle@ anglexy 17 xymul xyadd pos>tile tile@ 0 } <> <- me .mapid@ 0 <> and not if 
+				<- me .pos lt .angle@ anglexy 7 xymul xyadd lt .pos!
+			else
+				<- me .pos lt .pos!
+				\ no shooting out the map!
+			then 
+
+			' continue_pen lt .events! 
+			 
+			0.1 lt .hitcheck.shoot_thru!
+			3 lt .hitcheck.knockback!
+			5 lt .hitcheck.power! 		
+
+			60 lt .anim.counter!
+
+			lt .angle@ anglexy 10.25 xymul lt .vel! // Speed
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+			<- me .character@ .shooting@ STAT_SHOOTING <- me .character@ .bonus@ + 1.5 / >int 2 + 3 8 clamp lt .weapon_state.val! 
+
+
+;
+
+
+: always_pen args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		RIFLE_REWORK 1 = if 
+			<- me fire-slugbolt
+		then
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			
+			<- me .character@ .perk@ "Ranger" $= if 
+				<- me .cooldown@ 2 / <- me .anim.counter! 
+			else 
+				<- me .character@ .perk@ "The Big Shot" $= if 
+					<- me .cooldown@ 0.825 / <- me .anim.counter! 
+				else 
+					<- me .cooldown@ 1.2 / <- me .anim.counter!
+				then 
+			then 
+		then 
+	then 
+	
+	\ <- eventid THING_EVENT_WIELD = if 
+	\ 	5 <- me .weapon_state.off.x! 
+	\ then 
+
+;
+
+wielder_handler: last	
 	
 custom: BIG DAWG
 	spriteid: GUNS1 8 +
@@ -749,6 +1106,37 @@ custom: Dolt 45
 	pointblank_mid
 	Crangedtier
 
+	\ stomach 
+	spriteid16x32: 58
+
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+		
+		<- me .anim.counter@ 29 = if 
+			<- me .ammocount 6 % 0 = if 
+				<- me .ammocount 0 > if 
+					1 <- me .weapon_state.val!
+					2 <- me .weapon_state.frame! 
+				then 
+			then 
+		then 
+		
+		<- me .anim.counter@ 1 = if 
+			0 <- me .weapon_state.frame!			
+		then 
+	then 
+	
+	<- eventid THING_EVENT_SHOOT = if 
+		GUN_ANIMS 1 = if 
+		30 <- me .anim.counter! 
+		1 <- me .weapon_state.frame!
+		0 <- me .weapon_state.val! 
+	then then 
+; 
+
+wielder_handler: last 
 
 custom: Pistol
 	spriteid: GUNS1 4 +
@@ -766,6 +1154,38 @@ custom: Pistol
 	auto_eject: 1
 	melee_break_scale: 0
 	pointblank_mid
+	
+	\ stomach resprite
+	spriteid: GUNS_ANIM_SPRITE 4 + 
+
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			\ <- me .character@ .perk@ "Ranger" $= if 
+			\ 	<- me .cooldown@ 2 / <- me .anim.counter! 
+			\ else 
+			\ 	<- me .cooldown@ 1.2 / <- me .anim.counter!
+			\ then 
+			13 <- me .anim.counter! 
+		then 
+	then 
+;
+
+wielder_handler: last	
+
+
 
 custom: Snubnose
 	spriteid: GUNS1 6 +
@@ -788,6 +1208,38 @@ custom: Snubnose
 	pointblank_mid
 	Drangedtier
 
+	\ stomach 
+	spriteid16x32: 61
+
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+		
+		<- me .anim.counter@ 14 = if 
+			<- me .ammocount 6 % 0 = if 
+				<- me .ammocount 0 > if 
+					1 <- me .weapon_state.val!
+					2 <- me .weapon_state.frame! 
+				then 
+			then 
+		then 
+		
+		<- me .anim.counter@ 1 = if 
+			0 <- me .weapon_state.frame!			
+		then 
+	then 
+	
+	<- eventid THING_EVENT_SHOOT = if 
+		GUN_ANIMS 1 = if 
+		25 <- me .anim.counter! 
+		1 <- me .weapon_state.frame!
+		0 <- me .weapon_state.val! 
+	then then 
+; 
+
+wielder_handler: last 
+
 custom: Uzi
 	spriteid: GUNS1 5 +
 	gun_muzzle_height: 2
@@ -808,6 +1260,34 @@ custom: Uzi
 	badmelee
 	pointblank_mid
 	Arangedtier
+
+	\ stomach sprite 
+	spriteid: GUNS_ANIM_SPRITE 6 + 
+	\ some inaccuracies sustained to exaggerate an already short anim 
+	\ uzi is top heavy so "jiggles" a bit 
+
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			11 <- me .anim.counter!
+		then \ Gun fires too fast for firing anim to be noticeable a lot of the time, so...
+	then 
+;
+
+wielder_handler: last	
+
 
 custom: AK47
 	spriteid: GUNS1 7 +
@@ -832,6 +1312,32 @@ custom: AK47
 	melee_break_scale: 0
 	pointblank_mid
 	Arangedtier
+	
+	\ stomach sprite 
+	spriteid: GUNS_ANIM_SPRITE 8 + 
+	
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			9 <- me .anim.counter!
+		then \ Gun fires too fast for firing anim to be noticeable a lot of the time, so...
+	then 
+;
+
+wielder_handler: last		
+	
 
 custom: Cane
 	spriteid: MELEE3
@@ -929,15 +1435,86 @@ custom: Golf Club
 	lightcooldown
 	Etier
 	
+\ Stomach  	
+\ Sycamore, WTF is this? 
+\ Errr great question. Blasts are objects. they can have events.
+\ To limit the damage potential of the new axe AoEs i have this setup 
+\ Madgarden enlightened me to this technology. 
+
+: cursed_xyblast_magic args( me eventid ) 
+	<- eventid THING_EVENT_OVERLAP = if 
+		\ <- me .weapon_state.val@ <- me .overlapper .report
+		
+		<- me .overlapper .typeid@ THING_HUMAN = not if 
+			<- me .weapon_state.val@ 1 - <- me .weapon_state.val! 
+		then 
+		
+		<- me .weapon_state.info@ %chance if
+			<- me .overlapper .typeid@ THING_ZOMBIE = if  
+				0 <- me .overlapper .hitpoints! 
+				"CRIT!" rbold <- me .overlapper .report
+			then 
+		then 
+		
+		<- me .weapon_state.val@ 1 < if
+			-10000 dup lt .pos! \ TO THE SHADOW REALM WITH YE 
+			<- me silentkillit \ AND NOW: DIE 
+		then 
+	then 
+; 
+
+\ TODO: CRITS 
+
+: xypow_sycablast 0 args( x y rad hits crit bl ) 
+	<- x <- y xyblast -> bl
+	
+	-1 <- bl .hitcheck.blast!
+	1 <- bl .hitcheck.mode! 
+	50 <- bl .hitcheck.power_max! 
+	\ Not relevant most of the time
+	\ However: mutation mode EX. 
+
+	<- rad <- bl .hitcheck.rad! 
+	<- hits <- bl .weapon_state.val!  
+	<- crit <- bl .weapon_state.info! \ "info" crit info 
+	' cursed_xyblast_magic <- bl .events! 
+; 
+
+	
+	
 custom: Medieval Axe
 	spriteid: MELEE2 6 +
 	knockback: 2
 	power: 3
-	cooldown: 1.75
+	cooldown: 1.85
 	melee_break_scale: 0
-	melee_extra_hits: 2
+	melee_extra_hits: 0 \ was 2 
+	\ Slightly inferior to claymore due to cheapness (25 food) 
 	wepscorebonus
 	Btier
+	
+	: axe_rework args( me eventid ) 
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+		<- me .fatigued? not if 	
+			<- me .just_hit_id@ #thing .pos 17 2 3 rnd <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+		else 
+			<- me .just_hit_id@ #thing .pos 17 2 3 rnd 0 xypow_sycablast 
+		then 
+		
+			<- me .fatigued? not if 
+					<- me .wielded sel power@ lt .hitcheck.power!
+					<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+			else 
+				<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+				<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+			then 
+			
+	
+	then 
+; 
+
+wielder_handler: last 	
 	
 custom: Strong Katana
 	tags: truekatana
@@ -1001,11 +1578,45 @@ custom: Fire Axe
 	spriteid: MELEE2 0x a +
 	knockback: 2
 	power: 2
-	cooldown: 1.2
+	cooldown: 1.2 \ was 1.2
 	melee_break_scale: 0
-	melee_extra_hits: 1
-	melee_extra_chance: 0.5
+\	melee_extra_hits: 1
+\	melee_extra_chance: 0.5
 	Ctier
+\ See above on "axe rework" for explanation 
+
+
+: axe_rework args( me eventid ) 
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+			 
+		<- me .fatigued? not if 	
+			<- me .just_hit_id@ #thing .pos 17 2 <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+			\ 19 radius, 2 hits, apply crits 
+		else 
+			<- me .just_hit_id@ #thing .pos 17 2 0 xypow_sycablast 
+		then 
+
+			
+			<- me .fatigued? not if 
+				\ <- me .character@ "perkdef{ .fierce% }" evaluate %chance if
+				\	<- me .wielded sel power@ 2 * lt .hitcheck.power!
+				\	<- me .wielded sel knockback@ 2 * lt .hitcheck.knockback! 
+				\	1 rumble 
+				\ else 
+					<- me .wielded sel power@ lt .hitcheck.power!
+					<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+				\ then 
+			else 
+				<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+				<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+			then 
+			
+	
+	then 
+; 
+
+wielder_handler: last 
 
 custom: Umbrella
 	spriteid: MELEE2 0x e +
@@ -1366,19 +1977,23 @@ custom: Morning Star
 //	melee_extra_chance: 1 // for testing
 	Atier
 
-custom: Pool1
+custom: Pool Noodle
+	weapon: pool1 
 	spriteid: MELEE3 0x e +
-	knockback: 0.5
+	knockback: 1
 	power: 0
 	cooldown: 0.8
-	melee_break_scale: 0
+	melee_break_scale: 0.1
+	melee_extra_hits: 2
 	
-custom: Pool2
+custom: Pool Noodle 
+	weapon: pool2 
 	spriteid: MELEE3 0x f +
-	knockback: 0.5
+	knockback: 1
 	power: 0
 	cooldown: 0.8
-	melee_break_scale: 0
+	melee_break_scale: 0.1
+	melee_extra_hits: 2 
 
 // Special char weapons
 	
@@ -1422,11 +2037,13 @@ custom: Rambeux Knife
 	wepscorebonus
 	Btier
 
+: gunoff_x: lev> gun_muzzle_scale! ;
+
 custom: Minigun
 	spriteid: GUNS1 0x b +
 	gun_muzzle_height: 2
 	ammo_type: LOOT_RIFLE_SHELL
-	boom_factor: 3
+	boom_factor: 2
 	spread_factor: 5
 	shot_power: 2.5
 	reload: 0.1
@@ -1444,6 +2061,38 @@ custom: Minigun
 	melee_break_scale: 0
 	pointblank_mid
 	Grangedtier
+	0 custom_retract! 
+	
+	\ stomach sprite 
+	spriteid: GUNS_ANIM_SPRITE 10 + 
+	\ again, some liberties taken to make spinning barrel obvious 
+	
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if 
+		\ 0 <- me .weapon_state.reach! 
+		0 <- me .shudder! 
+	then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		GUN_ANIMS 1 = if	
+
+			<- me .weapon_state.val@ 3 / <- me .weapon_state.frame!
+
+			<- me .weapon_state.val@ 1 + <- me .weapon_state.val! 
+			\ 0 <- me .weapon_state.reach! \ anti bounce 
+			0 <- me .shudder! 
+			<- me .weapon_state.val@ 11 > if 
+				0 <- me .weapon_state.val! 
+			then 
+			
+			-1.7 rumble \ anti screenshake 
+			
+		then
+	then 
+;
+
+wielder_handler: last		
 
 custom: Ridiculous Pistol
 	spriteid: GUNS1 4 +
@@ -2309,7 +2958,7 @@ thing-event: mjol-wield
 			sfx{ rumble 2 scale! me .adjust-vol q@ 0.5 * q! }
 			2 rumble
 			me .drop
-			BLINKY "PAS DIGNES" $cat lt .report
+			BLINKY "NOT WORTHY" $cat lt .report
 			-90 lt .angle!
 			-2 lt .pos.y@ + lt .pos.y!
 			1 lt .flip!
@@ -3330,7 +3979,7 @@ custom: Air horn
 
 	0 <- me .anim.weapon_counter!
 
-	0.5 "vide" <- me .reportdur
+	0.5 "empty" <- me .reportdur
 
 	<- me .pos particle{
 		new pos!
@@ -3724,7 +4373,7 @@ custom: Healing Spray
 
 		0 <- me .anim.weapon_counter!
 
-		0.5 "vide" <- me .reportdur
+		0.5 "empty" <- me .reportdur
 
 		<- me .pos particle{
 			new pos!
@@ -3931,25 +4580,65 @@ WEAPON_SCYTHE clone-to: Stick Boot
 WEAPON_MEDIEVAL clone-to: Bardiche
 	weapon: bardiche
 	spriteid: MELEE5 0x 2b +
-	cooldown: 2.3
+	cooldown: 2.15 \ was 2.3 
 	power: 3.5
-	melee_extra_hits: 3
+	melee_extra_hits: 0 \ was 3 
 	melee_off.y: 2
 	melee_off.x: 3
 	melee_reach: 12
 	melee_range: 10
 	Btier
 	
+: axe_rework args( me eventid ) 
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+		<- me .fatigued? not if 	
+			<- me .just_hit_id@ #thing .pos 20 4 <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+		else 
+			<- me .just_hit_id@ #thing .pos 20 4 0 xypow_sycablast 
+		then 
+		
+			<- me .fatigued? not if 
+					<- me .wielded sel power@ lt .hitcheck.power!
+					<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+			else 
+				<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+				<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+			then 
+			
+	
+	then 
+; 
+
+wielder_handler: last 	
+	
 WEAPON_BARDICHE clone-to: Heavy Golden Axe
 	// 28% more power, 1 extra hit so 25% more cleave, 8% slower cooldown
 	spriteid16x32: 0x e
 	weapon: goldenaxe2
 	power: 4.5
-	cooldown: 2.5
-	melee_extra_hits: 4
+	cooldown: 2.25 \ was 2.5 
+	melee_extra_hits: 0 \ was 4 
 	Atier
 	
 	:noname args( me eventid )
+	
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+		<- me .fatigued? not if 	
+			<- me .just_hit_id@ #thing .pos 22 5 <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+		else 
+			<- me .just_hit_id@ #thing .pos 22 5 0 xypow_sycablast 
+		then 
+		
+			<- me .fatigued? not if 
+					<- me .wielded sel power@ lt .hitcheck.power!
+					<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+			else 
+				<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+				<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+			then 
+		then 
 
 		THING_EVENT_ANIMATE <- eventid = if
 			1 <- me .timer!
@@ -3968,12 +4657,29 @@ WEAPON_FIRE clone-to: Golden Axe
 	spriteid16x32: 0x d
 	weapon: goldenaxe1
 	power: 3
-	cooldown: 1.5
-	melee_extra_hits: 2
-	melee_extra_chance: 1
+	cooldown: 1.7
+	melee_extra_hits: 0 \ was 2
+	\ melee_extra_chance: 1
 	Atier
 	
 	:noname args( me eventid )
+	
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+		<- me .fatigued? not if 	
+			<- me .just_hit_id@ #thing .pos 17 3 <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+		else 
+			<- me .just_hit_id@ #thing .pos 17 3 0 xypow_sycablast 
+		then 
+		
+			<- me .fatigued? not if 
+					<- me .wielded sel power@ lt .hitcheck.power!
+					<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+			else 
+				<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+				<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+			then 
+		then 
 
 		THING_EVENT_ANIMATE <- eventid = if
 			1 <- me .timer!
@@ -4007,6 +4713,8 @@ WEAPON_PISTOL clone-to: Ded9
 	shot_power: 2.5
 	spread_factor: 1
 	Brangedtier
+	\ stomach 
+	wielder_handler: 0 
 	
 WEAPON_PISTOL clone-to: Modded Ded9
 	spriteid: GUNS2 1 +
@@ -4017,6 +4725,8 @@ WEAPON_PISTOL clone-to: Modded Ded9
 	shot_power: 2.5
 	shoot_thru: 0.15
 	Brangedtier
+	\ stomach 
+	wielder_handler: 0 
 	
 WEAPON_ALUMINUM clone-to: Skateboard
 	weapon: bortboard
@@ -4111,7 +4821,7 @@ WEAPON_RAYGUN clone-to: Mazer Pistol
 	spriteid: MELEE6 23 +
 	laser_type: 4
 	// cooldown: 0.4
-	FLASHY "Francais" .. WHITE .. chargename!
+	FLASHY "MAZAPS" .. WHITE .. chargename!
 	gun_muzzle_height: 3
 	Brangedtier
 
@@ -4189,9 +4899,34 @@ WEAPON_SHOVEL clone-to: Pickaxe
 	spriteid16x32: 5
 	knockback: 1.5
 	power: 2
-	cooldown: 1.2
-	melee_extra_chance: 0.35
+	cooldown: 1.3
+	\ melee_extra_chance: 0.35
+	melee_extra_hits: 0 \ new 
 	Ctier
+	
+: axe_rework args( me eventid ) 
+	<- eventid THING_EVENT_DID_HIT = if 
+ 
+		50 %chance if 
+			<- me .fatigued? not if 	
+				<- me .just_hit_id@ #thing .pos 17 2 <- me .character@ "perkdef{ .fierce% }" evaluate xypow_sycablast 
+			else 
+				<- me .just_hit_id@ #thing .pos 17 2 0 xypow_sycablast 
+			then 
+			
+				<- me .fatigued? not if 
+						<- me .wielded sel power@ lt .hitcheck.power!
+						<- me .wielded sel knockback@ lt .hitcheck.knockback! 
+				else 
+					<- me .wielded sel power@ 0.5 * lt .hitcheck.power!
+					<- me .wielded sel knockback@ 0.5 * lt .hitcheck.knockback!  
+				then 
+		then 	
+	
+	then 
+; 
+
+wielder_handler: last	
 	
 WEAPON_LOG clone-to: Lady's Log
 	weapon: logladylog
@@ -4252,6 +4987,8 @@ WEAPON_BARDICHE clone-to: Halberd
 	spriteid: MELEE5 0x 2c +
 	cooldown: 1.4
 	power: 2.5
+	melee_extra_hits: 3 
+	wielder_handler: 0 
 	Btier
 	
 WEAPON_KUNAI clone-to: Sai
@@ -4661,16 +5398,97 @@ custom: Green Turret
 WEAPON_PISTOL clone-to: Silenced Pistol
 	spriteid: GUNS2 2 +
 	weapon: silentpistol
-	boom_factor: 0
+	boom_factor: 0.001
 	shot_power: 1.2
+	
+	\ stomach resprite 
+	spriteid: GUNS_ANIM_SPRITE 16 + 
+
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					0 <- me .weapon_state.frame!			
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			1 <- me .weapon_state.frame!
+			\ <- me .character@ .perk@ "Ranger" $= if 
+			\ 	<- me .cooldown@ 2 / <- me .anim.counter! 
+			\ else 
+			\ 	<- me .cooldown@ 1.2 / <- me .anim.counter!
+			\ then 
+			13 <- me .anim.counter! 
+		then 
+	then 
+;
+
+wielder_handler: last		
 	
 WEAPON_HUNTING clone-to: Sniper Rifle
 	spriteid: GUNS2 8 +
 	weapon: silentrifle
-	boom_factor: 0
+	boom_factor: 0.01
 	shot_power: 3.5
 	shoot_thru: 0.4
 	Brangedtier
+	
+: fire-sniperbolt args( me )
+		
+			bullet
+			
+			\ sfx{ growl } 
+			
+			<- me thing# lt .throwerid!
+			<- me thing# lt .shooterid!
+			<- me .aim_angle@ lt .angle!
+
+			map{ <- me .pos <- me .angle@ anglexy 7 xymul xyadd pos>tile tile@ 0 } <> <- me .mapid@ 0 <> and not if 
+				<- me .pos lt .angle@ anglexy 14 xymul xyadd lt .pos!
+				
+			else
+				<- me .pos lt .angle@ anglexy 5 xymul xyadd lt .pos!
+				\ no shooting out the map!
+			then 
+
+			' continue_pen lt .events! 
+			 
+			0.05 lt .hitcheck.shoot_thru!
+			2 lt .hitcheck.knockback!
+			3.5 lt .hitcheck.power! 		
+
+			50 lt .anim.counter!
+
+			lt .angle@ anglexy 9.5 xymul lt .vel! // Speed
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+			<- me .character@ .shooting@ STAT_SHOOTING <- me .character@ .bonus@ + 1.5 / >int 1 + 2 4 clamp lt .weapon_state.val! 
+
+
+;
+
+
+: always_pen args( me eventid ) 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		RIFLE_REWORK 1 = if 
+			<- me fire-sniperbolt
+		then
+	then 
+	
+	<- eventid THING_EVENT_WIELD = if 
+		5 <- me .weapon_state.off.x! \ HOLD THE DAMN THING PROPERLY FOR ONCE 
+	then 
+
+;
+
+wielder_handler: last		
 	
 WEAPON_AUTOSHOT clone-to: Quiet Shotgun
 	spriteid: GUNS2 7 +
@@ -4679,6 +5497,13 @@ WEAPON_AUTOSHOT clone-to: Quiet Shotgun
 	shot_power: 0.4
 	reload: 0.7
 	Brangedtier
+	
+: no_country_for_old_men args( me eventid ) 
+	<- eventid THING_EVENT_SHOOT = if 
+		sfx{ zelda 1000 freq2! 600 freq! 0.9 1.1 frnd pitch! 20 a! 60 d! 0 s! 0 r! } 
+	then 
+; 
+wielder_handler: last 
 	
 WEAPON_MAZER clone-to: Solar Mazer
 	weapon: solarmazer	
@@ -5215,6 +6040,50 @@ WEAPON_SHOTGUN clone-to: Double-barrel shotgun
 	ammo_max: 60
 	Crangedtier
 	
+	\ stomach : 
+	\ switching to this spritesheet 
+	\ for the reload anim 
+	spriteid16x32: 56
+	
+: always_anim args( me eventid ) 
+
+	<- eventid THING_EVENT_ANIMATE = if
+	\ 1 <- me .weapon_state.val@ <- me .reportdurnow
+		<- me .anim.state@ if then;
+			GUN_ANIMS 1 = if
+				<- me .anim.counter@ 1 = if 
+					<- me .weapon_state.val@ 0 = if 
+						1 <- me .weapon_state.frame!
+						1 <- me .weapon_state.val! 
+						30 <- me .anim.counter! 
+					else 
+						0 <- me .weapon_state.frame! 
+					then 
+				then 
+			then 
+		then 
+
+	<- eventid THING_EVENT_SHOOT = if	
+		
+		GUN_ANIMS 1 = if 
+			0 <- me .weapon_state.frame!
+			0 <- me .weapon_state.val! 
+			<- me .character@ .perk@ "Ranger" $= if 
+				18 <- me .anim.counter! 
+			else 
+				<- me .character@ .perk@ "The Big Shot" $= if 
+					34 <- me .anim.counter! 
+				else 
+					23 <- me .anim.counter!
+				then 
+			then 
+		then 
+	then 
+
+;
+
+wielder_handler: last 	
+	
 WEAPON_MASONSAW clone-to: Chainsaw Hand
 	weapon: chainhand
 	spriteid: MELEE7 20 +
@@ -5256,8 +6125,202 @@ custom: Bow
 	10 constant BOW_FRESH_DRAW // originally 3
 	90 BOW_FRESH_DRAW * constant BOW_DRAW_TIME // originally 15, for 45 DRAW_TIME total
 	20 constant BOW_COOLDOWN_TIME // originally 15
+	
+	\ Main changes...
+	
+	\ Damage curve change: maximum damage at maximum draw is now 3, providing a 50% chance to 1-shot or multi-hit 
+	\ VFX change: arrows now move faster and have air trails during flight 
+	\ Gameplay change: arrows that reach the end of their life drop on the floor, may be picked up again 
+	\ New mechanic: arrows that don't kill may embed themselves in target, maiming target (speed loss) 
+	\ Perk changes: Bow+Arrows now has the longbow as it's specialist weapon 
+
+	\ I also think we should change the bow sprite. The current one looks a bit dinky imo. 
 
 	: .bow-cooldown-time BOW_COOLDOWN_TIME swap .fatigued? if 3 * then ; // was 4 before, but COOLDOWN_TIME was 15 before so it was the same 60 cooldown if fatigued
+
+: .zombie? .typeid@ THING_ZOMBIE = ;
+
+: restore_ammo2 args( me eventid ) 
+
+\ In the interest of simplicity, the bow and cupid bow may recharge one another, since they are functionally identical. 
+
+	<- eventid THING_EVENT_OVERLAP = if
+		<- me .overlap_id@ #thing .character@ .weapona@ WEAPON_BOW = <- me .overlap_id@ #thing .character@ .weapona@ 202 = or if
+			<- me .overlap_id@ #thing .character@ .stackeda@ 50 < if 
+				<- me .overlap_id@ #thing .character@ .stackeda@ 1 + <- me .overlap_id@ #thing .character@ .stackeda!
+				<- me silentkillit
+				sfx{ goodfx } 
+				<- me .reportammo
+		then then;
+		
+		<- me .overlap_id@ #thing .character@ .weaponb@ WEAPON_BOW = <- me .overlap_id@ #thing .character@ .weaponb@ 202 = or if
+			<- me .overlap_id@ #thing .character@ .stackedb@ 50 < if 
+				<- me .overlap_id@ #thing .character@ .stackedb@ 1 + <- me .overlap_id@ #thing .character@ .stackedb!
+				<- me silentkillit
+				sfx{ goodfx } 
+				<- me .reportammo
+		then then;
+		
+		<- me .overlap_id@ #thing .character@ .weaponc@ WEAPON_BOW = <- me .overlap_id@ #thing .character@ .weaponc@ 202 = or if
+			<- me .overlap_id@ #thing .character@ .stackedc@ 50 < if 
+				<- me .overlap_id@ #thing .character@ .stackedc@ 1 + <- me .overlap_id@ #thing .character@ .stackedc!
+				<- me silentkillit
+				sfx{ goodfx } 
+				<- me .reportammo
+		then then;
+	then 
+; 
+
+: spare_arrow2
+	spawn 
+	1 lt .walkover!
+	3 lt .hitpoints!
+	\ weapons_base_id 767 + lt .spriteid!
+	1 lt .nopush!
+	' restore_ammo2 lt .events!
+	\ 1 lt .no_hit!
+	5 lt .rad.x! 5 lt .rad.y! 
+	\ "DONT LEAVE ME" lt .report 
+; 
+	
+: arrow-stuck3 args( me eventid )
+	<- eventid THING_EVENT_TIMER = if
+	
+	1 <- me .timer!
+		<- me .pos particle{ 
+			new pos!
+			1 ticks!
+			75 angle!
+			1 layer! 
+			\ weapons_base_id 767 + spriteid!
+			\ weapons_base_id MELEE6 0x 39 + 2 + + spriteid! 
+			1 scale!
+		}
+		<- me .weapon_state.val@ particle{ spriteid! } 
+	then
+;
+			
+
+\ ----------------------------------------------
+\ RECTUM BOW REWORK LOGIC : 
+\ ----------------------------------------------
+
+
+defer penshotBow
+	
+		: fire-penshot-bow args( me )
+		
+					bullet
+
+
+			<- me .aim_angle@ lt .angle!
+
+
+			<- me .pos lt .angle@ anglexy 11 xymul xyadd lt .pos!
+		
+			1 lt .timer! 
+			' penshotBow lt .events! 
+			 
+			
+			0 lt .anim.extra! \ No ricochets. 
+			
+	;
+	
+
+	
+	: continue_pen_bow args( me eventid )
+	
+	\ <- me .anim.counter@ 1 = if 
+	
+	<- me .weapon_state.val@ 0 = if <- me silentkillit then; 
+	
+	<- eventid THING_EVENT_FREE = if
+			
+			"NUM 1" print 
+			
+				<- me .anim.counter@ 1 > if
+					<- me .weapon_state.val@ 1 = if 
+					"NUM 2" print 
+
+					<- me .hitcheck.lasthit_id@ 0 = not if 
+						<- me .hitcheck.lasthit_id@ #thing .typeid@ THING_ZOMBIE = if 
+							' arrow-stuck3 <- me .hitcheck.lasthit_id@ #thing .events!
+							0.6 <- me .hitcheck.lasthit_id@ #thing .friction!
+							100 <- me .hitcheck.lasthit_id@ #thing .stun! 
+							<- me .spriteid@ <- me .hitcheck.lasthit_id@ #thing .weapon_state.val! 
+							1 <- me .hitcheck.lasthit_id@ #thing .timer! 
+						then 
+					then 
+				then 
+					
+				else
+					spare_arrow2
+					<- me .pos lt .pos!
+					<- me .angle@ lt .angle!
+					<- me .spriteid@ lt .spriteid! 
+					<- me silentkillit
+				then 
+			
+			
+			map{ <- me .pos pos>tile tile@ 0 } = not if \ This entire conditional segment basically says "don't penetrate wall or blocked tiles, unless the tile is a shelf" 
+				map{ <- me .pos pos>tile tile@ .id@ TILE_BLOCK } = map{ <- me .pos pos>tile tile@ .id@ TILE_LINK_DOOR } = map{ <- me .pos pos>tile tile@ .id@ TILE_BLOCK_FLOOR } = map{ <- me .pos pos>tile tile@ .id@ TILE_WRECKAGE } = map{ <- me .pos pos>tile tile@ .id@ TILE_WALLTOP } = or or or or if 
+					0 <- me .anim.counter! 
+				then 
+			then 
+			
+					<- me .anim.counter@ 0 = not if 
+						<- me .angle@ <- me .aim_angle!
+						<- me fire-penshot-bow \ create new bullet, ensure old bullet properties are transient...
+						<- me .weapon_state.val@ 1 - lt .weapon_state.val! \ Penetration counter 
+						<- me .hitcheck.power@ 0.82 * lt .hitcheck.power! \ 18% stat loss per penetration 
+						<- me .hitcheck.knockback@ 0.82 * lt .hitcheck.knockback! 
+						<- me .hitcheck.shoot_thru@ 0.82 * lt .hitcheck.shoot_thru! 
+						<- me .vel lt .vel! \ No velocity reduction yet...unnecessary? 
+						<- me .anim.counter@ lt .anim.counter! \ No duration reduction yet, either 
+						<- me .anim.extra@ lt .anim.extra! 
+						-1 lt .anim.info!
+						<- me .spriteid@ lt .spriteid!
+					\ 	<- me .weapon_state.hint@ lt .weapon_state.hint! 
+						\ <- me .spriteid@ ": " .. lt .spriteid@ .. <- me .report  
+
+						"PIERCED!" print 
+						"Power:" lt .hitcheck.power@ .. print 
+						"KB: " lt .hitcheck.knockback@ .. print 
+						"SHOOT-THRU: " lt .hitcheck.shoot_thru@ .. print 
+
+			
+				then
+		then
+	
+		<- eventid THING_EVENT_TIMER = if 
+			1 <- me .timer! 
+			
+				<- me .vel xymag 3.5 > if 
+						
+						<- me .pos -4 4 rnd -4 4 rnd xyadd <- me .angle@ anglexy -10 xymul xyadd 
+						particle{
+							new pos!
+							2 ticks!
+							
+							particles_base_id 70 + spriteid!
+							1 scale!
+						}
+						<- me .pos.z@ particle{ pos.z! }
+						<- me .angle@ particle{ angle! } 
+						
+				 then
+		
+		then 
+
+	
+	;
+	
+	last to penshotBow \ cursed recursion logic 
+
+
+\ ----------------------------------------------
+\ RECTUM BOW REWORK LOGIC
+\ ----------------------------------------------
 
 	: fire-arrow args( me )
 		sfx{ pip 0 duty! freq@ 0.6 * freq2! 0.9 0.8 frnd 0.75 *  pitch! <- me .adjust-vol
@@ -5270,18 +6333,28 @@ custom: Bow
 		-1 lt .anim.info!
 		<- me thing# lt .throwerid!
 		<- me .wielded_spriteid 2 + lt .spriteid!
+		lt .spriteid@ lt .weapon_state.hint! \ remember my sprite for embed vfx 
 		-5 <- me .weapon_state.reach!
 		<- me .aim_angle@ lt .angle!
-		<- me .pos lt .angle@ anglexy 12 xymul xyadd lt .pos!
+		<- me .pos lt .angle@ anglexy 9 xymul xyadd lt .pos!
+		\ Arrow should leave from the mid of bow, not edge 
 
 		<- me .weapon_state.user@ BOW_DRAW_TIME / 15 * 30 + lt .anim.counter!
 
-		<- me .weapon_state.user@ BOW_DRAW_TIME / dup * 1.5 * 0.5 + lt .hitcheck.power! // Power (exponential)
+		<- me .weapon_state.user@ BOW_DRAW_TIME / dup * 2.5 * 0.5 + lt .hitcheck.power! 
+		\ passed 2.5 damage threshold 
+		"POWER:" print 
+		lt .hitcheck.power@ print 
 
-//		lt .hitcheck.power@ print
+		1 lt .timer! 
+		' continue_pen_bow lt .events! 
 
-		lt .angle@ anglexy <- me .weapon_state.user@ BOW_DRAW_TIME / 2 * 2 + xymul lt .vel! // Speed
-		<- me .weapon_state.user@ BOW_DRAW_TIME / dup * ( dup msg ) lt .hitcheck.shoot_thru! // Pierce (exponential)
+		lt .angle@ anglexy <- me .weapon_state.user@ BOW_DRAW_TIME / 4 * 2 + xymul lt .vel! // Speed
+		0.05 lt .hitcheck.shoot_thru! // Pierce (exponential)
+		
+		<- me .character@ .strength@ STAT_STRENGTH <- me .character@ .bonus@ + <- me .weapon_state.user@ BOW_DRAW_TIME / * >int 1 + 0 11 clamp lt .weapon_state.val! 
+
+		\ Direct linear scaling with STR. Secondary % scaling with charge time - 100% charge rewards the full value for your STR. 
 
 		-2 <- me .breath - lt .pos.z!
 		lt .pos lt .pos.z@ +
@@ -5296,6 +6369,15 @@ custom: Bow
 
 		<- me .weapon_state.user@ 0 > abs <- me .weapon_state.frame!
 		2 <- me .weapon_state.user@ BOW_DRAW_TIME / 5 * + <- me .weapon_state.off.x!
+		
+				gameticks 2 3 rnd & not if
+					sfx{ -5 nextpri thump
+						350 freq! 250 ramp_start! 500 ramp_end! 5 a! 10 d! 0.9 s! 10 r!
+						0.4 scale!
+						<- me .weapon_state.user@ 200 / 0 5 clamp pitch!
+						<- me .adjust-vol
+					}
+				then 
 
 		<- me .weapon_state.user@ 0= if then;
 
@@ -5310,6 +6392,7 @@ custom: Bow
 		<- me .weapon_state.user@ 0= if 5 <- me .fatigue+ else // Just starting to draw incurs 5 fatigue
 			gameticks 5 % dup print 0= if 1 <- me .fatigue+ then
 		then
+		
 
 		<- me .weapon_state.user@ BOW_DRAW_TIME >= if
 //			<- me .fatigued? if
@@ -5348,9 +6431,9 @@ root{ : bow 30 45 rnd #bow ; }
 WEAPON_BOW clone-to: Cupid's Bow
 	weapon: cupidbow
 	spriteid: MELEE6 0x 5c +
-	stack_max: 60
+	stack_max: 50 \ makes things easier 
 //	chargename: <3
-	RED "AMOUR" .. WHITE .. chargename!
+	RED "LOVE" .. WHITE .. chargename!
 	Btier
 
 : #cupidbow cupidbow .item.charges! ;
@@ -5969,8 +7052,8 @@ custom: Punchball
 
 		<- me .character@ .specialtype@ if
 			<- me .character@ .specialtype@ 1 & 0= 
-				if 13 "i ger!?"
-				else 58 "Mecanique" then
+				if 13 "i-ger!?"
+				else 58 "kadooshin'" then
 		else
 			0 "fireball"
 		then
@@ -6698,6 +7781,8 @@ WEAPON_SHOTGUN clone-to: LIL' DAWG
 	projectiles: 6
 	ammo_max: 90
 	Srangedtier
+	\ stomach 
+	wielder_handler: 0 
 
 WEAPON_SCALPEL clone-to: Golden Scalpel
 	// Double power, same cooldown, no breaking, half-fatigue tag added
@@ -6756,7 +7841,7 @@ custom: Egg
 	stack_max: 12
 
 	: spawn-a-chicken 
-		new-npc 30 lt .fade! lt .character@ ".tempchickenify" evaluate // Evaluate because word is defined later
+		new-npc 30 lt .fade! lt .character@ ".tempchickenify" evaluate lt .character@ dup .use_info@ USE_INFO_NO_PICKUP | swap .use_info!  // Evaluate because word is defined later
 	;
 
 	:noname args( me eventid )
@@ -6776,5 +7861,8 @@ custom: Egg
 
 
 }
+
+load weapondef/O-arq.df
+load weapondef/Sycamore_repo.df
 
 // End of defs

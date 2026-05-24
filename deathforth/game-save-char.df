@@ -156,9 +156,12 @@ voc{ filesave
 	dup #charprop: .headoff.x
 	dup #charprop: .headoff.y
 	dup #charprop: .specialmode
+	
+	// OMENTUM, fix for non human chars not having correct skeletons after death after loading save
+	dup #charprop: .skeleton_spriteid
 
 	( TODO: add char validation call )
-	dup "char validation" save-cmd
+	dup "char-validation" save-cmd
 	drop
 	scr
 ;
@@ -207,7 +210,7 @@ voc{ filesave
 
 	!!sel_gamechars
 
-	"SAUVEGARDER" $timeend
+	"SAVE" $timeend
 ;
 
 last to main-event-do-save-custchars

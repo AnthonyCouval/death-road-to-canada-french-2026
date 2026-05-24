@@ -9,21 +9,21 @@
 // : .statup
 
 // 50% chance if skill = skillcheck... Ex: Character with 2 Strength, cchar .strength@ 2 skillcheck? ... Skill one lower means 33%, higher means 60%, 66%, etc.
-// Search for "stat roulette" below for a bunch of convenience words.
+// Search for "statroll" below for a bunch of convenience words.
 
 : skillcheck? ( amt checkamt -- true|false )
 
 	0 max swap 0 max swap
 
 	DEBUG if
-		2dup swap "Competence " type type "  contre verification " type type " (" type
+		2dup swap "SKILL " type type " vs CHECK " type type " (" type
 	then
 
 	// Ratio
 	over + /
 
 	DEBUG if
-		dup type "  contre lancer de " type
+		dup type " vs roll of " type
 	then
 
 	// Roll
@@ -40,7 +40,7 @@
 		dup type
 
 		dup if
-			" " else " "
+			" (rolled less or equal, SUCCESS)" else " (rolled over, FAIL)"
 		then print
 	then
 ;	
@@ -58,8 +58,48 @@
 
 // : .stat+ ( amt STAT char -- )
 
+: stat2wordcase case 
+	0 of "morale" endof 
+	1 of "attitude" endof 
+	2 of "composure" endof 
+	3 of "charm" endof 
+	4 of "wits" endof 
+	5 of "loyalty" endof 
+	6 of "medical" endof 
+	7 of "mechanical" endof 
+	8 of "shooting" endof 
+	9 of "strength" endof 
+	10 of "dexterity" endof 
+	11 of "fitness" endof 
+	12 of "vitality" endof 
+	endcase
+; 
+
+: stat2maxmsg case 
+	0 of " is feeling pretty good as it is!" endof 
+	1 of " is as optimistic as they can be already!" endof 
+	2 of " has already achieved their maximum zen!" endof 
+	3 of " literally can't be any more charming!" endof 
+	4 of " is already at the peak of their wits!" endof 
+	5 of " couldn't be any more loyal!" endof 
+	6 of " has achieved their maximum medical skill!" endof 
+	7 of " can't improve their engineering any further!" endof 
+	8 of " couldn't improve their aim any further!" endof 
+	9 of " is at their maxmimum swole!" endof 
+	10 of " already moves at maximum speed!" endof 
+	11 of " can't get any fitter without special training!" endof 
+	12 of " is already a walking tank!" endof 
+	endcase
+;	
+
+: statmaxcheck args( stat chara ) 
+	<- stat <- chara .stat@ 6 = if 
+		cyoa{ ($ "RED" evaluate <- chara .name@ <- stat stat2maxmsg .. .. $) "+crtext" evaluate } 
+	then 
+; 
+
 : .stat++ ( STAT char -- )
-	2dup .stat@ CHAR_STAT_MAX = if 2drop exit then
+	2dup .stat@ CHAR_STAT_MAX = if statmaxcheck exit then
 	1 -rot 3dup .stat+ report-statchg
 ;
 
@@ -133,7 +173,7 @@ defer stat-cheevs
 
 : fastlearn-stat args( stat chara )
 	<- stat <- chara
-	<- chara .trait@ "Apprenant rapide" $= <- stat <- chara .stat@ 4 < and if
+	<- chara .trait@ "Fast Learner" $= <- stat <- chara .stat@ 4 < and if
 		// Could make this more precise, with two .stat++ with the second having a stat < 4 check if it needs nerfing
 		.stat2+
 	else
@@ -141,11 +181,31 @@ defer stat-cheevs
 	then
 ;
 
-: .strength++ STAT_STRENGTH swap .stat++ gstats{ ' total-str+ ++ } stat-cheevs ;
+: HPlearn-stat args( stat chara )
+
+	<- chara .perk@ "Hidden Potential" $= <- stat <- chara .stat@ 6 <> and if 
+	\ prevent HP from proccing infinitely at 6 
+		<- stat <- chara .stat++
+		<- chara .perk@ "Hidden Potential" $= if
+			<- stat <- chara .stat@ 2 % 0 = if 
+			\ "STAT IS LEVEL... " <- stat <- chara .stat@ .. print
+			\ <- stat <- chara .stat@ 2 % print 
+				<- stat <- chara .bonus@ 1 + <- stat <- chara .bonus! 
+				cyoa{ ($ "YELLOW" evaluate <- chara .name@ "'s potential grows!" .. .. $) "+crtext" evaluate } 
+			then 
+		then 
+	else
+		<- stat <- chara .stat++
+	then 
+;
+
+\ stomach & trachea : hidden potential rework 
+
+: .strength++ STAT_STRENGTH swap HPlearn-stat gstats{ ' total-str+ ++ } stat-cheevs ;
 : .medical++ STAT_MEDICAL swap fastlearn-stat gstats{ ' total-med+ ++ } stat-cheevs ;
 : .mechanic++ STAT_MECHANICAL swap fastlearn-stat gstats{ ' total-mech+ ++ } stat-cheevs ;
 : .shooting++ STAT_SHOOTING swap fastlearn-stat gstats{ ' total-shoot+ ++ } stat-cheevs ;
-: .fitness++ STAT_FITNESS swap .stat++ gstats{ ' total-fit+ ++ } stat-cheevs ;
+: .fitness++ STAT_FITNESS swap HPlearn-stat gstats{ ' total-fit+ ++ } stat-cheevs ;
 
 : .attitudeREV STAT_ATTITUDE swap .reveal ;
 : .temperREV STAT_COMPOSURE swap .reveal ;
@@ -365,15 +425,15 @@ defer stat-heal
 
 : shieldofhopeblurb args( chara )
 	<- chara .morale 3 > if
-		" est trop POMPEUSE pour mourir!"
+		" is too PUMPED UP to get killed!"
 	else
 		<- chara .morale 1 < if
-			" vit encore, mais entre dans le desespoir!"
+			" lives, but enters into despair!"
 		else
 			<- chara .morale 2 < if
-				" resiste a la mort, mais son moral flanche!"
+				" resists death, but morale wavers!"
 			else
-				" refuse de mourir!"
+				" refuses to die!"
 			then
 		then
 	then
@@ -397,7 +457,7 @@ defer stat-heal
 
 0 value hero-picked
 
-: isherotype? args( chara ) <- chara .trait@ "Type de heros" $= ;
+: isherotype? args( chara ) <- chara .trait@ "Hero Type" $= ;
 : herotype-except? args( chara )
 	<- chara team-stack-except ' isherotype? stack-filter nip ;
 
@@ -408,7 +468,7 @@ defer stat-heal
 : someherotype ' herotypecheck pick-team-char to hero-picked ;
   
  : hero-usedup
-	"Fidele compagnon" hero-picked .trait!
+	"Loyal Pal" hero-picked .trait!
 	// -1 STAT_VITALITY hero-picked .stat--
 	
  ;
@@ -416,16 +476,16 @@ defer stat-heal
  defer unfireproofer
  
  : .phoenixify args( chara )
-	"Phenix ressuscite !" <- chara .trait!
+	"Phoenix Arisen!" <- chara .trait!
 	<- chara .fullheal
 	<- chara .specialbody@ 78 = not if
 		78 <- chara .specialbody!
-		($ "est maintenant un MI HUMAIN, MI SQUELETTE, MI PHENIX, de retour pour se venger !" $) <- chara .job!
+		($ "is now a HALF-HUMAN, HALF-SKELETON, HALF-PHOENIX, back for vengeance!" $) <- chara .job!
 	else
 		78 <- chara .specialhead!
-		($ "est maintenant un MI SQUELETTE, MI PHENIX, apres une serie de bourdes majeures." $) <- chara .job!
+		($ "is now a HALF-SKELETON, HALF-PHOENIX, after a series of major blunders." $) <- chara .job!
 	then
-	<- chara .perk@ "Pyromane" $= if then;
+	<- chara .perk@ "Pyromaniac" $= if then;
 	<- chara unfireproofer
 ;
 
@@ -435,7 +495,7 @@ defer stat-heal
 : .death-shared args( chara )
 	<- chara herotype-except? if 
 		someherotype			
-		($ ICON_UP textclr$ .. <- chara .name@ .. "  est heroiquement sauve par " .. hero-picked .name@ .. "!" ..
+		($ ICON_UP textclr$ .. <- chara .name@ .. " is heroically saved by " .. hero-picked .name@ .. "!" ..
 		0 textclr$ $) blurbevent ICON_UP blurbicon
 		<- chara .fullheal
 		<- chara .health@ 2 > if
@@ -443,11 +503,11 @@ defer stat-heal
 		then
 		hero-usedup
 	else
-		<- chara .trait@ "Phenix" $= if
-			($ ICON_SKULL textclr$ .. <- chara .name@ .. "  sort de la tombe !" .. 0 textclr$ $) blurbevent ICON_UP blurbicon
+		<- chara .trait@ "Phoenix" $= if
+			($ ICON_SKULL textclr$ .. <- chara .name@ .. " rises from the grave!" .. 0 textclr$ $) blurbevent ICON_UP blurbicon
 			<- chara .phoenixify
 		else
-			($ ICON_SKULL textclr$ .. <- chara .name@ .. "  est TUE !" .. 0 textclr$ $)
+			($ ICON_SKULL textclr$ .. <- chara .name@ .. " is KILLED!" .. 0 textclr$ $)
 
 			blurbevent blurbskullicon
 
@@ -469,7 +529,7 @@ defer stat-heal
 : team-attacked args( chara )
 	<- chara .health@ 0= if exit then;
 	<- chara hit'n'die? if
-		<- chara .perk@ "Bouclier despoir" $= <- chara .morale SHIELDOFHOPE_MIN > and if
+		<- chara .perk@ "Shield of Hope" $= <- chara .morale SHIELDOFHOPE_MIN > and if
 			
 			<- chara morale--hopeshield
 			
@@ -482,15 +542,29 @@ defer stat-heal
 		then
 	else
 		<- chara .health@ 0 > if
-			($ ICON_DOWN textclr$ .. <- chara .name@ .. "  est BLESSE !" ..
+			($ ICON_DOWN textclr$ .. <- chara .name@ .. " is HURT!" ..
 				0 textclr$ $) blurbevent ICON_DOWN blurbicon
 		then
 	then
 	<- chara blurbchar blurb-last-to-cyoa
+	// Arq addition for back to the wall
+	<- chara "perkdef{ backwall-manual-check }" evaluate
 ;
 
-: .ouch-- team-attacked ;
-: .ouch2- dup team-attacked team-attacked ;
+: amresilient args( chara ) 
+	<- chara .trait@ "Resilient Type" $= <- chara .charm@ 0 = and if
+	\ sfx{ fm } 
+		($ ICON_UP textclr$ .. <- chara .name@ .. " resists some damage!" ..
+		0 textclr$ $) blurbevent ICON_UP blurbicon
+		<- chara blurbchar blurb-last-to-cyoa
+		1 <- chara .charm! 
+		0
+	then; \ leave these on stack to know where to execute next thing 
+	-1 
+;
+
+: .ouch-- dup amresilient -1 = if team-attacked then ;
+: .ouch2- dup dup amresilient -1 = if team-attacked then team-attacked ;
 : ouch--all ' .ouch-- foreach-team-char ;
 : ouch2-all ' .ouch2- foreach-team-char ;
 
@@ -577,7 +651,7 @@ defer stat-heal
 : food-required 0 0 args( chow chara )
 	team-stack depths for
 		pops -> chara 
-		<- chara .pet@ <- chara .trait@ "Minuscule mangeur" $= or if
+		<- chara .pet@ <- chara .trait@ "Tiny Eater" $= or if
 			<- chara .trait@ "Gourmand" $= if
 				2 
 			else

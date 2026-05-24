@@ -69,7 +69,7 @@
 
 :map 4
 :tags depotstorage1  
-:scriptB bazooka 
+:scriptB bazooka fosbury 
 :scriptC bigshelf opened noloot -1 movey 
 :scriptD cupboard opened noloot -1 movey 
 :scriptE 24 LOOT_BULLET spawnloot 
@@ -107,7 +107,7 @@
 :scriptD cupboard opened noloot -1 movey 
 :scriptE 20 LOOT_RIFLE_SHELL spawnloot 
 :scriptF 3 zombs-clump 
-:scriptG bazooka 
+:scriptG bazooka blackmamba
 :scriptH 3 for landmine .drift next 
 :size 31 18 
 :off 1 1 
@@ -177,7 +177,7 @@ DEPOTROOMS $parse-rooms
 	: depotlootn5 glaunch ;
 	: depotlootn6 bazooka ;
 	: depotlootn7 10 %chance if minigun drop else 2 for pistol drop next then ;
-	: depotlootn8 30 %chance if flamethrower else ak47 then drop ;
+	: depotlootn8 30 %chance if flamethrower else threeburst then drop ;
 	: depotlootn9 30 %chance if napalm else glaunch then ;
 	
 
@@ -226,31 +226,31 @@ location: depot
 
 		: depot0script
 			e edge-inc e random-edge-door "depotstair" only-with-door
-			2diff %zombs
+			2diff mil-zombsplit 
 		;
 		
 		: depot1script
 			s random-edge-door "depothall1" only-with-door
-			5diff %zombs
+			5diff mil-zombsplit 
 		;
 
 		: depot2script
 			s random-edge-door "depotstorage1" only-with-door
-			2diff %zombs
+			2diff mil-zombsplit 
 		;
 		
 		: depot3script
 			e random-edge-door "depotstorage2" only-with-door
-			skelscat skelscat 10diff %zombs
+			skelscat skelscat 10diff mil-zombsplit 
 		;
 		
 		: depot4script
 			e random-edge-door "depotstorage3" only-with-door
-			skelscat skelscat skelscat 20diff %zombs
+			skelscat skelscat skelscat 20diff mil-zombsplit 
 		;
 		
 		: depot5script
-			5diff %zombs
+			5diff mil-zombsplit 
 		;
 		
 		room-choice: depotstart
@@ -367,7 +367,7 @@ constant maplayout
 	plotmap
 	-1 -1 w 8 map{ gravellot }
 	
-	5sdiff %zombs
+	5sdiff mil-zombsplit 
 
 	// Put char and chars in middle of map
 	25 %mv-up

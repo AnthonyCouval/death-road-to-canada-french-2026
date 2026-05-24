@@ -10,13 +10,40 @@ load? events/city/city-locations.df
 
 locdef{
 
+
+0 value carkgen1
+
+\ "car key is safe" 
+: ckis 
+	1 to carkgen1
+; 
+
+\ STOMACH : force car key script 
+
+\ "force car key" 
+: fck 
+	rooms-created 8 = if 
+		carkgen1 0 = if 
+			carkeys 20 40 rnd sgas
+			1 to carkgen1
+			\ sfx{ growl } 
+		then 
+	\ sfx{ growl }  
+	then 
+; 
+
+\ "Why is the living weight down to 99 instead of 100?" 
+\ as far as i'm aware, 100 weight isnt valid
+\ i see a lot of 99 throughout the files so 
+\ even if that isnt how it works, fck should generate the carkey anyway 
+
 	location
 		tags: keysinhere
 		max-rooms: 8
 		entry-tags: entry
 		script: set-theme 
 		pre-script: set-theme
-		post-script: 10diff %zombs
+		post-script: 10diff %zombs fck
 
 		room-choice: entry
 			room-weight: 1
@@ -42,9 +69,9 @@ locdef{
 			room-script: nad floor-kitchen
 
 		room-choice: living
-			room-weight: 100
+			room-weight: 99
 			room-count: 1
-			room-post-script: skelscat carkeys 20 40 rnd sgas
+			room-post-script: skelscat carkeys 20 40 rnd sgas 1 to carkgen1
 
 		room-choice: hall
 			room-weight: 1

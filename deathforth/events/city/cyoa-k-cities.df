@@ -12,6 +12,7 @@ cyoa{ road{
 
 // : specialmission regiondef{ special-lot-setup-example } premission ;
 
+\ city rework here also 
 : easycity-picker
 	0 stack
 		"events/city/region/easy/easy-burb-vary-3x3.df" shove
@@ -19,6 +20,10 @@ cyoa{ road{
 		// "events/city/region/easy/easy-aparts-mid-2x3.df" shove
 		"events/city/region/easy/easy-burb-3x2.df" shove
 		"events/city/region/easy/easy-burb-4x2.df" shove
+		"events/stomach/syca_easycitytest.df" shove 
+		"events/stomach/syca_easycitytest1.df" shove 
+		"events/stomach/syca_easycitytest2.df" shove 
+		"events/stomach/syca_easycitytest3.df" shove 
 	shuffles pops nip
 ;
 
@@ -41,6 +46,29 @@ cyoa{ road{
 : citylayout17 "events/city/region/burb-vary-3x2.df" ;
 : citylayout18 "events/city/region/burb-1row.df" ;
 
+\ STOMACH & TRACHEA : CITY REWORK
+
+: syca_citylayout1 "events/stomach/syca_citytest.df" ;
+: syca_citylayout2 "events/stomach/syca_citytest1.df" ;
+: syca_citylayout3 "events/stomach/syca_citytest2.df" ;
+: syca_citylayout4 "events/stomach/syca_citytest3.df" ;
+: syca_citylayout5 "events/stomach/syca_citytest4.df" ;
+: syca_citylayout6 "events/stomach/syca_citytest5.df" ;
+: syca_citylayout7 "events/stomach/syca_citytest6.df" ;
+: syca_citylayout8 "events/stomach/syca_citytest7.df" ;
+: syca_citylayout9 "events/stomach/syca_citytest8.df" ;
+: syca_citylayout10 "events/stomach/syca_citytest9.df" ;
+: syca_citylayout11 "events/stomach/syca_citytest10.df" ;
+: syca_citylayout12 "events/stomach/syca_citytest11.df" ;
+: syca_citylayout13 "events/stomach/syca_citytest12.df" ;
+: syca_citylayout14 "events/stomach/syca_citytest13.df" ;
+: syca_citylayout15 "events/stomach/syca_citytest14.df" ;
+: syca_citylayout16 "events/stomach/syca_citytest15.df" ;
+: syca_citylayout17 "events/stomach/syca_citytest16.df" ;
+: syca_citylayout18 "events/stomach/syca_citytest17.df" ;
+
+
+
 	deck-new
 		card: citylayout1
 		card: citylayout2
@@ -60,114 +88,132 @@ cyoa{ road{
 		card: citylayout16
 		card: citylayout17
 		card: citylayout18
+		card: syca_citylayout1
+		card: syca_citylayout2
+		card: syca_citylayout3
+		card: syca_citylayout4
+		card: syca_citylayout5
+		card: syca_citylayout6
+		card: syca_citylayout7
+		card: syca_citylayout8
+		card: syca_citylayout9
+		card: syca_citylayout10
+		card: syca_citylayout11
+		card: syca_citylayout12
+		card: syca_citylayout13
+		card: syca_citylayout14
+		card: syca_citylayout15
+		card: syca_citylayout16
+		card: syca_citylayout17
+		card: syca_citylayout18
 	constant CITYLAYOUT-DECK
 	CITYLAYOUT-DECK var citylayout-deck
 	CITYLAYOUT-DECK shuffles to citylayout-deck
-
-: citylayoutdeck
+	
+: citylayoutdeck 
 	citylayout-deck depths 0= if CITYLAYOUT-DECK shuffles to citylayout-deck then
 	drawcard ;
 
 cyoa: easycity1
-	"Raid de lapres midi" cyoa-title!
+	"Afternoon Raid" cyoa-title!
 	someicon
-	($ Thegroup .. " observe une ville infestee depuis la route. En levaluant a distance, " .. ghe .. " doit decider sil doit se battre sous le soleil de midi pour des provisions." $) cyoa-text! basic-tone
+	($ Thegroup .. " spots an infested city from the road. Scouting it from afar, " .. ghe .. " has to decide whether to fight under the noon sun for supplies." $) cyoa-text! basic-tone
 	0.9 1.1 frnd 12 1 zforecast
-	($ "De loin, " .. thegroup .. " voit quelque chose dinteressant" $) +crtext
+	($ "From a distance, " .. thegroup .. " sees something of interest:" $) +crtext
 	easycity-picker $load-region
 		lot-draw
 ;
 
 cyoa: easycity2
-	"Zombies du petit matin" cyoa-title!
+	"Early Morning Zombies" cyoa-title!
 	someicon
-	($ Thegroup .. " spies une ville au loin. Il y a plus de morts vivants que d'habitude, mais il est tot dans la journee, donc ils devraient etre grognons. Du moins au debut." $) cyoa-text! basic-tone
+	($ Thegroup .. " spies a city from a distance. There's more undead than usual, but it's early in the day so they should be groggy. At least at first." $) cyoa-text! basic-tone
 	1.1 1.3 frnd 7 9 frnd 0 zforecast
-	($ "En conduisant vers la ville " .. thegroup .. " repere quelque chose" $) +crtext
+	($ "When driving into the city, " .. thegroup .. " spots something:" $) +crtext
 	easycity-picker $load-region
 		lot-draw
 ;
 
 cyoa: easycity3
-	"Pluie Legere" cyoa-title!
+	"Light Rain" cyoa-title!
 	someicon
-	($ Thegroup .. "  arrive dans une ville alors qu'il commence a pleuvoir. La fine pluie semble exciter les zombies locaux." $) cyoa-text! basic-tone
+	($ Thegroup .. " reaches a city as it starts to rain. The drizzle seems to rile up the local zombies." $) cyoa-text! basic-tone
 	0.9 10 15 frnd 2 zforecast
-	0.1 0.2 frnd weather! -0.5 0.5 frnd wind_force!
-	($ "En conduisant vers la ville " .. thegroup .. " decouvre:" $) +crtext
+	0.1 0.2 frnd weather! -0.5 0.5 frnd wind_force! 
+	($ "When driving into the city, " .. thegroup .. " discovers:" $) +crtext
 	easycity-picker $load-region
 		lot-draw
 ;
 
 cyoa: easycity4
-	"Craindre la Nuit" cyoa-title!
+	"Fear the Night" cyoa-title!
 	someicon
-	($ Thegroup .. "  conduit dans une ville alors quil commence a faire nuit. Essaie de ne pas perdre la notion du temps. Les choses peuvent devenir difficiles apres le coucher du soleil." $) cyoa-text! basic-tone
-	0.8 17 18 frnd 0 zforecast
-	($ "Lorsque vous conduisez dans la ville " .. thegroup .. "  trouve:" $) +crtext
+	($ Thegroup .. " drives into a city as it starts to get dark. Try not to lose track of time. Things can get bad after the sun sets." $) cyoa-text! basic-tone
+	0.8 17 18 frnd 0 zforecast 
+	($ "When driving into the city, " .. thegroup .. " finds:" $) +crtext
 	easycity-picker $load-region
 		lot-draw
 ;
 
 cyoa: easycity5
-	"Pillage Rapide" cyoa-title!
+	"Quick Looting" cyoa-title!
 	someicon
-	($ Thegroup .. " ' conduit a travers une ville qui n'a pas ete completement envahie. Tu devrais chercher des provisions pour le voyage." $) cyoa-text! basic-tone
+	($ Thegroup .. " drives through a city that hasn't been completely over-run. You should look for supplies to stock up for the journey." $) cyoa-text! basic-tone
 	0.9 1.1 frnd 10 16 frnd 0 1 rnd zforecast
-	($ "S'approchant de la ville " .. thegroup .. " repere quelque chose" $) +crtext
+	($ "When driving into the city, " .. thegroup .. " spots something:" $) +crtext
 	easycity-picker $load-region
 		lot-draw
 ;
 
 cyoa: normcity1
-	"Ville Animee" cyoa-title!
+	"Bustling City" cyoa-title!
 	someicon
-	($ Thegroup .. " ' trouve une ville dans l'apres midi. Les morts grouillent dessus. Ils sont inactifs maintenant, mais ils te remarqueront assez vite." $) cyoa-text! basic-tone
+	($ Thegroup .. " finds a city in the afternoon. The dead swarm over it. They're idle now, but they will notice you soon enough." $) cyoa-text! basic-tone
 	1.3 1.7 frnd 11 15 frnd 0 zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity2
-	"Ville Bondee" cyoa-title! 0 to cyoaicon cyoaicon
+	"Crowded City" cyoa-title! 0 to cyoaicon cyoaicon
 	someicon
-	($ Thegroup .. "  voit une ville au loin, avec des zombies qui envahissent les rues. Revenir en vie peut etre difficile." $) cyoa-text! basic-tone
+	($ Thegroup .. " sees a city in the distance, with zombies crowding the streets. Getting back alive may be difficult." $) cyoa-text! basic-tone
 	1.5 1.8 frnd 8 14 frnd 1 zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity3
-	"Ville Avant le Crepuscule" cyoa-title!
+	"City Before Dusk" cyoa-title!
 	someicon
-	($ Thegroup .. " se deplace pres de la tombee de la nuit et voit une ville au loin. Les zombies deviennent plus agressifs au coucher du soleil." $) cyoa-text! basic-tone
+	($ Thegroup .. " is travelling close to nightfall and sees a city in the distance. The zombies grow more aggressive as the sun sets." $) cyoa-text! basic-tone
 	0.8 1 frnd 18 20 frnd 1 2 rnd zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity4
-	"Ville silencieuse" cyoa-title! 0 to cyoaicon cyoaicon
+	"Quiet City" cyoa-title! 0 to cyoaicon cyoaicon
 	someicon
-	($ Thegroup .. " explorez une ville assez calme. Cest une bonne occasion de vous reapprovisionner en relative securite." $) cyoa-text! basic-tone
+	($ Thegroup .. " explores a fairly quiet city. This is a good chance to resupply in relative safety." $) cyoa-text! basic-tone
 	0.8 1.1 frnd 8 16 frnd 0 zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity5
-	"Heure de pointe" cyoa-title!
+	"Rush Hour" cyoa-title!
 	someicon
-	($ "Les zombies dans cette ville se sont reveilles. Ils sont deja agressifs comme " .. thegroup .. " arrivez." $) cyoa-text! basic-tone
+	($ "The zombies in this city have stirred. They are already aggressive as " .. thegroup .. " arrives." $) cyoa-text! basic-tone
 	1 1.3 frnd 16 17 frnd 2 zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity6
-	"Ville sous la pluie" cyoa-title!
+	"City in the Rain" cyoa-title!
 	someicon
-	($ "Il a commence a pleuvoir sur cette ville. Les zombies deviennent plus agressifs en reponse, pour des raisons qui nont pas ete expliquees." $) cyoa-text! basic-tone
+	($ "It has started to rain over this city. The zombies become more aggressive in response, for reasons that have not been explained." $) cyoa-text! basic-tone
 	1 1.3 frnd 7 15 frnd 2 zforecast
 	0.4 1 frnd weather! -1 1 frnd wind_force!
 	citylayoutdeck $load-region
@@ -175,9 +221,9 @@ cyoa: normcity6
 ;
 
 cyoa: normcity7
-	"Ville dans la Tempete" cyoa-title!
+	"City in the Storm" cyoa-title!
 	someicon
-	($ "Une tempete sabat sur " .. thegroup .. ". Dans la pluie battante, les zombies de cette ville cherchent les vivants!" $) cyoa-text! basic-tone
+	($ "A storm descends on " .. thegroup .. ". In the pouring rain, the zombies of this city search for the living!" $) cyoa-text! basic-tone
 	1 13 17 frnd 3 zforecast
 	1 1.5 frnd weather! -2 2 frnd wind_force!
 	citylayoutdeck $load-region
@@ -185,18 +231,18 @@ cyoa: normcity7
 ;
 
 cyoa: normcity8
-	"Quartiers dExterieur" cyoa-title!
+	"City Outskirts" cyoa-title!
 	someicon
-	($ Thegroup .. " ' conduit vers les quartiers dune ville. Les zombies rodent autour, mais ils nont pas encore remarque la voiture." $) cyoa-text! basic-tone
+	($ Thegroup .. " drives into the outskirts of a city. Zombies mill around, but they haven't seemed to notice the car yet." $) cyoa-text! basic-tone
 	1 1.3 frnd 9 16 frnd 0 1 rnd zforecast
 	citylayoutdeck $load-region
 		lot-draw
 ;
 
 cyoa: normcity9
-	"Reveil de la Ville" cyoa-title!
+	"Waking the City" cyoa-title!
 	someicon
-	($ Thegroup .. "  conduit dans une nouvelle ville. Les bruits de la voiture ont deja commence a attirer lattention des morts vivants." $) cyoa-text! basic-tone
+	($ Thegroup .. " drives into a new city. Noises from the car have already started to draw attention from the undead." $) cyoa-text! basic-tone
 	1.2 1.5 frnd 7 9 frnd 2 zforecast
 	citylayoutdeck $load-region
 		lot-draw

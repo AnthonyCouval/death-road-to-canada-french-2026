@@ -61,26 +61,32 @@ map{ roomgen{
 	75 %chance if skelscat then
 	20 %chance if nightstick .scatter then
 	40 %chance if shiv .drift then
-	1 5 rnd case
+	1 6 rnd case
 		1 of 90 %chance if snubnose .drift 12 LOOT_BULLET else autoshot .drift 15 LOOT_SHOTGUN_SHELL then spawnloot drift endof
 		2 of 2 LOOT_MEDICAL spawnloot drift endof
 		3 of 3 for pipebomb .drift next endof
 		4 of otaku .drift endof
 		5 of knucks .drift endof
+		6 of 66 %chance if dolt else fosbury then endof 
 	endcase
+	20 %chance if threeburst .drift 10 14 rnd LOOT_RIFLE_SHELL spawnloot then 
+	16 %chance if 50 %chance if mp5 .drift else chromeshotgun .drift then then  
 ;
 
 : evidencelootHQ
 	75 %chance if skelscat then
 	15 %chance if nightstick .scatter then
 	40 %chance if shiv .drift then
-	1 5 rnd case
+	1 6 rnd case
 		1 of 90 %chance if snubnose .drift 12 LOOT_BULLET else autoshot .drift 15 LOOT_SHOTGUN_SHELL then spawnloot drift endof
 		2 of 2 LOOT_MEDICAL spawnloot drift endof
 		3 of 2 for pipebomb .drift next endof
 		4 of 80 %chance if shotgun .drift 8 LOOT_SHOTGUN_SHELL else uzi .drift 30 LOOT_BULLET then spawnloot drift endof
 		5 of knucks .drift endof
+		6 of fosbury endof 
 	endcase
+	33 %chance if threeburst .drift 20 25 rnd LOOT_RIFLE_SHELL spawnloot then 
+	33 %chance if 50 %chance if mp5 .drift else chromeshotgun .drift then then 
 ;
 
 
@@ -96,17 +102,17 @@ location: police
 		post-script: 10diff %zombs nad ndx
 
 	: startpolicehall 
-		random-door "salle de bain" only-with-door
-		random-door "bureau" only-with-door
+		random-door "restroom" only-with-door
+		random-door "office" only-with-door
 	;
 	
 	: policeoffice
-		random-door "cellulespolice" only-with-door
+		random-door "policecells" only-with-door
 	;
 	
 	: policetoloot
-		random-door "preuveflic" only-with-door
-		random-door "salle de bain" only-with-door
+		random-door "copevidence" only-with-door
+		random-door "restroom" only-with-door
 		10diff %zombs
 	;
 

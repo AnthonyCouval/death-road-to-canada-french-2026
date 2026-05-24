@@ -23,10 +23,10 @@ filesave{
 : save-slot-info
 
 	// Make the evaluation string for the save slot button's display
-	($ 0 #teamchar .name@ .. "  avec " .. team-count 1- .. "  autres" .. ", JOUR " .. road{ road-trip-days } $)
+	($ 0 #teamchar .name@ .. " with " .. team-count 1- .. " others" .. ", DAY " .. road{ road-trip-days } $)
 
 	// Set icon to a skull if team is dead etc.
-	// team-count 0= if "  skullicon " $cat then
+	// team-count 0= if " skullicon " $cat then
 
 	slot-info-name $swrite
 ;
@@ -93,6 +93,14 @@ last to save-the-game
 		0 to wins-quickdeath-streak
 		0 to wins-4jerks-streak
 		0 to wins-4jerksEX-streak
+		0 to wins-weathermode-streak
+		0 to wins-rpgmode-streak
+		0 to wins-infectionmode-streak
+		0 to wins-sceptermode-streak 
+		0 to wins-mutationmode-streak 
+		0 to wins-infectionmodeEX-streak
+		0 to wins-mutationmodeEX-streak
+		0 to wins-horrormode-streak
 		' total-losses ++
 		
 		// Best Endless calc

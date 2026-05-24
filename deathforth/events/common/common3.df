@@ -1,176 +1,179 @@
 
-cyoa{ road{
+cyoa{ road{ 
 
 
 cyoa-choice: common3-molotov-2
-	($ cname .. "  fabrique 2 cocktails Molotov avec 20 gaz! Soyez prudent avec ceux ci!" $) text! 2 WEAPON_MOLOTOV trunk.weapon+ -20 trunk-gas+
+	($ cname .. " makes 2 molotov cocktails with 20 gas! Be careful with these!" $) text! 2 WEAPON_MOLOTOV trunk.weapon+ -20 trunk-gas+
 ;
 
 cyoa-choice: common3-molotov-4
-	($ cname .. "  fabrique 4 cocktails Molotov avec 40 gaz! De quoi griller un tas de zombies!" $) text! 4 WEAPON_MOLOTOV trunk.weapon+ -40 trunk-gas+
+	($ cname .. " makes 4 molotov cocktails with 40 gas! Enough to toast a bunch of zombies!" $) text! 4 WEAPON_MOLOTOV trunk.weapon+ -40 trunk-gas+
 ;
 
 cyoa-choice: common3-molotov-6
-	($ cname .. "  fabrique 6 cocktails Molotov avec 60 gaz! Cela devrait faire une grande difference!" $) text! 6 WEAPON_MOLOTOV trunk.weapon+ -60 trunk-gas+
+	($ cname .. " makes 6 molotov cocktails with 60 gas! This should make a big difference!" $) text! 6 WEAPON_MOLOTOV trunk.weapon+ -60 trunk-gas+
 ;
 
 cyoa-choice: common3-molotov-bottle
-	($ cname .. "  prend 6 bouteilles vides avec " .. chim .. ". Ils pourraient etre utiles ?" $) text! 6 WEAPON_BOTTLE trunk.weapon+
+	($ cname .. " takes 6 empty bottles with " .. chim .. ". They might come in handy?" $) text! 6 WEAPON_BOTTLE trunk.weapon+
 ;
 
 cyoa: common3-molotov
-	smartest choosechar cicon "Fabrication de cocktails Molotov" cyoa-title!
-	($ Thegroup .. "  trouve une maison saccagee avec des bouteilles et des chiffons en lambeaux. Cela semblait etre une perte de temps de la fouiller, mais " .. cname .. "  a une idee :" $) text!
+	smartest choosechar cicon "Molotov Making" cyoa-title!
+	($ Thegroup .. " finds a trashed house with some bottles and tattered rags. Searching it seemed like a waste of time, but " .. cname .. " has an idea:" $) text!
 	cchar .wits 2 > if
-		($ gThey .. "  pourrait fabriquer des cocktails Molotov, si " .. gthey .. "  peut se passer dessence !" $) goodfx
+		($ gThey .. " could make molotovs, if " .. gthey .. " can spare the gas!" $) goodfx
 	else
-		($ gThey .. "  pourrait prendre les bouteilles avec " .. ghim .. ", pour les lancer sur les zombies et autres ennemis !" $) badfx
+		($ gThey .. " could take the bottles with " .. ghim .. ", to throw at zombies and other enemies!" $) badfx
 	then +crtext witsREV
-
+		
 		cchar .wits 2 > if
 			trunk-gas 20 < if
-				"'Malheureusement, il n'y a pas assez d'essence a perdre." +crtext
+				"Sadly, there's not enough gas to spare." +crtext
 			then
 			trunk-gas 19 > if
-				choice( "Fabriquer 2 cocktails Molotov   20 essence" )choice: common3-molotov-2
+				choice( "Make 2 molotovs - 20 gas" )choice: common3-molotov-2
 			then
 			trunk-gas 39 > if
-				choice( "Fabriquer 4 cocktails Molotov   40 essence" )choice: common3-molotov-4
+				choice( "Make 4 molotovs - 40 gas" )choice: common3-molotov-4
 			then
 			trunk-gas 59 > if
-				choice( "Fabriquer 6 cocktails Molotov   60 essence" )choice: common3-molotov-6
+				choice( "Make 6 molotovs - 60 gas" )choice: common3-molotov-6
 			then
 		else
-			choice( "Prendre les bouteilles" )choice: common3-molotov-bottle
+			choice( "Take the bottles" )choice: common3-molotov-bottle
 		then
-		choice( "Quitter la maison" )choice
+		choice( "Leave the house" )choice
 ;
 
 cyoa-choice: common3-pipe-go
-	($ cname .. "  essaie de terminer de fabriquer les bombes." $) text!
+	($ cname .. " attempts to finish making the bombs." $) text!
 	cmechanic+ if
-		($ cHe .. "  termine facilement ces dernieres, et en finit avec 6 bombes a pipe." $) +crtext goodfx 6 WEAPON_PIPEBOMB trunk.weapon+
+		($ cHe .. " easily finishes them, and ends up with 6 pipebombs." $) +crtext goodfx 6 WEAPON_PIPEBOMB trunk.weapon+
 	else
 		mechanicroll if
-			($ cHe .. "  ne parvient pas a se faire exploser en partie grace au hasard " .. chim .. " arrive a conserver  bombes a pipe, en ruinant la moitie delles " .. cHe .. "  nest pas assez a laise avec ce genre de travail, et fait une erreur. Dommage" $) +crtext 3 WEAPON_PIPEBOMB trunk.weapon+ goodfx
+			($ cHe .. " manages to not blow " .. chim .. "self up, partially by luck. " .. cHe .. " ends up with 3 pipebombs, ruining half of them." $) +crtext 3 WEAPON_PIPEBOMB trunk.weapon+ goodfx
 		else
-			($ cHe .. " ' ne se sent pas a l'aise pour du travail de cette nature, et commet une faute. Desole !" $) +crtext ouch2- cchar ' .ouch01rnd-- foreach-team-char-except bitefx
+			($ cHe .. " isn't comfortable enough with work like this, and makes a mistake. Woops!" $) +crtext ouch2- cchar ' .ouch01rnd-- foreach-team-char-except bitefx
 		then
 	then mechanicREV alive? if mechanic++ then
-
+	
 ;
 
 cyoa: common3-pipe
-	someicon " Zombie Bombeur" cyoa-title!
-	($ Thegroup .. " ' decouvre un abri abandonne. Il y a un peu d'munition dedans." $) text!
+	someicon "Bomber Zombie" cyoa-title!
+	($ Thegroup .. " finds an abandoned safehouse. There's a little bit of ammo inside." $) text!
 	ammosearch1
-	($ " En poursuivant la recherche, des bombes a pipe inachevees sont dans l'edifice. Quelquun devait avoir du quitter en urgence. " .. " Travailler avec elles pourrait etre tres dangereux !" rbold $) +crtext
-		choice( " Les laisser seul !" )choice
-		mechanicest charchoice( ": Terminer de les fabriquer" )choice: common3-pipe-go
+	($ "On further searching, some unfinished pipebombs are in the building. Someone must have had to leave in a hurry. " .. "Messing with them could be really dangerous!" rbold $) +crtext
+		choice( "Leave them alone!" )choice
+		mechanicest charchoice( ": Finish making them" )choice: common3-pipe-go
 ;
 
 
 cyoa-choice: common3-bridgekeep-plow
 	someicon
-	($ Thegroup .. "  ignore simplement l'homme en armure qui se tient sur le pont et fonce droit dessus." .. "PAF!" rbold $) text!
+	($ Thegroup .. " just ignores the armored man standing in the bridge and crashes right through. " .. "THUNK!" rbold $) text!
 	car-plowthrough
 ;
 
 cyoa-choice: common3-bridgekeep-rage
-	($ cname .. " fonce droit sur l'homme en armure faite d'equipement sportif " .. "PLASH!" fbold $) text! goodfx rageREV morale++
+	($ cname .. " charges right at the sports-gear armored man, tackles him at the waist, and tosses him over the bridge. " .. "SPLASH!" fbold $) text! goodfx rageREV morale++
 ;
 
 cyoa-bridge: common3-bridgekeep-push
 	someicon
-	($ Thegroup .. " sort de la voiture et tente de pousser le garde hors du pont." $) text!
+	($ Thegroup .. " gets out the car and tries to push the bridge guard off the bridge." $) text!
 	strength-total fitness-total + 15 > if
-		($ " Apres avoir lutte, " .. thegroup .. "  parvient a le jeter par-dessus le pont !" $) +crtext goodfx
+		($ "After some struggling, " .. thegroup .. " is able to toss him off the bridge!" $) +crtext goodfx
 	else
-		($ " C'est inutile ! L'homme en armure vient de frapper " .. thegroup .. "  avec ses gants de boxe ! " $) +crtext
-			vehicle.which@ 0= if ($ gThey .. " courir" .. g1s .. " le passe apres la bagarre." $) +text then
+		($ "It's no use! The armored man just socks " .. thegroup .. " with his boxing gloves! " $) +crtext
+			vehicle.which@ 0= if ($ gThey .. " run" .. g1s .. " past him after the beating." $) +text then
 		sting--all bitefx
-		vehicle.which@ 0 > if choice( "Lui rouler dessus avec la voiture." )choice: common3-bridgekeep-plow then
-
+		vehicle.which@ 0 > if choice( "Run him over with car" )choice: common3-bridgekeep-plow then
+		 
 	then
 	' .strengthREV foreach-team-char ' .fitnessREV foreach-team-char
 ;
 
 : common3-bridgekeep-choice
-	choice( "Le jeter par-dessus le pont" )choice: common3-bridgekeep-push
-	vehicle.which@ 0 > if choice( "Foncer avec la voiture" )choice: common3-bridgekeep-plow then
+	choice( "Push him off bridge" )choice: common3-bridgekeep-push
+	vehicle.which@ 0 > if choice( "Plow through with car" )choice: common3-bridgekeep-plow then
 	most-angrystrong if
-		charchoice( ": le combattre en face a face !" )choice: common3-bridgekeep-rage
+		charchoice( ": Fight him one on one!" )choice: common3-bridgekeep-rage
 	then
 ;
 
 cyoa-bridge: common3-bridgekeep-coolit
 	cpet? if
-		($ cname .. " marche jusquau bord du pont, se tourne et " .. "pete" pbold .. " en direction du garde." $)
+		($ cname .. " walks to the edge of the bridge, turns around, and " .. "farts" pbold .. " in the general direction of the bridge guard." $)
 	else
-		($ cname .. " se tient au bord du pont et crie au garde du pont de se " .. "CALMER." pbold $)
+		($ cname .. " stands at the edge of the bridge and yells at the bridge guard to " .. "COOL IT." pbold $)
 	then text!
 	cool-it++
-	($ "L'homme en armure continue de regarder droit devant lui. Pas sur qu'il ait meme entendu quoi que ce soit." .. cname .. "." $) +crtext badfx
+	($ "The armored man continues staring straight forward. It's not clear if he even heard " .. cname .. "." $) +crtext badfx
 	common3-bridgekeep-choice
 ;
 
 cyoa: common3-bridgekeep
-	"Gardien Silencieux" cyoa-title!
-	($ "Un homme vetu d'une armure de fortune, fabriquee a partir d'equipements sportifs, monte la garde au milieu d'un etroit pont en bois. Il porte des gants de boxe et fixe silencieusement la voiture juste devant lui tout en bloquant le passage." $) text!
+	"Silent Guardian" cyoa-title!
+	($ "A man in makeshift armor, made from athletic gear, is standing guard in the middle of a narrow wooden bridge on the road. He's wearing boxing gloves, staring forward at the car, silent as he blocks the way past." $) text!
 		common3-bridgekeep-choice
 		most-grating if
-			charchoice( ": Dites au garde de se CALMER" )choice: common3-bridgekeep-coolit
+			charchoice( ": Tell sentinel to COOL IT" )choice: common3-bridgekeep-coolit
 		then
 ;
 
 // Ranting raving ambush
 
 cyoa-choice: common3-ranter-rage
-	($ "Au lieu detre surpris par lembuscade, " .. cname .. " ' se precipite sur l'homme pendant qu'il delire et le met KO. Il n'a meme pas le temps de reagir." $) text! goodfx rageREV morale++
+	($ "Instead of being surprised by the ambush, " .. cname .. " rushes at the man as he's ranting and knocks him out. He doesn't even get time to react." $) text! goodfx rageREV morale++
 	most-ahole if choosechar
-		($ cname .. "  saisit loccasion de voler ses affaires !" $) +crtext
+		($ cname .. " seizes the opportunity to steal his stuff!" $) +crtext
 		homesearch1 ammosearch1 rob-guilt2
 	then
 ;
 
 cyoa-choice: common3-ranter-obliv
-	($ cname .. " ' n'accuse pas du tout l'homme qui fulmine. Il devient tellement confus par cela qu'il devient silencieux et s'en va. 	" .. cname .. " ' ne faisait pas attention tout le temps et est davantage attire par " .. chis .. "  son propre petit monde." $) text! goodfx witsattREV attitude++ wits--
+	($ cname .. " doesn't acknowledge the ranting man at all. He gets so confused by this that he becomes quiet and wanders off. 
+	" .. cname .. " wasn't paying attention the whole time, and gets more drawn into " .. chis .. " own little world." $) text! goodfx witsattREV attitude++ wits--
 ;
 
 cyoa-bridge: common3-ranter-coolit
 	cpet? if
-		($ cname .. " ' interrompt les diatribes de l'homme en continu " .. "PETE" rbold .. "  quand il essaie de parler." $)
+		($ cname .. " interrupts the man's rants by continuously " .. "FARTING" rbold .. " when he tries to speak." $)
 	else
-		($ cname .. " ' interrompt les diatribes de l'homme pour lui dire de " .. "'DIS LE, NE LE PULVERISE PAS !" pbold $)
+		($ cname .. " interrupts the man's rants to tell him to " .. "SAY IT, DON'T SPRAY IT!" pbold $)
 	then text!
 	cool-it-7 if
-		($ "'Ha ! Tu es d'accord !" pbold .. "francais" $) +crtext
+		($ "Ha! You're alright!" pbold .. "
+		He offers to lend his skills to the team!" $) +crtext
 		cooled-it goodfx recruit-yesno morale3+all
 	else cool-it++
-		($ "Oh! On dirait quon a un perturbateur!" pbold .. "il explose " .. cname .. " avec un " .. "RANT DEVASTATEUR DE PERSPICACITE!" fbold .. " Le coup de gueule devastateur fait une petite onde de choc!" $) +crtext
+		($ "Oh! Looks like we got a heckler!" pbold .. "
+		He blasts " .. cname .. " with a " .. "DEVASTATINGLY INSIGHTFUL RANT!" fbold .. " The butt-blasting rant makes a small shockwave!" $) +crtext
 		morale4- ouch-- badfx
-	then witsattREV
+	then witsattREV 
 ;
 
 cyoa-choice: common3-ranter-charm
-	($ cname .. " " $) text!
+	($ cname .. " listens to the ranting man and tries to reason with him. The man calms down, and explains that he thought " $) text! 
 	solo if
-		($ cname .. " etait un bandit!" $)
+		($ cname .. " was a bandit!" $)
 	else
-		"le groupe etait de bandits!"
+		"the group were bandits!"
 	then  +text goodfx witsattREV morale++
 	most-ahole if choosechar
-		($ cname .. " lui montre cela " .. gtheyare .. " brigand" gaVSs .. "!" $) +crtext
+		($ cname .. " shows him that " .. gtheyare .. " bandit" gaVSs .. "!" $) +crtext
 		homesearch1 ammosearch1 rob-guilt2
 	then
 ;
 
 cyoa-choice: common3-ranter-fight ricon
-	($ Thegroup .. " " $) text! bitefx ouch--all
+	($ Thegroup .. " fights the cantankerous man! It's over very quickly, but he ended up doing some damage before he ran off." $) text! bitefx ouch--all
 ;
 
 cyoa-choice: common3-ranter-run ricon
-	($ Thegroup .. "  damage " .. "RANTING SIZZLING" rbold .. " avant after  apres " .. thegroup .. "  le perd." $) text! badfx morale2-all
+	($ Thegroup .. " runs away! The cantankerous man chases them for quite awhile, delivering some " .. "SIZZLING RANTS" rbold .. " before " .. thegroup .. " loses him." $) text! badfx morale2-all
 ;
 
 cyoa: common3-ranter
@@ -179,80 +182,84 @@ cyoa: common3-ranter
 	26 recruitee .specialtype! ricon
 	6 recruitee .wits! 0 recruitee .attitude! 0 recruitee .composure! 6 recruitee .loyalty!
 	2 recruitee .morale! 6 recruitee .shooting! 6 recruitee .medical! 6 recruitee .mechanical!
-	($ Thegroup .. " ' est pris en embuscade par un homme qui hurle. Il est en train de delirer et de s'emporter ! Il n'a pas l'air particulierement dangereux, mais ces coups de gueule commencent a " .. "siffler." pbold $) text!
+	($ Thegroup .. " is ambushed by a yelling man. He's ranting and raving! He doesn't look particularly dangerous, but those rants are starting to " .. "sizzle." pbold $) text!
 		most-angrystrong if
-			charchoice( ": Mettez le KO" )choice: common3-ranter-rage
+			charchoice( ": Knock him out" )choice: common3-ranter-rage
 		then
 		most-grating if
-			charchoice( "': DIS LE, NE LE PULVERISE PAS" fcoolit )choice: common3-ranter-coolit
+			charchoice( ": SAY IT, DON'T SPRAY IT" fcoolit )choice: common3-ranter-coolit
 		then
 		most-oblivious if
-			charchoice( ": Lignorer completement" )choice: common3-ranter-obliv
+			charchoice( ": Ignore him completely" )choice: common3-ranter-obliv
 		then
 		most-charming if
-			charchoice( ": Ecoute le" )choice: common3-ranter-charm
+			charchoice( ": Listen to him" )choice: common3-ranter-charm
 		then
-		choice( "Fuis !" )choice: common3-ranter-run
-		choice( "Bats toi contre lui !" )choice: common3-ranter-fight
+		choice( "Run away!" )choice: common3-ranter-run
+		choice( "Fight him!" )choice: common3-ranter-fight
 ;
 
 // BEE PROBLEMS
 
-: swatsoreats cpet? if "mange" else "ecrase" then ;
+: swatsoreats cpet? if "eats" else "swats" then ;
 
 cyoa-choice: common3-bee-swat
-	($ cname .. " " .. swatsoreats .. "  labeille ! Cela resout le probleme de labeille, mais " .. che .. "  se fait piquer !" $) text!
+	($ cname .. " " .. swatsoreats .. " the bee! It solves the bee problem, but " .. che .. " gets stung!" $) text!
 	ouch-- temperREV bitefx
-	alive? not if ($ cHis .. "  le sacrifice ne sera jamais oublie !" $) +crtext then
-
+	alive? not if ($ cHis .. " sacrifice will never be forgotten!" $) +crtext then
+	
 ;
 
 cyoa-choice: common3-bee-coolit
-	cpet? if
-		($ cname .. "  setire et ca ressemble un peu a " .. "CALME TOI." pbold $)
-	else
-		($ cname .. "  demande a la abeille de " .. "CALME TOI." pbold $)
+	cpet? if 
+		($ cname .. " yawns and it kind of sounds like " .. "COOL IT." pbold $)
+	else 
+		($ cname .. " tells the bee to " .. "COOL IT." pbold $)
 	then text!
-	($ "La abeille volle droit dans sa gueule  " .. cname .. "' il est pique ! " .. cHe .. "  ca fait mal beaucoup " .. " Totalement lignore !" rbold $) +crtext
+	($ "The bee flies right into " .. cname .. "'s mouth! " .. cHe .. " gets stung! " .. "It hurts a lot!" rbold $) +crtext
 	ouch-- witsattREV bitefx morale3- cool-it++
-	alive? not if ($ cHis .. "  le sacrifice ne sera jamais oublie !" $) +crtext then
+	alive? not if ($ cHis .. " sacrifice will never be forgotten!" $) +crtext then
 ;
 
 cyoa-choice: common3-bee-obliv
-	($ cname .. "  ne sest pas apercu " .. cHe .. " ' exemple et ignore egalement " $) text!
-	notsolo if ($ Everyone .. " suivra " .. chis .. "  la abeille" .. g2s .. "  elle." $) +text then
-	"La abeille continue de bourdonner autour de la voiture des mois apres quelle a ete abandonnee." +crtext goodfx witsattREV
+	($ cname .. " completely ignores the bee! " .. cHe .. " somehow didn't notice it. " $) text!
+	notsolo if ($ Everyone .. " follows " .. chis .. " example and also ignore" .. g2s .. " the bee." $) +text then
+	"The bee is still buzzing around the car months after it is abandoned." +crtext goodfx witsattREV
 ;
 
 cyoa-choice: common3-bee-panic
-	($ Thegroup .. " descends dans la panique! La voiture perd le controle et secrase contre un arbre." $) text!
+	($ Thegroup .. " descends into a panic! The car loses control and then plows into a tree." $) text!
 	car-plowthrough
-	"A un moment donne, labeille sest echappee par la fenetre." +crtext
+	"At some point, the bee escaped through the window." +crtext
 ;
 
 cyoa-choice: common3-bee-beeman
-	($ cname .. " " $) text!
+	($ cname .. " sings a soothing song to the bee.
+	The bee flies out of the window.
+	I didn't think I'd ever see the bee leave the car, but it's really happened." $) text!
 	morale2+all goodfx
 ;
 
 cyoa: common3-bee
-	"Probleme dabeilles!" cyoa-title! angriest choosechar cicon
-	vehicle.which@ 0= if
-		($ "Une abeille harcele " .. thegroup .. "il met une eternite a partir. Si tu avais une voiture, tu aurais surement ete protege des abeilles !" $) text! morale2-all
+	"Bee Trouble!" cyoa-title! angriest choosechar cicon
+	vehicle.which@ 0= if 
+		($ "A bee keeps harassing " .. thegroup .. "!
+		It takes forever for it to leave. If you only had a car, you would surely have been protected from bees!" $) text! morale2-all
 	then;
-	($ "'Une abeille entre dans la voiture ! Meme avec une fenetre ouverte, elle ne s'en va pas. Elle continue de voler directement dans " .. thegroup .. "'s face" .. gs .. "! Cela pourrait etre le plus grand defi, a ce jour !" $) text!
-		choice( "PANIQUE!" )choice: common3-bee-panic
+	($ "A bee flies into the car! Even with a window open, it doesn't leave. It keeps flying right into " .. thegroup .. "'s face" .. gs .. "!
+	This could be the biggest challenge, yet!" $) text!
+		choice( "PANIC!" )choice: common3-bee-panic
 		most-grating if
-			charchoice( "  dit a labeille de SE CALMER" )choice: common3-bee-coolit
+			charchoice( " tells bee to COOL IT" )choice: common3-bee-coolit
 		then
 		most-oblivious if
-			charchoice( "  ignore labeille" )choice: common3-bee-obliv
+			charchoice( " ignores the bee" )choice: common3-bee-obliv
 		then
-		angriest charchoice( " " .. swatsoreats .. "  labeille" )choice: common3-bee-swat
+		angriest charchoice( " " .. swatsoreats .. " the bee" )choice: common3-bee-swat
 		20 stpick if
-			charchoice( "  chante la chanson de labeille" )choice: common3-bee-beeman
+			charchoice( " sings bee song" )choice: common3-bee-beeman
 		then
-
+		
 ;
 
 // Gloomy Weather
@@ -260,52 +267,54 @@ cyoa: common3-bee
 : common3-gloom-attcheck args( @ )
 	<- @ .attitudeREV
 	<- @ .cattitude+ if
-		($ <- @ .colourname .. "  garde une attitude positive!" $) +crtext
+		($ <- @ .colourname .. " keeps up a positive attitude!" $) +crtext
 	then;
 	<- @ .cattitude- if
 		<- @ .morale2-
 	else
 		<- @ .morale--
-	then
+	then	
 ;
 
 cyoa-choice: common3-gloomy-pick
-	($ cname .. "  commence a parler, pour ameliorer lhumeur." $) text!
+	($ cname .. " starts talking, to improve the mood." $) text!
 	cpet? if
-		($ cHe .. " fait " .. cdogcat .. " ' bruits. C'est une distraction suffisante de la meteo!" $) +crtext morale++	goodfx
+		($ cHe .. " makes " .. cdogcat .. " noises. It's a decent enough distraction from the weather!" $) +crtext morale++	goodfx
 	then;
 	cchar grating? if
-		($ cHe .. "  raconte " .. everyone .. "  to " .. "  CALMER LE JEU." pbold $) +crtext
+		($ cHe .. " tells " .. everyone .. " to " .. "COOL IT. " pbold $) +crtext
 		cool-it-7 if
-			($ Everyone .. "  rit de bon cur! Cette phrase daccroche ne vieillit jamais!" $) +text
+			($ Everyone .. " laughs heartily! This catch phrase never gets old!" $) +text
 			morale2+all goodfx
 		else cool-it++
-			"Cela ne passe PAS bien du tout." +text morale3-all badfx
+			"This does NOT go over well at all." +text morale3-all badfx
 		then witsattREV
 	then;
 	ctemper- if
-		($ cHe .. " perd " .. chis .. "  temperament et commence a se plaindre de la meteo! " .. cHe .. "  se sent mieux mais " .. everyone .. "  il doit supporter les plaintes." $) +crtext badfx
+		($ cHe .. " loses " .. chis .. " temper and starts venting about the weather! " .. cHe .. " feels better but " .. everyone .. " has to endure the rants." $) +crtext badfx
 		temperREV morale++ cchar ' .morale-- foreach-team-char-except
 	then;
 	cattitude+ if
-		($ cHe .. "  parvient a distraire " .. everyone .. "  de la meteo deplaisante !" $) +crtext goodfx attitudeREV
+		($ cHe .. " manages to distract " .. everyone .. " from the crappy weather!" $) +crtext goodfx attitudeREV
 	then;
 	cattitude- if
-		($ cHe .. "  plaindrait et plaindrait, sur la meteo et dautres sujets non lies." $) +crtext badfx
+		($ cHe .. " whines and whines, both about the weather and other non-related topics." $) +crtext badfx
 		attitudeREV morale2-all
 	then;
-	"'Cela ne laide pas beaucoup." +crtext badfx
+	"It doesn't help that much." +crtext badfx
 	' common3-gloom-attcheck foreach-team-char
 ;
 
 cyoa: common3-gloomy
-	"Voyage Meteorologique Triste" cyoa-title! someicon
-	($ "'La meteo est grise et sales et ca commence a me " .. thegroup .. "  deprime. " $) text!
+	"Gloomy Weather Trip" cyoa-title! image-water-driving
+	($ "The weather is gray and dingy and it's really getting " .. thegroup .. " down. " $) text!
 	solo if
-		($ cHe .. "  na personne a plaindre de la meteo a." $) +text
+		pchar choosechar 
+		\ if you're solo, pchar is the only char. 
+		($ cHe .. " has no one to complain about the weather to." $) +text
 		soloer common3-gloom-attcheck
 	else
-		"Quelquun decide de parler, pour ameliorer lambiance:" +crtext
+		"Someone decides to speak up, to help the mood:" +crtext
 		' common3-gloomy-pick cyoa-team-choice
 	then 0.4 1 frnd weather! -1 1 frnd wind_force!
 
@@ -315,55 +324,56 @@ cyoa: common3-gloomy
 
 
 cyoa-choice: common3-fart-blame
-	($ cname .. "  est accuse du flatulence." $) text!
+	($ cname .. " is blamed for the fart." $) text!
 	cpet? if
-		($ "Ceci est une mauvaise " .. cdogcat .. "!" $) +crtext morale-- badfx
+		($ "Wow! What a bad " .. cdogcat .. "!" $) +crtext morale-- badfx
 	then;
-	cattitude+ if ($ cHe .. "  hausse les epaules avec bonhomie." $) +crtext attitudeREV else morale2- then
-	"Lodeur persiste !" +crtext
+	cattitude+ if ($ cHe .. " shrugs in a good-natured way." $) +crtext attitudeREV else morale2- then
+	"The smell lingers!" +crtext
 	cchar ' .morale-- foreach-team-char-except badfx
 	"Was this the real culprit? Who can say..." +crtext
 ;
 
 cyoa-choice: common3-fart-coolit
 	cpet? if
-		($ cname .. "  emet un " .. "PET TRES CLAIR SECOND PET." rbold $) text!
-		"Mystere resolu !" +crtext
+		($ cname .. " emits a " .. "VERY CLEAR SECOND FART." rbold $) text!
+		"Mystery solved!" +crtext
 	else
-		($ cname .. "  raconte " .. everyone .. "  to " .. "CALME TOI." pbold $) text!
-		($ "PERLES DE SUEUR NERVEUSE" rbold .. "  degoulinent sur " .. cname .. "'le visage. Pourtant rien ne peut etre prouve !" $) +crtext
+		($ cname .. " tells " .. everyone .. " to " .. "COOL IT." pbold $) text!
+		($ "BEADS OF NERVOUS SWEAT" rbold .. " roll down " .. cname .. "'s face. Yet nothing can be proven!" $) +crtext
 	then cool-it++ cchar ' .morale3- foreach-team-char-except witsattREV badfx
 ;
 
 cyoa-choice: common3-fart-smart
 	notcchar to victim
-	($ cname .. "  explique une sequence de deduction compliquee qui aboutit a une conclusion:" $) text!
+	($ cname .. " explains a complicated sequence of deduction that arrives at one conclusion:" $) text!
 	cattitude+ if
-	($ "Le pet a ete fait par un " .. "GHOST!!! WWWWHHHHOAAAAAAAAA!" fbold $) +crtext witsattREV morale++all goodfx
+	($ "The fart was made by a " .. "GHOST!!! WWWWHHHHOAAAAAAAAA!" fbold $) +crtext witsattREV morale++all goodfx
 	then;
-	($ "Cetait " .. vname .. "  qui etait le prouteux !" $) +crtext victim .morale2- badfx
+	($ "It was " .. vname .. " who was the farter!" $) +crtext victim .morale2- badfx
 	cloyalty- if
-		($ "En secret, cetait en realite " .. cname .. " qui etait le " .. "le monstre a flatulences!" rbold $) +crtext
+		($ "In secret, it was actually " .. cname .. " who was the " .. "fart monster!" rbold $) +crtext
 		loyaltyREV
 	then witsREV morale++
 ;
 
 cyoa: common3-fart
-	"Le Mystere du Fantome Fart" cyoa-title!
-	image-bad-smell 33 to cyoaicon
-	($ "C'est juste une journee typique sur la Route de la Mort quand quelqu'un " .. "fait des flatulences dans la voiture." rbold $) text!
+	"The Mystery of the Ghost Fart" cyoa-title!
+	image-bad-smell
+	($ "It's just another day on the Death Road when someone " .. "farts in the car." rbold $) text!
 	solo if
-		"Qui en a pu faire ? Nous pourrions jamais le savoir a nouveau." +crtext 1 trunk-gas+ badfx
+		"Who could have done this? We may never, ever know." +crtext 1 trunk-gas+ badfx
 	then;
 	solohuman if choosepet
-		($ "Qui en a pu faire ? Cetait probablement " .. cname .. ". Quel mauvais " .. cdogcat .. "!" $) +crtext morale-- badfx
+		($ "Who could have done this? It was probably " .. cname .. ". What a bad " .. cdogcat .. "!" $) +crtext morale-- badfx
 	then;
-		"La drame et la mystere absorbent lequipe.		Choisissez quelquun a blamer:" +crtext
+		"Drama and mystery consume the team.
+		Pick someone to blame:" +crtext
 		most-grating if
-			charchoice( "  raconte " .. everyone .. " lui pour le REFROIDIR" )choice: common3-fart-coolit
+			charchoice( " tells " .. everyone .. " to COOL IT" )choice: common3-fart-coolit
 		then
-		smartest-pass if
-			smartest charchoice( " lhomme resout le mystere" )choice: common3-fart-smart
+		smartest-pass if 
+			smartest charchoice( " solves the mystery" )choice: common3-fart-smart
 		then
 		' common3-fart-blame cyoa-team-choice
 ;
@@ -372,157 +382,160 @@ cyoa: common3-fart
 
 : common3-gator-hotwire
 	mechanicest choosechar cmechanic+ if cicon
-		($ cname .. " lhomme parvient a voler la voiture!" $) +crtext mechanicREV goodfx
+		($ cname .. " manages to hotwire the car!" $) +crtext mechanicREV goodfx
 	else
-		($ "Sans un bon mecanicien, il n'y a pas d'autre moyen pour " .. thegroup .. " demarrer la voiture!" $) +crtext
+		($ "Without a good mechanic, there's no other way for " .. thegroup .. " to start the car!" $) +crtext
 		car-abandon 1 to gator-ate-key
 	then
 ;
 
 cyoa-choice: common3-gator-str
-	($ cname .. " lutte contre lalligator pour les cles !" $) text!
+	($ cname .. " wrestles the gator for the keys!" $) text!
 	strength+roll if
-		($ "Lalligator est vaincu par " .. cname .. "'sa force brute ! Il recrache les cles." $) +crtext goodfx strength++
+		($ "The gator is bested by " .. cname .. "'s raw strength! It spits out the keys." $) +crtext goodfx strength++
 	else
-		($ "Lalligator gagne et finit par prendre une enorme bouchee de " .. cname .. " ! Il laisse tomber les cles." $) +crtext ouch2- bitefx
+		($ "The gator wins and ends up taking a huge chomp out of " .. cname .. "! It drops the keys." $) +crtext ouch2- bitefx
 	then alive? if strengthREV then
 ;
 
 cyoa-choice: common3-gator-fit
-	($ cname .. " harcele l'alligator en le poursuivant et en courant autour, dans l'espoir qu'il laisse tomber les cles." $) text!
+	($ cname .. " pesters the gator by chasing it and running from it, in hopes it drops the keys." $) text!
 	fitness+roll if
-		($ "L'alligator est epuise par l'energie de " .. cname .. "! Les cles finissent par glisser de sa bouche." $) +crtext goodfx fitness++
+		($ "The gator is tired out by " .. cname .. "'s energy! The keys eventually slip out of its mouth." $) +crtext goodfx fitness++
 	else
-		($ "L'alligator se jette sur " .. cname .. " et le mord quand " .. che .. " est fatigue! L'alligator laisse tomber les cles." $) +crtext ouch2- bitefx
+		($ "The gator lunges in and chomps " .. cname .. " when " .. che .. " gets tired! The gator drops the keys." $) +crtext ouch2- bitefx
 	then alive? if fitnessREV then
 ;
 
 cyoa-choice: common3-gator-shoot
-	($ cname .. " tire sur l'alligator !" $) text!
+	($ cname .. " shoots at the gator!" $) text!
 	shooting+roll if
-		($ "L'alligator est touche par l'excellent tir de " .. cname .. "! Les cles de voiture tombent." $) +crtext goodfx shooting++
+		($ "The gator is blasted by " .. cname .. "'s good aiming! It drops the car keys." $) +crtext goodfx shooting++
 		shootingREV
 	else
-		($ cname .. "  rate le tir. L'alligator avale les cles et s'eloigne en se dandinant." $) +crtext
+		($ cname .. " whiffs the shot. The gator swallows the keys and waddles away." $) +crtext
 		shootingREV common3-gator-hotwire
 	then
 ;
 
 cyoa-choice: common3-gator-obliv
-	($ cname .. " ' prend simplement les cles de voiture droit dans la bouche de l'alligator! Pas de probleme !	L'alligator n'y attendait rien du tout. Il est si surpris qu'il n'a pas referme ses machoires " .. Thegroup .. "  conduit la voiture!" $) text! goodfx witsattREV
+	($ cname .. " just goes ahead and grabs the car keys right from the gator's mouth! No problem!
+	The gator wasn't expecting this casual action at all. It is so surprised that it didn't snap its jaws shut. " .. Thegroup .. " drives the car away!" $) text! goodfx witsattREV
 ;
 
 cyoa-choice: common3-gator-mech
 	someicon
-	($ Thegroup .. " ' juge que les cles de voiture ne valent pas la peine de se meler a un alligator extremement dangereux.	L'alligator est triste que sa strategie ne fonctionne pas, et perd un point de moralite."  $) text!
+	($ Thegroup .. " decides that the car keys aren't worth messing with an extremely dangerous alligator.
+	The alligator is sad that his strategy doesn't work, and loses a point of morale."  $) text!
 	common3-gator-hotwire
 ;
 
 cyoa: common3-gator
-	"Cles Egarees" cyoa-title!
-	($ Thegroup .. " ne trouve plus les cles de la voiture! Apres un moment, " .. gthey .. " reperent " .. g1s .. " les cles qui sont posees dans " .. "la gueule ouverte d'un alligator" rbold .. ".
-	Apres la disparition de la plupart des humains, les alligators ont commences a se repandre le long de toute la côte Est. Il se dit que les alligators pourraient manger des zombies et des cles de voiture." $) text!
-		strongest charchoice( " fait de la lutte avec l'alligator" )choice: common3-gator-str
-		fittest charchoice( " epuise l'alligator" )choice: common3-gator-fit
+	"Misplaced Keys" cyoa-title!
+	($ Thegroup .. " can't find the car keys! After awhile, " .. gthey .. " spot" .. g1s .. " the keys laying inside a " .. "gator's open mouth" rbold .. ".
+	After most humans disappeared, alligators started spreading across the entire east coast. It's rumored the gators may eat zombies and car keys." $) text!
+		strongest charchoice( " wrestles the gator" )choice: common3-gator-str
+		fittest charchoice( " tires out the gator" )choice: common3-gator-fit
 		most-oblivious if
-			charchoice( " attrape simplement les cles." )choice: common3-gator-obliv
+			charchoice( " just grabs the keys" )choice: common3-gator-obliv
 		then
 		roadtrip-has-firearm? if
-			shootest charchoice( " tire sur l'alligator" )choice: common3-gator-shoot
+			shootest charchoice( " shoots the gator" )choice: common3-gator-shoot
 		then
-		choice( "Abandonner les cles de voiture" )choice: common3-gator-mech
+		choice( "Abandon the car keys" )choice: common3-gator-mech
 ;
 
 // Trap Town
 
 cyoa-choice: common3-traptown-pick
-	($ cname .. " his ability " .. chis .. " capacite." $) text!
+	($ cname .. " starts scavenging through the town, avoiding traps to the best of " .. chis .. " ability." $) text!
 	cchar paranoid? if
-		($ cHe .. " ' est extremement paranoiaque a chaque pas et action. C'est lent, de nombreux pieges se declenchent. " .. cname .. "  est pret pour chacun deux et evite les blessures." $) +crtext goodfx witsattREV mechanic++ ammosearch2 homesearch2
+		($ cHe .. " is extremely paranoid about every step and action. It's slow going, many traps go off. " .. cname .. " is ready for every one of them, and avoids injury." $) +crtext goodfx witsattREV mechanic++ ammosearch2 homesearch2
 	then;
 	cchar oblivious? if
-		($ cHe .. "  fonce a travers. La plupart des pieges frappent " .. chim .. ". " .. cname .. "  survit en quelque sorte a ce long processus !" $) +crtext bitefx witsattREV sting2- morale2-
-		"Voir autant de pieges en action etait educatif !" +crtext
+		($ cHe .. " blunders right through. Most of the traps hit " .. chim .. ". " .. cname .. " somehow survives this long process!" $) +crtext bitefx witsattREV sting2- morale2-
+		"Seeing so many traps in action was educational!" +crtext
 		' .mechanic++ foreach-team-char ammosearch2 homesearch2
 	then;
 	wits+roll if
-		($ cHe .. "  fait attention a lendroit ou " .. che .. "' va. De nombreux pieges sont reperes et declenches en toute securite. " .. cname .. "  evite les blessures !" $) +crtext goodfx witsREV mechanic++ ammosearch2 homesearch2
+		($ cHe .. " is careful about where " .. che .. "'s going. Many traps are spotted and set off safely. " .. cname .. " avoids injury!" $) +crtext goodfx witsREV mechanic++ ammosearch2 homesearch2
 	then;
 	mechanic+roll if
-		($ cHe .. " utilise " .. chis .. "  experience avec des trucs mecaniques pour raisonner ou " .. che .. "  mettrait des pieges si " .. che .. "  etait une sorte de cingle. " .. cname .. "  evite ou desarme de nombreux pieges de cette facon !" $) +crtext goodfx mechanicREV mechanic++ ammosearch2 homesearch2
+		($ cHe .. " uses " .. chis .. " experience with mechanical stuff to reason out where " .. che .. " would put traps if " .. che .. " was some kind of nut. " .. cname .. " avoids or disarms many traps this way!" $) +crtext goodfx mechanicREV mechanic++ ammosearch2 homesearch2
 	then;
-		($ cHis .. " ' la capacite d'eviter les pieges n'est pas si grande. " .. cname .. "  se fait dechiqueter mal " $) +crtext
+		($ cHis .. " ability at avoiding traps isn't that great. " .. cname .. " gets shredded bad! " $) +crtext
 		witsREV mechanicREV ouch2- bitefx
 ;
 
 cyoa-bridge: common3-traptown-pick4
 	someicon
-	"Qui devrait explorer la ville piegee?" cyoa-text!
+	"Who should scout the booby trapped town?" cyoa-text!
 	' common3-traptown-pick cyoa-team-choice
 ;
 
 cyoa: common3-traptown
-	"Ville de Pieges" cyoa-title!
-	($ Thegroup .. "  trouve une rue dans une ville qui est couverte de pieges. Trappes recouvertes de couvertures. Des pieges partout. Des barils a gros cailloux. Et ces sont juste les visibles." $) text!
+	"Town of Traps" cyoa-title!
+	($ Thegroup .. " finds a street in a town that has traps all over it. Pits with blankets put over the top. Snares everywhere. Spikes on barrels. A door with an obvious guillotine over it. And these are just the visible ones." $) text!
 		solo if
-			($ "Rechercher cette zone pour du butin peut etre " .. "tres dangereux" rbold .. ", particulierement depuis quil est seul " .. soloname .. " est seul!" $) +crtext
-			soloer charchoice( " essaye dexplorer" )choice: common3-traptown-pick
+			($ "Scouting this area for loot could be " .. "very dangerous" rbold .. ", especially since " .. soloname .. " is alone!" $) +crtext
+			soloer charchoice( " tries exploring" )choice: common3-traptown-pick
 		else
-			"Envoyer un scout explorer pour du butin?" +crtext
+			"Send a scout to explore for loot?" +crtext
 			team-count 3 > if
 				' common3-traptown-pick 2 #cyoa-team-choice
-				choice( "Choisissez quelquun dautre" )choice: common3-traptown-pick4
+				choice( "Pick someone else" )choice: common3-traptown-pick4
 			else
 				' common3-traptown-pick 3 #cyoa-team-choice
 			then
 		then
-		choice( "Fuyez!" )choice
-
+		choice( "Drive away!" )choice
+		
 ;
 
 // Creepy Store
 
 cyoa-choice: common3-creepy-go
-	($ cname .. " entre dans le magasin sombre et crepusculaire." $) text!
+	($ cname .. " enters the dark and creepy store." $) text!
 	cchar paranoid? if
-		($ cHis .. " le sens habituel de la paranoia se retourne contre vous! " .. cHe .. " sa sens de lalerte normale revient en arriere  " .. cname .. " voit une souris minuscule et alors commence a " .. " hurlant comme un Youtuber" fbold .. "!" $) +crtext morale2- witsattREV sfx{ creepy }
+		($ cHis .. " usual sense of paranoia backfires! " .. cHe .. " gets super scared. " .. cname .. " sees a tiny mouse and then starts " .. "shrieking like a Youtuber" fbold .. "!" $) +crtext morale2- witsattREV sfx{ creepy }
 	then;
 	cchar oblivious? if
-		($ cHe .. " ' ne remarque rien d'effrayant la dedans. Pas meme quand un " .. " SQUELETTE DANSANT EFFRAYANT" fbold .. "  tombe du plafond et commence a cliqueter !" $) +crtext
+		($ cHe .. " doesn't notice anything scary in there. Not even when a " .. "SPOOKY DANCING SKELETON" fbold .. " drops from the ceiling and starts clattering around!" $) +crtext
 		witsattREV homesearch2 goodfx
 	then;
 	temper+roll if
-		($ cHe .. "  reste calme, prend le butin " .. che .. "  trouve, et sort de la !" $) +crtext
+		($ cHe .. " keeps calm, takes the loot " .. che .. " finds, and gets out of there!" $) +crtext
 		temperREV homesearch2 goodfx
 	then;
-		($ cHe .. " perd " .. chis .. "  calme et sort de la en courant, affirmant quil ny avait pas de butin !" $) +crtext
+		($ cHe .. " loses " .. chis .. " calm and runs out of there, claiming there was no loot!" $) +crtext
 		temperREV morale-- badfx
 ;
 
 cyoa-choice: common3-creepy-allgo
-	someicon ($ Thegroup .. " entre dans le magasin sombre et crepusculaire." $) text!
+	someicon ($ Thegroup .. " enters the dark and creepy store." $) text!
 	angriest-pass if angriest choosechar cicon
-		($ cname .. "  prend un mannequin pour un zombie et attaque ! Cela fait " .. everyone .. "  paniquer et commencer aussi a attaquer aveuglement. Au final, aucun mannequin nest reste debout." $) +crtext temperREV
+		($ cname .. " mistakes a mannequin for a zombie and attacks! This makes " .. everyone .. " freak out and also start attacking blindy. In the end, no mannequins were left standing." $) +crtext temperREV
 		ouch--all bitefx
 	else
-		"Tout le monde reste assez calme ! Le magasin est pille sans incident." +crtext goodfx
+		"Everyone keeps fairly calm! The store is looted without incident." +crtext goodfx
 	then ' .temperREV foreach-team-char homesearch2
 ;
 
 cyoa-choice: common3-creepy-pick
-	"Qui devrait entrer dans le magasin effrayant ?" text!
+	"Who should enter the creepy store?" text!
 	' common3-creepy-go cyoa-team-choice
 ;
 
 cyoa: common3-creepy
-	"Magasin sombre et effrayant" cyoa-title! image-female-zombie-1
-	($ Thegroup .. " ' trouve un magasin inonde. Il y a beaucoup de mannequins a l'interieur, a peine visibles dans l'obscurite. L'ensemble du magasin est particulierement effrayant. Il peut y avoir des fournitures moisies laissees la dedans." $) text!
-		choice( "Francais" )choice
+	"Dark and Creepy Store" cyoa-title! image-female-zombie-1
+	($ Thegroup .. " finds a waterlogged store. There's a lot of mannequins inside, barely visible in the darkness. The whole store is especially creepy.
+	There may be some moldy supplies left in there." $) text!
+		choice( "Ignore this place" )choice
 		solo if
-			soloer charchoice( " entre dans le magasin" )choice: common3-creepy-go
+			soloer charchoice( " goes in the store" )choice: common3-creepy-go
 		else
-			choice( "Envoie quelquun" )choice: common3-creepy-pick
-			choice( "Envoie tout le monde !" )choice: common3-creepy-allgo
+			choice( "Send someone in" )choice: common3-creepy-pick
+			choice( "Send everyone in!" )choice: common3-creepy-allgo
 		then
 ;
 
@@ -530,67 +543,67 @@ cyoa: common3-creepy
 
 cyoa-choice: common3-badweather-drive
 	smartest choosechar
-	($ Thegroup .. " fait preuve dimprudence et decide de continuer a conduire." $) text!
-	cchar .wits 3 skillcheck? if
-		($ cname .. " se tend " .. chis .. " les yeux et parvient a eviter de justesse de percuter quoi que ce soit !" $) +crtext goodfx witsREV
+	($ Thegroup .. " throws caution to the wind and decides to keep on driving." $) text!
+	cchar .wits 3 skillcheck? if 
+		($ cname .. " strains " .. chis .. " eyes and manages to narrowly avoid crashing into anything!" $) +crtext goodfx witsREV
 	else
 		car-armor 0 > if
-			"La voiture percute des obstacles invisibles sous la pluie. Une partie de son blindage finit par tomber." +cr +text goodfx
+			"The car rams through some unseen obstacles in the rain. Some of its armor ends up falling off." +cr +text goodfx
 			-1 ' car-armor +!
 		else
 			-2 -3 rnd car-chassis+ badfx
 			car-chassis 0 > if
-				($ "La voiture est endommagee en traversant une epave " .. thegroup .. " 'n'a pas vu a temps, mais elle roule toujours." $) +crtext
+				($ "The car gets damaged plowing through some wreckage " .. thegroup .. " didn't see in time, but it's still running." $) +crtext
 			else
-				($ "La voiture percute de plein fouet le cote dune voiture en ruine sur la route et est detruite " .. Thegroup .. " commence a marcher." $) +crtext
-			then
+				($ "The car plows right into the side of a ruined car in the road, and gets wrecked. " .. Thegroup .. " starts walking." $) +crtext
+			then 
 		then
 	then
 ;
 
 cyoa-choice: common3-badweather-fight
-	($ Thegroup .. " 'ne s'installe meme pas dans cette maison avant de realiser qu'une grande horde s'approche sous la pluie battante." $) text!
+	($ Thegroup .. " doesn't even get settled in to this house before they realize a large horde is closing in from the pouring rain." $) text!
 	2.3 15 20 rnd 1 siegecast // 1.7
 	"events/siege/region/midopen1.df" $load-region
-	choice( "Essayez de survivre" )choice: premission
+	choice( "Try to Survive" )choice: premission
 ;
 
 cyoa-choice: common3-badweather-camp
-	someicon ($ Thegroup .. " prend la route secondaire moins frequentee et trouve un endroit pour camper jusqua ce que le temps seclaircisse." $) text! chowday
-	"Il faut une journee supplementaire pour que le temps sameliore suffisamment pour continuer le voyage " +crtext
+	someicon ($ Thegroup .. " takes the less busy side road and finds a place to camp until the weather clears." $) text! chowday
+	"It takes an extra day for the weather to improve enough to continue the journey. " +crtext
 	+cr fullcamp heal-event 1 calendar-day+
 ;
 
 cyoa: common3-badweather
-	"Conduire par mauvais temps" cyoa-title!
-	image-water-driving 73 to cyoaicon
-	($ "La pluie commence a tomber. Il est difficile de voir, et les formes des zombies rodent juste a la limite de l'obscurite " .. Thegroup .. " ' n'est pas sur de ce qui serait pire : continuer, ou s'arreter ici." $) text!
-	vehicle.which@ 0 > if choice( "Continuez a conduire" )choice: common3-badweather-drive then
-	choice( "Cherchez refuge dans la maison" )choice: common3-badweather-fight
+	"Driving in Bad Weather" cyoa-title!
+	image-water-driving
+	($ "Rain starts pouring down. It's hard to see, and the shapes of zombies lurk right on the edge of the darkness. " .. Thegroup .. " isn't sure what would be worse: continuing, or stopping here." $) text!
+	vehicle.which@ 0 > if choice( "Keep Driving" )choice: common3-badweather-drive then
+	choice( "Seek shelter in house" )choice: common3-badweather-fight
 	fullmeal if
-		choice( "Descendez la route secondaire, campez" )choice: common3-badweather-camp
+		choice( "Go down side road, camp" )choice: common3-badweather-camp
 	then 1.4 2 frnd weather! -2 2 frnd wind_force!
 ;
 
 cyoa-choice: common3-horde-plow
-	($ Thegroup .. "  decide dessayer de traverser la horde !" $) text! car-plowthrough
+	($ Thegroup .. " decides to try to try to drive through the horde!" $) text! car-plowthrough
 ;
 
 cyoa-choice: common3-horde-fight
-	($ Thegroup .. "  se cache dans une maison voisine pour attendre que la horde se disperse. Les zombies finissent par sagiter et ils attaquent !" $) text!
+	($ Thegroup .. " hides in a nearby house to wait for the horde to disperse. The zombies end up becoming agitated and they attack!" $) text!
 	2.4 15 20 rnd 1 siegecast // 1.7
 	"events/siege/region/midopen1.df" $load-region
-	choice( "Essayez de survivre" )choice: premission
+	choice( "Try to Survive" )choice: premission
 ;
 
 cyoa: common3-horde
-	"Trafic intense" cyoa-title!
-	image-zombie-hoard-1 9 to cyoaicon
-	($ "'Il y a une grande horde de zombies sur la route devant. " .. Thegroup .. " ' n'est pas sur si " .. gthey .. "  pourrait les traverser ou non." $) text!
-	choice( "Cherchez refuge dans la maison" )choice: common3-horde-fight
-	vehicle.which@ 0 > if
-		choice( "Faire un detour" )choice: car-detour
-		choice( "Labourez !" )choice: common3-horde-plow
+	"Heavy Traffic" cyoa-title!
+	image-zombie-hoard-1
+	($ "There's a large horde of zombies on the road ahead. " .. Thegroup .. " isn't sure if " .. gthey .. " could get through them or not." $) text!
+	choice( "Seek shelter in house" )choice: common3-horde-fight
+	vehicle.which@ 0 > if 
+		choice( "Take a detour" )choice: car-detour
+		choice( "Plow through!" )choice: common3-horde-plow 
 	then
 ;
 

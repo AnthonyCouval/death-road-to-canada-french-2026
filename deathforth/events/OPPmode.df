@@ -1,32 +1,35 @@
 uses paul/region-layout.df
 
 " 
-:map 1
+:map 1 
 :tags familiar  
-:scriptA opp-familiar 
+:scriptA opp-familiar-teleport 
 :scriptB rareparty4 
-:size 19 23
-:off 4 0 
+:size 19 26 
+:off 4 -2 
 :tiles 
-2222222222222222222
-2333333333333333332
-2AAAAAAAAAAAAAAAAA2
-2A111111111111111A2
-2A111111111111111A2
-2A1AAAAAAAAAAAAA1A2
-2A1A22222222222A1A2
-2A1A23333333332A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111B11112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A1A21111111112A1A2
-2A113111111111311A2
+0000222222222220000
+0000233333333320000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+0000211111111120000
+000021111B111120000
+2222211111111122222
+2333211111111123332
+2111211111111121112
+2111311111111131112
 2111111111111111112
 2222211111111122222
 3333222222222223333
@@ -66,11 +69,12 @@ cyoa{
 
 cyoa: opp-recruit-yes2
 	team-full? if
-		($ "Le groupe est plein. Qui souhaitez vous remplacer pour faire de la place a " .. rname .. "?" $) cyoa-text!
+		($ "The group is full.
+		Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
 		' recruit-replace cyoa-team-choice
 	then;
 	ricon
-	($ "Trop OP !" $) cyoa-text! 2 300 tone
+	($ "So OP!" $) cyoa-text! 2 300 tone
 		recruited
 ;
 
@@ -81,27 +85,47 @@ cyoa: opp-recruit-yes
 	recruitee .name@ "L@nk" $= if road{ 1 2 rnd to lnk-countdown } then;
 	recruitee .name@ "Ninja" $= if road{ 6 8 rnd to ninja-countdown } then;
 	recruitee .name@ "???" $= if road{ 2 3 rnd to mason-countdown 1 to mason-curse } then;
-	recruitee .name@ "Chevalier" $= if road{ 4 6 rnd to knight-countdown } then;
-	recruitee .name@ "Anime chan" $= if road{ 2 to anime-countdown } then;
+	recruitee .name@ "Knight" $= if road{ 4 6 rnd to knight-countdown } then;
+	recruitee .name@ "Anime-chan" $= if road{ 2 to anime-countdown } then;
+	recruitee .brck? if road{ 4 6 rnd to brck-countdown } then;
 ;
 
 : OPP-recruit-left 4 OPP-recruit-count - rbold ;
 
 cyoa: opp-recruit
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "BONJOUR JE SUIS " .. rname $) text!
+	($ "HELLO I AM " .. rname $) text!
 	
 	recruitee .specialmode@ 0 > if
-		"ATTENTION: EXTREMEMENT BUGGE" fbold +crtext
+		"WARNING: EXTREMELY BUGGY" fbold +crtext
 		recruitee .specialtype@ 1 = if
-			"MECHAMOUNTIE EST PARTICULIEREMENT BUGGE! UTILISEZ A VOS RISQUES ET PERILS!" rbold +crtext
+			"MECHAMOUNTIE IS ESPECIALLY BUGGY! USE AT OWN RISK!" rbold +crtext
 		then
 	then
 	
-	OPP-recruit-count 3 > if ($ "Vous avez recrute assez de personnages surpuissants! Je vous coupe les vivres!" bbold $) +crtext then;
-	($ "Vous pouvez recruter " bbold .. OPP-recruit-left .. " plus de personnages surpuissants!" bbold $) +crtext
-	choice( "Laissez " .. rname .. "  pour le moment" )choice
-	choice( "Demandez a " .. rname .. "  de rejoindre" )choice: opp-recruit-yes	
+	OPP-recruit-count 3 > if ($ "You've recruited enough overpowered characters! I'm cutting you off!" bbold $) +crtext then;
+	($ "You can recruit " bbold .. OPP-recruit-left .. " more overpowered characters!" bbold $) +crtext
+	choice( "Leave " .. rname .. " for now" )choice
+	choice( "Ask " .. rname .. " to join" )choice: opp-recruit-yes	
+;
+
+: opp-recruit-to-fam-yes
+    120 for
+        i #thing .id@ if
+            i #thing silentkillit
+        then
+    next
+    empty "events/4jerksmode.df" $load-region to-mission
+;
+cyoa: opp-recruit-to-fam
+	"Familiar Faces" cyoa-title!
+	"GO TO THE FAMILIAR CHARACTERS HUT?" cyoa-text!
+	"This will teleport you to a small area that contains all your previously created Custom Characters!" pbold +crtext
+	"WARNING: This will leave the OPP Characters Area! 
+	No going back if you pick 'YES'!" rbold +crtext
+	choice( "NO" )choice
+	choice( "YES" )choice: opp-recruit-to-fam-yes
+	
 ;
 
 }
@@ -176,7 +200,11 @@ map{ roomgen{
 	opp-camper opp-familiar-last
 	// regiondef{ new-familiar-recruit }
 ;
-	
+
+: opp-familiar-teleport
+	still-npc
+	cyoa{ ' opp-recruit-to-fam lt .cyoa! }
+;
 } }
 
 roomgen{
@@ -184,17 +212,17 @@ roomgen{
 
 : .opp-santafy args( chara )
 	3 <- chara .specialtype!
-	"Pere Noel" <- chara .name!
+	"Santa" <- chara .name!
 	4 <- chara .shooting! 0 <- chara .female! 6 <- chara .morale!
 ;
 
 : .opp-evilsantafy args( chara )
 	<- chara .opp-santafy
-	"Pere Noel malefique" <- chara .name! 4 <- chara .specialtype!
+	"Evil Santa" <- chara .name! 4 <- chara .specialtype!
 ;
 
 : .opp-turkeyfy args( chara )
-	"Dinde" <- chara .name!
+	"Turkey" <- chara .name!
 	27 <- chara .specialtype!
 ;
 
@@ -223,20 +251,20 @@ roomgen{
 	3 <- char .wits!
 	3 <- char .loyalty!
 	3 <- char .composure!
-	"semble tranquille, ou na peut etre aucune personnalite." <- char .job!
+	"seems quiet, or possibly has no personality whatsoever." <- char .job!
 	0 <- char .female!
 ;
 
 : .opp-fairy args( char )
 	13 <- char .specialtype!
-	"Reine des fees" <- char .name!
+	"Fairy Queen" <- char .name!
 	5 <- char .shooting!
 	4 <- char .strength!
 	6 <- char .fitness!
 	1 <- char .female!
 	0 <- char .loyalty!
 	4 <- char .medical!
-	"est la reine de tous les etres feeriques." <- char .job!
+	"is the Queen of all Fae Folk." <- char .job!
 ;
 
 : .opp-panda args( char )
@@ -248,7 +276,7 @@ roomgen{
 	6 <- char .fitness!
 	1 <- char .female!
 	1 <- char .carrying.slot_count!
-	"est un panda. Vraiment mignon sauf sil est en colere." <- char .job!
+	"is a panda. Real cute unless angered." <- char .job!
 ;
 
 : .opp-george args( char )
@@ -267,11 +295,11 @@ roomgen{
 	4 <- char .fitness!
 	4 <- char .vitality!
 	4 <- char .health!
-	"Ermite" <- char .name!
+	"Hermit" <- char .name!
 	0 <- char .female!
 	0 <- char .attitude!
 	0 <- char .composure!
-	"a ete surpris quil rejoigne lequipe, etant ermite et tout." <- char .job!
+	"was surprised that he even joined the team, being a hermit and all." <- char .job!
 	WEAPON_SHOTGUN <- char .weapona!
 	WEAPON_FIRE <- char .weaponb!
 	40 LOOT_SHOTGUN_SHELL <- char .lootamt!
@@ -279,7 +307,7 @@ roomgen{
 
 : .opp-clown args( char )
 	"Clown" <- char .name!
-	"est un clown drole !" <- char .job!
+	"is a funny clown!" <- char .job!
 	29 <- char .specialtype!
 	6 <- char .morale! 
 	0 <- char .attitude!
@@ -300,6 +328,31 @@ roomgen{
 
 : rareparty4
 
+
+	opprecruit-in .bayonetta_ify -14 movey 
+	opprecruit-in .zeusify -14 movey 2 movex 
+	opprecruit-in .ravenify -14 movey -2 movex 
+	opprecruit-in .rubick_ify -14 movey -4 movex 
+	opprecruit-in .pewterify -14 movey 4 movex 
+
+	opprecruit-in .paladinify -12 movey
+	opprecruit-in .chronomancerify -12 movey -2 movex
+	opprecruit-in .ruined_soulify -12 movey -4 movex
+	opprecruit-in .syca_ify -12 movey 2 movex 
+	opprecruit-in .kepaify -12 movey 4 movex 
+
+	opprecruit-in .poolify -10 movey
+	opprecruit-in .honchoify -10 movey -2 movex
+	opprecruit-in .rohoaify -10 movey -4 movex
+	opprecruit-in .emberify -10 movey 2 movex
+	opprecruit-in .ringmasterify -10 movey 4 movex
+
+	opprecruit-in -8 movey .brckify -8 movey
+	opprecruit-in .cartify -8 movey -2 movex
+	opprecruit-in .johnnyfy -8 movey -4 movex
+	opprecruit-in .arqify -8 movey 2 movex
+	opprecruit-in .vansmeltify -8 movey 4 movex
+	
 	opprecruit-in .jackhamify -6 movey
 	opprecruit-in .charbroify -6 movey 2 movex
 	opprecruit-in .opp-herman -6 movey 4 movex
@@ -318,9 +371,9 @@ roomgen{
 	opprecruit-in .barbarify -2 movex
 	opprecruit-in .cleanerify -4 movex
 
-	opprecruit-in .animeify "Anime chan" rename -2 movey
+	opprecruit-in .animeify "Anime-chan" rename -2 movey
 	opprecruit-in .opp-turkeyfy -2 movey 2 movex
-	opprecruit-in .horsify "Cheval" rename -2 movey 4 movex
+	opprecruit-in .horsify "Horse" rename -2 movey 4 movex
 	opprecruit-in .opp-santafy -2 movey -2 movex
 	opprecruit-in .opp-evilsantafy -2 movey -4 movex
 	
@@ -341,27 +394,27 @@ roomgen{
 : rarepartyX
 
 	opprecruit-in .lynnify 
-	opprecruit-in .chickenify "Clac clac" rename 2 movex
+	opprecruit-in .chickenify "Cluck-cluck" rename 2 movex
 	opprecruit-in .pqify "Punchzerker" rename 4 movex
-	opprecruit-in .skelify "Sans sans Undertale" rename -2 movex
+	opprecruit-in .skelify "Sans Undertale" rename -2 movex
 	opprecruit-in .grimreaperify -4 movex
 
-	opprecruit-in .mountiefy "Gendarme" rename -2 movey
+	opprecruit-in .mountiefy "Mountie" rename -2 movey
 	opprecruit-in .genieify "Genie" rename -2 movey 3 movex
 	// opprecruit-in . -2 movey 4 movex
 	// opprecruit-in . -2 movey -2 movex
 	opprecruit-in .moosify -2 movey -3 movex
 	
-	opprecruit-in .fly "La Mouche" rename 2 movey
+	opprecruit-in .fly "The Fly" rename 2 movey
 	opprecruit-in .oscarcatify 2 movey 2 movex
 	opprecruit-in .sambyoolify 2 movey 4 movex
-	opprecruit-in .flyhead "Mouche" rename 2 movey -2 movex
-	opprecruit-in .flybody "Le" rename 2 movey -4 movex
+	opprecruit-in .flyhead "Fly" rename 2 movey -2 movex
+	opprecruit-in .flybody "The" rename 2 movey -4 movex
 	
 ;
 
 : rarepartyM
-	opprecruit-in .mechamountify "Mountie Mecha" rename
+	opprecruit-in .mechamountify "Mecha Mountie" rename
 ;
 	
 }
@@ -371,9 +424,9 @@ map{ regiondef{
 trade-camp-reset
 
 : bldg tanchor!
-	"familier formal  formel" $picklocid addloc 
+	"familiar" $picklocid addloc 
 		prefab{
-		BLUE "SALON FAMILIER" .. sign-text!
+		BLUE "CHARACTER LOUNGE" .. sign-text!
 		1 1 1 sign-bg!
 		0 1 1 sign-border!
 		1 1 1 sign-fg!
@@ -382,9 +435,9 @@ trade-camp-reset
 ;
 
 : bldg2 tanchor!
-	"experience" $picklocid addloc 
+	"experiment" $picklocid addloc 
 		prefab{
-		BLUE "EXPERIMENTAL   UTILISER A VOS PROPRES RISQUES" .. sign-text!
+		BLUE "EXPERIMENTAL - USE AT OWN RISK" .. sign-text!
 		1 1 1 sign-bg!
 		0 1 1 sign-border!
 		1 1 1 sign-fg!
@@ -399,7 +452,7 @@ trade-camp-reset
 : rareparty1
 	opprecruit .opp-gordon -4 movey -4 movex
 	opprecruit .opp-garfy -4 movey -2 movex	
-	opprecruit .opp-fairy "Reine des fees" rename -4 movey
+	opprecruit .opp-fairy "Fairy Queen" rename -4 movey
 	opprecruit .opp-panda -4 movey 2 movex
 	opprecruit .opp-george -4 movey 4 movex
 	
@@ -447,7 +500,7 @@ trade-camp-reset
 : rareparty3
 
 	opprecruit .piratify
-	opprecruit .goatify "Chevre" rename 2 movex
+	opprecruit .goatify "Goat" rename 2 movex
 	opprecruit .sportify 4 movex
 	opprecruit .skelknightify -2 movex
 	opprecruit .nimbusify -4 movex
@@ -458,7 +511,7 @@ trade-camp-reset
 	opprecruit .firemanify -2 movey -2 movex
 	opprecruit .unclesamify -2 movey -4 movex
 	
-	opprecruit .knightify "Chevalier" rename 2 movey
+	opprecruit .knightify "Knight" rename 2 movey
 	opprecruit .rollerify 2 movey 2 movex
 	opprecruit .cavemanify 2 movey 4 movex
 	opprecruit .gigaguyify 2 movey -2 movex

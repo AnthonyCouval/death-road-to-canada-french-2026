@@ -52,7 +52,7 @@ particle{ : new new 0 global_colour! ; }
 	canuck_ road.special_charid!
 	1 canuck .party!
 	0 canuck .female!
-	"Gendarme" canuck .name!
+	"Mountie" canuck .name!
 ;
 
 // New for calculating best-gamemode-streak for hat unlocking
@@ -73,7 +73,12 @@ particle{ : new new 0 global_colour! ; }
 	wins-quickdeath-streak 0 > if 1 else 0 then
 	wins-4jerks-streak 0 > if 1 else 0 then
 	wins-4jerksEX-streak 0 > if 1 else 0 then
-	} + + + + + + + + + + + + + +
+	wins-weathermode-streak 0 > if 1 else 0 then
+	wins-sceptermode-streak 0 > if 1 else 0 then
+	wins-rpgmode-streak 0 > if 1 else 0 then
+	wins-infectionmode-streak 0 > if 1 else 0 then
+	
+	} + + + + + + + + + + + + + + + + + +
 ;
 
 : gamemodestreak-calc
@@ -86,7 +91,7 @@ particle{ : new new 0 global_colour! ; }
 	gstats{ ' wins-streak ++ }
 	gamedef{ ' defaultmode gamemode? } if 
 		gstats{ ' wins-normal ++ ' wins-normal-streak ++ }
-		($ "Mode normal de Death Road termine" ..
+		($ "Death Road Normal Mode completed" ..
 		gstats{ wins-normal } 1 > if
 			": " .. gstats{ wins-normal }
 		else
@@ -96,7 +101,7 @@ particle{ : new new 0 global_colour! ; }
 
 	gamedef{ ' longroad gamemode? } if
 		gstats{ ' wins-long ++ ' wins-long-streak ++ }
-		($ "Mode Long Winding Road termine" ..
+		($ "Long Winding Road Mode completed" ..
 		gstats{ wins-long } 1 > if
 			": " .. gstats{ wins-long }
 		else
@@ -106,7 +111,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' specialchars gamemode? } if 
 		gstats{ ' wins-special ++ ' wins-special-streak ++ }
-		($ "Mode personnages rares termine" ..
+		($ "Rare Characters Mode completed" ..
 		gstats{ wins-special } 1 > if
 			": " .. gstats{ wins-special }
 		else
@@ -116,7 +121,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' familiarchars gamemode? } if
 		gstats{ ' wins-family ++ ' wins-family-streak ++ }
-		($ "Mode personnages familiers termine" ..
+		($ "Familiar Characters Mode completed" ..
 		gstats{ wins-family } 1 > if
 			": " .. gstats{ wins-family }
 		else
@@ -126,7 +131,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' specialcharsEX gamemode? } if
 		gstats{ ' wins-specialEX ++ ' wins-specialEX-streak ++ }
-		($ "Personnages rares EXTREME termine" ..
+		($ "Rare Characters EXTREME completed" ..
 		gstats{ wins-specialEX } 1 > if
 			": " .. gstats{ wins-specialEX }
 		else
@@ -136,7 +141,7 @@ particle{ : new new 0 global_colour! ; }
 
 	gamedef{ ' familiarcharsEX gamemode? } if
 		gstats{ ' wins-familyEX ++ ' wins-familyEX-streak ++ }
-		($ "Personnages familiers EXTREME termine" ..
+		($ "Familiar Characters EXTREME completed" ..
 		gstats{ wins-familyEX } 1 > if
 			": " .. gstats{ wins-familyEX }
 		else
@@ -147,7 +152,7 @@ particle{ : new new 0 global_colour! ; }
 	gamedef{ ' kepamode gamemode? } if
 		gstats{ ' wins-kepa ++ ' wins-kepa-streak ++ }
 		cheevo: kepa
-		($ "Mode K*E*P*A termine" ..
+		($ "K*E*P*A Mode completed" ..
 		gstats{ wins-kepa } 1 > if
 			": " .. gstats{ wins-kepa }
 		else
@@ -157,7 +162,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' shortroad gamemode? } if
 		gstats{ ' wins-short ++ ' wins-short-streak ++ }
-		($ "Mode court voyage a Heck termine" ..
+		($ "Short Trip to Heck Mode completed" ..
 		gstats{ wins-short } 1 > if
 			": " .. gstats{ wins-short }
 		else
@@ -167,7 +172,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' marathonmode gamemode? } if
 		gstats{ ' wins-marathon ++ ' wins-marathon-streak ++ }
-		($ "Mode marathon termine" ..
+		($ "Marathon Mode completed" ..
 		gstats{ wins-marathon } 1 > if
 			": " .. gstats{ wins-marathon }
 		else
@@ -177,7 +182,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' deadlier gamemode? } if
 		gstats{ ' wins-deadlier ++ ' wins-deadlier-streak ++ }
-		($ "Mode Route Mortelle termine" ..
+		($ "Deadlier Road Mode completed" ..
 		gstats{ wins-deadlier } 1 > if
 			": " .. gstats{ wins-deadlier }
 		else
@@ -189,7 +194,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' endlessmode gamemode? } if
 		gstats{ ' wins-endless ++ ' wins-endless-streak ++ 0 to best-endless }
-		($ "Mode sans fin termine" ..
+		($ "Endless Mode completed" ..
 		gstats{ wins-endless } 1 > if
 			": " .. gstats{ wins-endless }
 		else
@@ -199,7 +204,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' OPPmode gamemode? } if
 		gstats{ ' wins-opp ++ ' wins-opp-streak ++ ' wins-streak -- }
-		($ "Mode fete surpuissant termine" ..
+		($ "OverPowered Party Mode completed" ..
 		gstats{ wins-opp } 1 > if
 			": " .. gstats{ wins-opp }
 		else
@@ -209,7 +214,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' quicknightmare gamemode? } if
 		gstats{ ' wins-quickdeath ++ ' wins-quickdeath-streak ++ }
-		($ "Mode Mort Rapide termine" ..
+		($ "Quick Death Mode completed" ..
 		gstats{ wins-quickdeath } 1 > if
 			": " .. gstats{ wins-quickdeath }
 		else
@@ -221,7 +226,7 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' 4jerksmode gamemode? } if
 		gstats{ ' wins-4jerks ++ ' wins-4jerks-streak ++ }
-		($ "Mode des quatre abrutis termine" ..
+		($ "Four Jerks Mode completed" ..
 		gstats{ wins-4jerks } 1 > if
 			": " .. gstats{ wins-4jerks }
 		else
@@ -231,33 +236,117 @@ particle{ : new new 0 global_colour! ; }
 	
 	gamedef{ ' 4jerksmodeEX gamemode? } if
 		gstats{ ' wins-4jerksEX ++ ' wins-4jerksEX-streak ++ }
-		($ "Mode des quatre abrutis termine" ..
+		($ "Four Jerks Mode completed" ..
 		gstats{ wins-4jerksEX } 1 > if
 			": " .. gstats{ wins-4jerksEX }
 		else
 			"!"
 		then $)
 	then
-		
+	
+	gamedef{ ' thelongsiege gamemode? } if
+		gstats{ ' wins-rpgmode ++ ' wins-rpgmode-streak ++ }
+		($ "RPG Mode completed" ..
+		gstats{ wins-rpgmode } 1 > if
+			": " .. gstats{ wins-rpgmode }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' weathermode gamemode? } if
+		gstats{ ' wins-weathermode ++ ' wins-weathermode-streak ++ }
+		($ "Weather Mode completed" ..
+		gstats{ wins-weathermode } 1 > if
+			": " .. gstats{ wins-weathermode }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' sceptermode gamemode? } if
+		gstats{ ' wins-sceptermode ++ ' wins-sceptermode-streak ++ }
+		($ "4 Jerks Scepter Mode completed" ..
+		gstats{ wins-sceptermode } 1 > if
+			": " .. gstats{ wins-sceptermode }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' theinfection gamemode? } if
+		gstats{ ' wins-infectionmode ++ ' wins-infectionmode-streak ++ }
+		($ "Infection Mode completed" ..
+		gstats{ wins-infectionmode } 1 > if
+			": " .. gstats{ wins-infectionmode }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' theinfectionEX gamemode? } if
+		gstats{ ' wins-infectionmodeEX ++ ' wins-infectionmodeEX-streak ++ }
+		($ "Infection Mode Extreme completed" ..
+		gstats{ wins-infectionmodeEX } 1 > if
+			": " .. gstats{ wins-infectionmodeEX }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' mutationmode gamemode? } if
+		gstats{ ' wins-mutationmode ++ ' wins-mutationmode-streak ++ }
+		($ "Mutation Mode completed" ..
+		gstats{ wins-mutationmode } 1 > if
+			": " .. gstats{ wins-mutationmode }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' mutationmodeEX gamemode? } if
+		gstats{ ' wins-mutationmodeEX ++ ' wins-mutationmodeEX-streak ++ }
+		($ "Mutation Mode EXTREME completed" ..
+		gstats{ wins-mutationmodeEX } 1 > if
+			": " .. gstats{ wins-mutationmodeEX }
+		else
+			"!"
+		then $)
+	then
+	
+	gamedef{ ' horrormode gamemode? } if
+		gstats{ ' wins-horrormode ++ ' wins-horrormode-streak ++ }
+		($ "Horror Mode completed" ..
+		gstats{ wins-horrormode } 1 > if
+			": " .. gstats{ wins-horrormode }
+		else
+			"!"
+		then $)
+	then
+	
+	"awawa" print 
+	
 	gamemodestreak-calc
 		
+	"gwah" print 
+	
 	filesave{ save-global-stats }
 ;
 
 : generalwinstreak
 	gamedef{ ' OPPmode gamemode? } if 
-		"Le mode O*P*P ne permet pas daugmenter votre serie de victoires totale !"
+		"O*P*P Mode does not increase your total win streak!"
 	then;
-	($ "Serie de victoires consecutives " rainbold .. gstats{ wins-streak } $)
+	($ "Consecutive Win Streak: " rainbold .. gstats{ wins-streak } $)
 ;
 
 : modewinstreak
 	gamedef{ ' defaultmode gamemode? } if 
-		($ "Serie de victoires sur la route de la mort en mode normal " .. gstats{ wins-normal-streak } $)
+		($ "Death Road Normal Win Streak: " .. gstats{ wins-normal-streak } $)
 	then
 	
 	gamedef{ ' longroad gamemode? } if
-		($ "Serie de victoires sur la longue route sinueuse " .. gstats{ wins-long-streak } $)
+		($ "Long Winding Road Win Streak: " .. gstats{ wins-long-streak } $)
 	then	
 	
 	gamedef{ ' specialchars gamemode? } if 
@@ -265,52 +354,85 @@ particle{ : new new 0 global_colour! ; }
 	then	
 	
 	gamedef{ ' familiarchars gamemode? } if
-		($ "Serie de victoires de personnages familiers: " .. gstats{ wins-family-streak } $)
+		($ "Familiar Characters Win Streak: " .. gstats{ wins-family-streak } $)
 	then	
 	
 	gamedef{ ' specialcharsEX gamemode? } if
-		($ "Serie de victoires en EX personnages rares: " .. gstats{ wins-specialEX-streak } $)
+		($ "Rare Characters EX Win Streak: " .. gstats{ wins-specialEX-streak } $)
 	then	
 
 	gamedef{ ' familiarcharsEX gamemode? } if
-		($ "Serie de victoires en EX personnages connus: " .. gstats{ wins-familyEX-streak } $)
+		($ "Familiar Characters EX Win Streak: " .. gstats{ wins-familyEX-streak } $)
 	then	
 	
 	gamedef{ ' kepamode gamemode? } if
-		($ "Serie de victoires en K*E*P*A: " .. gstats{ wins-kepa-streak } $)
+		($ "K*E*P*A Win Streak: " .. gstats{ wins-kepa-streak } $)
 	then
 	
 	gamedef{ ' shortroad gamemode? } if
-		($ "Serie de victoires en Court voyage en enfer: " .. gstats{ wins-short-streak } $)
+		($ "Short Trip to Heck Win Streak: " .. gstats{ wins-short-streak } $)
 	then
 	
 	gamedef{ ' marathonmode gamemode? } if
-		($ "Serie de victoires en Marathon: " .. gstats{ wins-marathon-streak } $)
+		($ "Marathon Win Streak: " .. gstats{ wins-marathon-streak } $)
 	then
 	
 	gamedef{ ' deadlier gamemode? } if
-		($ "Serie de victoires en Route plus meurtriere: " .. gstats{ wins-deadlier-streak } $)
+		($ "Deadlier Road Win Streak: " .. gstats{ wins-deadlier-streak } $)
 	then
 	
 	gamedef{ ' endlessmode gamemode? } if
-		($ "Serie de victoires en Mode infini: " .. gstats{ wins-endless-streak } $)
+		($ "Endless Mode Win Streak: " .. gstats{ wins-endless-streak } $)
 	then
 	
 	gamedef{ ' OPPmode gamemode? } if
-		($ "Serie de victoires en Groupe surpuissant: " .. gstats{ wins-opp-streak } $)
+		($ "OverPowered Party Win Streak: " .. gstats{ wins-opp-streak } $)
 	then
 	
 	gamedef{ ' quicknightmare gamemode? } if
-		($ "Serie de victoires en Mort rapide: " .. gstats{ wins-quickdeath-streak } $)
+		($ "Quick Death Win Streak: " .. gstats{ wins-quickdeath-streak } $)
 	then
 	
 	gamedef{ ' 4jerksmode gamemode? } if
-		($ "Serie de victoires en Quatre abrutis: " .. gstats{ wins-4jerks-streak } $)
+		($ "Four Jerks Win Streak: " .. gstats{ wins-4jerks-streak } $)
 	then
 	
 	gamedef{ ' 4jerksmodeEX gamemode? } if
-		($ "Serie de victoires en Quatre abrutis EX: " .. gstats{ wins-4jerksEX-streak } $)
+		($ "Four Jerks EX Win Streak: " .. gstats{ wins-4jerksEX-streak } $)
 	then
+	
+	gamedef{ ' thelongsiege gamemode? } if
+		($ "RPG Mode Win Streak: " .. gstats{ wins-rpgmode-streak } $)
+	then
+			
+	gamedef{ ' theinfection gamemode? } if
+		($ "Infection Mode Win Streak: " .. gstats{ wins-infectionmode-streak } $)
+	then
+	
+	gamedef{ ' sceptermode gamemode? } if
+		($ "Scepter Mode Win Streak: " .. gstats{ wins-sceptermode-streak } $)
+	then
+	
+	gamedef{ ' weathermode gamemode? } if
+		($ "Weather Forecast Streak: " .. gstats{ wins-weathermode-streak } $)
+	then
+	
+	gamedef{ ' mutationmode gamemode? } if
+		($ "Mutation Mode Win Streak: " .. gstats{ wins-mutationmode-streak } $)
+	then
+	
+	gamedef{ ' mutationmodeEX gamemode? } if
+		($ "Mutation Mode EX Win Streak: " .. gstats{ wins-mutationmodeEX-streak } $)
+	then
+	
+	gamedef{ ' horrormode gamemode? } if
+		($ "Horror Mode Win Streak: " .. gstats{ wins-horrormode-streak } $)
+	then
+	
+	gamedef{ ' theinfectionEX gamemode? } if
+		($ "Infection Mode EX Win Streak: " .. gstats{ wins-infectionmodeEX-streak } $)
+	then
+
 		
 ;
 
@@ -323,51 +445,51 @@ uses events/finale/ending-bits.df
 : ending-final-line
 	
 	gamedef{ ' defaultmode gamemode? } if 
-		"Essayez un autre mode de jeu!"
+		"Try a different Gameplay Mode!"
 	then;
 	
 	gamedef{ ' longroad gamemode? } if
-		"Continuez a conduire!"
+		"Keep on driving!"
 	then;	
 	
 	gamedef{ ' specialchars gamemode? } if
-		"Jespere que vous avez un personnage surpuissant!"
+		"I hope you got an OP character!"
 	then;
 	
 	gamedef{ ' familiarchars gamemode? } if
-		"Les zombies netaient pas de taille pour votre groupe!"
+		"Zombies were no match for your group!"
 	then;
 	
 	gamedef{ ' specialcharsEX gamemode? } if
-		"Personnage Rare EXTREME Complet!" rbold
+		"Rare Character EXTREME Complete!" rbold
 	then;
 	
 	gamedef{ ' familiarcharsEX gamemode? } if
-		"Personnages Familiers EXTREME Termine !" rbold
+		"Familiar Characters EXTREME Complete!" rbold
 	then;
 	
 	gamedef{ ' kepamode gamemode? } if
-		"K*E*P*A TERMINE !" fbold
+		"K*E*P*A COMPLETE!" fbold
 	then;
 
 	gamedef{ ' 4jerksmode gamemode? } if
-		"Felicitations ! Maintenant essayez Quatre Imbeciles EXTREME !"
+		"Congrats! Now try Four Jerks EXTREME!"
 	then;
 	
 	gamedef{ ' 4jerksmodeEX gamemode? } if
-		"Mode Quatre Imbeciles EXTREME Termine !" fbold
+		"Four Jerks Mode EXTREME Complete!" fbold
 	then;
 	
 	gamedef{ ' shortroad gamemode? } if
-		"Felicitations pour votre victoire rapide !"
+		"Congrats on your speedy victory!"
 	then;
 	
 	gamedef{ ' marathonmode gamemode? } if
-		"MODE MARATHON TERMINE !" rainbold
+		"MARATHON MODE COMPLETE!" rainbold
 	then;
 	
 	gamedef{ ' deadlier gamemode? } if
-		"Felicitations ! Maintenant essayez les modes ULTRA DIFFICILES !"
+		"Congrats! Now try the ULTRA-HARD modes!"
 	then;
 	
 	gamedef{ ' endlessmode gamemode? } if
@@ -375,11 +497,45 @@ uses events/finale/ending-bits.df
 	then;
 	
 	gamedef{ ' OPPmode gamemode? } if
-		"MODE FETE SURPUISSANT TERMINE !" rainbold
+		"OVERPOWERED PARTY MODE COMPLETE!" rainbold
 	then;
 	
 	gamedef{ ' quicknightmare gamemode? } if
-		"MODE MORT RAPIDE TERMINE !" fbold
+		"QUICK DEATH MODE COMPLETE!" fbold
+	then;
+	
+	gamedef{ ' theinfection gamemode? } if
+		"INFECTION MODE COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' theinfectionEX gamemode? } if
+		"INFECTION MODE EXTREME COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' mutationmode gamemode? } if
+		"MUTATION MODE COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' mutationmodeEX gamemode? } if
+		"MUTATION MODE EXTREME COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' horrormode gamemode? } if
+		"THE HORRORS MODE COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' weathermode gamemode? } if
+		"WEATHER FORECAST COMPLETE!" rainbold 
+	then;
+	
+	gamedef{ ' thelongsiege gamemode? } if
+	
+		"RPG MODE COMPLETE!" rainbold 
+		
+	then;
+	
+	gamedef{ ' sceptermode gamemode? } if
+		"SCEPTER MODE COMPLETE!" rainbold 
 	then;
 		
 	// Failsafe if a mode somehow isn't picked above
@@ -432,42 +588,101 @@ uses events/finale/epilogue-check.df
 : fin-script
 
 	filesave{ save-global-stats }
+	"num 1" print 
+	
 	delete-the-game
+	"num 2" print 
 
 	create-mountie
+	"num 3" print 
 
 	0 stack
 
 	// Test for doing the ending lines over and over
 	// 60 for epilogue-bits-checker next
+	"num 4" print 		
 			
 	modedefeated , 2 ,
-	($ "Total de Zombies Tues " .. road{ kills-this-game } $) , 2 ,
+	
+	gamedef{ ' theinfectionEX gamemode? } gamedef{ ' theinfection gamemode? } or if
+		($ "Seconds Remaining: " .. road{ kills-this-game } $) , 2 ,		
+		
+		road{ kills-this-game } 60 < if 
+			($ "Rank: " BLUE "D" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 90 < if 
+			($ "Rank: " GREEN "C" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 120 < if 
+			($ "Rank: " YELLOW "B" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 150 < if 
+			($ "Rank: " ORANGE "A" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 180 < if 
+			($ "Rank: " RED "S" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 210 < if 
+			($ "Rank: " RED "S+" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 240 < if 
+			($ "Rank: " RAINBOW "GNOMEY" .. .. $) , 2 , 
+		else  
+		
+		road{ kills-this-game } 270 < if 
+			($ "Rank: " FLASHY "GNOMEY+" .. .. $) , 2 , 
+		else   
+		
+		road{ kills-this-game } 270 >= if 
+			($ "Rank: " FLASHY "ULTRA GNOMEY!" .. .. $) , 2 , 
+		else  
+		
+		then then then then then then then then then 
+
+	else 
+		($ "Total Zombie Kills: " .. road{ kills-this-game } $) , 2 ,
+	then 
+	
+	"num 5" print 
 	
 	cheevcheck-end
 	cheevcheck-mode
+	
+	"num 6" print 
 	
 	gstats{ wins-streak } 1 > if 
 		generalwinstreak , 1 ,
 		modewinstreak , 3 ,
 	then
 	
+	"num 7" print 
+	
 	FLASHY "DEATH ROAD TO CANADA" .. ,
-	($ "Un jeu par " .. BLUE "Rocketcat Games & Madgarden" .. $) , 5 ,
+	($ "A game by " .. BLUE "Rocketcat Games & Madgarden" .. $) , 5 ,
 	
 	ending-bit-1
 	
+	"num 8" print 
+	
 // Single credits
 
-	($ "Conception " .. BLUE "Kepa Auwae" .. $) , 2 ,
-	($ "Developpeur " .. BLUE "Paul Jardin" .. $) , 2 ,
-	($ "Artistes: " .. BLUE "'G.P. Lackey et Conzeit Camilo Arturo" .. $) , 2 ,
-	($ "Musicien " .. BLUE "Joey Grady" .. $) , 5 ,
+	($ "Design: " .. BLUE "Kepa Auwae (Rocketcat Games)" .. $) , 2 ,
+	($ "Developer: " .. BLUE "Paul Pridham (Madgarden)" .. $) , 2 ,
+	($ "Artists: " .. BLUE "G.P. Lackey and 'Conzeit' Camilo Arturo" .. $) , 2 ,
+	($ "Musician: " .. BLUE "Joey Grady" .. $) , 5 ,
 
 	ending-bit-2
 	epilogue-bits
+	
+	"num 9" print 
 
-	BLUE "MERCI DAVOIR JOUE!" .. ,	
+	BLUE "THANK YOU FOR PLAYING!" .. ,	
 	FLASHY "DEATH ROAD TO CANADA" .. , 3 ,
 	BLUE ending-final-line .. , 5 ,
 	

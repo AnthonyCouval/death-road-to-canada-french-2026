@@ -51,13 +51,14 @@ cyoa{
 cyoa: parkrescue
 	rescue choosechar cicon
 	dead? if npc-died then;
-	"Pause toilettes" cyoa-title!
-	($ cname .. "  a survecu " .. chis .. "  mission de trouver une salle de bain. Puis " .. che .. "  a ete encercle par les hordes voisines.	" .. cHe .. "  demande si " .. che .. "  peut te suivre partout." $) cyoa-text!
+	"Bathroom Break" cyoa-title!
+	($ cname .. " survived " .. chis .. " mission of finding a bathroom. Then " .. che .. " got surrounded by the nearby hordes.
+	" .. cHe .. " asks if " .. che .. " can follow you around." $) cyoa-text!
 	park-car-spawned 0 > if
-		($ "Il y avait trop de zombies dans lautre salle de bain ! Je crois que jy ai laisse mes cles de voiture." pbold $) +crtext
+		($ "There were too many zombies in the other bathroom! I think I dropped my car keys in there." pbold $) +crtext
 	then
-		choice( "Laissez " .. chim .. "  vous suivre"  )choice: rescueme-2
-		choice( "Laissez " .. chim .. "  pour le moment" )choice
+		choice( "Let " .. chim .. " follow you"  )choice: rescueme-2
+		choice( "Leave " .. chim .. " for now" )choice
 ;
 
 }
@@ -176,23 +177,23 @@ map{ regiondef{
 0 value gby2
 
 : keybath tanchor! map{ 
-	"salledecle" $picklocid addloc prefab{ 4 5 2 shop } 
+	"keybath" $picklocid addloc prefab{ 4 5 2 shop } 
 } ;
 
 : magbath tanchor! map{ 
-	"bain de magie" $picklocid addloc prefab{ 3 5 2 shop } 
+	"magbath" $picklocid addloc prefab{ 3 5 2 shop } 
 } ;
 
 : rescbath tanchor! map{ 
-	"salle de bain" $picklocid addloc prefab{ 1 5 2 shop } 
+	"rescbath" $picklocid addloc prefab{ 1 5 2 shop } 
 } ;
 
 : parkshack tanchor! map{ 
-	"hack de parc" $picklocid addloc prefab{ 2 5 1 shop }  
+	"parkshack" $picklocid addloc prefab{ 2 5 1 shop }  
 } ;
 
 : indshack tanchor! map{ 
-	"hack de lindependance" $picklocid addloc prefab{ 2 5 1 shop } 
+	"indshack" $picklocid addloc prefab{ 2 5 1 shop } 
 } ;
 
 : randshack 50 %chance if parkshack else indshack then ;

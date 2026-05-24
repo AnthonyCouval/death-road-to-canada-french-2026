@@ -492,7 +492,8 @@ defer junkspritepicker
 ;
 
 // Old pine
-: oldpine spawn special_objects48_base_id 2 + lt .spriteid! treeify ;
+: oldpine spawn trees_base_id 10 + 0 2 rnd + lt .spriteid! treeify ;
+\ changing tree sprite coz i used to like the old one but not anymore 
 
 : justpine spawn trees_base_id 10 + 0 2 rnd + lt .spriteid! treeify ;
 : snowpine spawn trees_base_id 20 + 0 2 rnd + lt .spriteid! treeify ;

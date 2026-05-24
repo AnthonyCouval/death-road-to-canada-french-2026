@@ -20,9 +20,56 @@ particles_base_id 0x 3c + constant GET_OUT_ICON
 : cartype-variant-spriteid args( t v ) <- t 1- 6 * <- v 3 & + cars_base_id + ;
 : group-car-spriteid vehicle.which@ vehicle.variant@ cartype-variant-spriteid ;
 
-: car-start% car-engine car-max-engine / dup * 100 * 10 100 clamp ;
+: car-start% 
 
-: car-get-out player .inside_id@ #thing player .leave ;
+	gamedef{ ' weathermode gamemode? } not if 
+
+		car-engine car-max-engine / dup * 100 * 10 100 clamp 
+
+	else 
+
+		car-engine car-max-engine / dup * 18 * 2 50 clamp 
+
+	then 
+
+;
+
+0 value van_throwout 
+
+: car-get-out player .inside_id@ #thing player .leave 
+
+	vehicle.which@ 2 = if  \ RETINA : regular (moving) van gives you furniture to toss 
+
+		van_throwout 0 = if 
+		1 to van_throwout
+		
+		2 for
+			table 
+			mission.vehicle@ .pos mission.vehicle@ .rad.x@ -1.5 * 0 xyadd lt .pos!
+			-2 lt .vel.x!
+			1.5 -1.5 frnd lt .vel.y! 
+			10 lt .hitpoints! 
+			0.01 lt .mass! \ even an idiot can pick these up! 
+			0.5 1 frnd lt .clr.r!
+			0.5 1 frnd lt .clr.g!
+			0.5 1 frnd lt .clr.b! 
+		next 	
+		
+		2 for
+			chair  
+			mission.vehicle@ .pos mission.vehicle@ .rad.x@ -1.5 * 0 xyadd lt .pos!
+			-2 lt .vel.x!
+			1.5 -1.5 frnd lt .vel.y! 
+			10 lt .hitpoints! 
+			0.01 lt .mass! \ even an idiot can pick these up! 
+			0.5 1 frnd lt .clr.r!
+			0.5 1 frnd lt .clr.g!
+			0.5 1 frnd lt .clr.b! 
+		next 
+		
+		then 
+	then 
+;
 
 : car-honk
 	mission.vehicle@ .stun@ if then;
@@ -53,15 +100,15 @@ defer car-go
 : car-menu-setup args( me )
 	menustart
 	<- me .anim.state@ -2 = if
-		' car-get-out "ALLONS DANSER !" menuadd
+		' car-get-out "LET'S BOOGIE" menuadd
 	then;
 	<- me .anim.state@ 0= if
-		' car-start "DEMARRER LA VOITURE" menuadd
+		' car-start "START THE CAR" menuadd
 	else
-		' car-go rnd5050 if "APPUIE A FOND SUR L'ACCELERATEUR" else "DONNE TOUT !" then menuadd
+		' car-go rnd5050 if "FLOOR IT!" else "GIVE 'ER!" then menuadd
 	then
-	' car-honk "KLAXONNER" menuadd
-	' car-get-out "SORTIR" menuadd
+	' car-honk "HONK" menuadd
+	' car-get-out "GET OUT" menuadd
 ;
 
 : car-go_
@@ -194,7 +241,7 @@ last to car-go
 			<- me .adjust-vol
 		}
 
-		BLINKY "DEMARRAGE DE LA Voiture !" .. <- me .report
+		BLINKY "CAR START!" .. <- me .report
 
 		1 0.25 mission.vehicle@ .pos alertlcxy
 
@@ -244,7 +291,7 @@ last to car-start
 	<- me .vel.x@ 1 > if then;
 
 	// Car was started, do a bit of an engine rev
-	<- me .anim.substate@ if
+	<- me .anim.substate@ if 
 		<- me .stun@ if 2 <- me .anim.counter@ + <- me .anim.counter! then
 		<- me .anim.counter@ 0= if 0 <- me .anim.substate! then;
 	then;
@@ -264,7 +311,7 @@ last to car-start
 
 	<- car .chassis@ to car-chassis
 	<- car .chassis_max@ to car-max-chassis
-	<- car .engine@ to car-engine
+	<- car .engine@ to car-engine  
 	<- car .engine_max@ to car-max-engine
 	<- car .armour@ to car-armor
 	<- car .armour_max@ to car-max-armor
@@ -280,7 +327,7 @@ last to car-start
 
 : .calc-hitpoints args( car )
 	car-chassis CAR_HEALTH_SCALAR * CAR_HEALTH_SCALAR 4 / + <- car .hitpoints!
-	"POINTS DE VIE DE LA Voiture : " type <- car .hitpoints@ print
+	"CAR HITPOINTS: " type <- car .hitpoints@ print
 ;
 
 : .from-road-car args( car )
@@ -325,15 +372,168 @@ last to car-start
 
 ' cyoa-car vehicle-default-cyoa!
 
+
+	\ 1 <- chara .party!
+	\ TEAM_STATUS_FAMILIAR <- chara .team_status!
+
+: check_friendsofdog args( chara ) 
+	<- chara .perk@ "Friend of Dog" $= if 
+		<- chara .health@ 0 > if 
+			<- chara .location@ 1 = if 
+		FRIENDS_OF_DOG_ACTIVE 1 + to FRIENDS_OF_DOG_ACTIVE
+	then then then 
+; 
+
+: do_fod_check 
+	' check_friendsofdog "foreach-mission-char" evaluate 
+;
+
+: carboat_gunner args( me teid )
+
+	1 <- me .timer!
+	
+	<- teid THING_EVENT_TIMER = if
+	
+		vehicle.which@ 0 = if 
+			<- me silentkillit \ and KABLOOWIE
+		then 
+	
+		mission.vehicle@ if
+		
+			mission.vehicle@ .car-which 24 <> if 
+				2 <- me .stun!
+				0 <- me .clr.a! 
+			else 
+				1 <- me .clr.a!
+			then 
+		
+			TURRET_ACTIVE 0 = if 
+				2 <- me .stun! 
+			then; 
+		
+			6 <- me .character@ .health!
+			"" <- me .report
+			mission.vehicle@ .pos.x@ 36 + <- me .pos.x!
+			mission.vehicle@ .pos.y@ <- me .pos.y!
+			mission.vehicle@ .pos.z@ <- me .pos.z!
+			<- me .pos.y@ -17 + <- me .pos.y!
+			
+			<- me .targetid@ 0 = if 
+					90 <- me .move_angle!
+				then
+			
+
+		then
+	then
+	
+	<- teid THING_EVENT_BREAK <> if
+			mission.vehicle@ not if
+				2 <- me .stun! 
+			then
+		then
+	
+;
+
 : car-start-mission amend main-event-mission-start
 	loud-vol
 	vehicle.which@ 0= if then;
+
+	0 to FRIENDS_OF_DOG_ACTIVE
+	0 to van_throwout
+
+	do_fod_check
 
 	mv@ 0= if then;
 
 	mv@ .setup-mission-car
 	mv@ .anim.state@ 2 = if
 		-2 mv@ .anim.state! // So we know it's driving in, -2 is the alt driving state
+		
+			vehicle.which@ 23 = if  \ Additional party members, due to bus; only when vehicle is present! 
+				2 for
+					new-npc 
+					mission.vehicle@ lt .enter
+						50 %chance if
+							WEAPON_DOLT lt .character@ .weapona!
+							100 LOOT_BULLET lt .character@ .lootamt!
+							6 lt .character@ .shooting!
+						else
+							WEAPON_HATCHET lt .character@ .weapona!
+							6 lt .character@ .fitness! 
+						then
+						1 lt .character@ .weapon_nodropa!
+						\ 2 lt .character@ .party!
+						1 lt .character@ .ai.attack_chance!
+						0 lt .character@ .ai.flee_dist!
+						30 lt .character@ .ai.follow_leash!
+						0 lt .character@ .ai.loot_chance!
+						1 lt .character@ .carrying.slot_count! 
+						0 lt .mass!
+						1 lt .character@ .party!
+						TEAM_STATUS_FAMILIAR lt .character@ .team_status!
+						lt .character@ .nopickups
+						player lt .follow
+				next
+			then
+			
+			vehicle.which@ 16 = if \ RETINA : friend of dog van gives u dogs 
+				FRIENDS_OF_DOG_ACTIVE 0 > if 
+					2
+				else 
+					1 
+				then 	
+					for 
+					new-npc 
+					mission.vehicle@ lt .enter
+						lt .character@ .doggify 
+						1 lt .character@ .weapon_nodropa!
+						1 lt .character@ .ai.attack_chance!
+						0 lt .character@ .ai.flee_dist!
+						30 lt .character@ .ai.follow_leash!
+						0 lt .character@ .ai.loot_chance!
+						1 lt .character@ .carrying.slot_count! 
+						0 lt .mass!
+						1 lt .character@ .party!
+						lt .character@ .nopickups
+						TEAM_STATUS_FAMILIAR lt .character@ .team_status! \ TODO: stop eating my damn loot 
+						player lt .follow
+						
+				next 
+			then 
+			
+			vehicle.which@ 24 = if \ Carboat 
+				
+				4 mission.vehicle@ .rad.z!
+				32 mission.vehicle@ .rad.x!
+				4 mission.vehicle@ .rad.y!
+
+				new-npc
+				
+				3 lt .walkover!
+				-3 lt .layer!
+				1 lt .character@ .carrying.slot_count!
+				WEAPON_CARBOATCANNON lt .character@ .weapona!
+				1 lt .unseen!
+				\ 1 lt .invisible
+				1 lt .timer!
+				1 lt .nocollide!
+				3 lt .tileflags!
+				lt .character@ .nopickups
+				1 lt .character@ .default-ai-setup
+				1 lt .character@ .party! // defend the leader
+				-1 lt .character@ .ai.attack_level!
+				1 lt .character@ .ai.attack_chance!
+				300 lt .character@ .ai.attack_dist!
+				
+				lt immovable
+				\ 144 lt .character@ .specialtype!
+				0 lt .character@ .scale.head.x!
+				0 lt .character@ .scale.body.x!
+				lt ' carboat_gunner swap .events!
+				300 LOOT_RIFLE_SHELL lt .character@ .lootamt!
+				
+			then
+		
 	then
 ; last to main-event-mission-start
 
@@ -371,7 +571,7 @@ mission{ cyoa{
 
 : thething dup .subtypeid@ ITEM_VEHICLE =
 	if to thecar else drop then ;
-: getcar ' thething foreach-active-thing ;
+: getcar ' thething foreach-active-thing ; 
 
 : lift-car interactee player .carry ($ DEATH .. "RAUUUGH!!!" $) me .say sfx{ pip 10 fx .freq! 250 fx .freq2! 0.01 fx .duty! 500 fx .d! } ;
 
@@ -387,28 +587,28 @@ mission{ cyoa{
 	cyoa-start
 
 	getcar
-	"A LEXTERIEUR DU CADILLAC" cyoa-title!
-	"'C'est une voiture. QUOI FAIRE ?" cyoa-text!
+	"OUTSIDE OF A CAR" cyoa-title!
+	"It's a car. WHAT NOW?" cyoa-text!
 
 	cyoa-add-choice
-		"Montez dedans." cyoa-choice-text!
+		"Get in." cyoa-choice-text!
 		' get-into-car cyoa-choice-handler!
-
+	
 	// Change this from soloer later
 	cyoa-add-choice
-		"Prendre la voiture." cyoa-choice-text!
+		"Pick up the car." cyoa-choice-text!
 		' lift-car cyoa-choice-handler!
-
+	
 	cyoa-add-choice
-		"Non merci." cyoa-choice-text!
+		"Nevermind." cyoa-choice-text!
 
 	cyoa-show
 ;
 
 
 cyoa: locked-car-hotwire
-	"Pirate!" cyoa-title!
-	($ "Il ne faut pas longtemps pour " .. pname .. " voler une voiture" $) cyoa-text!
+	"Hotwired!" cyoa-title!
+	($ "It doesn't take long for " .. pname .. " to break into the car and get it running. No keys necessary!" $) cyoa-text!
 		2 to carkey goodfx get-into-car
 	o'clock@ 1 + o'clock
 ;
@@ -417,29 +617,32 @@ cyoa: cyoa-locked-car
 	carkey 1 > if cyoa-car then;
 
 	carkey 0 > if
-	"Allons y!" cyoa-title!
-		($ "Les cles sadaptent parfaitement!" .. pname .. " deverrouille la porte de la voiture." $) cyoa-text!
+	"Let's Roll!" cyoa-title!
+		($ "The keys fit perfectly!
+		" .. pname .. " unlocks the car door." $) cyoa-text!
 			2 to carkey goodfx
-			choice( "Montez dans la voiture" )choice: get-into-car
-			choice( "Laisse tomber pour linstant" )choice
+			choice( "Get in the car" )choice: get-into-car
+			choice( "Leave it be for now" )choice
 			interactee .car-cyoa-default
 	else
-	"Voiture Verrouillee" cyoa-title!
-		"Cette voiture a l'air en tres bon e?tat. Mais ou sont les cle?s?" cyoa-text!
-		choice( "Laisse tomber pour linstant" )choice
+	"Locked Car" cyoa-title!
+		"This car looks like it's in really good condition. 
+		But where are the keys?" cyoa-text!
+		choice( "Leave it be for now" )choice
 		pchar .cmechanic+ if
-			pchar charchoice( " demarre la voiture" )choice: locked-car-hotwire
+			pchar charchoice( " hotwires the car!" )choice: locked-car-hotwire
 		then
 	then
 	STAT_STRENGTH cyoachar .effstat 99 > if
-		choice( "Prendre la voiture" )choice: lift-car
+		choice( "Pick up the car" )choice: lift-car
 	then
 
 ;
 
 cyoa: carkeyz
-	"Cles de voiture" cyoa-title!
-	($ "Ceci est une cle, y compris des cles de voiture." .. pname .. " le prend." $) cyoa-text! goodfx
+	"Car Keys" cyoa-title!
+	($ "This is a set of keys, including some car keys.
+	" .. pname .. " picks it up." $) cyoa-text! goodfx
 	1 to carkey deleteme
 ;
 
@@ -450,15 +653,16 @@ cyoa: carkeyz
 	0 lt .action_icon!
 ;
 
-: spawn-locked-car
+: spawn-locked-car 
 	50 %chance if
 		tireiron 50 %chance if -8 else 8 then movex .drift
 	then
-	10 30 rnd LOOT_GAS spawnloot 6 8 rnd movey 50 %chance if 2 else 10 then movex
+	10 30 rnd LOOT_GAS spawnloot 6 8 rnd movey 50 %chance if 2 else 10 then movex 
 	spawn-locked-car-noloot
 ;
 
-: carkeys keychain scatter mission{ cyoa{ ' carkeyz cyoa! } } delete-covering ;
+: carkeys keychain scatter mission{ cyoa{ ' carkeyz cyoa! } } delete-covering 1 lt .no_hit! 1 lt .weapon_state.val! ;
+\ STOMACH : STOP BLOWING UP MY DAMN KEYS.
 
 : resetcarkeys mission{ 0 to carkey } ;
 
@@ -472,6 +676,6 @@ cyoa: carkeyz
 : bag-me-out bag-me map{ pixelw 2 / lt .pos.x! pixelh lt .pos.y! } ;
 
 : scale-car-up args( pct car ) map{ pixelh dup <- pct * - } <- car car-map-posy ;
-: %mv-up 0 100 clamp 100 / mv@ dup 0= if
-		drop bag-me-out lt
+: %mv-up 0 100 clamp 100 / mv@ dup 0= if 
+		drop bag-me-out lt 
 	then scale-car-up ;

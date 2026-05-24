@@ -14,6 +14,8 @@ constant WEAPON_LIST_HANDGUNS
 	WEAPON_SLUG shove
 	WEAPON_AK47 shove
 	WEAPON_SILENTRIFLE shove
+	WEAPON_FLIPARI shove 
+	WEAPON_MOARGUN shove 
 constant WEAPON_LIST_RIFLE
 
 0 stack
@@ -43,7 +45,41 @@ constant WEAPON_LIST_RIFLE
 	WEAPON_SOLARMAZER shove
 	WEAPON_CANNON shove
 	WEAPON_CAPTAINCANNON shove
+	WEAPON_ASSAULT shove
+	
+	WEAPON_DSHOTGUN shove 
+	WEAPON_GOLDPISTOL shove 
+	WEAPON_LILDAWG shove 
+	WEAPON_FARMDSHOTGUN shove 
+	\ OMENTUM
+	
+	 WEAPON_SLAMFIRE shove 
+	 WEAPON_SIXSHOOTER shove 
+	 WEAPON_FLIPARI shove 
+	 WEAPON_MARBELLE shove 
+	\ Pancreas
+	
+	 WEAPON_FOSBURY shove 
+	 WEAPON_BLACKMAMBA shove 
+	 WEAPON_FLET shove
+	 WEAPON_THREEBURST shove 
+	\ Quadricep
+	
+	 WEAPON_BOW shove 
+	 WEAPON_WARBOW shove
+	\ About time these were recognised for hunting! 
+	
+	WEAPON_MOARGUN shove 
+	\ Rectum 
+	
+	\ Stomach
+	WEAPON_MERENJAHARP shove 
+	WEAPON_MP5 shove 
+	WEAPON_CHROMESHOTGUN shove 
+	WEAPON_PEWSHOTGUN shove 
+	
 constant WEAPON_LIST_FIREARM
+
 
 0 stack
 	WEAPON_KITCH shove
