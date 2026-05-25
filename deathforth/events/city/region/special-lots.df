@@ -300,33 +300,33 @@ map{ regiondef{
 	: example-special-choice choice( "VERY SPECIAL EMPTY BUILDING" )choice: example-special-lot-premission ;
 	
 	: bar choice( "BAR" )choice: bar-premission ;
-	: gunshop choice( "GUN SHOP" )choice: gunshop-premission ;
-	: foodshop choice( "GROCERY STORE" )choice: foodshop-premission ;
-	: minimart choice( "CONVENIENCE MART" )choice: minimart-premission ;
-	: drugshop choice( "PHARMACY" )choice: drugshop-premission ;
-	: hardwareshop choice( "HARDWARE STORE" )choice: hardwareshop-premission ;
-	: police choice( "POLICE STATION" )choice: police-premission ;
-	: clinic choice( "MEDICAL CLINIC" )choice: clinic-premission ;
-	: campingshop choice( "CAMP SUPPLIES SHOP" )choice: campingshop-premission ;
-	: bannerhouse choice( "LOST SAFEHOUSE" )choice: bannerhouse-premission ;
-	: gym choice( "STRENGTH & FITNESS GYM" )choice: gym-premission ;
-	: rescueapt choice( "APARTMENT WITH 'HELP' BANNER" )choice: rescueapt-premission ;
-	: office choice( "OFFICE BUILDING" )choice: office-premission ;
-	: jockshop choice( "ATHLETIC STORE" )choice: jockshop-premission ;
-	: sporting choice( "SPORTING GOODS STORE" )choice: sporting-premission ;
-	: infestedhouse choice( "INFESTED STRONGHOLD" )choice: infestedhouse-premission ;
-	: umbrellashop choice( "UMBRELLA SHOP" )choice: umbrellashop-premission ;
+	: gunshop choice( "ARMURERIE" )choice: gunshop-premission ;
+	: foodshop choice( "EPICERIE" )choice: foodshop-premission ;
+	: minimart choice( "SUPERETTE" )choice: minimart-premission ;
+	: drugshop choice( "PHARMACIE" )choice: drugshop-premission ;
+	: hardwareshop choice( "QUINCAILLERIE" )choice: hardwareshop-premission ;
+	: police choice( "COMMISSARIAT" )choice: police-premission ;
+	: clinic choice( "CLINIQUE" )choice: clinic-premission ;
+	: campingshop choice( "MAGASIN DE CAMPING" )choice: campingshop-premission ;
+	: bannerhouse choice( "REFUGE ISOLE" )choice: bannerhouse-premission ;
+	: gym choice( "SALLE DE SPORT" )choice: gym-premission ;
+	: rescueapt choice( "APPARTEMENT AVEC BANNIERE 'A L AIDE'" )choice: rescueapt-premission ;
+	: office choice( "BUREAUX" )choice: office-premission ;
+	: jockshop choice( "MAGASIN DE SPORT" )choice: jockshop-premission ;
+	: sporting choice( "MAGASIN D'ARTICLES DE SPORT" )choice: sporting-premission ;
+	: infestedhouse choice( "REFUGE ENVAHI" )choice: infestedhouse-premission ;
+	: umbrellashop choice( "MAGASIN DE PARAPLUIES" )choice: umbrellashop-premission ;
 	
 	: arcade choice( "ARCADE" )choice: arcade-premission ;
 	: restaurant choice( "RESTAURANT" )choice: restaurant-premission ;
-	: bookstore choice( "BOOK STORE" )choice: bookstore-premission ;
-	: furnshop choice( "FURNITURE STORE" )choice: furnshop-premission ;
-	: coffeeshop choice( "COFFEE SHOP" )choice: coffee-premission ;
+	: bookstore choice( "LIBRAIRIE" )choice: bookstore-premission ;
+	: furnshop choice( "MAGASIN DE MEUBLES" )choice: furnshop-premission ;
+	: coffeeshop choice( "SALON DE THE" )choice: coffee-premission ;
 	
 	// Below were going to be rare, but cancelled the idea of rare special-lots
 	
-	: rescuedogapt choice( "APARTMENT WITH 'BARK' BANNER" )choice: rescuedogapt-premission ;
-	: petshop choice( "PET SHOP" )choice: petshop-premission ;
+	: rescuedogapt choice( "APPARTEMENT AVEC BANNIERE 'OUAF'" )choice: rescuedogapt-premission ;
+	: petshop choice( "ANIMALERIE" )choice: petshop-premission ;
 	
 	// fast food place
 	

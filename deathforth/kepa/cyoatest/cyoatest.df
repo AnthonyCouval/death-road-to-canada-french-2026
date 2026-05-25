@@ -202,7 +202,7 @@
 : ltestgas 50 LOOT_GAS addloot ;
 : ltestnames 1 5 rnd case 1 of "un BEAU GOSSE" endof 2 of "une BOMBE" endof 3 of "a DATE HAVER" endof 4 of "a POWER WAIF" endof 5 of "a HANDSOME LAD" endof endcase ;
 : ltestbad 1 5 rnd case 1 of "a FART BUTT" endof 2 of "an ICEY DINK" endof 3 of "a SMELLY JERK" endof 4 of "a DINGUS" endof 5 of "a COLD FISH" endof endcase ;
-: lovetestend 50 %chance if "Puis le Testeur d’Amour se met a cracher des nuages de fumee, juste avant d'exploser." else "Le Testeur d'Amour emet un horrible bruit de grincement, puis explose." then ;
+: lovetestend 50 %chance if "Puis le Testeur d'Amour se met a cracher des nuages de fumee, juste avant d'exploser." else "Le Testeur d'Amour emet un horrible bruit de grincement, puis explose." then ;
 : ltestbreak 1 3 rnd case
 1 of "detruire la machine a l'aide d'une arme de corps a corps." cyoa-text-append 1 LOOT_BULLET addloot ltestskill "Strength" endof
 2 of "sortir un flingue et mitrailler la machine." cyoa-text-append 2 LOOT_BULLET addloot ltestskill "Shooting" endof

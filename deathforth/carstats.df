@@ -687,8 +687,8 @@ DOT1 value DOT
 
 // TODO: Maybe put different text in here depending on bar values
 : +repairstatus +purple "chassis" +text +white ;
-: +wearstatus +purple "engine" +text +white ;
-: +armourstatus +purple "armour" +text +white ;
+: +wearstatus +purple "moteur" +text +white ;
+: +armourstatus +purple "armure" +text +white ;
 : +carspeed 
 	car-speed 2 < if 
 		+red "Slow"
@@ -778,29 +778,29 @@ DOT1 value DOT
 		gamedef{ ' endlessmode gamemode? } if
 		
 			road{ road-trip-days } 2 < if 
-				+cr "Just started the Endless journey!" +text +cr
+				+cr "Le periple Sans Fin commence !" +text +cr
 			then;
 			
 			road{ road-trip-days } 3 < if 
-				+cr "Survived the first day of Endless Mode!" +text +cr
+				+cr "Premier jour survecu en mode Sans Fin !" +text +cr
 			then;
 		
-			+cr "Still alive after " +text +red road{ road-trip-days } 1 - +text +white " days on the road!!!" +text +cr
+			+cr "Toujours en vie apres " +text +red road{ road-trip-days } 1 - +text +white " jours sur la route!!!" +text +cr
 				
 		then;
 		
-		+cr "Only " +text +canadadays " driving days until CANADA!!!" +text +cr
+		+cr "Seulement " +text +canadadays " jours de route avant le CANADA!!!" +text +cr
 		
 	then;
 
 	road{ road-trip-days nearcanada-day < } if
 	
-	"Only " +text +canadadays " driving days until CANADA..." +text +cr
-	+cr "...IF WE HAD A CAR " +text DX +text +cr
+	"Plus que " +text +canadadays " jours de route avant le CANADA..." +text +cr
+	+cr "...SI SEULEMENT ON AVAIT UNE VOITURE " +text DX +text +cr
 	
 	then;
 	
-	"Only " +text +canadadays " days until CANADA!!!" +text +cr	
+	"Plus que " +text +canadadays " jours avant le CANADA!!!" +text +cr
 	
 ;
 

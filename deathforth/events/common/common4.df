@@ -470,7 +470,7 @@ cyoa-choice: common4-spider-devour
 cyoa: common4-spider
 	"Attaque de l'Araignee Geante" cyoa-title! someicon
 	($ Thegroup .. " essaie de se reposer dans une maison mais est pris en embuscade par une " .. "araignee geante !" fbold $) text!
-	($ "Bon c'est peut-etre une araignee normale mais elle est degoutante. L'araignee ronge rapidement le moral de " .. thegroup .. " !" $) +crtext
+	($ "Bon c'est peut-etre une araignee normale mais elle est degoutante. L'araignee plombe le moral du " .. thegroup .. " !" $) +crtext
 		choice( "Fuir de degout" )choice: common4-spider-run
 		choice( "Ecraser l'araignee" )choice: common4-spider-smoosh-pick
 		numpets 0 > numgourmands 0 > or if choice( "Manger l'araignee" )choice: common4-spider-eat-pick then

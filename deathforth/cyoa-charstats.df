@@ -370,7 +370,7 @@ cyoa: recruit-yes-food args( food )
 ;
 
 : npc-died 
-	"Perdu sur la Death Road" cyoa-title! 
+	"Perdu sur la Route de la Mort" cyoa-title!
 	($ pname .. " arrive trop tard.
 	Il n'y a rien que vous puissiez faire pour " .. chim .. " maintenant." $) cyoa-text!
 	clear-cyoa badfx

@@ -16,12 +16,12 @@ cyoa: camp2-minigolf
 	"Mini Golf !" cyoa-title!
 	($ Thegroup .. " monte le camp a l'endroit le plus sur qu'ils aient pu trouver : un parc de mini-golf abandonne. " $) cyoa-text! basic-tone
 	+cr fullcamp
-	($ "Le matin, " .. gthey .. " trouve" .. g1s .. " une balle de golf et un putter en cherchant dans la zone. " .. Thegroup .. " decide de faire une partie rapide !" $) +crtext
+	($ "Le matin, " .. gthey .. " trouv" .. g1s .. " une balle de golf et un putter en cherchant dans la zone. " .. Thegroup .. " decide de faire une partie rapide !" $) +crtext
 	unfittest choosechar cfitness- if
 		cpet? if
 			($ cname .. " court partout d'excitation !" $) +crtext morale++
 		else
-			($ cname .. " fait de l'exercice dont il avait besoin !" $) +crtext fitness++
+			($ cname .. " fait l'exercice dont il avait besoin !" $) +crtext fitness++
 		then
 	then
 	most-ahole if
