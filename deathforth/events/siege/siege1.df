@@ -47,7 +47,7 @@ cyoa: siege1-cabin
 cyoa: siege1-cabineasy
 	image-old-house
 	"1 Heure de Vacances en cabane" cyoa-title!
-	($ Thegroup .. " se perd en conduisant a travers une forêt. " .. gThey .. " s'arretent " .. g1s .. " a une cabane pour determiner ou " .. gtheyare .. ", mais " .. g1s .. " mais ils se font pieger par une horde errante." $) cyoa-text! basic-tone
+	($ Thegroup .. " se perd en conduisant a travers une foret. " .. gThey .. " s'arretent " .. g1s .. " a une cabane pour determiner ou " .. gtheyare .. ", mais " .. g1s .. " mais ils se font pieger par une horde errante." $) cyoa-text! basic-tone
 		1.4 ( 1 ) 6 14 rnd 1 siegecast
 		"events/siege/region/cabin-easy.df" $load-region
 		choice( "Try to Survive" )choice: premission

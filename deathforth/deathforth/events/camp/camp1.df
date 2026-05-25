@@ -3,9 +3,9 @@ cyoa{ road{
 
 cyoa-choice: camp1-boring-run
 	chumany? if
-		($ cname .. "  decide que lendroit semble TROP sur et " .. ghe .. "  finit par DEGAGER de la, vite, sans manger ni dormir.		" .. cname .. "''s se sent satisfait de savoir " .. che .. "  a evite cette menace." $)
+		($ cname .. " decide que l'endroit semble TROP sur et " .. ghe .. "  finit par DEGAGER de la, vite, sans manger ni dormir.		" .. cname .. " se sent satisfait de savoir que " .. che .. "  a evite cette menace." $)
 	else
-		($ cname .. " ' decide qu'il y a UN DANGER A PIED et " .. che .. "  commence a aboyer dans le vide et ne sarrete jamais, jamais jusquau lendemain matin." $)
+		($ cname .. " decide qu'il y a UN DANGER A PIED et " .. che .. "  commence a aboyer dans le vide et ne s'arrete jamais, jamais jusqu'au lendemain matin." $)
 	then cyoa-text!
 	cchar ' .morale-- foreach-team-char-except morale++ witsattREV attitude-- nosleep badfx ;
 cyoa-choice: camp1-boring-eat
@@ -26,7 +26,7 @@ cyoa: camp1-boring
 cyoa-choice: camp1-story-tell
 	solo if
 	($ soloname .. " " .. soloname .. " oublie tout des guimauves, et elles sont laissees derriere!" $) cyoa-text! soloer .morale3+ +cr fullcamp then;
-	($ Thegroup .. " ils echangent des histoires sur eux memes. Ils apprennent beaucoup lun sur lautre, mais oublient tout des guimauves!" $) cyoa-text!
+	($ Thegroup .. " ils echangent des histoires sur eux memes. Ils apprennent beaucoup l'un sur l'autre, mais oublient tout des guimauves!" $) cyoa-text!
 	' campstoryreveal foreach-team-char +cr fullcamp ;
 cyoa-choice: camp1-story-eat
 	($ Thegroup .. " ." $) cyoa-text! 2 LOOT_FOOD trunk.loot+ +cr sleep goodfx ;
@@ -48,19 +48,19 @@ cyoa: camp1-quick
 
 cyoa: camp1-passout
 	"Sevanouir" cyoa-title! cyoaicon
-	($ "Epuise apres une tres longue route, " .. thegroup .. "  repere un endroit de camping et sendort immediatement apres.	" $) cyoa-text! basic-tone fullcamp
+	($ "Epuise apres une tres longue route, " .. thegroup .. "  repere un endroit de camping et s'endort immediatement apres.	" $) cyoa-text! basic-tone fullcamp
 ;
 
 cyoa-choice: camp1-gas-no
 	"Zut" cyoa-title!
-	($ "  Le lendemain matin, " .. thegroup .. "  va siphonner les voitures, mais remarque une grande horde de zombies qui approche et doit abandonner lessence.	" $) cyoa-text! fullcamp
+	($ "  Le lendemain matin, " .. thegroup .. "  va siphonner les voitures, mais remarque une grande horde de zombies qui approche et doit abandonner l'essence.	" $) cyoa-text! fullcamp
 ;
 cyoa-choice: camp1-gas-get
 	"Nuit gazee" cyoa-title!
 	cpet? if
-		($ cname .. " il essaie de siphonner un peu de carburant, mais decouvre que " .. chis .. " la structure corporelle est vraiment mal adaptee a ca." $) cyoa-text! morale-- sleep
+		($ cname .. " il essaie de siphonner un peu de carburant, mais decouvre que " .. chis .. " structure corporelle est vraiment mal adaptee a ca." $) cyoa-text! morale-- sleep
 	else
-		($ cname .. " il siphonne le carburant, mais goute accidentellement un peu et tombe gravement malade cette nuit au lieu de dormir." $) cyoa-text! 40 70 rnd trunk-gas+ sleep-except morale2-
+		($ cname .. " il siphonne le carburant, mais en avale accidentellement et tombe gravement malade cette nuit au lieu de dormir." $) cyoa-text! 40 70 rnd trunk-gas+ sleep-except morale2-
 	then
 	+cr chowtime
 ;
@@ -74,14 +74,14 @@ cyoa-bridge: camp1-gas-get4
 cyoa: camp1-gas
 	image-abandoned-cars
 	"Siphon de Nuit" cyoa-title! cyoaicon
-	($ Thegroup .. " il installe le camp tard. Sur l'autoroute voisine se trouvent des voitures abandonnees. Elles sont cassees, mais beaucoup en ont encore un peu. Voulez vous envoyer quelqu'un pour siphonner le carburant ?" $) cyoa-text! basic-tone
+	($ Thegroup .. " installe le camp tard. Sur l'autoroute voisine se trouvent des voitures abandonnees. Elles sont cassees, mais beaucoup en ont encore un peu. Voulez vous envoyer quelqu'un pour siphonner le carburant ?" $) cyoa-text! basic-tone
 		team-count 3 > if
 			' camp1-gas-get 2 #cyoa-team-choice
-			choice( "Choisissez quelquun dautre" )choice: camp1-gas-get4
+			choice( "Choisissez quelqu'un dautre" )choice: camp1-gas-get4
 		else
 			' camp1-gas-get 3 #cyoa-team-choice
 		then
-		choice( "Attendez jusquau matin" )choice: camp1-gas-no
+		choice( "Attendez jusqu'au matin" )choice: camp1-gas-no
 ;
 
 } }

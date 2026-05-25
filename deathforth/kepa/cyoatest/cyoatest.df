@@ -9,7 +9,7 @@
 : give-food
 	cyoa-start
 		"Yo, BRO" cyoa-title!
-		"Do you want some chow?" cyoa-text!
+		"Tu veux manger un morceau ?" cyoa-text!
 		cyoa-add-choice
 			' testloot cyoa-choice-handler!
 		cyoa-add-choice
@@ -18,24 +18,24 @@
 ;
 : does-nothing
 	cyoa-start
-		"BIG WOOP" cyoa-title!
-		"It didn't do much." cyoa-text!
+		"GRANDE NOUVELLE" cyoa-title!
+		"Ca n'a pas servi a grand-chose." cyoa-text!
 		cyoa-add-choice
 			"Dang." cyoa-choice-text!
 	cyoa-show
 ;
 : cyoa-test
 	cyoa-start
-	"Hey, FOO" cyoa-title!
-	"Do you want to click a button." cyoa-text!
+	"Hey, frerot" cyoa-title!
+	"Tu veux cliquer sur un bouton ?" cyoa-text!
 	cyoa-add-choice
-		"What?" cyoa-choice-text!
+		"Quoi ?" cyoa-choice-text!
 		' test1 cyoa-choice-handler!
 	cyoa-add-choice
-		"No, but I'm hungry." cyoa-choice-text!
+		"Non, mais j'ai faim." cyoa-choice-text!
 		' give-food cyoa-choice-handler!
 	cyoa-add-choice
-		"Sure." cyoa-choice-text!
+		"Bien sur." cyoa-choice-text!
 		' does-nothing cyoa-choice-handler!
 	cyoa-show
 ;
@@ -47,7 +47,7 @@
 // TEST
 : gimme 1 LOOT_COUNT 1- rnd 1 3 rnd addloot ;
 
-: toiletsaying 50 %chance if "Gross." else "OH COME ON" then ;
+: toiletsaying 50 %chance if "Degueu." else " OH PITIE" then ;
 : toilet-cyoa nearest ( DUP WAS REMOVED HERE ) .open toiletsaying player .say clear-cyoa ;
 // : toilet-cyoa get-loot-act ;
 // : noloot LOOT_BULLET loot! 3 amount! ;
@@ -61,52 +61,52 @@
 
 : toiletwishA
 	cyoa-start
-		"Riches and Gold" cyoa-title!
-		"Gold coins start raining from the ceiling. You're rich!
-		Then you realize it's just garbage and zombie parts raining down as the roof collapses." cyoa-text!
+		"Or et richesse" cyoa-title!
+		"Des pieces d'or se mettent a pleuvoir du plafond. Tu es riche !
+		 Puis tu te rends compte que ce ne sont que des dechets et des morceaux de zombies qui tombent a mesure que le toit s'effondre." cyoa-text!
 		nearest dup .open .tpos anchor! 10 zombs
 	cyoa-show
 ;
 : toiletwishB
 	cyoa-start
-		"The Terrible Curse of Immortality" cyoa-title!
-		"You stare in horror as your skin turns to stone, trapping you in place forever as a statue.
-		No wait, it just kind of turned your skin gray." cyoa-text!
+		"La terrible Malediction de l'Immortalite" cyoa-title!
+		"Tu regardes avec horreur ta peau se transformer en pierre, te figant sur place pour toujours sous la forme d'une statue.
+		Non, attends, en fait, ca a juste rendu ta peau grise." cyoa-text!
 		cyoa-add-choice
-			"Well, whatever." cyoa-choice-text!
+			"Bon, peu importe." cyoa-choice-text!
 			// Turn the character that opened the CYOA gray for rest of game, maybe heal up to max health.
 	cyoa-show
 ;
 : toiletwishC
 	cyoa-start
-		"The Power of Friendship" cyoa-title!
-		"The genie blushes. I DIDN'T KNOW THAT ANYONE CARED. The being starts following you around." cyoa-text!
+		"Le Pouvoir de l'Amitie" cyoa-title!
+		"Le genie rougit. JE NE SAVAIS PAS QUE ÇA INTERESSERAIT QUELQU'UN. L'etre se met à te suivre partout." cyoa-text!
 		// I want this one to replace the usually decorative genie that's spawned, and then have it follow you around, punching zombies.
 	cyoa-show
 ;
 : toiletwishD
 	cyoa-start
-		"The Shocking Answer" cyoa-title!
-		"YEAH PRETTY MUCH says the genie. Then it just kind of hovers around, staring at you." cyoa-text!
+		"La Reponse Surprenante" cyoa-title!
+		"OUI A-PEU-PRES dit le genie. Puis il reste la, a tourner autour de toi en te fixant du regard." cyoa-text!
 		nearest dup .open .tpos anchor! 20 zombs
 	cyoa-show
 ;
 : cyoa-toiletwish
 	cyoa-start
-	"The Wishing Toilet" cyoa-title!
-	"When you open the toilet, a magical genie emerges. THANKS FOR FREEING ME FROM THE TOILET, it says. NOW MAKE A WISH.
-	You decide to wish for:" cyoa-text!
+	"Les Toilettes a Souhaits" cyoa-title!
+	"Quand tu ouvres la cuvette des toilettes, un genie sort comme par magie. MERCI DE M'AVOIR LIBERE DES TOILETTES, dit-il. MAINTENANT, FAIS UN SOUHAIT.
+	Tu decides de faire le voeu de:" cyoa-text!
 	cyoa-add-choice
-		"I vant... to bee rich" cyoa-choice-text!
+		"Je veux... etre riche" cyoa-choice-text!
 		' toiletwishA cyoa-choice-handler!
 	cyoa-add-choice
-		"Immortality" cyoa-choice-text!
+		"Immortalite" cyoa-choice-text!
 		' toiletwishB cyoa-choice-handler!
 	cyoa-add-choice
-		"Friendship" cyoa-choice-text!
+		"Amitie" cyoa-choice-text!
 		' toiletwishC cyoa-choice-handler!
 	cyoa-add-choice
-		"Are you one of those ahole genies?" cyoa-choice-text!
+		"Fais-tu partie de ces connards de genie ?" cyoa-choice-text!
 		' toiletwishD cyoa-choice-handler!
 	cyoa-show
 ;
@@ -118,32 +118,32 @@
 : poutloot 3 LOOT_FOOD addloot ;
 : poutfridgeA
 	cyoa-start
-	"Pastryfest" cyoa-title!
-	"You stuff yourself with pastries. You feel pretty good about this decision.
-	You feel very full." cyoa-text!
+	"Patissefete" cyoa-title!
+	"Tu te gaves de patisseries. Tu es plutot content de ce choix.
+	Tu te sens bien repu." cyoa-text!
 	cyoa-add-choice	
-		"Urg so full" cyoa-choice-text!
+		"Arg, je suis gave" cyoa-choice-text!
 	// I'd like to make this increase morale for both characters, but make their sprites 30% wider for rest of game.
 	cyoa-show
 ;
 : poutfridgeB
 	cyoa-start
-	"Sugary Mush" cyoa-title!
-	"You jam some pastries into a plastic bag. It turns into a sticky ball of pastry filling, but it should still be edible later." cyoa-text!
+	"Mousse Sucree" cyoa-title!
+	"Tu fourres quelques patisseries dans un sac en plastique. Ca se transforme en une boule collante de pate et de garniture, mais ca devrait quand meme etre mangeable plus tard." cyoa-text!
 	cyoa-add-choice
 		' poutloot cyoa-choice-handler!
 	cyoa-show
 ;
 : cyoa-poutfridge
 	cyoa-start
-	"Delicious Fridge" cyoa-title!
-	"This fridge is full of delicous pastries! Their containers are flimsy, and you know they will be smushed if you try to carry them back.
+	"Le Frigo des Delices" cyoa-title!
+	"Ce frigo regorge de delicieuses patisseries ! Leurs emballages sont fragiles, et on sait bien qu'elles vont s'ecraser si on essaie de les ramener a la maison.
 	Would you like to:" cyoa-text!
 	cyoa-add-choice
-		"Eat a bunch of them right now" cyoa-choice-text!
+		"Manges-en plein tout de suite" cyoa-choice-text!
 		' poutfridgeA cyoa-choice-handler!
 	cyoa-add-choice
-		"Try to cram some in backpack" cyoa-choice-text!
+		"Essaie d'en glisser quelques-unes dans ton sac a dos" cyoa-choice-text!
 		' poutfridgeB cyoa-choice-handler!
 	cyoa-show
 ;
@@ -155,8 +155,8 @@
 : zfridgeloot 7 LOOT_FOOD addloot ;
 : zombfridgeA1
 	cyoa-start
-	"Unexpected Bounty" cyoa-title!
-	"Sickened with yourself, you pack some of the zombie meat. You'll have to come up with a good lie later for how you got this meat." cyoa-text!
+	"Butin Inattendu" cyoa-title!
+	"Degoute de toi-meme, tu emportes un peu de cette viande de zombie. Tu devras trouver un bon pretexte plus tard pour expliquer d'ou vient cette viande." cyoa-text!
 	cyoa-add-choice	
 		' zfridgeloot cyoa-choice-handler!
 	// Add a bunch of food, take some morale away from party characters, but also add a flag for an event that happens some random amount of nights later
@@ -164,8 +164,8 @@
 ;
 : zombfridgeA2
 	cyoa-start
-	"Food Bites Back" cyoa-title!
-	"As you take some meat, one of the zombies starts moving! Stumbling back, you notice that more have crept up behind you!" cyoa-text!
+	"La Nourriture Riposte" cyoa-title!
+	"Alors que tu prends un peu de viande, l'un des zombies commence a bouger ! En reculant tout en titubant, tu remarques que d'autres zombies se sont faufiles derriere toi !" cyoa-text!
 	cyoa-add-choice	
 		' testloot nearest dup .open .tpos anchor! 5 zombs cyoa-choice-handler!
 	cyoa-show
@@ -173,23 +173,23 @@
 : zfridgeroll 66 %chance if zombfridgeA1 else zombfridgeA2 then ;
 : zombfridgeB
 	cyoa-start
-	"Better Left Alone" cyoa-title!
-	"You pretend you didn't see any of this. Knowing you weren't desperate enough to eat zombie meat makes you feel a little better about things." cyoa-text!
+	"Mieux Vaut Ne Pas S'en Meler" cyoa-title!
+	"Tu fais comme si tu n'avais rien vu. Le fait de savoir que tu n'etais pas assez desespere pour manger de la viande de zombie te reconforte un peu." cyoa-text!
 	cyoa-add-choice
-		"Could be worse" cyoa-choice-text!
+		"Ca pourrait etre pire" cyoa-choice-text!
 	// Later add a tiny morale bonus.
 	cyoa-show
 ;
 : cyoa-zombfridge
 	cyoa-start
-	"Zombie Meat Fridge" cyoa-title!
-	"The fridge is full of zombies that someone cut up and stuffed in here. You have a horrible thought, that some of it actually looks like it could pass for normal meat.
-	Would you like to:" cyoa-text!
+	"Frigo a Viande de Zombie" cyoa-title!
+	"Le frigo est rempli de morceaux de zombies que quelqu'un a dacoupes et fourres la-dedans. Une pensee effrayante te traverse l'esprit : certains morceaux pourraient presque passer pour de la viande normale.
+    Que souhaites-tu faire :" cyoa-text!
 	cyoa-add-choice
-		"Pack some up, tell no one later" cyoa-choice-text!
+		"Prends-en un peu, mais n'en parle a personne" cyoa-choice-text!
 		' zfridgeroll cyoa-choice-handler!
 	cyoa-add-choice
-		"Ignore it!" cyoa-choice-text!
+		"Laisse tomber !" cyoa-choice-text!
 		' zombfridgeB cyoa-choice-handler!
 	cyoa-show
 ;
@@ -200,20 +200,20 @@
 
 : ltestskill ;
 : ltestgas 50 LOOT_GAS addloot ;
-: ltestnames 1 5 rnd case 1 of "a HUNKY STUD" endof 2 of "an ULTRA BABE" endof 3 of "a DATE HAVER" endof 4 of "a POWER WAIF" endof 5 of "a HANDSOME LAD" endof endcase ;
+: ltestnames 1 5 rnd case 1 of "un BEAU GOSSE" endof 2 of "une BOMBE" endof 3 of "a DATE HAVER" endof 4 of "a POWER WAIF" endof 5 of "a HANDSOME LAD" endof endcase ;
 : ltestbad 1 5 rnd case 1 of "a FART BUTT" endof 2 of "an ICEY DINK" endof 3 of "a SMELLY JERK" endof 4 of "a DINGUS" endof 5 of "a COLD FISH" endof endcase ;
-: lovetestend 50 %chance if "Then the Love Tester emits plumes of smoke, right before it explodes." else "The Love Tester makes a horrible grinding noise, then explodes." then ;
+: lovetestend 50 %chance if "Puis le Testeur d’Amour se met a cracher des nuages de fumee, juste avant d'exploser." else "Le Testeur d'Amour emet un horrible bruit de grincement, puis explose." then ;
 : ltestbreak 1 3 rnd case
-1 of "smashing the machine with a melee weapon." cyoa-text-append 1 LOOT_BULLET addloot ltestskill "Strength" endof
-2 of "pulling out a gun and blasting the machine apart." cyoa-text-append 2 LOOT_BULLET addloot ltestskill "Shooting" endof
-3 of "prying open a panel and ripping out cables and circuit boards." cyoa-text-append 3 LOOT_BULLET addloot ltestskill "Mechanics" endof endcase ;
+1 of "detruire la machine a l'aide d'une arme de corps a corps." cyoa-text-append 1 LOOT_BULLET addloot ltestskill "Strength" endof
+2 of "sortir un flingue et mitrailler la machine." cyoa-text-append 2 LOOT_BULLET addloot ltestskill "Shooting" endof
+3 of "forcer l'ouverture du panneau frontal et en arracher les cables et les circuits imprimes." cyoa-text-append 3 LOOT_BULLET addloot ltestskill "Mechanics" endof endcase ;
 // For ltestbreak, currently just using rnd case but I want it to check to see what skills the target doesn't have maxed, then pick one at random to increase. Also check if that character has a gun/melee weapon.
 : lovetestboom ;
 // Need a line named "lovetestboom" that makes the love tester object break apart/send the piece flying.
 : ltestuse1
 	cyoa-start
-	"The Love Tester declares that NAME is " cyoa-text-append ltestnames cyoa-text-append cyoa-text-cr2
-	lovetestend cyoa-text-append cyoa-text-cr2 "NAME feels a bit more confident and gains 5 morale!" cyoa-text-append
+	"Le Testeur d'Amour declare que ce NAME est " cyoa-text-append ltestnames cyoa-text-append cyoa-text-cr2
+	lovetestend cyoa-text-append cyoa-text-cr2 "NAME se sent un peu plus confiant et gagne 5 points de moral !" cyoa-text-append
 	cyoa-add-choice	
 		"NICE" cyoa-choice-text!
 	// Add a handler that increases morale for the person that used it
@@ -221,15 +221,15 @@
 ;
 : ltestuse2
 	cyoa-start
-	"The Love Tester declares that NAME is " cyoa-text-append ltestbad cyoa-text-append cyoa-text-cr2
-	"NAME screams in rage at this accusation while " cyoa-text-append ltestbreak cyoa-text-cr2 "NAME lost 15 morale, but gained 1 in " cyoa-text-append ltestskill cyoa-text-append
+	"Le Testeur d'Amour declare que ce NAME est " cyoa-text-append ltestbad cyoa-text-append cyoa-text-cr2
+	"NAME hurle de rage face a cette accusation tandis que " cyoa-text-append ltestbreak cyoa-text-cr2 "NAME perd 15 points de moral, mais gagne 1 point en " cyoa-text-append ltestskill cyoa-text-append
 	// Add a handler that decreases morale for the person that used it, while adding 1 point in a skill.
 	// If a skill is full, pick a different skill. If ALL skills are full, provide a different message?
 	cyoa-show
 ;
 : ltestsmash1
 	cyoa-start
-	"NAME shouts I DON'T NEED ANYBODY and proceeds to bust the machine into parts. NAME takes some of the scrap, as a souvenier of this accomplishment.
+	"NAME crie JE N'AI BESOIN DE PERSONNE et reduit la machine en morceaux. NAME recupere quelques débris en souvenir de cet exploit.
 	Received 2 scrap metal!" cyoa-text!
 	// Picks a random character out of your duo to use for the name. Or just uses your only character, if solo. Adds scrap metal to loot.
 	cyoa-show

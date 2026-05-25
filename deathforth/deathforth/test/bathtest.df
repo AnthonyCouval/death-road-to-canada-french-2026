@@ -31,7 +31,7 @@ regiondef{
 
 		inside
 
-		"Regions LOCATIONS" print
+		"SITES de la region" print
 					
 		loc-choice: test
 			loc-weight: 99

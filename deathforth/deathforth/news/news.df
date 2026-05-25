@@ -14,7 +14,7 @@ voc{ news
 
 // BUTTONS INFO
 
-"See Trailer / Buy / Wishlist" value b0_text
+"Voir le Trailer / Acheter / Wishlist" value b0_text
 "http://www.cannibalcrossing.com" urlopener: b0_url
 
 "Discord Officiel" value b1_text
@@ -69,7 +69,7 @@ b2_text 	2 #news_btn_text!
 cyoa{
 
 cyoa-blank: social
-	"TWITTER AND FACEBOOK" cyoa-title!
+	"TWITTER ET FACEBOOK" cyoa-title!
 
 	"Suivez les mises a jour de Rocketcat Games sur Twitter ou Facebook pour les nouvelles de Death Road et les prochains jeux! Lisez le Twitter de Madgarden pour de vraies Sagesse Canadienne!" bbold text!
 	"Nous sommes rapides a repondre aux commentaires et suggestions sur Twitter!" +crtext
@@ -84,8 +84,8 @@ cyoa-blank: social
 cyoa-blank: weblinks
 	"OPTIONS DES INFOS" cyoa-title!
 
-	"Voici dautres facons de nous contacter, de faire part de vos commentaires et suggestions, et de voir ce que nous faisons pour les mises a jour et les nouveaux projets! Nous sommes tres actifs sur le Discord officiel de Rocketcat, ou vous pouvez nous parler ainsi qua dautres fans de nos jeux." bbold text!
-	"Vous pouvez egalement masquer le panneau dactualites jusqua la prochaine mise a jour majeure." +crtext
+	"Voici d'autres facons de nous contacter, de faire part de vos commentaires et suggestions, et de voir ce que nous faisons pour les mises a jour et les nouveaux projets! Nous sommes tres actifs sur le Discord officiel de Rocketcat, ou vous pouvez nous parler ainsi qua dautres fans de nos jeux." bbold text!
+	"Vous pouvez egalement masquer le panneau d'actualites jusqu'a la prochaine mise a jour majeure." +crtext
 
 	choice( "Retour" )choice
 	choice( "Twitter/Facebook" )choice: social

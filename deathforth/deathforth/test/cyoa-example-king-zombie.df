@@ -83,7 +83,7 @@ road{
 
 : foodbribe
 	cyoa-good-dialog
-		"KING ZOMBIE accepte a contrecur des SNACKS, et avec un regard vide, il seloigne." cyoa-text!
+		"KING ZOMBIE accepte a contrecoeur des SNACKS, et avec un regard vide, il s'eloigne." cyoa-text!
 		-5 LOOT_FOOD trunk.loot+
 ;
 

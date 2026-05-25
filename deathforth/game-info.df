@@ -101,24 +101,24 @@ defer infoback
 
 	cyoa-start
 	"DEATH ROAD STATS" cyoa-title!
-	($ "Toilets opened: " bbold .. gstats{ toilets-opened } $) text!
-	($ "   Zombies splatted: " bbold .. gstats{ total-kills } $) +text
+	($ "Toilettes ouvertes : " bbold .. gstats{ toilets-opened } $) text!
+	($ "   Zombies ecrases : " bbold .. gstats{ total-kills } $) +text
 	
-	($ "Strength trained: " bbold .. gstats{ total-str+ } $) +crtext
-	($ "   Fitness trained: " bbold .. gstats{ total-fit+ } $) +text
+	($ "Force entrainee : " bbold .. gstats{ total-str+ } $) +crtext
+	($ "   Fitness entrainee : " bbold .. gstats{ total-fit+ } $) +text
 	
-	($ "Shooting trained: " bbold .. gstats{ total-shoot+ } $) +crtext
-	($ "   Mechanical trained: " bbold .. gstats{ total-mech+ } $) +text
+	($ "Tir entraine: " bbold .. gstats{ total-shoot+ } $) +crtext
+	($ "   Mecanique entrainee: " bbold .. gstats{ total-mech+ } $) +text
 		
-		($ "Medical trained: " bbold .. gstats{ total-med+ } $) +crtext
-	($ "   Teammates healed: " bbold .. gstats{ total-heal } $) +text
+		($ "Medecine entrainee: " bbold .. gstats{ total-med+ } $) +crtext
+	($ "   Coequipiers soignes : " bbold .. gstats{ total-heal } $) +text
 	
-	($ "Ally deaths: " bbold .. gstats{ total-dead } $) +crtext
+	($ "Deces d'allies : " bbold .. gstats{ total-dead } $) +crtext
 	
 	
-	($ "Total Wins: " bbold .. winstotal $) +crtext
-	($ "   Total Losses: " bbold .. gstats{ total-losses } $) +text
-	($ "Consecutive Wins: " bbold .. gstats{ wins-streak } $) +crtext
+	($ "Total de victoires : " bbold .. winstotal $) +crtext
+	($ "   Total des parties perdues : " bbold .. gstats{ total-losses } $) +text
+	($ "Victoires consecutives : " bbold .. gstats{ wins-streak } $) +crtext
 	
 	choice( "OK" )choice
 	// choice( "BACK" )choice: infoback
@@ -142,10 +142,10 @@ defer infoback
 
 cyoa-start
 "Zombo Town Directions" cyoa-title!
-"Things to do in Zombo Town:" bbold text!
-"The building to the right lets you view your stats and other information.
-The center building lets you upgrade and unlock Perks and Traits. You can then use these to make powerful Starting or Custom Characters!" +crtext 
-"Beware the Unlock Gnome!" fbold +crtext
+"Chose a faire a Zombo Ville:" bbold text!
+"Le batiment situe à droite vous permet de consulter vos statistiques et d'autres informations.
+Le batiment central vous permet d'ameliorer et de debloquer des avantages et des traits de caractere. Vous pourrez ensuite vous en servir pour creer des personnages de depart ou personnalises tres puissants !" +crtext
+"Mefiez-vous du Gnome deverrouille !" fbold +crtext
 
 choice( "EXIT" )choice
 choice( "BACK" )choice: infoback
@@ -158,7 +158,7 @@ choice( "BACK" )choice: infoback
 
 cyoa-start
 "Death Road Information" cyoa-title!
-"Welcome to the Death Road to Canada!" text! BLUE 
+"Bienvenue dans Death Road to Canada!" text! BLUE
 touch_controls@ 1 < if 
 	"For discussion check out the Steam Announcement page: http://steamcommunity.com/app/252610
 	Constant news: www.twitter.com/rocketcatgames/" 

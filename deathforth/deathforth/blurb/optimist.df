@@ -2,7 +2,7 @@
 : good-weather
 	2nd-char choosechar
 	blurbslot 0= if
-		"Finalement, aujourd'hui s'est avere être une belle journee !" blurbsay
+		"Finalement, aujourd'hui s'est avere etre une belle journee !" blurbsay
 	else
 		blurbslot 2 < if
 			cattitude- if
@@ -35,7 +35,7 @@
 : canada-weather
 	2nd-char choosechar
 	blurbslot 0= if
-		"Il fait peut-être froid au Canada, mais j'attends avec impatience ce temps !" blurbsay
+		"Il fait peut-etre froid au Canada, mais j'attends avec impatience ce temps !" blurbsay
 	else
 		blurbslot 2 < if
 			cattitude- if
@@ -51,7 +51,7 @@
 	: optimist-oneline1 "Je me sens plutot bien a ce sujet. Je veux dire, dans l'ensemble." ;
 	: optimist-oneline2 "Je pense toujours que les chances sont bonnes, ici." ;
 	: optimist-oneline3 "La chance est de mon cote!" ;
-	: optimist-oneline4 "Le monde n'est pas si mal. Bien sûr, il pourrait être ameliore..." ;
+	: optimist-oneline4 "Le monde n'est pas si mal. Bien sûr, il pourrait etre ameliore..." ;
 	: optimist-oneline5 "Je peux le sentir, nous allons tomber sur quelque chose de bien!" ;
 // VVVVVVVV JONZ BLURBZ VVVVVVVVV
 	: optimist-oneline6 "Cette nourriture pour chat n'est pas si mauvaise!" ;
