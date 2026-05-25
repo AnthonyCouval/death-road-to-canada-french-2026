@@ -11,38 +11,38 @@ cyoa{ regiondef{
 
 cyoa-choice: camp-ninja-flee
 	ricon
-	($ rname  .. " slams a smoke bomb into the ground!
-	She's gone!" $) cyoa-text! badfx 
+	($ rname  .. " claque une bombe fumigene sur le sol !
+	Elle est partie !" $) cyoa-text! badfx
 	camp-ninja-vanish
 ;
 
 cyoa-bridge: camp-ninja-recruit
 	ricon
-	($ rname  .. " takes the food and then slams a smoke bomb into the ground. She's gone!
-	No wait, she's following you now." $) cyoa-text! goodfx
+	($ rname  .. " prend la nourriture puis claque une bombe fumigene sur le sol. Elle est partie !
+	Attendez, elle vous suit maintenant." $) cyoa-text! goodfx
 
 	interactee mission{ .smokepoof } interactee .scatter 15 interactee .fade!
 
 	5 recruitee .morale! clear-cyoa
 		team-count 3 > if
-			"She likes her personal space for sword swinging, so you'll have to boot someone." +crtext 
+			"Elle aime son espace personnel pour manier l'epee, vous devrez donc virer quelqu'un." +crtext
 			-5 trunk-food+ ' recruit-replace cyoa-team-choice
 		then;
 	recruitee .strengthREV recruitee .fitnessREV recruitee .temperREV
 	-5 trunk-food+
-	recruited 
+	recruited
 	road{ 6 8 rnd to ninja-countdown }
 ;
 
 cyoa: camp-rec-ninja
-	"Ninja Strike 3: Third Strike" cyoa-title!
+	"Ninja Strike 3 : Troisieme Strike" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
 	"Ninja" recruitee .name!
-	($ Thegroup .. " finds someone dressed in a ninja costume, standing in camp with a dramatic crossing-arms pose. Her impractical-length headband waves in the wind." $) cyoa-text! basic-tone
-		choice( "Leave her be" )choice
-		choice( "Approach her" )choice: camp-ninja-flee
+	($ Thegroup .. " trouve quelqu'un habille en costume de ninja, debout dans le camp dans une pose theatrale les bras croises. Son bandeau de longueur impratique flotte dans le vent." $) cyoa-text! basic-tone
+		choice( "La laisser" )choice
+		choice( "S'approcher d'elle" )choice: camp-ninja-flee
 	trunk-food 4 > if
-		choice( "Bribe her to join for 5 food" )choice: camp-ninja-recruit
+		choice( "La soudoyer pour 5 nourriture" )choice: camp-ninja-recruit
 	then
 ;
 
@@ -51,10 +51,10 @@ cyoa-bridge: camp-ramb-recruit
 	4 recruitee .morale!
 	clear-cyoa
 	team-count 3 > if
-		($  rname .. " notices that the team is already full.
-		You'll have to boot someone out of the team to make room. You should, since you already gave up the food." $) cyoa-text! -10 trunk-food+ ' recruit-replace cyoa-team-choice
+		($  rname .. " remarque que l'equipe est deja complete.
+		Vous devrez virer quelqu'un pour faire de la place. Vous devriez, vu que vous avez deja donne la nourriture." $) cyoa-text! -10 trunk-food+ ' recruit-replace cyoa-team-choice
 	then;
-	($ rname  .. " joins the team! He outright refuses to let go of " .. "BERTHA" pbold .. ", and says no one will ever be able to pry it from him." $) cyoa-text! goodfx
+	($ rname  .. " rejoint l'equipe ! Il refuse categoriquement de lacher " .. "BERTHA" pbold .. ", et dit que personne ne pourra jamais la lui arracher." $) cyoa-text! goodfx
 		-10 trunk-food+	recruited
 ;
 
@@ -62,92 +62,92 @@ cyoa: camp-rec-ramb
 	"RAMBEUX: FIRST BUTT" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
 	"Rambeux" recruitee .name!
-	($ Thegroup .. " meets a serious looking guy. He's holding a gigantic knife and he's carrying a " .. "MINIGUN" fbold .. " across his back.
-	He mumbles that he is a mercenary for hire, paid up front." $) cyoa-text! basic-tone
+	($ Thegroup .. " rencontre un gars d'allure serieuse. Il tient un couteau gigantesque et porte un " .. "MINIGUN" fbold .. " dans le dos.
+	Il marmonne qu'il est un mercenaire a louer, paye d'avance." $) cyoa-text! basic-tone
 	trunk-food 9 > if
-		choice( "Leave him for now" )choice
-		choice( "Pay up front - 10 food" )choice: camp-ramb-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Payer d'avance - 10 nourriture" )choice: camp-ramb-recruit
 	else
-		"His price is 10 food, and you don't have enough." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Son prix est de 10 nourriture, et vous n'en avez pas assez." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 cyoa-choice: camp-catlady-pet
 	ricon clear-cyoa
-	($ rname  .. " seems disappointed by the amount of food you gave her, but only for the briefest moment.
-	" .. "Thanks for the cat food! Please pet the kitties! " pbold .. "
-	The cats consider killing you, but don't this time. " .. "NICE!" fbold $) cyoa-text! goodfx
+	($ rname  .. " semble deçue par la quantite de nourriture que vous lui avez donnee, mais seulement l'espace d'un instant.
+	" .. "Merci pour la nourriture pour chats ! Caressez les minous ! " pbold .. "
+	Les chats envisagent de vous tuer, mais n'en font rien cette fois. " .. "SUPER !" fbold $) cyoa-text! goodfx
 		-5 trunk-food+ morale2+all
 ;
 
 cyoa-choice: camp-catlady-pet2
 	ricon clear-cyoa
-	($  rname .. " is delighted by the makeshift cat food!
-	She shows the group her special reserve of cats dressed in little clothes and the ones that are less likely to bite hard enough to draw blood." $) cyoa-text! goodfx
+	($  rname .. " est ravie par la nourriture pour chat de fortune !
+	Elle montre au groupe sa reserve speciale de chats habilles en petits vetements et ceux qui sont moins susceptibles de mordre assez fort pour saigner." $) cyoa-text! goodfx
 		-10 trunk-food+ morale4+all
 ;
 
 cyoa-bridge: camp-catlady-recruit
 	6 recruitee .morale!
 	clear-cyoa
-	($ "Much like the cats she loves, " .. rname .. " now sees you as a source of food that she can then give directly to her cats. She starts following you around." $) cyoa-text! goodfx
+	($ "Tout comme les chats qu'elle aime, " .. rname .. " vous voit maintenant comme une source de nourriture qu'elle peut ensuite donner directement a ses chats. Elle commence a vous suivre partout." $) cyoa-text! goodfx
 		recruitee .witsREV recruitee .attitudeREV -20 trunk-food+
 	team-count 3 > if
-		($  rname .. " insists that you get rid of someone that's scaring her precious cats! She points at:" $) +crtext ' recruit-replace cyoa-team-choice
+		($  rname .. " insiste pour que vous vous debarrassiez de quelqu'un qui fait peur a ses precieux chats ! Elle designe :" $) +crtext ' recruit-replace cyoa-team-choice
 	else
 		recruited
 	then
 ;
 
 cyoa: camp-rec-catlady
-	"The Last Cat Lady" cyoa-title!
+	"La Derniere Dame aux Chats" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "When entering the trading camp, " .. thegroup .. " detected an " .. "overpowering stench" rbold .. ", different from the usual smell of death. The source is all these cats.
-	A woman is among the cats, and she asks right away if " .. thegroup .. " has any spare cat food. 
-	She will join you for 20 food!" $) cyoa-text! basic-tone
-	choice( "Can't spare the food" )choice
+	($ "En entrant dans le camp de commerce, " .. thegroup .. " a detecte une " .. "puanteur ecrasante" rbold .. ", differente de l'odeur habituelle de la mort. La source : tous ces chats.
+	Une femme est parmi les chats, et elle demande tout de suite si " .. thegroup .. " a de la nourriture pour chats en rab.
+	Elle vous rejoindra pour 20 nourriture !" $) cyoa-text! basic-tone
+	choice( "Pas assez de nourriture" )choice
 	trunk-food 4 > if
-		choice( "Give her 5 food" )choice: camp-catlady-pet
+		choice( "Lui donner 5 nourriture" )choice: camp-catlady-pet
 	then
 	trunk-food 9 > if
-		choice( "Give her 10 food" )choice: camp-catlady-pet2
+		choice( "Lui donner 10 nourriture" )choice: camp-catlady-pet2
 	then
 	trunk-food 19 > if
-		choice( "Give her 20 food!" )choice: camp-catlady-recruit
-	then	
+		choice( "Lui donner 20 nourriture !" )choice: camp-catlady-recruit
+	then
 ;
 
 cyoa-bridge: camp-maria-recruit
 	ricon 4 recruitee .morale!
 	clear-cyoa
 	team-count 3 > if
-		($  rname .. " notices that the team is already full.
-		You'll have to boot someone out of the team to make room for her." $) cyoa-text! -10 trunk-food+ recruitee .strengthREV recruitee .fitnessREV ' recruit-replace cyoa-team-choice
+		($  rname .. " remarque que l'equipe est deja complete.
+		Vous devrez virer quelqu'un pour faire de la place." $) cyoa-text! -10 trunk-food+ recruitee .strengthREV recruitee .fitnessREV ' recruit-replace cyoa-team-choice
 	then;
-	($ rname  .. " joins the team! She says she'd rather be heading towards Colombia, but at least Canada also starts with a " .. "'C'." rbold $) cyoa-text! goodfx
+	($ rname  .. " rejoint l'equipe ! Elle dit qu'elle prefererait aller vers la Colombie, mais au moins le Canada commence aussi par un " .. "'C'." rbold $) cyoa-text! goodfx
 		-10 trunk-food+	recruitee .strengthREV recruitee .fitnessREV recruited
 ;
 
 cyoa: camp-rec-maria
 	"Zombie Harvest" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ Thegroup .. " meets a sturdy woman wearing old fashioned clothes. She is wielding an especially heavy cast iron frying pan.
-	She says that she was visiting this country, but got stuck here after the zombies happened. She offers to join the team in exchange for 10 food, up front." $) cyoa-text! basic-tone
+	($ Thegroup .. " rencontre une femme robuste en habits d'antan. Elle brandit une poele en fonte particulierement lourde.
+	Elle dit qu'elle visitait ce pays, mais s'est retrouvee bloquee ici apres l'arrivee des zombies. Elle propose de rejoindre l'equipe en echange de 10 nourriture, d'avance." $) cyoa-text! basic-tone
 	trunk-food 9 > if
-		choice( "Leave her for now" )choice
-		choice( "Give her 10 food" )choice: camp-maria-recruit
+		choice( "La laisser pour l'instant" )choice
+		choice( "Lui donner 10 nourriture" )choice: camp-maria-recruit
 	else
-		"Her price is 10 food, and you don't have enough." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Son prix est de 10 nourriture, et vous n'en avez pas assez." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 cyoa-bridge: camp-goat-recruit
 	ricon 4 recruitee .morale!
 	clear-cyoa
 
-	($ rname  .. " starts following! It " .. "IMMEDIATELY" rbold .. " crams its horns into " .. cname .. "!" $) cyoa-text! bitefx
+	($ rname  .. " commence a suivre ! Il " .. "IMMEDIATEMENT" rbold .. " enfonce ses cornes dans " .. cname .. " !" $) cyoa-text! bitefx
 		recruitee .loyaltyREV recruitee .attitudeREV ouch--
 		recruited
 ;
@@ -157,31 +157,31 @@ cyoa-bridge: camp-goat-recruit
 cyoa-choice: camp-goat-milk
 	' camp-goat-milked ++
 	camp-goat-milked 2 < if
-		($ "Did you know that goats produce the most milk out of any livestock animal? Roughly 300 times more than a cow!
-		Also the goat gores " .. cname .. " pretty bad." $) 
+		($ "Saviez-vous que les chevres produisent le plus de lait de tous les animaux d'elevage ? Environ 300 fois plus qu'une vache !
+		En plus la chevre encorne " .. cname .. " plutot severement." $)
 	else
-		($ cname .. " attempts to milk the goat again.
-		Once again, the goat gores " .. cname .. " pretty bad." $) 
+		($ cname .. " essaie de traire la chevre encore.
+		Une fois de plus, la chevre encorne " .. cname .. " plutot severement." $)
 	then
 		text!
 		ouch-- morale-- bitefx
-		recruitee .female@ if 
+		recruitee .female@ if
 			alive? if
-				($ cname .. " manages to get some milk from the goat!" $)
+				($ cname .. " reussit a obtenir du lait de la chevre !" $)
 			else
-				($ cname .. " gets some milk from the goat before dying. Nice!" $)
+				($ cname .. " obtient du lait de la chevre avant de mourir. Sympa !" $)
 			then +crtext 2 trunk-food+ goodfx
 		else
-			"You can't get goat milk from a male goat!" +crtext
+			"On ne peut pas obtenir de lait de chevre d'une chevre male !" +crtext
 			alive? if
 				camp-goat-milked 2 < if
-					($ "The goat gores " .. cname .. " extra hard, so " .. che .. " remembers this lesson." $) 
+					($ "La chevre encorne " .. cname .. " tres fort, pour qu'il se souvienne de cette leçon." $)
 				else
-					($ cname .. " didn't manage to remember this lesson from last time." $) 
+					($ cname .. " n'a pas reussi a retenir cette leçon la derniere fois." $)
 				then
 					+crtext	ouch--
 			else
-				($ "The goat is disappointed that " .. cname .. " died already, as he wanted to thunk " .. chim .. " twice." $) +crtext 
+				($ "La chevre est decue que " .. cname .. " soit deja mort, car elle voulait le cogner deux fois." $) +crtext
 			then
 		then
 ;
@@ -190,8 +190,8 @@ cyoa-bridge: camp-goat-milk-pick
 	solohuman if
 		choosehuman camp-goat-milk
 	then;
-	($ "Who should milk the goat? " .. rHe .. " seems " .. "ornery." rbold $) text!
-	choice( "Changed my mind!" )choice
+	($ "Qui doit traire la chevre ? " .. rHe .. " a l'air " .. "revecheuse." rbold $) text!
+	choice( "J'ai change d'avis !" )choice
 	' camp-goat-milk cyoa-human-choice
 ;
 
@@ -199,30 +199,30 @@ cyoa-bridge: camp-goat-rec-pick
 	solohuman if
 		choosehuman camp-goat-recruit
 	then;
-	($ "Who should recruit the goat? " .. rHe .. " seems " .. "ornery." rbold $) text!
+	($ "Qui doit recruter la chevre ? " .. rHe .. " a l'air " .. "revecheuse." rbold $) text!
 	' camp-goat-recruit cyoa-human-choice
 ;
 
 cyoa: camp-rec-goat
-	"Year of the Goat" cyoa-title!
+	"L'Annee de la Chevre" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "It's a goat! " .. cHe .. "'s just chilling near the camp. Doing goat things. No one seems to own " .. chim .. "... the goat is just here." $) cyoa-text! basic-tone
-		choice( "Leave it for now" )choice
-		choice( "Milk the goat!" )choice: camp-goat-milk-pick
+	($ "C'est une chevre ! " .. cHe .. " traîne juste pres du camp. Elle fait ses trucs de chevre. Personne ne semble la posseder... la chevre est juste la." $) cyoa-text! basic-tone
+		choice( "La laisser pour l'instant" )choice
+		choice( "Traire la chevre !" )choice: camp-goat-milk-pick
 		team-count 4 < if
-			($ "The goat is staring at " .. thegroup .. " with intensity. " .. cHe .. "'s up to something." $) +crtext
-			choice( "Recruit the goat!" )choice: camp-goat-rec-pick
+			($ "La chevre fixe " .. thegroup .. " avec intensite. " .. cHe .. " mijote quelque chose." $) +crtext
+			choice( "Recruter la chevre !" )choice: camp-goat-rec-pick
 		else
-			($ "The goat is startled by your full group! If only you had a smaller team..." $) +crtext
+			($ "La chevre est surprise par votre groupe complet ! Si seulement vous aviez une equipe plus petite..." $) +crtext
 		then
 ;
 
 cyoa-bridge: camp-sports-recruit
 	4 recruitee .morale!
 	clear-cyoa
-	($ "You say that you also love sports. The " .. "Ultimate Sports Fan" pbold .. " bonds with you instantly due to shared interests." $) cyoa-text!
+	($ "Vous dites que vous aussi vous aimez le sport. Le " .. "Fan de Sport Ultime" pbold .. " tisse immediatement des liens avec vous grace a vos interets communs." $) cyoa-text!
 	team-count 3 > if
-		($  rname .. " notices that the team is already full. You'll have to boot someone out to make room for more sports." $) +crtext ' recruit-replace cyoa-team-choice
+		($  rname .. " remarque que l'equipe est deja complete. Vous devrez virer quelqu'un pour faire de la place pour plus de sport." $) +crtext ' recruit-replace cyoa-team-choice
 	then;
 	goodfx recruited
 ;
@@ -230,17 +230,17 @@ cyoa-bridge: camp-sports-recruit
 cyoa: camp-rec-sports
 	"ULTIMATE SPORTS" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ Thegroup .. " meets the " .. "Ultimate Sports Fan" pbold .. ". " .. rHe .. " is holding a limited edition air horn and it looks like " .. rhe .. " is about to " .. "BLAST IT!" fbold $) cyoa-text! basic-tone
-	"I love sports. Even in the post-zombocalypse." pbold +crtext
-		choice( "Leave " .. rhim .. " for now" )choice
-		choice( "Recruit Sports" )choice: camp-sports-recruit
+	($ Thegroup .. " rencontre le " .. "Fan de Sport Ultime" pbold .. ". " .. rHe .. " tient une corne de brume edition limitee et on dirait qu'" .. rhe .. " est sur le point de " .. "LA FAIRE SONNER !" fbold $) cyoa-text! basic-tone
+	"J'adore le sport. Meme dans l'apres-zombocalypse." pbold +crtext
+		choice( "Le/la laisser pour l'instant" )choice
+		choice( "Recruter le Fan de Sport" )choice: camp-sports-recruit
 ;
 
 : samedi-roomcheck
 	3 recruitee .morale! recruitee .witsREV recruitee .attitudeREV goodfx
 	clear-cyoa
 	team-count 3 > if
-		($  rname .. " needs more skeleton room! You have to get rid of someone:" $) +crtext ' recruit-replace cyoa-team-choice
+		($  rname .. " a besoin de plus de place pour les squelettes ! Vous devez vous debarrasser de quelqu'un :" $) +crtext ' recruit-replace cyoa-team-choice
 	else
 		recruited
 	then
@@ -248,26 +248,26 @@ cyoa: camp-rec-sports
 
 cyoa-choice: camp-samedi-skeleton
 	pchar .skelbody picon
-	($ rname .. " waves her hand at " .. pname .. ". " .. pHis .. " cumbersome flesh falls off, revealing a wonderful skeleton underneath." $) cyoa-text!
-	"Much better! Big improvement! Well, let's go." pbold +crtext
+	($ rname .. " agite sa main en direction de " .. pname .. ". Sa chair encombrante tombe, revelant un magnifique squelette dessous." $) cyoa-text!
+	"Bien mieux ! Grande amelioration ! Bon, allons-y." pbold +crtext
 	samedi-roomcheck
 ;
 
 cyoa-bridge: camp-samedi-recruit
-	($ rname .. " looks a little disappointed. Maybe it's because she would have preferred to turn someone into a skeleton." $) cyoa-text! -10 trunk-food+
+	($ rname .. " a l'air un peu decue. Peut-etre parce qu'elle aurait prefere transformer quelqu'un en squelette." $) cyoa-text! -10 trunk-food+
 	samedi-roomcheck
 ;
 
 cyoa: camp-rec-samedi
-	"Skeletons vs Zombies" cyoa-title!
+	"Squelettes contre Zombies" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This woman offers to join " .. thegroup .. ", along with her " .. "ARMY OF SKELETONS!" rbold $) text!
-	($ "She asks for either 10 food, or that she gets to turn " .. pname .. " into a skeletal minion." $) +crtext basic-tone
-	choice( "Leave her alone" )choice
+	($ "Cette femme propose de rejoindre " .. thegroup .. ", avec son " .. "ARMEE DE SQUELETTES !" rbold $) text!
+	($ "Elle demande soit 10 nourriture, soit qu'elle puisse transformer " .. pname .. " en sbire squelettique." $) +crtext basic-tone
+	choice( "La laisser" )choice
 	trunk-food 9 > if
-		choice( "Recruit her for 10 food!" )choice: camp-samedi-recruit
-	then	
-	choice( "Let her skeletonize " .. pname )choice: camp-samedi-skeleton
+		choice( "La recruter pour 10 nourriture !" )choice: camp-samedi-recruit
+	then
+	choice( "La laisser squelettiser " .. pname )choice: camp-samedi-skeleton
 ;
 
 // HANK
@@ -275,9 +275,9 @@ cyoa: camp-rec-samedi
 0 value hnk-red9
 
 cyoa-choice: camp-hnk-gun
-	($ Thegroup .. " buys the Ded9! 
-	Big revolver power, little pistol speed.
-	" .. "This gun has never let me down! It won't betray you!" pbold $) cyoa-text! basic-tone
+	($ Thegroup .. " achete le Ded9 !
+	Puissance de revolver, vitesse de pistolet.
+	" .. "Cette arme ne m'a jamais laisse tomber ! Elle ne vous trahira pas !" pbold $) cyoa-text! basic-tone
 	1 WEAPON_RED9 trunk.weapon+ -10 trunk-food+ ' hnk-red9 ++ goodfx
 ;
 
@@ -286,32 +286,32 @@ cyoa-choice: camp-hnk-gun
 cyoa-bridge: camp-hnk-recruit
 	3 recruitee .morale! clear-cyoa
 	hnk-red9 1 < if WEAPON_RED9 recruitee .weaponb! then
-	($ "I'll protect you on the way to Canada! I promise I won't betray you." pbold .. " He's said that at least twice now, so he must really mean it." $) cyoa-text! goodfx
+	($ "Je vous protegerai jusqu'au Canada ! Je promets que je ne vous trahirai pas." pbold .. " Il l'a dit au moins deux fois maintenant, donc il doit vraiment le penser." $) cyoa-text! goodfx
 		recruitee .shootingREV recruitee .fitnessREV recruitee .strengthREV hnk-recruitcost -1 * trunk-food+
 	team-count 3 > if
-		($  rname .. " needs extra room for his unnecessarily large pistol. Who leaves the group?" $) +crtext ' recruit-replace cyoa-team-choice
+		($  rname .. " a besoin de plus de place pour son pistolet inutilement grand. Qui quitte le groupe ?" $) +crtext ' recruit-replace cyoa-team-choice
 	else
 		recruited
 	then
 ;
 
 cyoa: camp-rec-hnk
-	"No Idea on the Acronym" cyoa-title!
+	"Aucune Idee sur l'Acronyme" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This guy looks ominous.
-	" .. "I'm a special agent on a special mission. It's a zombie warzone out there. I promise I won't betray you." pbold $) text! basic-tone
-	hnk-red9 1 < if 
-		($ "This all sounds good. He offers to sell " .. thegroup .. " a powerful pistol for 10 food, or join " .. ghim .. " for 20 food." $) +crtext
+	($ "Ce type a l'air inquietant.
+	" .. "Je suis un agent special en mission speciale. C'est une zone de guerre zombie la-dehors. Je promets que je ne vous trahirai pas." pbold $) text! basic-tone
+	hnk-red9 1 < if
+		($ "Tout ca semble bien. Il propose de vendre a " .. thegroup .. " un puissant pistolet pour 10 nourriture, ou de rejoindre " .. ghim .. " pour 20 nourriture." $) +crtext
 	else
-		($ Thegroup .. " already bought the Ded9, so he's reduced the price of recruiting him to 10 food." $) +crtext
+		($ Thegroup .. " a deja achete le Ded9, il a donc reduit le prix pour le recruter a 10 nourriture." $) +crtext
 	then
-	choice( "Can't spare the food" )choice
+	choice( "Pas assez de nourriture" )choice
 	trunk-food 9 > hnk-red9 1 < and if
-		choice( "Buy Ded9 Pistol - 10 food" )choice: camp-hnk-gun
+		choice( "Acheter Pistolet Ded9 - 10 nourriture" )choice: camp-hnk-gun
 	then
 	trunk-food hnk-recruitcost 1 - > if
-		choice( "Recruit him - " .. hnk-recruitcost .. " food" )choice: camp-hnk-recruit
-	then	
+		choice( "Le recruter - " .. hnk-recruitcost .. " nourriture" )choice: camp-hnk-recruit
+	then
 ;
 
 // PIRATE CAPTAIN
@@ -319,8 +319,8 @@ cyoa: camp-rec-hnk
 0 value pirate-cannon
 
 cyoa-choice: camp-pirate-gun
-	($ Thegroup .. " buys the cannon! It's the type that you'd find on an old ship. 
-	She throws in an enormous pile of cannonballs and gunpowder. It somehow fits in a little space in the trunk.
+	($ Thegroup .. " achete le canon ! C'est le type qu'on trouverait sur un vieux bateau.
+	Elle ajoute une enorme pile de boulets et de poudre a canon. Ca tient mysterieusement dans un petit espace du coffre.
 	" .. "Yarp." pbold $) cyoa-text! basic-tone
 	30 WEAPON_CANNON trunk.weapon+ -5 trunk-food+ ' pirate-cannon ++ goodfx
 ;
@@ -330,32 +330,32 @@ cyoa-choice: camp-pirate-gun
 cyoa-bridge: camp-pirate-recruit
 	3 recruitee .morale! clear-cyoa
 	pirate-cannon 1 < if WEAPON_CANNON recruitee .weaponc! 30 recruitee .stackedc! then
-	($ "Yarrrrrr!" pbold .. " She sounds enthusiastic." $) cyoa-text! goodfx
+	($ "Yarrrrrr !" pbold .. " Elle a l'air enthousiaste." $) cyoa-text! goodfx
 		recruitee .shootingREV recruitee .fitnessREV recruitee .strengthREV pirate-recruitcost -1 * trunk-food+
 	team-count 3 > if
-		($  rname .. " needs extra room for the cannonballs she's bringing. Who leaves the group?" $) +crtext ' recruit-replace cyoa-team-choice
+		($  rname .. " a besoin de plus de place pour les boulets qu'elle apporte. Qui quitte le groupe ?" $) +crtext ' recruit-replace cyoa-team-choice
 	else
 		recruited
 	then
 ;
 
 cyoa: camp-rec-pirate
-	"Terror of the Zombie Sea" cyoa-title!
+	"Terreur des Mers Zombies" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This woman is a pirate. At least that's what you assume, due to the peg leg, eyepatch, cutlass, clothing, and hat.
-	" .. "Yarr!" pbold $) text! basic-tone
-	pirate-cannon 1 < if 
-		($ "This checks out. She offers to sell " .. thegroup .. " a cannon for 5 food, or join " .. ghim .. " for 20 food." $) +crtext
+	($ "Cette femme est une pirate. C'est du moins ce qu'on suppose, vu la jambe de bois, le cache-oeil, le sabre, les habits, et le chapeau.
+	" .. "Yarr !" pbold $) text! basic-tone
+	pirate-cannon 1 < if
+		($ "Tout ca cadre. Elle propose de vendre a " .. thegroup .. " un canon pour 5 nourriture, ou de rejoindre " .. ghim .. " pour 20 nourriture." $) +crtext
 	else
-		($ Thegroup .. " already bought a cannon, so she reduced the price of recruiting her." $) +crtext
+		($ Thegroup .. " a deja achete un canon, elle a donc reduit le prix pour la recruter." $) +crtext
 	then
-	choice( "Can't spare the food" )choice
+	choice( "Pas assez de nourriture" )choice
 	trunk-food 4 > pirate-cannon 1 < and if
-		choice( "Buy Cannon - 5 food" )choice: camp-pirate-gun
+		choice( "Acheter Canon - 5 nourriture" )choice: camp-pirate-gun
 	then
 	trunk-food pirate-recruitcost 1 - > if
-		choice( "Recruit her - " .. pirate-recruitcost .. " food" )choice: camp-pirate-recruit
-	then	
+		choice( "La recruter - " .. pirate-recruitcost .. " nourriture" )choice: camp-pirate-recruit
+	then
 ;
 
 // LOG
@@ -364,25 +364,25 @@ cyoa-bridge: camp-log-recruit
 	ricon 4 recruitee .morale!
 	clear-cyoa
 	team-count 3 > if
-		($  rname .. " notices that the team is already full.
-		You'll have to boot someone out of the team to make room for her." $) cyoa-text! -10 trunk-food+ ' recruit-replace cyoa-team-choice
+		($  rname .. " remarque que l'equipe est deja complete.
+		Vous devrez virer quelqu'un pour faire de la place." $) cyoa-text! -10 trunk-food+ ' recruit-replace cyoa-team-choice
 	then;
-	($ rname  .. " and her companion both join the team! Two for the price of one!" $) cyoa-text! goodfx
+	($ rname  .. " et sa compagne rejoignent toutes les deux l'equipe ! Deux pour le prix d'un !" $) cyoa-text! goodfx
 		-10 trunk-food+	recruited
 ;
 
 cyoa: camp-rec-log
-	"Wood Woman" cyoa-title!
+	"Femme au Bois" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ Thegroup .. " meets a mysterious woman. She holds a massive chunk of wood in her arms.
-	" .. "My log says you can be trusted. I am more pragmatic. Pay me and I'll join you." pbold $) cyoa-text! basic-tone
+	($ Thegroup .. " rencontre une femme mysterieuse. Elle tient un enorme morceau de bois dans les bras.
+	" .. "Mon bois dit qu'on peut vous faire confiance. Moi je suis plus pragmatique. Payez-moi et je vous rejoins." pbold $) cyoa-text! basic-tone
 	trunk-food 9 > if
-		choice( "Leave her for now" )choice
-		choice( "Recruit her - 10 food" )choice: camp-log-recruit
+		choice( "La laisser pour l'instant" )choice
+		choice( "La recruter - 10 nourriture" )choice: camp-log-recruit
 	else
-		"Her price is 10 food, and you don't have enough." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Son prix est de 10 nourriture, et vous n'en avez pas assez." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Fireproof Person
@@ -393,18 +393,18 @@ cyoa-bridge: camp-fireproof-recruit
 ;
 
 cyoa: camp-rec-fireproof
-	"Try Burning Everything" cyoa-title!
+	"Essayez de Tout Bruler" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This person is covered head to toe in fireproof gear.
-	This would usually be more suspicious, but you're used to this sort of thing.
-	" .. "Hi. Did you know that zombies are highly flammable?" pbold $) cyoa-text! basic-tone
+	($ "Cette personne est couverte de la tete aux pieds d'equipement ignifuge.
+	Ce serait normalement plus suspect, mais vous avez l'habitude de ce genre de chose.
+	" .. "Bonjour. Saviez-vous que les zombies sont tres inflammables ?" pbold $) cyoa-text! basic-tone
 	trunk-food 14 > if
-		choice( "Leave for now" )choice
-		choice( "Recruit for 15 food" )choice: camp-fireproof-recruit
+		choice( "Laisser pour l'instant" )choice
+		choice( "Recruter pour 15 nourriture" )choice: camp-fireproof-recruit
 	else
-		"You need 15 food to properly make friends." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 15 nourriture pour vous faire de vrais amis." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Giga Guy
@@ -415,38 +415,38 @@ cyoa-bridge: camp-giga-recruit
 ;
 
 cyoa: camp-rec-giga
-	"Is This Cosplay?" cyoa-title!
+	"C'est du Cosplay ?" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This person is covered in blue tights, a weird helmet, and is wearing a big plastic tube on one of his arms.
-	This would usually be more suspicious, but you're used to this sort of thing.
-	He strikes a dynamic pose with his plastic tube arm." $) cyoa-text! basic-tone
+	($ "Cette personne est couverte de collants bleus, d'un casque bizarre, et porte un grand tube en plastique sur l'un de ses bras.
+	Ce serait normalement plus suspect, mais vous avez l'habitude de ce genre de chose.
+	Il prend une pose dynamique avec son bras-tube en plastique." $) cyoa-text! basic-tone
 	trunk-food 19 > if
-		choice( "Leave him for now" )choice
-		choice( "Recruit him - 20 food" )choice: camp-giga-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Le recruter - 20 nourriture" )choice: camp-giga-recruit
 	else
-		"You need 20 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 20 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 cyoa-bridge: camp-bee-recruit
 	ricon 6 recruitee .morale! clear-cyoa
-	5 recruit-yes-food "Bee strong, bee loyal." pbold +crtext recruitee .loyaltyREV
+	5 recruit-yes-food "Abeille fort, abeille loyal." pbold +crtext recruitee .loyaltyREV
 ;
 
 cyoa: camp-rec-bee
-	"Bee Power" cyoa-title!
+	"Pouvoir des Abeilles" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "It's Bee Mann! He was a popular children's show host, when TV still existed.
-	By some miracle, he's still around." $) cyoa-text! basic-tone
-	"It's a little strange that he's still wearing his costume." +crtext
+	($ "C'est Bee Mann ! Il etait un animateur populaire d'emissions pour enfants, quand la tele existait encore.
+	Par miracle, il est toujours la." $) cyoa-text! basic-tone
+	"C'est un peu etrange qu'il porte encore son costume." +crtext
 	trunk-food 4 > if
-		choice( "Leave him for now" )choice
-		choice( "Recruit him - 5 food" )choice: camp-bee-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Le recruter - 5 nourriture" )choice: camp-bee-recruit
 	else
-		"You need 5 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 5 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Puppy or Kitten
@@ -458,87 +458,87 @@ cyoa-bridge: camp-puppy-recruit
 ;
 
 cyoa: camp-rec-puppy
-	"Tiny Animal" cyoa-title!
+	"Petit Animal" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "It's a small animal.
-	" .. rHe .. " looks like some kind of rodent? 
-	I'm not an expert on what is and isn't a rodent." $) cyoa-text! basic-tone
+	($ "C'est un petit animal.
+	" .. rHe .. " ressemble a une sorte de rongeur ?
+	Je ne suis pas expert en matiere de rongeurs." $) cyoa-text! basic-tone
 	trunk-food 2 > if
-		choice( "Leave " .. rhim .. " for now" )choice
-		choice( "Recruit " .. rhim .. " - 3 food" )choice: camp-puppy-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Le recruter - 3 nourriture" )choice: camp-puppy-recruit
 	else
-		($ "You need 3 food to recruit " .. rhim .. " to the party." $) +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		($ "Il vous faut 3 nourriture pour le recruter." $) +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Double Barrel Shotgun Farmer
 
 cyoa-bridge: camp-farmshot-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	10 recruit-yes-food "Let's blast our way to Canada! Two shells at a time!" pbold +crtext
+	10 recruit-yes-food "On va se frayer un chemin jusqu'au Canada ! Deux cartouches a la fois !" pbold +crtext
 	recruitee .strengthREV recruitee .fitnessREV recruitee .shootingREV
 ;
 
 cyoa: camp-rec-farmshot
-	"Super Shotgun" cyoa-title!
+	"Super Fusil a Pompe" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This woman is cleaning a double barrel shotgun. On closer inspection, her weapon seems sturdier than normal. It is covered in fine engraving." $) cyoa-text! basic-tone
-	"Have shotgun, will travel.
-	Recruit me and I'll show you how many zombies I can splat in one shot!" pbold +crtext
+	($ "Cette femme nettoie un fusil a deux canons. En y regardant de plus pres, son arme semble plus solide que d'habitude. Elle est couverte de belles gravures." $) cyoa-text! basic-tone
+	"Fusil en main, prete a partir.
+	Recrutez-moi et je vous montrerai combien de zombies je peux eclabousser en un seul tir !" pbold +crtext
 	trunk-food 9 > if
-		choice( "Leave her for now" )choice
-		choice( "Recruit her - 10 food" )choice: camp-farmshot-recruit
+		choice( "La laisser pour l'instant" )choice
+		choice( "La recruter - 10 nourriture" )choice: camp-farmshot-recruit
 	else
-		"You need 10 food to recruit her to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 10 nourriture pour la recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Barbarian
 
 cyoa-bridge: camp-barbar-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food "What weapon should I get out first?" pbold +crtext
+	15 recruit-yes-food "Quelle arme je sors en premier ?" pbold +crtext
 	recruitee .loyaltyREV
 ;
 
 cyoa: camp-rec-barbar
-	"Truly Barbaric" cyoa-title!
+	"Vraiment Barbare" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "She is wearing primitive leather armor, and her hair is stuffed into a very old looking metal helmet. Is this the next fashion trend in the zombocalypse?" $) cyoa-text! basic-tone
-	"I own 18 different weapons, each one is my favorite.
-	I like to switch between them so I don't get bored!" pbold +crtext
+	($ "Elle porte une armure de cuir primitive, et ses cheveux sont fourres dans un casque metallique tres vieux. Est-ce la prochaine tendance mode de la zombocalypse ?" $) cyoa-text! basic-tone
+	"Je possede 18 armes differentes, chacune est ma preferee.
+	J'aime les changer pour ne pas m'ennuyer !" pbold +crtext
 	trunk-food 14 > if
-		choice( "Leave her for now" )choice
-		choice( "Recruit her - 15 food" )choice: camp-barbar-recruit
+		choice( "La laisser pour l'instant" )choice
+		choice( "La recruter - 15 nourriture" )choice: camp-barbar-recruit
 	else
-		"You need 15 food to recruit her to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 15 nourriture pour la recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Moodguy
 
 cyoa-bridge: camp-moody-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food "I brought my own weapons!" pbold +crtext
+	15 recruit-yes-food "J'ai apporte mes propres armes !" pbold +crtext
 	recruitee .strengthREV recruitee .fitnessREV recruitee .shootingREV
 ;
 
 cyoa: camp-rec-moody
 	"MooD" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This man is wearing futuristic sci-fi armor and holding a matching rifle. Likely some kind of cosplay, though I don't know who because I'm not a nerd." $) cyoa-text! basic-tone
-	"Nobody tells Moody what to do!
-	I'm Moody." pbold +crtext
+	($ "Cet homme porte une armure de science-fiction futuriste et tient un fusil assorti. Probablement du cosplay, mais je ne sais pas de qui parce que je ne suis pas un geek." $) cyoa-text! basic-tone
+	"Personne ne dit a Moody quoi faire !
+	Je suis Moody." pbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Recruit him - 15 food" )choice: camp-moody-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Le recruter - 15 nourriture" )choice: camp-moody-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // A CharBro Reference
@@ -546,49 +546,49 @@ cyoa: camp-rec-moody
 cyoa-bridge: camp-charbro-recruit
 	ricon 4 recruitee .morale! clear-cyoa
 	15 recruit-yes-food
-	"[STAND NAME] S DOGGY DOGG   [STAND MASTER] CharBro" bbold +crtext
-	"DESTRUCTIVE POWER: B   SPEED: B   RANGE: C
-	DURABILITY: C   PRECISION: C   POTENTIAL: C" pbold +crtext
+	"[NOM DU STAND] S DOGGY DOGG   [MAITRE DU STAND] CharBro" bbold +crtext
+	"PUISSANCE DESTRUCTRICE: B   VITESSE: B   PORTEE: C
+	DURABILITE: C   PRECISION: C   POTENTIEL: C" pbold +crtext
 	recruitee .strengthREV recruitee .fitnessREV
 ;
 
 cyoa: camp-rec-charbro
-	"Finally, a CharBro Reference" cyoa-title!
+	"Enfin, une Reference a CharBro" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This extremely buff man claims to be a 'Stamp User', though " .. pname .. " has no idea what this means and does not care to know." $) cyoa-text! basic-tone
+	($ "Cet homme extremement muscle se dit 'Utilisateur de Timbre', bien que " .. pname .. " n'ait aucune idee de ce que ca signifie et ne tienne pas a le savoir." $) cyoa-text! basic-tone
 	"Yare yare daze...." pbold +crtext
-	"TRANSLATORS NOTE: LOOSELY TRANSLATED FROM JAPANESE, THIS MEANS 'GOOD GRIEF.'" rbold +crtext
+	"NOTE DU TRADUCTEUR : TRADUIT LIBREMENT DU JAPONAIS, CA SIGNIFIE 'MON DIEU.'" rbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Recruit him - 15 food" )choice: camp-charbro-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "Le recruter - 15 nourriture" )choice: camp-charbro-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Construction Guy
 
 cyoa-bridge: camp-jackham-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	($ Thegroup .. " offers him a new job: Zombie crushing." $) +crtext
-	"Break over!" pbold +crtext
+	15 recruit-yes-food
+	($ Thegroup .. " lui propose un nouveau boulot : Ecraseur de Zombies." $) +crtext
+	"Pause terminee !" pbold +crtext
 	recruitee .strengthREV recruitee .fitnessREV
 ;
 
 cyoa: camp-rec-jackham
-	"Under Construction" cyoa-title!
+	"En Construction" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This man is dressed up like a construction worker, but what's being built? It seems like he's just standing around. Maybe he's been standing around for years." $) cyoa-text! basic-tone
-	"I'm on break!" pbold +crtext
+	($ "Cet homme est habille en ouvrier du batiment, mais que construit-il ? Il a l'air de juste traîner. Peut-etre qu'il traîne depuis des annees." $) cyoa-text! basic-tone
+	"Je suis en pause !" pbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Hire him - 15 food" )choice: camp-jackham-recruit
+		choice( "Le laisser pour l'instant" )choice
+		choice( "L'embaucher - 15 nourriture" )choice: camp-jackham-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il vous faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Cartographer
@@ -597,36 +597,36 @@ cyoa: camp-rec-jackham
 
 cyoa-bridge: camp-cart-map
 	' cartmap-bought ++
-	($ Thegroup .. " buys a map! This will help for a sense of direction." $) cyoa-text! goodfx ricon
+	($ Thegroup .. " achete une carte ! Ca aidera pour le sens de l'orientation." $) cyoa-text! goodfx ricon
 	-5 trunk-food+
 ;
 
 cyoa-bridge: camp-cart-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food "My maps will get us straight to Canada!" pbold +crtext
+	15 recruit-yes-food "Mes cartes nous meneront droit au Canada !" pbold +crtext
 	0.25 recruitee .ai.wander_chance!
 ;
 
 cyoa: camp-rec-cart
-	"I like Maps" cyoa-title!
+	"J'aime les Cartes" cyoa-title!
 	interactee .character@ to recruitee ricon
-	($ "This woman is carrying a bunch of maps. You can see a bunch of papers sticking out of her backpack.
-	" .. "I love maps! Started makin' them ever since before the apocalypse, now they've been more useful than ever!
-	" pbold .. "She offers to sell " .. thegroup .. " one of her maps, or to join for some food." $) cyoa-text! basic-tone
-	choice( "Leave her for now" )choice
+	($ "Cette femme porte plein de cartes. On peut voir des tas de papiers qui depassent de son sac a dos.
+	" .. "J'adore les cartes ! J'ai commence a en faire bien avant l'apocalypse, maintenant elles sont plus utiles que jamais !
+	" pbold .. "Elle propose de vendre a " .. thegroup .. " l'une de ses cartes, ou de rejoindre pour un peu de nourriture." $) cyoa-text! basic-tone
+	choice( "La laisser pour l'instant" )choice
 	trunk-food 4 > if
-		cartmap-bought 0= if 
-			choice( "Buy a Map - 5 food" )choice: camp-cart-map
+		cartmap-bought 0= if
+			choice( "Acheter une Carte - 5 nourriture" )choice: camp-cart-map
 		else
-			($ Thegroup .. " already bought a map from her. She doesn't seem to want to give out any more maps." $) +crtext
+			($ Thegroup .. " a deja achete une carte chez elle. Elle ne semble pas vouloir distribuer d'autres cartes." $) +crtext
 		then
 		trunk-food 14 > if
-			choice( "Recruit her - 15 food" )choice: camp-cart-recruit
+			choice( "La recruter - 15 nourriture" )choice: camp-cart-recruit
 		else
-			($ Thegroup .. " doesn't have enough food to recruit her, unfortunately." $) +crtext
+			($ Thegroup .. " n'a malheureusement pas assez de nourriture pour la recruter." $) +crtext
 		then
 	else
-		($ Thegroup .. " doesn't have enough food to buy anything!" $) +crtext
+		($ Thegroup .. " n'a pas assez de nourriture pour acheter quoi que ce soit !" $) +crtext
 	then
 ;
 
@@ -636,18 +636,18 @@ road{ 0 value brck-countdown }
 
 cyoa-bridge: brck-recruit
 	ricon
-	"Champion in Training" cyoa-title! road{ 4 6 rnd to brck-countdown }
+	"Champion en Formation" cyoa-title! road{ 4 6 rnd to brck-countdown }
 	15 recruit-yes-food
-	($ "Alright! Let's go!
-	" pbold .. "He eats the food in no time at all." $) +crtext goodfx
+	($ "Allez ! On y va !
+	" pbold .. "Il mange la nourriture en un rien de temps." $) +crtext goodfx
 	recruitee .attitudeREV 4 recruitee .morale! clear-cyoa
 	0.25 recruitee .ai.wander_chance!
 ;
 
 cyoa-choice: camp-rec-brck-buy-base args( amt )
 	ricon
-	($ Thegroup .. " buys " .. <- amt 1 > if "some" else "one" then .. " Pukeyball" .. <- amt 1 > if "s" else "" then .. " from the man.
-	" .. "They'll fare you well!" pbold $) cyoa-text! goodfx
+	($ Thegroup .. " achete " .. <- amt 1 > if "des" else "un" then .. " Pukeyball" .. <- amt 1 > if "s" else "" then .. " a l'homme.
+	" .. "Ca vous servira bien !" pbold $) cyoa-text! goodfx
 	<- amt -2 * trunk-food+
 	recruitee .stackedb@ <- amt - 3 max recruitee .stackedb!
 	<- amt WEAPON_PUKEYBALL trunk.weapon+
@@ -660,35 +660,35 @@ cyoa-choice: camp-rec-brck-buy-base args( amt )
 
 cyoa: camp-rec-brck
 	// char-gen to recruitee recruitee .brckify ricon
-	"Catch 'em All" cyoa-title!
+	"Attrapez-les Tous" cyoa-title!
 	interactee .character@ to recruitee ricon
-	($ Thegroup .. " finds a man with a frying pan in the camp. He's being followed by a floating rock with arms?
-	" .. "All these zombies chased the Pukeymon all away, but I won't give up hope! I'll keep training and be the best there ever was!
-	" pbold .. "What in the world is he babbling about?
-	Aside from that, he offers to sell " .. thegroup .. " some Pukeyballs, 2 food for 1 ball, or to join for 15 food." $) cyoa-text!
-	choice( "Leave him be" )choice
+	($ Thegroup .. " trouve un homme avec une poele dans le camp. Il est suivi par un rocher flottant avec des bras ?
+	" .. "Tous ces zombies ont chasse les Pukeymon, mais je ne perdrai pas espoir ! Je vais continuer a m'entraîner et etre le meilleur qui ait jamais existe !
+	" pbold .. "Mais de quoi est-ce qu'il parle ?
+	A part ca, il propose de vendre a " .. thegroup .. " des Pukeyballs, 2 nourriture pour 1 ball, ou de rejoindre pour 15 nourriture." $) cyoa-text!
+	choice( "Le laisser" )choice
 	trunk-food 14 > if
-		choice( "Recruit him - 15 food" )choice: brck-recruit
+		choice( "Le recruter - 15 nourriture" )choice: brck-recruit
 	else
-		($ Thegroup .. " doesn't have enough food to recruit him." $) +crtext
+		($ Thegroup .. " n'a pas assez de nourriture pour le recruter." $) +crtext
 	then
-	brck-pukey 0= if "He's out of pukeyballs to sell you!" +crtext then;
-	trunk-food 2 < if ($ Thegroup .. " has no food to buy any Pukeyballs with!" $) +crtext then;
+	brck-pukey 0= if "Il n'a plus de Pukeyballs a vous vendre !" +crtext then;
+	trunk-food 2 < if ($ Thegroup .. " n'a pas de nourriture pour acheter des Pukeyballs !" $) +crtext then;
 	brck-pukey 5 > if
 		trunk-food 11 > if
-			choice( "Buy full Pukeymon team - 12 food" )choice: camp-rec-brck-fullbuy
+			choice( "Acheter l'equipe complete de Pukeymon - 12 nourriture" )choice: camp-rec-brck-fullbuy
 		then
 	else
 		brck-pukey 2 > trunk-food 5 > and if
-			choice( "Buy 3 Pukeyballs - 6 food" )choice: camp-rec-brck-halfbuy
+			choice( "Acheter 3 Pukeyballs - 6 nourriture" )choice: camp-rec-brck-halfbuy
 		then
 	then
 	brck-pukey 0 > trunk-food 1 > and if
-		choice( "Buy a Pukeyball - 2 food" )choice: camp-rec-brck-buy
+		choice( "Acheter un Pukeyball - 2 nourriture" )choice: camp-rec-brck-buy
 	then
 ;
 
-} } 
+} }
 
 cyoa{ road{ regiondef{
 
@@ -720,11 +720,11 @@ cyoa{ road{ regiondef{
 ;
 
 cyoa-bridge: recruit-campyes-familiar
-	($ rname .. " is glad to be back!" $) cyoa-text! basic-tone
+	($ rname .. " est content de revenir !" $) cyoa-text! basic-tone
 	clear-cyoa
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		($ "Le groupe est complet.
+		Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
 		' recruit-familiarreplace cyoa-team-choice
 	else
 		recruited goodfx
@@ -733,12 +733,12 @@ cyoa-bridge: recruit-campyes-familiar
 ;
 
 cyoa-bridge: recruit-campyes
-	($ rname .. " devours the food!" $) cyoa-text! basic-tone
+	($ rname .. " devore la nourriture !" $) cyoa-text! basic-tone
 	-5 trunk-food+
 	clear-cyoa
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		($ "Le groupe est complet.
+		Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
 		' recruit-replace cyoa-team-choice
 	else
 		recruited goodfx
@@ -746,19 +746,19 @@ cyoa-bridge: recruit-campyes
 ;
 
 : recruit-campyesno
-	choice( "Leave " .. rname .. " for now" )choice
+	choice( "Laisser " .. rname .. " pour l'instant" )choice
 	trunk-food 4 > if
-		choice( "Recruit " .. rname .. " - 5 food" )choice: recruit-campyes
+		choice( "Recruter " .. rname .. " - 5 nourriture" )choice: recruit-campyes
 	then
 ;
 
 cyoa-bridge: recruit-finalcampyes
-	($ rname .. " devours the food! It's like watching a speed eating competition, but with one person." $) cyoa-text! basic-tone
+	($ rname .. " devore la nourriture ! C'est comme regarder un concours de mangeur rapide, mais avec une seule personne." $) cyoa-text! basic-tone
 	-10 trunk-food+
 	clear-cyoa
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		($ "Le groupe est complet.
+		Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
 		' recruit-replace cyoa-team-choice
 	else
 		recruited goodfx
@@ -766,35 +766,35 @@ cyoa-bridge: recruit-finalcampyes
 ;
 
 : recruit-finalcampyesno
-	choice( "Leave " .. rname .. " for now" )choice
+	choice( "Laisser " .. rname .. " pour l'instant" )choice
 	trunk-food 9 > if
-		choice( "Recruit " .. rname .. " - 10 food" )choice: recruit-finalcampyes
+		choice( "Recruter " .. rname .. " - 10 nourriture" )choice: recruit-finalcampyes
 	then
 ;
 
 : camp-recruit-intro
 	nearest .character@ choosechar
 	cchar to recruitee ricon
-	
-	($ rname .. " is tired of being stuck in this camp. " .. rHe .. " will join you, for a small fee of 5 food!" $) cyoa-text! basic-tone
+
+	($ rname .. " en a marre d'etre bloque dans ce camp. " .. rHe .. " vous rejoindra, pour un modeste tarif de 5 nourriture !" $) cyoa-text! basic-tone
 ;
 
 : camp-recruit-nofood
-	"You don't have enough food to spare." +crtext
-	choice( "Leave " .. rname .. " for now" )choice
+	"Vous n'avez pas assez de nourriture." +crtext
+	choice( "Laisser " .. rname .. " pour l'instant" )choice
 ;
 
 // Due to how they're set up with camprecruit-talked, there should likely be only one skill recruit per camp. Two won't break anything, but it will mess up the chance for liars with 0-2 skill 0-1 loyalty allocation vs chance for strong recruits with 4, 20% chance of 5 skill.
 
 cyoa: camp-recruit-fitness
-	"The Outdoors Fitness Lifestyle" cyoa-title!
+	"Le Mode de Vie Fitness en Plein Air" cyoa-title!
 	camp-recruit-intro
 	WEAPON_HOCKEY recruitee .weaponc!
 	trunk-food 5 < if
 		camp-recruit-nofood
 	then;
-	($ rname .. " claims to be physically fit. " $) +crtext
-	regiondef{ camprecruit-talked } 1 < if 
+	($ rname .. " se dit physiquement en forme. " $) +crtext
+	regiondef{ camprecruit-talked } 1 < if
 		($ rHe .. recruit-fitness-flavor $) +text
 		60 %chance if
 			recruit-highstat .fitness!
@@ -806,7 +806,7 @@ cyoa: camp-recruit-fitness
 	recruitee .fitness@ 3 > if
 		fittest-pass if fittest recruit-confirm .fitnessREV fitnessREV
 		else
-			most-paranoid if recruit-confirm .fitnessREV witsREV attitudeREV then 
+			most-paranoid if recruit-confirm .fitnessREV witsREV attitudeREV then
 		then
 	else
 		fittest-pass if fittest recruit-scoff .fitnessREV fitnessREV
@@ -818,14 +818,14 @@ cyoa: camp-recruit-fitness
 ;
 
 cyoa: camp-recruit-strength
-	"Muscle Mercenary" cyoa-title!
+	"Mercenaire Muscle" cyoa-title!
 	camp-recruit-intro
 	WEAPON_SLEDGE recruitee .weaponc!
 	trunk-food 5 < if
 		camp-recruit-nofood
 	then;
-	($ rname .. " claims to be really strong. " $) +crtext
-	regiondef{ camprecruit-talked } 1 < if 
+	($ rname .. " se dit vraiment fort. " $) +crtext
+	regiondef{ camprecruit-talked } 1 < if
 		($ rHe .. recruit-strength-flavor $) +text
 		60 %chance if
 			recruit-highstat .strength!
@@ -837,7 +837,7 @@ cyoa: camp-recruit-strength
 	recruitee .strength@ 3 > if
 		strongest-pass if strongest recruit-confirm .strengthREV strengthREV
 		else
-			most-paranoid if recruit-confirm .strengthREV witsREV attitudeREV then 
+			most-paranoid if recruit-confirm .strengthREV witsREV attitudeREV then
 		then
 	else
 		strongest-pass if strongest recruit-scoff .strengthREV strengthREV
@@ -849,14 +849,14 @@ cyoa: camp-recruit-strength
 ;
 
 cyoa: camp-recruit-shooting
-	"Hired Gun" cyoa-title!
+	"Pistolero a Gages" cyoa-title!
 	camp-recruit-intro
 	WEAPON_PISTOL recruitee .weaponc!
 	trunk-food 5 < if
 		camp-recruit-nofood
 	then;
-	($ rname .. " claims to be a great shot with a gun. " $) +crtext
-	regiondef{ camprecruit-talked } 1 < if 
+	($ rname .. " se dit un excellent tireur. " $) +crtext
+	regiondef{ camprecruit-talked } 1 < if
 		($ rHe .. recruit-shooting-flavor $) +text
 		60 %chance if
 			recruit-highstat .shooting!
@@ -868,7 +868,7 @@ cyoa: camp-recruit-shooting
 	recruitee .shooting@ 3 > if
 		shootest-pass if shootest recruit-confirm .shootingREV shootingREV
 		else
-			most-paranoid if recruit-confirm .shootingREV witsREV attitudeREV then 
+			most-paranoid if recruit-confirm .shootingREV witsREV attitudeREV then
 		then
 	else
 		shootest-pass if shootest recruit-scoff .shootingREV shootingREV
@@ -880,14 +880,14 @@ cyoa: camp-recruit-shooting
 ;
 
 cyoa: camp-recruit-medical
-	"Field Medic" cyoa-title!
+	"Medecin de Terrain" cyoa-title!
 	camp-recruit-intro
 	WEAPON_MACHETE1 recruitee .weaponc!
 	trunk-food 5 < if
 		camp-recruit-nofood
 	then;
-	($ rname .. " claims to be experienced in medical matters. " $) +crtext
-	regiondef{ camprecruit-talked } 1 < if 
+	($ rname .. " se dit experimente en matiere medicale. " $) +crtext
+	regiondef{ camprecruit-talked } 1 < if
 		($ rHe .. recruit-medical-flavor $) +text
 		60 %chance if
 			recruit-highstat .medical!
@@ -899,7 +899,7 @@ cyoa: camp-recruit-medical
 	recruitee .medical@ 3 > if
 		medicalest-pass if medicalest recruit-confirm .medicalREV medicalREV
 		else
-			most-paranoid if recruit-confirm .medicalREV witsREV attitudeREV then 
+			most-paranoid if recruit-confirm .medicalREV witsREV attitudeREV then
 		then
 	else
 		medicalest-pass if medicalest recruit-scoff .medicalREV medicalREV
@@ -911,14 +911,14 @@ cyoa: camp-recruit-medical
 ;
 
 cyoa: camp-recruit-mechanical
-	"Mechanic for Hire" cyoa-title!
+	"Mecanicien a Louer" cyoa-title!
 	camp-recruit-intro
 	WEAPON_WRENCH recruitee .weaponc!
 	trunk-food 5 < if
 		camp-recruit-nofood
 	then;
-	($ rname .. " claims to be great at fixing cars and machinery. " $) +crtext
-	regiondef{ camprecruit-talked } 1 < if 
+	($ rname .. " se dit doue pour reparer les voitures et les machines. " $) +crtext
+	regiondef{ camprecruit-talked } 1 < if
 		($ rHe .. recruit-mechanical-flavor $) +text
 		60 %chance if
 			recruit-highstat .mechanical!
@@ -930,7 +930,7 @@ cyoa: camp-recruit-mechanical
 	recruitee .mechanical@ 3 > if
 		mechanicest-pass if mechanicest recruit-confirm .mechanicREV mechanicREV
 		else
-			most-paranoid if recruit-confirm .mechanicREV witsREV attitudeREV then 
+			most-paranoid if recruit-confirm .mechanicREV witsREV attitudeREV then
 		then
 	else
 		mechanicest-pass if mechanicest recruit-scoff .mechanicREV mechanicREV
@@ -942,11 +942,11 @@ cyoa: camp-recruit-mechanical
 ;
 
 cyoa-bridge: camp-recruit-dog-psych
-	($ rname .. " is tamed using DOG PSYCHOLOGY by " .. cname .. ", who insists on bringing " .. rhim .. " along!" $) cyoa-text! goodfx
+	($ rname .. " est apprivoise grace a la PSYCHOLOGIE CANINE de " .. cname .. ", qui insiste pour l'emmener !" $) cyoa-text! goodfx
 	clear-cyoa
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		($ "Le groupe est complet.
+		Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
 		' recruit-replace cyoa-team-choice
 	else
 		recruited
@@ -954,74 +954,74 @@ cyoa-bridge: camp-recruit-dog-psych
 ;
 
 cyoa: camp-recruit-dog
-	"A Dog With No Cause" cyoa-title!
+	"Un Chien Sans Raison" cyoa-title!
 	nearest .character@ choosechar
 	cchar to recruitee ricon
-	
-	($ rname .. " is hanging around the camp, tame but with no one to follow. " .. rHe .. " must have been abandoned here." $) cyoa-text! basic-tone
-	
-	choice( "Leave the dog alone" )choice
+
+	($ rname .. " traîne dans le camp, apprivoise mais sans personne a suivre. " .. rHe .. " a dû etre abandonne ici." $) cyoa-text! basic-tone
+
+	choice( "Laisser le chien" )choice
 	trunk-food 4 > if
-		choice( "Recruit " .. rname .. " - 5 food" )choice: recruit-campyes
+		choice( "Recruter " .. rname .. " - 5 nourriture" )choice: recruit-campyes
 	then
 	dogpal? if
-		choosedogpal cchar charchoice( " recruits the dog!" )choice: camp-recruit-dog-psych
+		choosedogpal cchar charchoice( " recrute le chien !" )choice: camp-recruit-dog-psych
 	then
 ;
 
 cyoa: camp-recruit-final
-	"If At First You Don't Succeed" cyoa-title!
+	"Si au Premier Essai ca Rate" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ rname .. " almost made it to Canada. " .. rHe .. " got as far as the City of Crushed Hopes, where the rest of " .. rhis .. " group was eaten.
-	" .. rHe .. " offers to join you for 10 food. " .. rHe .. " has a real good feeling about this attempt!" $) cyoa-text! basic-tone
+	($ rname .. " a failli atteindre le Canada. " .. rHe .. " est arrive jusqu'a la Ville des Espoirs Brises, ou le reste de " .. rhis .. " groupe s'est fait manger.
+	" .. rHe .. " propose de vous rejoindre pour 10 nourriture. " .. rHe .. " a vraiment bon espoir pour cette tentative !" $) cyoa-text! basic-tone
 	WEAPON_HOCKEY recruitee .weaponc!
-	
+
 	trunk-food 10 < if
 		camp-recruit-nofood
 	then;
-	
-	regiondef{ camprecruit-final-talked } 1 < if 
-		($ rname .. " gives a quick demonstration of " .. rhis .. " " $) +crtext
+
+	regiondef{ camprecruit-final-talked } 1 < if
+		($ rname .. " fait une rapide demonstration de " .. rhis .. " " $) +crtext
 		40 %chance if
-			"shooting skills!" +text
+			"competences de tir !" +text
 			recruit-highstat .shooting!
 			recruitee .shootingREV
 		else
 			50 %chance if
-				"mighty strength!" +text
+				"force colossale !" +text
 				recruit-highstat .strength!
 				recruitee .strengthREV
 			else
-				"physical fitness!" +text
+				"forme physique !" +text
 				recruit-highstat .fitness!
 				recruitee .fitnessREV
 			then
 		then
 	else
-		($ "My last team was a bunch of wieners! I think I'll do a lot better this time around, if you give me a chance!" $) pbold +crtext
+		($ "Ma derniere equipe etait nulle ! Je pense que ca ira bien mieux cette fois, si vous me donnez une chance !" $) pbold +crtext
 	then
 	regiondef{ ' camprecruit-final-talked ++ }
-	
+
 	recruit-finalcampyesno
 ;
 
 cyoa: camp-rec-familiar
-	"Familiar Face" cyoa-title!
+	"Visage Familier" cyoa-title!
 	nearest .character@ choosechar
 	cchar to recruitee ricon
-		
-	($ rname .. " is hanging around the camp. " .. rHe .. " has been waiting for you to show up!" $) cyoa-text! basic-tone
-	
-	recruitee .trait@ $len 0= if
-		($ rHe .. " claims to know you, but you swear you've never seen this person before..." $) +crtext
-	else
-		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
-		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
-	then
-	
-	choice( "Leave " .. rname .. " for now" )choice
 
-		choice( "Recruit " .. rname .. "!" )choice: recruit-campyes-familiar
+	($ rname .. " traîne dans le camp. " .. rHe .. " vous attendait !" $) cyoa-text! basic-tone
+
+	recruitee .trait@ $len 0= if
+		($ rHe .. " pretend vous connaitre, mais vous jurez ne jamais avoir vu cette personne..." $) +crtext
+	else
+		($ "TRAIT : " pbold .. recruitee .trait@ $) +crtext
+		($ "  AVANTAGE : " pbold .. recruitee .perk@ $) +text
+	then
+
+	choice( "Laisser " .. rname .. " pour l'instant" )choice
+
+		choice( "Recruter " .. rname .. " !" )choice: recruit-campyes-familiar
 ;
 
 
