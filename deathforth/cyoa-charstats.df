@@ -36,8 +36,8 @@
 
 // Below words for putting in an extra s depending on group
 
-: g1s solo if "s" else "" then ;
-: g2s team-count 2 = if "s" else "" then ;
+: g1s solo if "" else "ent" then ;
+: g2s team-count 2 = if "" else "ent" then ;
 : gs solo if "" else "s" then ;
 : gS solo if "" else "S" then ;
 

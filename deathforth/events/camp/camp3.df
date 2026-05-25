@@ -4,7 +4,7 @@ cyoa{ road{
 // Fire escape
 
 cyoa-choice: camp3-fire-paranoid
-	($ cname .. " a TOUJOURS un plan d'evacuation incendie prepare. Peu importe ou " .. che .. " est, " .. cname .. " pense constamment a de nouveaux plans d'evacuation incendie.
+	($ cname .. " a TOUJOURS un plan d'evacuation pret en cas d'incendie. Peu importe ou " .. che .. " est, " .. cname .. " pense constamment a de nouveaux plans d'evacuation en cas d'incendie.
 	Toutes les provisions ont ete sauvees ! " $) text! notsolo if "Personne n'a ete blesse." +text then goodfx morale++ witsattREV
 	+cr fullcamp
 ;
@@ -60,12 +60,12 @@ cyoa-choice: camp3-fire-ditch
 cyoa: camp3-fire
 	image-dog-on-fire
 	"Au Feu !" cyoa-title!
-	($ Thegroup .. " va contre son jugement et campe dans un appartement de ville, car il n'y a pas de zombies autour." $) text!
+	($ Thegroup .. " va contre son jugement et campe dans un appartement en ville, car il n'y a pas de zombies autour." $) text!
 	($ "Quand " .. gthey .. " se reveille" .. g1s .. ", le batiment est en feu. " $) +crtext 1 600 tone
 		most-paranoid if
-			charchoice( " est cool avec la securite incendie" )choice: camp3-fire-paranoid
+			charchoice( " est cool avec les consignes anti-incendie" )choice: camp3-fire-paranoid
 		else
-			choice( "Planifier l'evacuation" )choice: camp3-fire-choose
+			choice( "Planifier l'evasion" )choice: camp3-fire-choose
 		then
 		choice( "Sortir MAINTENANT" )choice: camp3-fire-ditch
 ;
@@ -73,7 +73,7 @@ cyoa: camp3-fire
 // Grocery store trust exercise
 
 cyoa-choice: camp3-grocery-pick
-	($ Theothers .. " monte" .. g2s .. " la garde dehors pour les pilleurs pendant que " .. cname .. " fouille l'epicerie." $) text!
+	($ Theothers .. " montent la garde dehors pour surveiller si des pilleurs arrivent pendant que " .. cname .. " fouille l'epicerie." $) text!
 	cloyalty- if cchar to bully
 		cchar .morale 3 < if
 			($ cname .. " prend la nourriture et se barre discretement, pour ne jamais revenir. Quelle fouine !" $) +crtext

@@ -61,42 +61,42 @@
 : stat2wordcase case 
 	0 of "morale" endof 
 	1 of "attitude" endof 
-	2 of "composure" endof 
-	3 of "charm" endof 
-	4 of "wits" endof 
-	5 of "loyalty" endof 
-	6 of "medical" endof 
-	7 of "mechanical" endof 
-	8 of "shooting" endof 
-	9 of "strength" endof 
-	10 of "dexterity" endof 
-	11 of "fitness" endof 
-	12 of "vitality" endof 
+	2 of "calme" endof
+	3 of "charme" endof
+	4 of "reflexes" endof
+	5 of "loyaute" endof
+	6 of "medical" endof
+	7 of "mecanique" endof
+	8 of "tir" endof
+	9 of "force" endof
+	10 of "dexterite" endof
+	11 of "forme" endof
+	12 of "vitalite" endof
 	endcase
-; 
+;
 
-: stat2maxmsg case 
-	0 of " is feeling pretty good as it is!" endof 
-	1 of " is as optimistic as they can be already!" endof 
-	2 of " has already achieved their maximum zen!" endof 
-	3 of " literally can't be any more charming!" endof 
-	4 of " is already at the peak of their wits!" endof 
-	5 of " couldn't be any more loyal!" endof 
-	6 of " has achieved their maximum medical skill!" endof 
-	7 of " can't improve their engineering any further!" endof 
-	8 of " couldn't improve their aim any further!" endof 
-	9 of " is at their maxmimum swole!" endof 
-	10 of " already moves at maximum speed!" endof 
-	11 of " can't get any fitter without special training!" endof 
-	12 of " is already a walking tank!" endof 
+: stat2maxmsg case
+	0 of " est deja de bonne humeur !" endof
+	1 of " est deja aussi optimiste que possible !" endof
+	2 of " a deja atteint son calme maximum !" endof
+	3 of " ne peut pas etre plus charmant !" endof
+	4 of " est deja au sommet de ses reflexes !" endof
+	5 of " ne pourrait pas etre plus loyal !" endof
+	6 of " a atteint son niveau medical maximum !" endof
+	7 of " ne peut plus ameliorer sa mecanique !" endof
+	8 of " ne peut plus ameliorer sa visee !" endof
+	9 of " est deja au maximum de sa force !" endof
+	10 of " se deplace deja a vitesse maximale !" endof
+	11 of " ne peut plus ameliorer sa forme sans entrainement special !" endof
+	12 of " est deja un tank ambulant !" endof
 	endcase
-;	
+;
 
-: statmaxcheck args( stat chara ) 
-	<- stat <- chara .stat@ 6 = if 
-		cyoa{ ($ "RED" evaluate <- chara .name@ <- stat stat2maxmsg .. .. $) "+crtext" evaluate } 
-	then 
-; 
+: statmaxcheck args( stat chara )
+	<- stat <- chara .stat@ 6 = if
+		cyoa{ ($ "RED" evaluate <- chara .name@ <- stat stat2maxmsg .. .. $) "+crtext" evaluate }
+	then
+;
 
 : .stat++ ( STAT char -- )
 	2dup .stat@ CHAR_STAT_MAX = if statmaxcheck exit then
@@ -183,23 +183,23 @@ defer stat-cheevs
 
 : HPlearn-stat args( stat chara )
 
-	<- chara .perk@ "Hidden Potential" $= <- stat <- chara .stat@ 6 <> and if 
-	\ prevent HP from proccing infinitely at 6 
+	<- chara .perk@ "Hidden Potential" $= <- stat <- chara .stat@ 6 <> and if
+	\ prevent HP from proccing infinitely at 6
 		<- stat <- chara .stat++
 		<- chara .perk@ "Hidden Potential" $= if
-			<- stat <- chara .stat@ 2 % 0 = if 
+			<- stat <- chara .stat@ 2 % 0 = if
 			\ "STAT IS LEVEL... " <- stat <- chara .stat@ .. print
-			\ <- stat <- chara .stat@ 2 % print 
-				<- stat <- chara .bonus@ 1 + <- stat <- chara .bonus! 
-				cyoa{ ($ "YELLOW" evaluate <- chara .name@ "'s potential grows!" .. .. $) "+crtext" evaluate } 
-			then 
-		then 
+			\ <- stat <- chara .stat@ 2 % print
+				<- stat <- chara .bonus@ 1 + <- stat <- chara .bonus!
+				cyoa{ ($ "YELLOW" evaluate <- chara .name@ " gagne en potentiel !" .. .. $) "+crtext" evaluate }
+			then
+		then
 	else
 		<- stat <- chara .stat++
-	then 
+	then
 ;
 
-\ stomach & trachea : hidden potential rework 
+\ stomach & trachea : hidden potential rework
 
 : .strength++ STAT_STRENGTH swap HPlearn-stat gstats{ ' total-str+ ++ } stat-cheevs ;
 : .medical++ STAT_MEDICAL swap fastlearn-stat gstats{ ' total-med+ ++ } stat-cheevs ;
@@ -225,7 +225,7 @@ defer stat-cheevs
 
 
 : .showitall STAT_COUNT for i 1- over .reveal next drop ;
-: bigreveal ' .showitall foreach-team-char ; 
+: bigreveal ' .showitall foreach-team-char ;
 ' bigreveal 0 hotkey!
 
 : shootingREVall ' .shootingREV foreach-team-char ;
@@ -312,7 +312,7 @@ defer stat-heal
 
 : hit'n'die? dup .health-- .health@ 0= ;
 
-: damage dup .vitality@ swap .health@ - ; 
+: damage dup .vitality@ swap .health@ - ;
 
 : .health++ args( chara )
 	<- chara damage 0 > if
@@ -333,9 +333,9 @@ defer stat-heal
 : team-damage 0 ' sum-damage foreach-team-char ;
 
 : groupheal
-	for 
+	for
 		most-hurt damage 0 > if
-				most-hurt .health++ 
+				most-hurt .health++
 		then
 	next
 ;
@@ -368,7 +368,7 @@ defer stat-heal
 ;
 
 : sappend depths for pops swap >r shove r> next drop ;
-	
+
 : .hiskill 0 0 args( ch hival histat ) STAT_VITALITY for
 		i STAT_SKILLS = if break then
 		i 1- <- ch .effstat dup <- hival > if -> hival i 1- -> histat else drop then
@@ -382,7 +382,7 @@ defer stat-heal
 		i 1- <- ch .effstat <- histat <- ch .effstat = if i 1- shove then
 	next
 ;
-		
+
 : .histat-stack dup .histat args( ch histat ) 0 stack
 	STAT_SKILLS for i 1- <- ch .effstat <- histat <- ch .effstat = if i 1- shove then next
 ;
@@ -402,7 +402,7 @@ defer stat-heal
 
 	<- xstat
 ;
-		
+
 : .xtreme-stat-stack dup .xstat args( ch xstat ) 0 stack
 	STAT_SKILLS for
 		i 1- STAT_MORALE = if break then
@@ -425,15 +425,15 @@ defer stat-heal
 
 : shieldofhopeblurb args( chara )
 	<- chara .morale 3 > if
-		" is too PUMPED UP to get killed!"
+		" est trop MOTIVE pour mourir !"
 	else
 		<- chara .morale 1 < if
-			" lives, but enters into despair!"
+			" survit, mais sombre dans le desespoir !"
 		else
 			<- chara .morale 2 < if
-				" resists death, but morale wavers!"
+				" resiste a la mort, mais son moral vacille !"
 			else
-				" refuses to die!"
+				" refuse de mourir !"
 			then
 		then
 	then
@@ -466,24 +466,24 @@ defer stat-heal
 
 : herotypecheck checkchar isherotype? ;
 : someherotype ' herotypecheck pick-team-char to hero-picked ;
-  
+
  : hero-usedup
 	"Loyal Pal" hero-picked .trait!
 	// -1 STAT_VITALITY hero-picked .stat--
-	
+
  ;
- 
+
  defer unfireproofer
- 
+
  : .phoenixify args( chara )
 	"Phoenix Arisen!" <- chara .trait!
 	<- chara .fullheal
 	<- chara .specialbody@ 78 = not if
 		78 <- chara .specialbody!
-		($ "is now a HALF-HUMAN, HALF-SKELETON, HALF-PHOENIX, back for vengeance!" $) <- chara .job!
+		($ "est desormais UN DEMI-HUMAIN, DEMI-SQUELETTE, DEMI-PHOENIX, de retour pour se venger !" $) <- chara .job!
 	else
 		78 <- chara .specialhead!
-		($ "is now a HALF-SKELETON, HALF-PHOENIX, after a series of major blunders." $) <- chara .job!
+		($ "est desormais UN DEMI-SQUELETTE, DEMI-PHOENIX, suite a une serie de grosses erreurs." $) <- chara .job!
 	then
 	<- chara .perk@ "Pyromaniac" $= if then;
 	<- chara unfireproofer
@@ -493,9 +493,9 @@ defer stat-heal
 // mission?
 
 : .death-shared args( chara )
-	<- chara herotype-except? if 
-		someherotype			
-		($ ICON_UP textclr$ .. <- chara .name@ .. " is heroically saved by " .. hero-picked .name@ .. "!" ..
+	<- chara herotype-except? if
+		someherotype
+		($ ICON_UP textclr$ .. <- chara .name@ .. " est heroiquement sauve par " .. hero-picked .name@ .. "!" ..
 		0 textclr$ $) blurbevent ICON_UP blurbicon
 		<- chara .fullheal
 		<- chara .health@ 2 > if
@@ -504,10 +504,10 @@ defer stat-heal
 		hero-usedup
 	else
 		<- chara .trait@ "Phoenix" $= if
-			($ ICON_SKULL textclr$ .. <- chara .name@ .. " rises from the grave!" .. 0 textclr$ $) blurbevent ICON_UP blurbicon
+			($ ICON_SKULL textclr$ .. <- chara .name@ .. " ressuscite !" .. 0 textclr$ $) blurbevent ICON_UP blurbicon
 			<- chara .phoenixify
 		else
-			($ ICON_SKULL textclr$ .. <- chara .name@ .. " is KILLED!" .. 0 textclr$ $)
+			($ ICON_SKULL textclr$ .. <- chara .name@ .. " est TUE !" .. 0 textclr$ $)
 
 			blurbevent blurbskullicon
 
@@ -521,28 +521,28 @@ defer stat-heal
 		then
 	then
 ;
- 
-: .kill	args( chara ) 0 <- chara .health! 
+
+: .kill	args( chara ) 0 <- chara .health!
 	<- chara .death-shared
 ;
- 
+
 : team-attacked args( chara )
 	<- chara .health@ 0= if exit then;
 	<- chara hit'n'die? if
 		<- chara .perk@ "Shield of Hope" $= <- chara .morale SHIELDOFHOPE_MIN > and if
-			
+
 			<- chara morale--hopeshield
-			
+
 			($ ICON_UP textclr$ .. <- chara .name@ .. <- chara shieldofhopeblurb ..
 			0 textclr$ $) blurbevent ICON_UP blurbicon
-			
+
 			1 <- chara .health!
 		else
-			<- chara .death-shared			
+			<- chara .death-shared
 		then
 	else
 		<- chara .health@ 0 > if
-			($ ICON_DOWN textclr$ .. <- chara .name@ .. " is HURT!" ..
+			($ ICON_DOWN textclr$ .. <- chara .name@ .. " est BLESSE !" ..
 				0 textclr$ $) blurbevent ICON_DOWN blurbicon
 		then
 	then
@@ -551,10 +551,10 @@ defer stat-heal
 	<- chara "perkdef{ backwall-manual-check }" evaluate
 ;
 
-: amresilient args( chara ) 
+: amresilient args( chara )
 	<- chara .trait@ "Resilient Type" $= <- chara .charm@ 0 = and if
-	\ sfx{ fm } 
-		($ ICON_UP textclr$ .. <- chara .name@ .. " resists some damage!" ..
+	\ sfx{ fm }
+		($ ICON_UP textclr$ .. <- chara .name@ .. " resiste aux degats !" ..
 		0 textclr$ $) blurbevent ICON_UP blurbicon
 		<- chara blurbchar blurb-last-to-cyoa
 		1 <- chara .charm! 

@@ -66,7 +66,7 @@ cyoa-choice: camp1-gas-get
 	cpet? if
 		($ cname .. " essaie de siphonner de l'essence, mais sa morphologie est vraiment tres peu adaptee pour ca." $) cyoa-text! morale-- sleep
 	else
-		($ cname .. " siphonne l'essence, mais en avale accidentellement un peu et est vraiment, vraiment malade cette nuit-la au lieu de dormir." $) cyoa-text! 40 70 rnd trunk-gas+ sleep-except morale2-
+		($ cname .. " siphonne l'essence, mais en avale accidentellement et est vraiment malade toute la nuit." $) cyoa-text! 40 70 rnd trunk-gas+ sleep-except morale2-
 	then	
 	+cr chowtime
 ;

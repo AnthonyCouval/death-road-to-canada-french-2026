@@ -22,7 +22,7 @@ cyoa: camp2-minigolf
 			($ cname .. " court partout d'excitation !" $) +crtext morale++
 		else
 			($ cname .. " fait de l'exercice dont il avait besoin !" $) +crtext fitness++
-		then	
+		then
 	then
 	most-ahole if
 		choosechar ($ cname .. " se lasse du jeu et perd la balle expres." $) +crtext morale--all
@@ -50,7 +50,7 @@ cyoa-choice: camp2-fore-fore
 	solo if
 		soloer choosechar
 		cpet? if
-			($ cname .. " essaie de jouer au golf, mais c'est difficile en tant que " .. cdogcat .. ". " .. cHe .. " aurait peut-etre pu s'en sortir avec un caddy.
+		    ($ cname .. " tente de jouer au golf, mais cest difficile a faire en tant que " .. cdogcat .. ". " .. cHe .. " aurait peut-etre pu y arriver avec un caddie.
 			" .. cname .. " est completement submerge." $) cyoa-text! morale3- ouch-- sting-- bitefx
 		else
 			($ cname .. " envoie des balles de golf dans des tetes de zombies. C'est un bon exercice, mais bientot " .. che .. " est submerge.
@@ -215,7 +215,7 @@ cyoa: camp2-zwatch
 			choice( "Choisir quelqu'un d'autre" )choice: camp2-zwatch-pick4
 		else
 			' camp2-zwatch-pick 3 #cyoa-team-choice
-		then		
+		then
 		solo if
 			choice( "Dormir quand meme" )choice: camp2-zwatch-awake
 		else
@@ -240,7 +240,7 @@ cyoa: camp2-berry
 	"Cueillette de Baies en Pleine Apocalypse Zombie" cyoa-title!
 	($ Thegroup .. " monte le camp pour la nuit apres s'etre assure qu'il n'y a aucun danger." $) cyoa-text!
 		($ gThey .. " decouvre" .. g1s .. " des buissons de baies comestibles tout autour du campement !
-		
+
 		Les baies ne feraient pas une grande quantite de nourriture pour le travail et la nuit blanche, mais chaque petit bit peut aider." $) +crtext
 		choice( "Cueillir des baies toute la nuit" )choice: camp2-berry-go
 		choice( "Aller dormir" )choice: camp2-berry-no
@@ -281,7 +281,7 @@ cyoa-choice: camp2-scary-go
 			($ cname .. " " .. cbarkmeow .. "e surtout beaucoup mais d'une " .. "MANIERE TERRIFIANTE !" fbold $) +crtext
 		else
 			($ cname .. " fait son histoire de peur sur " .. camp2-scary-noun fbold $) +crtext
-		then morale2+all	
+		then morale2+all
 	then
 	sfx{ creepy 30 fx .delay! }
 	($ Thegroup .. " s'amuse, mais ne dort pas assez et est fatigue le lendemain." $) +crtext nosleep
@@ -412,10 +412,10 @@ cyoa: camp2-airbnb
 	($ Thegroup .. " trouve une auberge, ouverte ! La proprietaire se frotte les mains :
 	" .. "Donnez-moi 10 nourriture, je veillerai sur vous pendant que vous dormez hhhHHHHHeh." rbold .. "
 	Elle est super flippante." $) text!
-		trunk-food 9 > if	
+		trunk-food 9 > if
 			choice( "Payer les 10 nourriture" )choice: camp2-airbnb-pay
 		then
-		most-grating if	
+		most-grating if
 			charchoice( ": LE DIRE PAS LE POSTILLONNER" fcoolit )choice: camp2-airbnb-coolit
 		then
 		most-charming trunk-food 5 > and if
@@ -433,7 +433,7 @@ cyoa: camp2-airbnb
 	then
 	<- @ .cattitude- if
 		<- @ .morale--
-	then	
+	then
 ;
 
 cyoa-choice: camp2-sing-sing someicon
@@ -444,7 +444,7 @@ cyoa-choice: camp2-sing-sing someicon
 cyoa-choice: camp2-sing-plan
 	cwits- if
 		($ "Il s'avere que " .. thegroup .. " n'est vraiment pas doue pour planifier les choses." $) cyoa-text! morale--all ' .witsREV foreach-team-char badfx
-	then;	
+	then;
 	cwits+ witsroll or if
 		($ cname .. " planifie le lendemain. C'est une bonne utilisation du temps, et l'aide a se concentrer sur les grandes lignes." $) cyoa-text!
 			morale++ goodfx
@@ -460,7 +460,7 @@ cyoa: camp2-sing
 		choice( "Chanter une chanson" )choice: camp2-sing-sing
 		smartest charchoice( ": Planifier demain" )choice: camp2-sing-plan
 ;
-		
+
 } }
 
 
