@@ -2,33 +2,33 @@
 cyoa{ road{
 
 cyoa: clown-survived
-	"After the Circus" cyoa-title!
+	"Apres le Cirque" cyoa-title!
 	someone choosechar
-	($ Thegroup .. " escapes from the " .. "CIRCUS OF DEATH!" rbold .. "
-		The car outside was crushed by the clown stampede, and no longer starts. " .. cname .. " checks one of the many clown cars now there, and it starts up.
-		Onward to Canada!" $) text!
+	($ Thegroup .. " s'echappe du " .. "CIRQUE DE LA MORT !" rbold .. "
+		La voiture dehors a ete ecrasee par la stampede de clowns et ne demarre plus. " .. cname .. " verifie l'une des nombreuses voitures de clown maintenant disponibles, et elle demarre.
+		En route vers le Canada !" $) text!
 		CAR_CLOWN get-car
 ;
 
 cyoa: clown-despair
 	bully choosechar cicon
 	solo if
-		"Stop Clowning Around" cyoa-title!
-		($ "With no one left to laugh at, " .. cname .. " is bored of driving around.
-		He abandons the car and starts hitchhiking, hoping to find a new group of people to play with." $) cyoa-text!
+		"Arretez de Faire le Clown" cyoa-title!
+		($ "Sans personne a faire rire, " .. cname .. " s'ennuie de conduire partout.
+		Il abandonne la voiture et commence a faire du stop, esperant trouver un nouveau groupe de gens avec qui jouer." $) cyoa-text!
 	else
-		"Night of the Clown" cyoa-title!
-		($ Thegroup .. " is scavenging a house in an empty city. Sitting among the trash is extremely valuable loot! Just there for the taking!
-		" .. cname .. " pulls out a little music box.
-		The box plays a tinny, eerie tune.
-		" .. notcname .. " is about to yell at the clown to knock it off when they notice he is gone...
-		" .. RED .. "A SENSE OF IMMENSE DREAD FILLS THE AIR." $) cyoa-text!
+		"La Nuit du Clown" cyoa-title!
+		($ Thegroup .. " fouille une maison dans une ville vide. Parmi les dechets se trouvent des objets de grande valeur ! Juste la, a portee de main !
+		" .. cname .. " sort une petite boite a musique.
+		La boite joue un air grele et sinistre.
+		" .. notcname .. " est sur le point de crier au clown d'arreter quand il remarque que celui-ci a disparu...
+		" .. RED .. "UN SENTIMENT D'EFFROI INTENSE EMPLIT L'AIR." $) cyoa-text!
 		2.8 18 20 rnd 2 siegecast // untouched
 		"events/siege/region/clown.df" $load-region
 		mission{ ' clown-survived to post-mission-cyoa }
-		choice( "Circus music starts playing" )choice: premission
+		choice( "La musique de cirque commence a jouer" )choice: premission
 	then
-	decruit-bad-silent-takeweapons sfx{ creepy } 
+	decruit-bad-silent-takeweapons sfx{ creepy }
 ;
 
 } }

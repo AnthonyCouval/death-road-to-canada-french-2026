@@ -44,7 +44,7 @@ cyoa: find-car-muscle
 
 cyoa: find-car-starter
 	// NEED IMAGE
-	"Already seen" cyoa-title!
+	"Deja Vu" cyoa-title!
 	choosehuman
 	($ cname .. "  repere une voiture garee au milieu de la route. Ils se precipitent pour decouvrir une voiture qui ressemble etrangement a celle dans laquelle ils ont commence leur voyage." $) text!
 	gator-ate-key 1 < if

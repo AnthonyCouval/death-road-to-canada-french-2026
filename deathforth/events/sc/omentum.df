@@ -2,31 +2,31 @@ cyoa{ road{
 
 cyoa: cart-despair
 	bully choosechar cicon
-	"Where am I?" cyoa-title! badfx
-	($ cname .. " loses a complete sense of direction, having no idea where " .. che .. " is." $) cyoa-text!
+	"Ou suis-je ?" cyoa-title! badfx
+	($ cname .. " perd completement le sens de l'orientation et ne sait plus du tout ou " .. che .. " est." $) cyoa-text!
 	solo if
-		($ cHe .. " wanders off into uncharted territory on her maps, not even bothering to mark it. " .. cHe .. " was never seen again." $) +crtext
+		($ cHe .. " s'aventure dans des territoires inexplores sur ses cartes, sans meme prendre la peine de les noter. " .. cHe .. " ne fut jamais revu." $) +crtext
 	else
 		regiondef{ cartmap-bought } if
-			"You don't deserve this, I'm taking it back!" pbold +crtext
-			($ cHe .. " angrily swipes the map " .. thegroup .. " bought from " .. chim .. " and stomps off!" $) +crtext
+			"Vous ne meritez pas ca, je le reprends !" pbold +crtext
+			($ cHe .. " arrache furieusement la carte que " .. thegroup .. " lui avait achetee et part en colere !" $) +crtext
 			regiondef{ 0 to cartmap-bought }
 		else
-			($ cHe .. " tells " .. theothers .. " that she is charting another map, and wanders off into a random direction.
-			After many hours, it's clear " .. che .. " has no intention of coming back." $) +crtext
+			($ cHe .. " dit a " .. theothers .. " qu'il est en train de tracer une nouvelle carte, et part en random.
+			Apres de nombreuses heures, il est clair qu'" .. che .. " n'a aucune intention de revenir." $) +crtext
 		then
 	then
-	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
 ;
 
 // 0 value brck-countdown <- value in events/trade/camp-recruit.df
 
 cyoa-bridge: brck-mon-recruit
 	THEBRCKMON #character to recruitee ricon
-	"Pukeymon?" cyoa-title!
-	($ "Woah! " .. rname .. " managed to survive. Nice!
-	Its owner may be dead, but it seems like it wants to stick around anyway.
-	What should " .. thegroup .. " do?" $) cyoa-text! goodfx
+	"Un Pukeymon ?" cyoa-title!
+	($ "Waouh ! " .. rname .. " a reussi a survivre. Sympa !
+	Son maitre est peut-etre mort, mais il a l'air de vouloir rester quand meme.
+	Qu'est-ce que " .. thegroup .. " devrait faire ?" $) cyoa-text! goodfx
 	recruit-yesno
 ;
 
@@ -40,9 +40,9 @@ cyoa-bridge: brck-mon-recruit
 
 cyoa: brck-timeup
 	4 6 rnd to brck-countdown
-	stpick-brck if choosechar else ($ "Looks like " .. "Brick" fbold .. " disappeared! How odd." $) text! exit then
-	"Huh? Something's happening..." cyoa-title!
-	($ "Congratulations! " fbold .. cname .. "'s Pukeymon evolved! It looks stronger than before." $) text! goodfx
+	stpick-brck if choosechar else ($ "On dirait que " .. "Brik" fbold .. " a disparu ! Comme c'est etrange." $) text! exit then
+	"Hein ? Il se passe quelque chose..." cyoa-title!
+	($ "Felicitations ! " fbold .. "Le Pukeymon de " .. cname .. " a evolue ! Il a l'air plus fort qu'avant." $) text! goodfx
 	cchar .charm@ 0= if
 		char-gen to recruitee 127 recruitee .specialtype! ricon
 		1 cchar .charm!
@@ -51,48 +51,49 @@ cyoa: brck-timeup
 			char-gen to recruitee 128 recruitee .specialtype! ricon
 			2 cchar .charm!
 		else
-			"It makes a low growl, ready to fight!" +crtext
+			"Il grogne sourdement, pret au combat !" +crtext
 		then
 	then
 	morale++
-	cchar charchoice( ": Alright!" )choice
+	cchar charchoice( ": Allez !" )choice
 ;
 
 cyoa: brck-despair
 	bully choosechar cicon
-	"Whiting Out" cyoa-title! badfx
-	($ cname .. " doesn't seem satisfied with how " .. chis .. " training of " .. chis .. " Pukeymon is going." $) cyoa-text!
+	"Defaite" cyoa-title! badfx
+	($ cname .. " ne semble pas satisfait de l'entrainement de son Pukeymon." $) cyoa-text!
 	solo if
-		($ cHe .. " withdraws it back into its Pukeyball, and wanders off somewhere, never to be seen again." $)
+		($ cHe .. " le rentre dans sa Pukeyball, et s'en va quelque part, pour ne jamais etre revu." $)
 	else
-		"I'm sorry guys, but my buddy and I need to part ways now. I'm sure we'll meet again down the road!" pbold
+		"Desole les gars, mais mon pote et moi devons se separer maintenant. On se reverra surement sur la route !" pbold
 	then +crtext
-	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
 ;
 
 cyoa: johnny-despair
 	bully choosechar cicon
-	"THAT'S ENOUGH" rbold cyoa-title!
-	($ cname .. " explodes in a fit of rage, unable to control " .. chim .. "self and see any reason." $) cyoa-text! badfx
+	"CA SUFFIT" rbold cyoa-title!
+	($ cname .. " explose dans un acces de rage, incapable de se controler ou de voir raison." $) cyoa-text! badfx
 	solo if
-		($ cHe .. " runs off guns blazing, attracting a horde, never to be seen again." $) +crtext
+		($ cHe .. " part en tirant dans tous les sens, attirant une horde, pour ne jamais etre revu." $) +crtext
 	else
-		($ cHe .. " swears profusely at " .. theothers .. " before stomping off. This is a family friendly game, so we won't be writing what " .. che .. " said." $) +crtext
+		($ cHe .. " insulte copieusement " .. theothers .. " avant de partir en trombe. C'est un jeu familial, donc on ne va pas ecrire ce qu'" .. che .. " a dit." $) +crtext
 		cchar ' .morale2- foreach-team-char-except
 	then
-	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
 ;
 
 cyoa: arq-despair
 	bully choosechar cicon
-	"Not cool, man" cyoa-title! badfx
-	($ cname .. " feels upset with " .. chim .. "self. Not to mention, " .. che .. " hasn't had a good bite to eat." $) cyoa-text!
-	($ cHe .. " decides the best course of action is to return to the house " .. che .. " was standing in when " .. che .. " was recruited into the team." $) +crtext
+	"C'est pas cool" cyoa-title! badfx
+	($ cname .. " se sent mal a l'aise avec lui-meme. Sans parler du fait qu'il n'a pas mange correctement." $) cyoa-text!
+	($ cHe .. " decide que le mieux est de retourner dans la maison ou " .. che .. " se trouvait quand " .. che .. " a ete recrute dans l'equipe." $) +crtext
 	solo if
-		($ cHe .. " turns the car around and finds " .. chis .. " home once again!" $)
+		($ cHe .. " fait demi-tour avec la voiture et retrouve sa maison !" $)
 	else
-		($ cHe .. " starts walking back until " .. theothers .. " see " .. chim .. " disappear into the horizon." $)
+		($ cHe .. " commence a marcher en arriere jusqu'a ce que " .. theothers .. " le voient disparaitre a l'horizon." $)
 	then +crtext
-	($ cname .. " has left the team." $) +crtext decruit-bad-silent-takeweapons
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
 ;
 } }
+

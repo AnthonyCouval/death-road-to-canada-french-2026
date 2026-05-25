@@ -5,27 +5,27 @@ cyoa{
 
 cyoa-choice: tutorchat-1
 	pchar choosechar
-	($ pname .. " tells " .. bname .. " to " .. "COOL IT!" pbold $) text!
-	($ bname .. " is infuriated by this! " .. bHe .. " gets " .. "SUPER STEAMING MAD!" rbold $) +crtext
-	($ "I'm not sure if telling someone to " .. "'COOL IT'" pbold .. " has ever worked, in the history of the whole world." $) +crtext
+	($ pname .. " dit a " .. bname .. " de " .. "SE CALMER !" pbold $) text!
+	($ bname .. " est furieux ! " .. bHe .. " devient " .. "COMPLETEMENT ENRAGE !" rbold $) +crtext
+	($ "Je ne suis pas sur que dire a quelqu'un de " .. "'SE CALMER'" pbold .. " ait jamais marche, dans toute l'histoire du monde entier." $) +crtext
 	1 cchar .wits! 1 cchar .attitude!
 	witsattREV badfx clear-cyoa morale2-all
 ;
 
 cyoa-choice: tutorchat-2
 	pchar choosechar
-	($ pname .. " tries to lay on the charm and get " .. bname .. " to help fight the zombies swarming in.
-	" .. bname .. " sweats visibly." $) text!
-	($ "I'm busy! I'm busy doing stuff! You go do it!" pbold $) +crtext
-	"Well, it was worth a try. This might have worked on someone that was less of a jerk." +crtext
+	($ pname .. " essaie de charmer " .. bname .. " pour qu'il aide a combattre les zombies qui envahissent les lieux.
+	" .. bname .. " transpire visiblement." $) text!
+	($ "Je suis occupe ! Je suis occupe a faire des trucs ! Vas-y toi !" pbold $) +crtext
+	"Bon, ca valait le coup d'essayer. Ca aurait peut-etre marche avec quelqu'un de moins nul." +crtext
 	6 cchar .wits! 6 cchar .attitude!
 	witsattREV badfx clear-cyoa
 ;
 
-cyoa-choice: tutorchat-3 
+cyoa-choice: tutorchat-3
 	pchar choosechar
-	($ pname .. " calls " .. bname .. " a " .. "dink." pbold $) text!
-	($ bname .. " is shocked! It was fun to finally tell " .. bhim .. " what a dink " .. bhe .. " was." $) +crtext
+	($ pname .. " traite " .. bname .. " de " .. "nul." pbold $) text!
+	($ bname .. " est choque ! C'etait agreable de lui dire enfin a quel point il etait nul." $) +crtext
 	goodfx clear-cyoa morale++all
 ;
 
@@ -33,23 +33,23 @@ cyoa: tutorchat
 	rescue choosechar cicon
 	cchar to bully
 	dead? if npc-died then;
-	($ pname .. " sees " .. cname .. ", who is a real dink.
-	" .. "Zombies have broken into my home! This is probably your fault! It certainly isn't mine!" pbold .. "
-	When the group found this zombie bunker, " .. bname .. " called dibs on this big bedroom before anyone else." $) text!
+	($ pname .. " voit " .. cname .. ", qui est vraiment nul.
+	" .. "Des zombies ont envahi ma maison ! C'est probablement de ta faute ! Certainement pas de la mienne !" pbold .. "
+	Quand le groupe a trouve ce bunker a zombies, " .. bname .. " a fait appelz dibs sur cette grande chambre avant tout le monde." $) text!
 	
-	choice( "Leave " .. chim .. " be for now" )choice
-	choice( "Tell " .. chim .. " to 'Cool It'" )choice: tutorchat-1
-	choice( "Convince " .. chim .. " to help fight zombies" )choice: tutorchat-2
-	choice( "Call " .. chim .. " a dink" )choice: tutorchat-3
+	choice( "Le laisser tranquille pour l'instant" )choice
+	choice( "Lui dire de 'Se Calmer'" )choice: tutorchat-1
+	choice( "Le convaincre d'aider a combattre les zombies" )choice: tutorchat-2
+	choice( "Le traiter de nul" )choice: tutorchat-3
 ;
 
 cyoa: tutorrecruit
 	recruitee choosechar cicon
 	dead? if npc-died then;
-	($ pname .. " greets " .. rname .. ".
-	" .. "I think we will have to leave this safehouse. At least we got to rest for awhile.
-	We should try heading to Canada! Would you like me to travel with you?" pbold .. "
-	More people means more hands to loot and fight with. It also means more people to get in the way, eat up the food, and argue." $) text!
+	($ pname .. " salue " .. rname .. ".
+	" .. "Je crois qu'on va devoir quitter ce refuge. Au moins on a pu se reposer un peu.
+	On devrait essayer d'aller au Canada ! Tu voudrais voyager avec nous ?" pbold .. "
+	Plus de gens ca fait plus de mains pour piller et se battre. Ca fait aussi plus de gens pour gener, manger la nourriture, et se disputer." $) text!
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen! clear-cyoa
 	recruit-yesno
 	
@@ -57,30 +57,30 @@ cyoa: tutorrecruit
 
 }
 
-: tutorial-npc1 
+: tutorial-npc1
 	new-npc@ 0 over .ai.wander_chance! 180 lt .aim_angle! lt .character@ to rescue
 	cyoa{ ' tutorchat cyoa! } drop
 ;
 
 : tutorial-npc2
 	// new-rescue-npc 0 lt .character@ .ai.wander_chance!
-	new-npc@ rescue-weapon over .weapona! 1 lt .unseen! 0 over .ai.wander_chance! 180 lt .aim_angle! lt .character@ to recruitee 
+	new-npc@ rescue-weapon over .weapona! 1 lt .unseen! 0 over .ai.wander_chance! 180 lt .aim_angle! lt .character@ to recruitee
 	cyoa{ ' tutorrecruit cyoa! } drop
 ;
 
-mission{ 
+mission{
 
 : door-tutorial-escape
 	cyoa-start
 	beep "door-no-escape" print
-	"No Exit" cyoa-title!
-	($ "You can't leave from this location!
-	This door just leads to the " .. "Garbage Room" rbold .. ", which is nearly full. Whoever designed this zombie bunker didn't put a lot of thought into how long it would last.
-	You will have to find another way out. " $) cyoa-text!
-	"Or, if you'd like, you can skip the tutorial." rbold +text
-		choice( "Go Back to Tutorial" )choice
+	"Pas de Sortie" cyoa-title!
+	($ "Vous ne pouvez pas partir de cet endroit !
+	Cette porte mene juste a la " .. "Salle des Ordures" rbold .. ", qui est presque pleine. Celui qui a concu ce bunker a zombies n'a pas beaucoup reflechi a sa longevite.
+	Il va falloir trouver une autre sortie. " $) cyoa-text!
+	"Ou, si vous voulez, vous pouvez passer le tutoriel." rbold +text
+		choice( "Retourner au Tutoriel" )choice
 		cyoa-add-choice
-		"Skip Tutorial!" cyoa-choice-text!
+		"Passer le Tutoriel !" cyoa-choice-text!
 			cyoa{ ' tutorial-ladder-end cyoa-choice-handler! }
 ;
 
@@ -105,18 +105,10 @@ mission{
 : leftbtn CMD_LEFT best_btn_name ;
 : rightbtn CMD_RIGHT best_btn_name ;
 
-: usebtns usebtn
-	// .. usebtn $len 1 usebtn $len and if "OR " else "" then .. 1 usebtn
-;
-: attackbtns attackbtn 
-	// .. attackbtn $len 1 attackbtn $len and if "OR " else "" then .. 1 attackbtn
-;
-: swapbtns swapbtn
-	// .. swapbtn $len 1 swapbtn $len and if "OR " else "" then .. 1 swapbtn 
-;
-: startbtns startbtn 
-	// .. startbtn $len 1 startbtn $len and if "OR " else "" then .. 1 startbtn 
-;
+: usebtns usebtn ;
+: attackbtns attackbtn ;
+: swapbtns swapbtn ;
+: startbtns startbtn ;
 
 : arrowbtns
 	upbtn ", " .. downbtn .. ", " .. leftbtn .. ", " .. rightbtn ..
@@ -126,89 +118,87 @@ mission{
 
 thing-event: tutormsg1
 	tutorial_touch_check if
-		($ "DRAG LEFT THUMB TO MOVE
-		TAP USE BUTTON TO OPEN" $)
-		// ADJUST CONTROLS IN TOP LEFT OF PAUSE MENU - Removed from second line for now
-		// Could we have the USE button glow here or something? That way could get rid of the third line maybe...
+		($ "GLISSER LE POUCE GAUCHE POUR BOUGER
+		APPUYER SUR UTILISER POUR OUVRIR" $)
 	else
-		($ arrowbtns .. " TO MOVE 
-		" .. usebtns .. " TO OPEN OR USE" $) 
+		($ arrowbtns .. " POUR BOUGER
+		" .. usebtns .. " POUR OUVRIR OU UTILISER" $)
 	then tutortopmsg ;
-thing-event: tutormsg2 
+thing-event: tutormsg2
 	tutorial_touch_check if
-		($ "USE BUTTON TO PICK UP WEAPONS
-		SWAP BUTTON TO SWAP
-		HOLD USE TO DROP" $) 
+		($ "UTILISER POUR RAMASSER LES ARMES
+		ECHANGER POUR SWAPPER
+		MAINTENIR UTILISER POUR DEPOSER" $)
 	else
-		($ usebtns .. " TO PICK UP WEAPONS
-		" .. swapbtns .. " TO SWAP WEAPONS
-		HOLD " .. usebtn .. " TO DROP WEAPON" $) 
+		($ usebtns .. " POUR RAMASSER LES ARMES
+		" .. swapbtns .. " POUR SWAPPER LES ARMES
+		MAINTENIR " .. usebtn .. " POUR DEPOSER L'ARME" $)
 	then tutortopmsg ;
-thing-event: tutormsg3 
+thing-event: tutormsg3
 	tutorial_touch_check if
-		player if 
-			player .carryid@ 0 = not if 
-				($ "USE BUTTON TO SLAM CHAIR 
-				TAP RIGHT SIDE OF SCREEN TO LOB CHAIR
-				SWAP BUTTON TO DROP" $)
-			else 
-				($ "USE BUTTON TO PICK UP CHAIRS
-				GET SWOLE TO LIFT BETTER STUFF
-				HEAVIER OBJECTS DO MORE DAMAGE" $)
-			then 
-		then 
+		player if
+			player .carryid@ 0 = not if
+				($ "UTILISER POUR CLAQUER LA CHAISE
+				APPUYER DROITE POUR LANCER LA CHAISE
+				ECHANGER POUR DEPOSER" $)
+			else
+				($ "UTILISER POUR RAMASSER LES CHAISES
+				DEVENEZ GONFLE POUR SOULEVER DE MEILLEURES CHOSES
+				LES OBJETS PLUS LOURDS FONT PLUS DE DEGATS" $)
+			then
+		then
 	else
-		player if 
-		player .carryid@ 0 = not if 
-			($ usebtns .. " TO SLAM CHAIR
-			" .. attackbtns .. " TO LOB CHAIR
-			" .. swapbtns .. " TO DROP CHAIR" $)
-		else 
-			($ usebtns .. " TO PICK UP CHAIRS
-			GET SWOLE TO LIFT BETTER STUFF
-			HEAVIER OBJECTS DO MORE DAMAGE" $)
-		then then 
+		player if
+		player .carryid@ 0 = not if
+			($ usebtns .. " POUR CLAQUER LA CHAISE
+			" .. attackbtns .. " POUR LANCER LA CHAISE
+			" .. swapbtns .. " POUR DEPOSER LA CHAISE" $)
+		else
+			($ usebtns .. " POUR RAMASSER LES CHAISES
+			DEVENEZ GONFLE POUR SOULEVER DE MEILLEURES CHOSES
+			LES OBJETS PLUS LOURDS FONT PLUS DE DEGATS" $)
+		then then
 	then tutortopmsg ;
-thing-event: tutormsg4 
+thing-event: tutormsg4
 	tutorial_touch_check if
-		($ "TAP RIGHT SIDE OF SCREEN TO ATTACK
-		TRY TO PACE YOURSELF" $)
+		($ "APPUYER A DROITE DE L'ECRAN POUR ATTAQUER
+		ESSAYEZ DE DOSER" $)
 	else
-		($ attackbtns .. " TO ATTACK
-		TRY TO PACE YOURSELF" $)
+		($ attackbtns .. " POUR ATTAQUER
+		ESSAYEZ DE DOSER" $)
 	then tutortopmsg ;
 
-thing-event: tutormsg5 
-	"WATCH OUT FOR HUGE SWARMS
-	RUNNING OFTEN BEATS FIGHTING" tutortopmsg ;
-thing-event: tutormsg6 
-	"LADDER LEADS TO OUTSIDE
-	GOOD LUCK OUT THERE" tutortopmsg ;
+thing-event: tutormsg5
+	"ATTENTION AUX GROSSES HORDES
+	FUIR VAUT SOUVENT MIEUX QUE SE BATTRE" tutortopmsg ;
+thing-event: tutormsg6
+	"L'ECHELLE MENE A L'EXTERIEUR
+	BONNE CHANCE LA-DEHORS" tutortopmsg ;
 
-thing-event: tutormsg7 
+thing-event: tutormsg7
 	tutorial_touch_check if
-		($ "USE BUTTON TO TALK OR INTERACT" $)
+		($ "UTILISER POUR PARLER OU INTERAGIR" $)
 	else
-		($ usebtns .. " TO TALK OR INTERACT" $)
+		($ usebtns .. " POUR PARLER OU INTERAGIR" $)
 	then tutortopmsg ;
 
-thing-event: tutormsg8 
-	"CHOOSE YOUR PALS WISELY" tutortopmsg ;
-thing-event: tutormsg9 
-	"BATHROOMS MAY HAVE MEDS" tutortopmsg ;
-thing-event: tutormsg10 
-		($ "ALWAYS BE LOOTING
-		LOOK OUT FOR LOOTABLE SHELVES!" $) tutortopmsg ;
+thing-event: tutormsg8
+	"CHOISISSEZ BIEN VOS PARTENAIRES" tutortopmsg ;
+thing-event: tutormsg9
+	"LES SALLES DE BAIN ONT PARFOIS DES MEDOCS" tutortopmsg ;
+thing-event: tutormsg10
+		($ "PILLEZ TOUJOURS
+		REPÉREZ LES ETAGERES PILLABLES !" $) tutortopmsg ;
 
 	thing-event: tutormsg11
 	tutorial_touch_check if
-		($ "PAUSE FOR TEAM SWAP OR INFO
-		SWAP LEADERS BY SELECTING CHAR FACE
-		DOUBLE-TAP WEAPON TO LOCK IT TO CHAR" $)
+		($ "PAUSE POUR ECHANGER L'EQUIPE OU INFOS
+		CHANGER DE CHEF EN SELECTIONNANT LE VISAGE
+		DOUBLE-APPUI SUR ARME POUR LA VERROUILLER" $)
 	else
-		($ startbtns .. " FOR TEAM SWAP OR INFO
-		SWAP LEADERS BY SELECTING CHAR FACE
-		DOUBLE-TAP WEAPON TO LOCK IT TO CHAR" $)
+		($ startbtns .. " POUR ECHANGER L'EQUIPE OU INFOS
+		CHANGER DE CHEF EN SELECTIONNANT LE VISAGE
+		DOUBLE-APPUI SUR ARME POUR LA VERROUILLER" $)
 	then tutortopmsg ;
 }
 
@@ -354,7 +344,7 @@ location: tutorial
 			room-post-script: tutorial-npc2 tutorkitchmsg
 }
 			
-regiondef{			
+regiondef{		
 
 	: tutorial-setup
 		mission{ ' door-tutorial-escape to main-event-mission-location-leave }

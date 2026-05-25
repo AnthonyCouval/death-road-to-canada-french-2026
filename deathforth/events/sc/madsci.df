@@ -6,36 +6,36 @@ uses road.df
 cyoa{ road{
 
 cyoa: madsci-timeup
-	10 stpick if choosechar cicon else ($ "Looks like the " .. "mad scientist" pbold .. " will never get to her destination, now." $) text! exit then
+	10 stpick if choosechar cicon else ($ "On dirait que la " .. "scientifique folle" pbold .. " n'arrivera jamais a destination, maintenant." $) text! exit then
 	notcchar to victim
-	"Back to the Lab" cyoa-title!
-	solo if 
-		($ "The scientist" pbold .. " gets to her lab alone.
-		She wasn't part of the Canada plan, so looks like the journey is at an end." $) cyoa-text!
+	"Retour au Labo" cyoa-title!
+	solo if
+		($ "La scientifique" pbold .. " arrive a son labo seule.
+		Elle ne faisait pas partie du plan Canada, donc le voyage s'arrete ici." $) cyoa-text!
 		decruit-good-silent
 	then;
-	($ "The scientist" pbold .. " is delivered to her laboratory!
-		She thanks " .. thegroup .. " and gives an " .. "overcharged teleporter" rbold .. " as a reward!" $) cyoa-text! goodfx decruit-good-silent 10 WEAPON_DOODAD trunk.weapon+
-			choice( "NICE" )choice
+	($ "La scientifique" pbold .. " est deposee a son laboratoire !
+		Elle remercie " .. thegroup .. " et donne un " .. "teleporteur surchauffe" rbold .. " en recompense !" $) cyoa-text! goodfx decruit-good-silent 10 WEAPON_DOODAD trunk.weapon+
+			choice( "SUPER" )choice
 ;
 
 : madsci-lash
-"If I knew you were going to be " .. "weiner" aVSs .. " about all this I never would have accepted the ride!" ;
+"Si j'avais su que vous alliez etre aussi " .. "chieur" aVSs .. " avec tout ca, je n'aurais jamais accepte le trajet !" ;
 
 cyoa: madsci-despair
 	bully choosechar cicon
-	solo if 
-		"Look on the bright side" cyoa-title!
-		($ cname .. " wonders how this got so bad THIS fast.
-		" .. "I just accepted the ride and everyone's dead!
-		Well, at least I have this sweet car now." pbold $) cyoa-text!
+	solo if
+		"Le Bon Cote des Choses" cyoa-title!
+		($ cname .. " se demande comment ca a pu partir aussi vite en vrille.
+		" .. "J'ai juste accepte un trajet et tout le monde est mort !
+		Bon, au moins j'ai cette belle voiture maintenant." pbold $) cyoa-text!
 		morale3+ goodfx
 	then;
-	"Scientific Analysis" cyoa-title!
+	"Analyse Scientifique" cyoa-title!
 	// Maybe add a chance to teleport out of the car, destroying it
-	($ cname .. " lashes out at " .. everyone .. ".
+	($ cname .. " s'en prend a " .. everyone .. ".
 	" .. PURPLE .. madsci-lash .. "
-	In my professional opinion you're " .. "butt" aVSs .. "." .. WHITE $) cyoa-text!
+	De mon point de vue professionnel vous etes des " .. "boulets" aVSs .. "." .. WHITE $) cyoa-text!
 	cchar ' .morale-- foreach-team-char-except badfx
 ;
 

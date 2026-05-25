@@ -6,16 +6,16 @@ uses road.df
 cyoa{ road{
 
 cyoa: knight-timeup
-	53 stpick if choosechar cicon else ($ "Looks like" .. "the knight" pbold .. " won't get to continue her quest." $) text! exit then
-	"Path of the Knight" cyoa-title!
-	solo if 
-		($ "The knight" pbold .. " is close to her destination, so she exits the car to continue on her sacred quest.
-		Her questing continues, but there's no one left for the Canada quest." $) cyoa-text! badfx
+	53 stpick if choosechar cicon else ($ "On dirait que " .. "le chevalier" pbold .. " ne pourra pas poursuivre sa quete." $) text! exit then
+	"La Voie du Chevalier" cyoa-title!
+	solo if
+		($ "Le chevalier" pbold .. " est proche de sa destination, alors elle quitte la voiture pour poursuivre sa quete sacree.
+		Sa quete continue, mais il ne reste personne pour la quete du Canada." $) cyoa-text! badfx
 	else
-	($ "The knight" pbold .. " asks to be let out of the car.
-	" .. "It's time for me to resume my quest!" pbold .. "
-	In thanks, she gives " .. thegroup .. " her spare sword!
-	" .. "Knight's Sword" pbold .. " obtained!" $) cyoa-text! goodfx 1 WEAPON_KNIGHT trunk.weapon+
+	($ "Le chevalier" pbold .. " demande a sortir de la voiture.
+	" .. "Il est temps pour moi de reprendre ma quete !" pbold .. "
+	En guise de remerciement, elle donne a " .. thegroup .. " son epee de rechange !
+	" .. "Epee de Chevalier" pbold .. " obtenue !" $) cyoa-text! goodfx 1 WEAPON_KNIGHT trunk.weapon+
 	then
 	decruit-good-silent
 	// TEAM_STATUS_GOOD_LEFT cchar .decruit
@@ -23,10 +23,10 @@ cyoa: knight-timeup
 
 cyoa: knight-despair
 	bully choosechar cicon
-	"Well my FEELINGS aren't in plate armor" cyoa-title!
-	($ cname .. " decides she doesn't need any more of this crap. 
-	" .. "This car is CURSED! I should have just found another horse!" pbold .. "
-	She storms off angry, armor clanking." $) cyoa-text!
+	"Mes SENTIMENTS ne sont pas en armure eux" cyoa-title!
+	($ cname .. " decide qu'elle n'a plus besoin de ces conneries.
+	" .. "Cette voiture est MAUDITE ! J'aurais juste du trouver un autre cheval !" pbold .. "
+	Elle s'eloigne en colere, l'armure cliquetant." $) cyoa-text!
 	decruit-bad
 ;
 

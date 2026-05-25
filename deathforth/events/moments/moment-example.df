@@ -145,7 +145,7 @@ cyoa-choice: mresult2
 ;
 
 cyoa-choice: mresult1 
-	($ cname .. " 99 hot dogs and then literally, not figuratively, chokes." $) cyoa-text! 
+	($ cname .. " mange 99 hot dogs et etouffe, au sens propre, pas figure." $) cyoa-text! 
 	social loser moment 
 	charchoice( "attends je peux le faire!" )choice: mresult2
 ;

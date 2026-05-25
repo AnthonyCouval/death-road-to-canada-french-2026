@@ -7,25 +7,25 @@ cyoa{ road{
 
 cyoa-choice: turkey-rid
 	turkey-meal
-	"It took long enough for that meal to happen." +cr +text
+	"Ca aura au moins pris le temps que ca a pris." +cr +text
 	cchar .kill
 ;
 
 cyoa-choice: turkey-kick
-	($ vname .. " gets kicked out of the group!
-	" .. "I can't believe this! How is that turkey even still alive?" pbold $) cyoa-text!
+	($ vname .. " est expulse du groupe !
+	" .. "Je n'en reviens pas ! Comment cette dinde est encore vivante ?" pbold $) cyoa-text!
 		victim .weapons-to-trunk TEAM_STATUS_BAD_LEFT victim .decruit badfx
 ;
 
 cyoa: turkey-despair
 	bully choosechar cicon
-	notcchar to victim 
-	"Turkey Fight" cyoa-title!
-	($ cname .. " pecks at " .. vname .. " while making frantic gobbling noises!
-	It looks like there's no compromise here.
-	Either the turkey goes or " .. vname .. " has to." $) cyoa-text!
-		choice( "Get rid of Turkey" )choice: turkey-rid
-		choice( "Kick " .. vname .. " from team" )choice: turkey-kick
+	notcchar to victim
+	"Bagarre de Dinde" cyoa-title!
+	($ cname .. " picote " .. vname .. " en faisant des gloussements frenetiques !
+	Il n'y a visiblement pas de compromis possible ici.
+	Soit la dinde degage, soit c'est " .. vname .. " qui doit partir." $) cyoa-text!
+		choice( "Se debarrasser de la dinde" )choice: turkey-rid
+		choice( "Virer " .. vname .. " de l'equipe" )choice: turkey-kick
 ;
 	
 } }

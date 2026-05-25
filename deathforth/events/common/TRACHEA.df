@@ -19,27 +19,27 @@
 \ death : "You can't touch me...I'm made!" 
 : godfather_lines 1 21 rnd case 
 
-	1 of "How much more betrayal can I take?" endof 
-	2 of "How bout that dink's face?" endof 
-	3 of "I'm the kingpin." endof 
-	4 of "Never had the makings of a varsity athlete." endof 
-	5 of "20 years in a sardine can." endof 
-	6 of "Zombies don't buy drink." endof 
-	7 of "Capped." endof 
-	8 of "Capiche?" endof 
-	9 of "Ya understand me?" endof 
-	10 of "You come to me...on the day of my 4th kidney stone..." endof 
-	11 of "It won't be cinematic." endof 
-	12 of "Just do as you're told." endof 
-	13 of "No knees? Just compromise." endof 
-	14 of "Family is everything. Mine are zombies." endof 
-	15 of "Heyyyyyy how ya doinnnn?" endof 
-	16 of "This is the schmutz." endof 
-	17 of "Where's the gabagool?" endof 
-	18 of "20 Gs on my desk by sundown." endof 
-	19 of "Get 'em boys!" endof 
-	20 of "You better watch yourself!" endof 
-	21 of "You got-a bee on-a your hat!" endof 
+	1 of "Combien de trahisons de plus je peux endurer ?" endof 
+	2 of "T'as vu la tete de ce nul ?" endof 
+	3 of "Je suis le grand patron." endof 
+	4 of "J'ai jamais eu l'etoffe d'un champion." endof 
+	5 of "20 ans dans une boite de sardines." endof 
+	6 of "Les zombies n'achetent pas a boire." endof 
+	7 of "Liquide." endof 
+	8 of "Capisce ?" endof 
+	9 of "Tu me comprends ?" endof 
+	10 of "Tu viens me voir...le jour de mon 4eme calcul renal..." endof 
+	11 of "Ca sera pas cinematographique." endof 
+	12 of "Fais juste ce qu'on te dit." endof 
+	13 of "Plus de genoux ? On negocie." endof 
+	14 of "La famille c'est tout. La mienne ce sont des zombies." endof 
+	15 of "Heyyyyyy comment t'vas ?" endof 
+	16 of "C'est la schmoutz." endof 
+	17 of "C'est ou le gabagoul ?" endof 
+	18 of "20 000 sur mon bureau avant la nuit." endof 
+	19 of "Chopez-les les gars !" endof 
+	20 of "Tu ferais mieux de faire gaffe !" endof 
+	21 of "T'as une abeille sur le chapeau !" endof 
 	endcase
 ; 
 
@@ -83,8 +83,8 @@
 ;
 
 : .mobsterify args( chara ) 
-	"Mobster" <- chara .name! 
-	"did 20 years in the can eating gabagool off the grilled cheese radiator." <- chara .job! 
+	"Mafioso" <- chara .name! 
+	"a fait 20 ans en taule a manger du gabagoul sur le radiateur a fromage grille." <- chara .job! 
 	4 <- chara .shooting! 
 	4 <- chara .strength! 
 	6 <- chara .wits! 
@@ -99,7 +99,7 @@
 	50 LOOT_BULLET <- chara .lootamt! 
 	154 <- chara .specialtype! 
 	"Cabrone" <- chara .perk! 
-	"Made Man" <- chara .trait! 
+	"Homme de Main" <- chara .trait! 
 	' mobster-main-events <- chara .main_events! 
 ; 
 
@@ -113,8 +113,8 @@
 \ Arkhalis DRTS, essentially 
 
 : .swissguardify args( chara )
-	"Swiss Guard" <- chara .name! 
-	"isn't even being paid anymore, he just loves his job." <- chara .job! 
+	"Garde Suisse" <- chara .name! 
+	"n'est meme plus paye, il aime juste son boulot." <- chara .job! 
 	4 <- chara .strength!
 	4 <- chara .fitness! 
 	4 <- chara .wits! 
@@ -124,8 +124,8 @@
 	-10 STAT_SHOOTING <- chara .bonus! 
 	WEAPON_SWISSSLASH <- chara .weapona! 
 	WEAPON_SWISSTHRUST <- chara .weaponb!
-	"Halberdier" <- chara .perk! 
-	"Mercenary" <- chara .trait! 
+	"Hallebardier" <- chara .perk! 
+	"Mercenaire" <- chara .trait! 
 	<- chara .nocanshoot 
 	0 <- chara .female! 
 	1 <- chara .weapon_nodropa! 
@@ -145,14 +145,14 @@
 
 
 0 stack 
-	" has modified the engine for even greater efficiency." shove
-	" tinkered with the timing of the pistons." shove
-	" fiddled with the air-fuel mixture." shove
-	" replaced an outdated part in the engine." shove
-	" is trying out a leaner fuel formula." shove
-	" is driving the car with ludicrous speed." shove
-	" is driving like a maniac." shove
-	" has his foot almost surgically attached to the accelerator." shove
+	" a modifie le moteur pour encore plus d'efficacite." shove
+	" a bidouille le calage des pistons." shove
+	" a regle le melange air-carburant." shove
+	" a remplace une piece obsolete du moteur." shove
+	" essaie une formule de carburant plus legere." shove
+	" conduit la voiture a une vitesse absurde." shove
+	" conduit comme un fou." shove
+	" a le pied presque collee chirurgicalement a l'accelerateur." shove
 var stig-fix-stack
 : stig-fix-phrase stig-fix-stack rndpicks nip ;
 
@@ -174,8 +174,8 @@ var stig-fix-stack
 		
 		mission.vehicle@ .mpg@ 0.3 < car-speed 4 < and if then;
 			road{ qmsg ($ <- chara .name@ .. stig-fix-phrase $) txt }
-			road{ qmsg ($ GREEN "Car MPG improved!" .. $) txt }
-			road{ qmsg ($ GREEN "Car speed increased!" .. $) txt }
+			road{ qmsg ($ GREEN "Consommation de la voiture amelioree !" .. $) txt }
+			road{ qmsg ($ GREEN "Vitesse de la voiture augmentee !" .. $) txt }
 		then
 	then
 		
@@ -185,10 +185,10 @@ var stig-fix-stack
 : .stigify args( chara ) 
 	155 <- chara .specialtype! 
 	0 <- chara .female! 
-	"The Stug" <- chara .name! 
-	"Rally Driver" <- chara .perk! 
-	"Nonverbal" <- chara .trait! 
-	"is a person we know only two things about: he's good at driving, and he's called The Stug." <- chara .job! 
+	"Le Stug" <- chara .name! 
+	"Pilote de Rallye" <- chara .perk! 
+	"Non-Verbal" <- chara .trait! 
+	"est quelqu'un dont on ne sait que deux choses : il sait conduire, et il s'appelle Le Stug." <- chara .job! 
 	WEAPON_JAG <- chara .weapona! 
 	1 <- chara .dexterity! 
 	4 <- chara .mechanical! 

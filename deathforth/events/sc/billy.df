@@ -1,18 +1,17 @@
-
 cyoa{ road{
 
 cyoa: billy-despair
 	bully choosechar cicon
 	solo if
-		"Sensible Fishing" cyoa-title!
-		($ "With no one else around, " .. cname .. " realizes he was probably better off just staying in his fishing boat.
-		He abandons the idea of Canada and sets off to find another quiet lake he can obliterate.
+		"Peche Raisonnee" cyoa-title!
+		($ "Sans personne autour, " .. cname .. " realise qu'il aurait probablement mieux fait de rester dans son bateau de peche.
+		Il abandonne l'idee du Canada et part a la recherche d'un autre lac tranquille a demolir.
 		" .. "    ><> ><> ><> ><> ><> ><> ><>    " pbold $) cyoa-text!
 	else
-		"Woops" cyoa-title!
-		($ "While feeling pretty out of it, " .. cname .. " accidentally drops his freshly loaded shotgun.
-		As it hits the ground, his shotgun fires over and over and over, much more than a normal shotgun could.
-		As the earth " .. "SHAKES ITSELF APART" rbold .. ", " .. cname .. " decides to cut his losses and run before " .. theothers .. " of the team come" .. g2s .. " after him." $) cyoa-text! 
+		"Oups" cyoa-title!
+		($ "Dans un moment de distraction, " .. cname .. " laisse tomber son fusil a pompe fraichement charge.
+		En touchant le sol, le fusil part encore et encore et encore, bien plus que ne le ferait un fusil normal.
+		Alors que la terre " .. "SE DECHIRE D'ELLE-MEME" rbold .. ", " .. cname .. " decide de prendre ses jambes a son cou avant que " .. theothers .. " ne lui courent" .. g2s .. " apres." $) cyoa-text!
 		2 for ' team-attacked foreach-team-char next
 	then
 	decruit-bad-silent badfx

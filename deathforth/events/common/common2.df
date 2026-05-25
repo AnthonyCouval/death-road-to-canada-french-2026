@@ -1,5 +1,5 @@
 
-cyoa{ road{ 
+cyoa{ road{
 
 : camp-pic
 	50 %chance if
@@ -14,17 +14,17 @@ cyoa{ road{
 cyoa-choice: common2-rare-tp-share
 	someicon
 	solo if
-		($ cname .. " realizes that this roll of toilet paper is a treasure that must not be given away." $) text! morale4+ goodfx 1 WEAPON_CARDBOARD trunk.weapon+
+		($ cname .. " realise que ce rouleau de papier toilette est un tresor qu'il ne faut pas partager." $) text! morale4+ goodfx 1 WEAPON_CARDBOARD trunk.weapon+
 		zombop++
 	then;
-	"The team decides to try to share the roll of toilet paper." text!
+	"L'equipe decide d'essayer de partager le rouleau de papier toilette." text!
 	loyalty-average 2 < if
-		"It doesn't take them long to be erupt into a huge fight! The situation descends into an all-out brawl. The toilet paper ends up getting torn apart by accident!" +crtext morale3-all badfx
+		"Ca ne prend pas longtemps pour degénérer en une enorme dispute ! La situation vire a la bagarre generale. Le papier toilette finit par etre dechire accidentellement !" +crtext morale3-all badfx
 	else
 		loyalty-average 4 < if
-			"There's some inevitable fighting from having to share the TP, but the group manages to overcome their differences." +crtext morale2+all goodfx
+			"Il y a inevitablement des frictions pour partager le PQ, mais le groupe arrive a surmonter ses differences." +crtext morale2+all goodfx
 		else
-			"The group joins forces around the toilet paper, mutually protecting it. Even after the TP is gone, the cardboard tube becomes a symbol for the group's unity." +crtext morale4+all goodfx
+			"Le groupe s'unit autour du papier toilette, le protegeant mutuellement. Meme apres que le PQ soit epuise, le tube en carton devient un symbole de l'unite du groupe." +crtext morale4+all goodfx
 		then
 	then
 	' .loyaltyREV foreach-team-char 1 WEAPON_CARDBOARD trunk.weapon+
@@ -33,33 +33,33 @@ cyoa-choice: common2-rare-tp-share
 
 cyoa-choice: common2-rare-tp-trade
 	someicon
-	($ Thegroup .. " decides to sell the roll of toilet paper as soon as possible. It's not worth carrying something THAT valuable around!" $) text!
+	($ Thegroup .. " decide de vendre le rouleau de papier toilette au plus vite. Ca vaut pas le coup de transporter quelque chose d'aussi precieux !" $) text!
 		50 %chance if
-			"A settlement buys the roll of TP for 20 food! Not bad!" +crtext 20 trunk-food+
+			"Un campement achete le rouleau de PQ pour 20 nourriture ! Pas mal !" +crtext 20 trunk-food+
 		else
 			50 %chance if
-				"A shrewd merchant buys the TP for 12 food. Can't complain!" +crtext 12 trunk-food+
+				"Un marchand habile achete le PQ pour 12 nourriture. Pas a se plaindre !" +crtext 12 trunk-food+
 			else
-				($ "A " .. "VERY" rbold .. " interested party buys the TP for " .. "30 food!" fbold $) +crtext 30 trunk-food+
+				($ "Une partie " .. "TRES" rbold .. " interessee achete le PQ pour " .. "30 nourriture !" fbold $) +crtext 30 trunk-food+
 			then
 		then goodfx morale++all
 ;
 
 cyoa: common2-rare-tp
-	"More Valuable Than Gold" cyoa-title!
-	($ Thegroup .. " finds a " .. "PRISTINE ROLL OF TOILET PAPER" fbold .. " while scavenging. Toilet paper was the first thing to run out after the apocalypse. There's still tons of canned food and ammo left in America. Decent butt paper was used up fast.
-	This is the rarest resource possible. CHOOSE WISELY:" $) text!
+	"Plus Precieux que l'Or" cyoa-title!
+	($ Thegroup .. " trouve un " .. "ROULEAU DE PAPIER TOILETTE INTACT" fbold .. " en pillant. Le papier toilette a ete la premiere chose a manquer apres l'apocalypse. Il reste encore des tonnes de conserves et de munitions en Amerique. Le PQ de qualite s'est epuise vite.
+	C'est la ressource la plus rare possible. CHOISISSEZ BIEN :" $) text!
 		solo if
-			choice( "Use this precious gift" )choice: common2-rare-tp-share
+			choice( "Utiliser ce precieux cadeau" )choice: common2-rare-tp-share
 		else
-			choice( "Share this precious gift" )choice: common2-rare-tp-share
+			choice( "Partager ce precieux cadeau" )choice: common2-rare-tp-share
 		then
-		choice( "Trade it away ASAP" )choice: common2-rare-tp-trade
+		choice( "L'echanger au plus vite" )choice: common2-rare-tp-trade
 ;
 
 cyoa-choice: common2-rare-zombmaster-run
 	image-creepy-girl
-	($ "The " .. "MASTER OF ZOMBIES" rbold .. " sets up a little obstacle course and teaches " .. thegroup .. " how to run in a more efficient, less embarassing fashion!" $) text! goodfx
+	($ "La " .. "MAITRESSE DES ZOMBIES" rbold .. " installe un petit parcours et apprend a " .. thegroup .. " a courir de facon plus efficace et moins ridicule !" $) text! goodfx
 	' .dexterity++ foreach-team-char
 ;
 
@@ -69,29 +69,29 @@ cyoa-choice: common2-rare-zombmaster-run
 
 cyoa-choice: common2-rare-zombmaster-fight
 	image-creepy-girl
-	($ "The " .. "MASTER OF ZOMBIES" rbold .. " enlightens " .. thegroup .. " on melee weaponry with some tips and some " .. "VERY DANGEROUS TRAINING." rbold $) text! goodfx bitefx
+	($ "La " .. "MAITRESSE DES ZOMBIES" rbold .. " eclaire " .. thegroup .. " sur les armes de melee avec quelques conseils et un " .. "ENTRAINEMENT TRES DANGEREUX." rbold $) text! goodfx bitefx
 	' common2-rare-zomb-workout foreach-team-char sting--all
 ;
 
 cyoa-choice: common2-rare-zombmaster-shoot
 	image-creepy-girl
-	($ "The " .. "MASTER OF ZOMBIES" rbold .. " gives " .. thegroup .. " a great lesson on proper shooting! She gives a homework assignment to do some real zombie hunting, and provides a bunch of ammo and a rifle!" $) text! goodfx ' .shootingREV foreach-team-char ' .shooting++ foreach-team-char
+	($ "La " .. "MAITRESSE DES ZOMBIES" rbold .. " donne a " .. thegroup .. " une excellente lecon sur le tir ! Elle donne comme devoir de chasser de vrais zombies, et fournit un tas de munitions et un fusil !" $) text! goodfx ' .shootingREV foreach-team-char ' .shooting++ foreach-team-char
 	60 trunk-bullet+ 40 trunk-rifle-shell+ 30 trunk-shotgun-shell+ 1 WEAPON_RIFLE trunk.weapon+
 ;
 
 cyoa-choice: common2-rare-zombmaster-tough
 	image-creepy-girl
-	($ "The " .. "MASTER OF ZOMBIES" rbold .. " shows " .. thegroup .. " how to toughen " .. ghis .. " skin up against zombie bites! This process involves her beating " .. ghim .. " up." $) text! goodfx bitefx
+	($ "La " .. "MAITRESSE DES ZOMBIES" rbold .. " montre a " .. thegroup .. " comment endurcir sa peau contre les morsures de zombies ! Ce processus implique qu'elle les tabasse." $) text! goodfx bitefx
 	' .vitality++ foreach-team-char sting--all
 ;
 
 cyoa: common2-rare-zombmaster
-	image-creepy-girl "The Zombie Master" cyoa-title!
-	($ Thegroup .. " runs into a strange woman wearing goggles, a scarf, and a cape. She says she's the " .. "MASTER OF ZOMBIES" rbold .. " and that she will teach one of her secret zombie tips as a service to humanity." $) text! goodfx
-		choice( "Zombie shooting lesson" )choice: common2-rare-zombmaster-shoot
-		choice( "Just run away constantly" )choice: common2-rare-zombmaster-run
-		choice( "How to fight with melee" )choice: common2-rare-zombmaster-fight
-		choice( "Toughen up against bites" )choice: common2-rare-zombmaster-tough
+	image-creepy-girl "La Maitresse des Zombies" cyoa-title!
+	($ Thegroup .. " tombe sur une femme etrange portant des lunettes, une echarpe et une cape. Elle dit etre la " .. "MAITRESSE DES ZOMBIES" rbold .. " et qu'elle va enseigner un de ses conseils secrets sur les zombies comme service a l'humanite." $) text! goodfx
+		choice( "Lecon de tir anti-zombie" )choice: common2-rare-zombmaster-shoot
+		choice( "Juste fuir constamment" )choice: common2-rare-zombmaster-run
+		choice( "Comment se battre au corps a corps" )choice: common2-rare-zombmaster-fight
+		choice( "S'endurcir contre les morsures" )choice: common2-rare-zombmaster-tough
 ;
 
 // END rares
@@ -102,12 +102,12 @@ cyoa: common2-rare-zombmaster
 
 : cboardprize
 	common2-cboardtype case
-		1 of "NIGHTSTICK" endof
-		2 of "SHOTGUN" endof
-		3 of "RIFLE" endof
-		4 of "DOLT45 REVOLVER" endof
-		5 of "FIRE AXE" endof
-		6 of "SNUBNOSE REVOLVER" endof
+		1 of "MATRAQUE" endof
+		2 of "FUSIL A POMPE" endof
+		3 of "FUSIL" endof
+		4 of "REVOLVER DOLT45" endof
+		5 of "HACHE INCENDIE" endof
+		6 of "REVOLVER A CANON COURT" endof
 	endcase
 ;
 
@@ -123,17 +123,17 @@ cyoa: common2-rare-zombmaster
 ;
 
 cyoa-choice: common2-cboard-steal
-	($ cname .. " steals the helpless man's " .. cboardprize rbold .. "." $) text! badfx
+	($ cname .. " vole le " .. cboardprize rbold .. " de l'homme sans defense." $) text! badfx
 	cloyalty- if
-		($ cHe .. " feels pretty smug about this." $) +crtext morale++
+		($ cHe .. " se sent plutot fier de lui." $) +crtext morale++
 	else
 		cloyalty+ if
-			($ cHe .. " feels incredibly guilty about this!" $) +crtext morale3-
+			($ cHe .. " se sent incroyablement coupable !" $) +crtext morale3-
 		else
-			($ cHe .. " feels guilty about this." $) +crtext morale--
+			($ cHe .. " se sent coupable." $) +crtext morale--
 		then
 	then loyaltyREV
-	($ "Got a " rbold .. cboardprize rbold $) +crtext cboardget trunk.weapon+
+	($ "Obtenu un " rbold .. cboardprize rbold $) +crtext cboardget trunk.weapon+
 ;
 
 : cboard-help-check args( @ )
@@ -141,13 +141,13 @@ cyoa-choice: common2-cboard-steal
 ;
 
 cyoa-choice: common2-cboard-help
-	($ Thegroup .. " saves the man from all the cardboard boxes pinning him down. He can't spare a reward, but is really grateful!" $) text! ' cboard-help-check foreach-team-char goodfx
+	($ Thegroup .. " sauve l'homme de toutes les boites en carton qui le coincent. Il ne peut pas donner de recompense, mais est vraiment reconnaissant !" $) text! ' cboard-help-check foreach-team-char goodfx
 ;
 
 cyoa-choice: common2-cboard-bandit
-	($ cname .. " steals the helpless man's " .. cboardprize rbold .. " and then takes the rest of his supplies!" $) text! badfx
+	($ cname .. " vole le " .. cboardprize rbold .. " de l'homme sans defense et prend tout le reste de ses provisions !" $) text! badfx
 	rob-guilt	
-	($ "Got a " rbold .. cboardprize rbold $) +crtext cboardget trunk.weapon+ 
+	($ "Obtenu un " rbold .. cboardprize rbold $) +crtext cboardget trunk.weapon+
 	10 20 rnd trunk-bullet+ 5 15 rnd trunk-rifle-shell+ 3 12 rnd trunk-shotgun-shell+
 	2 4 rnd trunk-medical+ 1 6 rnd trunk-food+
 	aholeREV
@@ -155,88 +155,70 @@ cyoa-choice: common2-cboard-bandit
 
 cyoa-bridge: common2-cboard-steal4
 	someicon
-	"Who should steal his weapon?" cyoa-text!
+	"Qui doit lui voler son arme ?" cyoa-text!
 	' common2-cboard-steal cyoa-team-choice
 ;
 
 cyoa: common2-cboard
-	"Helping out someone in need!" cyoa-title!
+	"Aider quelqu'un dans le besoin !" cyoa-title!
 	1 6 rnd to common2-cboardtype
-	($ "While scavenging, " .. thegroup .. " runs into a man covered in cardboard boxes. He says he's been stuck there for days! He has a " .. cboardprize rbold .. " lying on the ground outside of his reach." $) text!
-	choice( "Help him up" )choice: common2-cboard-help
+	($ "En pillant, " .. thegroup .. " tombe sur un homme couvert de boites en carton. Il dit etre coincé la depuis des jours ! Il a un " .. cboardprize rbold .. " par terre hors de sa portee." $) text!
+	choice( "L'aider a se relever" )choice: common2-cboard-help
 	most-ahole if
-		charchoice( ": Steal all his supplies" )choice: common2-cboard-bandit
+		charchoice( ": Voler toutes ses provisions" )choice: common2-cboard-bandit
 		team-count 2 > if
-			choice( "Choose a thief" )choice: common2-cboard-steal4
+			choice( "Choisir un voleur" )choice: common2-cboard-steal4
 		then;
 	then	
 		
 	solo if
-		soloer choosechar choice( "Steal his weapon" )choice: common2-cboard-steal
+		soloer choosechar choice( "Lui voler son arme" )choice: common2-cboard-steal
 	else
-		"Should someone steal his weapon?" +crtext
+		"Quelqu'un devrait-il lui voler son arme ?" +crtext
 		team-count 3 > if
-			choice( "Choose a thief" )choice: common2-cboard-steal4
-		then 
+			choice( "Choisir un voleur" )choice: common2-cboard-steal4
+		then
 		' common2-cboard-steal 3 #cyoa-team-choice
 	then
 ;
-
-// Quick template for the usual "pick someone else" choice
-(*
-
-cyoa-bridge: 4
-	someicon
-	"Who should ?" cyoa-text!
-	'  cyoa-team-choice
-;
-
-		team-count 3 > if
-			'  2 #cyoa-team-choice
-			choice( "Pick someone else" )choice: 4
-		else
-
-		then
-
-*)
 
 // Farm help
 
 : common2-farm-reward
 	8 trunk-food+
 	most-charming if
-		choosechar ($ cname .. " convinces the farmers to give " .. chim .. " a pitchfork!" $) +crtext
+		choosechar ($ cname .. " convainc les fermiers de lui donner une fourche !" $) +crtext
 		1 WEAPON_PITCHFORK trunk.weapon+
 	then
 ;
 
 cyoa-choice: common2-farm-mechanic
-	($ cname .. " offers " .. chis .. " services in fixing things around the farm. " $) text!
+	($ cname .. " propose ses services pour reparer des trucs dans la ferme. " $) text!
 	cmechanic+ if	
-		($ cHe .. " is so skilled that the large amount of work isn't a huge problem." $) +text
+		($ cHe .. " est si competent que la grande quantite de travail n'est pas un gros probleme." $) +text
 	else
-		($ "There's so many broken things that " .. che .. " becomes exhausted." $) +text cchar tired
+		($ "Il y a tellement de trucs casses que " .. che .. " s'epuise." $) +text cchar tired
 	then
 	mechanicREV mechanic++
 	cchar .mechanical 3 < if
-		($ "The farmers refuse to give a reward after they find out everything is still broken." $) +crtext badfx
+		($ "Les fermiers refusent de donner une recompense apres avoir realise que tout est encore casse." $) +crtext badfx
 	else
-		($ "The farmers are grateful for the work!" $) +crtext goodfx common2-farm-reward
+		($ "Les fermiers sont reconnaissants du travail !" $) +crtext goodfx common2-farm-reward
 	then
 ;
 
 cyoa-choice: common2-farm-bandit
-	($ cname .. " robs the peaceful farmers. They were completely caught by surprise against a non-zombie threat." $) text! badfx
+	($ cname .. " vole les fermiers paisibles. Ils ont ete completement pris par surprise par une menace non-zombie." $) text! badfx
 	14 trunk-food+ rob-guilt2 aholeREV
 ;
 
 cyoa-choice: common2-farm-haul
 	someicon
-	($ Thegroup .. " hauls tons of things around. There's always stuff to haul around on a farm. It's exhausting work, and " .. gthey .. " get" .. g1s .. " very tired!" $) text! goodfx 
+	($ Thegroup .. " transporte des tonnes de trucs. Il y a toujours des trucs a transporter dans une ferme. C'est un travail epuisant, et " .. gthey .. " est tres fatigue" .. g1s .. " !" $) text! goodfx
 	' .strengthREV foreach-team-char ' .strength++ foreach-team-char common2-farm-reward
 	// added STR check for scythe
 	strongest-pass if strongest choosechar
-		($ "The farmers noticed " .. cname .. "'s unusual strength and gave " .. chim .. " a scythe as a gift!" $) +crtext
+		($ "Les fermiers ont remarque la force inhabituelle de " .. cname .. " et lui ont donne une faux en cadeau !" $) +crtext
 		1 WEAPON_SCYTHE trunk.weapon+
 	then
 	nosleep
@@ -244,98 +226,98 @@ cyoa-choice: common2-farm-haul
 
 cyoa-choice: common2-farm-till
 	someicon
-	($ Thegroup .. " helps with tilling the fields and planting new crops. It's exhausting work, and " .. gthey .. " get" .. g1s .. " very tired!" $) text! goodfx 
+	($ Thegroup .. " aide a labourer les champs et planter de nouvelles cultures. C'est un travail epuisant, et " .. gthey .. " est tres fatigue" .. g1s .. " !" $) text! goodfx
 	' .fitnessREV foreach-team-char ' .fitness++ foreach-team-char common2-farm-reward
 	// added FIT check for scythe
 	fittest-pass if fittest choosechar
-		($ "The farmers noticed " .. cname .. "'s level of fitness and gave " .. chim .. " a scythe as a gift!" $) +crtext
+		($ "Les fermiers ont remarque la forme de " .. cname .. " et lui ont donne une faux en cadeau !" $) +crtext
 		1 WEAPON_SCYTHE trunk.weapon+
 	then
 	nosleep
 ;
 
 cyoa: common2-farm
-	"A Trip to the Farm" cyoa-title!
-	($ Thegroup .. " runs into some people that are attempting to run a small farm. They offer 8 food in exchange for some help." $) text!
-		choice( "Tilling and planting" )choice: common2-farm-till
-		choice( "Hauling and hauling" )choice: common2-farm-haul
+	"Un Tour a la Ferme" cyoa-title!
+	($ Thegroup .. " tombe sur des gens qui essaient de faire tourner une petite ferme. Ils offrent 8 nourriture en echange d'aide." $) text!
+		choice( "Labourer et planter" )choice: common2-farm-till
+		choice( "Transporter et transporter" )choice: common2-farm-haul
 		most-ahole if
-			charchoice( ": Rob the farm" )choice: common2-farm-bandit
+			charchoice( ": Voler la ferme" )choice: common2-farm-bandit
 		then
-		mechanicest	charchoice( ": Repair work" )choice: common2-farm-mechanic
-		choice( "No time to help" )choice
+		mechanicest	charchoice( ": Travaux de reparation" )choice: common2-farm-mechanic
+		choice( "Pas le temps d'aider" )choice
 ;
 
 // Annoying diplomat
 
 : common2-detoured
-	vehicle.which@ 0 > if choice( "Take a detour" )choice: car-detour else
-		// ($ Thegroup .. " takes a long detour on foot." $) +crtext 
+	vehicle.which@ 0 > if choice( "Faire un detour" )choice: car-detour else
+		// ($ Thegroup .. " prend un long detour a pied." $) +crtext
 		1 calendar-day+ +cr fullcamp
 	then
 ;
 
 cyoa-bridge: common2-meeting-talk
-	($ cname .. " talks to the annoying representative." $) text!
+	($ cname .. " parle au representant enervant." $) text!
 	cpet? if
-		($ cHe .. " isn't supposed to be capable of speech, so " .. che .. " mostly just licks " .. chim .. "self. The dingus is really insulted by being made to talk to a " .. cdogcat .. ", but the guards are amused. They let " .. thegroup .. " through!" $) +crtext goodfx morale++all
+		($ cHe .. " n'est pas cense etre capable de parler, alors " .. che .. " se leche surtout. L'abruti est vraiment insulte d'etre oblige de parler a un " .. cdogcat .. ", mais les gardes trouvent ca drole. Ils laissent passer " .. thegroup .. " !" $) +crtext goodfx morale++all
 	then;
 	cchar grating? if
-		($ cHe .. " really gets along! They mostly exchange " .. "COOL IT" pbold .. " quips with each other. For an hour. " .. Thegroup .. " is let through." $) +crtext witsattREV goodfx cool-it++ cool-it++
+		($ cHe .. " s'entend vraiment bien ! Ils echangent surtout des " .. "SE CALMER" pbold .. " entre eux. Pendant une heure. " .. Thegroup .. " passe." $) +crtext witsattREV goodfx cool-it++ cool-it++
 	then;
 	cchar oblivious? if
-		($ cHe .. " somehow doesn't notice all the times the dingus is annoying or insulting. The meeting goes well and " .. thegroup .. " is let past." $) +crtext witsattREV goodfx
+		($ cHe .. " ne remarque pas les moments ou l'abruti est enervant ou insultant. La reunion se passe bien et " .. thegroup .. " passe." $) +crtext witsattREV goodfx
 	then;
 	cattitude+ if
-		($ cHe .. " manages to be very polite. After enough pointless questioning, " .. thegroup .. " is let through the barricade." $) +crtext attitudeREV goodfx
+		($ cHe .. " arrive a etre tres poli. Apres assez de questions inutiles, " .. thegroup .. " est laisse passer la barricade." $) +crtext attitudeREV goodfx
 	then;
 	cchar angrystrong? if
-		($ cHe .. " loses " .. chis .. " temper right away and knocks him out in one punch. The barricade guards are impressed by this! One gives a thumbs up. They decide to let " .. thegroup .. " through, anyway." $) +crtext attitudeREV strengthREV goodfx morale++all
+		($ cHe .. " perd son calme immediatement et l'assomme d'un seul coup de poing. Les gardes de la barricade sont impressionnes ! L'un d'eux donne un pouce en l'air. Ils decidenet de laisser passer " .. thegroup .. " quand meme." $) +crtext attitudeREV strengthREV goodfx morale++all
 	then;
 	ctemper- if
-		($ cHe .. " loses " .. chis .. " temper right away and starts screaming. This really spooks the guards, and they start shooting. " .. Thegroup .. " has to flee!" $) +crtext temperREV bitefx sting--all
+		($ cHe .. " perd son calme immediatement et commence a crier. Ca effraie vraiment les gardes, qui commencent a tirer. " .. Thegroup .. " doit fuir !" $) +crtext temperREV bitefx sting--all
 		common2-detoured	
 	then;
 	ctemper+ temperroll or if
-		($ cHe .. " manages to control " .. chis .. " temper! " .. Thegroup .. " is let through the barricade after some further annoyance." $) +crtext goodfx
+		($ cHe .. " arrive a controler son calme ! " .. Thegroup .. " est laisse passer la barricade apres quelques agacements supplementaires." $) +crtext goodfx
 	else
-		($ cHe .. " tries to control " .. chis .. " temper, but the guy is just too annoying. He runs and tells the guards to not open the door. " .. Thegroup .. " has to find a way around!" $) +crtext badfx
+		($ cHe .. " essaie de controler son calme, mais le type est juste trop enervant. Il va dire aux gardes de ne pas ouvrir la porte. " .. Thegroup .. " doit trouver un autre chemin !" $) +crtext badfx
 		common2-detoured
 	then temperREV
 ;
 
 cyoa-bridge: common2-meeting-talk4
 	someicon
-	"Who should try to deal with the annoying person?" cyoa-text!
+	"Qui doit essayer de gerer cette personne enervante ?" cyoa-text!
 	' common2-meeting-talk cyoa-team-choice
 ;
 
 cyoa: common2-meeting
-	"Cool-it Diplomacy" cyoa-title! image-stranger-in-road
-	($ Thegroup .. " is blocked by another survivor group that set up a barricade to protect themselves. They are distrusting and heavily armed.
-	The person they send to talk is " .. "EXTREMELY ANNOYING" rbold .. "." $) text!
+	"Diplomatie Calme-Toi" cyoa-title! image-stranger-in-road
+	($ Thegroup .. " est bloque par un autre groupe de survivants qui a installe une barricade pour se proteger. Ils sont mefiants et lourdement armes.
+	La personne qu'ils envoient pour parler est " .. "EXTREMEMENT ENERVANTE." rbold $) text!
 		solo if
-			($ " He keeps saying things like " .. "COOL IT" pbold .. " and " .. "SAY IT DON'T SPRAY IT." pbold $) +text
-			soloer choosechar choice( "Try to not lose temper" )choice: common2-meeting-talk
+			($ " Il arrete pas de dire des trucs comme " .. "SE CALMER" pbold .. " et " .. "LE DIRE PAS LE POSTILLONNER." pbold $) +text
+			soloer choosechar choice( "Essayer de ne pas perdre son calme" )choice: common2-meeting-talk
 		else
-			" Who should try to deal with him?" +text
+			" Qui doit essayer de le gerer ?" +text
 			team-count 3 > if
 				' common2-meeting-talk 2 #cyoa-team-choice
-				choice( "Pick someone else" )choice: common2-meeting-talk4
+				choice( "Choisir quelqu'un d'autre" )choice: common2-meeting-talk4
 			else
 				' common2-meeting-talk 3 #cyoa-team-choice
 			then
 		then
-		vehicle.which@ 0 > if smartest charchoice( ": Take a detour" )choice: car-detour then
+		vehicle.which@ 0 > if smartest charchoice( ": Faire un detour" )choice: car-detour then
 ;
 
 // Park Chatting
 
 : common2-parkchat-tipme args( @ )
-	<- @ 40 %chance if 
-		.shooting++ 
+	<- @ 40 %chance if
+		.shooting++
 	else
-		50 %chance if 
+		50 %chance if
 			.mechanic++
 		else
 			.medical++
@@ -344,128 +326,128 @@ cyoa: common2-meeting
 ;
 
 cyoa-choice: common2-parkchat-tips
-	cpet? if 
-		($ cname .. " " .. cbarkmeow .. "s in a very wise and experienced way." $) text!
+	cpet? if
+		($ cname .. " " .. cbarkmeow .. "e d'une facon tres sage et experimentee." $) text!
 	else
-		($ cname .. " exchanges advice on different topics." $) text!
+		($ cname .. " echange des conseils sur differents sujets." $) text!
 	then
 	cwits- if
-		"The friendly survivor is confused by the worthless advice." +crtext badfx witsREV
+		"Le sympathique survivant est confus par les conseils inutiles." +crtext badfx witsREV
 	then;
 	cwits+ if
-		"The friendly survivor is enlightened by the advice, and gives some great tips of his own!" +crtext
+		"Le sympathique survivant est eclaire par les conseils, et donne quelques super tuyaux en retour !" +crtext
 		goodfx ' common2-parkchat-tipme foreach-team-char witsREV
 	then;
-		($ "The friendly survivor appreciates it, and gives a little bit of advice to " .. cname .. " in return." $) +crtext
+		($ "Le sympathique survivant l'apprecie, et donne un peu de conseil a " .. cname .. " en retour." $) +crtext
 		cchar common2-parkchat-tipme goodfx witsREV
 ;
 
 cyoa-choice: common2-parkchat-pep
-	cpet? if 
-		($ cname .. " " .. cbarkmeow .. "s in a reassuring way." $) text!
+	cpet? if
+		($ cname .. " " .. cbarkmeow .. "e d'une facon rassurante." $) text!
 	else
-		($ cname .. " tries to give a pep talk." $) text!
+		($ cname .. " essaie de faire un discours motivant." $) text!
 	then
 	cattitude- if
-		"The friendly survivor actually feels worse now." +crtext badfx attitudeREV
+		"Le sympathique survivant se sent en fait plus mal maintenant." +crtext badfx attitudeREV
 	then;
 	cattitude+ if
-		"The friendly survivor feels very optimistic after the talk, and gives an inspiring speech!" +crtext
+		"Le sympathique survivant se sent tres optimiste apres la discussion, et fait un discours inspirant !" +crtext
 		morale2+all goodfx attitudeREV
 	then;
-		($ "The friendly survivor gives some reassuring words in return." $) +crtext
+		($ "Le sympathique survivant dit quelques mots rassurants en retour." $) +crtext
 		morale++all goodfx attitudeREV
 ;
 
 cyoa-choice: common2-parkchat-bandit
-	($ cname .. " easily robs the friendly person. He didn't have much, but that will teach him an important lesson in trusting others." $) text! badfx
+	($ cname .. " vole facilement la personne sympa. Il n'avait pas grand chose, mais ca lui apprendra une importante lecon sur la confiance." $) text! badfx
 		2 4 rnd trunk-food+ 50 %chance if 1 3 rnd trunk-medical+ then rob-guilt
 		aholeREV
 ;
 
 cyoa-bridge: common2-parkchat-coolit
 	cpet? if
-		($ cname .. " starts " .. "FARTING" rbold .. " at the person, and somehow continues to do so for several minutes without stopping for even a moment." $)
+		($ cname .. " commence a " .. "PETER" rbold .. " en direction de la personne, et continue etrangement a le faire pendant plusieurs minutes sans s'arreter une seule seconde." $)
 	else
-		($ cname .. " interrupts the friendly survivor mid-sentence, to tell him to " .. "COOL IT." pbold $)
+		($ cname .. " interrompt le sympathique survivant au milieu d'une phrase pour lui dire de " .. "SE CALMER." pbold $)
 	then text!
 	cool-it-7 if
-		char-gen to recruitee "Friendly Guy" recruitee .name!
-		"He is awestruck by this. He claims that this is all according to the prophesies, and that he's been holding on to a gift for the Chosen One!" +crtext
+		char-gen to recruitee "Type Sympa" recruitee .name!
+		"Il est epate par ca. Il dit que tout ca est conforme aux propheties, et qu'il gardait un cadeau pour l'Elu !" +crtext
 		cooled-it goodfx rescue-trainitem morale3+all
 	else cool-it++
-		($ "He stares at " .. cname .. ", without speaking, until " .. thegroup .. " leaves." $) +crtext
+		($ "Il fixe " .. cname .. " sans parler, jusqu'a ce que " .. thegroup .. " parte." $) +crtext
 		morale--all badfx
-	then witsattREV 
+	then witsattREV
 ;
 
 cyoa: common2-parkchat
-	"Like a Normal day" cyoa-title!
-	($ Thegroup .. " meets another person just chilling on a park bench. He seems friendly. They have a conversation, just like before the world ended.
-	What was the main topic?" $) text!
-		smartest charchoice( ": Advice exchange" )choice: common2-parkchat-tips
-		gallant charchoice( ": Pep Talk" )choice: common2-parkchat-pep
+	"Comme un Jour Normal" cyoa-title!
+	($ Thegroup .. " rencontre une autre personne qui se detend sur un banc de parc. Il semble sympathique. Ils ont une conversation, comme avant la fin du monde.
+	Quel etait le sujet principal ?" $) text!
+		smartest charchoice( ": Echange de conseils" )choice: common2-parkchat-tips
+		gallant charchoice( ": Discours Motivant" )choice: common2-parkchat-pep
 		most-ahole if
-			charchoice( ": Giving me your stuff" )choice: common2-parkchat-bandit
+			charchoice( ": Filer tes affaires" )choice: common2-parkchat-bandit
 		then
 		most-grating if
-			charchoice( ": Cooling It" fcoolit )choice: common2-parkchat-coolit
+			charchoice( ": Se Calmer" fcoolit )choice: common2-parkchat-coolit
 		then
 ;
 
 // Busted leg
 
 cyoa-choice: common2-busted-med
-	($ cname .. " tries to treat the woman's busted leg." $) text!
+	($ cname .. " essaie de soigner la jambe blessée de la femme." $) text!
 	cmedical+ if
-		($ cHe .. " uses " .. chis .. " medical expertise to quickly fix up her leg! She appreciates the help and gives what she can spare!" $) +crtext morale++ medicalREV medical++ goodfx -1 trunk-medical+ 2 trunk-food+
+		($ cHe .. " utilise son expertise medicale pour reparer rapidement sa jambe ! Elle apprecie l'aide et donne ce qu'elle peut !" $) +crtext morale++ medicalREV medical++ goodfx -1 trunk-medical+ 2 trunk-food+
 	then;
 	cmedical- if
-		($ cHe .. " has no idea what " .. che .. " is doing, wastes a day, and maybe makes things a little worse." $) +crtext medicalREV cloyalty- not if morale-- then loyaltyREV +cr fullcamp badfx -1 trunk-medical+ 1 calendar-day+
+		($ cHe .. " n'a aucune idee de ce qu'" .. che .. " fait, gaspille une journee, et empire peut-etre un peu les choses." $) +crtext medicalREV cloyalty- not if morale-- then loyaltyREV +cr fullcamp badfx -1 trunk-medical+ 1 calendar-day+
 	then;
 	medicalroll if
-		($ cHe .. " takes a day to help the woman treat her leg. She is thankful, but can't spare much!" $) +crtext morale++ medicalREV medical++ goodfx 2 trunk-food+
+		($ cHe .. " prend une journee pour aider la femme a soigner sa jambe. Elle est reconnaissante, mais ne peut pas donner grand chose !" $) +crtext morale++ medicalREV medical++ goodfx 2 trunk-food+
 	else
-		($ cHe .. " tries to help over the course of a day, but doesn't manage to do much. Still, practice makes perfect." $) +crtext medicalREV medical++ cloyalty- not if morale-- then loyaltyREV badfx
+		($ cHe .. " essaie d'aider pendant une journee, mais n'arrive pas a faire grand chose. Quand meme, c'est de la pratique." $) +crtext medicalREV medical++ cloyalty- not if morale-- then loyaltyREV badfx
 	then +cr fullcamp -1 trunk-medical+ 1 calendar-day+ heal-event
 ;
 
 cyoa-bridge: common2-busted-coolit
 	cpet? if
-		($ cname .. " starts rolling around on the cold ground." $)
+		($ cname .. " commence a se rouler sur le sol froid." $)
 	else
-		($ cname .. " tells the woman to " .. "COOL IT." pbold $)
+		($ cname .. " dit a la femme de " .. "SE CALMER." pbold $)
 	then text!
 	cool-it-7 if
-		char-gen to recruitee "Crutch Woman" recruitee .name!
-		($ "She takes this as advice that she should apply cold compresses to her leg. After " .. thegroup .. " helps her with that, she offers a reward!" $) +crtext
+		char-gen to recruitee "Femme a Bequille" recruitee .name!
+		($ "Elle prend ca comme un conseil d'appliquer des compresses froides sur sa jambe. Apres que " .. thegroup .. " l'aide avec ca, elle offre une recompense !" $) +crtext
 		cooled-it goodfx rescue-trainitem morale3+all
 	else cool-it++
-		($ "She asks " .. "WHAT IS WRONG WITH YOU, EXACTLY?" pbold .. " before limping away in disgust." $) +crtext
+		($ "Elle demande " .. "MAIS QU'EST-CE QUI CLOCHE CHEZ VOUS ?" pbold .. " avant de partir en boitant degoutee." $) +crtext
 		morale--all badfx
 	then witsattREV
 ;
 
 cyoa-choice: common2-busted-bandit
-	($ cname .. " easily robs the wounded woman of what little supplies she had left. Way to go!" $) text! badfx
+	($ cname .. " vole facilement le peu de provisions qu'il restait a la femme blessée. Bravo !" $) text! badfx
 		2 4 rnd trunk-food+ rob-guilt aholeREV
 ;
 
 cyoa: common2-busted
-	"Busted Leg" cyoa-title! image-female-zombie-3
-	($ Thegroup .. " meets a woman limping around with a crutch. One of her legs was wounded in a recent fall as she was getting away from zombies." $) text!
+	"Jambe Cassee" cyoa-title! image-female-zombie-3
+	($ Thegroup .. " rencontre une femme qui boite avec une bequille. Une de ses jambes a ete blessée dans une chute recente en fuyant des zombies." $) text!
 		trunk-medical 0 > if
-			medicalest charchoice( ": Help her leg" )choice: common2-busted-med
-			choice( "No time to help" )choice
+			medicalest charchoice( ": Soigner sa jambe" )choice: common2-busted-med
+			choice( "Pas le temps d'aider" )choice
 		else
-			($ Thegroup .. " lacks any medical supplies to help her with." $) +crtext
-			choice( "Leave her alone" )choice
+			($ Thegroup .. " n'a pas de provisions medicales pour l'aider." $) +crtext
+			choice( "La laisser seule" )choice
 		then
 		most-grating if
-			charchoice( ": Tell her to COOL IT" fcoolit )choice: common2-busted-coolit
+			charchoice( ": Lui dire de SE CALMER" fcoolit )choice: common2-busted-coolit
 		then
 		most-ahole if
-			charchoice( ": Steal her supplies" )choice: common2-busted-bandit
+			charchoice( ": Voler ses provisions" )choice: common2-busted-bandit
 		then
 ;
 
@@ -476,59 +458,59 @@ cyoa: common2-busted
 ;
 
 cyoa-choice: common2-carhelp-mech
-	($ cname .. " tries to fix the man's broken car." $) text!
+	($ cname .. " essaie de reparer la voiture cassée de l'homme." $) text!
 	cmechanic+ if
-		($ cHe .. " uses " .. chis .. " car knowledge to quickly repair it! He appreciates the help and gives some supplies!" $) +crtext morale++ mechanicREV mechanic++ goodfx ammosearch1
+		($ cHe .. " utilise ses connaissances en mecanique pour la reparer rapidement ! Il apprecie l'aide et donne des provisions !" $) +crtext morale++ mechanicREV mechanic++ goodfx ammosearch1
 	then;
 	cmechanic- if
-		($ cHe .. " also has no idea what " .. che .. " is doing, and wastes a good day farting around." $) +crtext mechanicREV cloyalty- not if morale-- then loyaltyREV +cr fullcamp badfx 1 calendar-day+ heal-event
+		($ cHe .. " non plus n'a aucune idee de ce qu'" .. che .. " fait, et gaspille une bonne journee." $) +crtext mechanicREV cloyalty- not if morale-- then loyaltyREV +cr fullcamp badfx 1 calendar-day+ heal-event
 	then;
 	mechanicroll if
-		($ cHe .. " takes a day to help fix the man's car. He gives some supplies as a reward!" $) +crtext morale++ mechanicREV mechanic++ goodfx ammosearch1
+		($ cHe .. " prend une journee pour aider a reparer la voiture. Il donne des provisions en recompense !" $) +crtext morale++ mechanicREV mechanic++ goodfx ammosearch1
 	else
-		($ cHe .. " tries to help over the course of a day, but isn't successful. Still, it's good practice." $) +crtext mechanicREV mechanic++ cloyalty- not if morale-- then loyaltyREV badfx
+		($ cHe .. " essaie d'aider pendant une journee, mais sans succes. C'est quand meme de la pratique." $) +crtext mechanicREV mechanic++ cloyalty- not if morale-- then loyaltyREV badfx
 	then +cr fullcamp 1 calendar-day+ heal-event
 ;
 
 cyoa-bridge: common2-carhelp-coolit
 	cpet? if
-		($ cname .. " ignores the stranded man and starts eating ants crawling on the cold ground." $)
+		($ cname .. " ignore l'homme en panne et commence a manger des fourmis sur le sol froid." $)
 	else
-		($ cname .. " tells the stranded man to " .. "COOL IT." pbold $)
+		($ cname .. " dit a l'homme en panne de " .. "SE CALMER." pbold $)
 	then text!
 	cool-it-7 if
-		char-gen to recruitee "Stranded Man" recruitee .name!
-		($ "YOU'RE RIGHT! THE CAR JUST NEEDS MORE COOLANT TO RUN AGAIN!" pbold .. " He offers a reward!" $) +crtext
+		char-gen to recruitee "Homme en Panne" recruitee .name!
+		($ "T'AS RAISON ! LA VOITURE A JUSTE BESOIN DE PLUS DE LIQUIDE DE REFROIDISSEMENT !" pbold .. " Il offre une recompense !" $) +crtext
 		cooled-it goodfx rescue-trainitem morale3+all
 	else cool-it++
-		($ "He starts yelling at " .. thegroup .. " until " .. gthey .. " leave" .. g1s .. "." $) +crtext
+		($ "Il commence a crier apres " .. thegroup .. " jusqu'a ce qu'" .. gthey .. " parte" .. g1s .. "." $) +crtext
 		morale--all badfx
 	then witsattREV
 ;
 
 cyoa-choice: common2-carhelp-bandit
-	($ cname .. " easily robs the stranded man of his supplies, even his wrench." $) text! badfx
+	($ cname .. " vole facilement les provisions de l'homme en panne, meme sa cle anglaise." $) text! badfx
 		common2-carhelp-win 1 WEAPON_WRENCH trunk.weapon+ rob-guilt aholeREV
 ;
 
 cyoa: common2-carhelp
-	"Helping with Car Trouble" cyoa-title!
-	char-gen to recruitee 
+	"Aider en Cas de Panne" cyoa-title!
+	char-gen to recruitee
 	0 recruitee .mechanical!
 	0 recruitee .female! ricon
 	WEAPON_WRENCH recruitee .weapona!
-	($ Thegroup .. " meets a man trying to repair his broken car. He clearly has no idea of what he's doing." $) text!
-		mechanicest charchoice( ": Help fix car" )choice: common2-carhelp-mech
+	($ Thegroup .. " rencontre un homme qui essaie de reparer sa voiture cassée. Il n'a clairement aucune idee de ce qu'il fait." $) text!
+		mechanicest charchoice( ": Aider a reparer la voiture" )choice: common2-carhelp-mech
 		most-charming if
-			charchoice( ": Recruit him" )choice: recruit-yes
+			charchoice( ": Le recruter" )choice: recruit-yes
 		then
 		most-grating if
-			charchoice( ": Tell him to COOL IT" fcoolit )choice: common2-carhelp-coolit
+			charchoice( ": Lui dire de SE CALMER" fcoolit )choice: common2-carhelp-coolit
 		then
 		most-ahole if
-			charchoice( ": Steal his supplies" )choice: common2-carhelp-bandit
+			charchoice( ": Voler ses provisions" )choice: common2-carhelp-bandit
 		then
-		choice( "No time to help" )choice
+		choice( "Pas le temps d'aider" )choice
 ;
 
 // Bandit raid
@@ -538,8 +520,8 @@ cyoa: common2-carhelp
 ;
 
 cyoa-choice: common2-raid-calmshot
-	($ cname .. " takes a cowboy rifle from the settlers and hides in a tall place. When the bandits show up, " .. che .. " makes multiple amazing shots to blow out their tires.
-	The bandits become too freaked out to continue the attack! The fight is over before it starts. The settlers are glad to give the reward!" $) text! common2-raid-prize
+	($ cname .. " prend un fusil des colons et se cache en hauteur. Quand les bandits arrivent, " .. che .. " fait plusieurs tirs incroyables pour crever leurs pneus.
+	Les bandits sont trop paniques pour continuer l'attaque ! Le combat est termine avant de commencer. Les colons sont ravis de donner la recompense !" $) text! common2-raid-prize
 ;
 
 : common2-raid-shoot+
@@ -548,10 +530,10 @@ cyoa-choice: common2-raid-calmshot
 
 : common2-raid-fightprize
 	choosehuman alive? if
-		"The settlers remain true to their word and give a large reward!" +crtext
+		"Les colons tiennent leur promesse et donnent une grande recompense !" +crtext
 		common2-raid-prize
 		most-calmshot if
-			choosechar ($ cname .. " does some crazy shots that inspire the others." $) +crtext
+			choosechar ($ cname .. " fait des tirs fous qui inspirent les autres." $) +crtext
 			' .shooting++ foreach-team-char
 		else
 			' common2-raid-shoot+ foreach-team-char
@@ -560,100 +542,100 @@ cyoa-choice: common2-raid-calmshot
 ;
 
 cyoa-choice: common2-raid-fight
-	someicon ($ Thegroup .. " decides to help the settlers fight the bandits, directly." $) text!
+	someicon ($ Thegroup .. " decide d'aider les colons a combattre les bandits directement." $) text!
 	shootingREVall
 	shooting-total 14 > if
-		"The shooting skill of the group helps the settlers overwhelm the bandits. No one is hurt!" +crtext
+		"Les competences de tir du groupe aident les colons a ecraser les bandits. Personne n'est blesse !" +crtext
 		common2-raid-fightprize
 	then;
 	shooting-total 10 > if
-		"The fight is harsh, but the group's shooting abilities save the settlement." +crtext
+		"Le combat est rude, mais les capacites de tir du groupe sauvent le campement." +crtext
 		ouch--all bitefx common2-raid-fightprize
 	then;
 	shooting-total 6 > if
-		"The fight is brutal! The group's shooting skills barely help drive the bandits away." +crtext
+		"Le combat est brutal ! Les capacites de tir du groupe reussissent juste a repousser les bandits." +crtext
 		ouch12rnd--all bitefx common2-raid-fightprize
 	then;
-		"The help provided wasn't nearly enough in the shootout. The bandits drive everyone from the settlement." +crtext ouch2-all bitefx
+		"L'aide fournie etait loin d'etre suffisante dans la fusillade. Les bandits chassent tout le monde du campement." +crtext ouch2-all bitefx
 ;
 
 cyoa-choice: common2-raid-mech
-	($ cname .. " tries to build up the settlement's defenses." $) text!
+	($ cname .. " essaie de renforcer les defenses du campement." $) text!
 	cmechanic+ if
-		($ cHe .. " quickly makes plans and gets people to help " .. chim .. " turn the place into a fortress! The bandits are overwhelmed by the new defenses when they show up, and flee without hurting anyone." $) +crtext mechanicREV mechanic++ common2-raid-prize
+		($ cHe .. " fait rapidement des plans et amene des gens a l'aider a transformer l'endroit en forteresse ! Les bandits sont ecrases par les nouvelles defenses a leur arrivee, et fuient sans blesser personne." $) +crtext mechanicREV mechanic++ common2-raid-prize
 	then;
 	mechanicroll if
-		($ cHe .. " tells the settlers how to build fortifications in some weak areas. The extra defenses seem to help a lot in the bandit attack! The settlers are thankful for the help!" $) +crtext mechanicREV mechanic++ common2-raid-prize
+		($ cHe .. " dit aux colons comment construire des fortifications dans les zones faibles. Les defenses supplementaires semblent beaucoup aider lors de l'attaque des bandits ! Les colons sont reconnaissants !" $) +crtext mechanicREV mechanic++ common2-raid-prize
 	else
-		($ cHe .. " tries to fortify some things, but the efforts didn't seem to help much against the vicious bandit attack. The wounded settlers accuse " .. cname .. " of wasting their time, and refuse to give the reward." $) +crtext mechanicREV morale--all sting--all bitefx
+		($ cHe .. " essaie de fortifier des trucs, mais les efforts n'ont pas vraiment aide contre l'attaque vicieuse des bandits. Les colons blesses accusent " .. cname .. " de leur avoir fait perdre du temps, et refusent de donner la recompense." $) +crtext mechanicREV morale--all sting--all bitefx
 	then
 ;
 
 cyoa: common2-raid
-	"Bandit Raid Defense" cyoa-title!
-	($ Thegroup .. " is asked for help by a settlement. They say they will be raided by bandits soon. If " .. thegroup .. " helps with the defense, " .. gthey .. " will get a reward of 15 food, some ammo, and a cowboy rifle!
-	This could be " .. "very dangerous..." rbold $) text!
-		vehicle.which@ 0 > if 
-			choice( "Don't help, drive off" )choice else choice( "Don't help them" )choice
+	"Defense Contre les Bandits" cyoa-title!
+	($ Thegroup .. " est sollicite par un campement. Ils disent qu'ils vont bientot etre attaques par des bandits. Si " .. thegroup .. " aide a la defense, " .. gthey .. " recevra une recompense de 15 nourriture, des munitions, et un fusil de cow-boy !
+	Ca pourrait etre " .. "tres dangereux..." rbold $) text!
+		vehicle.which@ 0 > if
+			choice( "Ne pas aider, partir" )choice else choice( "Ne pas les aider" )choice
 		then
-		choice( "Help them in shootout" )choice: common2-raid-fight
-		mechanicest charchoice( ": Build up defenses" )choice: common2-raid-mech
+		choice( "Les aider dans la fusillade" )choice: common2-raid-fight
+		mechanicest charchoice( ": Renforcer les defenses" )choice: common2-raid-mech
 		most-calmshot if
-			charchoice( ": I'll handle it" )choice: common2-raid-calmshot
+			charchoice( ": Je m'en occupe" )choice: common2-raid-calmshot
 		then
 ;
 
 // Rooftop relaxing
 
 cyoa-choice: common2-relax-morale
-	($ Thegroup .. " spends some time " .. "just chillin'" fbold .. "." $) text!
+	($ Thegroup .. " passe du temps a " .. "juste se detendre" fbold .. "." $) text!
 	morale2+all cool-it++ goodfx
 ;
 
 cyoa-choice: common2-relax-strength
-	($ Thegroup .. " gets some impromptu strength exercises in. The heaviest furniture that can be lifted is picked up, then set down. Repeat until " .. "MEGABUFF" fbold .. "." $) text!
+	($ Thegroup .. " fait des exercices de musculation impromptus. Le meuble le plus lourd possible est souleve, puis repose. Repeter jusqu'a " .. "MEGA GONFLE" fbold .. "." $) text!
 	' .strength++ foreach-team-char goodfx
 ;
 
 cyoa-choice: common2-relax-fitness
-	($ Thegroup .. " gets some impromptu cardiovascular exercises in. Mostly burpees, some jumping jacks. Repeat until " .. "ULTRA FIT" fbold .. "." $) text!
+	($ Thegroup .. " fait des exercices cardio impromptus. Surtout des burpees, quelques jumping jacks. Repeter jusqu'a " .. "ULTRA FIT" fbold .. "." $) text!
 	' .fitness++ foreach-team-char goodfx
 ;
 
 cyoa-choice: common2-relax-med
-	($ cname .. " teaches " .. everyone .. " what " .. che .. " knows about emergency medical care and semi-painless dentistry." $) text!
-		cmedical- if 
-			($ cHe .. " doesn't know much about it! It's a completely useless lesson." $) +crtext badfx
+	($ cname .. " enseigne a " .. everyone .. " ce qu'" .. che .. " sait sur les soins d'urgence et la dentisterie semi-indolore." $) text!
+		cmedical- if
+			($ cHe .. " n'y connait pas grand chose ! C'est une lecon completement inutile." $) +crtext badfx
 		else
 			cchar ' .medical++ foreach-team-char-except goodfx
 		then medicalREV morale++
 ;
 
 cyoa-choice: common2-relax-mech
-	($ cname .. " teaches " .. everyone .. " what " .. che .. " knows about car repair and other ways to accidentally mess up machinery." $) text!
-		cmechanic- if 
-			($ cHe .. " doesn't know much about it! It's a completely useless lesson." $) +crtext badfx
+	($ cname .. " enseigne a " .. everyone .. " ce qu'" .. che .. " sait sur la reparation de voitures et les autres facons de casser accidentellement de la machinerie." $) text!
+		cmechanic- if
+			($ cHe .. " n'y connait pas grand chose ! C'est une lecon completement inutile." $) +crtext badfx
 		else
 			cchar ' .mechanic++ foreach-team-char-except goodfx
 		then mechanicREV morale++
 ;
 
 cyoa-choice: common2-roofrelax-reveal
-	($ cname .. " reveals " .. chis .. " TRUE ESSENCE." $) text!
+	($ cname .. " revele sa " .. "VRAIE ESSENCE." $) text!
 		allREV goodfx
 ;
 
 cyoa: common2-roofrelax
 	image-tired-survivor
-	($ Thegroup .. " gets a rare peaceful moment to relax on an apartment roof." $) text!
+	($ Thegroup .. " profite d'un rare moment tranquille pour se reposer sur un toit d'immeuble." $) text!
 	solo if
 		soloer choosechar
-		($ "With no one to bother " .. chim .. ", " .. che .. " decides to:" $) +crtext
-		choice( "COOL IT" )choice: common2-relax-morale
-		choice( "Exercise for strength" )choice: common2-relax-strength
-		choice( "Exercise for fitness" )choice: common2-relax-fitness
+		($ "Sans personne pour le deranger, " .. che .. " decide de :" $) +crtext
+		choice( "SE CALMER" )choice: common2-relax-morale
+		choice( "Faire des exercices de force" )choice: common2-relax-strength
+		choice( "Faire des exercices d'endurance" )choice: common2-relax-fitness
 	else
-		"There's time to talk, and someone reveals a lot about themself:" +crtext
+		"Il y a le temps de parler, et quelqu'un revele beaucoup sur lui-meme :" +crtext
 		' common2-roofrelax-reveal cyoa-team-choice
 	then
 ;
@@ -662,26 +644,26 @@ cyoa: common2-roofrelax
 
 cyoa: common2-saferelax
 	image-door-on-brick
-	($ Thegroup .. " gets a peaceful moment to rest in a safehouse, no zombies in sight." $) text!
+	($ Thegroup .. " profite d'un moment tranquille pour se reposer dans un refuge, sans zombie en vue." $) text!
 	solo if
 		soloer choosechar
-		($ "With no one to bother " .. chim .. ", " .. che .. " decides to:" $) +crtext
-		choice( "COOL IT" )choice: common2-relax-morale
-		choice( "Exercise for strength" )choice: common2-relax-strength
-		choice( "Exercise for fitness" )choice: common2-relax-fitness
+		($ "Sans personne pour le deranger, " .. che .. " decide de :" $) +crtext
+		choice( "SE CALMER" )choice: common2-relax-morale
+		choice( "Faire des exercices de force" )choice: common2-relax-strength
+		choice( "Faire des exercices d'endurance" )choice: common2-relax-fitness
 	else
-		"With some spare time, they decide to:" +crtext
-			50 %chance if 
-				choice( "COOL IT" )choice: common2-relax-morale
+		"Avec du temps libre, ils decidennt de :" +crtext
+			50 %chance if
+				choice( "SE CALMER" )choice: common2-relax-morale
 			else
 				50 %chance if
-					choice( "Exercise for strength" )choice: common2-relax-strength
+					choice( "Faire des exercices de force" )choice: common2-relax-strength
 				else
-					choice( "Exercise for fitness" )choice: common2-relax-fitness
+					choice( "Faire des exercices d'endurance" )choice: common2-relax-fitness
 				then
 			then
-			mechanicest charchoice( ": Teach mechanic skills" )choice: common2-relax-mech
-			medicalest charchoice( ": Teach medical skills" )choice: common2-relax-med
+			mechanicest charchoice( ": Enseigner la mecanique" )choice: common2-relax-mech
+			medicalest charchoice( ": Enseigner les soins" )choice: common2-relax-med
 	then
 ;
 

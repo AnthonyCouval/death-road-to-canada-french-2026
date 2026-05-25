@@ -7,24 +7,24 @@ cyoa{ road{
 
 cyoa: santa-despair
 	bully choosechar cicon
-	solo if 
-		"CHRISTMAS IS OVER FOREVER" cyoa-title!
-		($ cname .. ", alone and defeated, stops at an empty house. " .. cHe .. " goes up the chimney, and is never seen again." $) cyoa-text! badfx
+	solo if
+		"NOEL EST FINI POUR TOUJOURS" cyoa-title!
+		($ cname .. ", seul et vaincu, s'arrete dans une maison vide. " .. cHe .. " monte dans la cheminee, et ne fut jamais revu." $) cyoa-text! badfx
 		decruit-bad-silent
 	then;
 	notcchar to victim
-	"THAT ONE TIM ALLEN MOVIE BASICALLY" cyoa-title!
-	($ cname .. " lies down on the road in a state of despair. In a freak accident, " .. vname .. " runs " .. chim .. " over with the car. 
-	Due to the CURSE OF SAINT NICK, " .. vname .. " is instantly turned into the new Santa." $) cyoa-text! badfx
+	"CE FILM TIM ALLEN EN GROS" cyoa-title!
+	($ cname .. " s'allonge sur la route dans un etat de desespoir. Dans un accident bizarre, " .. vname .. " lui passe dessus avec la voiture.
+	En raison de la MALEDICTION DE SAINT NICOLAS, " .. vname .. " est instantanement transforme en nouveau Pere Noel." $) cyoa-text! badfx
 		cchar .kill
 		3 victim .specialtype!		
 ;
 
 cyoa: santa-camp
-	"The Night Before Christmas" cyoa-title!
-	($ Thegroup .. " wakes up after a night of camping to find an extra Santa. " .. gHe .. " decides to say nothing about this, and to pretend that nothing is wrong." $) cyoa-text! basic-tone
+	"La Nuit Avant Noel" cyoa-title!
+	($ Thegroup .. " se reveille apres une nuit de camping pour trouver un Pere Noel en plus. " .. gHe .. " decide de ne rien dire, et de faire comme si tout allait bien." $) cyoa-text! basic-tone
 	char-gen to recruitee 4 recruitee .shooting! 0 recruitee .female! 6 recruitee .morale!  ricon
-	50 %chance if 
+	50 %chance if
 		3 screcruit "Santa" recruitee .name! santajoins
 	else
 		4 screcruit "Evil Santa" recruitee .name! evilsantajoins

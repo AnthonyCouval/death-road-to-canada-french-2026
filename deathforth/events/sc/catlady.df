@@ -2,11 +2,11 @@ cyoa{ road{
 
 cyoa: catlady-camp
 	sc-camper choosechar cicon
-	"Cat food is expensive" cyoa-title!
+	"La nourriture pour chat c'est cher" cyoa-title!
 	trunk-food 4 < if
-		($ cname .. " is fed up with the food situation. She takes her enormous swarm of cats and the remaining food, then leaves the team." $) cyoa-text! decruit-bad-silent-takeweapons eat-all
+		($ cname .. " en a marre de la situation alimentaire. Elle prend son enorme nuee de chats et la nourriture restante, puis quitte l'equipe." $) cyoa-text! decruit-bad-silent-takeweapons eat-all
 	else
-	($ "Before camping for the day, " .. cname .. " gets her hands on the food and throws a bunch on the ground. A large swarm of cats appear out of seemingly nowhere and consume it." $) cyoa-text!
+	($ "Avant de camper pour la journee, " .. cname .. " met la main sur la nourriture et en jette une bonne partie par terre. Un enorme essaim de chats surgit de nulle part et la devore." $) cyoa-text!
 		trunk-food 7 > if -8 trunk-food+ else eat-all then
 	then
 	badfx team-count 0 > if +cr fullcamp then
@@ -15,13 +15,13 @@ cyoa: catlady-camp
 
 cyoa: catlady-despair
 	bully choosechar cicon
-	"Cat Party" cyoa-title!
-	($ cname .. "'s expression brightens.
-	" .. "Who can stay sad when they have kitties?" pbold .. "
-	A swarm of adorable cats show up!" $) cyoa-text!
+	"Fete des Chats" cyoa-title!
+	($ "Le visage de " .. cname .. " s'illumine.
+	" .. "Comment rester triste quand on a des petits minous ?" pbold .. "
+	Un essaim de chats adorables debarque !" $) cyoa-text!
 	' .morale2+ foreach-team-char goodfx
-	trunk-food 7 > if "They get into the food and eat a bunch." +crtext -8 trunk-food+ then;
-	trunk-food 0 > if "They eat the remaining food." +crtext eat-all then;
+	trunk-food 7 > if "Ils s'attaquent a la nourriture et en mangent une bonne partie." +crtext -8 trunk-food+ then;
+	trunk-food 0 > if "Ils mangent toute la nourriture restante." +crtext eat-all then;
 ;
 	
 } }

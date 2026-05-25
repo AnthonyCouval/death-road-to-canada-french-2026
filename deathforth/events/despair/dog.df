@@ -8,13 +8,13 @@ uses road.df
 cyoa{ road{
 
 cyoa: dog-lost
-	"Lost to Despair" cyoa-title!
+	"Perdu dans le Desespoir" cyoa-title!
 	despair-start!
-	($ cname .. " has lost all faith in " .. chis .. " pack. " .. cHe .. " sits down and simply refuses to continue on the journey." $) cyoa-text! badfx
+	($ cname .. " a perdu toute confiance en sa meute. " .. cHe .. " s'assoit et refuse simplement de continuer le voyage." $) cyoa-text! badfx
 		
 	notsolo ccat? and if
 		notcchar to victim
-		($ cname .. " decides to maul " .. vname .. " real quick before giving up. " .. "One for the road." rbold $) +crtext
+		($ cname .. " decide de mutiler " .. vname .. " rapidement avant d'abandonner. " .. "Un pour la route." rbold $) +crtext
 		victim .ouch2- bitefx
 	then
 	
@@ -23,38 +23,38 @@ cyoa: dog-lost
 	
 cyoa: dog-attack
 	despair-start-victim!
-	($ cDogcat .. " Attack" $) cyoa-title!
-	($ cname .. " snaps, seemingly out of nowhere, and mauls " .. vname .. " in a flurry of " .. csnarlhiss .. "ing and " .. cteethclaws .. "." $) cyoa-text! 
-	cdog? if 
-		victim .ouch2- 
-	else 
+	($ cDogcat .. " Attaque" $) cyoa-title!
+	($ cname .. " craque, apparemment de nulle part, et mutile " .. vname .. " dans une furie de " .. csnarlhiss .. "ements et de " .. cteethclaws .. "." $) cyoa-text!
+	cdog? if
+		victim .ouch2-
+	else
 		ccat? if
 			victim .kill
 		else
-			victim .ouch-- 
+			victim .ouch--
 		then
 	then bitefx
 	ccat? if
-		($ "The " .. cdogcat .. " doesn't seem guilty about this murder. In fact, " .. che .. " seems very pleased with " .. chim .. "self.
+		($ "Le " .. cdogcat .. " ne semble pas coupable de ce meurtre. En fait, " .. che .. " semble tres content de lui.
 		" $) +crtext
 		morale4+
 	else	
-		($ "Realizing what " .. che .. " did, the " .. cdogcat .. " flees and never returns." $) +crtext
+		($ "Realisant ce qu'" .. che .. " a fait, le " .. cdogcat .. " prend la fuite et ne revient jamais." $) +crtext
 		decruit-bad-silent-takeweapons
 	then	
 ;
 
 cyoa: dog-tantrum
 	despair-start!
-	($ cDogcat .. " Tantrum" $) cyoa-title!
-	($ cname .. " throws a huge tantrum. " .. cHe .. " snorts and leaps around in one place. After finishing by ripping up some grass and peeing defiantly, " .. che .. " feels a little better." $) cyoa-text! goodfx
+	($ cDogcat .. " Crise" $) cyoa-title!
+	($ cname .. " fait une enorme crise. " .. cHe .. " renifle et saute sur place. Apres avoir termine en arrachant de l'herbe et en faisant ses besoins de facon provocatrice, " .. che .. " se sent un peu mieux." $) cyoa-text! goodfx
 	morale++
 	notsolo if
 		ccat? if
-			($ "During the tantrum, " .. cname .. " took the opportunity to maim " .. everyone .. "." $) +crtext
+			($ "Pendant la crise, " .. cname .. " en a profite pour estropier " .. everyone .. "." $) +crtext
 			cchar ' .sting-- foreach-team-char-except bitefx
 		else
-			($ "These antics were amusing to watch." $) +crtext
+			($ "Ces pitreries etaient amusantes a regarder." $) +crtext
 			cchar ' .morale++ foreach-team-char-except
 		then
 	then

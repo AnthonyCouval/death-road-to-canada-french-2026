@@ -9,10 +9,10 @@ cyoa-choice: bandit-car-plow
 cyoa-choice: bandit-car-paranoid
 	($ cname .. " avait trouve un plan pendant le discours." $) cyoa-text!
 	cpet? if
-		($ cHe .. " commence a klaxonner. Les bandits sont amuses de voir que c'est un animal qui fait ca. Ils decident de laisser passer " .. thegroup .. ". Tout etait calcule !" $)
+		($ cHe .. " commence a klaxonner. Les bandits sont amuses par le spectacle d'un animal qui fait ca. Ils decident de laisser passer " .. thegroup .. ". Tout etait prevu !" $)
 	else
-		($ cHe .. " appuie soudainement sur l'accelerateur et tourne sec. La voiture se faufile par une petite breche dans le barrage, puis continue.
-		Le temps que les bandits reagissent, " .. thegroup .. " a deja trop d'avance pour que ca vaille la peine de les poursuivre." $)
+		($ cHe .. " appuie soudainement sur l'accelerateur et tourne sec. La voiture se faufile par une petite brèche dans le barrage, puis continue.
+		Le temps que les bandits reagissent, " .. thegroup .. " a deja trop d'avance pour qu'il vaille la peine de les poursuivre." $)
 	then +crtext morale++all witsattREV goodfx
 ;
 

@@ -47,10 +47,10 @@ cyoa: siege1-cabin
 cyoa: siege1-cabineasy
 	image-old-house
 	"1 Heure de Vacances en cabane" cyoa-title!
-	($ Thegroup .. " se perd en conduisant a travers une foret. " .. gThey .. " s'arretent " .. g1s .. " a une cabane pour determiner ou " .. gtheyare .. ", mais " .. g1s .. " mais ils se font pieger par une horde errante." $) cyoa-text! basic-tone
+	($ Thegroup .. " se perd en conduisant a travers une forêt. " .. gThey .. " s'arretent " .. g1s .. " a une cabane pour determiner ou " .. gtheyare .. ", mais " .. g1s .. " mais ils se font pieger par une horde errante." $) cyoa-text! basic-tone
 		1.4 ( 1 ) 6 14 rnd 1 siegecast
 		"events/siege/region/cabin-easy.df" $load-region
-		choice( "Try to Survive" )choice: premission
+		choice( "Essayer de survivre" )choice: premission
 ;
 
 cyoa: siege1-rescuecabin
@@ -83,7 +83,7 @@ cyoa: siege1-rescuerest
 
 cyoa: siege1-dirtroadeasy
 	"Coince dans un fosse" cyoa-title!
-	($ "La voiture reste coincee dans le fosse pres dun chemin de terre pourri " .. Thegroup .. " is close to getting the car out when a roaming horde draws near. " .. gthey .. " doit distraire les zombies pour quils ne sapprochent pas trop." $) cyoa-text! basic-tone
+	($ "La voiture reste coincee dans le fosse pres dun chemin de terre pourri " .. Thegroup .. " est sur le point de degager la voiture quand une horde errante s'approche. " .. gthey .. " doit distraire les zombies pour qu'ils ne s'approchent pas trop." $) cyoa-text! basic-tone
 	1.8 ( 1.1, then 2 ) 9 20 rnd 0.3 + 0.7 siegecast
 	"events/siege/region/road-dirt.df" $load-region
 		choice( "Essayez de survivre" )choice: premission

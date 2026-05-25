@@ -51,14 +51,14 @@ cyoa{
 cyoa: parkrescue
 	rescue choosechar cicon
 	dead? if npc-died then;
-	"Bathroom Break" cyoa-title!
-	($ cname .. " survived " .. chis .. " mission of finding a bathroom. Then " .. che .. " got surrounded by the nearby hordes.
-	" .. cHe .. " asks if " .. che .. " can follow you around." $) cyoa-text!
+	"Pause Pipi" cyoa-title!
+	($ cname .. " a accompli sa mission de trouver des toilettes. Puis " .. che .. " s'est retrouve encercle par les hordes voisines.
+	" .. cHe .. " demande s'" .. che .. " peut vous suivre." $) cyoa-text!
 	park-car-spawned 0 > if
-		($ "There were too many zombies in the other bathroom! I think I dropped my car keys in there." pbold $) +crtext
+		($ "Il y avait trop de zombies dans l'autre salle de bain ! Je crois que j'ai laisse mes cles de voiture la-dedans." pbold $) +crtext
 	then
-		choice( "Let " .. chim .. " follow you"  )choice: rescueme-2
-		choice( "Leave " .. chim .. " for now" )choice
+		choice( "Le laisser vous suivre" )choice: rescueme-2
+		choice( "Le laisser pour l'instant" )choice
 ;
 
 }

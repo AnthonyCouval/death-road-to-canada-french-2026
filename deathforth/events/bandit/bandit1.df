@@ -2,28 +2,28 @@
 cyoa{ road{
 
 : bandithurt
-	ezbandit? if 
+	ezbandit? if
 		ouch--all
 	else
 		ouch12rnd--all
 	then
 ;
 
-: haggler-morale 
+: haggler-morale
 	haggler? if else morale--all then
 ;
 
 : bandit-give-in
-	($ Thegroup .. " decide de ne pas prendre de risques. " .. gThey .. " cedent" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
+	($ Thegroup .. " decide de ne pas prendre de risques. " .. gThey .. " cedent aux exigences des bandits." $) cyoa-text! badfx
 ;
 cyoa-choice: bandit-pay-foodtoll
-	someicon bandit-give-in bandit-toll-pay haggler-morale 
+	someicon bandit-give-in bandit-toll-pay haggler-morale
 ;
 cyoa-choice: bandit-pay-lowtoll
 	someicon bandit-give-in eat-all bandit-ammomed2 haggler-morale
 ;
 cyoa-choice: bandit-pay-badtoll
-	someicon bandit-give-in bandit-ammomed 
+	someicon bandit-give-in bandit-ammomed
 		// check if in car
 		vehicle.which@ 0 if
 			bandit-gas
@@ -32,7 +32,7 @@ cyoa-choice: bandit-pay-badtoll
 		then morale2-all
 ;
 cyoa-choice: bandit-start-fight
-	($ Thegroup .. " sait que chaque provision est essentielle pour avoir une chance d'atteindre le Canada. Alors " .. gthey .. " se battent" .. g1s .. "." $) cyoa-text! someicon bitefx
+	($ Thegroup .. " sait que chaque provision est essentielle pour avoir une chance d'atteindre le Canada. Alors " .. gthey .. " se battent." $) cyoa-text! someicon bitefx
 		ezbandit? if
 			ouch--all
 		else
@@ -45,7 +45,7 @@ cyoa-choice: bandit-start-fight
 
 : bandit-demand
 	bandit-toll? if
-		($ bandit-toll .. " nourriture " .. "pour passer en securite." rbold $) +text
+		($ bandit-toll .. " nourriture " .. "pour passer surement." rbold $) +text
 		choice( "Payer le peage de " .. bandit-toll .. " nourriture" )choice: bandit-pay-foodtoll
 	else
 		trunk-food 4 > if

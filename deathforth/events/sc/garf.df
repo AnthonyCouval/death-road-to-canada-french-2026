@@ -1,12 +1,12 @@
 cyoa{ mission{
 
 cyoa: garf-survived
-	"Tuesday" cyoa-title!
-	($ Thegroup .. " wanders through the forest outside of this world for a short time. 
-		In a blink, " .. gtheyare .. " back to where " .. gtheywere .. " before being transported to that place.
-		That was terrifying!" $) text! badfx
-		bully .alive? if ($ bname .. " still hates Mondays." rbold $) +crtext 6 bully .morale! else
-		($ "Garf" pbold " is nowhere to be seen." rbold .. $) +crtext then
+	"Mardi" cyoa-title!
+	($ Thegroup .. " erre dans la foret hors de ce monde pendant un court moment.
+		En un clin d'oeil, " .. gtheyare .. " de retour la ou " .. gtheywere .. " avant d'etre transporte dans cet endroit.
+		C'etait terrifiant !" $) text! badfx
+		bully .alive? if ($ bname .. " deteste toujours les lundis." rbold $) +crtext 6 bully .morale! else
+		($ "Garf" pbold " est introuvable." rbold .. $) +crtext then
 ;
 
 } }
@@ -16,17 +16,17 @@ cyoa{ road{
 cyoa: garf-despair
 	bully choosechar cicon
 	solo if
-		"The Final Monday" cyoa-title!
-		($ cname .. " complains about Mondays to the empty car. Every day feels like a Monday.
-		It slowly becomes transparent, then disappears. Fading into the Mondays from which it came." $) cyoa-text! decruit-bad-silent sfx{ creepy }
+		"Le Lundi Final" cyoa-title!
+		($ cname .. " se plaint des lundis a la voiture vide. Chaque jour ressemble a un lundi.
+		Il devient progressivement transparent, puis disparait. Se fondant dans les lundis dont il est issu." $) cyoa-text! decruit-bad-silent sfx{ creepy }
 	else
-		"The Monday" cyoa-title!
-		($ cname .. " is unhappy. It slowly takes off its head in front of " .. everyone ..
-			". Time skips and the group is now in a strange forest. " .. "THIS IS THE DAY THAT I HATE" rbold .. " screams " .. cname .. ". " .. "THIS IS MONDAY!" rbold $) cyoa-text!
+		"Le Lundi" cyoa-title!
+		($ cname .. " est malheureux. Il se retire lentement la tete devant " .. everyone ..
+			". Le temps fait un bond en avant et le groupe se retrouve dans une foret etrange. " .. "C'EST LE JOUR QUE JE DETESTE" rbold .. " crie " .. cname .. ". " .. "C'EST LUNDI !" rbold $) cyoa-text!
 		2.8 18 20 rnd 2 siegecast // untouched
 		"events/siege/region/garf.df" $load-region
-		choice( "What's going on?" )choice: premission
-	then badfx 
+		choice( "Qu'est-ce qui se passe ?" )choice: premission
+	then badfx
 ;
 
 } }
