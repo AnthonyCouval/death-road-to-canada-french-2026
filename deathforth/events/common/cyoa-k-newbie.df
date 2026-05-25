@@ -38,7 +38,7 @@ cyoa{ road{
 		"La force vous permet de soulever et de lancer des meubles plus lourds. Les meubles lances sont les meilleures armes." shove
 		"Une combinaison de Force et de Forme physique determine la vitesse de balancement de larme et l'utilisation d'energie." shove
 		"Creez des personnages personnalises! Ils peuvent apparaitre aleatoirement dans le jeu." shove
-		"Pour la derniere etape du voyage, vous aurez besoin dun bon groupe ou de grandes armes." shove
+		"Pour la derniere etape du voyage, vous aurez besoin d'un bon groupe ou de grandes armes." shove
 		"La forme physique determine la quantite d'energie de melee que vous avez et la vitesse a laquelle vous la recuperez." shove
 		"FATIGUE donne de gros malus de stats! Eliminez la en dormant au prochain camp ou en vous reposant avant une mission." shove
 		"Si le moral des membres de l'equipe devient trop bas, ils commenceront a se disputer, a desesperer et a se poignarder dans le dos." shove
@@ -85,8 +85,8 @@ cyoa{ road{
 		"Les fusils ont des degats eleves et une grande capacite de perforation. Un seul tir peut pulveriser toute une rangee de zombies." shove
 		"Vous pouvez souvent faire reposer vos coequipiers dans la voiture. Utile si quelqu'un est blesse ou si vous voulez un groupe plus petit." shove
 		"Il n'y a pas vraiment de penalite pour qu'un coequipier soit mange par des zombies. Je vous donne juste ce fait." shove
-		
-		\ new hints for STOMACH 
+
+		\ new hints for STOMACH
         "La penetration des fusils depend de ton tir. Les fusils de haut niveau ont un plafond plus eleve de cibles percees." shove
         "Les armes automatiques sont bonnes pour se frayer un chemin dans une horde en cas de besoin." shove
         "Les modes de jeu difficiles requierent presque toujours une composition d equipe bien pensee." shove
@@ -126,10 +126,48 @@ cyoa{ road{
         "Les fouets ont un grand cleave, peu de degats et un etourdissement. Les haches ont un grand cleave et des degats eleves, mais mettent longtemps a frapper." shove
         "Il y a de bonnes raisons de skipper un lieu rare ; beaucoup ont beaucoup plus de zombies que la normale." shove
         "La force n'augmente pas les degats ! Par contre elle reduit le temps de recharge des armes et le cout en endurance par coup." shove
-		
+		"La penetration des fusils depend de votre Tir. Les fusils de meilleure qualite ont un plafond de penetration plus eleve." shove
+		"Les armes automatiques sont bonnes pour se frayer un chemin dans une horde en urgence." shove
+		"Les modes de jeu plus difficiles necessitent presque certainement une composition d'equipe bien pensee." shove
+		"DRTC est en developpement constant ! Rejoignez-nous sur notre discord et dites-nous ce que vous pensez des changements !" shove
+		"Artisan est un trait qui peut rendre certaines armes mediocres utilisables et puissantes. Par exemple : la rame." shove
+		"La voiture de depart necessite 4 en Mecanique pour etre reparee. Choisissez vos perks et traits judicieusement !" shove
+		"Le fusil de cowboy a la progression de penetration la plus lente parmi les fusils, gagnant 1 penetration par tranche de 3 en Tir." shove
+		"Le M.O.A.R a le plus grand nombre de penetrations possibles parmi les fusils, plafonnant a 11 cibles par tir." shove
+		"Bonnes combinaisons de stats : reflexes eleves avec attitude basse, attitude elevee avec reflexes bas, calme et loyaute bas." shove
+		"Si vos coequipiers ne font pas ce que vous voulez, changez votre TACTIQUE dans le menu pause." shove
+		"Mettre la TACTIQUE sur RUNNIN' est souvent un bon moyen de faire monter les PNJ dans la voiture." shove
+		"De nombreuses armes cassables compensent leur fragilite en etant de bonnes armes en debut de partie." shove
+		"Utilisez des fouets sur les personnages a faibles stats pour aider vos autres membres a maintenir un compte de kills eleve." shove
+		"Les zombies peuvent envahir un endroit si vous restez apres 21h. Partez a temps, ou preparez-vous au combat !" shove
+		"Parlez au Professeur Sycamore dans l'INFO HUT. Il parait qu'elle est plutot cool ou quelque chose comme ca." shove
+		"La nourriture et l'essence sont souvent les ressources les plus precieuses. Faites de votre mieux pour les preserver !" shove
+		"La vitesse de deplacement est puissante ! Cherchez des occasions de l'augmenter sur la route !" shove
+		"Du mal a jouer ? Bonnes combos de combat precoces : Fighter + Warrior, Megabuff + Hyperfixated, Gun Collector + Calm Under Fire." shove
+		"Du mal a jouer ? Bonnes combos de soutien precoces : Car Nut + Inventive, Surgeon + Civilized, Mechanic + Craftsman." shove
+		"Certaines armes automatiques peuvent etre utiles meme avec un faible Tir si vous tirez en rafales courtes." shove
+		"La mitrailleuse offre une puissance immense pour une consommation de munitions immense. Prudence !" shove
+		"Les personnages Paranoiacs, Forts-en-colere et Calmes-tireurs sont de bonnes options contre les bandits." shove
+		"Si vous avez assez de sprays de soin et que votre personnage mort n'est pas trop loin, vous pouvez le ranimer !" shove
+		"Vous detestez un perk ou trait ? Vous le trouvez sous-puissant ? Parlez-en sur le discord ! Il sera peut-etre retravaille." shove
+		"Les fouets ont un effet d'etourdissement, indique par un 'X' au contact. Ca garde les zombies a terre plus longtemps." shove
+		"Le legendaire Giant Animal est une voiture extremement resistante, mais consomme de l'essence a un rythme astronomique." shove
+		"Les armes ont des niveaux ! Les endroits rares contiennent souvent de meilleures armes, et les IA les ramasseront." shove
+		"Plages de penetration des fusils : Cowboy 0-2, Chasse 1-6, Sniper 1-5, Slug 2-8." shove
+		"Bien que Ranger promette 30% de reduction de recharge a distance, pour certaines armes ce CDR est en realite plus grand." shove
+		"Les degats sont tires aleatoirement entre 1 et 5, puis multiplies par la stat de puissance de l'arme." shove
+		"Les zombies ont toujours 5 points de vie. Une arme a 2.5 de puissance tuera en un coup 80% du temps." shove
+		"A chaque penetration, les fusils perdent 18% de puissance et de renversement. C'est une penalite multiplicative." shove
+		"Des fusils suffisamment puissants avec un Tir assez eleve peuvent tirer a travers les etageres !" shove
+		"Des fusils suffisamment puissants peuvent tirer a travers les objets, meme les epaves ! Utilisez les couvertures !" shove
+		"Il n'y a fonctionnellement aucune difference de degats entre le Zweihander et le Dragonslayer." shove
+		"En general, les coups multiples ne viennent que des armes de melee plus lourdes." shove
+		"Les fouets ont fort clivage, peu de degats et etourdissent. Les haches ont fort clivage et degats, mais sont tres lentes." shove
+		"Il y a de bonnes raisons d'eviter un emplacement rare ; beaucoup ont bien plus de zombies que d'habitude." shove
+		"La Force n'augmente pas les degats ! Elle reduit cependant le temps de recharge et le cout en endurance par frappe." shove
 	constant HINT-LIST
 	HINT-LIST var hint-list HINT-LIST shuffles to hint-list
-		
+
 : hintlist
 	hint-list depths 0= if "- Determinez vos traits et avantages preferes, puis creez un tas de personnages personnalises avec eux.
 	- Si vous avez de l'essence dans le reservoir, vous pouvez ignorer de nombreux endroits. Chaque endroit ignore augmente les chances de reussir !
@@ -145,7 +183,7 @@ cyoa{ road{
 cyoa: special-losthope
 	1.3 to diff-scalar 1.2 to road-difficulty 15 to road-trip-days
 	"TESTER LA VILLE DE L\'ESPOIR PERDUE EN MODE ROUTE PLUS MORTELLE!" text!
-	2.3 12 14 rnd 4 siegecast "events/finale/deathcity.df" $load-region 
+	2.3 12 14 rnd 4 siegecast "events/finale/deathcity.df" $load-region
 	choice( "TOUT OU RIEN !" rbold )choice: premission
 	150 trunk-rifle-shell+ 1 WEAPON_AK47 trunk.weapon+
 ;
@@ -158,20 +196,20 @@ cyoa: test-newcity
 	2. Buildings where the door is off the map" $) cyoa-text! basic-tone
 	1 1.3 frnd 7 15 frnd 2 zforecast
 	0.4 1 frnd weather! -1 1 frnd wind_force!
-	// citylayoutdeck 
+	// citylayoutdeck
 	// "events/city/region/burb-vary-3x4.df" $load-region
 	"events/city/region/test/region-downtown-custom.df" $load-region
 	// "events/city/region/test/region-downtown-test2.df" $load-region
-	
+
 		lot-draw
 ;
 
 cyoa: crashtest
-	($ "This option will take you straight to Canada, the final mission on the final day!
-	The purpose of this is to help people with the crash bug.
-	" .. "SPOILERS AHEAD" fbold $) text!
-		choice( "Woops no play normally" )choice
-		choice( "Warp straight to Canada!" )choice: warptocanada
+	($ "Cette option vous emmene directement au Canada, la mission finale du dernier jour !
+	Le but est d'aider les gens avec le bug de crash.
+	" .. "AVERTISSEMENT SPOILERS" fbold $) text!
+		choice( "Oops non jouer normalement" )choice
+		choice( "Teleporter directement au Canada !" )choice: warptocanada
 ;
 
 cyoa: special-testing
@@ -203,7 +241,7 @@ cyoa: location-testing2
 
 : weapon-testing
 	goblin-laugh
-	
+
 	100 trunk-bullet+
 	100 trunk-shotgun-shell+
 	100 trunk-rifle-shell+
@@ -219,25 +257,25 @@ cyoa: location-testing2
 	// 24 WEAPON_GLAUNCH trunk.weapon+
 	// 12 WEAPON_BAZOOKA trunk.weapon+
 	// 1 WEAPON_CAVALRY trunk.weapon+
-	
+
 	\ 1 WEAPON_SLAMFIRE trunk.weapon+
 	\ 1 WEAPON_SIXSHOOTER trunk.weapon+
-	\ 1 WEAPON_FLIPARI trunk.weapon+	
+	\ 1 WEAPON_FLIPARI trunk.weapon+
 ;
 
 : weapon-testing-2 ;
 
 cyoa: wykreset
-	"WYK codes reset!" text! goodfx gstats{ 0 to wyk-highscore }
+	"Codes WYK reinitialises !" text! goodfx gstats{ 0 to wyk-highscore }
 ;
 
 : arq-testing 30 trunk-food+ "events/arqregion.df" $load-region to-mission ;
 
 cyoa-choice: update-testing
-	\ 30 trunk-food+ 
+	\ 30 trunk-food+
 	"UPDATE TESTING" cyoa-title!
 	($ "Notes for the " .. "STOMACH" rainbold .. " Update:" $) text!
-	($ "BTTW compatibility has been improved with other perks. There are many more new trademark weapon combinations! 
+	($ "BTTW compatibility has been improved with other perks. There are many more new trademark weapon combinations!
 	Axes were reworked! They now have an AoE around the point of impact. There's also a citadel, train and rail yard to find!" rbold $) +crtext
 	($ "Also, most major firearms have been animated!" $) +crtext
 	($ "REMEMBER: ART IS SUBJECT TO CHANGE." $) +crtext
@@ -248,12 +286,12 @@ cyoa-choice: update-testing
 defer hintrepeat
 
 : startchoices
-	\ Q addition - RPG mode 
+	\ Q addition - RPG mode
 	gamedef{ ' thelongsiege gamemode? } if to_the_fare then
-	gamedef{ ' sceptermode gamemode? } if to_the_range then 
-	choice( "HIT THE ROAD" )choice
+	gamedef{ ' sceptermode gamemode? } if to_the_range then
+	choice( "EN ROUTE !" )choice
 //	choice( "WARP TO CANADA [crashdebug]" )choice: crashtest
-	DEBUG_BUILD TEST_BRANCH or if 
+	DEBUG_BUILD TEST_BRANCH or if
 		(*
 		// choice( "START WITH JOJO REFERENCE" fbold )choice: special-testing
 		choice( "START IN MECHANICAL FORTRESS" fbold )choice: location-testing
@@ -264,14 +302,14 @@ defer hintrepeat
 	then
 //	choice( "Try New City" fbold )choice: test-newcity
 	puppymode kittenmode
-	wyk? if choice( "RESET WYK CODES" rbold )choice: wykreset then;
-	hint-list depths 0= not if choice( "Read another Hint" )choice: hintrepeat then
+	wyk? if choice( "REINITIALISER LES CODES WYK" rbold )choice: wykreset then;
+	hint-list depths 0= not if choice( "Lire un autre Conseil" )choice: hintrepeat then
 ;
 
 : 4morale-team args( char )
-	STAT_MORALE <- char .bonus@ -3 < if  
+	STAT_MORALE <- char .bonus@ -3 < if
 		6 <- char .morale!
-	else 
+	else
 		4 <- char .morale!
 	then	
 ;
@@ -295,63 +333,63 @@ cyoa: starthintme
 ' starthintme to hintrepeat
 
 cyoa: knoobstartP
-	wyk? if 
-		($ "WYK RACE: " .. wyk-name .. " Edition" $) cyoa-title!
+	wyk? if
+		($ "COURSE WYK : " .. wyk-name .. " Edition" $) cyoa-title!
 	else
 		"Death Road to Canada" cyoa-title!
 	then
-	// choice( "HIT THE ROAD" )choice
+	// choice( "EN ROUTE !" )choice
 		soloer choosechar cicon
-		
-		time.month 6 = time.month.day 1 = and if 
+
+		time.month 6 = time.month.day 1 = and if
 			' beaver-scget stack-road-action
 		then
-		
-		time.month 6 = time.month.day 4 = and if 
+
+		time.month 6 = time.month.day 4 = and if
 			' july4-scget stack-road-action
 		then
-	
-		time.month 11 = time.month.day 25 = and if 
+
+		time.month 11 = time.month.day 25 = and if
 			' santa-test stack-road-action
 		then
-		
-		time.month 11 = time.month.day 24 = and if 
+
+		time.month 11 = time.month.day 24 = and if
 			' santa-test stack-road-action
 		then
-		
-		time.month 10 = time.week.day 4 = and if 
+
+		time.month 10 = time.week.day 4 = and if
 			time.month.day 21 > time.month.day 29 < and if
 				' turkey-test stack-road-action
 			then
 		then
 
-		halloween? if 
+		halloween? if
 			' halloween-event stack-road-action
 		then
-		
-		time.month 1 = time.month.day 14 = and if 
+
+		time.month 1 = time.month.day 14 = and if
 			' feb14-scget stack-road-action
 		then
-				
+
 		// Placeholder.. accidental LNK DAY that one time
-		// time.month 2 = time.month.day 29 = and if 
+		// time.month 2 = time.month.day 29 = and if
 		//	' lnk-test stack-road-action
 		// then
 
 	cheevo{ post-all }
 
 	' startcheck stack-road-action
-	
-	gamedef{ ' OPPmode gamemode? } if 
+
+	gamedef{ ' OPPmode gamemode? } if
 		"events/OPPmode.df" $load-region to-mission
 		someperkchecks
 	then;
-	
-	gamedef{ ' 4jerksmode gamemode? ' 4jerksmodeEX gamemode? } or if 
+
+	gamedef{ ' 4jerksmode gamemode? ' 4jerksmodeEX gamemode? } or if
 		"events/4jerksmode.df" $load-region to-mission
 		someperkchecks
 	then;
-	
+
 	// Arq new word for perk supply checks
 	' someperkchecks stack-road-action
 
@@ -359,20 +397,20 @@ cyoa: knoobstartP
 	N'ayant rien a gagner a rester en Floride, " .. che .. " decide de braver la Route de la Mort et de conduire vers le nord." $) cyoa-text!
 
 	hintlist +crtext
-			
-	wyk? if "WYK RACE: " +crtext 
+
+	wyk? if "COURSE WYK : " +crtext
 		gstats{ wyk-highscore } case
-			0 of "7 Steam keys are hidden on the Death Road!" fbold endof
-			1 of "6 Steam keys remaining!" rbold endof
-			2 of "5 Steam keys to go!" rbold endof
-			3 of "4 Steam keys still hidden!" rbold endof
-			4 of "Win the game to get a final 3 Steam keys!" fbold endof
-			5 of "All keys were found! Congrats!" pbold endof
+			0 of "7 cles Steam sont cachees sur la Death Road !" fbold endof
+			1 of "6 cles Steam restantes !" rbold endof
+			2 of "5 cles Steam restantes !" rbold endof
+			3 of "4 cles Steam encore cachees !" rbold endof
+			4 of "Terminez le jeu pour obtenir les 3 dernieres cles Steam !" fbold endof
+			5 of "Toutes les cles ont ete trouvees ! Felicitations !" pbold endof
 		endcase +text
 	then
-		
+
 		startchoices
-				
+
 ;
 
 // *********** OLD STUFF BELOW *************
@@ -381,7 +419,7 @@ cyoa: knoobstartP
 
 cyoa: knoobstartB
 	"The Death Road to Canada 8/26 Alpha" cyoa-title!
-	choice( "HIT THE ROAD" )choice
+	choice( "EN ROUTE !" )choice
 		soloer choosechar cicon
 
 	($ "Welcome to the Death Road to Canada Alpha!
@@ -393,111 +431,111 @@ cyoa: knoobstartB
 
 // END temporary beta start message
 
-cyoa-choice: kn1recruit 
+cyoa-choice: kn1recruit
 	recruitee character# cyoa-char-icon!
 	WEAPON_WRENCH recruitee .weapona!
-	($ rname .. " is now part of the team!
-	" .. cname .. " quietly groans a little bit about this.
-	Onward to Canada!" $) cyoa-text! 2 300 tone
+	($ rname .. " fait maintenant partie de l'equipe !
+	" .. cname .. " grogne discretement un peu a ce sujet.
+	En avant vers le Canada !" $) cyoa-text! 2 300 tone
 	morale-- recruitee .recruit
 ;
-cyoa-choice: kn1nope 
-	($ cname .. " peels out of there. 
-	" .. "SEE YOU LATER SUCKER." pbold .. "
-	It seems like a good start." $) cyoa-text! morale2+ goodfx
+cyoa-choice: kn1nope
+	($ cname .. " degage de la.
+	" .. "A PLUS IMBECILE." pbold .. "
+	Ca semble un bon debut." $) cyoa-text! morale2+ goodfx
 ;
 
 cyoa: knoobevent1
-	"Powerful Allies" cyoa-title!
+	"Allies Puissants" cyoa-title!
 	char-gen to recruitee
 	recruitee character# cyoa-char-icon!
 	soloer choosechar
 	choice( "Recruit " .. rname )choice: kn1recruit
 	cchar charchoice( " PEELS OUT" )choice: kn1nope
 
-	($ "As " .. cname .. " starts the journey to Canada, they meet their neighbor, " .. rname .. ". 
-	" .. cname .. " has always hated this person, but could use the help and/or decoy." $) cyoa-text! basic-tone
+	($ "Alors que " .. cname .. " commence le voyage vers le Canada, il rencontre son voisin, " .. rname .. ".
+	" .. cname .. " a toujours deteste cette personne, mais pourrait utiliser l'aide et/ou le leurre." $) cyoa-text! basic-tone
 ;
 
 : 4food2med 4 LOOT_FOOD trunk.loot+ 2 LOOT_MEDICAL trunk.loot+ ;
 cyoa-choice: kn2-shotty
-	($ soloname .. " named this shotgun BIG DAWG. It is capable of exploding zombies, both near and far. For a novice, it's possibly the best choice of firearm.
-	" .. Thegroup .. " acquires " .. RED .. "BIG DAWG" .. WHITE .. "." $)
+	($ soloname .. " a nomme ce fusil BIG DAWG. Il est capable d'exploser les zombies, de pres comme de loin. Pour un novice, c'est peut-etre le meilleur choix d'arme a feu.
+	" .. Thegroup .. " acquiert " .. RED .. "BIG DAWG" .. WHITE .. "." $)
 	cyoa-text! goodfx 1 WEAPON_SHOTGUN trunk.weapon+ 8 LOOT_SHOTGUN_SHELL trunk.loot+ 4food2med
 ;
 cyoa-choice: kn2-rifle
-	($ "Rifles are capable of puncturing through multiple zombie heads, in the hands of a great shooter! " .. soloname .. " isn't necessarily a great shot, but practice makes perfect.
-	" .. Thegroup .. " acquires the rifle!" $)
+	($ "Les fusils peuvent traverser plusieurs cranes de zombies, entre les mains d'un excellent tireur ! " .. soloname .. " n'est pas necessairement un grand tireur, mais c'est en forgeant qu'on devient forgeron.
+	" .. Thegroup .. " acquiert le fusil !" $)
 	cyoa-text! goodfx 1 WEAPON_RIFLE trunk.weapon+ 12 LOOT_RIFLE_SHELL trunk.loot+ 4food2med
 ;
 cyoa-choice: kn2-pistol
-	($ "The humble pistol may not have the power of bigger firearms, but it gets the job done. That, and pistol bullets are still rather plentiful. Open any drawer and some will likely spill out!
-	" .. Thegroup .. " acquires the pistol!" $)
+	($ "Le modeste pistolet n'a peut-etre pas la puissance des grandes armes, mais il fait le travail. Et les balles de pistolet sont encore assez abondantes. Ouvrez n'importe quel tiroir et il en sortira probablement !
+	" .. Thegroup .. " acquiert le pistolet !" $)
 	cyoa-text! goodfx 1 WEAPON_PISTOL trunk.weapon+ 20 LOOT_BULLET trunk.loot+ 4food2med
 ;
 cyoa-choice: kn2-gas
-	"Weapons: who needs them? The car is a weapon. The further that huge chunk of metal can be driven before it runs out of gas, the safer the journey is.
-	Also, maybe you'll run into a chainsaw." cyoa-text! goodfx 150 LOOT_GAS trunk.loot+ 4food2med
+	"Les armes : qui en a besoin ? La voiture est une arme. Plus ce gros bloc de metal peut rouler avant de tomber en panne d'essence, plus le voyage est sur.
+	Aussi, vous trouverez peut-etre une tronconneuse." cyoa-text! goodfx 150 LOOT_GAS trunk.loot+ 4food2med
 ;
 cyoa: knoobevent2
-	"Locking and Loading" cyoa-title! 0 to cyoaicon cyoaicon
+	"En Armes et Prets" cyoa-title! 0 to cyoaicon cyoaicon
 	soloer choosechar
-	($ Thegroup .. " takes a small detour to a stash of supplies that " .. cname-he .. " left there before. 
- Besides a dinky bit of food and medicine, the stash had: " $) cyoa-text! 2 500 tone
+	($ Thegroup .. " fait un petit detour vers une cache de provisions laissee la avant.
+ En plus d'un peu de nourriture et de medecine, la cache contenait : " $) cyoa-text! 2 500 tone
 
-		choice( "Shotgun and 8 shells" )choice: kn2-shotty
-		choice( "Rifle and 12 ammo" )choice: kn2-rifle
-		choice( "Pistol and 20 bullets" )choice: kn2-pistol
-		choice( "150 extra Gas" )choice: kn2-gas
+		choice( "Fusil a pompe et 8 cartouches" )choice: kn2-shotty
+		choice( "Fusil et 12 munitions" )choice: kn2-rifle
+		choice( "Pistolet et 20 balles" )choice: kn2-pistol
+		choice( "150 d'essence supplementaire" )choice: kn2-gas
 ;
 
-cyoa-choice: kn3recruit 
+cyoa-choice: kn3recruit
 	recruitee character# cyoa-char-icon!
-	($ rname .. " is now part of the team!
-	" .. cname .. " winces as the new recruit scarfs down the two long-hoarded food cans.
-	Onward to Canada!" $) cyoa-text! 2 300 tone
+	($ rname .. " fait maintenant partie de l'equipe !
+	" .. cname .. " grimace en voyant la nouvelle recrue engloutir les deux boites de conserve longuement thesaurisees.
+	En avant vers le Canada !" $) cyoa-text! 2 300 tone
 	-2 LOOT_FOOD trunk.loot+ recruitee .recruit
 ;
-cyoa-choice: kn3nope 
-	($ cname .. " peels out of there. 
-	" .. "NO ONE TOUCHES MY CANS OF FOOD." pbold .. "
-	It was probably the right choice." $) cyoa-text! goodfx morale++
+cyoa-choice: kn3nope
+	($ cname .. " degage de la.
+	" .. "PERSONNE NE TOUCHE MES BOITES DE CONSERVE." pbold .. "
+	C'etait probablement le bon choix." $) cyoa-text! goodfx morale++
 ;
 
 cyoa: knoobevent3
-	"Ne'er-do-well Recruitment" cyoa-title!
+	"Recrutement d'un Vaurien" cyoa-title!
 	soloer choosechar
 	char-gen to recruitee
 	WEAPON_SLEDGE recruitee .weapona!
 	recruitee character# cyoa-char-icon!
-	($ "A short drive away from " .. cname .. "'s hideout, " .. thegroup .. " runs into someone just wandering the road, sledgehammer over shoulder.
-	" .. rname .. " introduces " .. recruitee xhim .. "self, and offers to join the mission to Canada in exchange for some food to chow down on." $) cyoa-text! basic-tone
-		choice( "Recruit " .. rname .. " for 2 Food" )choice: kn3recruit
-		cchar charchoice( ": IT'S MY FOOD" )choice: kn3nope
+	($ "Pas loin de la planque de " .. cname .. ", " .. thegroup .. " tombe sur quelqu'un qui erre sur la route, masse sur l'epaule.
+	" .. rname .. " se presente et propose de rejoindre la mission vers le Canada en echange d'un peu de nourriture." $) cyoa-text! basic-tone
+		choice( "Recruter " .. rname .. " pour 2 Nourriture" )choice: kn3recruit
+		cchar charchoice( ": C'EST MA NOURRITURE" )choice: kn3nope
 ;
 
-: knoob4text ($ "Such incredible wisdom.
-" .. cname .. " is enriched with this knowledge. " .. cHe .. " will never forget those words." $) cyoa-text! goodfx morale++
+: knoob4text ($ "Quelle incroyable sagesse.
+" .. cname .. " est enrichi de ce savoir. " .. cHe .. " n'oubliera jamais ces mots." $) cyoa-text! goodfx morale++
 ;
 cyoa-choice: kn4-eyes knoob4text wits++ ;
 cyoa-choice: kn4-hitit knoob4text mechanic++ ;
 cyoa-choice: kn4-sick knoob4text medical++ ;
 cyoa-choice: kn4-sayit knoob4text attitude++ loyalty++ cool-it++ ;
 cyoa: knoobevent4
-	"Wise Mentor" cyoa-title! 0 to cyoaicon cyoaicon
+	"Sage Mentor" cyoa-title! 0 to cyoaicon cyoaicon
 	soloer choosechar
-	($ cname .. " decides to visit their grizzled mentor one last time before heading north.
-	" .. cname .. "'s mentor reminisces with " .. chim .. " and offers some final advice before the journey starts:" $) cyoa-text! 2 500 tone
+	($ cname .. " decide de rendre visite a son vieux mentor une derniere fois avant de partir vers le nord.
+	Le mentor de " .. cname .. " se souvient avec " .. chim .. " et offre quelques derniers conseils avant le depart :" $) cyoa-text! 2 500 tone
 
-	choice( "NEVER TRUST ANYONE OR ANYTHING" )choice: kn4-eyes
-	choice( "IF SOMETHIN BREAKS JUST HIT IT" )choice: kn4-hitit
-	choice( "SICK PEOPLE ARE FAKIN IT" )choice: kn4-sick
-	choice( "SAY IT DON'T SPRAY IT" )choice: kn4-sayit
+	choice( "NE JAMAIS FAIRE CONFIANCE A PERSONNE NI A RIEN" )choice: kn4-eyes
+	choice( "SI QUELQUE CHOSE CASSE, FRAPPE-LE" )choice: kn4-hitit
+	choice( "LES MALADES FONT SEMBLANT" )choice: kn4-sick
+	choice( "DIS-LE NE LE CRACHE PAS" )choice: kn4-sayit
 ;
 
 cyoa: knoobstart1
 	"The Death Road to Canada 5/27 Alpha" cyoa-title!
-	choice( "HIT THE ROAD" )choice
+	choice( "EN ROUTE !" )choice
 		soloer choosechar cicon
 
 	($ cname .. " hears rumors that Canada is a safe place, free of the threat of zombies.

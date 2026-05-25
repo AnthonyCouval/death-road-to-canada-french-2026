@@ -80,7 +80,7 @@
 : toiletwishC
 	cyoa-start
 		"Le Pouvoir de l'Amitie" cyoa-title!
-		"Le genie rougit. JE NE SAVAIS PAS QUE ÇA INTERESSERAIT QUELQU'UN. L'etre se met à te suivre partout." cyoa-text!
+		"Le genie rougit. JE NE SAVAIS PAS QUE ÇA INTERESSERAIT QUELQU'UN. L'etre se met a te suivre partout." cyoa-text!
 		// I want this one to replace the usually decorative genie that's spawned, and then have it follow you around, punching zombies.
 	cyoa-show
 ;
@@ -229,7 +229,7 @@
 ;
 : ltestsmash1
 	cyoa-start
-	"NAME crie JE N'AI BESOIN DE PERSONNE et reduit la machine en morceaux. NAME recupere quelques débris en souvenir de cet exploit.
+	"NAME crie JE N'AI BESOIN DE PERSONNE et reduit la machine en morceaux. NAME recupere quelques debris en souvenir de cet exploit.
 	Received 2 scrap metal!" cyoa-text!
 	// Picks a random character out of your duo to use for the name. Or just uses your only character, if solo. Adds scrap metal to loot.
 	cyoa-show

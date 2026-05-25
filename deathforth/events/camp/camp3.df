@@ -93,7 +93,7 @@ cyoa-choice: camp3-grocery-pick
 
 cyoa-choice: camp3-grocery-solo
 	someicon
-	($ cname .. " ramasse des boites de conserve sur les etageres, evitant un nombre clairseme de zombies. Un autre groupe de pilleurs arrive.
+	($ cname .. " ramasse des boites de conserve sur les etageres, evitant un petit groupe de zombies. Un autre groupe de pilleurs arrive.
 	Les pilleurs commencent a tirer ! Ils veulent vraiment ces boites !
 	" .. cname .. " retourne au camp pour se battre. Ils ne suivent jamais, mais " .. cname .. " reste eveille toute la nuit." $) text! 3 4 rnd trunk-food+ badfx +cr tiredcamp
 ;
@@ -144,7 +144,7 @@ cyoa-choice: camp3-crowd-rob
 
 cyoa-choice: camp3-crowd-coolit
 	cpet? if
-		($ cname .. " va au milieu du camp bondé et commence a " .. "PETER EN MASSE." rbold $)
+		($ cname .. " va au milieu du camp bonde et commence a " .. "PETER EN MASSE." rbold $)
 	else
 		($ cname .. " monte sur une petite caisse et dit a tout le camp de " .. "SE CALMER." pbold $)
 	then text!
@@ -158,7 +158,7 @@ cyoa-choice: camp3-crowd-coolit
 ;
 
 cyoa-choice: camp3-crowd-camp
-	($ Thegroup .. " prend le risque de dormir dans le camp bondé." $) cyoa-text!
+	($ Thegroup .. " prend le risque de dormir dans le camp bonde." $) cyoa-text!
 	60 %chance if "Rien d'inhabituel ne se passe." +crtext
 	else
 		50 %chance if
@@ -180,7 +180,7 @@ cyoa-choice: camp3-crowd-tired
 
 cyoa: camp3-crowd
 	image-wandering-off
-	"Camping Bondé" cyoa-title!
+	"Camping Bonde" cyoa-title!
 	($ Thegroup .. " trouve un grand camping occupe par quelques voitures d'autres survivants. Camper avec des etrangers est risque, mais il n'y a nulle part ailleurs ou aller.
 	Aucun ne va au Canada." $) cyoa-text! basic-tone
 		choice( "Camper avec eux" )choice: camp3-crowd-camp
@@ -382,7 +382,7 @@ cyoa: camp3-moose
 		" pense qu'il n'y a pas TANT de zombies que ca." shove
 		" est pret a ecraser des zombies !" shove
 		" est partant !" shove
-		" se sent pompé pour demain !" shove
+		" se sent pompe pour demain !" shove
 		" est excite par le Canada !" shove
 		" a hate !" shove
 	shuffles pops nip

@@ -16,22 +16,22 @@
 \ ------------------------------------------------
 
 : rohoalines 1 16 rnd case 
-	1 of BLUE "Be more careful next time!" .. endof
-	2 of BLUE "Let me fix ya up, hon." .. endof
-	3 of BLUE "Expertise! From the expert." .. endof
-	4 of BLUE "Come here a moment." .. endof
-	5 of BLUE "What'd you do this time?" .. endof
-	6 of BLUE "That looked nasty." .. endof
-	7 of BLUE "I can fix that, hang on..." .. endof
-	8 of BLUE "No, I don't keep whiskey in it." .. endof
-	9 of BLUE "Let me help, hold on..." .. endof
-	10 of BLUE "Right as rain!" .. endof 
-	11 of BLUE "Steady on there." .. endof 
-	12 of BLUE "I've got just the thing for that." .. endof 
-	13 of BLUE "Will you stop dying, please?" .. endof 
-	14 of BLUE "Let me patch you up." .. endof 
-	15 of BLUE "Stand still a moment..." .. endof 
-	16 of BLUE "Hang on- I can help." .. endof 
+	1 of BLUE "Soyez plus prudent la prochaine fois !" .. endof
+	2 of BLUE "Laisse-moi te retaper, mon chou." .. endof
+	3 of BLUE "Du grand art ! Par un veritable expert." .. endof
+	4 of BLUE "Viens ici 5 minutes." .. endof
+	5 of BLUE "Qu'est-ce que tu as foutu cette fois ?" .. endof
+	6 of BLUE "Ca avait l'air violent." .. endof
+	7 of BLUE "Bouge pas, je m'en occupe..." .. endof
+	8 of BLUE "Non, il n'y a pas de whisky dedans." .. endof
+	9 of BLUE "Bouge pas, je vais t'aider..." .. endof
+	10 of BLUE "Comme sur des roulettes !" .. endof
+	11 of BLUE "Doucement, reste tranquille." .. endof
+	12 of BLUE "J'ai pile ce qu'il faut pour ca." .. endof
+	13 of BLUE "Tu peux arreter de crever, s'il te plait ?" .. endof
+	14 of BLUE "Laisse moi te retaper." .. endof
+	15 of BLUE "Reste tranquille un instant..." .. endof
+	16 of BLUE "Attends, je peux donner un coup de main." .. endof
 	endcase
 ;	
 \ Flavour dialogue. 
@@ -40,7 +40,7 @@
 : rohoa-thing-events args( me teid )
 
 	<- teid THING_EVENT_DIED = if 
-		"No, no, wait! If I can just reach into-" <- me .yellmsg
+		"Non, non, attends ! Si je peux juste attraper ce qu'il y a dans-" <- me .yellmsg
 	then 
 
 	<- teid THING_EVENT_SWING = if

@@ -5,165 +5,165 @@ cyoa{ road{
 
 // Future Toilet, based on a true story
 
-: common5-toilet-end ($ "The future toilet emits a whirring noise and stops working." $) +crtext goodfx ;
+: common5-toilet-end ($ "La toilette du futur emet un bourdonnement et cesse de fonctionner." $) +crtext goodfx ;
 
 cyoa-choice: common5-toilet-water
-	($ "The toilet sprays an enormous amount of water from a hidden bidet. This coats the room in water, but most of it hits " .. cname .. " right in the eyes." $) text!
+	($ "La toilette projette une quantite enorme d'eau depuis un bidet cache. Ca inonde la piece, mais la plupart atterrit directement dans les yeux de " .. cname .. "." $) text!
 	morale--
 	solo not if ($ Theothersarename .. " delighted by this! " $) +crtext cchar ' .morale2+ foreach-team-char-except then
-	cchar .shooting@ 6 < if ($ "But wait! The bidet water was medicated and pleasantly scented! " .. cname .. "'s vision sharpens!" $) +crtext shooting++ then
-	most-hurt damage 0 > if ($ Thegroup .. " is fully healed by the medicated bidet water!" $) +crtext ' .fullheal foreach-team-char then
+	cchar .shooting@ 6 < if ($ "Mais attendez ! L'eau du bidet etait medicamentee et agreablement parfumee ! La vision de " .. cname .. " s'ameliore !" $) +crtext shooting++ then
+	most-hurt damage 0 > if ($ Thegroup .. " est completement gueri par l'eau medicinale du bidet !" $) +crtext ' .fullheal foreach-team-char then
 	common5-toilet-end
 ;
 
 cyoa-blank: common5-toilet-note
-	"Song of the Toilet" cyoa-title!
-	"The toilet plays beautiful music. The music has no words, yet conveys a strong and haunting message of hope." text!
+	"Chanson des Toilettes" cyoa-title!
+	"La toilette joue une belle musique. Sans paroles, elle transmet pourtant un message fort et envoûtant d'espoir." text!
 	morale4+all common5-toilet-end
 ;
 
 cyoa-choice: common5-toilet-wings
-	"The toilet's lid opens and closes rapidly, with big WHOOMP sounds as the lid flings out gusts of air. The lid opens and closes about 30 times in a row, then stops." text!
-	($ cname .. " is confused by the purpose of this function." $) +crtext
+	"Le couvercle de la toilette s'ouvre et se ferme rapidement, avec de grands WHOMP alors qu'il projette des rafales d'air. Il s'ouvre et se ferme environ 30 fois de suite, puis s'arrete." text!
+	($ cname .. " est perplexe quant a l'utilite de cette fonction." $) +crtext
 	common5-toilet-end gstats{ 30 ' toilets-opened +! }
 ;
 
 cyoa-choice: common5-toilet-butt
-	"The toilet seat starts to hum and glow slightly." text!
-	($ cname .. " sits down. The eletronic toilet seat gives " .. chim .. " a powerful gluteal" .. "*" pbold .. " massage, as the toilet repeatedly chants in different languages:" $) +crtext
-	"THE GLUTES ARE THE KEY TO FITNESS
-	THE GLUTES ARE THE KEY TO STRENGTH
-	THE GLUTES ARE THE KEY TO POWER
-	THE GLUTES ARE THE CENTER OF LIFE" bbold +crtext
+	"Le siege des toilettes commence a bourdonner et a luire legerement." text!
+	($ cname .. " s'asseoit. Le siege electronique lui offre un puissant massage" .. "*" pbold .. " des fessiers, pendant que la toilette scande en boucle en differentes langues :" $) +crtext
+	"LES FESSIERS SONT LA CLE DE LA FORME
+	LES FESSIERS SONT LA CLE DE LA FORCE
+	LES FESSIERS SONT LA CLE DU POUVOIR
+	LES FESSIERS SONT LE CENTRE DE LA VIE" bbold +crtext
 	morale++ strength++ fitness++ common5-toilet-end
-	"*Vocabulary note: Gluteal means 'butt'" pbold +crtext
+	"*Note de vocabulaire : Fessier signifie 'derriere'" pbold +crtext
 ;
 
 cyoa: common5-toilet-rare
-	"Toilet of the Past's Future" cyoa-title! choosehuman cicon
-	($ Thegroup .. " discovers something incredible while exploring a house: An actual working toilet. Everyone has been doing their business in the woods.
-	The toilet has a futuristic control panel full of buttons. " .. cname .. " feels compelled to press one, and chooses the button labelled with a picture of:" $) text!
-		choice( "Jets of Water?" )choice: common5-toilet-water
-		choice( "Musical Notes" )choice: common5-toilet-note
-		choice( "Wings Flapping" )choice: common5-toilet-wings
-		choice( "A Butt?" )choice: common5-toilet-butt
+	"Toilettes du Futur Passe" cyoa-title! choosehuman cicon
+	($ Thegroup .. " decouvre quelque chose d'incroyable en explorant une maison : des vraies toilettes qui fonctionnent. Tout le monde avait fait ses affaires dans les bois jusqu'ici.
+	Les toilettes ont un panneau de controle futuriste plein de boutons. " .. cname .. " ne peut s'empecher d'en appuyer un, et choisit le bouton avec le dessin de :" $) text!
+		choice( "Jets d'eau ?" )choice: common5-toilet-water
+		choice( "Notes musicales" )choice: common5-toilet-note
+		choice( "Ailes qui battent" )choice: common5-toilet-wings
+		choice( "Un derriere ?" )choice: common5-toilet-butt
 ;
 
 // Long Line
 
-: common5-line-camp ($ "With the day wasted, " .. thegroup .. " has to set up camp." $) +crtext +cr fullcamp 1 calendar-day+ ;
-: common5-line-shop ($ "The shop is a trendy upscale grocery store. Most of the fancier items have rotted to mush, but there's still some loot." $) +crtext
+: common5-line-camp ($ "La journee etant perdue, " .. thegroup .. " doit monter le camp." $) +crtext +cr fullcamp 1 calendar-day+ ;
+: common5-line-shop ($ "Le magasin est une epicerie tendance haut de gamme. La plupart des articles de luxe ont pourri, mais il reste du butin." $) +crtext
 	8 12 rnd trunk-food+ 4 6 rnd trunk-medical+ goodfx ;
 
 cyoa-choice: common5-line-pick
-	
+
 	cdog? if
-		($ cname .. " scampers towards the line and then passes it completely.
-		Hours later, " .. cname .. " returns with a stick in " .. chis .. " mouth." $) text!
+		($ cname .. " trottine vers la file et la depasse completement.
+		Quelques heures plus tard, " .. cname .. " revient avec un baton dans " .. chis .. " bouche." $) text!
 		1 WEAPON_TREEBRANCH trunk.weapon+
 		morale2+ cchar morale--all-except goodfx
 		common5-line-camp
 	then;
-	
+
 	ccat? if
-		($ cname .. " rushes into the shop, avoiding the line. " .. cHe .. " emerges carrying a dead rodent, possibly a gerbil?" $) text!
+		($ cname .. " se precipite dans le magasin en evitant la file. " .. cHe .. " ressort en portant un rongeur mort, peut-etre un gerbille ?" $) text!
 		2 trunk-food+ morale2+ goodfx
 	then;
-	
+
 	cpet? if
-		($ cname .. " lies down for a little break. As an animal, " .. che .. " either doesn't understand the concept of a line, or pretends not to." $) text!
+		($ cname .. " s'allonge pour une petite pause. En tant qu'animal, " .. che .. " ne comprend pas le concept de file d'attente, ou fait semblant." $) text!
 		morale++ goodfx
 	then;
-	
+
 	cchar oblivious? if
-		($ cname .. " skips the line completely. " .. cHe .. " didn't notice there was a line at all, or zombies." $) text!
+		($ cname .. " ignore completement la file. " .. cHe .. " n'avait remarque ni la file ni les zombies." $) text!
 		witsREV attitudeREV common5-line-shop
 	then;
-	
+
 	ctemper- if
 		cloyalty- if
-			($ cname .. " just goes ahead and skips the line completely. " .. cHe .. " does NOT play by the rules!" $) text!
+			($ cname .. " court-circuite completement la file. " .. cHe .. " ne respecte PAS les regles !" $) text!
 			morale++ aholeREV common5-line-shop
 		then;
-		($ cname .. " lasts about a minute in the line before losing " .. chis .. " temper!" $) text!
+		($ cname .. " tient environ une minute dans la file avant de perdre patience !" $) text!
 		cstrength+ if
-			"WAITING IN LINE IS FOR NERDS!" rbold +crtext
-			($ cHe .. " starts speed-punching all the zombies in the line until they explode. There's too many to punch so " .. che .. " gets tired and stumbles away, sweating. What a workout!" $) +crtext
+			"FAIRE LA FILE C'EST POUR LES NULS !" rbold +crtext
+			($ cHe .. " se met a frapper frenetiquement tous les zombies de la file jusqu'a ce qu'ils explosent. Il y en a trop, alors " .. che .. " finit par s'epuiser et s'eloigner en titubant, en sueur. Quel entrainement !" $) +crtext
 			rageREV fitness++ fitnessREV morale++ goodfx
 		then;
-		($ cHe .. " starts attacking the zombie in front of " .. chim .. ". The other zombies eventually notice and start attacking. " .. cname .. " is forced to run!" $) +crtext
-		sting-- bitefx temperREV 
+		($ cHe .. " attaque le zombie devant " .. chim .. ". Les autres zombies finissent par s'en apercevoir et attaquent. " .. cname .. " est force de fuir !" $) +crtext
+		sting-- bitefx temperREV
 	then;
-	
+
 	ctemper+ if
-		($ cname .. " patiently waits in the long line. It moves forward very slowly, but " .. che .. " calmly waits it out." $) text!
-		temperREV 
+		($ cname .. " attend patiemment dans la longue file. Elle avance tres lentement, mais " .. che .. " attend calmement." $) text!
+		temperREV
 		common5-line-shop common5-line-camp
 	then;
-	
-	($ cname .. " waits in line. It inches forward, to " .. cname .. "'s great irritation." $) text!
-	attitude+roll if 
-		($ cname .. " tries to think about this positively. " .. cHe .. " manages to endure and get inside the store!" $) +crtext
+
+	($ cname .. " attend dans la file. Ca avance centimetre par centimetre, a la grande irritation de " .. cname .. "." $) text!
+	attitude+roll if
+		($ cname .. " essaie de voir les choses positivement. " .. cHe .. " reussit a tenir et a entrer dans le magasin !" $) +crtext
 		attitudeREV morale-- common5-line-shop
 	else
-		($ "After hours of this, the zombies turn on " .. cname .. " due to " .. chis .. " constant whining. " .. cHe .. " is forced to flee!" $) +crtext
-		morale2- sting-- bitefx 
+		($ "Apres des heures de ca, les zombies se retournent contre " .. cname .. " a cause de " .. chis .. " plaintes incessantes. " .. cHe .. " est force de fuir !" $) +crtext
+		morale2- sting-- bitefx
 	then temperREV common5-line-camp
 ;
 
 cyoa-bridge: common5-line-pick4
-	"Choose who gets to wait in the zombie line:" text!
-	' common5-line-pick cyoa-team-choice 
+	"Choisissez qui va attendre dans la file de zombies :" text!
+	' common5-line-pick cyoa-team-choice
 ;
 
 cyoa-blank: common5-line
-	"Still Having to Wait in Line" cyoa-title!
-	($ Thegroup .. " runs into a horde of zombies. They're completely docile, just waiting outside of a shop in a big single-file line. Every zombie is staring straight ahead." $) text!
-		choice( "Ignore this weirdness" )choice
+	"Toujours en File d'Attente" cyoa-title!
+	($ Thegroup .. " tombe sur une horde de zombies. Ils sont completement dociles, attendant devant un magasin en file indienne. Chaque zombie regarde droit devant lui." $) text!
+		choice( "Ignorer cette bizarrerie" )choice
 	solo if
-		"The shop's sign is faded out and can't be read." +crtext
-		soloer charchoice( ": Wait in line" )choice: common5-line-pick
+		"L'enseigne du magasin est trop delavee pour etre lue." +crtext
+		soloer charchoice( ": Faire la queue" )choice: common5-line-pick
 	then;
-	"You can send someone to join the line, to solve this mystery. It looks like it could be a long wait." +crtext
+	"Vous pouvez envoyer quelqu'un rejoindre la file pour resoudre ce mystere. Ca risque de durer longtemps." +crtext
 	team-count 3 > if
 		' common5-line-pick 2 #cyoa-team-choice
-		choice( "Pick someone else" )choice: common5-line-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: common5-line-pick4
 	else
 		' common5-line-pick 3 #cyoa-team-choice
-	then	
+	then
 ;
 
 // Rock throwing
 
 cyoa-choice: common5-rock-throw
-	($ cname .. " is compelled to throw a rock at the hapless zombie." $) text!
+	($ cname .. " est irresistiblement pousse a lancer une pierre sur le pauvre zombie." $) text!
 	cchar oblivious? if
-		($ cHe .. " keeps accidentally throwing the rock in ways that make it return to " .. chim .. ". First it was straight up, then the next few times it hit the fence. This goes on for several hours.
-		" .. cname .. " eventually throws the rock over the fence, just barely. " .. cHe .. " is nearly dead from exhaustion by then." $) +crtext
+		($ cHe .. " n'arrête pas de lancer la pierre d'une facon qui la fait revenir. D'abord tout droit en l'air, puis plusieurs fois contre la cloture. Ca dure plusieurs heures.
+		" .. cname .. " finit par la lancer par-dessus la cloture, tout juste. " .. cHe .. " est presque mort d'epuisement a ce moment-la." $) +crtext
 		morale3- sting-- cchar morale--all-except fitness++ strength++ fitnessREV strengthREV witsattREV
 		common5-line-camp
 	then;
 	strength+roll if
-		($ cHe .. " puts all " .. chis .. " might into a mighty downward throw. The rock misses the zombie, but obliterates a small garden gnome." $) +crtext
+		($ cHe .. " met toute " .. chis .. " force dans un puissant lancer vers le bas. La pierre rate le zombie, mais aneantit un petit nain de jardin." $) +crtext
 		strengthREV morale++all goodfx
-		33 stpick if choosechar ($ cname .. " realizes that this is very offensive to " .. chim .. "!" $) +crtext morale4- badfx then
+		33 stpick if choosechar ($ cname .. " realise que c'est tres offensant pour " .. chim .. " !" $) +crtext morale4- badfx then
 	then;
 	cfitness+ if
-		($ cHe .. " performs a throw with perfect form. The rock sails gracefully through the air. It misses the zombie by far, but what a nice throw!" $) +crtext
+		($ cHe .. " effectue un lancer d'une forme parfaite. La pierre vole gracieusement dans les airs. Elle rate le zombie de loin, mais quel beau lancer !" $) +crtext
 		fitnessREV morale2+ cchar morale++all-except goodfx
 	then;
-	($ cHe .. " not only misses, but performs a really embarassing throw. " .. cHe .. " stumbles and nearly falls over the fence and off the cliff." $) +crtext badfx strengthREV fitnessREV morale-- cchar morale++all-except
+	($ cHe .. " rate non seulement le tir, mais effectue un lancer vraiment embarrassant. " .. cHe .. " trebuchet et manque de tomber par-dessus la cloture dans le vide." $) +crtext badfx strengthREV fitnessREV morale-- cchar morale++all-except
 ;
 
 cyoa: common5-rock
-	"The Perfect Rock" cyoa-title!
-	($ Thegroup .. " finds a perfect throwing rock on the ground. It is next to a low fence guarding a big fall. At the bottom of this drop is a single zombie, standing there, staring at nothing in particular." $) text!
+	"La Pierre Parfaite" cyoa-title!
+	($ Thegroup .. " trouve une pierre parfaite pour lancer par terre. Elle est pres d'une basse cloture donnant sur une grande chute. Au bas de cette chute se trouve un seul zombie, debout, regardant dans le vide." $) text!
 	solohuman if choosehuman
-		($ cname ..  " feels a burning desire to throw the rock at this zombie." $) +crtext
-		choice( "Leave zombie alone" )choice
-		cchar charchoice( ": Throw rock!" )choice: common5-rock-throw
+		($ cname ..  " ressent une envie irresistible de lancer la pierre sur ce zombie." $) +crtext
+		choice( "Laisser le zombie tranquille" )choice
+		cchar charchoice( ": Lancer la pierre !" )choice: common5-rock-throw
 	else
-		"It's too good to pass up. Someone MUST throw that rock at this zombie:" +crtext
+		"C'est trop tentant. Quelqu'un DOIT lancer cette pierre sur ce zombie :" +crtext
 		' common5-rock-throw cyoa-human-choice
 	then
 ;
@@ -172,92 +172,92 @@ cyoa: common5-rock
 
 cyoa-choice: common5-drag-race
 	vehicle.which@ 1 < if
-		($ Thegroup .. " doesn't have a car right now, so it's not a very close race." $) text!
-		"I WIN, NERDS!" rbold +crtext morale3-all badfx
+		($ Thegroup .. " n'a pas de voiture en ce moment, donc ce n'est pas vraiment une course serree." $) text!
+		"J'AI GAGNE, LES NULS !" rbold +crtext morale3-all badfx
 	then;
-	($ "The race begins! Both drivers " .. "FLOOR IT!" fbold $) text!
+	($ "La course commence ! Les deux conducteurs " .. "A FOND !" fbold $) text!
 	car-speed 2 < if
-		($ Thegroup .. "'s slow car had no chance at all in this race." $) +crtext badfx morale3-all
+		($ Thegroup .. " : la voiture trop lente n'avait aucune chance dans cette course." $) +crtext badfx morale3-all
 	then;
 	car-speed 2 = if
-		($ Thegroup .. "'s car is too slow, and is left far behind." $) +crtext badfx morale--all
+		($ Thegroup .. " : la voiture est trop lente et se retrouve loin derriere." $) +crtext badfx morale--all
 	then;
 	car-speed 3 > if
-		"Your car easily wins the race, leaving the other driver in the dust." +crtext goodfx morale4+all
+		"Votre voiture gagne facilement la course, laissant l'autre conducteur dans la poussiere." +crtext goodfx morale4+all
 	then;
 	car-speed 2 > if
-		"Your car barely wins the race. The other driver gives a thumbs up." +crtext morale2+all goodfx
+		"Votre voiture gagne de justesse. L'autre conducteur leve le pouce." +crtext morale2+all goodfx
 	then;
 ;
 
 cyoa-choice: common5-drag-ignore
 	vehicle.which@ 0 > if
-		"YOU CAN'T DO THAT! YOU CAN'T IGNORE A DRAG RACE CHALLENGE!" rbold text!
+		"VOUS NE POUVEZ PAS FAIRE CA ! ON N'IGNORE PAS UN DEFI EN COURSE !" rbold text!
 		car-armor 0 > if
-			($ "The driver bumps into " .. thegroup .. "'s car, but just bounces right off the armor.
-			The driver's car careens off the road and crashes into a ditch." .. Thegroup .. " is very amused by this." $) +crtext morale3+all goodfx
+			($ "Le conducteur percute la voiture de " .. thegroup .. ", mais rebondit sur le blindage.
+			Sa voiture part en tete-a-queue et s'ecrase dans un fosse." .. Thegroup .. " trouve ca tres amusant." $) +crtext morale3+all goodfx
 		then;
-		($ "The driver bumps into " .. thegroup .. "'s car, sending it into a spin." $) +crtext
+		($ "Le conducteur percute la voiture de " .. thegroup .. ", la faisant partir en tete-a-queue." $) +crtext
 		-1 car-chassis+
-		car-chassis 0 > if 
-			($ "The car takes minor damage, and " .. thegroup .. " gets hurt." $) +crtext sting--all bitefx
+		car-chassis 0 > if
+			($ "La voiture subit des degats mineurs et " .. thegroup .. " est blesse." $) +crtext sting--all bitefx
 		else
-			($ "The battered car couldn't take that stress. It stops running." $) +crtext badfx
+			($ "La voiture abimee ne pouvait pas supporter ce choc supplementaire. Elle tombe en panne." $) +crtext badfx
 		then
 	else
-		"FINE, BE THAT WAY! I'LL BE BACK WHEN YOU HAVE A CAR!" rbold text!
-		($ "The driver " .. "PEELS OUT!" fbold $) +crtext
+		"TRES BIEN ! JE REVIENDRAI QUAND VOUS AUREZ UNE VOITURE !" rbold text!
+		($ "Le conducteur " .. "DECOLLE EN TROMBE !" fbold $) +crtext
 	then
 
 ;
 
 cyoa-choice: common5-drag-ram
-	($ "Before the drag race can start, " .. thegroup .. " plows "  .. ghis .. " car into the opponent's car." $) text!
+	($ "Avant que la course ne commence, " .. thegroup .. " percute " .. ghis .. " voiture contre celle de l'adversaire." $) text!
 	car-armor 0 > if
-		"Your armored car obliterates the fast but flimsy vehicle, the armor doesn't even get scratched." +crtext
+		"Votre voiture blindee aneantit le vehicule rapide mais fragile, sans meme rayer le blindage." +crtext
 	else
 		-2 car-chassis+ bitefx
 		car-chassis 0 > if
-			"Both cars take damage, but the opponent's vehicle takes a lot more. You win the race!" +crtext
+			"Les deux voitures sont endommagees, mais celle de l'adversaire bien plus. Vous gagnez la course !" +crtext
 		else
-			"Both cars are damaged enough to no longer drive. That makes the race a tie!" +crtext
-		then 
+			"Les deux voitures sont trop endommagees pour rouler. Course nulle !" +crtext
+		then
 	then
-	($ "The annoying driver runs away, screaming " .. "CHEATER! " rbold .. Thegroup .. " siphons some gas from his wreckage." $) +crtext
+	($ "Le conducteur agacant s'enfuit en criant " .. "TRICHEUR ! " rbold .. Thegroup .. " siphonne de l'essence de son epave." $) +crtext
 	morale++all 30 40 rnd trunk-gas+ goodfx
 ;
 
 cyoa-choice: common5-drag-rules
-	($ cname .. " isn't clear on the rules of drag racing." $) text!
-	"THE ONLY RULE OF DRAG RACING... IS THAT THERE ARE NO RULES!" rbold +crtext
-	"The driver then goes on to ramble on about a long list of drag racing rules. " +crtext
+	($ cname .. " ne connait pas bien les regles de la course." $) text!
+	"LA SEULE REGLE DE LA COURSE... C'EST QU'IL N'Y A PAS DE REGLES !" rbold +crtext
+	"Le conducteur se lance ensuite dans un long discours sur les regles de la course. " +crtext
 	most-ahole if choosechar
-		($ "During this, " .. cname .. " goes ahead and siphons all the gas from the driver's car." $) +text 80 120 rnd trunk-gas+ aholeREV
+		($ "Pendant ce temps, " .. cname .. " siphonne tranquillement tout le carburant de la voiture du conducteur." $) +text 80 120 rnd trunk-gas+ aholeREV
 	else
-		($ "At around rule 60, " .. thegroup .. " slowly drives away while the driver keeps talking." $) +text
+		($ "Vers la regle 60, " .. thegroup .. " s'eloigne lentement en voiture pendant que le conducteur continue a parler." $) +text
 	then goodfx
 ;
 
 cyoa: common5-drag
-	"FAAF 15: Gotta Go Fast" cyoa-title! someicon
-	($ "A fast and fancy car pulls up to you dramatically. The driver shouts from his window:" $) text!
-	"ON THE DEATH ROAD, THE ONLY WAY TO SURVIVE IS TO BE FAST. AND ALSO FURIOUS." rbold +crtext
-	"He challenges you to a drag race." +crtext
-		choice( "Ignore lunatic" )choice: common5-drag-ignore
+	"FAAF 15 : Faut Aller Vite" cyoa-title! someicon
+	($ "Une voiture rapide et stylee s'arrete pres de vous de facon theatrale. Le conducteur crie par sa fenetre :" $) text!
+	"SUR LA DEATH ROAD, LA SEULE FACON DE SURVIVRE EST D'ETRE RAPIDE. ET AUSSI FURIEUX." rbold +crtext
+	"Il vous defie en course de vitesse." +crtext
+		choice( "Ignorer le dingue" )choice: common5-drag-ignore
 	vehicle.which@ 0 > if
-		choice( "Ram into his car" )choice: common5-drag-ram
+		choice( "Percuter sa voiture" )choice: common5-drag-ram
 	then
-	choice( "Accept challenge" )choice: common5-drag-race
+	choice( "Accepter le defi" )choice: common5-drag-race
 	most-oblivious if
-		charchoice( ": Ask for rules" )choice: common5-drag-rules
+		charchoice( ": Demander les regles" )choice: common5-drag-rules
 	then
 ;
 
 // Radio Station
 
 cyoa-choice: common5-radiodj-siphon
-	($ Thegroup .. " siphons the gas out of the generator. There wasn't much left, but every little bit helps.
-	The radio station's power shuts down." $) text! 15 30 rnd trunk-gas+ goodfx
+	($ Thegroup .. " siphonne l'essence du generateur. Il n'en restait pas beaucoup, mais ca aide toujours.
+	L'alimentation de la station radio s'eteint." $) text! 15 30 rnd trunk-gas+ goodfx
 ;
 
 0 value DJ-PICK
@@ -267,151 +267,151 @@ cyoa-choice: common5-radiodj-pick
 	// This should be expanded later for lots of possible stuff
 
 	cdog? if
-		($ cname .. " says something along the lines of " .. "BARK!" rbold .. " or maybe " .. "BORK?" rbold .. "
-		Here's hoping that it confused a lot of people listening to their radios." $) text!
+		($ cname .. " dit quelque chose ressemblant a " .. "OUAF !" rbold .. " ou peut-etre " .. "OUAF ?" rbold .. "
+		Esperons que ca a confus beaucoup de gens a l'ecoute de leur radio." $) text!
 		morale++ goodfx
 	then;
-	
+
 	cpet? if
-		($ cname .. " attacks the microphone!
-		The microphone is destroyed!
-		" .. cname .. " is very pleased about getting rid of this threat." $) text! bitefx morale2+ strengthREV fitnessREV
+		($ cname .. " attaque le microphone !
+		Le microphone est detruit !
+		" .. cname .. " est tres content d'avoir elimine cette menace." $) text! bitefx morale2+ strengthREV fitnessREV
 	then;
-	
+
 	cchar oblivious? if
-		($ cname .. " turns the microphone on by accident, then blurts out a lot of embarassing personal facts.
-		This includes some useful information to bandits, such as location and current amount of supplies." $) text!
+		($ cname .. " allume le microphone par accident, puis debite plein de faits personnels embarrassants.
+		Ca inclut des informations utiles pour les bandits, comme la position et la quantite de provisions actuelles." $) text!
 		witsattREV cchar morale2-all-except
 	then;
-	
+
 	cchar grating? if
-		($ cname .. " repeatedly shrieks " .. "COOL IT!" fbold .. " into the microphone.
-		After eleven of these shrieks, the radio equipment shorts out and the generator lights on fire." $) text! witsattREV morale++ cchar morale2-all-except 11 to cool-it
+		($ cname .. " crie " .. "COOL IT !" fbold .. " en boucle dans le microphone.
+		Apres onze de ces cris, l'equipement radio grille et le generateur prend feu." $) text! witsattREV morale++ cchar morale2-all-except 11 to cool-it
 	then;
-	
+
 	cchar paranoid? if
-		($ cname .. " broadcasts a long, nearly breathless rant about how the zombie apocalypse was created by the government.
-		The project was codenamed " .. "PROJECT: DINGUS" bbold .. " and the intended goal was to serve as a smokescreen for making jorts" .. 
-		"*" rbold .. " illegal.
-		FINALLY, the truth has been revealed!" $) text! witsattREV morale3+ cchar morale--all-except
-		"* Note: Jorts mean 'jean shorts'." rbold +crtext
+		($ cname .. " diffuse un long discours haletant sur la creation de l'apocalypse zombie par le gouvernement.
+		Le projet avait pour nom de code " .. "PROJET : DINGUS" bbold .. " et l'objectif etait de servir de paravent pour rendre les jorts" ..
+		"*" rbold .. " illegaux.
+		ENFIN, la verite est revelee !" $) text! witsattREV morale3+ cchar morale--all-except
+		"* Note : Jorts signifie 'short en jean'." rbold +crtext
 	then;
-	
+
 	cloyalty- if
-		($ cname .. " broadcasts a helpful message:" $) text!
+		($ cname .. " diffuse un message utile :" $) text!
 		cchar ahole? if
-			"CIVILIZATION HAS ENDED!
-			LIE, CHEAT, STEAL GAS FROM TOILETS!
-			HOMEWORK SUCKS!!!" rbold +crtext
-			"The last line of this tirade is yelled so loud that the microphone emits feedback." +crtext
+			"LA CIVILISATION EST TERMINEE !
+			MENTEZ, TRICHEZ, VOLEZ DE L'ESSENCE DANS LES TOILETTES !
+			LES DEVOIRS C'EST NUL !!!" rbold +crtext
+			"La derniere ligne de cette diatribe est criee si fort que le microphone emet un larsen." +crtext
 			aholeREV morale2+
 			cchar ' .loyalty-- foreach-team-char-except
 		else
-			"EVERYONE BUT ME
-			... IS A NERD!" rbold +crtext
+			"TOUT LE MONDE SAUF MOI
+			... EST UN NUL !" rbold +crtext
 			loyaltyREV morale++
 		then cchar morale--all-except
 	then;
 
 	cchar .hiskill-stack depths 0= if 0 else shuffles pops then to DJ-PICK drop
-	
+
 	DJ-PICK STAT_MEDICAL = if
 		cchar .medical 3 > if
-			($ cname .. " knows that " .. chis .. " message can save lives, and desperately rattles off as much practical medical knowledge as " .. che .. " can in a short time.
-			Maybe this can help someone." $) text!
+			($ cname .. " sait que " .. chis .. " message peut sauver des vies, et debite frenetiquement le plus de connaissances medicales pratiques en peu de temps.
+			Ca peut aider quelqu'un." $) text!
 			medicalREV morale++
 			' .medical++ foreach-team-char
 		then;
 		cchar .medical 3 < if
-			($ cname .. " proudly spouts as much medical knowledge as " .. che .. " can in a short time.
-			It's all really bad advice that makes anyone that hears it actually worse off." $) text!
+			($ cname .. " debite fierement le plus de connaissances medicales possible en peu de temps.
+			C'est de tres mauvais conseils qui empirent la situation de ceux qui les entendent." $) text!
 			medicalREV morale2+
 			cchar ' .medical-- foreach-team-char-except
 		then; medicalREV
 	then
-	
+
 	DJ-PICK STAT_MECHANICAL = if
 		cchar .mechanical 3 > if
-			($ cname .. " broadcasts a short impromptu talk show that is a crash course in car repair. It's informative and entertaining.
-			Maybe this can help someone." $) text!
+			($ cname .. " diffuse un court talk-show improvise sur la reparation automobile. C'est informatif et divertissant.
+			Ca peut aider quelqu'un." $) text!
 			mechanicREV morale++
 			' .mechanic++ foreach-team-char
 		then;
 		cchar .mechanical 3 < if
-			($ cname .. " rambles on about repairing sweet cars and 'crafting level 3 lighting-flame-chainsaws' until the power runs out.
-			Anyone that hears this actually gets worse at repairing things." $) text!
+			($ cname .. " blablatise sur les belles voitures et la 'fabrication de tronconneuses-eclairs de niveau 3' jusqu'a ce que l'electricite s'eteigne.
+			Ceux qui l'entendent deviennent moins bons en reparation." $) text!
 			mechanicREV morale2+
 			cchar ' .mechanic-- foreach-team-char-except
 		then; mechanicREV
 	then
-	
+
 	DJ-PICK STAT_FITNESS = if
 		cfitness+ if
-			($ cname .. " creates an intense radio calisthenics show. Whoever is listening joins in with the exercises.
-			The total combined sweat from this could fill up a bathtub." $) text!
+			($ cname .. " cree une emission radio de calisthenie intense. Ceux qui ecoutent font les exercices.
+			La sueur combinee de tout ca pourrait remplir une baignoire." $) text!
 			fitnessREV morale2+
 			' .fitness++ foreach-team-char
 		then;
 	then
-	
+
 	DJ-PICK STAT_SHOOTING = if
 		cshooting+ if
-			($ cname .. " broadcasts some very effective tips and theories on zombie shooting.
-			During the show, " .. cHe .. " even comes up with some new trick shots." $) text!
+			($ cname .. " diffuse de tres bons conseils et theories sur le tir anti-zombie.
+			Durant l'emission, " .. cHe .. " invente meme de nouveaux tirs acrobatiques." $) text!
 			shootingREV morale++
-			' .shooting++ foreach-team-char		
-		then;	
+			' .shooting++ foreach-team-char
+		then;
 	then
 
 	DJ-PICK STAT_STRENGTH = if
 		cstrength+ if
-			($ cname .. " reads a poem that " .. che .. " wrote about how much " .. che .. " loves being strong.
-			The Four Spirits of Swoleness hear this sweet poem, and they confer their blessing!" $) text!
+			($ cname .. " lit un poeme sur son amour d'etre fort.
+			Les Quatre Esprits de la Musculature entendent ce doux poeme et conferent leur benediction !" $) text!
 			strengthREV morale++
-			' .strength++ foreach-team-char		
-		then;	
+			' .strength++ foreach-team-char
+		then;
 	then
-	
+
 	cchar charming? if
-		($ cname .. " can't come up with anything else, so " .. che .. " sings a song.
-		It's a great performance, sure to become a new post-zombocalpyic hit single!" $) text! witsattREV morale2+all
+		($ cname .. " ne trouve rien d'autre, alors " .. che .. " chante une chanson.
+		C'est une excellente performance, sure de devenir un nouveau tube post-zombocalyptique !" $) text! witsattREV morale2+all
 	then;
-		
-	($ cname .. " can't think of anything to say, and stays silent even as the power runs out." $) text! badfx morale--
+
+	($ cname .. " ne trouve rien a dire et reste silencieux meme quand l'electricite s'eteint." $) text! badfx morale--
 ;
 
 cyoa-bridge: common5-radiodj-pick4
-	"Who gets to be the radio DJ?" text!
+	"Qui sera le DJ radio ?" text!
 	' common5-radiodj-pick cyoa-team-choice
 ;
 
 cyoa: common5-radiodj
-	"Death Road Radio" cyoa-title!
-	($ Thegroup .. " finds a radio station. The broadcasting equipment is hooked up to a gas generator with a small amount of fuel left. There's enough power to get out one message to anyone that may hear it. " $) text!
-		choice( "Siphon generator" )choice: common5-radiodj-siphon
+	"Radio Death Road" cyoa-title!
+	($ Thegroup .. " trouve une station de radio. L'equipement de diffusion est branche a un generateur a essence avec peu de carburant restant. Il y a assez de puissance pour envoyer un message a quiconque pourrait l'entendre. " $) text!
+		choice( "Siphonner le generateur" )choice: common5-radiodj-siphon
 	solo if
-		soloer charchoice( ": Send a message" )choice: common5-radiodj-pick
+		soloer charchoice( ": Envoyer un message" )choice: common5-radiodj-pick
 	then;
-	"Who should send out the message?" +crtext
+	"Qui devrait envoyer le message ?" +crtext
 	team-count 3 > if
 		' common5-radiodj-pick 2 #cyoa-team-choice
-		choice( "Pick someone else" )choice: common5-radiodj-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: common5-radiodj-pick4
 	else
 		' common5-radiodj-pick 3 #cyoa-team-choice
-	then	
+	then
 ;
 
 // Mysterious Radio Signal
 
 : common5-signal-win
-	"The message warns that the base has been abandoned, but they hid a stash of ammo to help other survivors.
-	The stash turns out to be nearby!" +crtext morale++all ammosearch2
+	"Le message avertit que la base a ete abandonnee, mais ils ont cache des munitions pour aider d'autres survivants.
+	La cache se trouve a proximite !" +crtext morale++all ammosearch2
 	solohuman if witsREV else ' .witsREV foreach-team-char // wits-total is for the whole team instead of just humans, oddly... may change this later
 		wits-total 17 > if
-			"The team decodes an additional ultra-secret message:" +crtext
+			"L'equipe decode un message ultra-secret supplementaire :" +crtext
 			char-gen to recruitee ricon
-			($ "We also ditched " .. recruitee .name@ .. ", " .. rhe .. " was a real nerd.
-			You can recruit " .. rhim .. " if you are desperate." $) bbold bbold +crtext
+			($ "On a aussi largue " .. recruitee .name@ .. ", " .. rhe .. " etait vraiment un nul.
+			Vous pouvez le recruter si vous etes desesperes." $) bbold bbold +crtext
 			recruit-yesno
 		then
 	then
@@ -419,24 +419,24 @@ cyoa: common5-radiodj
 
 cyoa-blank: common5-signal-decode
 	solohuman if
-		choosehuman ($ cname .. " tries to figure the code out by " .. chim .. "self..." $) text!
+		choosehuman ($ cname .. " essaie de dechiffrer le code seul..." $) text!
 		cwits+ if common5-signal-win then;
 	else
-		"The team puts their heads together to figure out the code..." text!
+		"L'equipe met ses cerveaux en commun pour dechiffrer le code..." text!
 		wits-total 10 > if common5-signal-win then;
 	then
-	"The message says something like " +crtext "DRINK MORE OVALTUMS" bbold +text
-	"It's just nonsense! What a waste of time!" +crtext morale--all
+	"Le message dit quelque chose comme " +crtext "BUVEZ PLUS D'OVALTUMS" bbold +text
+	"C'est du charabia ! Quelle perte de temps !" +crtext morale--all
 ;
 
 cyoa-blank: common5-signal-drive
-	($ Thegroup .. " attempts to drive to the signal by listening for the radio broadcast as it gets weaker or stronger. This takes quite a bit of time." $) text!
+	($ Thegroup .. " essaie de conduire vers le signal en ecoutant la radio selon qu'elle s'affaiblit ou se renforce. Ca prend pas mal de temps." $) text!
 	car-mpg 0 = if
-		"Funny enough, this car takes no gas." +crtext
+		"Chose amusante, cette voiture ne consomme pas d'essence." +crtext
 		goodfx
-	else		
+	else
 		trunk-gas 70 car-mpg * >= if
-			-55 -70 rnd car-mpg * car-gas+ 
+			-55 -70 rnd car-mpg * car-gas+
 		else
 			bandit-gas
 		then
@@ -446,56 +446,56 @@ cyoa-blank: common5-signal-drive
 ;
 
 cyoa-choice: common5-signal-gov
-	"THIS IS AN OBVIOUS TRAP SET BY THE GOVERNMENT.
-	THE SECRET ZOMBIE GOVERNMENT!" pbold text!
-	($ gHe .. " wastes no time in " .. "PEELING OUT" fbold .. " of there!
-	" .. cname .. " is quite relieved to have escaped." $) +crtext morale2+ witsattREV
+	"C'EST EVIDEMMENT UN PIEGE TENDU PAR LE GOUVERNEMENT.
+	LE GOUVERNEMENT SECRET DES ZOMBIES !" pbold text!
+	($ gHe .. " ne perd pas de temps a " .. "DEGUERPIR" fbold .. " de la !
+	" .. cname .. " est bien soulage d'avoir echappe." $) +crtext morale2+ witsattREV
 ;
 
 cyoa: common5-signal
-	"Mysterious Radio Signal" cyoa-title!
-	($ Thegroup .. " finds a strange repeating message on the radio. It's a series of short bursts of music, beeps, spoken numbers, and haunting slide whistle noises. There's also a kazoo in there.
-	What could it all mean?" $) text!
-		choice( "Ignore it" )choice
-		choice( "Decipher message" )choice: common5-signal-decode
-		choice( "Drive to signal" )choice: common5-signal-drive
+	"Signal Radio Mysterieux" cyoa-title!
+	($ Thegroup .. " trouve un etrange message repetitif sur la radio. C'est une serie de courtes rafales de musique, bips, nombres parles et sinistres sons de flute coulissante. Il y a aussi un kazoo.
+	Qu'est-ce que ca pourrait signifier ?" $) text!
+		choice( "Ignorer" )choice
+		choice( "Dechiffrer le message" )choice: common5-signal-decode
+		choice( "Conduire vers le signal" )choice: common5-signal-drive
 		most-paranoid if
-			charchoice( ": THIS IS A TRAP!" )choice: common5-signal-gov
+			charchoice( ": C'EST UN PIEGE !" )choice: common5-signal-gov
 		then
 ;
 
 // Repair Shop repair
 
 cyoa-choice: common5-repair-pick
-	($ cname .. " spends a day trying to fix something in the junk pile... " $) text!
+	($ cname .. " passe une journee a essayer de reparer quelque chose dans le tas de detritus... " $) text!
 	cchar .mechanical@ case
-		0 of ($ cHe .. " accidentally gets a lot of cuts, scrapes, and bruises. " .. cHe .. " learns about repair, the hard way." $) +text endof
-		1 of ($ cHe .. " takes a broken tennis racket and turned it into a " .. "Level 2 Ultra Ergonomic Tennis Racket of the Whale" bbold .. ". This is exactly the same as a regular tennis racket." $) +text 1 WEAPON_TENNIS trunk.weapon+ endof
-		2 of ($ cHe .. " turns a useless Rusted Machete into a useful or at least usable " .. "Rusty Machete" bbold .. ". It's a clear improvement." $) +text 1 WEAPON_MACHETE1 trunk.weapon+ endof
-		3 of ($ cHe .. " reinforced a splintered bat with nails and metal to make a " .. "Spiked Bat" bbold .. "! It's great until it breaks!" $) +text 1 WEAPON_SPIKEDBAT trunk.weapon+ endof
-		4 of ($ cHe .. " sharpens a dull " .. "Branch Trimmer" bbold .. "! It's a decent if slightly awkward weapon that won't break on you!" $) +text 1 WEAPON_BRANCHTRIM trunk.weapon+ endof // This was a sturdy machete until I chickened out
-		5 of ($ cHe .. " gets a broken " .. "Leaf Blower" bbold .. " working again! Send zombies flying like leaves!" $) +text 1 WEAPON_BLOWER trunk.weapon+ endof
-		6 of ($ cHe .. " restores a faulty " .. "Weed Whacker" bbold .. "! It's like a slightly wimpy son to the chainsaw! To make up for the lack of power, it's much more gas efficient." $) +text 1 WEAPON_WHACKER trunk.weapon+ endof
+		0 of ($ cHe .. " se fait accidentellement plein de coupures, egratignures et bleus. " .. cHe .. " apprend la reparation a la dure." $) +text endof
+		1 of ($ cHe .. " prend une raquette de tennis cassee et la transforme en " .. "Raquette de Tennis Ultra-Ergonomique Niveau 2 de la Baleine" bbold .. ". C'est exactement pareil a une raquette normale." $) +text 1 WEAPON_TENNIS trunk.weapon+ endof
+		2 of ($ cHe .. " transforme une Machette Rouilee inutile en " .. "Machette Rouilee" bbold .. " utilisable. C'est une nette amelioration." $) +text 1 WEAPON_MACHETE1 trunk.weapon+ endof
+		3 of ($ cHe .. " renforce une batte fendue avec des clous et du metal pour faire une " .. "Batte Clouee" bbold .. " ! C'est super jusqu'a ce qu'elle casse !" $) +text 1 WEAPON_SPIKEDBAT trunk.weapon+ endof
+		4 of ($ cHe .. " affute un " .. "Elagueur" bbold .. " emoussee ! C'est une arme correcte si un peu maladroite qui ne cassera pas !" $) +text 1 WEAPON_BRANCHTRIM trunk.weapon+ endof // This was a sturdy machete until I chickened out
+		5 of ($ cHe .. " remet en marche un " .. "Souffleur de Feuilles" bbold .. " casse ! Envoyez les zombies voler comme des feuilles !" $) +text 1 WEAPON_BLOWER trunk.weapon+ endof
+		6 of ($ cHe .. " restaure un " .. "Coupe-Herbes" bbold .. " defectueux ! C'est comme le fils un peu frele de la tronconneuse ! Pour compenser le manque de puissance, il est bien plus economique en essence." $) +text 1 WEAPON_WHACKER trunk.weapon+ endof
 	endcase mechanicREV mechanic++
 	+cr fullcamp heal-event
 ;
 
 cyoa-bridge: common5-repair-pick4
-	"Who should spend a day repairing junk?" text!
+	"Qui devrait passer une journee a reparer les detritus ?" text!
 	' common5-repair-pick cyoa-human-choice
 
 ;
 
 cyoa: common5-repair
-	"Repair Shop Repair" cyoa-title!
-	($ Thegroup .. " finds a repair shop. There's a tiny bit of gas, plus a lot of broken garbage. There could be something good here, if you know how to fix it." $) text!
+	"Atelier de Reparation" cyoa-title!
+	($ Thegroup .. " trouve un atelier de reparation. Il y a un peu d'essence, plus beaucoup de bric-a-brac casse. Il pourrait y avoir quelque chose d'utile ici, si on sait reparer." $) text!
 	10 16 rnd trunk-gas+
-		choice( "Ignore junk" )choice
-	solohuman if choosehuman cchar charchoice( ": Repair junk" )choice: common5-repair-pick "You could spend a day repairing things in here." +crtext then;
-	"Pick someone to spend a day repairing junk:" +crtext
+		choice( "Ignorer les detritus" )choice
+	solohuman if choosehuman cchar charchoice( ": Reparer les detritus" )choice: common5-repair-pick "Vous pourriez passer une journee a reparer des choses ici." +crtext then;
+	"Choisissez quelqu'un pour passer une journee a reparer les detritus :" +crtext
 	numhums 3 > if
 		' common5-repair-pick 2 #cyoa-human-choice
-		choice( "Pick someone else" )choice: common5-repair-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: common5-repair-pick4
 	else
 		' common5-repair-pick cyoa-human-choice
 	then
@@ -504,18 +504,18 @@ cyoa: common5-repair
 // Health Food Store healing
 
 0 stack
-	"thinks the food is fine." shove
-	"doesn't mind the horrid food." shove
-	"has a positive attitude about this slop!" shove
-	"is trying to keep an open mind." shove
-	"pretends that it's junk food instead." shove
-	"successfully ignores the food." shove
-	"thinks about curry." shove
-	"focuses on the health benefits." shove
-	"tries to block out the smell." shove
-	"has eaten worse food, possibly." shove
-	"mentally blocks out the disgust." shove
-	"resists feeling any emotion right now!" shove
+	"trouve la nourriture acceptable." shove
+	"ne s'offusque pas de cette horrible nourriture." shove
+	"a une attitude positive face a cette bouillie !" shove
+	"essaie de rester ouvert d'esprit." shove
+	"fait semblant que c'est de la junk food." shove
+	"ignore avec succes la nourriture." shove
+	"pense au curry." shove
+	"se concentre sur les bienfaits pour la sante." shove
+	"essaie de ne pas sentir l'odeur." shove
+	"a peut-etre mange pire." shove
+	"bloque mentalement le degout." shove
+	"resiste a toute emotion pour l'instant !" shove
 value common5-healthfood-line-base
 common5-healthfood-line-base shuffles var common5-healthfood-line
 
@@ -525,7 +525,7 @@ common5-healthfood-line-base shuffles var common5-healthfood-line
 
 : common5-healthfood-stat args( @ )
 	<- @ .cattitude+ if
-		($ <- @ .colourname .. " " .. common5-healthfood-say $) +crtext 
+		($ <- @ .colourname .. " " .. common5-healthfood-say $) +crtext
 	else
 		<- @ .cattitude- if
 			<- @ .morale2-
@@ -533,23 +533,23 @@ common5-healthfood-line-base shuffles var common5-healthfood-line
 			<- @ .morale--
 		then
 	then <- @ .attitudeREV <- @ .health++
-	
+
 ;
 
 cyoa-blank: common5-healthfood-go
- ($ Thegroup .. " loots the gross health food, picking what " .. gthey .. " can live with.
-  This turns out to be not that much of the food in total." $) text!
+ ($ Thegroup .. " pille la nourriture sante degoutante, en prenant ce qu'" .. gthey .. " peut avaler.
+  Ca ne represente pas grand chose du total." $) text!
   4 6 rnd trunk-food+
   ' common5-healthfood-stat foreach-team-char
-  ($ Thegroup .. " feels healthier just looking at the gross food!" $) +crtext
+  ($ Thegroup .. " se sent deja en meilleure sante rien qu'a regarder cette nourriture degoutante !" $) +crtext
 ;
 
 cyoa: common5-healthfood
-	"Health Food Havoc" cyoa-title!
-	($ Thegroup .. " finds a health food store. It seems like no one bothered to loot it because the food was disgusting.
-	Most of the food seems to be rotting anyway. Or maybe it's not, it could be that the food is supposed to look and smell like this." $) text!
-		choice( "Ignore for morale reasons" )choice: morale++all
-		choice( "Loot the gross food" )choice: common5-healthfood-go
+	"Chaos au Magasin Sante" cyoa-title!
+	($ Thegroup .. " trouve un magasin de nourriture sante. Il semble que personne n'ait pris la peine de le piller parce que la nourriture etait degoutante.
+	La plupart des aliments semblent quand meme pourrir. Ou peut-etre pas, c'est peut-etre leur aspect et odeur normale." $) text!
+		choice( "Ignorer pour des raisons de moral" )choice: morale++all
+		choice( "Piller la nourriture degoutante" )choice: common5-healthfood-go
 ;
 
 // The Swole-O-Flex
@@ -558,51 +558,51 @@ cyoa: common5-healthfood
 
 : common5-swoloflex-go
 	common5-swoloflex@ 1 < if
-		"The machine starts its patented automated total-body bodybuilding regiment..." text!
-		($ cname .. "'s body makes audible snapping and crunching sounds! How horrifying!" $) rbold +crtext
+		"La machine demarre son programme brevete de musculation totale automatise..." text!
+		($ cname .. " : son corps emet des craquements audibles ! Quelle horreur !" $) rbold +crtext
 		strength++ ouch-- 1 to common5-swoloflex@ bitefx
 	else
-		($ "The machine clamps " .. cname .. " in place for its innovative gymnastics simulator..." $) text!
-		($ "A high-tension cable snaps free and whips around! There's no time to react to it!" $) rbold +crtext
+		($ "La machine immobilise " .. cname .. " pour son simulateur de gymnastique innovant..." $) text!
+		($ "Un cable haute tension se brise et fouette dans tous les sens ! Pas le temps de reagir !" $) rbold +crtext
 		fitness++ ouch-- 0 to common5-swoloflex@ bitefx
 	then
 ;
 
 cyoa-choice: common5-swoloflex-again
-	($ cname .. " finishes " .. chis .. " workouts, no matter the cost!" $) text!
+	($ cname .. " termine " .. chis .. " seance d'entrainement, quoi qu'il en coute !" $) text!
 	common5-swoloflex-go
 	dead? if
-		($ "A little speaker on the machine says " .. "NO PAIN NO GAIN!" rbold $) +crtext
+		($ "Un petit haut-parleur sur la machine dit " .. "PAS DE DOULEUR, PAS DE GAIN !" rbold $) +crtext
 	then;
 ;
 
 cyoa-bridge: common5-swoloflex-pick
-	($ cname .. " uses the innovative Swolo-O-Flex personal exercise system..." $) text!
+	($ cname .. " utilise l'innovant systeme d'exercice personnel Swolo-O-Flex..." $) text!
 	common5-swoloflex-go
 	dead? if
-		($ "A little speaker on the machine says " .. "NO REFUNDS!" rbold $) +crtext
+		($ "Un petit haut-parleur sur la machine dit " .. "PAS DE REMBOURSEMENT !" rbold $) +crtext
 	then;
-		choice( "Avoid further injury" )choice
-		choice( "Finish workout!" )choice: common5-swoloflex-again
+		choice( "Eviter d'autres blessures" )choice
+		choice( "Finir la seance !" )choice: common5-swoloflex-again
 ;
 
 cyoa-bridge: common5-swoloflex-pick4
-	"Who should get maimed or killed by the Swole-O-Flex?" rbold text!
+	"Qui devrait etre mutile ou tue par le Swole-O-Flex ?" rbold text!
 	' common5-swoloflex-pick cyoa-human-choice
 ;
 
 cyoa: common5-swoloflex
 	"Swole-O-Flex" cyoa-title!
 	0 1 rnd to common5-swoloflex@
-	($ Thegroup .. " stumbles upon a " .. "Swole-O-Flex Home Strength and Fitness Machine [tm]" bbold .. "!
-		You don't see these much anymore after all the lawsuits against it and the government ordered recalls." $) text!
+	($ Thegroup .. " tombe sur une " .. "Machine Swole-O-Flex de Musculation et Fitness [tm]" bbold .. " !
+		On n'en voit plus beaucoup depuis tous les proces et les rappels ordonnes par le gouvernement." $) text!
 		// The company that made it went out of business shortly before the zombocalypse hit. - Extra text
-		choice( "Stay away from it" )choice
-	solohuman if choosehuman cchar charchoice( ": Use Swole-O-Flex" )choice: common5-swoloflex-pick "Using this will hurt." rbold +crtext then;
-	"Pick someone to use Swole-O-Flex and probably get killed:" rbold +crtext
+		choice( "Rester a l'ecart" )choice
+	solohuman if choosehuman cchar charchoice( ": Utiliser le Swole-O-Flex" )choice: common5-swoloflex-pick "Utiliser ca va faire mal." rbold +crtext then;
+	"Choisissez quelqu'un pour utiliser le Swole-O-Flex et probablement mourir :" rbold +crtext
 	numhums 3 > if
 		' common5-swoloflex-pick 2 #cyoa-human-choice
-		choice( "Pick someone else" )choice: common5-swoloflex-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: common5-swoloflex-pick4
 	else
 		' common5-swoloflex-pick cyoa-human-choice
 	then
@@ -611,19 +611,19 @@ cyoa: common5-swoloflex
 // Gnome Challenge Conduct Rare
 
 defer common5-gnomerepeat
-: common5-gnome-back choice( "BACK" )choice: common5-gnomerepeat ;
+: common5-gnome-back choice( "RETOUR" )choice: common5-gnomerepeat ;
 
 cyoa-choice: common5-gnome-no
-	"All the challenges sound awful." text! ricon
-	($ "The gnome shrieks " .. "WHATEVER, NERDS!" rbold .. " and then waddles away in a huff." $) +crtext
-	($ Thegroup .. " is relieved that this is all over." $) +crtext morale++all goodfx
+	"Tous ces defis ont l'air horrible." text! ricon
+	($ "Le gnome crie " .. "PEU IMPORTE, LES NULS !" rbold .. " et se dandine pour partir d'un air irrite." $) +crtext
+	($ Thegroup .. " est soulage que ca soit termine." $) +crtext morale++all goodfx
 ;
 
 0 stack
-	" chuckles quietly." shove
-	" doesn't feel much different, just kind of smug." shove
-	" shrugs, rolls eyes." shove
-	" tries not to laugh." shove
+	" rigole discretement." shove
+	" ne se sent pas vraiment different, juste un peu suffisant." shove
+	" hausse les epaules, leve les yeux au ciel." shove
+	" essaie de ne pas rire." shove
 value common5-gnome-line-base
 common5-gnome-line-base shuffles var common5-gnome-line
 
@@ -639,24 +639,24 @@ common5-gnome-line-base shuffles var common5-gnome-line
 ;
 
 cyoa-blank: common5-gnome-morale-go
-	"CAN YOU SURVIVE THE SADNESS?" rbold text! goodfx
+	"POUVEZ-VOUS SURVIVRE A LA TRISTESSE ?" rbold text! goodfx
 	' common5-gnome-morale-stat foreach-team-char
 ;
 
 cyoa-bridge: common5-gnome-morale
-	"BE CURSED BY ULTIMATE EMO SADNESS!" rbold text! ricon
-	($ "Choosing this will make " .. thegroup .. "'s maximum morale be 3 lower than normal. In exchange, " .. gthey .. " will get:" $) +crtext
-	"+ An extra point added to maximum health!
-	+ One point in all skills, up to each maximum!" bbold +crtext
+	"SOYEZ MAUDIT PAR UNE TRISTESSE EMO ULTIME !" rbold text! ricon
+	($ "Choisir ceci reduira le moral maximum de " .. thegroup .. " de 3 en dessous de la normale. En echange, " .. gthey .. " obtiendra :" $) +crtext
+	"+ Un point supplementaire en sante maximum !
+	+ Un point dans toutes les competences, jusqu'au maximum de chacune !" bbold +crtext
 	common5-gnome-back
-	choice( "Accept Challenge!" )choice: common5-gnome-morale-go
+	choice( "Accepter le Defi !" )choice: common5-gnome-morale-go
 ;
 
-: common5-gnome-melee1 "Got the WHAMMER!" bbold +crtext 1 WEAPON_MEGASPIKEDBAT trunk.weapon+ ;
-: common5-gnome-melee2 "Got a STRONG CLEAVER!" bbold +crtext 1 WEAPON_SCLEAVER trunk.weapon+ ;
-: common5-gnome-melee3 "Got a WOODEN CLUB!" bbold +crtext 1 WEAPON_WOODCLUB trunk.weapon+ ;
-: common5-gnome-melee4 "Got a MIGHTY CLAYMORE!" fbold +crtext 1 WEAPON_CLAYMORE trunk.weapon+ ;
-: common5-gnome-melee5 "Got a HALBERD!" fbold +crtext 1 WEAPON_HALBERD trunk.weapon+ ;
+: common5-gnome-melee1 "Obtenu le WHAMMER !" bbold +crtext 1 WEAPON_MEGASPIKEDBAT trunk.weapon+ ;
+: common5-gnome-melee2 "Obtenu un COUPERET ROBUSTE !" bbold +crtext 1 WEAPON_SCLEAVER trunk.weapon+ ;
+: common5-gnome-melee3 "Obtenu une MASSUE EN BOIS !" bbold +crtext 1 WEAPON_WOODCLUB trunk.weapon+ ;
+: common5-gnome-melee4 "Obtenu une GRANDE CLAYMORE !" fbold +crtext 1 WEAPON_CLAYMORE trunk.weapon+ ;
+: common5-gnome-melee5 "Obtenu une HALLEBARDE !" fbold +crtext 1 WEAPON_HALBERD trunk.weapon+ ;
 
 0 stack
 	' common5-gnome-melee1 shove
@@ -670,25 +670,25 @@ common5-gnome-meleewep-base shuffles var common5-gnome-meleewep
 : common5-gnome-givemelee common5-gnome-meleewep depths 0= if common5-gnome-meleewep-base shuffles to common5-gnome-meleewep then pops nip execute ;
 
 cyoa-blank: common5-gnome-shoot-go
-	"NO MORE GUNS OR CHAINSAWS! ENJOY YOUR CHALLENGE!" rbold text! goodfx
+	"PLUS D'ARMES A FEU NI DE TRONCONNEUSES ! PROFITEZ DE VOTRE DEFI !" rbold text! goodfx
 	' .nocanshoot foreach-team-char
 	team-count-alive for common5-gnome-givemelee next
 ;
 
 cyoa-choice: common5-gnome-shoot
-	"GUNS AND CHAINSAWS ARE TOO LOUD! I HATE THEM!" rbold text! ricon
-	($ "Choosing this will make " .. thegroup .. " no longer capable of shooting guns or using chainsaws or similar weapons. In exchange, you will get " $) +crtext
-	"one random high quality melee weapon for each member of your group!
-	Possible weapons: Wooden Club, The Whammer, Sturdy Cleaver, Mighty Claymore, Halberd" bbold +text
+	"LES ARMES A FEU ET LES TRONCONNEUSES SONT TROP BRUYANTES ! JE LES DETESTE !" rbold text! ricon
+	($ "Choisir ceci rendra " .. thegroup .. " incapable de tirer des armes a feu ou d'utiliser des tronconneuses. En echange, vous obtiendrez " $) +crtext
+	"une arme de melee aleatoire de haute qualite pour chaque membre de votre groupe !
+	Armes possibles : Massue en bois, Le Whammer, Couperet Robuste, Grande Claymore, Hallebarde" bbold +text
 	common5-gnome-back
-	choice( "Accept Challenge!" )choice: common5-gnome-shoot-go
+	choice( "Accepter le Defi !" )choice: common5-gnome-shoot-go
 ;
 
-: common5-gnome-firearm1 "Got an UZI!" bbold +crtext 1 WEAPON_UZI trunk.weapon+ 80 trunk-bullet+ ;
-: common5-gnome-firearm2 "Got an ASSAULT RIFLE!" bbold +crtext 1 WEAPON_AK47 trunk.weapon+ 50 trunk-rifle-shell+ ;
-: common5-gnome-firearm3 "Got a MINIGUN!" fbold +crtext 1 WEAPON_MINIGUN trunk.weapon+ 100 trunk-rifle-shell+ ;
-: common5-gnome-firearm4 "Got an AUTOMATIC SHOTGUN!" bbold +crtext 1 WEAPON_AUTOSHOT trunk.weapon+ 30 trunk-shotgun-shell+ ;
-: common5-gnome-firearm5 "Got a RIFLED SLUG SHOTGUN!" bbold +crtext 1 WEAPON_SLUG trunk.weapon+ 30 trunk-shotgun-shell+ ;
+: common5-gnome-firearm1 "Obtenu un UZI !" bbold +crtext 1 WEAPON_UZI trunk.weapon+ 80 trunk-bullet+ ;
+: common5-gnome-firearm2 "Obtenu un FUSIL D'ASSAUT !" bbold +crtext 1 WEAPON_AK47 trunk.weapon+ 50 trunk-rifle-shell+ ;
+: common5-gnome-firearm3 "Obtenu une MITRAILLEUSE !" fbold +crtext 1 WEAPON_MINIGUN trunk.weapon+ 100 trunk-rifle-shell+ ;
+: common5-gnome-firearm4 "Obtenu un FUSIL A POMPE AUTOMATIQUE !" bbold +crtext 1 WEAPON_AUTOSHOT trunk.weapon+ 30 trunk-shotgun-shell+ ;
+: common5-gnome-firearm5 "Obtenu un FUSIL A POMPE A CHEVROTINES !" bbold +crtext 1 WEAPON_SLUG trunk.weapon+ 30 trunk-shotgun-shell+ ;
 
 0 stack
 	' common5-gnome-firearm1 shove
@@ -702,29 +702,29 @@ common5-gnome-firearm-base shuffles var common5-gnome-firearm
 : common5-gnome-givefirearm common5-gnome-firearm depths 0= if common5-gnome-firearm-base shuffles to common5-gnome-firearm then pops nip execute ;
 
 cyoa-blank: common5-gnome-melee-go
-	"MELEE WEAPONS ARE FORBIDDEN FOREVER! GOOD LUCK!" rbold text! goodfx
+	"LES ARMES DE MELEE SONT INTERDITES POUR TOUJOURS ! BONNE CHANCE !" rbold text! goodfx
 	' .atkspecial foreach-team-char
 	team-count-alive for common5-gnome-givefirearm next
 ;
 
 cyoa-choice: common5-gnome-melee
-	"WHO NEEDS MELEE WEAPONS WHEN YOU HAVE FRIENDSHIP?" rbold text! ricon
-	($ "Choosing this will make " .. thegroup .. " no longer capable of melee attacks. In exchange, you will get " $) +crtext
-	"one random high quality firearm for each member of your group, with ammo!
-	Possible guns: Uzi, Assault Rifle, Automatic Shotgun, Slug Shotgun, Minigun" bbold +text
+	"QUI A BESOIN D'ARMES DE MELEE QUAND ON A L'AMITIE ?" rbold text! ricon
+	($ "Choisir ceci rendra " .. thegroup .. " incapable d'attaques de melee. En echange, vous obtiendrez " $) +crtext
+	"une arme a feu aleatoire de haute qualite pour chaque membre de votre groupe, avec des munitions !
+	Armes possibles : Uzi, Fusil d'assaut, Fusil a pompe automatique, Fusil a pompe a chevrotines, Mitrailleuse" bbold +text
 	common5-gnome-back
-	choice( "Accept Challenge!" )choice: common5-gnome-melee-go
+	choice( "Accepter le Defi !" )choice: common5-gnome-melee-go
 ;
 
 cyoa: common5-gnome-rare
-	"Challenge Mode" cyoa-title! char-gen to recruitee ricon recruitee .gnomify2
-	($ "During a moment's peace, a gnome shows up and starts shrieking.
-	" .. "I'M CNOMEY THE CHALLENGE CONDUCT GNOME!" rbold .. "
-	It gives you the choice of an extra challenge, in exchange for a " .. "FABULOUS REWARD!" rainbold $) text!
-		choice( "No thanks" )choice: common5-gnome-no
-		choice( "No Melee Attacks" )choice: common5-gnome-melee
-		choice( "No Shooting/Chainsaw" )choice: common5-gnome-shoot
-		choice( "Max Morale Penalty" )choice: common5-gnome-morale
+	"Mode Defi" cyoa-title! char-gen to recruitee ricon recruitee .gnomify2
+	($ "Pendant un moment de calme, un gnome apparait et commence a crier.
+	" .. "JE SUIS CNOMEY LE GNOME DES DEFIS !" rbold .. "
+	Il vous offre le choix d'un defi supplementaire, en echange d'une " .. "FABULEUSE RECOMPENSE !" rainbold $) text!
+		choice( "Non merci" )choice: common5-gnome-no
+		choice( "Pas d'Attaques de Melee" )choice: common5-gnome-melee
+		choice( "Pas de Tir/Tronconneuse" )choice: common5-gnome-shoot
+		choice( "Malus de Moral Maximum" )choice: common5-gnome-morale
 ;
 
 ' common5-gnome-rare to common5-gnomerepeat
@@ -739,9 +739,9 @@ cyoa-choice: common5-chest-rare-
 
 : common5-chest-weapon
 	common5-chest@ case
-	0 of "Pirate Cutlass" endof
-	1 of "Mighty Claymore" endof
-	2 of "Sturdy Cleaver" endof
+	0 of "Cimeterre de Pirate" endof
+	1 of "Grande Claymore" endof
+	2 of "Couperet Robuste" endof
 	endcase rbold
 ;
 
@@ -754,12 +754,12 @@ cyoa-choice: common5-chest-rare-
 ;
 
 cyoa-choice: common5-chest-pick
-	($ cname .. " picks up the " .. common5-chest-weapon .. "!
-	It fuses to " .. chis .. " hands, preventing the use of any other weapon!" $) text!
+	($ cname .. " prend le " .. common5-chest-weapon .. " !
+	Il fusionne avec " .. chis .. " mains, empechant l'utilisation de toute autre arme !" $) text!
 	ctakeweapons 1 cchar .carrying.slot_count!
 	common5-chest-weaponpick .weapona! 1 cchar .weapon_nodropa!
 	cchar .trait@ "Specialist" $= if
-		($ cname .. " feels naturally familiar with this weapon somehow, and also feels just a little smug." $) +crtext strength++ fitness++ morale++ goodfx
+		($ cname .. " se sent naturellement a l'aise avec cette arme, et se sent aussi un peu suffisant." $) +crtext strength++ fitness++ morale++ goodfx
 	then; goblin-laugh
 ;
 
@@ -767,20 +767,20 @@ cyoa-bridge: common5-chest-pick4
 	solohuman if
 		choosehuman common5-chest-pick
 	then;
-	($ "Who should be given the incredibly cursed " .. common5-chest-weapon .. "?" $) text!
-	"WARNING: The weapon will be locked to the character, and the character will be reduced to one carrying slot!" rbold +crtext
+	($ "Qui devrait recevoir le " .. common5-chest-weapon .. " incroyablement maudit ?" $) text!
+	"AVERTISSEMENT : L'arme sera liee au personnage, qui sera reduit a un seul emplacement de transport !" rbold +crtext
 	' common5-chest-pick cyoa-human-choice
 ;
 
 cyoa-choice: common5-chest-book
 	solohuman if
-		choosehuman ($ cname .. " reads the " .. "Dingusnomicon!" rbold $) text!
+		choosehuman ($ cname .. " lit le " .. "Dingusnomicon !" rbold $) text!
 	else
-		($ "Everyone takes turns reading the " .. "Dingusnomicon!" rbold $) text!	
+		($ "Tout le monde lit le " .. "Dingusnomicon !" rbold $) text!
 	then
-	($ "It's an evil, ancient book covered in eyes and mouths. It keeps doing little bites and also shouts " .. "'nerd'" fbold .. " in a thousand different forgotten languages." $) +crtext
+	($ "C'est un livre mauvais et ancien couvert d'yeux et de bouches. Il mord sans cesse et crie " .. "'nerd'" fbold .. " dans un millier de langues oubliees." $) +crtext
 	morale--all sting--all bitefx
-	"The book imparts its FORBIDDEN KNOWLEDGE!" bbold +crtext
+	"Le livre transmet ses CONNAISSANCES INTERDITES !" bbold +crtext
 	' rewardevent-random foreach-human-char
 	choosehuman cchar rewardevent-random
 ;
@@ -789,13 +789,13 @@ cyoa-choice: common5-chest-book
 
 : common5-lootweapon-name
 	common5-lootweapon@ case
-		0 of "Knight Sword" endof
+		0 of "Epee de Chevalier" endof
 		1 of "Bardiche" endof
-		2 of "Medieval Axe" endof
-		3 of "Sturdy Machete" endof
-		4 of "Rapier" endof
-		5 of "Halberd" endof
-		6 of "Morning Star" endof
+		2 of "Hache Medievale" endof
+		3 of "Machette Robuste" endof
+		4 of "Rapiere" endof
+		5 of "Hallebarde" endof
+		6 of "Masse d'armes" endof
 	endcase rbold
 ;
 
@@ -813,87 +813,87 @@ cyoa-choice: common5-chest-book
 
 cyoa-choice: common5-chest-loot
 	0 6 rnd to common5-lootweapon@
-	($ Thegroup .. " finds a cache of very old weapons! While sorting through unusable junk, " .. gthey .. " run" .. g1s .. " into a lot of problems with splinters and tiny, bitey spiders." $) text!
+	($ Thegroup .. " trouve une cache de tres vieilles armes ! En triant les detritus inutilisables, " .. gthey .. " rencontre" .. g1s .. " plein de problemes avec des eclats de bois et de petites araignees mordantes." $) text!
 	morale--all sting--all bitefx
-	($ gThey .. " take some useful weapons, including a " .. common5-lootweapon-name .. "!" $) +crtext
+	($ gThey .. " prend quelques armes utiles, dont un " .. common5-lootweapon-name .. " !" $) +crtext
 	common5-lootweapon-pick
-	1 30 %chance if WEAPON_WOODCLUB else 50 %chance if WEAPON_GAUNTLET else WEAPON_DAGGER then then trunk.weapon+ 1 WEAPON_DAGGER trunk.weapon+ 
+	1 30 %chance if WEAPON_WOODCLUB else 50 %chance if WEAPON_GAUNTLET else WEAPON_DAGGER then then trunk.weapon+ 1 WEAPON_DAGGER trunk.weapon+
 ;
 
 cyoa-choice: common5-chest-basket
-	($ Thegroup .. " found a Goblin Gift Basket!" $) text!
+	($ Thegroup .. " a trouve un Panier Cadeau Gobelin !" $) text!
 	homesearch2 ammosearch2 morale++all
-	($ "The gift basket is mildly cursed! Now " .. cname .. " feels obligated to buy a gift for the unseen and possibly nonexistent goblins!" $) +crtext goblin-laugh
+	($ "Le panier cadeau est legerement maudit ! Maintenant " .. cname .. " se sent oblige d'acheter un cadeau pour les gobelins invisibles et peut-etre inexistants !" $) +crtext goblin-laugh
 ;
 
 : common5-chest-flash
 	common5-chest@ case
-	0 of "Pirate Cutlass" endof // CUTLASS
-	1 of "Mighty Claymore" endof // CLAYMORE
-	2 of "Sturdy Cleaver" endof // SCLEAVER
+	0 of "Cimeterre de Pirate" endof // CUTLASS
+	1 of "Grande Claymore" endof // CLAYMORE
+	2 of "Couperet Robuste" endof // SCLEAVER
 	endcase fbold
 ;
 
 cyoa: common5-chest-rare
-	"Cursed Treasure" cyoa-title! someicon
+	"Tresor Maudit" cyoa-title! someicon
 	0 2 rnd to common5-chest@
-	($ Thegroup .. " looks for supplies in a creepy cabin and uncovers a hidden basement with an ancient treasure!" $) text!
-	"Warning: Red choices have a penalty of morale loss and nonfatal damage! The" rbold +crtext " flashing " fbold +text "choice will set the character you give the weapon to down to one locked slot!" rbold +text
-		choice( "Goblin Gift Basket" )choice: common5-chest-basket
-		choice( "The Dingusnomicon" rbold )choice: common5-chest-book
-		choice( "Long Lost Weapons" rbold )choice: common5-chest-loot
+	($ Thegroup .. " cherche des provisions dans une cabane sinistre et decouvre un sous-sol cache avec un tresor antique !" $) text!
+	"Avertissement : Les choix rouges entrainent une perte de moral et des degats non mortels ! Le" rbold +crtext " clignotant " fbold +text "choix reduira le personnage a qui vous donnez l'arme a un emplacement verrouille !" rbold +text
+		choice( "Panier Cadeau Gobelin" )choice: common5-chest-basket
+		choice( "Le Dingusnomicon" rbold )choice: common5-chest-book
+		choice( "Armes Perdues depuis Longtemps" rbold )choice: common5-chest-loot
 		choice( common5-chest-flash )choice: common5-chest-pick4
 ;
 
 // Hand Replacement
 
 cyoa-choice: common5-hand-pick
-	($ nursename .. " attempts to prepare the room for surgery." $) text!
+	($ nursename .. " essaie de preparer la salle pour la chirurgie." $) text!
 	teamnurse .medicalREV
-	($ cname .. " loses " .. chis .. " boring old hand and gets a " .. "Chainsaw Hand!" rainbold .. " This modified chainsaw is more efficient!" $) +crtext
+	($ cname .. " perd " .. chis .. " vieille main ennuyeuse et obtient une " .. "Main-Tronconneuse !" rainbold .. " Cette tronconneuse modifiee est plus efficace !" $) +crtext
 	ctakeweapons WEAPON_CHAINHAND cchar .weapona! 1 cchar .weapon_nodropa!
 	cchar .trait@ "Specialist" $= if
-		($ cname .. " feels INCREDIBLY smug!" rainbold $) +crtext
+		($ cname .. " se sent INCROYABLEMENT suffisant !" rainbold $) +crtext
 		2 cchar .carrying.slot_count! morale4+
 	then
 	teamnurse .cmedical+ teamnurse .medical statroll or if
-		"The surgery went well!" +crtext goodfx
+		"La chirurgie s'est bien passee !" +crtext goodfx
 	else
-		"The surgery was very clumsy." +crtext strength-- sting-- badfx
+		"La chirurgie etait tres maladroite." +crtext strength-- sting-- badfx
 	then
 	1 WEAPON_DSHOTGUN trunk.weapon+ // Putting this here just so that it can be given last in -loot
-	choice( "Groovy" )choice
+	choice( "Super" )choice
 ;
 
 cyoa-bridge: common5-hand-pick4
-	"Who do you want to give a chainsaw hand to?" text!
+	"A qui voulez-vous donner une main-tronconneuse ?" text!
 	' common5-hand-pick cyoa-human-choice
 ;
 
 cyoa-choice: common5-hand-loot
-	($ "Instead of going through with the hand replacement surgery, " .. thegroup .. " loots all the medical supplies in the room. There's even a Healing Spray!" $) text!
+	($ "Au lieu de proceder a la chirurgie de remplacement de main, " .. thegroup .. " pille toutes les fournitures medicales de la piece. Il y a meme un Spray de Soin !" $) text!
 		9 trunk-medical+ 3 WEAPON_HEALSPRAY trunk.weapon+ goodfx
 	mechanicest choosechar cmechanic+ if
-		($ cname .. " manages to convert the chainsaw hand into a normal wieldable chainsaw!" $) +crtext
+		($ cname .. " reussit a convertir la main-tronconneuse en une vraie tronconneuse maniable !" $) +crtext
 		mechanicREV 1 WEAPON_CHAINSAW trunk.weapon+ mechanicREV
 	else
-		"The chainsaw hand was designed for arm-mounted use only, so it is left behind." +crtext
+		"La main-tronconneuse etait concue pour etre montee sur le bras uniquement, donc elle est laissee derriere." +crtext
 	then 1 WEAPON_DSHOTGUN trunk.weapon+
 ;
 
 cyoa: common5-hand-rare
-	"Hand Upgrade" cyoa-title!
+	"Amelioration de la Main" cyoa-title!
 	medicalest to teamnurse
-	($ Thegroup .. " finds a makeshift surgery room. In one corner is a skeleton with a double barrel shotgun and prosthetic chainsaw hand, both empty. 
-	Chainsaw hand? That seems like a good idea!" $) text!
-		choice( "Loot supplies instead" )choice: common5-hand-loot
+	($ Thegroup .. " trouve une salle d'operation de fortune. Dans un coin se trouve un squelette avec un fusil a double canon et une prothese de main-tronconneuse, tous les deux vides.
+	Main-tronconneuse ? Ca semble une bonne idee !" $) text!
+		choice( "Piller les provisions plutot" )choice: common5-hand-loot
 	solohuman if
-		choosehuman cchar charchoice( ": Replace Hand" )choice: common5-hand-pick 
-		"Chainsaws are better than hands." +crtext then;
-	"Replace someone's hand with a chainsaw:" +crtext
+		choosehuman cchar charchoice( ": Remplacer la main" )choice: common5-hand-pick
+		"Les tronconneuses sont mieux que les mains." +crtext then;
+	"Remplacer la main de quelqu'un par une tronconneuse :" +crtext
 	numhums 3 > if
 		' common5-hand-pick 2 #cyoa-human-choice
-		choice( "Pick someone else" )choice: common5-hand-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: common5-hand-pick4
 	else
 		' common5-hand-pick cyoa-human-choice
 	then

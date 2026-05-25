@@ -5,8 +5,8 @@
 
 
 : recruited 
-	+cr ($ rname .. " joins the team!
-	Onward to Canada! " $) +text
+	+cr ($ rname .. " rejoint l'equipe !
+	En avant vers le Canada ! " $) +text
 	recruitee .morale@ 2 < if
 		2 recruitee .morale!
 	then
@@ -27,7 +27,7 @@
 : xHe .female@ if "Elle" else "Il" then ;
 
 : ghis solo if soloer xhis else "leur" then ;
-: gHis solo if soloer xHis else "leur" then ;
+: gHis solo if soloer xHis else "Leur" then ;
 : ghim solo if soloer xhim else "eux" then ;
 : ghe solo if soloer xhe else "le groupe" then ;
 : gHe solo if soloer xHe else "Le groupe" then ;
@@ -41,8 +41,8 @@
 : gs solo if "" else "s" then ;
 : gS solo if "" else "S" then ;
 
-: gare solo if "is" else "are" then ;
-: gwere solo if "was" else "were" then ;
+: gare solo if "est" else "sont" then ;
+: gwere solo if "etait" else "etaient" then ;
 : gtheywere gthey .. " " .. gwere ;
 : gtheyare gthey .. " " .. gare ;
 : gTheyare gThey .. " " .. gare ;
@@ -56,9 +56,9 @@
 : gaVSs ($ g1a .. swap .. gs $) ;
 : ganVSs ($ g1an .. swap .. gs $) ;
 
-: I-or-we team-count-alive 1 = if " I " else " we " then ;
-: I-or-WE team-count-alive 1 = if " I " else " WE " then ;
-: I-or-We team-count-alive 1 = if " I " else " We " then ;
+: I-or-we team-count-alive 1 = if " je " else " nous " then ;
+: I-or-WE team-count-alive 1 = if " je " else " NOUS " then ;
+: I-or-We team-count-alive 1 = if " Je " else " Nous " then ;
 
 : cname-he solo if soloer xhe else cname then ;
 : cname-He solo if soloer xHe else cname then ;
@@ -93,11 +93,11 @@
 
 : Thegroup solo if soloer .colourname else "Le groupe" then ;
 : thegroup solo if soloer .colourname else "le groupe" then ;
-: yourteam solo if soloer .colourname else "your team" then ;
+: yourteam solo if soloer .colourname else "votre equipe" then ;
 
 : Theothers team-count 2 = if notcname else "Les autres membres" then ;
 : theothers team-count 2 = if notcname else "les autres membres" then ;
-: Theothersarename team-count 2 = if ($ notcname .. " is" $) else "Les autres sont" then ;
+: Theothersarename team-count 2 = if ($ notcname .. " est" $) else "Les autres sont" then ;
 
 : everyone team-count 2 = if notcname else "tout le monde" then ;
 : Everyone team-count 2 = if notcname else "Tout le monde" then ;
@@ -185,36 +185,36 @@ cyoa{
 ;
 
 cyoa-choice: toiletwishA
-	"Riches and Gold" cyoa-title!
-		($ "Cans of food start raining from the ceiling.
-		Finally. You're rich!
-		Then the roof collapses on top of " .. pname .. "... " $) cyoa-text! goodfx clear-cyoa
+	"Richesses et Or" cyoa-title!
+		($ "Des boites de nourriture commencent a pleuvoir du plafond.
+		Enfin. Vous etes riche !
+		Puis le toit s'effondre sur " .. pname .. "... " $) cyoa-text! goodfx clear-cyoa
 	15 20 rnd sfood
 	' xyzombceil 10 40 90 rnd zwave-ex	
 ;
 
 cyoa-choice: toiletwishB
-		($ pname .. " stares in horror as " .. phis .. " skin turns to stone, trapping " .. phim .. " in place forever as a statue.
-		No wait, it just kind of turned " .. phis .. " skin gray." $) text! goodfx deleteme
+		($ pname .. " regarde avec horreur " .. phis .. " peau se transformer en pierre, le piegant en place pour toujours comme une statue.
+		Attendez, non, ca a juste rendu " .. phis .. " skin gray." $) text! goodfx deleteme
 		pchar .vitality++ pchar .fullheal pchar .stoneclr
 ;
 
 cyoa-choice: toiletwishC
-	"The Shocking Answer" cyoa-title!
-	($ "YEAH PRETTY MUCH says the genie. Then it just kind of hovers around, staring at " .. pname .. " for awhile before it disappears." $) cyoa-text! badfx clear-cyoa deleteme
+	"La Reponse Choquante" cyoa-title!
+	($ "OUI A PEU PRES dit le genie. Puis il plane juste autour, fixant " .. pname .. " un moment avant de disparaitre." $) cyoa-text! badfx clear-cyoa deleteme
 	nearest .tpos anchor! 20 zombs
 ;
 
 cyoa: toiletwishgenie // Added an underscore so that "toiletwish" isn't redefined, as that would mess up the next part
-	"The Wishing Toilet" cyoa-title!
+	"Les Toilettes aux Voeux" cyoa-title!
 	picon!
-	($ "When " .. pname .. " opened the toilet, a magical genie appeared.
-	" .. "THANKS FOR FREEING ME FROM THE TOILET," pbold .. " it says. " .. "NOW MAKE A WISH.
-	" pbold .. pname .. " makes a wish:" $) text!
-		choice( "Don't make a wish yet" )choice
-		choice( "I vant.. to bee rich" )choice: toiletwishA
-		choice( "Immortality" )choice: toiletwishB
-		choice( "Are you one of those evil genies?" )choice: toiletwishC
+	($ "Quand " .. pname .. " a ouvert les toilettes, un genie magique est apparu.
+	" .. "MERCI DE M'AVOIR LIBERE DES TOILETTES," pbold .. " dit-il. " .. "MAINTENANT FAITES UN VOEU.
+	" pbold .. pname .. " fait un voeu :" $) text!
+		choice( "Ne pas encore faire de voeu" )choice
+		choice( "Je veeeux... etre riche" )choice: toiletwishA
+		choice( "Immortalite" )choice: toiletwishB
+		choice( "Etes-vous un de ces genies mauvais ?" )choice: toiletwishC
 ;
 
 : toiletwish_
@@ -230,11 +230,11 @@ cyoa: toiletwishgenie // Added an underscore so that "toiletwish" isn't redefine
 ' toiletwish_ to toiletwish
 
 : foodamt
-	($ " You have " .. LOOT_FOOD looticon .. "" .. trunk-food .. " food left. " $) +text
+	($ " Vous avez " .. LOOT_FOOD looticon .. "" .. trunk-food .. " nourriture restante. " $) +text
 ;
 
 : gasamt
-	($ " You have " .. LOOT_GAS looticon .. "" .. trunk-gas .. " gas left. " $) +text
+	($ " Vous avez " .. LOOT_GAS looticon .. "" .. trunk-gas .. " essence restante. " $) +text
 ;
 
 cyoa: just-testing beep "TESTING POST-MISSION ROAD-STACKED CYOA" cyoa-text! ;
@@ -245,27 +245,27 @@ cyoa: just-testing beep "TESTING POST-MISSION ROAD-STACKED CYOA" cyoa-text! ;
 
 cyoa-choice: comicbook-who
 	chumany? if
-		($ cname .. " gets to read " .. "THE SPANDEX LEAGUE" fbold .. ".
-		" .. cHe .. " absorbs the contents! Sadly, " .. che .. " ruins the comic book for others due to " .. chis .. " grimy " .. cfingspaws .. "." $) cyoa-text!
+		($ cname .. " lit " .. "LA LIGUE SPANDEX" fbold .. ".
+		" .. cHe .. " absorbe le contenu ! Malheureusement, " .. che .. " abime la bande dessinee pour les autres a cause de " .. chis .. " sales " .. cfingspaws .. "." $) cyoa-text!
 		comicbookgain goodfx
 	else
-		($ cname .. " completely ruins the comic.
-		Seems like someone doesn't like graphic novels." $) cyoa-text! badfx
+		($ cname .. " abime completement la bande dessinee.
+		On dirait que quelqu'un n'apprecie pas les romans graphiques." $) cyoa-text! badfx
 	then 
 ;
 
 cyoa: comicbook-2
-	"It's a Graphic Novel NOT a Comic Book" cyoa-title!
+	"C'est un Roman Graphique PAS une BD" cyoa-title!
 	picon!
 	dead? if
-		($ "The comic book got torn up during the fighting." $) cyoa-text! badfx
+		($ "La bande dessinee a ete dechiquetee pendant le combat." $) cyoa-text! badfx
 	then;
-	($ Thegroup .. " got out with a comic book! It's full of stories of burly people punching each other and shooting each other with eye beams." $) cyoa-text! goodfx
+	($ Thegroup .. " est sorti avec une bande dessinee ! Elle est pleine d'histoires de balaises qui se tabassent et se tirent dessus avec des rayons oculaires." $) cyoa-text! goodfx
 	solohuman if
 		choosehuman cicon
-		($ cname-He .. " reads it and absorbs the wisdom contained within! It's informative and entertaining!" $) +crtext cchar comicbookgain
+		($ cname-He .. " la lit et absorbe la sagesse qu'elle contient ! C'est instructif et divertissant !" $) +crtext cchar comicbookgain
 	then;  
-		"Who should get to read it?" +crtext
+		"Qui devrait la lire ?" +crtext
 		' comicbook-who cyoa-team-choice
 ;
 
@@ -273,54 +273,54 @@ cyoa: comicbook-2
 
 cyoa-choice: bookmag-who
 	chumany? if
-		($ cname .. " gets to read " .. bookmagtitle .. ".
-		" .. cHe .. " absorbs the contents! Sadly, " .. che .. " ruins the magazine for others due to " .. chis .. " grimy " .. cfingspaws .. "." $) cyoa-text!
+		($ cname .. " lit " .. bookmagtitle .. ".
+		" .. cHe .. " absorbe le contenu ! Malheureusement, " .. che .. " abime le magazine pour les autres a cause de " .. chis .. " sales " .. cfingspaws .. "." $) cyoa-text!
 		cchar bookmaggain goodfx
 	else
-		($ cname .. " completely ruins the magazine.
-		Seems like someone doesn't appreciate fine literature." $) cyoa-text! badfx
+		($ cname .. " abime completement le magazine.
+		On dirait que quelqu'un n'apprecie pas la bonne litterature." $) cyoa-text! badfx
 	then 
 ;
 
 cyoa: bookmag-get2
-	"Catch up on Reading" cyoa-title!
+	"Rattrapons la Lecture" cyoa-title!
 	picon!
 	dead? if
-		($ "The " .. bookormag .. " was lost in the carnage." $) cyoa-text! badfx
+		($ "Le " .. bookormag .. " a ete perdu dans le carnage." $) cyoa-text! badfx
 	then;
-	($ Thegroup .. " now has the " .. bookormag .. ", " .. bookmagtitle .. "." $) cyoa-text! goodfx
+	($ Thegroup .. " a maintenant le " .. bookormag .. ", " .. bookmagtitle .. "." $) cyoa-text! goodfx
 	solohuman if
 		choosehuman cicon
-		($ cname-He .. " reads it and absorbs the knowledge!" $) +crtext cchar bookmaggain goodfx
+		($ cname-He .. " le lit et absorbe les connaissances !" $) +crtext cchar bookmaggain goodfx
 	then;  
 	bookmagtype 4 > if
-		"Everyone gets a chance to read it and learn some new things." +crtext ' bookmaggain foreach-human-char 
+		"Tout le monde a une chance de le lire et d'apprendre de nouvelles choses." +crtext ' bookmaggain foreach-human-char 
 	else
-		"Who should get to read it?" +crtext
+		"Qui devrait la lire ?" +crtext
 		' bookmag-who cyoa-team-choice
 	then
 ;
 
 cyoa: bookmag-get
-	"Reading Material" cyoa-title!
+	"Lecture" cyoa-title!
 	picon!
-	($ cname .. " finds a " .. bookormag .. " in good condition, among the ruined magazines and books. 
-	The " .. bookormag .. "'s title is: " .. bookmagtitle .. ".
-	" .. cHe .. " stuffs it into " .. chis .. " pack." $) cyoa-text!
+	($ cname .. " trouve un " .. bookormag .. " en bon etat, parmi les magazines et livres abimes.
+	Le titre du " .. bookormag .. " est : " .. bookmagtitle .. ".
+	" .. cHe .. " le fourre dans " .. chis .. " sac." $) cyoa-text!
 	deleteme
 	clear-cyoa goodfx mission{ ' bookmag-get2 to post-mission-cyoa }
 ;
 
 cyoa-choice: recruit-replace
 	ricon
-	($ cname .. " gets booted out of the group to make room for " .. rname .. "." $) cyoa-text!
+	($ cname .. " est vire du groupe pour faire de la place pour " .. rname .. "." $) cyoa-text!
 	ctakeweapons TEAM_STATUS_BAD_LEFT cchar .decruit 0.5 600 tone
 	recruited
 ;
 
 cyoa-bridge: recruit-replace4
 	ricon
-	($ "Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
+	($ "Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) cyoa-text!
 	' recruit-replace cyoa-team-choice
 ;
 
@@ -330,49 +330,49 @@ cyoa-bridge: recruit-replace4
 	// Doesn't use this: recruit-dog-feed recruit-familiarreplace? and the camp-recruits
 	team-count 3 > if
 		' recruit-replace 2 #cyoa-team-choice
-		choice( "Pick someone else" )choice: recruit-replace4
+		choice( "Choisir quelqu'un d'autre" )choice: recruit-replace4
 	else
 		' recruit-replace cyoa-team-choice
 	then
-	choice( "Leave " .. rname .. " behind" )choice
+	choice( "Laisser " .. rname .. " derriere" )choice
 ;
 
 (* : recruit-replace?-3 // The old recruit-replace?, currently used twice for annoying recruits in cyoa-k-recruit ... but I got rid of it because I added the pick someone else options to recruit-replace?
 	// This was formerly so you could avoid the pushy person with a full party, and so you could avoid the Dinkdoor guy if you used a cool-it but NOT if you recruited him without a cool-it.
-	// ' recruit-replace 3 #cyoa-team-choice choice( "Leave " .. rname .. " behind" )choice
+	// ' recruit-replace 3 #cyoa-team-choice choice( "Laisser " .. rname .. " derriere" )choice
 ; *)
 
 cyoa: recruit-yes
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
+		($ "Le groupe est plein.
+		Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) cyoa-text!
 		recruit-replace?
 	then;
 	ricon
-	($ Thegroup .. " accepts " .. rname .. " to the team!" $) cyoa-text! 2 300 tone
+	($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) cyoa-text! 2 300 tone
 		recruited
 ;
 
 cyoa: recruit-yes-food args( food )
 	team-full? if
-		($ "The group is full. Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
+		($ "Le groupe est plein. Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) cyoa-text!
 			<- food -1 * trunk-food+
 			' recruit-replace cyoa-team-choice 
 	then;
 	ricon
-	($ Thegroup .. " recruits " .. rname .. " to the team!" $) cyoa-text! 2 300 tone
+	($ Thegroup .. " recrute " .. rname .. " dans l'equipe !" $) cyoa-text! 2 300 tone
 		<- food -1 * trunk-food+ recruited
 ;
 
 : recruit-yesno
-	choice( "Ask " .. rname .. " to join" )choice: recruit-yes
-	choice( "Leave " .. rname .. " behind" )choice
+	choice( "Inviter " .. rname .. " a rejoindre" )choice: recruit-yes
+	choice( "Laisser " .. rname .. " derriere" )choice
 ;
 
 : npc-died 
-	"Lost to the Death Road" cyoa-title! 
-	($ pname .. " gets there too late.
-	There's nothing that you can do for " .. chim .. " now." $) cyoa-text!
+	"Perdu sur la Death Road" cyoa-title! 
+	($ pname .. " arrive trop tard.
+	Il n'y a rien que vous puissiez faire pour " .. chim .. " maintenant." $) cyoa-text!
 	clear-cyoa badfx
 ; 
 
@@ -390,17 +390,17 @@ cyoa: recruit-yes-food args( food )
 ;
 : rescskillname
 	rescskilltype case
-		0 of "strength" endof
-		1 of "fitness" endof
+		0 of "force" endof
+		1 of "forme" endof
 		2 of "medical" endof
-		3 of "mechanic" endof
-		4 of "shooting" endof
+		3 of "mecanique" endof
+		4 of "tir" endof
 	endcase
 ;
 
 : rescskill-got
-	($ Thegroup .. " gets all sorts of secret " .. rescskillname .. " tips from " .. rname .. "!
-	The training ends, and " .. rname .. " departs." $) cyoa-text!
+	($ Thegroup .. " obtient toutes sortes de conseils secrets sur la " .. rescskillname .. " de " .. rname .. " !
+	L'entrainement se termine et " .. rname .. " repart." $) cyoa-text!
 	// formerly cchar
 	' rescskillup foreach-human-char goodfx
 ;
@@ -410,7 +410,7 @@ cyoa: recruit-yes-food args( food )
 	chumany? if
 		rescskill-got
 	else
-		($ cname .. " doesn't understand " .. rname .. "'s attempts at training, at all." $) cyoa-text! badfx
+		($ cname .. " ne comprend pas du tout les tentatives d'entrainement de " .. rname .. "." $) cyoa-text! badfx
 	then 
 ;
 
@@ -419,7 +419,7 @@ cyoa: rescskill-choose
 		choosehuman cicon
 		rescskill-got
 	else  
-		($ "Who should get the " .. rescskillname .. " training?" $) cyoa-text!
+		($ "Qui devrait recevoir l'entrainement en " .. rescskillname .. " ?" $) cyoa-text!
 		' rescskill-who cyoa-team-choice
 	then
 ;
@@ -429,26 +429,26 @@ cyoa: rescskill-choose
 	rescskill-who
 ;
 
-: groupadd team-count 1 > if "Group " .. then ;
+: groupadd team-count 1 > if "Groupe " .. then ;
 
 : rescskill1-get 0 rescskill-pick ;
-: rescskill1 choice( groupadd "Strength Training" )choice: rescskill1-get 
+: rescskill1 choice( groupadd "Entrainement Force" )choice: rescskill1-get 
 	4 recruitee .strength!
 ;
 : rescskill2-get 1 rescskill-pick ;
-: rescskill2 choice( groupadd "Fitness Training" )choice: rescskill2-get 
+: rescskill2 choice( groupadd "Entrainement Forme" )choice: rescskill2-get 
 	4 recruitee .fitness!
 ;
 : rescskill3-get 4 rescskill-pick ;
-: rescskill3 choice( groupadd "Shooting Training" )choice: rescskill3-get 
+: rescskill3 choice( groupadd "Entrainement Tir" )choice: rescskill3-get 
 	4 recruitee .shooting!
 ;
 : rescskill4-get 3 rescskill-pick ;
-: rescskill4 choice( groupadd "Mechanic Training" )choice: rescskill4-get 
+: rescskill4 choice( groupadd "Entrainement Mecanique" )choice: rescskill4-get 
 	4 recruitee .mechanical!
 ;
 : rescskill5-get 2 rescskill-pick ;
-: rescskill5 choice( groupadd "Medical Training" )choice: rescskill5-get 
+: rescskill5 choice( groupadd "Entrainement Medical" )choice: rescskill5-get 
 	4 recruitee .medical!
 ;
  
@@ -464,22 +464,22 @@ constant RESCUE-SKILL
 RESCUE-SKILL shuffles to rescue-skill-deck
 
 : rescreward1-get 75 trunk-bullet+ ; 
-: rescreward1 choice( "Stash of 75 bullets" )choice: rescreward1-get ;
+: rescreward1 choice( "Cache de 75 balles" )choice: rescreward1-get ;
 : rescreward2-get 60 trunk-rifle-shell+ ;
-: rescreward2 choice( "Stash of 60 rifle ammo" )choice: rescreward2-get ;
+: rescreward2 choice( "Cache de 60 munitions de fusil" )choice: rescreward2-get ;
 : rescreward3-get 45 trunk-shotgun-shell+ ;
-: rescreward3 choice( "45 shotgun shells" )choice: rescreward3-get ;
+: rescreward3 choice( "45 cartouches de fusil a pompe" )choice: rescreward3-get ;
 : rescreward4-get 15 trunk-food+ ;
-: rescreward4 choice( "Stash of 15 food" )choice: rescreward4-get ;
+: rescreward4 choice( "Cache de 15 nourriture" )choice: rescreward4-get ;
 : rescreward5-get 80 trunk-gas+ ;
-: rescreward5 choice( "Tank of 80 gas" )choice: rescreward5-get ;
+: rescreward5 choice( "Reservoir de 80 essence" )choice: rescreward5-get ;
 : rescreward6-get 10 trunk-medical+ ;
-: rescreward6 choice( "Stash of 10 medical" )choice: rescreward6-get ;
+: rescreward6 choice( "Cache de 10 medical" )choice: rescreward6-get ;
 : rescreward7-get morale2+all goodfx ;
 : rescreward8-get 5 groupheal goodfx ; // trader is 7
 : rescreward7 // Two for the price of one
-	choice( "Morale Pep Talk" )choice: rescreward7-get
-	choice( groupadd "First Aid" )choice: rescreward8-get 
+	choice( "Discours de Motivation" )choice: rescreward7-get
+	choice( groupadd "Premiers Soins" )choice: rescreward8-get 
 ;
  
 0 var rescue-reward-deck
@@ -518,7 +518,7 @@ RESCUE-REWARD shuffles to rescue-reward-deck
 
 
 : recruit-choice
-	choice( "Recruit " .. rname .. " to team" )choice: recruit-yes
+	choice( "Recruter " .. rname .. " dans l'equipe" )choice: recruit-yes
 ;
 
 : rescue-reward
@@ -530,10 +530,10 @@ RESCUE-REWARD shuffles to rescue-reward-deck
 : judgerecruit
 	most-paranoid if choosechar
 		50 %chance if 
-			($ cname .. " sizes up " .. rhis .. " skills..." $) +crtext
+			($ cname .. " evalue les competences de " .. rname .. "..." $) +crtext
 			recruitee dup .medicalREV dup .mechanicREV dup .shootingREV dup .strengthREV dup .fitnessREV
 		else
-			($ cname .. " judges " .. rhis .. " character..." $) +crtext
+			($ cname .. " juge le caractere de " .. rname .. "..." $) +crtext
 			recruitee dup .attitudeREV dup .temperREV dup .witsREV dup .loyaltyREV
 		then goodfx witsattREV
 	then
@@ -545,15 +545,15 @@ cyoa: rescuedme
 	rescue to recruitee ricon
 	0 rescue .party!
 	recruitee .alive? if
-		"Rescue Successful!" cyoa-title!
-		($ rname .. " catches up with " .. thegroup .. " at a safe spot.
-		" .. rHe .. " offers a reward in thanks for saving " .. rhim .. "!" $) cyoa-text!
+		"Sauvetage Reussi !" cyoa-title!
+		($ rname .. " rejoint " .. thegroup .. " dans un endroit sur.
+		" .. rHe .. " offre une recompense en remerciement pour " .. rhim .. " avoir sauve !" $) cyoa-text!
 		rescue-reward
 		judgerecruit
 	else
-		"Yeah Well Nobody's Perfect" cyoa-title!
-		($ Thegroup .. " feels pretty guilty about " .. rname .. " getting eaten.
-		Such is life, I suppose." $) cyoa-text!
+		"Eh Bien Personne n'Est Parfait" cyoa-title!
+		($ Thegroup .. " se sent plutot coupable que " .. rname .. " se soit fait manger.
+		C'est la vie, je suppose." $) cyoa-text!
 		morale--all
 	then
 ;
@@ -563,31 +563,31 @@ cyoa: rescueddog
 	rescue to recruitee ricon
 	0 rescue .party!
 	recruitee .alive? if
-		"Rescue Successful!" cyoa-title!
+		"Sauvetage Reussi !" cyoa-title!
 		gstats{ ugnome-extraZP 0 > if 1 zombop+! then }
-		($ rname .. " catches up with " .. thegroup .. " at a safe spot.
-		" .. rHe .. " seems like " .. rhe .. " wants to stick around!" $) cyoa-text!
+		($ rname .. " rejoint " .. thegroup .. " dans un endroit sur.
+		" .. rHe .. " semble vouloir rester dans les parages !" $) cyoa-text!
 		recruit-choice
-		choice( "Set " .. rname .. " free" )choice: morale2+all
+		choice( "Liberer " .. rname .. "" )choice: morale2+all
 		judgerecruit
 	else
-		"Dog Adoption Failed" cyoa-title!
-		($ Thegroup .. " feels guilty about " .. rname .. " getting eaten.
-		A dog could have been really handy." $) cyoa-text!
+		"Adoption du Chien Echouee" cyoa-title!
+		($ Thegroup .. " se sent coupable que " .. rname .. " se soit fait manger.
+		Un chien aurait pu etre vraiment utile." $) cyoa-text!
 		morale2-all
 	then
 ;
 
 cyoa-choice: chicken-dinner
-	"The chicken is returned to its component nugs." text!
-	"Ashes to Ashes, Nugs to Nugs" pbold +crtext
-	"The beautiful cycle of life continues." +crtext
+	"Le poulet est rendu a ses nuggets composants." text!
+	"Cendres et Cendres, Nuggets et Nuggets" pbold +crtext
+	"Le beau cycle de la vie continue." +crtext
 	3 4 rnd trunk-food+ goodfx
 ;
 
 cyoa-choice: chicken-free
-	"The chicken leaves behind an egg!
-	This is a sign of good luck! Probably." text!
+	"Le poulet laisse un oeuf !
+	C'est un signe de bonne chance ! Probablement." text!
 	morale++all goodfx
 	1 weapondef{ WEAPON_EGG } trunk.weapon+
 ;
@@ -597,18 +597,18 @@ root{ defer freechicken-cheevo }
 cyoa: rescuedchicken
 	rescue choosechar cicon 0 rescue .party!
 	rescue .alive? if
-		"Chicken Rescued!" cyoa-title!
+		"Poulet Sauve !" cyoa-title!
 		gstats{ ugnome-extraZP 0 > if 1 zombop+! then }
-		($ Thegroup .. " was able to get a chicken out of that farm!
-		The chicken wouldn't make for a good recruit.
-		It could be set free, or butchered for food. It doesn't have much meat on it, but it could be good for some chicken nuggets." $) cyoa-text!
-		choice( "Set chicken free" )choice: chicken-free
-		choice( "Nuggetify chicken" )choice: chicken-dinner
+		($ Thegroup .. " a reussi a sortir un poulet de cette ferme !
+		Le poulet ne ferait pas une bonne recrue.
+		Il pourrait etre libere, ou abattu pour la nourriture. Il n'a pas beaucoup de viande, mais ca pourrait faire de bons nuggets." $) cyoa-text!
+		choice( "Liberer le poulet" )choice: chicken-free
+		choice( "Nuggetifier le poulet" )choice: chicken-dinner
 		freechicken-cheevo
 	else
-		"Chicken Rescue Failed" cyoa-title!
-		($ Thegroup .. " feels vaguely guilty about the chicken being eaten.
-		It was a waste of a good chicken." $) cyoa-text!
+		"Sauvetage du Poulet Echoue" cyoa-title!
+		($ Thegroup .. " se sent vaguement coupable que le poulet se soit fait manger.
+		C'etait un gaspillage d'un bon poulet." $) cyoa-text!
 		morale--all badfx
 	then
 ; 
@@ -617,53 +617,53 @@ cyoa: rescuedchicken
 0 value gothic-pa
 
 cyoa-choice: farmrescue-1
-	($ Thegroup .. " gets some homespun wisdom on repairing rusty junk heaps of all shapes and stripes." $) text! picon
+	($ Thegroup .. " obtient de precieux conseils maison sur la reparation de tas de ferraille rouilles de toutes formes." $) text! picon
 	' .mechanicREV foreach-team-char ' .mechanic++ foreach-team-char goodfx ;
 cyoa-choice: farmrescue-2
-	($ Thegroup .. " learns some old farmer healing remedies. Local medical herbs, ointments, home surgery techniques." $) text! picon
+	($ Thegroup .. " apprend de vieux remedes paysans. Herbes medicinales locales, onguents, techniques de chirurgie maison." $) text! picon
 	' .medicalREV foreach-team-char ' .medical++ foreach-team-char goodfx ;
 cyoa-choice: farmrescue-3 
-	($ Thegroup .. " gets a nice sharp sickle as a gift. It's light, it doesn't break, and it can do some damage." $) text! picon 1 WEAPON_SICKLE trunk.weapon+ goodfx ;
+	($ Thegroup .. " recoit une belle faucille bien affilee en cadeau. Elle est legere, ne casse pas et peut faire des degats." $) text! picon 1 WEAPON_SICKLE trunk.weapon+ goodfx ;
 cyoa-choice: farmrescue-4 
-	($ Thegroup .. " is lead to a stash of pickled fruits, vegetables, and weird meat! Jar food is a nice change from canned food." $) text! picon 10 trunk-food+ morale++all goodfx ;
+	($ Thegroup .. " est guide vers une reserve de fruits, legumes et viande bizarre en conserve ! La nourriture en bocaux change des boites." $) text! picon 10 trunk-food+ morale++all goodfx ;
 
 cyoa: farmrescue
-	"Gothic Farm Rescue" cyoa-title! picon
-	($ Thegroup .. " escapes the farm!" $) text!
+	"Sauvetage de la Ferme Gothique" cyoa-title! picon
+	($ Thegroup .. " s'echappe de la ferme !" $) text!
 	gothic-ma 0= not if
 		0 gothic-ma .party!
 		gothic-ma .alive? if
-			($ "Ma" pbold .. " escapes the farm, thanks to you!" $) +crtext
+			($ "Ma" pbold .. " s'echappe de la ferme, grace a vous !" $) +crtext
 		else
-			($ "Ma" pbold .. " did not escape with you." $) +crtext
+			($ "Ma" pbold .. " ne s'est pas echappee avec vous." $) +crtext
 			morale--all
 		then
 	then
 	gothic-pa 0= not if
 		0 gothic-pa .party!
 		gothic-pa .alive? if
-			($ "Pa" pbold .. " survives thanks to your help!" $) +crtext
+			($ "Pa" pbold .. " survit grace a votre aide !" $) +crtext
 		else
-			($ "Pa" pbold .. " didn't make it." $) +crtext
+			($ "Pa" pbold .. " n'a pas survecu." $) +crtext
 			morale--all
 		then
 	then
-	gothic-ma 0= gothic-pa 0= and if "Unfortunately, neither of the farmers did." +crtext badfx morale--all then;
+	gothic-ma 0= gothic-pa 0= and if "Malheureusement, aucun des fermiers n'a survecu." +crtext badfx morale--all then;
 	gothic-pa 0= not gothic-ma 0= not and if
 		gothic-pa .alive? gothic-ma .alive? and if
-			"Grateful to both be alive, they offer you a gift:" +crtext
-			choice( "Stash of 10 food" )choice: farmrescue-4
-			choice( "Pa's Fix-Em-Up Tips" )choice: farmrescue-1
-			choice( "Ma's Home Remedies" )choice: farmrescue-2
-			choice( "A Sturdy Sickle" )choice: farmrescue-3
+			"Reconnaissants d'etre tous les deux en vie, ils vous offrent un cadeau :" +crtext
+			choice( "Cache de 10 nourriture" )choice: farmrescue-4
+			choice( "Les Conseils de Bricolage de Pa" )choice: farmrescue-1
+			choice( "Les Remedes Maison de Ma" )choice: farmrescue-2
+			choice( "Une Faucille Robuste" )choice: farmrescue-3
 		then
 	then
 ;
 
 : drunkchat-up
 	rescue choosechar cicon
-	($ "OK, I'm awake!" pbold .. "
-	" .. cHe .. " says " .. che .. "'ll follow you for awhile. Also that you should meet " .. chim .. " outside of town, if you both make it." $) +crtext
+	($ "OK, je suis reveille !" pbold .. "
+	" .. cHe .. " dit qu'" .. che .. " vous suivra un moment. Aussi que vous devriez le retrouver a la sortie de la ville, si vous y arrivez tous les deux." $) +crtext
 		1 rescue .party-familiar 0 nearest .unseen!
 		rescue .wakeup
 		mission{ ' rescuedme to post-mission-cyoa }
@@ -672,18 +672,18 @@ cyoa: farmrescue
 
 cyoa-choice: drunkchat-med
 	rescue choosechar
-	($ pname .. " makes a careful diagnosis, and then starts kicking " .. cname .. " on the rump." $) cyoa-text!
+	($ pname .. " fait un diagnostic soigneux, puis commence a botter les fesses de " .. cname .. "." $) cyoa-text!
 	drunkchat-up
 ;
 
 cyoa-choice: drunkchat-food
-	($ pname .. " starts smooshing some food on " .. cname .. "'s mouth as " .. che .. " sleeps." $) cyoa-text!
+	($ pname .. " commence a ecraser de la nourriture sur la bouche de " .. cname .. " pendant qu'" .. che .. " dort." $) cyoa-text!
 	-1 add-food
 	drunkchat-up
 ;
 
 cyoa-choice: drunkchat-poke
-	($ pname .. " pokes " .. cname .. " to wake " .. chim .. " up from sleep. It takes four consecutive hours of continuous poking." $) cyoa-text!
+	($ pname .. " pousse " .. cname .. " pour le reveiller. Ca prend quatre heures consecutives de coups de doigt continus." $) cyoa-text!
 	drunkchat-up
 	o'clock@ 4 + o'clock
 	4 7 rnd nearest .tpos anchor! zombs
@@ -691,7 +691,7 @@ cyoa-choice: drunkchat-poke
 ;
 
 cyoa-choice: drunkchat-pet
-	($ pname .. " starts licking " .. cname .. "'s face as " .. che .. " sleeps." $) cyoa-text!
+	($ pname .. " commence a lecher le visage de " .. cname .. " pendant qu'" .. che .. " dort." $) cyoa-text!
 	drunkchat-up
 ;
 
@@ -699,48 +699,48 @@ cyoa: drunkchat
 	// rescue to recruitee ricon
 	rescue choosechar cicon
 	dead? if npc-died then;
-	"Passed Out" cyoa-title!
-	($ pname .. " has seen this kind of thing before.
-	This person clearly drank too much soda judging from the bottles lying around.
-	Now " .. che .. "'s in need of food to even out " .. chis .. " blood sugar." $) cyoa-text!
+	"Evanoui" cyoa-title!
+	($ pname .. " a deja vu ca avant.
+	Cette personne a clairement bu trop de soda a en juger par les bouteilles autour.
+	Maintenant " .. che .. " a besoin de nourriture pour equilibrer " .. chis .. " glycemie." $) cyoa-text!
 	pchar notpet? if
 		pchar .cmedical+ if
-			pchar charchoice( " revives using medical skills" )choice: drunkchat-med
+			pchar charchoice( " reveille avec des competences medicales" )choice: drunkchat-med
 		then
 		LOOT_FOOD pchar .lootamt@ 0 > if
-			choice( "Feed " .. chim .. " 1 food" )choice: drunkchat-food
+			choice( "Donner 1 nourriture a " .. chim .. "" )choice: drunkchat-food
 		else
-			"There might be some food in a nearby building..." +crtext
+			"Il pourrait y avoir de la nourriture dans un batiment proche..." +crtext
 		then
 	else
-		pchar charchoice( " revives " .. chim .. " via face licking" )choice: drunkchat-pet
+		pchar charchoice( " reveille " .. chim .. " en lui lechant le visage" )choice: drunkchat-pet
 	then
-	choice( "Leave " .. chim .. " alone" )choice
+	choice( "Laisser " .. chim .. " tranquille" )choice
 	LOOT_FOOD pchar .lootamt@ 1 < if
-		choice( "Poke " .. chim .. " for 4 hours" )choice: drunkchat-poke
+		choice( "Pousser " .. chim .. " du doigt pendant 4 heures" )choice: drunkchat-poke
 	then
 ;
 
 cyoa-choice: rescueme-2
-	($ cname .. " starts following " .. pname .. "!
-	" .. cHe .. " could be useful, if you can get " .. chim .. " out of here alive. Or a handy distraction, if you can't." $) cyoa-text!
+	($ cname .. " commence a suivre " .. pname .. " !
+	" .. cHe .. " pourrait etre utile, si vous pouvez le faire sortir vivant. Ou une bonne distraction, si vous ne pouvez pas." $) cyoa-text!
 	rescueget mission{ ' rescuedme to post-mission-cyoa }
 ;
 
 cyoa-choice: rescueme-d
-	($ cname .. " starts following " .. pname .. "!
-	" .. cHe .. " could be useful, if you can get " .. chim .. " out of here alive. Or a handy distraction, if you can't." $) cyoa-text!
+	($ cname .. " commence a suivre " .. pname .. " !
+	" .. cHe .. " pourrait etre utile, si vous pouvez le faire sortir vivant. Ou une bonne distraction, si vous ne pouvez pas." $) cyoa-text!
 	rescueget mission{ ' rescueddog to post-mission-cyoa }
 ;
 
 cyoa: rescueme
 	rescue choosechar cicon
 	dead? if npc-died then;
-	"Everyone needs help sometimes" cyoa-title!
-	($ cname .. " says that " .. che .. " really wants to get out of this place.
-	" .. cHe .. " asks if " .. che .. " can follow you around." $) cyoa-text!
-		choice( "Let " .. chim .. " follow you"  )choice: rescueme-2
-		choice( "Leave " .. chim .. " for now" )choice
+	"Tout le monde a besoin d'aide parfois" cyoa-title!
+	($ cname .. " dit qu'" .. che .. " veut vraiment quitter cet endroit.
+	" .. cHe .. " demande si " .. che .. " peut vous suivre." $) cyoa-text!
+		choice( "Laisser " .. chim .. " vous suivre"  )choice: rescueme-2
+		choice( "Laisser " .. chim .. " pour l'instant" )choice
 ;
 
 cyoa: dogrescue
@@ -748,21 +748,21 @@ cyoa: dogrescue
 	dead? if npc-died then;
 	
 	cchar .bodytype@ 20 = if
-	"The Ultra-Wiener" cyoa-title!
-		($ "You've never seen a more impressive wiener dog. This must have been a show dog, with papers. The dog is also wielding a shotgun.
-		His collar reads:" .. " LIL' SAM BYOOL" rainbold $) text!
+	"L'Ultra-Teckel" cyoa-title!
+		($ "Vous n'avez jamais vu un teckel aussi impressionnant. Ce devait etre un chien de concours, avec papiers. Le chien manie aussi un fusil a pompe.
+		Son collier indique :" .. " P'TIT SAM BYOOL" rainbold $) text!
 		cchar .shootingREV cchar .witsREV		
 	else
-		"What's a dog doing here?" cyoa-title!
-		($ "The dog seems unusually tame! Most dogs that are still alive have become feral at this point. This dog seems eager to see humans." $) text!
+		"Qu'est-ce qu'un chien fait ici ?" cyoa-title!
+		($ "Le chien semble inhabituellement apprivoise ! La plupart des chiens encore en vie sont devenus sauvages. Ce chien semble desireux de voir des humains." $) text!
 	then
-		choice( "Let dog follow you"  )choice: rescueme-d
-		choice( "Leave dog alone for now" )choice
+		choice( "Laisser le chien vous suivre"  )choice: rescueme-d
+		choice( "Laisser le chien pour l'instant" )choice
 ;
 
 cyoa-bridge: feral-recruit
 	cchar to recruitee goodfx clear-cyoa
-	($ "The dog wants to follow " .. pname .. "!" $) text!
+	($ "Le chien veut suivre " .. pname .. " !" $) text!
 	pchar .morale++
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen! cchar .yestake 
 	recruit-yesno
@@ -771,24 +771,24 @@ cyoa-bridge: feral-recruit
 cyoa: feralrescue
 	interactee .character@ choosechar cicon
 	dead? if npc-died then;
-	"Dog Pack" cyoa-title!
-	($ "The dog is feral! It's no longer capable of trusting humans. " $) cyoa-text!
+	"Meute de Chiens" cyoa-title!
+	($ "Le chien est sauvage ! Il n'est plus capable de faire confiance aux humains. " $) cyoa-text!
 		mission-team-stack ' notpet? stack-filter nip 1 < if
-			choice( "Leave dog alone" )choice
+			choice( "Laisser le chien tranquille" )choice
 			pchar dog? if 
-				choice( "Recruit the dog" )choice: feral-recruit
-				"This is no problem, as there are no humans around."				
+				choice( "Recruter le chien" )choice: feral-recruit
+				"Pas de probleme, il n'y a pas d'humains dans les parages."				
 			else
-				($ pname .. " isn't a dog. The feral dog growls in suspicion." $)
+				($ pname .. " n'est pas un chien. Le chien sauvage grogne de suspicion." $)
 			then +crtext
 		then;
 		pchar isdogpal? if
-			($ "Of course, " .. pname .. " is different! The dog starts to remember some long forgotten memories of when dogs and humans worked together... " $) +crtext
-			choice( "Recruit the dog" )choice: feral-recruit
+			($ "Bien sur, " .. pname .. " est different ! Le chien commence a se souvenir de vieux souvenirs d'une epoque ou chiens et humains travaillaient ensemble... " $) +crtext
+			choice( "Recruter le chien" )choice: feral-recruit
 		else
-			"This dog's eyes glimmer with recognition for a brief moment..." +text
+			"Les yeux de ce chien s'illuminent de reconnaissance un bref instant..." +text
 		then
-		choice( "Leave dog alone" )choice
+		choice( "Laisser le chien tranquille" )choice
 ;
 
 : southofshared
@@ -809,42 +809,42 @@ cyoa: feralrescue
 ;
 
 : safe1-get 20 add-shell shotgun southofcyoa ;
-: safe1 choice( "Shotgun with 20 shells" )choice: safe1-get ;
+: safe1 choice( "Fusil a pompe avec 20 cartouches" )choice: safe1-get ;
 : safe2-get 36 add-bullet dolt southofcyoa ;
-: safe2 choice( "Magnum and 36 bullets" )choice: safe2-get ;
+: safe2 choice( "Magnum et 36 balles" )choice: safe2-get ;
 : safe3-get 75 add-bullet ;
-: safe3 choice( "Box of 75 bullets" )choice: safe3-get ;
+: safe3 choice( "Boite de 75 balles" )choice: safe3-get ;
 : safe4-get 80 add-gas ;
-: safe4 choice( "Container of 80 gas" )choice: safe4-get ;
+: safe4 choice( "Bidon de 80 essence" )choice: safe4-get ;
 : safe5-get 45 add-shell ;
-: safe5 choice( "Box of 45 shells" )choice: safe5-get ;
+: safe5 choice( "Boite de 45 cartouches" )choice: safe5-get ;
 : safe6-get 60 add-rifle ;
-: safe6 choice( "Box of 60 rifle ammo" )choice: safe6-get ;
+: safe6 choice( "Boite de 60 munitions de fusil" )choice: safe6-get ;
 : safe7-get 10 add-medical ;
-: safe7 choice( "Pack of 10 medical" )choice: safe7-get ;
+: safe7 choice( "Pack de 10 medical" )choice: safe7-get ;
 : safe8-get 15 add-food ;
-: safe8 choice( "Stockpile of 15 food" )choice: safe8-get ;
+: safe8 choice( "Stockpile de 15 nourriture" )choice: safe8-get ;
 : safe9-get uzi southofcyoa ;
-: safe9 choice( "Submachine Gun" )choice: safe9-get ;
+: safe9 choice( "Pistolet-mitrailleur" )choice: safe9-get ;
 : safe10-get hunting southofcyoa ;
-: safe10 choice( "Hunting Rifle" )choice: safe10-get ;
+: safe10 choice( "Fusil de Chasse" )choice: safe10-get ;
 : safe11-get 30 add-rifle rifle southofcyoa ;
-: safe11 choice( "Cowboy Rifle and 30 ammo" )choice: safe11-get ;
+: safe11 choice( "Fusil de Cowboy et 30 munitions" )choice: safe11-get ;
 : safe12-geta knight southofcyoa ;
 : safe12-getb ak47 southofcyoa ;
 : safe12-getc autoshot southofcyoa ;
 : safe12-getd slug southofcyoa ;
 : safe12
 	20 %chance if
-		choice( "Knight Sword" )choice: safe12-geta
+		choice( "Epee de Chevalier" )choice: safe12-geta
 	else
 		25 %chance if
-			choice( "Rifled Slug Shotgun" )choice: safe12-getd
+			choice( "Fusil a Pompe Rifled Slug" )choice: safe12-getd
 		else
 			50 %chance if
-				choice( "Auto Shotgun" )choice: safe12-getc
+				choice( "Fusil a Pompe Automatique" )choice: safe12-getc
 			else
-				choice( "Assault Rifle" )choice: safe12-getb
+				choice( "Fusil d'assaut" )choice: safe12-getb
 			then
 		then
 	then
@@ -876,85 +876,85 @@ SAFE-REWARD shuffles to safe-reward
 : combo? safecombo 0 > ;
 
 cyoa: safe-crack
-	"Safe Cracked!" cyoa-title!
-	($ "It takes a couple hours, but " .. pname .. " figures out the safe's combination!
-	Along with some now useless money, it had:" $) cyoa-text!
+	"Coffre Force !" cyoa-title!
+	($ "Ca prend quelques heures, mais " .. pname .. " trouve la combinaison du coffre !
+	En plus d'argent maintenant inutile, il contenait :" $) cyoa-text!
 	safe-reward-get
 	o'clock@ 2 + o'clock 6 10 rnd nearest .tpos anchor! zombs 
 ;
 cyoa: safe
 	pchar humany? not if
-	"Safe vs Pets" cyoa-title!
-		($ pname .. " doesn't possess the brain necessary to be able to open a safe. Just another example of the human world's anti-" .. cdogcat .. " bias." $) cyoa-text!
+	"Coffre vs Animaux" cyoa-title!
+		($ pname .. " ne possede pas le cerveau necessaire pour ouvrir un coffre. Encore un exemple du biais anti-" .. cdogcat .. " du monde humain." $) cyoa-text!
 	then;
 	combo? if 
-	"Safe Opened!" cyoa-title!
-		($ pname .. " unlocks and opens the safe!
-		Along with some now useless papers, it had:" $) cyoa-text!
+	"Coffre Ouvert !" cyoa-title!
+		($ pname .. " deverrouille et ouvre le coffre !
+		En plus de papiers maintenant inutiles, il contenait :" $) cyoa-text!
 		safe-reward-get
 	else
-	"Locked Safe" cyoa-title!
-	"This safe is locked close, and too sturdy to destroy.
-	With luck the combination or key will be around, somewhere." cyoa-text!
+	"Coffre Verrouille" cyoa-title!
+	"Ce coffre est bien verrouille et trop solide pour etre detruit.
+	Avec de la chance, la combinaison ou la cle sera quelque part dans le coin." cyoa-text!
 		pchar .cmechanic+ if
-			choice( "Leave it be for now" )choice
-			pchar charchoice( " cracks the safe!" )choice: safe-crack
+			choice( "Le laisser pour l'instant" )choice
+			pchar charchoice( " force le coffre !" )choice: safe-crack
 		then
 	then 
 	
 ;
 
 cyoa: comboskel
-	"Combination Number" cyoa-title!
-	($ "This skeleton is clutching a small piece of paper. 
-	The paper has a series of numbers on it that looks like a padlock or safe combination!
-	" .. pname .. " picks it up." $) cyoa-text! goodfx
+	"Numero de Combinaison" cyoa-title!
+	($ "Ce squelette tient un petit bout de papier.
+	Le papier a une serie de nombres qui ressemblent a une combinaison de cadenas ou de coffre !
+	" .. pname .. " le ramasse." $) cyoa-text! goodfx
 	1 to safecombo clear-cyoa
 ;
 
 cyoa: combokey
-	"Big Metal Key" cyoa-title!
-	($ "This big fancy key looks like it would unlock a safe!
-	" .. pname .. " picks it up." $) cyoa-text! goodfx
+	"Grande Cle en Metal" cyoa-title!
+	($ "Cette grande cle fantaisie semble pouvoir deverrouiller un coffre !
+	" .. pname .. " la ramasse." $) cyoa-text! goodfx
 	1 to safecombo deleteme
 ;
 
 cyoa: combonote
-	"Combination Number" cyoa-title!
-	($ "This piece of paper has a series of numbers on it that looks like a padlock or safe combination!
-	" .. pname .. " picks it up." $) cyoa-text! goodfx
+	"Numero de Combinaison" cyoa-title!
+	($ "Ce bout de papier a une serie de nombres qui ressemblent a une combinaison de cadenas ou de coffre !
+	" .. pname .. " le ramasse." $) cyoa-text! goodfx
 	1 to safecombo deleteme
 ;
 
 : lab1 
 	cchar .hairtype@ 0 = if 
-		($ cname .. " grows new hair! Nice!" $) +crtext morale3+ goodfx
+		($ cname .. " pousse de nouveaux cheveux ! Super !" $) +crtext morale3+ goodfx
 		1 45 rnd cchar .hairtype!
 	else
-		($ cname .. " loses " .. chis .. " hair!" $) +crtext morale3- badfx
+		($ cname .. " perd " .. chis .. " cheveux !" $) +crtext morale3- badfx
 		0 cchar .hairtype!
 	then
 ;
 : lab2 
 	cchar .cwits+ if
-		($ cname .. "'s eyes and mind are a bit more blurry..." $) +crtext wits-- shooting-- badfx
+		($ cname .. " : ses yeux et son esprit sont un peu plus flous..." $) +crtext wits-- shooting-- badfx
 		0.8 cchar .scale.head.x! 0.8 cchar .scale.head.y! 0.5 pchar .headoff.y!
 	else
-		($ cname .. " feels more perceptive!" $) +crtext wits++ shooting++ goodfx
+		($ cname .. " se sent plus perspicace !" $) +crtext wits++ shooting++ goodfx
 		1.2 cchar .scale.head.x! 1.2 cchar .scale.head.y! 0.5 pchar .headoff.y!
 	then	
 ;
 : lab3
 	cchar .dexterity@ 0 > if
-		($ cname .. " feels like " .. che .. " is slowing down..." $) +crtext 0 cchar .dexterity! badfx
+		($ cname .. " a l'impression de ralentir..." $) +crtext 0 cchar .dexterity! badfx
 		0.7 pchar .scale.body.y!
 	else
-		($ cname .. " feels faster!" $) +crtext dexterity++ goodfx
+		($ cname .. " se sent plus rapide !" $) +crtext dexterity++ goodfx
 		1.3 pchar .scale.body.y!
 	then	
 ;
 : lab4
-	($ cname .. " feels like a new person!" $) +crtext 6 cchar .morale! goodfx
+	($ cname .. " se sent comme une nouvelle personne !" $) +crtext 6 cchar .morale! goodfx
 		0 3 rnd cchar .bodytype!
 		0 45 rnd cchar .hairtype!
 		0 15 rnd cchar .torsotype!
@@ -968,59 +968,59 @@ cyoa: combonote
 ;
 : lab5
 	cpet? if
-		($ cname .. " feels more human!" $) +crtext 1 cchar .loyalty! loyalty-- goodfx
+		($ cname .. " se sent plus humain !" $) +crtext 1 cchar .loyalty! loyalty-- goodfx
 		// 0 cchar .pet! cchar statmod{ .undog } 0 3 rnd cchar .bodytype!
 		cchar .dogtosuperdog	
 	else
-		($ cname .. " feels more loyal!" $) +crtext 5 cchar .loyalty! loyalty++ goodfx
+		($ cname .. " se sent plus loyal !" $) +crtext 5 cchar .loyalty! loyalty++ goodfx
 		cchar .doggify cchar .dogtosuperdog	
 	then loyaltyREV
 ;
 : lab6
 	50 %chance if
-		($ cname .. " feels like the world got bigger!" $) +crtext badfx
+		($ cname .. " a l'impression que le monde est devenu plus grand !" $) +crtext badfx
 		0.8 cchar .scale.head.x! 0.8 cchar .scale.head.y! 0.5 cchar .headoff.y!
 		0.7 cchar .scale.body.y! 0.7 cchar .scale.body.x!
 	else
-		($ cname .. " feels large and in charge!" $) +crtext vitality++ goodfx
+		($ cname .. " se sent grand et maitre de la situation !" $) +crtext vitality++ goodfx
 		1.2 cchar .scale.head.x! 1.2 cchar .scale.head.y! 0.5 cchar .headoff.y!
 		1.2 cchar .scale.body.y! 1.2 cchar .scale.body.x!
 	then	
 ;
 : lab7
 	cchar .vitality@ 3 > if
-		($ cname .. " feels frail!" $) +crtext 2 cchar .vitality!  2 cchar .health! badfx
+		($ cname .. " se sent fragile !" $) +crtext 2 cchar .vitality!  2 cchar .health! badfx
 		0.6 cchar .scale.body.x!
 	else
-		($ cname .. " feels sturdy!" $) +crtext vitality++ goodfx
+		($ cname .. " se sent robuste !" $) +crtext vitality++ goodfx
 		1.5 cchar .scale.body.x!
 	then	
 ;
 : lab8
 	cchar .specialbody@ 73 = cchar .specialhead@ 73 = and if
-		($ cname .. " turns into a dogdogdogtaur! It's unclear what this actually means..." $) +crtext
+		($ cname .. " se transforme en dogdogdogtaure ! Ce que ca signifie exactement est flou..." $) +crtext
 	then;
 	cpet? if
-		($ cname .. " turns into a dogman: a dog with the body of a human!" $) +crtext goodfx
+		($ cname .. " se transforme en dog-homme : un chien avec le corps d'un humain !" $) +crtext goodfx
 		0 cchar .pet! cchar statmod{ .undog } 0 3 rnd cchar .bodytype! 73 cchar .specialhead!
 	then;
 	cchar .specialbody@ 73 = cchar .specialhead@ 73 = or if
-		($ cname .. " turns into a dogdogtaur! A dog with the arms of a human and the head of a dog and the legs of a dog!" $) +crtext goodfx 73 cchar .specialhead! cchar .dogtaur
+		($ cname .. " se transforme en dogdogtaure ! Un chien avec les bras d'un humain, la tete et les pattes d'un chien !" $) +crtext goodfx 73 cchar .specialhead! cchar .dogtaur
 	else
-		($ cname .. " turns into a dogtaur: a dog with the torso and arms of a human!" $) +crtext goodfx
+		($ cname .. " se transforme en dogtaure : un chien avec le torse et les bras d'un humain !" $) +crtext goodfx
 		cchar .dogtaur
 	then	
 ;
 : lab9
 	cchar .specialtype@ 74 = if
-		($ "A fly wanders into the machine! Doesn't seem to bother " .. cname .. "..." $) +crtext
+		($ "Une mouche se faufile dans la machine ! Ca ne semble pas deranger " .. cname .. "..." $) +crtext
 	then;
 	cpet? if
-		($ cname .. " turns into a dogfly! How horrifying!" $) +crtext goodfx
+		($ cname .. " se transforme en dog-mouche ! Quelle horreur !" $) +crtext goodfx
 		0 cchar .pet! cchar statmod{ .undog } 
 		50 %chance if 73 cchar .specialhead! cchar .flybody else 73 cchar .specialbody! cchar .flyhead then
 	then;
-	($ "A fly wanders into the machine as it starts up! " .. cname .. " gets spliced up with fly DNA! Bonus!!!" $) +crtext goodfx cchar
+	($ "Une mouche se faufile dans la machine au demarrage ! " .. cname .. " se retrouve melange a de l'ADN de mouche ! Bonus !!!" $) +crtext goodfx cchar
 	cchar .specialbody@ 74 = cchar .specialhead@ 74 = or if
 		.fly
 	else
@@ -1044,31 +1044,31 @@ constant LAB-EFFECT
 LAB-EFFECT shuffles to lab-effect
 
 cyoa-choice: lab-go
-	"Experiment Results" cyoa-title!
-	($ cname .. " gets blasted by mysterious science rays until the machine ceases to work. " .. cHe .. " feels energized!" $) text!
+	"Resultats de l'Experience" cyoa-title!
+	($ cname .. " est bombarde de rayons scientifiques mysterieux jusqu'a ce que la machine s'arrete. " .. cHe .. " se sent energise !" $) text!
 	strength++ fitness++ cchar .fullheal
 	lab-effect depths 0= if LAB-EFFECT shuffles to lab-effect then
 	drawcard clear-cyoa
 ;
 
 cyoa: lab
-	"Mysterious Device" cyoa-title!
-	($ "Looks like some sorta mad science thing. There's no telling what this could do if messed with." $) text!
-		choice( "Leave it alone for now" )choice
-		pchar charchoice( " enters the machine!" )choice: lab-go
+	"Appareil Mysterieux" cyoa-title!
+	($ "Ca ressemble a un truc de science folle. Impossible de savoir ce que ca pourrait faire si on y touche." $) text!
+		choice( "Laisser ca tranquille pour l'instant" )choice
+		pchar charchoice( " entre dans la machine !" )choice: lab-go
 ;
 
 : altarpush lt .poofmescary ;
 
 cyoa-choice: altar-1
-	($ cname .. " touches the altar and is instantly blasted by strange energies!" $) text!
+	($ cname .. " touche l'autel et est instantanement frappe par d'etranges energies !" $) text!
 	ouch2- bitefx 300 tint_trigger 0 light_mode!
 	alive? if 
-		($ cHe .. " manages to survive, and feels different than before." $) +crtext goodfx
+		($ cHe .. " reussit a survivre et se sent different d'avant." $) +crtext goodfx
 		strength++ fitness++ shooting++
 	else
-		($ "For " .. chis .. " sacrifice, the altar bestows a gift!
-		In the distance, a " .. "spooky goblin" fbold .. " laughs in a goblin-like fashion." $) +crtext
+		($ "Pour " .. chis .. " sacrifice, l'autel accorde un cadeau !
+		Au loin, un " .. "sinistre gobelin" fbold .. " rit a la facon d'un gobelin." $) +crtext
 		33 %chance if ' .strength++ else 50 %chance if ' .fitness++ else ' .shooting++ then then foreach-team-char
 		goblin-laugh
 		0 6 rnd case
@@ -1089,14 +1089,14 @@ cyoa-choice: altar-1
 ;
 
 cyoa: altar
-	"Sacrificial Altar" cyoa-title!
+	"Autel Sacrificiel" cyoa-title!
 	picon!
-	($ cname .. " stands near a stone altar. It must be the source of the ominous feeling coming from this entire place.
-	The altar seems " .. "extremely dangerous!" rbold .. " It's a bit weird that someone would have this in their house.
-	It probably shouldn't be messed with!" $) text!
-	"WARNING: WILL KILL ANYONE NOT AT FULL HEALTH!" rbold +crtext
-		choice( "Have " .. cname .. " touch altar" )choice: altar-1
-		choice( "Leave altar alone for now" )choice
+	($ cname .. " se tient pres d'un autel de pierre. Ce doit etre la source du sentiment sinistre qui emane de tout cet endroit.
+	L'autel semble " .. "extremement dangereux !" rbold .. " C'est un peu bizarre que quelqu'un ait ca chez soi.
+	On ne devrait probablement pas y toucher !" $) text!
+	"AVERTISSEMENT : TUERA QUICONQUE N'A PAS SA SANTE MAXIMALE !" rbold +crtext
+		choice( "Faire toucher l'autel a " .. cname .. "" )choice: altar-1
+		choice( "Laisser l'autel tranquille" )choice
 ;
 
 }
@@ -1249,7 +1249,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 : fitness+roll cfitness+ fitnessroll or ;
 
 : decruited
-	+cr ($ cname .. " has left the team!" $) +text
+	+cr ($ cname .. " a quitte l'equipe !" $) +text
 ;
 
 : screcruit recruitee .specialtype! ;
@@ -1265,32 +1265,32 @@ mansionloot-picker-base shuffles var mansionloot-picker
 
 : 0weapona
 	cchar .weapona@ 0 > if
-		($ cHe .. " loses " .. chis .. " primary weapon!" $) +crtext
+		($ cHe .. " perd " .. chis .. " arme principale !" $) +crtext
 		0 cchar .weapona!
 	then
 ;
 : 0weaponb
 	cchar .weaponb@ 0 > if
-		($ cHe .. " loses " .. chis .. " secondary weapon!" $) +crtext
+		($ cHe .. " perd " .. chis .. " arme secondaire !" $) +crtext
 		0 cchar .weaponb!
 	then
 ;
 : 0weaponc
 	cchar .weaponb@ 0 > if
-		($ cHe .. " loses " .. chis .. " tertiary weapon!" $) +crtext
+		($ cHe .. " perd " .. chis .. " arme tertiaire !" $) +crtext
 		0 cchar .weaponc!
 	then
 ;
 : 0weapons
 	cchar .weaponc@ 0 > cchar .weaponb@ 0 > cchar .weapona@ 0 > or or if
-		($ cHe .. " loses " .. chis .. " weapons!" $) +crtext
+		($ cHe .. " perd " .. chis .. " armes !" $) +crtext
 		0 cchar .weaponb! 0 cchar .weapona! 0 cchar .weaponc!
 	then
 ;
 
 : trunk.killer 
 	trunk.count 0 > if
-		($ trunk.count rbold .. " WEAPONS LOST!" rbold $) +crtext
+		($ trunk.count rbold .. " ARMES PERDUES !" rbold $) +crtext
 		trunk.clear
 	then
 ;
@@ -1300,10 +1300,10 @@ mansionloot-picker-base shuffles var mansionloot-picker
 : stay-warm
 	gamedef{ ' weathermode gamemode? } if
 		trunk-food team-count >= if
-			($ Thegroup .. " has to eat extra to keep warm." $) +crtext 
+			($ Thegroup .. " doit manger plus pour rester au chaud." $) +crtext 
 			team-count -1 * LOOT_FOOD trunk.loot+
 		else
-			($ Thegroup .. " doesn't have enough food to stay warm. Frost nips at their fingers." $) +crtext 
+			($ Thegroup .. " n'a pas assez de nourriture pour rester au chaud. Le gel mord les doigts." $) +crtext 
 			' .morale-- foreach-team-char
 			trunk-food -1 * LOOT_FOOD trunk.loot+ 
 			badfx
@@ -1314,12 +1314,12 @@ mansionloot-picker-base shuffles var mansionloot-picker
 : eat-icecream args( chara ) 
 	vehicle.which@ 14 = if 
 		50 %chance if 
-			($ <- chara .name@ .. " decides to have some ice cream from the truck for dessert. It's a small, if usually forgotten, comfort." $) +crtext
+			($ <- chara .name@ .. " decide de prendre de la glace du camion en dessert. C'est un petit plaisir, souvent oublie." $) +crtext
 			<- chara .morale++ 
 		then 
 		
 		<- chara .trait@ "BERSERK!" $= if 
-			($ <- chara .name@ .. " shovels so much ice cream into their mouth that they get brainfreeze right away." $) +crtext
+			($ <- chara .name@ .. " enfourne tellement de glace que le mal de tete arrive immediatement." $) +crtext
 			<- chara .morale--
 		then
 	then 
@@ -1330,9 +1330,9 @@ mansionloot-picker-base shuffles var mansionloot-picker
 	<- chara .trait@ "Gourmand" $= if then; 
 
 	<- chara .attitude 1 < if 
-			($ <- chara .name@ .. " doesn't really understand the taste palette, but food is food." $) +crtext
+			($ <- chara .name@ .. " ne comprend pas vraiment les subtilites gustatives, mais nourriture est nourriture." $) +crtext
 		else
-			($ <- chara .name@ .. " thinks the meal was great! It tastes amazing!" $) +crtext
+			($ <- chara .name@ .. " trouve le repas excellent ! Ca a un gout incroyable !" $) +crtext
 			<- chara .morale++ 
 		then
 
@@ -1360,7 +1360,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 	
 	
 	fullmeal GOURMANDS_ACTIVE 0 > and if \ retina : Gourmand buff , restores morale for EVERYBODY at mealtime 
-		($ Thegroup .. " eats a fantastic meal, served up by " GOURMAND_TONIGHT pbold .. "!" .. $)
+		($ Thegroup .. " mange un repas fantastique, prepare par " GOURMAND_TONIGHT pbold .. " !" .. $)
 		cyoa-text-append
 		chowday
 		goodfx
@@ -1371,7 +1371,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 	then; 
 	
 	fullmeal if
-		($ Thegroup .. " eats a decent meal." $)
+		($ Thegroup .. " mange un repas correct." $)
 		cyoa-text-append
 		chowday
 		goodfx
@@ -1382,7 +1382,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 		
 	then;
 	halfmeal if
-		($ Thegroup .. " is low on food, and eats less." $)
+		($ Thegroup .. " manque de nourriture et mange moins." $)
 		cyoa-text-append
 		chowday
 		badfx
@@ -1390,7 +1390,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 		stay-warm
 	then;
 	trunk-food 0 = if
-		($ Thegroup .. " finds that there is no food left at all. Despair creeps in." $)
+		($ Thegroup .. " constate qu'il ne reste plus aucune nourriture. Le desespoir s'installe." $)
 		cyoa-text-append
 		stay-warm
 		team-count 1 > if
@@ -1399,7 +1399,7 @@ mansionloot-picker-base shuffles var mansionloot-picker
 			soloer .morale2-
 		then morale--gourmandall badfx
 	then;
-	($ Thegroup .. " didn't have nearly enough food to eat. Doubt festers." $)
+	($ Thegroup .. " n'avait pas du tout assez de nourriture. Le doute ronge." $)
 		cyoa-text-append
 	chowday
 	stay-warm
@@ -1453,7 +1453,7 @@ chow_calc_anytime
 
 // Words for trading
 : charm-text choosechar 
-	($ "The trader falls for " .. cname .. "'s charm and gives extra!" $) 
+	($ "Le marchand tombe sous le charme de " .. cname .. " et donne plus !" $) 
 	+crtext +cr witsREV attitudeREV cicon
 ;
 

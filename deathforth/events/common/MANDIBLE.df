@@ -44,8 +44,8 @@ cyoa: mandible-park
 ;
 
 cyoa: mandible-crowded
-	"Parc Bondé" cyoa-title!
-	($ Thegroup .. " repere un parc bondé de zombies. De l'autre cote, une voiture arrive en trombe. Quelqu'un en sort en courant, et meme a cette distance, il est evident qu'il fonce vers les toilettes." $) cyoa-text! basic-tone
+	"Parc Bonde" cyoa-title!
+	($ Thegroup .. " repere un parc bonde de zombies. De l'autre cote, une voiture arrive en trombe. Quelqu'un en sort en courant, et meme a cette distance, il est evident qu'il fonce vers les toilettes." $) cyoa-text! basic-tone
 	1.4 1.7 frnd 8 17 frnd 2 3 rnd zforecast
 	1 to parktype
 	"events/exterior/park.df" $load-region

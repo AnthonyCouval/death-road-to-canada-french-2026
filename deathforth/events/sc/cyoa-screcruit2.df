@@ -164,7 +164,7 @@ cyoa-choice: octodad-recruit
 		" .. rname .. " a quitte l'equipe !" $) cyoa-text!
 	then;
 	($ " Il faut environ 15 minutes a " .. rname .. " pour ouvrir la portiere, monter dans la voiture et attacher sa ceinture.
-	Pendant ce temps, la claymore et les provisions tombent dans des toilettes voisines et sont irrécuperables." $) cyoa-text! badfx
+	Pendant ce temps, la claymore et les provisions tombent dans des toilettes voisines et sont irrecuperables." $) cyoa-text! badfx
 	recruitee .temperREV recruitee .attitudeREV
 	recruited
 ;

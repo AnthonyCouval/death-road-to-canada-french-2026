@@ -129,7 +129,7 @@ cyoa-choice: common1-stitches-med
 ;
 
 cyoa-choice: common1-stitches-cauter
-	($ cname .. " imite quelque chose qu'" .. che .. " a vu dans le film 'Rambeux'. " .. cHe .. " chauffe un couteau vraiment fort et le pose directement sur la coupure pour cautériser la plaie.
+	($ cname .. " imite quelque chose qu'" .. che .. " a vu dans le film 'Rambeux'. " .. cHe .. " chauffe un couteau vraiment fort et le pose directement sur la coupure pour cauteriser la plaie.
 	C'etait une assez mauvaise idee ! La douleur est extreme, mais le saignement s'arrete et il n'y a pas de perte de force dans le bras." $) cyoa-text! badfx morale3-
 ;
 
@@ -138,7 +138,7 @@ cyoa: common1-stitches
 	"Coupure Profonde" cyoa-title!
 	choosehuman
 	cchar to victim
-	($ cname .. " se coupe assez severement en faisant des betises dans le post-apocalypse. " .. cHe .. " aura probablement besoin de points pour son bras." $) cyoa-text!
+	($ cname .. " se coupe assez severement en faisant n'importe quoi dans ce monde en ruines. " .. cHe .. " aura probablement besoin de points de suture pour son bras." $) cyoa-text!
 		choice( "L'ignorer / Faire avec" )choice: common1-stitches-no
 		medicalest charchoice( " essaie de le suturer" )choice: common1-stitches-med
 		cchar charchoice( " le cauterise" )choice: common1-stitches-cauter

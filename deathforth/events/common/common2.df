@@ -19,7 +19,7 @@ cyoa-choice: common2-rare-tp-share
 	then;
 	"L'equipe decide d'essayer de partager le rouleau de papier toilette." text!
 	loyalty-average 2 < if
-		"Ca ne prend pas longtemps pour degénérer en une enorme dispute ! La situation vire a la bagarre generale. Le papier toilette finit par etre dechire accidentellement !" +crtext morale3-all badfx
+		"Ca ne prend pas longtemps pour degenerer en une enorme dispute ! La situation vire a la bagarre generale. Le papier toilette finit par etre dechire accidentellement !" +crtext morale3-all badfx
 	else
 		loyalty-average 4 < if
 			"Il y a inevitablement des frictions pour partager le PQ, mais le groupe arrive a surmonter ses differences." +crtext morale2+all goodfx
@@ -162,7 +162,7 @@ cyoa-bridge: common2-cboard-steal4
 cyoa: common2-cboard
 	"Aider quelqu'un dans le besoin !" cyoa-title!
 	1 6 rnd to common2-cboardtype
-	($ "En pillant, " .. thegroup .. " tombe sur un homme couvert de boites en carton. Il dit etre coincé la depuis des jours ! Il a un " .. cboardprize rbold .. " par terre hors de sa portee." $) text!
+	($ "En pillant, " .. thegroup .. " tombe sur un homme couvert de boites en carton. Il dit etre coince la depuis des jours ! Il a un " .. cboardprize rbold .. " par terre hors de sa portee." $) text!
 	choice( "L'aider a se relever" )choice: common2-cboard-help
 	most-ahole if
 		charchoice( ": Voler toutes ses provisions" )choice: common2-cboard-bandit
@@ -398,7 +398,7 @@ cyoa: common2-parkchat
 // Busted leg
 
 cyoa-choice: common2-busted-med
-	($ cname .. " essaie de soigner la jambe blessée de la femme." $) text!
+	($ cname .. " essaie de soigner la jambe blessee de la femme." $) text!
 	cmedical+ if
 		($ cHe .. " utilise son expertise medicale pour reparer rapidement sa jambe ! Elle apprecie l'aide et donne ce qu'elle peut !" $) +crtext morale++ medicalREV medical++ goodfx -1 trunk-medical+ 2 trunk-food+
 	then;
@@ -429,13 +429,13 @@ cyoa-bridge: common2-busted-coolit
 ;
 
 cyoa-choice: common2-busted-bandit
-	($ cname .. " vole facilement le peu de provisions qu'il restait a la femme blessée. Bravo !" $) text! badfx
+	($ cname .. " vole facilement le peu de provisions qu'il restait a la femme blessee. Bravo !" $) text! badfx
 		2 4 rnd trunk-food+ rob-guilt aholeREV
 ;
 
 cyoa: common2-busted
 	"Jambe Cassee" cyoa-title! image-female-zombie-3
-	($ Thegroup .. " rencontre une femme qui boite avec une bequille. Une de ses jambes a ete blessée dans une chute recente en fuyant des zombies." $) text!
+	($ Thegroup .. " rencontre une femme qui boite avec une bequille. Une de ses jambes a ete blessee dans une chute recente en fuyant des zombies." $) text!
 		trunk-medical 0 > if
 			medicalest charchoice( ": Soigner sa jambe" )choice: common2-busted-med
 			choice( "Pas le temps d'aider" )choice
@@ -458,7 +458,7 @@ cyoa: common2-busted
 ;
 
 cyoa-choice: common2-carhelp-mech
-	($ cname .. " essaie de reparer la voiture cassée de l'homme." $) text!
+	($ cname .. " essaie de reparer la voiture cassee de l'homme." $) text!
 	cmechanic+ if
 		($ cHe .. " utilise ses connaissances en mecanique pour la reparer rapidement ! Il apprecie l'aide et donne des provisions !" $) +crtext morale++ mechanicREV mechanic++ goodfx ammosearch1
 	then;
@@ -499,7 +499,7 @@ cyoa: common2-carhelp
 	0 recruitee .mechanical!
 	0 recruitee .female! ricon
 	WEAPON_WRENCH recruitee .weapona!
-	($ Thegroup .. " rencontre un homme qui essaie de reparer sa voiture cassée. Il n'a clairement aucune idee de ce qu'il fait." $) text!
+	($ Thegroup .. " rencontre un homme qui essaie de reparer sa voiture cassee. Il n'a clairement aucune idee de ce qu'il fait." $) text!
 		mechanicest charchoice( ": Aider a reparer la voiture" )choice: common2-carhelp-mech
 		most-charming if
 			charchoice( ": Le recruter" )choice: recruit-yes

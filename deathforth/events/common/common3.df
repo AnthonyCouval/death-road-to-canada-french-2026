@@ -87,7 +87,7 @@ cyoa-bridge: common3-bridgekeep-push
 		($ "Apres quelques efforts, " .. thegroup .. " reussit a le jeter par-dessus !" $) +crtext goodfx
 	else
 		($ "Impossible ! L'homme en armure colle des beignes a " .. thegroup .. " avec ses gants de boxe ! " $) +crtext
-			vehicle.which@ 0= if ($ gThey .. " passe" .. g1s .. " devant lui apres la raclée." $) +text then
+			vehicle.which@ 0= if ($ gThey .. " passe" .. g1s .. " devant lui apres la raclee." $) +text then
 		sting--all bitefx
 		vehicle.which@ 0 > if choice( "Le renverser avec la voiture" )choice: common3-bridgekeep-plow then
 		 

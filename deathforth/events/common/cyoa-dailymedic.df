@@ -30,12 +30,12 @@ cyoa{ road{
 cyoa: healthcheck
 	"STATUT DE SANTE" cyoa-title!
 	someicon
-	($ cname .. " is a dinkus with " .. cchar .vitality@ .. " max health.
-	" .. cname .. " currently has " .. cchar .health@ .. " health.
-	" .. cHe .. " has " .. cchar damage .. " damage.
-	" .. cHe .. " has " .. healerskill .. " medical skill and could heal for " .. healformula .. " health. 
-	Total team health is " .. team-health .. "
-	Total team damage is " .. team-damage $) cyoa-text! basic-tone
+	($ cname .. " est un dinkus avec " .. cchar .vitality@ .. " max health.
+	" .. cname .. " a actuellement " .. cchar .health@ .. " health.
+	" .. cHe .. " a " .. cchar damage .. " de degat.
+	" .. cHe .. " a " .. healerskill .. " des competences medicales et pourrait soigner pour " .. healformula .. " de vie.
+	Sante totale de l'equipe " .. team-health .. "
+	Degats totaux de l'equipe " .. team-damage $) cyoa-text! basic-tone
 ;
 : maxhealcost healerskill 5 > if -1 else -2 then ;
 : maxhealreq healerskill 5 > if 0 else 1 then ;

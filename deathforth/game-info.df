@@ -143,7 +143,7 @@ defer infoback
 cyoa-start
 "Zombo Town Directions" cyoa-title!
 "Chose a faire a Zombo Ville:" bbold text!
-"Le batiment situe à droite vous permet de consulter vos statistiques et d'autres informations.
+"Le batiment situe a droite vous permet de consulter vos statistiques et d'autres informations.
 Le batiment central vous permet d'ameliorer et de debloquer des avantages et des traits de caractere. Vous pourrez ensuite vous en servir pour creer des personnages de depart ou personnalises tres puissants !" +crtext
 "Mefiez-vous du Gnome deverrouille !" fbold +crtext
 
