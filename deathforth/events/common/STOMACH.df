@@ -578,98 +578,96 @@ cyoa{
 \ Admiral Raven 
 
 cyoa-bridge: camp-admiral-recruit
-	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	"All the world's a bathtub, and us merely the sailors." bbold +crtext
-	recruitee .shootingREV recruitee .mechanicREV
+    ricon 4 recruitee .morale! clear-cyoa
+    15 recruit-yes-food
+    "Le monde entier est une baignoire, et nous ne sommes que ses marins." bbold +crtext
+    recruitee .shootingREV recruitee .mechanicREV
 ;
 
 cyoa: camp-rec-admiral
-	"Commander Of The Seas And Your Bathtub" cyoa-title!
-	nearest .character@ choosechar cchar to recruitee ricon
-	($ "At first, this uniformed person is just splashing about in a puddle. Whatever kind of ritual this is, she's having a great time.  
-	She looks like an important member of some naval force, or possibly a very eccentric fisherwoman." $) cyoa-text! basic-tone
-	"This character can exchange food for gas supply drops. She's very powerful in wet weather or environments." rbold +crtext
-	trunk-food 14 > if
-		choice( "Leave her for now" )choice
-		choice( "Hire her - 15 food" )choice: camp-admiral-recruit
-	else
-		"You need 15 food to recruit Admiral Raven to the party." +crtext
-		choice( "No bathtub navy for you!" )choice
-	then		
+    "Commander Of The Seas And Your Bathtub" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "Au debut, cette personne en uniforme est juste en train de barboter dans une flaque d'eau. Quel que soit ce rituel, elle s'amuse comme une folle.
+    Elle ressemble a un membre important d'une force navale, ou peut-etre a une pecheuse tres excentrique." $) cyoa-text! basic-tone
+    "Ce personnage peut echanger de la nourriture contre des ravitaillement d'essence. Elle est tres puissante par temps pluvieux ou dans les environnements aquatiques." rbold +crtext
+    trunk-food 14 > if
+       choice( "La laisser pour l'instant" )choice
+       choice( "L'embaucher - 15 nourriture" )choice: camp-admiral-recruit
+    else
+       "Vous avez besoin de 15 nourriture pour recruter l'Amiral Raven dans l'equipe." +crtext
+       choice( "Pas de marine de baignoire pour vous !" )choice
+    then
 ;
-
-\ Zeus 
+\ Zeus
 \ for TRACHEA, we are definitely making Rubick
-\ "IM COMING FRIENDS. WAIT FOR MEEEEEEE" 
+\ "IM COMING FRIENDS. WAIT FOR MEEEEEEE"
 
 cyoa-bridge: camp-zeus-recruit
-	ricon 4 recruitee .morale! clear-cyoa
-	25 recruit-yes-food 
-	"THIS TRIBUTE IS...SUFFICIENT. ALSO, TASTY. ARE THESE CHIPS LIGHTNING FLAVOURED?" fbold +crtext
-	"Perhaps the group WILL make it to Canada, after all!" +crtext
+    ricon 4 recruitee .morale! clear-cyoa
+    25 recruit-yes-food
+    "CET HOMMAGE EST...SUFFISANT. DE PLUS, SAVOUREUX. CES CHIPS SONT-ELLES PARFUMEES A LA FOUDRE ?" fbold +crtext
+    "Peut-etre que le groupe ARRIVERA au Canada, apres tout !" +crtext
 ;
 
 cyoa-choice: camp-zeus-rude
-	($ ". . ." $) cyoa-text!
-	"YOU, DEAR MORTAL. YOU, MORTAL WHO IS PUNY, TINY, PATHETIC, WEAK, IN YOUR FRAIL FLESH FORM..." fbold +crtext
-	". . . " +crtext
-	"Would ask ME - ME? - ZEUS OF MOUNT OLYMPUS...TO COOL IT?" fbold +crtext
-	($ "In retrospect, this was a popping-a-tire-on-the-freeway level bad idea. With a flick of his fingers, Zeus turns " cname .. "'s organs into pure ZP. Nothing remains." .. $) +crtext
-	"Zeus, at least, looks pleased with himself." +crtext
-	cchar .kill 
-	cool-it++
-	20 zombop!
+    ($ ". . ." $) cyoa-text!
+    "TOI, CHER MORTEL. TOI, MORTEL QUI EST CHETIF, MINUSCULE, PATHETIQUE, FAIBLE, DANS TA FORME DE CHAIR TOUTE FRAGILE..." fbold +crtext
+    ". . . " +crtext
+    "Tu oserais ME demander - A MOI ? - ZEUS DU MONT OLYMPE...DE ME CALMER ?" fbold +crtext
+    ($ "Avec le recul, c'etait une idee aussi foireuse que de crever un pneu sur l'autoroute. D'un claquement de doigts, Zeus transforme les organes de " cname .. " en pur Zombie Points. Il n'en reste plus rien." .. $) +crtext
+    "Zeus, au moins, a l'air content de lui." +crtext
+    cchar .kill
+    cool-it++
+    20 zombop!
 ;
 
 cyoa: camp-rec-zeus
-	"TRUE SIGHT" cyoa-title!
-	nearest .character@ choosechar cchar to recruitee ricon
-	($ "It's literally Zeus. The DINK. The myth. The legend. Here and now, right in front of you, wandering Earth in human form!" $) cyoa-text! basic-tone
-	"MORTALS...WHAT TRIBUTE DO YOU HAVE FOR YOUR SUPERIOR?" fbold +crtext
-	"Thunder quakes between his words in the far distance." rbold "...it could also just be a chips packet opening." .. +crtext
-	"This character wields lightning with great effectiveness, but it must be charged through melee attacks." rbold +crtext
-	trunk-food 24 > if
-		choice( "Leave him for now" )choice
-		choice( "Hire him - 25 food" )choice: camp-zeus-recruit
-		
-	else
-		"You need 25 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then	
-		most-grating if
-			charchoice( " tells Zeus to 'Cool It'" )choice: camp-zeus-rude
-			\ There is no positive outcome in telling God to cool it. Especially if that god is ZEUS.
-		then
-	
-;
+    "TRUE SIGHT" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "C'est litteralement Zeus. Le DIEU. Le mythe. La legende. Ici et maintenant, juste en face de vous, arpentant la Terre sous forme humaine !" $) cyoa-text! basic-tone
+    "MORTELS... QUEL HOMMAGE AVEZ-VOUS POUR VOTRE DIEU ?" fbold +crtext
+    "Le tonnerre gronde au loin entre chacun de ses mots." rbold "... cela pourrait aussi juste etre un paquet de chips qu'on ouvre." .. +crtext
+    "Ce personnage manie la foudre avec une grande efficacite, mais elle doit etre chargee par des attaques au corps a corps." rbold +crtext
+    trunk-food 24 > if
+       choice( "Le laisser pour l'instant" )choice
+       choice( "L'embaucher - 25 nourriture" )choice: camp-zeus-recruit
 
-\ Bayonetta 
+    else
+       "Vous avez besoin de 25 nourriture pour le recruter dans l'equipe." +crtext
+       choice( "Impossible de sacrifier la nourriture" )choice
+    then
+       most-grating if
+          charchoice( " dit a Zeus de 'Se Calmer'" )choice: camp-zeus-rude
+          \ Il n'y a pas d'issue positive quand on dit a Dieu de se calmer. Surtout si ce dieu est ZEUS.
+       then
+
+;
+\ Bayonetta
 \ Idk how I feel about Bayonetta. I think I would've rather made a different char.
-\ Oh well. 
+\ Oh well.
 
 cyoa-bridge: camp-bayonetta-recruit
-	ricon 6 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	"YESYESYESYESYES! THIS'LL BE BLOODY BRILLIANT! ;3" fbold +crtext
-	recruitee .showitall
+    ricon 6 recruitee .morale! clear-cyoa
+    15 recruit-yes-food
+    "OUIOUIOUIOUIOUI ! CA VA ETRE CARREMENT GENIAL ! ;3" fbold +crtext
+    recruitee .showitall
 ;
 \ She starts with 6 morale because she extracted 2 morale from me.
 
 cyoa: camp-rec-bayonetta
-	"SURVIVORS OF THE VAMPIRIC VARIETY" cyoa-title!
-	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This woman won't stop talking. It's a relentless self-confident assault on the senses. Nevertheless, she seems to be hauling a variety of good weapons, as well as two pistols." $) cyoa-text! basic-tone
-	"OOH OOH HIRE ME! HIRE ME! I'LL BE SO FAST YOU WON'T BE ABLE TO KEEP UP, DARLING~" fbold +crtext
-	"I'm sitting in this cyoa and even I already think she's annoying." +crtext
-	"This character has a combo system. When killing with your locked-slot weapon, you'll roll a new weapon afterwards." rbold +crtext
-	trunk-food 14 > if
-		choice( "Spare your ears" )choice
-		choice( "Hire her - 15 food" )choice: camp-bayonetta-recruit
-	else
-		"You need 15 food to recruit her to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+    "SURVIVORS OF THE VAMPIRIC VARIETY" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "Cette femme n'arrete pas de parler. C'est un assaut implacable de confiance en soi qui agresse les sens. Neanmoins, elle semble trimballer une grande variete de bonnes armes, ainsi que deux pistolets." $) cyoa-text! basic-tone
+    "OOH OOH ENGAGE-MOI ! ENGAGE-MOI ! JE VAIS ETRE SI RAPIDE QUE TU NE POURRAS PAS SUIVRE, CHERI~" fbold +crtext
+    "Je suis assis dans ce cyoa et meme moi je la trouve deja agacante." +crtext
+    "Ce personnage possede un systeme de combo. En tuant avec votre arme a emplacement verrouille, vous debloquerez une nouvelle arme juste apres." rbold +crtext
+    trunk-food 14 > if
+       choice( "Epargner vos oreilles" )choice
+       choice( "L'engager - 15 nourriture" )choice: camp-bayonetta-recruit
+    else
+       "Vous avez besoin de 15 nourriture pour la recruter dans l'equipe." +crtext
+       choice( "Impossible de sacrifier la nourriture" )choice
+    then
 ;
 
 }
@@ -693,7 +691,7 @@ cyoa: camp-rec-bayonetta
 	15 <- chara .haircolour!
 	1234512345 <- chara .seed!
 	"IS KEPA" <- chara .trait!
-	($ "is trapped in this dimension as punishment for the roomgen system." $) <- chara .job!
+	($ "est coince dans cette dimension en guise de punition pour le systeme roomgen." $) <- chara .job!
 	"GAME DESIGNER" <- chara .perk!
 	WEAPON_CARDBOARD <- chara .weapona!
 	5 <- chara .shooting! 5 <- chara .strength! 3 <- chara .fitness!	2 <- chara .morale!
@@ -703,323 +701,323 @@ cyoa: camp-rec-bayonetta
 	1 <- chara .vitality! 1 <- chara .health!
 ;
 
-\ can't wait for this to get griefed... 
-: .syca_ify args( chara ) 
-	121 <- chara .specialtype! 
-	1 <- chara .female! 
-	WEAPON_FOSBURY <- chara .weapona! 
-	200 LOOT_BULLET <- chara .lootamt! 
-	WEAPON_HUNTING <- chara .weaponb! 
-	200 LOOT_RIFLE_SHELL <- chara .lootamt! 
-	4 <- chara .shooting! 
-	4 <- chara .mechanical! 
-	6 <- chara .loyalty! 
-	"Deciduous" <- chara .perk! 
-	"Developer" <- chara .trait! 
-	"is mostly here on accident after 'quit-to-title' stopped working for her." <- chara .job! 
-	"Hazel" <- chara .name! 
-; 
+\ can't wait for this to get griefed...
+: .syca_ify args( chara )
+	121 <- chara .specialtype!
+	1 <- chara .female!
+	WEAPON_FOSBURY <- chara .weapona!
+	200 LOOT_BULLET <- chara .lootamt!
+	WEAPON_HUNTING <- chara .weaponb!
+	200 LOOT_RIFLE_SHELL <- chara .lootamt!
+	4 <- chara .shooting!
+	4 <- chara .mechanical!
+	6 <- chara .loyalty!
+	"Deciduous" <- chara .perk!
+	"Developer" <- chara .trait!
+	"is mostly here on accident after 'quit-to-title' stopped working for her." <- chara .job!
+	"Hazel" <- chara .name!
+;
 
 
 
 \ ----------------------------------------------
 \ ----------------------------------------------
-\ 			RUBICK SPELLSTEALER BELOW 
+\ 			RUBICK SPELLSTEALER BELOW
 \ ----------------------------------------------
 \ ----------------------------------------------
 
-: rubick-thing-events args( me eventid ) 
-	<- eventid THING_EVENT_SWING <> if 
-		1 <- me .character@ .weapon_nodropb! 
-	then 
-	
-	<- eventid THING_EVENT_DIED = if 
-		GREEN "i lost?" .. <- me .yellmsg 
-	then 
-; 
-	
+: rubick-thing-events args( me eventid )
+	<- eventid THING_EVENT_SWING <> if
+		1 <- me .character@ .weapon_nodropb!
+	then
 
-: never_drop_things args( chara eventid ) 
-	\ 1 <- me .character@ .weapon_nodropc! 
+	<- eventid THING_EVENT_DIED = if
+		GREEN "i lost?" .. <- me .yellmsg
+	then
+;
+
+
+: never_drop_things args( chara eventid )
+	\ 1 <- me .character@ .weapon_nodropc!
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
 		<- chara .thing@ swap ( teid ) rubick-thing-events
-		
-; 
 
-: .rubick_ify args( chara ) 
-	151 <- chara .specialtype! 
-	0 <- chara .female!  
-	
-	WEAPON_FADEBOLT_REAL <- chara .weapona! 
-	WEAPON_SHOVEL <- chara .weaponb! \ Need to put something here or the AI tries to pick up stuff that it cant  
-	
-	\ Think of it as like that old shovel neutral item that dug up consumables 
-	
-	WEAPON_COPYCOPY <- chara .weaponc! 
-	1 <- chara .stackedc! 
+;
+
+: .rubick_ify args( chara )
+	151 <- chara .specialtype!
+	0 <- chara .female!
+
+	WEAPON_FADEBOLT_REAL <- chara .weapona!
+	WEAPON_SHOVEL <- chara .weaponb! \ Need to put something here or the AI tries to pick up stuff that it cant
+
+	\ Think of it as like that old shovel neutral item that dug up consumables
+
+	WEAPON_COPYCOPY <- chara .weaponc!
+	1 <- chara .stackedc!
 	\ Copy weapon does not need charges
-	\ It has charges because it enables the weapon to "aim" nicely 
-	\ they will never be used or run out 
-	
+	\ It has charges because it enables the weapon to "aim" nicely
+	\ they will never be used or run out
+
 	1 <- chara .weapon_nodropc!
 	1 <- chara .weapon_nodropb!
-	1 <- chara .weapon_nodropa! 
-	
-	0 <- chara .female! 
-	
-	2 <- chara .strength! 
-	1 <- chara .fitness! 
+	1 <- chara .weapon_nodropa!
+
+	0 <- chara .female!
+
+	2 <- chara .strength!
+	1 <- chara .fitness!
 	6 <- chara .wits!
-	3 <- chara .attitude! 
-	
-	2 <- chara .vitality! 
-	2 <- chara .health! 
-	
-	0 <- chara .loyalty! 
-	0 <- chara .composure! 
-	
-	' never_drop_things <- chara .main_events! 
-	
-	"Level 30" <- chara .perk! 
-	"Spellstealer" <- chara .trait! 
-	"will also steal your partner, children and house if unattended. A thief through and through!" <- chara .job! 
-	"Magus" <- chara .name! 
-; 
+	3 <- chara .attitude!
 
-\ "MYYYYYYY TURN NOW"
-\ my most played dota char by far 
+	2 <- chara .vitality!
+	2 <- chara .health!
 
-: pewt_laugh 1 19 rnd case 
-	1 of "NYEHEHEHEHEH" endof 
-	2 of "Nyheheheheh" endof 
-	3 of "hehehehehh" endof 
-	4 of "HEHEHEHEH" endof 
-	5 of "HEY LEWIS" endof 
-	6 of "hey lewis" endof 
-	7 of "NYEHEHEH HEHEHEH" endof 
-	8 of "nyehehehehh" endof 
-	9 of "I am...ELECTRIC MAN" endof 
-	10 of "pewter...the zombies are here." endof 
-	11 of "this is worse than the time when..." endof 
-	12 of "SHUT UP MEG." endof 
-	13 of "INSERT CUTAWAY GAG" endof 
-	14 of "at least I'm not drinking." endof 
-	15 of "I just wanna talk to him." endof 
-	16 of "Buttscratcher." endof 
-	17 of "Life is a terrible thing!" endof 
-	18 of "IT INSISTS UPON ITSELF." endof 
-	19 of "OOOH! A DOLLAR." endof 
+	0 <- chara .loyalty!
+	0 <- chara .composure!
+
+	' never_drop_things <- chara .main_events!
+
+	"Level 30" <- chara .perk!
+	"Spellstealer" <- chara .trait!
+	"volera aussi votre partenaire, vos enfants et votre maison si vous ne surveillez rien. Un voleur jusqu'au bout des doigts !" <- chara .job!
+	"Magus" <- chara .name!
+;
+
+\ "MOOOON TOUR MAINTENANT"
+\ my most played dota char by far
+
+: pewt_laugh 1 19 rnd case
+	1 of "NYEHEHEHEHEH" endof
+	2 of "Nyheheheheh" endof
+	3 of "hehehehehh" endof
+	4 of "HEHEHEHEH" endof
+	5 of "HEY LEWIS" endof
+	6 of "hey lewis" endof
+	7 of "NYEHEHEH HEHEHEH" endof
+	8 of "nyehehehehh" endof
+	9 of "Je suis... ELECTRIC MAN" endof
+    10 of "pewter... les zombies sont la." endof
+    11 of "c'est encore pire que la fois ou..." endof
+    12 of "FERME LA MEG." endof
+    13 of "INSERER UN GAG EN FLASHBACK" endof
+    14 of "au moins je ne bois pas." endof
+    15 of "je veux juste lui parler." endof
+    16 of "Gratte-cul." endof
+    17 of "La vie est une chose terrible !" endof
+    18 of "IL SE PREND TRES AU SERIEUX." endof
+    19 of "OOOH ! UN DOLLAR." endof
 	endcase
-; 
+;
 
-: familyguy-thing-events args( me eventid ) 
-	<- eventid THING_EVENT_SWING = if 
-		
-		player 0 = not if 
-			16 %chance if 
-				<- me .id@ pchar .thing@ .id@ = if 
+: familyguy-thing-events args( me eventid )
+	<- eventid THING_EVENT_SWING = if
+
+		player 0 = not if
+			16 %chance if
+				<- me .id@ pchar .thing@ .id@ = if
 					pewt_laugh <- me .yellmsg
 				else
-					50 %chance if 
+					50 %chance if
 						"hey, hey " pchar .name@ .. "..." .. <- me .yellmsg
-							else 
+							else
 						"hey " pchar .name@ .. <- me .yellmsg
-					then 
-				then 
-			then 
-		then 	
-	then 
-	
-	<- eventid THING_EVENT_DIED = if 
-		RED "*gasp*...aaaaaah...*gasp*...ahhhh..." .. <- me .yellmsg 
-	then 
-; 
-	
+					then
+				then
+			then
+		then
+	then
 
-: familyguy-main-events args( chara eventid ) 
-	\ 1 <- me .character@ .weapon_nodropc! 
+	<- eventid THING_EVENT_DIED = if
+		RED "*gasp*...aaaaaah...*gasp*...ahhhh..." .. <- me .yellmsg
+	then
+;
+
+
+: familyguy-main-events args( chara eventid )
+	\ 1 <- me .character@ .weapon_nodropc!
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
 		<- chara .thing@ swap ( teid ) familyguy-thing-events
-		
-; 
+
+;
 
 \ ----------------------------------------------
 \ ----------------------------------------------
-\ 	PETER "I JUST WANNA TALK TO HIM" GRIFFIN BELOW 
+\ 	PETER "I JUST WANNA TALK TO HIM" GRIFFIN BELOW
 \ ----------------------------------------------
 \ ----------------------------------------------
 
-: .pewterify args( chara ) 
-	152 <- chara .specialtype! 
-	0 <- chara .female!  
-	
+: .pewterify args( chara )
+	152 <- chara .specialtype!
+	0 <- chara .female!
+
 	3 <- chara .strength!
-	
-	6 <- chara .fitness! 
-	-6 STAT_FITNESS <- chara .bonus! 
 
-	WEAPON_ROUNDHOUSE <- chara .weapon_default! 
-	' familyguy-main-events <- chara .main_events! 
-	WEAPON_PEWSHOTGUN <- chara .weapona! 
-	
+	6 <- chara .fitness!
+	-6 STAT_FITNESS <- chara .bonus!
+
+	WEAPON_ROUNDHOUSE <- chara .weapon_default!
+	' familyguy-main-events <- chara .main_events!
+	WEAPON_PEWSHOTGUN <- chara .weapona!
+
 	1 <- chara .wits!
-	2 <- chara .attitude! 
-	
-	6 <- chara .vitality! 
-	6 <- chara .health! 
-	
-	0 <- chara .loyalty! 
-	2 <- chara .composure! 
-	
-	-3 STAT_MORALE <- chara .bonus! 
-	6 <- chara .morale! 
-	
-	"Electric Man" <- chara .perk! 
-	"Gourmand" <- chara .trait! 
-	"is wondering where all those good old-fashioned values have gone. Nyehehehe." <- chara .job! 
-	"Pewter" <- chara .name! 
-; 
+	2 <- chara .attitude!
+
+	6 <- chara .vitality!
+	6 <- chara .health!
+
+	0 <- chara .loyalty!
+	2 <- chara .composure!
+
+	-3 STAT_MORALE <- chara .bonus!
+	6 <- chara .morale!
+
+    "Electric Man" <- chara .perk!
+    "Gourmand" <- chara .trait!
+    "se demande ou sont passees les bonnes vieilles valeurs d'autrefois. Nyehehehe." <- chara .job!
+    "Pewter" <- chara .name!
+;
 
 \ ----------------------------------------------
 \ ----------------------------------------------
-\ 			JIMBO "JON BALATRO" BELOW 
+\ 			JIMBO "JON BALATRO" BELOW
 \ ----------------------------------------------
 \ ----------------------------------------------
 
-: .jimboify args( chara ) 
-	153 <- chara .specialtype! 
-	0 <- chara .female!  
-	
-	-6 6 rnd STAT_STRENGTH <- chara .bonus! 
-	-6 6 rnd STAT_FITNESS <- chara .bonus! 
-	-6 6 rnd STAT_SHOOTING <- chara .bonus! 
-	-6 6 rnd STAT_MEDICAL <- chara .bonus! 
-	-6 6 rnd STAT_MECHANICAL <- chara .bonus! 
-	\ meet potential man 
-	
+: .jimboify args( chara )
+	153 <- chara .specialtype!
+	0 <- chara .female!
+
+	-6 6 rnd STAT_STRENGTH <- chara .bonus!
+	-6 6 rnd STAT_FITNESS <- chara .bonus!
+	-6 6 rnd STAT_SHOOTING <- chara .bonus!
+	-6 6 rnd STAT_MEDICAL <- chara .bonus!
+	-6 6 rnd STAT_MECHANICAL <- chara .bonus!
+	\ meet potential man
+
 	0 6 rnd <- chara .wits!
-	0 6 rnd <- chara .attitude! 
-	0 6 rnd <- chara .loyalty! 
-	0 6 rnd <- chara .composure! 
-	
-	3 dup <- chara .vitality! <- chara .health! 
-	
-	0 <- chara .female! 
+	0 6 rnd <- chara .attitude!
+	0 6 rnd <- chara .loyalty!
+	0 6 rnd <- chara .composure!
 
-	6 <- chara .morale! 
-	
-	"Blind" <- chara .perk! 
-	"Joker" <- chara .trait! 
-	"continuously whispers that" " THE EVIL PLANT MUST PAY." fbold .. <- chara .job! 
-	"Jumbo" <- chara .name! 
-	
-	1 <- chara .carrying.slot_count! 
-; 
+	3 dup <- chara .vitality! <- chara .health!
 
-cyoa{ road{ 
+	0 <- chara .female!
+
+	6 <- chara .morale!
+
+    "Blind" <- chara .perk!
+    "Joker" <- chara .trait!
+    "chuchote continuellement que" " LA PLANTE MALEFIQUE DOIT PAYER." fbold .. <- chara .job!
+    "Jumbo" <- chara .name!
+
+	1 <- chara .carrying.slot_count!
+;
+
+cyoa{ road{
 cyoa-choice: magic-tips
-	($ GREEN "WELL, IT WOULD TAKE YOU A FEW THOUSAND YEARS TO LEARN WHAT I HAVE LEARNED..." .. $) cyoa-text!
-	($ PURPLE "ok, no need to be a dink about it." .. $) +crtext
-	morale--all 
-	($ GREEN "HMM...I DID BUY THESE HEALING ITEMS FOR THE UPCOMING BATTLE. THEY WON'T BE OF MUCH USE TO ME NOW. YOU CAN HAVE THEM INSTEAD." .. $) +crtext
-	($ WHITE "Magus gives the group 2 healing sprays!" .. $) +crtext
-	($ "Afterwards, he performs a circular hand motion. A ritual circle appears at his feet. In a second, he vanishes into thin air! Magical." $) +crtext
-	morale++all 
-	2 WEAPON_HEALSPRAY trunk.weapon+ 
-; 	
+    ($ GREEN "EH BIEN, IL VOUS FAUDRAIT QUELQUES MILLIERS D'ANNEES POUR APPRENDRE CE QUE J'AI APPRIS..." .. $) cyoa-text!
+    ($ PURPLE "ok, pas la peine d'etre un abruti avec ca." .. $) +crtext
+    morale--all
+    ($ GREEN "HMM... J'AVAIS ACHETE CES OBJETS DE SOIN POUR LA BATAILLE A VENIR. ILS NE ME SERONT PLUS D'UNE GRANDE UTILITE MAINTENANT. VOUS POUVEZ LES PRENDRE A LA PLACE." .. $) +crtext
+    ($ WHITE "Magus donne au groupe 2 sprays de soin !" .. $) +crtext
+    ($ "Ensuite, il effectue un mouvement circulaire de la main. Un cercle de rituel apparait a ses pieds. En une seconde, il disparait dans les airs ! Magique." $) +crtext
+    morale++all
+    2 WEAPON_HEALSPRAY trunk.weapon+
+;
 
 cyoa: rubick-scget
-	"DOGS OF THE APIARY 2...WAIT, NO" cyoa-title! 
-	char-gen to recruitee ricon 3 recruitee .morale! recruitee .rubick_ify 
-	($ "When the group exits their car for a break, heavenly music plays. White flashes in their eyes. In front of them, some sort of green-goblin looking magic thing materialises." $) cyoa-text! basic-tone
-	($ rname .. " looks around, confused, glancing at his hands and then back towards " thegroup .. ". He has some kind of staff." .. $) +crtext 
-	($ GREEN "SOOOOO, THAT WAS DEATH. INTER-EST-ING. Oh, hello friends!" .. $) +crtext 
-	($ WHITE "It's not everyday somebody on the road respawns in front of you." .. $) +crtext
-	($ RED "Magus can copy other weapons for himself and also can use magic." .. $) +crtext 	
-		choice( "Ask " .. rname .. " to join" )choice: recruit-yes
-		choice( "Ask " .. rname .. " for some magic tips" )choice: magic-tips 
-		choice( "Forget this jerk" )choice
+    "CHIENS DE LA RUCHE 2... ATTENDS, NON" cyoa-title!
+    char-gen to recruitee ricon 3 recruitee .morale! recruitee .rubick_ify
+    ($ "Quand le groupe sort de la voiture pour une pause, une musique celeste retentit. Des flashs blancs dans leurs yeux. Devant eux, une sorte de truc magique ressemblant a un gobelin vert se materialise." $) cyoa-text! basic-tone
+    ($ rname .. " regarde autour de lui, confus, jetant un oeil a ses mains puis vers " thegroup .. ". Il a une sorte de baton." .. $) +crtext
+    ($ GREEN "SOOOOO, C'ETAIT LA MORT. IN-TE-RES-SANT. Oh, bonjour les amis !" .. $) +crtext
+    ($ WHITE "C'est pas tous les jours que quelqu'un sur la route respawn devant vous." .. $) +crtext
+    ($ RED "Magus peut copier les armes des autres et utiliser de la magie." .. $) +crtext
+       choice( "Demander a " .. rname .. " de rejoindre" )choice: recruit-yes
+       choice( "Demander a " .. rname .. " des conseils magiques" )choice: magic-tips
+       choice( "Oublier cet abruti" )choice
 ;
 
 
 cyoa: recruit-peter-yes
-	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
-		recruit-replace?
-	then;
-	ricon
-	($ Thegroup .. " accepts " .. rname .. " to the team!" $) cyoa-text! 2 300 tone
-		recruited
-	($ rname .. " almost chokes to death on the rice cakes!" $) +crtext
-	-5 trunk-food+ 
-	3 5 rnd for 
-		recruitee .ouch--
-	next badfx
+    team-full? if
+       ($ "Le groupe est complet.
+       Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) cyoa-text!
+       recruit-replace?
+    then;
+    ricon
+    ($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) cyoa-text! 2 300 tone
+       recruited
+    ($ rname .. " manque presque de s'etouffer avec les galettes de riz !" $) +crtext
+    -5 trunk-food+
+    3 5 rnd for
+       recruitee .ouch--
+    next badfx
 ;
 
 cyoa: peter-scget
-	"HUMANOID MALE OF THE FAMILIAL VARIETY" cyoa-title! 
-	char-gen to recruitee ricon 3 recruitee .morale! recruitee .pewterify
-	($ "NYEHEHEHEHEHE. NYEHEHEHEHEHE..." fbold $) cyoa-text! basic-tone
-	($ "HEY...HEY " pname .. " HEY, " .. pname .. "!" .. $) +crtext 
-	($ pname .. " looks around, terrified. Who said that?" $) +crtext 
-	($ WHITE "There's a large man with cartoon-like glasses ahead." .. $) +crtext
-	($ "Between laughs, he says he'll join you, for some" " rice cakes." rbold ..  $) +crtext 	
-	
-		trunk-food 4 > if 
-			choice( "Offer " .. rname .. " 5 food of rice cakes" )choice:  recruit-peter-yes
-		then 
-			choice( "Reject him" )choice
+    "MALE HUMANOIDE DE LA VARIETE FAMILIALE" cyoa-title!
+    char-gen to recruitee ricon 3 recruitee .morale! recruitee .pewterify
+    ($ "NYEHEHEHEHEHE. NYEHEHEHEHEHE..." fbold $) cyoa-text! basic-tone
+    ($ "EH...EH " pname .. " EH, " .. pname .. "!" .. $) +crtext
+    ($ pname .. " regarde autour de lui, terrifie. Qui a dit ca ?" $) +crtext
+    ($ WHITE "Il y a un grand homme avec des lunettes de dessin anime devant." .. $) +crtext
+    ($ "Entre deux rires, il dit qu'il vous rejoindra, pour des" " galettes de riz." rbold ..  $) +crtext
+
+       trunk-food 4 > if
+          choice( "Offrir a " .. rname .. " 5 nourriture de galettes de riz" )choice: recruit-peter-yes
+       then
+          choice( "Le rejeter" )choice
 
 ;
 
 \ ---------------------------
 \ ---------------------------
 \ Code originally intended for Jimbo...
-\ Not allowed - aw! 
+\ Not allowed - aw!
 \ ---------------------------
 \ ---------------------------
 
 
-\ The Jimventory 
+\ The Jimventory
 
-: diff-up-jim "road{ road-difficulty 0.1 + to road-difficulty }" evaluate ;  
+: diff-up-jim "road{ road-difficulty 0.1 + to road-difficulty }" evaluate ;
 : mega-diff-up-jim "road{ road-difficulty 0.3 + to road-difficulty }" evaluate ;
 
-: jim1 1 STAT_STRENGTH cchar .bonus+ ; 
-: jim2 1 STAT_FITNESS cchar .bonus+ ; 
-: jim3 1 STAT_SHOOTING cchar .bonus+ ; 
-: jim4 1 STAT_MEDICAL cchar .bonus+ ; 
-: jim5 1 STAT_MECHANICAL cchar .bonus+ ; 
+: jim1 1 STAT_STRENGTH cchar .bonus+ ;
+: jim2 1 STAT_FITNESS cchar .bonus+ ;
+: jim3 1 STAT_SHOOTING cchar .bonus+ ;
+: jim4 1 STAT_MEDICAL cchar .bonus+ ;
+: jim5 1 STAT_MECHANICAL cchar .bonus+ ;
 
-: jim6 2 STAT_STRENGTH cchar .bonus+ diff-up-jim ; 
-: jim7 2 STAT_FITNESS cchar .bonus+ diff-up-jim ; 
-: jim8 2 STAT_SHOOTING cchar .bonus+ diff-up-jim ; 
-: jim9 2 STAT_MEDICAL cchar .bonus+ diff-up-jim ; 
-: jim10 2 STAT_MECHANICAL cchar .bonus+ diff-up-jim ; 
+: jim6 2 STAT_STRENGTH cchar .bonus+ diff-up-jim ;
+: jim7 2 STAT_FITNESS cchar .bonus+ diff-up-jim ;
+: jim8 2 STAT_SHOOTING cchar .bonus+ diff-up-jim ;
+: jim9 2 STAT_MEDICAL cchar .bonus+ diff-up-jim ;
+: jim10 2 STAT_MECHANICAL cchar .bonus+ diff-up-jim ;
 
-: jim11 cchar .carrying.slot_count@ 1 + 1 3 clamp cchar .carrying.slot_count! ; 
+: jim11 cchar .carrying.slot_count@ 1 + 1 3 clamp cchar .carrying.slot_count! ;
 
-: jim12 cchar .vitality@ 1 + 1 6 clamp cchar .vitality! ; 
-: jim13 cchar .vitality@ 2 + 1 6 clamp cchar .vitality! diff-up-jim ; 
+: jim12 cchar .vitality@ 1 + 1 6 clamp cchar .vitality! ;
+: jim13 cchar .vitality@ 2 + 1 6 clamp cchar .vitality! diff-up-jim ;
 
-: jim14 1 6 rnd cchar .wits! 1 6 rnd cchar .attitude! 1 6 rnd cchar .composure! 1 6 rnd cchar .loyalty! ;    
+: jim14 1 6 rnd cchar .wits! 1 6 rnd cchar .attitude! 1 6 rnd cchar .composure! 1 6 rnd cchar .loyalty! ;
 
-: jim1choice choice( "+1 Strength" bbold )choice: jim1 ; 
+: jim1choice choice( "+1 Strength" bbold )choice: jim1 ;
 : jim2choice choice( "+1 Fitness" bbold )choice: jim2 ;
-: jim3choice choice( "+1 Shooting" bbold )choice: jim3 ; 
+: jim3choice choice( "+1 Shooting" bbold )choice: jim3 ;
 : jim4choice choice( "+1 Medical" bbold )choice: jim4 ;
-: jim5choice choice( "+1 Mechanical" bbold )choice: jim5 ; 
-: jim6choice choice( "+2 Strength" bbold " +0.1x zombs" rbold .. )choice: jim6 ; 
+: jim5choice choice( "+1 Mechanical" bbold )choice: jim5 ;
+: jim6choice choice( "+2 Strength" bbold " +0.1x zombs" rbold .. )choice: jim6 ;
 : jim7choice choice( "+2 Fitness" bbold " +0.1x zombs" rbold .. )choice: jim7 ;
-: jim8choice choice( "+2 Shooting" bbold " +0.1x zombs" rbold .. )choice: jim8 ; 
+: jim8choice choice( "+2 Shooting" bbold " +0.1x zombs" rbold .. )choice: jim8 ;
 : jim9choice choice( "+2 Medical" bbold " +0.1x zombs" rbold .. )choice: jim9 ;
 : jim10choice choice( "+2 Mech" bbold " +0.1x zombs" rbold .. )choice: jim10 ;
- 
+
 : jim11choice choice( "+1 Carry Slot" bbold )choice: jim11 ;
 
-: jim12choice choice( "+1 Max HP" bbold )choice: jim12 ; 
+: jim12choice choice( "+1 Max HP" bbold )choice: jim12 ;
 : jim13choice choice( "+2 Max HP" bbold " +0.1x zombs" rbold .. )choice: jim13 ;
 
 : jim14choice choice( "Reroll Personality" bbold )choice: jim14 ;
@@ -1041,9 +1039,9 @@ cyoa: peter-scget
 		card: jim14choice
 	constant JIM-DECK
 	JIM-DECK var jim-deck
-	
-: drawjim 
-	jim-deck depths 0= if 
+
+: drawjim
+	jim-deck depths 0= if
 		regiondef{ JIM-DECK shuffles to jim-deck }
 	then
 	drawcard
@@ -1055,50 +1053,50 @@ cyoa: peter-scget
 ;
 
 
-\ At Kepa's request, this tech is being repurposed for a Nimbus rework. 
-cyoa: jumbo-getjoker 
-	"LEVEL UP!" cyoa-title! 
-	93 stpick if choosechar cicon else ($ "Nimbus" pbold .. " is missing. Oh well. " Thegroup .. " was never going to reach " .. "this campaign's end" rainbold .. " anyway." .. $) text! exit then
-	($ "With every passing day," " Nimbus Ordeal " pbold .. "gains more and more power." .. $) cyoa-text!
-	($ "He'll need to accumulate even more power if he wants to finish his" " legendary quest" rainbold .. " and win." .. $) +crtext
-	($ "Pick an upgrade for him:" $) +crtext 
-		3 for drawjim next 
+\ A la demande de Kepa, cette tech est reutilisee pour un rework de Nimbus.
+cyoa: jumbo-getjoker
+    "NIVEAU SUPERIEUR !" cyoa-title!
+    93 stpick if choosechar cicon else ($ "Nimbus" pbold .. " est absent. Tant pis. " Thegroup .. " n'allait de toute facon jamais atteindre " .. "la fin de cette campagne" rainbold .. "." .. $) text! exit then
+    ($ "Avec chaque jour qui passe," " Nimbus Ordeal " pbold .. "accumule de plus en plus de puissance." .. $) cyoa-text!
+    ($ "Il devra accumuler encore plus de puissance s'il veut terminer sa" " quete legendaire" rainbold .. " et gagner." .. $) +crtext
+    ($ "Choisissez une amelioration pour lui :" $) +crtext
+       3 for drawjim next
 ;
 
-\ It should be relatively trivial for any prospective modders to restore Jimbo, if they so wish to. 
-\ Just replace the "93" here and in road.df with "153" and call the recruiting event via console 
-\ SAVE ME FROM THE PLANT  
+\ Ca devrait etre relativement trivial pour tout moddeur potentiel de restaurer Jimbo, s'il le souhaite.
+\ Remplacez juste le "93" ici et dans road.df par "153" et appelez l'evenement de recrutement via console
+\ SAUVEZ-MOI DE LA PLANTE
 
 cyoa: recruit-jumbo-yes
 
-	($ rname .. " accepts a spare ace of hearts card. As it transitions into his hand, it suddenly becomes " "steel-like" rbold .. " and a " .. "red seal" rainbold .. " appears out of nowhere." .. $) cyoa-text! 
-	($ "As soon as " rname .. " puts the card on the table, the plant pot explodes!" .. $) +crtext
-	($ "YOU'RE A REAL JOKER! THANKS. I'LL FOLLOW YOU, AT LEAST TO THE END OF THIS ANTE." fbold $) +crtext 
-	
-	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
-		recruit-replace?
-	then;
-	ricon
-	($ Thegroup .. " accepts " .. rname .. " to the team!" $) +crtext 2 300 tone
-		recruited
-	recruitee .showitall 
+    ($ rname .. " accepte un as de coeur de rechange. En passant dans sa main, il devient soudainement " "comme de l'acier" rbold .. " et un " .. "sceau rouge" rainbold .. " apparait de nulle part." .. $) cyoa-text!
+    ($ "Des que " rname .. " pose la carte sur la table, le pot de fleurs explose !" .. $) +crtext
+    ($ "T'ES UN VRAI JOKER ! MERCI. JE VOUS SUIVRAI, AU MOINS JUSQU'A LA FIN DE CETTE ANTE." fbold $) +crtext
+
+    team-full? if
+       ($ "Le groupe est complet.
+       Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
+       recruit-replace?
+    then;
+    ricon
+    ($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) +crtext 2 300 tone
+       recruited
+    recruitee .showitall
 ;
 
 cyoa: jumbo-scget
-	"COLD STAKE CANADIAN DECK" cyoa-title! 
-	char-gen to recruitee ricon 2 recruitee .morale! recruitee .jimboify
-	($ "The group is walking through a park when they come across a jester." $) cyoa-text! basic-tone
-	($ rname .. " seems to be deep into some kind of insane poker game. Across from him sits a plant in a pot." $) +crtext 
-	($ "THE EVIL PLANT MUST PAY. THE EVIL PLANT MUST PAY." pbold  $) +crtext 
-	($ WHITE "Somehow, despite playing against an inanimate object, he seems to be losing." .. $) +crtext
-	
-		choice( "Bribe him with a card" )choice: recruit-jumbo-yes
-		choice( "Leave him behind" )choice 
+    "DECK CANADIEN COLD STAKE" cyoa-title!
+    char-gen to recruitee ricon 2 recruitee .morale! recruitee .jimboify
+    ($ "Le groupe se promene dans un parc quand il tombe sur un bouffon." $) cyoa-text! basic-tone
+    ($ rname .. " semble plonge dans une partie de poker completement dingue. En face de lui est assis une plante en pot." $) +crtext
+    ($ "LA MAUVAISE PLANTE DOIT PAYER. LA MAUVAISE PLANTE DOIT PAYER." pbold  $) +crtext
+    ($ WHITE "Etrangement, malgre le fait de jouer contre un objet inanime, il semble perdre." .. $) +crtext
+
+       choice( "Le soudoyer avec une carte" )choice: recruit-jumbo-yes
+       choice( "Le laisser derriere" )choice
 ;
 
-} } 
+} }
 
  : to_the_railyard
 	"events/stomach/rail_yard.df" $load-region premission 

@@ -2,8 +2,8 @@
 cyoa{ road{
 
 cyoa: yallmart-easy
-	"LIDL" cyoa-title!
-	($ Thegroup .. " repere un Y'all-Mart abandonne au loin. Il a l'air d'avoir ete pille, mais il y a peut-etre du butin intact a l'interieur." $) cyoa-text! basic-tone
+	"YALLMART" cyoa-title!
+	($ Thegroup .. " repere un Yall-Mart abandonne au loin. Il a l'air d'avoir ete pille, mais il y a peut-etre du butin intact a l'interieur." $) cyoa-text! basic-tone
 	1 8 14 frnd 0 zforecast
 	"events/exterior/region/yallmart.df" $load-region
 		choice( "Faire les bonnes affaires" )choice: premission

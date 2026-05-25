@@ -7,52 +7,52 @@
 	
 	gamedef{ ' defaultmode gamemode? } if 
 
-		rndchar , "Sooooo... this is Canada eh" , 3 ,
+		rndchar , "Boooooooon... C'est le Canada hein" , 3 ,
 		solo if
-			char1 , "Guess I made it alone." , 3 ,
+			char1 , "Je suppose que j'ai reussi tout seul." , 3 ,
 		else	
-			char2 , "Yup." , 2 , 
+			char2 , "Yep." , 2 ,
 		then
 	
-		char1 , "It's a bit... brisk" , 2 ,
+		char1 , "Il fait un peu... frisquet" , 2 ,
 	
 		solo if
-			char1 , "Oh, well." , 2 ,	
+			char1 , "Ah, d'accord." , 2 ,
 		else
-			char2 , "Ya think?" , 3 ,
+			char2 , "Tu penses ?" , 3 ,
 		then
 
 		5 for
 			' penguin , 0.2 0.5 frnd ,
 		next
 
-		rndchar , "Hey look! Penguins!!" ,
+		rndchar , "Hey regarde ! Des pingouins!!" ,
 
 		3 for
 			' penguin , 0.2 0.5 frnd ,
 		next
 
-		0.5 , canuck , "Wait what" , 2 ,
-		char1 , "What?" , 1 ,
-		canuck , "There are no penguins in Canada..." , 2 ,
-		char1 , "But... ice, snow... PENGUINS! " 0x e6 $chr $cat , 3 ,
-		canuck , "...sigh" , 1 ,
+		0.5 , canuck , "Attends quoi" , 2 ,
+		char1 , "Quoi ?" , 1 ,
+		canuck , "Il n'y a pas de pingouins au Canada..." , 2 ,
+		char1 , "Mais... la glace, la neige... LES PINGOUINS ! " 0x e6 $chr $cat , 3 ,
+		canuck , "...soupir" , 1 ,
 		
 	then;
 	
 	gamedef{ ' longroad gamemode? } if
 	
-		rndchar , "What a long road!" , 3 ,
+		rndchar , "Quelle route interminable !" , 3 ,
 		
 		solo if 
-			rndchar , "That felt like it took an eternity." , 2 , 
-			rndchar , "Oh well." , 1 ,
-			rndchar , "At least I made it!" , 1 , 
+            rndchar , "J'ai l'impression que ca a pris une eternite." , 2 ,
+            rndchar , "Ah, d'accord." , 1 ,
+            rndchar , "Au moins, j'ai reussi !" , 1 ,
 		else 
-			char1 , "Remind me..." , 1 , 
-			char1 , "Who's idea was it to take the long way, again?" , 2 , 
-			char2 , "...shut up." , 2 ,
-			canuck , "What a pleasant time in Canada you two will have, eh?" , 2 , 
+            char1 , "Rappelle-moi..." , 1 ,
+            char1 , "C'etait l'idee de qui, deja, de prendre le chemin le plus long ?" , 2 ,
+            char2 , "... ferme-la." , 2 ,
+            canuck , "Vous allez passer un moment tellement agreable au Canada tous les deux, hein ?" , 2 ,
 		then 
 		
 	then;	

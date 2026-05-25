@@ -4,8 +4,8 @@
 cyoa{
 
 cyoa-choice: cyoa-bear-wrestle
-	($ cname .. " grapples with the stuffed bear.
-	It doesn't budge. " .. cHe .. " keeps wrestling with the bear, and somehow absorbs a little bit of its strength.." $) cyoa-text! strength++ strengthREV goodfx clear-cyoa o'clock@ 3 + o'clock 6 10 rnd roomgen{ .zombspawn }
+    ($ cname .. " se bat au corps a corps avec l'ours en peluche.
+    Il ne bouge pas d'un poil. " .. cHe .. " continue de lutter avec l'ours, et absorbe tant bien que mal un peu de sa force.." $) cyoa-text! strength++ strengthREV goodfx clear-cyoa o'clock@ 3 + o'clock 6 10 rnd roomgen{ .zombspawn }
 ;
 
 cyoa-choice: cyoa-bear-search

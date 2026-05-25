@@ -15,25 +15,25 @@ cyoa-choice: usedlot-little image-car-lot usedlot-carget carinfo-little CAR_BUG 
 cyoa: car1-usedlot
 	"Prix si bas que c'est gratuit" cyoa-title!
 	($ Thegroup .. " trouve un concessionnaire epargne par le temps, ou du moins par les pillards.
-	" .. gThey .. " trouve" .. g1s .. " de l'essence et quelques voitures en etat de marche !" $) cyoa-text!
+	" .. gThey .. " trouv" .. g1s .. " de l'essence et quelques voitures en etat de marche !" $) cyoa-text!
 		50 80 rnd trunk-gas+ image-car-lot
 		// Choices in events/car/walkdecks/carfind1.df
 		70 %chance if
-			choice( "Changer pour SUV" )choice: usedlot-SUV
+			choice( "Changer pour le SUV" )choice: usedlot-SUV
 		else
 			choice( "Changer pour Muscle Car" )choice: usedlot-muscle
 		then
 		70 %chance if
-			choice( "Changer pour petite voiture" )choice: usedlot-little
+			choice( "Changer pour la petite voiture" )choice: usedlot-little
 		else
-			choice( "Changer pour voiture classique" )choice: usedlot-grandpa
+			choice( "Changer pour la voiture classique" )choice: usedlot-grandpa
 		then
 		30 %chance if
-			choice( "Changer pour hybride electrique" )choice: usedlot-hybrid
+			choice( "Changer pour la voiture hybride electrique" )choice: usedlot-hybrid
 		else
-			choice( "Changer pour grand van" )choice: usedlot-van
+			choice( "Changer pour le grand van" )choice: usedlot-van
 		then
-		choice( "Garder la voiture, partir" )choice
+		choice( "Garder la voiture et partir" )choice
 ;
 
 : mechanic-armor?
