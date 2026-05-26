@@ -75,7 +75,7 @@ cyoa: camp-rec-ramb
 
 cyoa-choice: camp-catlady-pet
 	ricon clear-cyoa
-	($ rname  .. " semble deçue par la quantite de nourriture que vous lui avez donnee, mais seulement l'espace d'un instant.
+	($ rname  .. " semble decue par la quantite de nourriture que vous lui avez donnee, mais seulement l'espace d'un instant.
 	" .. "Merci pour la nourriture pour chats ! Caressez les minous ! " pbold .. "
 	Les chats envisagent de vous tuer, mais n'en font rien cette fois. " .. "SUPER !" fbold $) cyoa-text! goodfx
 		-5 trunk-food+ morale2+all
@@ -175,9 +175,9 @@ cyoa-choice: camp-goat-milk
 			"On ne peut pas obtenir de lait de chevre d'une chevre male !" +crtext
 			alive? if
 				camp-goat-milked 2 < if
-					($ "La chevre encorne " .. cname .. " tres fort, pour qu'il se souvienne de cette leçon." $)
+					($ "La chevre encorne " .. cname .. " tres fort, pour qu'il se souvienne de cette lecon." $)
 				else
-					($ cname .. " n'a pas reussi a retenir cette leçon la derniere fois." $)
+					($ cname .. " n'a pas reussi a retenir cette lecon la derniere fois." $)
 				then
 					+crtext	ouch--
 			else
@@ -206,7 +206,7 @@ cyoa-bridge: camp-goat-rec-pick
 cyoa: camp-rec-goat
 	"L'Annee de la Chevre" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "C'est une chevre ! " .. cHe .. " traîne juste pres du camp. Elle fait ses trucs de chevre. Personne ne semble la posseder... la chevre est juste la." $) cyoa-text! basic-tone
+	($ "C'est une chevre ! " .. cHe .. " traine juste pres du camp. Elle fait ses trucs de chevre. Personne ne semble la posseder... la chevre est juste la." $) cyoa-text! basic-tone
 		choice( "La laisser pour l'instant" )choice
 		choice( "Traire la chevre !" )choice: camp-goat-milk-pick
 		team-count 4 < if
@@ -580,7 +580,7 @@ cyoa-bridge: camp-jackham-recruit
 cyoa: camp-rec-jackham
 	"En Construction" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "Cet homme est habille en ouvrier du batiment, mais que construit-il ? Il a l'air de juste traîner. Peut-etre qu'il traîne depuis des annees." $) cyoa-text! basic-tone
+	($ "Cet homme est habille en ouvrier du batiment, mais que construit-il ? Il a l'air de juste trainer. Peut-etre qu'il traine depuis des annees." $) cyoa-text! basic-tone
 	"Je suis en pause !" pbold +crtext
 	trunk-food 14 > if
 		choice( "Le laisser pour l'instant" )choice
@@ -663,7 +663,7 @@ cyoa: camp-rec-brck
 	"Attrapez-les Tous" cyoa-title!
 	interactee .character@ to recruitee ricon
 	($ Thegroup .. " trouve un homme avec une poele dans le camp. Il est suivi par un rocher flottant avec des bras ?
-	" .. "Tous ces zombies ont chasse les Pukeymon, mais je ne perdrai pas espoir ! Je vais continuer a m'entraîner et etre le meilleur qui ait jamais existe !
+	" .. "Tous ces zombies ont chasse les Pukeymon, mais je ne perdrai pas espoir ! Je vais continuer a m'entrainer et etre le meilleur qui ait jamais existe !
 	" pbold .. "Mais de quoi est-ce qu'il parle ?
 	A part ca, il propose de vendre a " .. thegroup .. " des Pukeyballs, 2 nourriture pour 1 ball, ou de rejoindre pour 15 nourriture." $) cyoa-text!
 	choice( "Le laisser" )choice
@@ -958,7 +958,7 @@ cyoa: camp-recruit-dog
 	nearest .character@ choosechar
 	cchar to recruitee ricon
 
-	($ rname .. " traîne dans le camp, apprivoise mais sans personne a suivre. " .. rHe .. " a dû etre abandonne ici." $) cyoa-text! basic-tone
+	($ rname .. " traine dans le camp, apprivoise mais sans personne a suivre. " .. rHe .. " a dû etre abandonne ici." $) cyoa-text! basic-tone
 
 	choice( "Laisser le chien" )choice
 	trunk-food 4 > if
@@ -1010,7 +1010,7 @@ cyoa: camp-rec-familiar
 	nearest .character@ choosechar
 	cchar to recruitee ricon
 
-	($ rname .. " traîne dans le camp. " .. rHe .. " vous attendait !" $) cyoa-text! basic-tone
+	($ rname .. " traine dans le camp. " .. rHe .. " vous attendait !" $) cyoa-text! basic-tone
 
 	recruitee .trait@ $len 0= if
 		($ rHe .. " pretend vous connaitre, mais vous jurez ne jamais avoir vu cette personne..." $) +crtext

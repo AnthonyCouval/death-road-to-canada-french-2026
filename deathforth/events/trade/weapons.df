@@ -108,7 +108,7 @@ cyoa-choice: trade-shotgun-coolit
 	else cool-it++
 		($ "Le vendeur est vraiment agace par ca.
 		" .. "J'essaie de gagner ma vie ici !" pbold .. "
-		Il commence alors a tirer ses fusils a pompe en l'air de facon menaçante, forçant " .. thegroup .. " a fuir !" $) badfx +crtext quitmission
+		Il commence alors a tirer ses fusils a pompe en l'air de facon menacante, forcant " .. thegroup .. " a fuir !" $) badfx +crtext quitmission
 	then attitudeREV witsREV
 ;
 
@@ -469,7 +469,7 @@ cyoa-choice: trade-axe-4
 ;
 
 cyoa-choice: trade-axe-3
-	($ Thegroup .. " achete une guitare en forme de hache. Ca ferait une arme stylée." $) cyoa-text! goodfx
+	($ Thegroup .. " achete une guitare en forme de hache. Ca ferait une arme stylee." $) cyoa-text! goodfx
 	1 WEAPON_GUITAR trunk.weapon+ -10 trunk-food+ picon ' axe-guitar ++
 ;
 
@@ -485,7 +485,7 @@ cyoa-choice: trade-axe-1
 
 cyoa: trade-axe
 	"Marchand de Haches" cyoa-title!
-	($ Thegroup .. " rencontre une etrange et menaçante silhouette. Elle porte un masque et une robe.
+	($ Thegroup .. " rencontre une etrange et menacante silhouette. Elle porte un masque et une robe.
 	" .. "Je vends des haches... Juste des haches..." rbold $) cyoa-text! foodamt
 	choice( "Le laisser" )choice back-esc
 	most-ahole if
@@ -863,7 +863,7 @@ cyoa-choice: trade-blunt-1
 
 cyoa: trade-blunt
 	"Maitresse des Masses" cyoa-title!
-	($ Thegroup .. " rencontre une femme couverte de marteaux. Ils pendent de plusieurs ceintures a outils et bandoulières.
+	($ Thegroup .. " rencontre une femme couverte de marteaux. Ils pendent de plusieurs ceintures a outils et bandoulieres.
 	" .. "Vous voulez un secret ?
 	J'adore les armes contondantes. Je vous vends mes reserves, pas cher !" pbold $) cyoa-text! basic-tone foodamt
 	choice( "La laisser" )choice back-esc
@@ -930,7 +930,7 @@ cyoa-choice: trade-polearm-coolit
 
 cyoa-choice: trade-polearm-4
 	($ Thegroup .. " achete la " .. "BARDICHE" rbold .. " !
-	" .. "Faites attention en la balançant, elle est tres lourde ! Poussez avec les genoux, pas avec le dos." pbold $) cyoa-text! goodfx
+	" .. "Faites attention en la balancant, elle est tres lourde ! Poussez avec les genoux, pas avec le dos." pbold $) cyoa-text! goodfx
 	1 WEAPON_BARDICHE trunk.weapon+ -25 trunk-food+ someicon ' polearm-bardiche ++
 ;
 
@@ -1148,7 +1148,7 @@ cyoa-choice: trade-heavy-mine1
 
 cyoa: trade-heavy
 	"Artillerie Lourde" cyoa-title!
-	($ Thegroup .. " rencontre un homme qui tient un bazooka et une sacoche bourrée de mines bip-bip. Il a l'air tellement content avec ses explosifs.
+	($ Thegroup .. " rencontre un homme qui tient un bazooka et une sacoche bourree de mines bip-bip. Il a l'air tellement content avec ses explosifs.
 	" .. "Ces armes ne vous decevront pas ! Sauf, bien sur, si vous vous faites exploser avec." pbold $) cyoa-text! basic-tone foodamt
 	trunk-food 6 < if
 		($ "Vous n'avez plus de nourriture ! Le marchand donne a " .. thegroup .. " une mine terrestre offerte." $) +crtext goodfx 1 WEAPON_LANDMINE trunk.weapon+ clear-cyoa

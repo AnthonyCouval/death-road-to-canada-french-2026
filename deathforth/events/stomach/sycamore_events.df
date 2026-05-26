@@ -693,7 +693,7 @@ cyoa-choice: drts-cult-smart
 
 cyoa-choice: drts-cult-sneak
 	($ Thegroup .. " essaie de contourner les cultistes discretement. Ca implique de faire tout le long chemin autour du bord de la ville, une perspective longue et dangereuse." $) cyoa-text!
-	($ "En essayant d'eviter les patrouilles cultistes, ils sont forces de se cacher dans une maison delabrée." $) +crtext
+	($ "En essayant d'eviter les patrouilles cultistes, ils sont forces de se cacher dans une maison delabree." $) +crtext
 
 	composure-total team-count / >int 2 > if
 		($ "Tout le monde garde son calme ! Les bandits sont evites avec succes. Personne n'a meme pousse un couinement !" $) +crtext
@@ -848,7 +848,7 @@ cyoa-choice: t-mech-paytoll
 \ LE MECHA BANDIT
 cyoa: t-mechabandit
 	"BANDFORMERS... DES BANDITS INCOGNITO" cyoa-title!
-	($ Thegroup .. " avance tranquillement sur une route quand un bandit dans une sorte de mech sort de derriere un immeuble. D'une voix sèche de synthese vocale, il parle :" $) cyoa-text!
+	($ Thegroup .. " avance tranquillement sur une route quand un bandit dans une sorte de mech sort de derriere un immeuble. D'une voix seche de synthese vocale, il parle :" $) cyoa-text!
 	($ "TOUT VOTRE BUTIN NOUS APPARTIENNENT." rbold $) +crtext
 	($ "Le mech exige tout votre essence et vos munitions pour passer." rbold $) +crtext
 

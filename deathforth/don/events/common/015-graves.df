@@ -11,7 +11,7 @@ cyoa{ road{
 	cyoa-choice: don-common-graves-digup1
 		image-three-graves
 		($ Thegroup .. " trouve une collection de lettres d'amour d'un soldat a sa bien-aimee. Elles sont vraiment emouvantes !" $)  cyoa-text!
-		($ "Il y a aussi une boite de conserve pleine de harengs et une boîte de bonbons rassis entouree d'un noeud dore." $) +crtext
+		($ "Il y a aussi une boite de conserve pleine de harengs et une boite de bonbons rassis entouree d'un noeud dore." $) +crtext
 			10 trunk-food+ goodfx
 			morale2+all
 	;

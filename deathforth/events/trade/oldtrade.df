@@ -104,7 +104,7 @@ cyoa: trade-shoot
 
 cyoa-choice: trade-strength-pose
 	cchar .strength 6 > if
-		($ cname .. " flechit une seule fois, a moitie effort. Mais le concours est deja plié.
+		($ cname .. " flechit une seule fois, a moitie effort. Mais le concours est deja plie.
 		" .. "IMPOSSIBLE ! C'EST IMPOSSIBLE !" fbold .. " hurle le Coach de Force d'une voix etrangement aigue.
 		" .. "ETES-VOUS 'LE MUSCLE QUI ETAIT PROMIS' ?" fbold .. " puis il se transforme en pierre et, quelques instants plus tard, explose en un million de fragments." $) cyoa-text! goodfx
 		morale2+
@@ -260,7 +260,7 @@ cyoa-choice: trade-fitness-coolit
 
 cyoa: trade-fitness
 	"Monitrice de Fitness" cyoa-title!
-	($ Thegroup .. " trouve une femme couverte de bandeaux, de jambières, et de tenues de sport. Tout en neon fluo.
+	($ Thegroup .. " trouve une femme couverte de bandeaux, de jambieres, et de tenues de sport. Tout en neon fluo.
 	" .. "Seuls les plus en forme survivront dans ce monde infeste de zombies ! Je peux vous aider a vous mettre en forme, vite !" pbold .. "
 	Elle court sur place depuis tout ce temps." $) cyoa-text! basic-tone
 	trunk-food 6 < if
@@ -336,7 +336,7 @@ cyoa-choice: trade-medical-coolit
 
 cyoa: trade-medicalt
 	"Fac de Med EZ" cyoa-title!
-	($ Thegroup .. " decouvre une baraque insalubre et inquietante. Elle a un panneau qui dit " .. "FAC DE MED EZ" rbold .. " accroché de travers au-dessus de la porte.
+	($ Thegroup .. " decouvre une baraque insalubre et inquietante. Elle a un panneau qui dit " .. "FAC DE MED EZ" rbold .. " accroche de travers au-dessus de la porte.
 	A l'interieur se trouve un type insalubre et inquietant en salopette.
 	" .. "ALORS ? QUI VEUT APPRENDRE LA CHIRURGIE ?" pbold $) cyoa-text! basic-tone
 	trunk-food 6 < if
@@ -373,7 +373,7 @@ cyoa-choice: trade-mechanic-charm
 
 cyoa-choice: trade-mechanic-train
 	cchar .mechanical@ 6 < if
-		($ cname .. " suit un cours accelère en reparation, barricades efficaces, et autres techniques de genie anti-zombie !" $) goodfx
+		($ cname .. " suit un cours accelere en reparation, barricades efficaces, et autres techniques de genie anti-zombie !" $) goodfx
 	else
 		($ cname .. " n'a rien appris de nouveau. " .. cHe .. " connaissait deja tout ce que la mecanicienne pouvait enseigner." $) badfx
 	then cyoa-text!
@@ -479,7 +479,7 @@ cyoa-choice: trade-army-7
 
 cyoa: trade-army
 	"Fort Surplus Militaire" cyoa-title!
-	($ Thegroup .. " trouve un magasin de surplus militaire couvert de barricades. Verrou hermétique. Il y a un panneau de prix d'armes sur un mur dehors, pres d'une petite fenetre.
+	($ Thegroup .. " trouve un magasin de surplus militaire couvert de barricades. Verrou hermetique. Il y a un panneau de prix d'armes sur un mur dehors, pres d'une petite fenetre.
 	" .. "Glissez juste la nourriture par la fenetre !" pbold .. " dit une toute petite voix dans l'obscurite." $) cyoa-text! basic-tone
 	choice( "Partir" )choice
 	trunk-food 5 < if
@@ -677,7 +677,7 @@ cyoa-choice: trade-fanatic-coolit
 	cool-it-7 if
 		($ "Elle en est ravie, d'une certaine facon.
 		" .. "WAOUH ! WAOUH OUAH OUAH OUAHHHHH !" rbold .. "
-		La commerçante donne a " .. cname .. " presque tout son stock. 8 molotovs, un parcmetre, et une " .. "tronconneuse." rbold $) goodfx +crtext
+		La commercante donne a " .. cname .. " presque tout son stock. 8 molotovs, un parcmetre, et une " .. "tronconneuse." rbold $) goodfx +crtext
 		1 WEAPON_CHAINSAW trunk.weapon+ 1 WEAPON_PARKING trunk.weapon+ 8 WEAPON_MOLOTOV trunk.weapon+ cooled-it
 	else cool-it++
 		($ "La marchande d'armes est furieuse.
@@ -833,7 +833,7 @@ cyoa: trade-blade
 
 cyoa-choice: trade-axe-rob
 	40 %chance if
-		($ cname .. " vole le marchand de haches, qui reste la sans reagir du tout. " .. cname .. " attrape la hache medievale mais est trop flippé pour voler une deuxieme chose. " $) cyoa-text! 0.4 1100 tone
+		($ cname .. " vole le marchand de haches, qui reste la sans reagir du tout. " .. cname .. " attrape la hache medievale mais est trop flippe pour voler une deuxieme chose. " $) cyoa-text! 0.4 1100 tone
 		notsolo if
 			($ Theothersare .. " aussi tres flippes." $) +text
 		then morale2-all 1 WEAPON_MEDIEVAL trunk.weapon+
@@ -860,7 +860,7 @@ cyoa-choice: trade-axe-4
 ;
 
 cyoa-choice: trade-axe-3
-	($ Thegroup .. " achete une guitare en forme de hache. Ca ferait une arme stylée." $) cyoa-text! goodfx
+	($ Thegroup .. " achete une guitare en forme de hache. Ca ferait une arme stylee." $) cyoa-text! goodfx
 	1 WEAPON_GUITAR trunk.weapon+ -10 trunk-food+ someicon
 ;
 
@@ -1504,7 +1504,7 @@ cyoa-choice: trade-groupheal-charm
 		trade-groupheal-guy +crtext
 	else
 		($ cname .. " passe accidentellement pour quelqu'un de bizarre.
-		" .. gHe .. " est expulse de l'hopital et prié de ne jamais revenir." $) cyoa-text! badfx
+		" .. gHe .. " est expulse de l'hopital et prie de ne jamais revenir." $) cyoa-text! badfx
 	then
 ;
 
