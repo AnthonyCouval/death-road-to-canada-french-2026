@@ -472,7 +472,7 @@ cyoa: drts-submarine
 	"LE USS RUSTOLEUM" cyoa-title!
 	image-submarine-def
 	($ Thegroup .. " explore pres de la cote quand il rencontre un capitaine squelette d'un vieux sous-marin use qui a coule a proximite ! L'apocalypse l'a sorti de chez lui." $) cyoa-text!
-	($ "BONJOUR. JE NE SUIS PAS MECHANT. PROMIS JURÉ !" pbold $) +crtext
+	($ "BONJOUR. JE NE SUIS PAS MECHANT. PROMIS JURE !" pbold $) +crtext
 	($ "Son petit doigt osseux tombe alors." $) +crtext
 	($ "Quel etait le sujet de leur discussion ?" $) +crtext
 	most-ahole if

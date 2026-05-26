@@ -75,7 +75,7 @@ cyoa: camp-rec-ramb
 
 cyoa-choice: camp-catlady-pet
 	ricon clear-cyoa
-	($ rname  .. " semble decue par la quantite de nourriture que vous lui avez donnee, mais seulement l'espace d'un instant.
+	($ rname  .. " semble deçue par la quantite de nourriture que vous lui avez donnee, mais seulement l'espace d'un instant.
 	" .. "Merci pour la nourriture pour chats ! Caressez les minous ! " pbold .. "
 	Les chats envisagent de vous tuer, mais n'en font rien cette fois. " .. "SUPER !" fbold $) cyoa-text! goodfx
 		-5 trunk-food+ morale2+all
@@ -175,9 +175,9 @@ cyoa-choice: camp-goat-milk
 			"On ne peut pas obtenir de lait de chevre d'une chevre male !" +crtext
 			alive? if
 				camp-goat-milked 2 < if
-					($ "La chevre encorne " .. cname .. " tres fort, pour qu'il se souvienne de cette lecon." $)
+					($ "La chevre encorne " .. cname .. " tres fort, pour qu'il se souvienne de cette leçon." $)
 				else
-					($ cname .. " n'a pas reussi a retenir cette lecon la derniere fois." $)
+					($ cname .. " n'a pas reussi a retenir cette leçon la derniere fois." $)
 				then
 					+crtext	ouch--
 			else

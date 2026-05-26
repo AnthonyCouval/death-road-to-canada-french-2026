@@ -188,7 +188,7 @@ thing-event: tutormsg9
 	"LES SALLES DE BAIN ONT PARFOIS DES MEDOCS" tutortopmsg ;
 thing-event: tutormsg10
 		($ "PILLEZ TOUJOURS
-		REPÉREZ LES ETAGERES PILLABLES !" $) tutortopmsg ;
+		REPEREZ LES ETAGERES PILLABLES !" $) tutortopmsg ;
 
 	thing-event: tutormsg11
 	tutorial_touch_check if

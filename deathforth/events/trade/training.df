@@ -168,7 +168,7 @@ cyoa-choice: trade-strength-coolit
 		Il prend " .. cname .. " comme son eleve principal, pour qu'il devienne ENORME a une vitesse renversante !" $) +crtext  goodfx 3 for strength++ next cooled-it clear-cyoa
 	else cool-it++
 		($ "Il ne prend pas ca tres bien.." .. "
-		DÉGAGE D'ICI, ESPECE DE GEEK ! TU NE MERITES PAS DE DEVENIR ENORME !" fbold .. "
+		DEGAGE D'ICI, ESPECE DE GEEK ! TU NE MERITES PAS DE DEVENIR ENORME !" fbold .. "
 		Il continue de hurler jusqu'a ce que " .. thegroup .. " quitte le camp de commerce." $) +crtext badfx quitmission
 	then strengthREV
 ;
@@ -201,7 +201,7 @@ cyoa: trade-strength
 
 cyoa-choice: trade-fitness-charm 
 	charmroll if
-		($ cname .. " beneficie d'un entraînement physique GRATUIT ! " .. cHe .. " sue a grosses gouttes a cause de l'intensite de l'exercice !" $) cyoa-text!
+		($ cname .. " beneficie d'un entrainement physique GRATUIT ! " .. cHe .. " sue a grosses gouttes a cause de l'intensite de l'exercice !" $) cyoa-text!
 		cchar .fitness@ 5 > if 
 			($ "Cela n'a pas vraiment ameliore sa condition physique, mais c'etait GRATUIT !" $) +crtext
 		then
