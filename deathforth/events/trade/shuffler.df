@@ -116,7 +116,7 @@ defer trade-camp-draw-instead
 ;
 
 cyoa: tradeevent
-    "Commerce sur la Route de la Mort" cyoa-title!
+    "Commerce sur la Death Road" cyoa-title!
     road-trip-days 3 = if
        "En dehors du Canada, la majeure partie de la societe et de la civilisation a ete detruite. Vous pouvez encore trouver des gens pour faire du troc, les conserves etant la nouvelle monnaie." 
        end-trade-draw

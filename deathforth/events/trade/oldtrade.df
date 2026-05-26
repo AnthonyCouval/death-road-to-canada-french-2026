@@ -179,7 +179,7 @@ cyoa-choice: trade-strength-coolit
 
 cyoa: trade-strength
 	"Coach de Force" cyoa-title!
-	($ Thegroup .. " rencontre un vieil homme tres musculeux en survêtement gris assorti.
+	($ Thegroup .. " rencontre un vieil homme tres musculeux en survetement gris assorti.
 	Il hurle quelque chose sur " .. "CONSTRUIRE LA MASSE ET LE VOLUME " fbold .. " avec une " .. "ROUTINE DE FORCE INTENSE !" fbold .. "
 	Il se rue vers des objets lourds eparpilles autour." $) cyoa-text! basic-tone
 	trunk-food 6 < if

@@ -394,7 +394,7 @@ cyoa: knoobstartP
 	' someperkchecks stack-road-action
 
 	($ cname .. " a entendu des rumeurs selon lesquelles le Canada etait un endroit sur, a l'abri de la menace des zombies.
-	N'ayant rien a gagner a rester en Floride, " .. che .. " decide de braver la Route de la Mort et de conduire vers le nord." $) cyoa-text!
+	N'ayant rien a gagner a rester en Floride, " .. che .. " decide de braver la Death Road et de conduire vers le nord." $) cyoa-text!
 
 	hintlist +crtext
 

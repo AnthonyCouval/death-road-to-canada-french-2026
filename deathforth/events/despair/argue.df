@@ -108,7 +108,7 @@ cyoa: argue-insults
 ;
 
 cyoa: group-haze-no
-"Quitter la Route de la Mort" cyoa-title! soloer choosechar
+"Quitter la Death Road" cyoa-title! soloer choosechar
 ($ "L'equipe finit par abandonner. Ils battent en retraite vers un sort inconnu.
 Le voyage vers le Canada est termine." $) cyoa-text! 0 cyoa-image-icon! 1 500 tone
 	clear-streak delete-the-game

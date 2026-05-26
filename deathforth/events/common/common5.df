@@ -138,7 +138,7 @@ cyoa-blank: common5-line
 cyoa-choice: common5-rock-throw
 	($ cname .. " est irresistiblement pousse a lancer une pierre sur le pauvre zombie." $) text!
 	cchar oblivious? if
-		($ cHe .. " n'arrête pas de lancer la pierre d'une facon qui la fait revenir. D'abord tout droit en l'air, puis plusieurs fois contre la cloture. Ca dure plusieurs heures.
+		($ cHe .. " n'arrete pas de lancer la pierre d'une facon qui la fait revenir. D'abord tout droit en l'air, puis plusieurs fois contre la cloture. Ca dure plusieurs heures.
 		" .. cname .. " finit par la lancer par-dessus la cloture, tout juste. " .. cHe .. " est presque mort d'epuisement a ce moment-la." $) +crtext
 		morale3- sting-- cchar morale--all-except fitness++ strength++ fitnessREV strengthREV witsattREV
 		common5-line-camp

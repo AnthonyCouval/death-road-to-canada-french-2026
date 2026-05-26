@@ -215,7 +215,7 @@ pops nip ;
 : locpick
 	cyoa-start
 	"Always Be Looting" cyoa-title!
-	($ "Pendant le trajet sur la Route de la mort, " .. thegroup .. " decide de s'arreter pour faire des provisions : " $) text!
+	($ "Pendant le trajet sur la Death Road, " .. thegroup .. " decide de s'arreter pour faire des provisions : " $) text!
 	pick-3-locs
 	regiondef{ cartmap-bought } if
 		choice( "Carte du Cartographe : " pbold .. "3 Nouveaux Emplacements" )choice: cartmap-repick
@@ -228,9 +228,9 @@ pops nip ;
 
 : easylocpick
 	cyoa-start
-	"En route pour la Route de la Mort" cyoa-title!
+	"En route pour la Death Road" cyoa-title!
 	($ "Pour commencer le voyage, " .. thegroup .. " decide de se ravitailler dans un endroit proche.
-		Pour survivre sur la Route de la Mort, vous devrez accumuler autant de fournitures que possible ! Vous devrez egalement trouver des moyens d'entrainer et de developper votre equipe." $) text!
+		Pour survivre sur la Death Road, vous devrez accumuler autant de fournitures que possible ! Vous devrez egalement trouver des moyens d'entrainer et de developper votre equipe." $) text!
 	// Temp Testing
 	// choice( "Frozen Friend" fbold )choice: rare2-caveman
 	pick-3-locs-easy

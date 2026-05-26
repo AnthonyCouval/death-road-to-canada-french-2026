@@ -6,7 +6,7 @@ uses road.df
 cyoa{ road{
 
 cyoa: solo-haze-no
-"Quitter la Route de la Mort" cyoa-title! soloer choosechar
+"Quitter la Death Road" cyoa-title! soloer choosechar
 ($ cname .. " finit par abandonner. " .. cHe .. " bat en retraite vers un destin inconnu.
 Le voyage vers le Canada est termine." $) cyoa-text! 0 cyoa-image-icon! 1 500 tone
 	clear-streak delete-the-game

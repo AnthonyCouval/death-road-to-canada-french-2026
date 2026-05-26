@@ -383,7 +383,7 @@ cyoa-choice: drts-sub-sink
 
 	($ "HA. HAHAHAHA. LOSER. pardon." bbold $) +crtext
 
-	($ cname .. " apprend une lecon precieuse mais honnêtement vaguement liee a la guerre navale... et au tir !" $) +crtext
+	($ cname .. " apprend une lecon precieuse mais honnetement vaguement liee a la guerre navale... et au tir !" $) +crtext
 
 	($ cname .. " se demande silencieusement ou est le sous-marin maintenant." $) +crtext
 

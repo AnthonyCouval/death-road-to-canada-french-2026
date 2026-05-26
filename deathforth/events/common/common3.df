@@ -246,7 +246,7 @@ cyoa: common3-bee
 		($ "Une abeille n'arrete pas d'embeter " .. thegroup .. " !
 		Ca prend une eternite pour qu'elle parte. Si seulement vous aviez une voiture, vous seriez surement proteges des abeilles !" $) text! morale2-all
 	then;
-	($ "Une abeille vole dans la voiture ! Meme avec une fenetre ouverte, elle ne part pas. Elle n'arrete pas de voler droit dans la figure de " .. thegroup .. gs .. " !
+	($ "Une abeille vole dans la voiture ! Meme avec une fenetre ouverte, elle ne part pas. Elle n'arrete pas de voler autour du visage de chaque personne !
 	Ca pourrait etre le plus grand defi jusqu'ici !" $) text!
 		choice( "PANIQUER !" )choice: common3-bee-panic
 		most-grating if
@@ -360,7 +360,7 @@ cyoa-choice: common3-fart-smart
 cyoa: common3-fart
 	"Le Mystere du Pet Fantome" cyoa-title!
 	image-bad-smell
-	($ "C'est juste un autre jour sur la Route de la Mort quand quelqu'un " .. "pete dans la voiture." rbold $) text!
+	($ "C'est juste un autre jour sur la Death Road quand quelqu'un " .. "pete dans la voiture." rbold $) text!
 	solo if
 		"Qui a pu faire ca ? On ne le saura peut-etre jamais." +crtext 1 trunk-gas+ badfx
 	then;

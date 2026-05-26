@@ -81,7 +81,7 @@ cyoa: walk-pain2
 ;
 cyoa: walk-pain3
 	"Terrain Difficile" cyoa-title! someicon
-	($ Thegroup .. " tombe sur un troncon de route particulierement difficile. Il n'y a rien de mortel, c'est juste une longue et miserable marche. " .. gThey .. " repar" .. g1s .. " blesse et malmene par une serie de petits accidents." $) cyoa-text! sting--all morale--all bitefx
+	($ Thegroup .. " tombe sur un troncon de route particulierement difficile. Il n'y a rien de mortel, c'est juste une longue et miserable marche. " .. gThey .. " repart" .. g1s .. " blesse et malmene par une serie de petits accidents." $) cyoa-text! sting--all morale--all bitefx
 ;
 cyoa: walk-rainmorale
 	"Meteo Horrible" cyoa-title! someicon

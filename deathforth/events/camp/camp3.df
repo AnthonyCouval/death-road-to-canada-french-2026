@@ -217,7 +217,7 @@ cyoa: camp3-tinker
 	"Bric-a-Brac Utile" cyoa-title!
 	($ Thegroup .. " campe dans un batiment solide. Ca ressemble a un vieux atelier de reparation, avec des machines cassees qui trainent.
 	Ce serait un bon moment pour s'entrainer a reparer des choses, mais ca ferait beaucoup de bruit." $) text! +cr fullcamp
-		choice( "Juste aller dormir" )choice
+		choice( "Aller juste dormir" )choice
 		choice( "Bricoler toute la nuit" )choice: camp3-tinker-pick
 ;
 

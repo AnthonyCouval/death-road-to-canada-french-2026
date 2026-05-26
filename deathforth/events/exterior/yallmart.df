@@ -6,7 +6,7 @@ cyoa: yallmart-easy
 	($ Thegroup .. " repere un Yall-Mart abandonne au loin. Il a l'air d'avoir ete pille, mais il y a peut-etre du butin intact a l'interieur." $) cyoa-text! basic-tone
 	1 8 14 frnd 0 zforecast
 	"events/exterior/region/yallmart.df" $load-region
-		choice( "Faire les bonnes affaires" )choice: premission
+		choice( "Faire des bonnes affaires" )choice: premission
 		gas-draw
 ;
 
@@ -51,7 +51,7 @@ cyoa: yallmart-mid
 	($ Thegroup .. " voit un grand Y'all-Mart. Une grande quantite de morts-vivants protege les provisions eparpillees a l'interieur." $) cyoa-text! basic-tone
 	1.3 1.5 frnd 6 16 frnd 0 2 rnd zforecast
 	"events/exterior/region/yallmart-mid.df" $load-region
-		choice( "Faire les bonnes affaires" )choice: premission
+		choice( "Faire des bonnes affaires" )choice: premission
 		gas-draw
 ;
 

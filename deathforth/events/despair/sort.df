@@ -14,12 +14,12 @@ cyoa: despair-oblivious
 ;
 
 cyoa: despair-superdog
-	"La Route de la Mort Continue" cyoa-title!
+	"La Death Road Continue" cyoa-title!
 	bully .notchoosechar
 	bully character# cyoa-char-icon!
 	($ bname .. " s'excuse aupres de " .. cname .. "." $) text!
 	bully notpet? if
-		($ "Je ne peux plus continuer sur la Route de la Mort ! N'oublie pas tout ce que je t'ai appris !
+		($ "Je ne peux plus continuer sur la Death Road ! N'oublie pas tout ce que je t'ai appris !
 			Tu peux le faire, j'ai confiance en toi !" pbold $)
 	else
 		($ bname .. " " .. bully barkmeow .. "e d'une facon tres inspirante.

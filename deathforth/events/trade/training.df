@@ -320,7 +320,7 @@ cyoa-choice: trade-medical-coolit
 		($ cname .. " lache un " .. "DIS LE NE LE POSTILLONNE PAS" pbold .. " a l'homme en salopette." $)
 	then cyoa-text!
 	cool-it-7 if
-		($ "Il hoche la tete avec une sagesse profonde. Peut-être a-t-" .. xhe .. " mal entendu ? Il se lance dans l'enseignement de techniques medicales de survie incroyables, telles qu'on n'en a jamais vues auparavant." $) +crtext goodfx 3 for medical++ next cooled-it clear-cyoa
+		($ "Il hoche la tete avec une sagesse profonde. Peut-etre a-t-" .. xhe .. " mal entendu ? Il se lance dans l'enseignement de techniques medicales de survie incroyables, telles qu'on n'en a jamais vues auparavant." $) +crtext goodfx 3 for medical++ next cooled-it clear-cyoa
 	else cool-it++
 		($ "*TOI* NE LE DIS PAS OU NE LE POSTILLONNE PAS ! AAAAAAAARGH!" rbold .. "
 		Il est furieux ! " .. thegroup .. " est force de quitter le camp." $) +crtext badfx quitmission

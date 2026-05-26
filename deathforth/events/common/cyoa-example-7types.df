@@ -121,10 +121,10 @@ cyoa: card1-cyoa
 	then
 	aholeREV morale2+
 ;
-: card2-pumped ($ cname .. " se sent BOOST par cette histoire et souleve une buche a la barre." $) +text cyoa-text-cr
+: card2-pumped ($ cname .. " se sent HYPER MOTIVE par cette histoire et souleve un tronc d'arbre a proximite pour faire son developpe couche !" $) +text cyoa-text-cr
 	strengthREV	strength++ morale++
 ;
-cyoa: card2-cyoa ($ someone .colourname .. " rencontre un autre survivant qui raconte avoir vu un bodybuilder huile 'trop muscle pour etre controle', dechiquetant des zombies en deux apres les avoir souleves a la barre." $) cyoa-text! +cr 1 cyoa-image-icon! 4 500 tone
+cyoa: card2-cyoa ($ someone .colourname .. " rencontre un autre survivant qui raconte avoir vu un bodybuilder huile 'trop muscle pour etre controle', dechiquetant des zombies en deux apres les avoir souleves au developpe couche." $) cyoa-text! +cr 1 cyoa-image-icon! 4 500 tone
 
 	strongest-pass
 	if strongest choosechar card2-pumped then;

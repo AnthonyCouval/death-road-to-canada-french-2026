@@ -114,14 +114,14 @@ cyoa-choice: bully-sprayit
 ;
 
 cyoa: solo-haze-won
-	"De Retour sur la Route de la Mort !" cyoa-title! someicon
+	"De Retour sur la Death Road !" cyoa-title! someicon
 	($	"Comment vous avez survecu a ca ?
 		" .. cname .. " est " .. "COMPLETEMENT A FOND" fbold $) cyoa-text!
 			morale4+ goodfx
 ;
 
 cyoa: group-haze-won
-	"De Retour sur la Route de la Mort !" cyoa-title! someicon
+	"De Retour sur la Death Road !" cyoa-title! someicon
 	($	"Peut-etre que cette equipe n'est pas si mauvaise apres tout !
 		" .. Thegroup .. " est " .. "COMPLETEMENT A FOND" fbold $) cyoa-text!
 			morale4+all goodfx

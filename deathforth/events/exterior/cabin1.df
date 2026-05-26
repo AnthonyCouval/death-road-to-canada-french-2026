@@ -105,7 +105,7 @@ cyoa: cabin1-car
 ;
 
 cyoa: canada-crossing
-	"La Fin de la Route de la Mort" cyoa-title! image-road-end
+	"La Fin de la Death Road" cyoa-title! image-road-end
 	($ "La frontiere du Canada est juste au nord ! " .. Thegroup .. " doit traverser le pont puis atteindre le fort qui sert de poste de controle juste avant le Canada. C'est le defi final ! Bonne chance !" $) cyoa-text! basic-tone
 	2.3 7 22 frnd 4 zforecast-short
 	"events/exterior/region/canada-crossing-region.df" $load-region

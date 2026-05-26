@@ -28,16 +28,16 @@ cyoa: find-car-SUV
 	image-suv
 	"FAIT TOUT SUR LA ROUTE" cyoa-title!
 	choosehuman
-	($ "Alors quil marchait le long des bords de ville " .. cname .. " 'il trouve une petite boutique de loisirs sportifs. Elle est vide de butin. Pensant que tout etait perdu, " .. cname .. " il remarque un vieux SUV dans le fond de la boutique." $) cyoa-text! carinfo-SUV CAR_SUV get-car
-		choice( "Le demarre !" )choice: find-car-gas
+	($ "Alors qu'il marche en peripherie de la ville " .. cname .. " decouvre un petit magasin d'articles de sport. Il a ete entierement pille. Pensant que tout est perdu, " .. cname .. " apercoit un vieux SUV a l'arriere du magasin." $) cyoa-text! carinfo-SUV CAR_SUV get-car
+		choice( "Demarre-le !" )choice: find-car-gas
 ;
 
 cyoa: find-car-muscle
 	image-sports-car
 	"BRULURE DE RUBAN" cyoa-title!
 	choosehuman
-	($ "En marchant le long de la route " .. cname .. " repere une station service au loin. Il ny a pas grand chose a part une muscle car a lair cool a cote de la pompe a essence. Les cles sont sur le tableau de bord !" $) cyoa-text! carinfo-muscle CAR_MUSCLE2 get-car
-		choice( "Le demarre !" )choice: find-car-gas
+	($ "En marchant le long de la route " .. cname .. " repere une station service au loin. Il ny a pas grand chose a part une muscle car qui a l'air cool a cote de la pompe a essence. Les cles sont sur le tableau de bord !" $) cyoa-text! carinfo-muscle CAR_MUSCLE2 get-car
+		choice( "Demarre-la !" )choice: find-car-gas
 ;
 
 0 value gator-ate-key
@@ -48,9 +48,9 @@ cyoa: find-car-starter
 	choosehuman
 	($ cname .. "  repere une voiture garee au milieu de la route. Ils se precipitent pour decouvrir une voiture qui ressemble etrangement a celle dans laquelle ils ont commence leur voyage." $) text!
 	gator-ate-key 1 < if
-		($ cname .. "  prend les cles que " .. che .. "  a gardees de la vieille voiture et les met dans le contact. Ca demarre." $)
+		($ cname .. "  prend les cles qu'" .. che .. "  a gardees de la vieille voiture et les met dans le contact. Ca demarre." $)
 	else
-		($ cname .. "  verifie les cles de voiture. Il ny en a pas. " .. cHe .. "  sort de la voiture un moment et met " .. chis .. "  le pied droit dans de la merde dalligator. Il y a des cles a linterieur !" $)
+		($ cname .. "  verifie les cles de voiture. Il n'y en a pas. " .. cHe .. "  sort de la voiture un moment et met " .. chis .. "  pied droit dans de la merde d'alligator. Il y a des cles a l'interieur !" $)
 	then
 		+crtext starting-car get-car
 		choice( " C'est reparti !" )choice: find-car-gas
@@ -60,8 +60,8 @@ cyoa: find-car-hybrid
 	image-hybrid-battery
 	"EM PEE GEES" cyoa-title!
 	choosehuman
-	($ " En se promenant dans une petite ville " .. cname .. "  decouvre une voiture hybride plus recente devant un magasin. La batterie est a plat, mais le magasin savere etre un magasin de pieces detachees automobiles. Trouver une batterie en etat de marche a ete facile !" $) cyoa-text! carinfo-hybrid CAR_HYBRID1 get-car
-		choice( "Le demarre !" )choice: find-car-gas
+	($ " En se promenant dans une petite ville " .. cname .. "  decouvre une voiture hybride recente devant un magasin. La batterie est a plat, mais le magasin s'avere etre un magasin de pieces detachees automobiles. Trouver une batterie en etat de marche a ete facile !" $) cyoa-text! carinfo-hybrid CAR_HYBRID1 get-car
+		choice( "Demarre-le !" )choice: find-car-gas
 ;
 
 } }

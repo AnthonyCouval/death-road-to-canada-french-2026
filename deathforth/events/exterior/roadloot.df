@@ -56,7 +56,7 @@ cyoa: roadloot-city
 ;
 
 cyoa: roadloot-canada
-	"La Fin de la Route de la Mort" cyoa-title!
+	"La Fin de la Death Road" cyoa-title!
 	someicon
 	($ Thegroup .. " est arrive juste avant la frontiere du Canada !
 	Si pres de la securite, c'est ici que ca devient le plus dangereux !" $) cyoa-text! basic-tone

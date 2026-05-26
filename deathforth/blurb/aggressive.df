@@ -36,7 +36,7 @@
 : aggressive-passpess1
 	2nd-char choosechar
 	blurbslot 0= if
-		"'He ! Si tu mets autant de temps a tirer sur quelque chose donne moi certaines de tes munitions !" blurbsay
+		"He ! Si tu mets autant de temps a tirer sur quelque chose donne moi certaines de tes munitions !" blurbsay
 	else
 		blurbslot 2 < if
 			ctemper+ cattitude- or if
