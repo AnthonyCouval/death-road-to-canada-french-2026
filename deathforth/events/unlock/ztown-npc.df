@@ -2,7 +2,7 @@ cyoa{ road{ regiondef{
 
 cyoa: info-dingus
 	"wugh" cyoa-title!
-	"Hi, I'm the Info Dingus" text!
+	"Salut, je suis le Dingus Info" text!
 ;
 
 uses events/unlock/perktrait.df
@@ -14,7 +14,7 @@ uses events/unlock/gnome.df
 uses events/unlock/twitter.df
 
 : challenge-gamemodecheck
-	\ q update again... 
+	\ q update again...
 	// Increment this 0 by 1 for each game mode with wins
 	0 gstats{
 		wins-normal		if 1+ then
@@ -35,34 +35,34 @@ uses events/unlock/twitter.df
 		wins-weathermode	if 1+ then
 		wins-sceptermode	if 1+ then
 		wins-rpgmode	if 1+ then
-		wins-infectionmode	if 1+ then		
-		wins-mutationmode	if 1 + then 
-		wins-infectionmodeEX	if 1 + then 
-		wins-mutationmodeEX	if 1 + then 
-		wins-horrormode if 1 + then 
+		wins-infectionmode	if 1+ then
+		wins-mutationmode	if 1 + then
+		wins-infectionmodeEX	if 1 + then
+		wins-mutationmodeEX	if 1 + then
+		wins-horrormode if 1 + then
 	}
 ;
 
 cyoa: challenge-statue1
 	gstats{ challenge-statue1 } 1 < if
-		"CHALLENGE OF MODES I" cyoa-title!
+		"DEFI DES MODES I" cyoa-title!
 		challenge-gamemodecheck 6 < if
-			($ "Beat 6 different game modes to " .. "unlock" rainbold .. " an assortment of " .. "9 NEW HATS" rainbold .. " for the Custom Character Maker!" $) text!
-			($ "Game Modes Beaten: " bbold .. challenge-gamemodecheck $) +crtext
+			($ "Bats 6 modes de jeu differents pour " .. "debloquer" rainbold .. " un assortiment de " .. "9 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnage !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
 		else
-			($ "You've beaten 6 different game modes!
-			" .. "CHALLENGE COMPLETE!" rainbold $) text!
+			($ "Tu as battu 6 modes de jeu differents !
+			" .. "DEFI ACCOMPLI !" rainbold $) text!
 			goodfx gstats{ 1 to challenge-statue1 } filesave{ save-global-stats }
-			"New hats are permanently unlocked. Check them out in the Custom Character Maker!" +crtext
+			"Les nouveaux chapeaux sont debloques de maniere permanente. Decouvrez-les dans le Createur de Personnage !" +crtext
 			extrahatcheck
 		then
 	else
-		"CHALLENGE OF MODES I - COMPLETE!" cyoa-title!
-		($ "After beating 6 different game modes, you have earned a batch of 9 new hats for the Custom Character Maker! This includes much sought after hats such as:
-		" .. "TOILET TANK WITH LID
-		HORSE HEAD HOOD
-		GOLDEN CROWN" rbold .. "
-		AND MORE!
+		"DEFI DES MODES I - ACCOMPLI !" cyoa-title!
+		($ "Apres avoir battu 6 modes de jeu differents, tu as gagne un lot de 9 nouveaux chapeaux pour le Createur de Personnage ! Parmi eux des chapeaux tres attendus tels que :
+		" .. "RESERVOIR DE TOILETTES AVEC COUVERCLE
+		CAPUCHE TETE DE CHEVAL
+		COURONNE DOREE" rbold .. "
+		ET PLUS ENCORE !
 		" fbold $) text!
 		extrahatcheck
 	then
@@ -71,26 +71,26 @@ cyoa: challenge-statue1
 
 cyoa: challenge-statue2
 	gstats{ challenge-statue1 } 2 < if
-		"CHALLENGE OF MODES II" cyoa-title!
+		"DEFI DES MODES II" cyoa-title!
 		challenge-gamemodecheck 10 < if
-			($ "Beat 10 different game modes to " .. "unlock" rainbold .. " an assortment of " .. "6 NEW HATS" rainbold .. " and " .. "8 NEW SHADES" rainbold .. " for the Custom Character Maker!" $) text!
-			($ "Game Modes Beaten: " bbold .. challenge-gamemodecheck $) +crtext
+			($ "Bats 10 modes de jeu differents pour " .. "debloquer" rainbold .. " un assortiment de " .. "6 NOUVEAUX CHAPEAUX" rainbold .. " et " .. "8 NOUVELLES LUNETTES" rainbold .. " pour le Createur de Personnage !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
 		else
-			($ "You've beaten 10 different game modes!
-			" .. "CHALLENGE COMPLETE!" rainbold $) text!
+			($ "Tu as battu 10 modes de jeu differents !
+			" .. "DEFI ACCOMPLI !" rainbold $) text!
 			goodfx gstats{ 2 to challenge-statue1 } filesave{ save-global-stats }
-			"New hats and shades are permanently unlocked. Check them out in the Custom Character Maker!" +crtext
+			"Les nouveaux chapeaux et lunettes sont debloques de maniere permanente. Decouvrez-les dans le Createur de Personnage !" +crtext
 			extrahatcheck extraglassescheck
 		then
 	else
-		"CHALLENGE OF MODES II - COMPLETE!" cyoa-title!
-		($ "After beating 10 different game modes, you have earned a batch of 6 new hats and 8 new shades for the Custom Character Maker! This includes much sought after accessories such as:
-		" .. "PRINCESS HAT (unisex)
-		DUNCE CAP
-		DISGUSTING BIRD
-		INCREDIBLE FACE DISGUISE
-		HI-TECH SHADES" rbold .. "
-		AND MORE!
+		"DEFI DES MODES II - ACCOMPLI !" cyoa-title!
+		($ "Apres avoir battu 10 modes de jeu differents, tu as gagne un lot de 6 nouveaux chapeaux et 8 nouvelles lunettes pour le Createur de Personnage ! Parmi eux des accessoires tres attendus tels que :
+		" .. "CHAPEAU DE PRINCESSE (unisexe)
+		BONNET D'ANE
+		OISEAU DEGOUTANT
+		INCROYABLE DEGUISEMENT FACIAL
+		LUNETTES HIGH-TECH" rbold .. "
+		ET PLUS ENCORE !
 		" fbold $) text!
 		extrahatcheck extraglassescheck
 	then
@@ -99,25 +99,25 @@ cyoa: challenge-statue2
 
 cyoa: challenge-statue3
 	gstats{ challenge-statue1 } 3 < if
-		"CHALLENGE OF MODES III" cyoa-title!
+		"DEFI DES MODES III" cyoa-title!
 		challenge-gamemodecheck 14 < if
-			($ "Beat 14 different game modes to " .. "unlock" rainbold .. " an assortment of " .. "12 NEW HATS" rainbold .. " for the Custom Character Maker!" $) text!
-			($ "Game Modes Beaten: " bbold .. challenge-gamemodecheck $) +crtext
+			($ "Bats 14 modes de jeu differents pour " .. "debloquer" rainbold .. " un assortiment de " .. "12 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnage !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
 		else
-			($ "You've beaten 14 different game modes!
-			" .. "CHALLENGE COMPLETE!" rainbold $) text!
+			($ "Tu as battu 14 modes de jeu differents !
+			" .. "DEFI ACCOMPLI !" rainbold $) text!
 			goodfx gstats{ 3 to challenge-statue1 } filesave{ save-global-stats }
-			"New hats are permanently unlocked. Check them out in the Custom Character Maker!" +crtext
+			"Les nouveaux chapeaux sont debloques de maniere permanente. Decouvrez-les dans le Createur de Personnage !" +crtext
 			extrahatcheck
 		then
 	else
-		"CHALLENGE OF MODES III - COMPLETE!" cyoa-title!
-		($ "After beating 14 different game modes, you have earned a batch of 12 new hats for the Custom Character Maker! This includes much sought after hats such as:
-		" .. "BIG FISH
+		"DEFI DES MODES III - ACCOMPLI !" cyoa-title!
+		($ "Apres avoir battu 14 modes de jeu differents, tu as gagne un lot de 12 nouveaux chapeaux pour le Createur de Personnage ! Parmi eux des chapeaux tres attendus tels que :
+		" .. "GROS POISSON
 		TAM O' SHANTER
-		HEAD BOOT
-		CHEF HAT" rbold .. "
-		AND MORE!
+		BOTTE SUR LA TETE
+		CHAPEAU DE CHEF" rbold .. "
+		ET PLUS ENCORE !
 		" fbold $) text!
 		extrahatcheck
 	then
@@ -126,26 +126,26 @@ cyoa: challenge-statue3
 
 cyoa: challenge-statue4
 	gstats{ challenge-statue1 } 4 < if
-		"CHALLENGE OF MODES IV" cyoa-title!
+		"DEFI DES MODES IV" cyoa-title!
 		gstats{ best-gamemode-streak 4 } > challenge-gamemodecheck 13 > and if
-			($ "You've streaked 5 different game modes!
-			" .. "CHALLENGE COMPLETE!" rainbold $) text!
+			($ "Tu as enchaine 5 modes de jeu differents !
+			" .. "DEFI ACCOMPLI !" rainbold $) text!
 			goodfx gstats{ 4 to challenge-statue1 } filesave{ save-global-stats }
-			"New hats are permanently unlocked. Check them out in the Custom Character Maker!" +crtext
+			"Les nouveaux chapeaux sont debloques de maniere permanente. Decouvrez-les dans le Createur de Personnage !" +crtext
 			extrahatcheck
 		else
-			($ "After beating the previous challenges, get a win streak of 5 different game modes to " .. "unlock" rainbold .. " an assortment of " .. "18 NEW HATS" rainbold .. " for the Custom Character Maker!" $) text!
-			($ "Game Modes Beaten: " bbold .. challenge-gamemodecheck $) +crtext
-			($ "Best Streak of Different Game Modes: " bbold .. gstats{ best-gamemode-streak } $) +crtext
+			($ "Apres avoir termine les defis precedents, realise une serie de 5 modes de jeu differents pour " .. "debloquer" rainbold .. " un assortiment de " .. "18 NOUVEAUX CHAPEAUX" rainbold .. " pour le Createur de Personnage !" $) text!
+			($ "Modes de Jeu Battus : " bbold .. challenge-gamemodecheck $) +crtext
+			($ "Meilleure Serie de Modes Differents : " bbold .. gstats{ best-gamemode-streak } $) +crtext
 		then
 	else
-		"CHALLENGE OF MODES IV - COMPLETE!" cyoa-title!
-		($ "After streaking 5 different game modes, you have earned a batch of 18 new hats for the Custom Character Maker! This includes much sought after hats such as:
-		" .. "GNOMEY CAP
-		TIN FOIL HAT
-		CARDBOARD MASK
-		WARLOCK HAT" rbold .. "
-		AND MORE!
+		"DEFI DES MODES IV - ACCOMPLI !" cyoa-title!
+		($ "Apres avoir enchaine 5 modes de jeu differents, tu as gagne un lot de 18 nouveaux chapeaux pour le Createur de Personnage ! Parmi eux des chapeaux tres attendus tels que :
+		" .. "CASQUETTE DE GNOMEY
+		CHAPEAU EN PAPIER D'ALUMINIUM
+		MASQUE EN CARTON
+		CHAPEAU DE SORCIER" rbold .. "
+		ET PLUS ENCORE !
 		" fbold $) text!
 		extrahatcheck
 	then
@@ -153,26 +153,26 @@ cyoa: challenge-statue4
 ;
 
 cyoa: jerk-dingus
-	"The Jerk Store Called" cyoa-title!
-	"YOU'RE A JERK
-	OK, THAT'LL BE FIVE DOLLARS!
-	
-	THANKS FOR SHOPPING
-	AT THE JERK STORE" text!
-	choice( "THEY'RE ALL OUT OF YOU" )choice
+	"Le Magasin des Tocards a Appele" cyoa-title!
+	"T'ES UN TOCARD
+	OK, CA FERA CINQ DOLLARS !
+
+	MERCI D'AVOIR FAIT VOS COURSES
+	AU MAGASIN DES TOCARDS" text!
+	choice( "ILS SONT A COURT DE VOUS" )choice
 ;
 
 cyoa: roaming-capyrun
-	"The Roaming Rodent" cyoa-title!
-	($ "The rodent thing " .. "(Capybara? Very large gerbil?)" pbold .. " flees when you approach it.
-	It runs to the " .. "NORTH-EAST!" rainbold $) text!
+	"Le Rongeur Errant" cyoa-title!
+	($ "La chose rongeur " .. "(Capybara ? Tres grand gerbil ?)" pbold .. " fuit quand tu t'approches.
+	Elle court vers le " .. "NORD-EST !" rainbold $) text!
 	clear-cyoa deleteme
 ;
 
 cyoa: ugnome-note
-	"From the Desk of Unomey" cyoa-title!
-	($ "The note reads as follows:" $) cyoa-text! 
-	"GET OUT OF MY HOUSE, YOU NERD!" pbold +crtext
+	"Du Bureau d'Unomey" cyoa-title!
+	($ "La note dit ceci :" $) cyoa-text!
+	"SORS DE CHEZ MOI, ESPECE DE NERD !" pbold +crtext
 ;
 
 // : tutorial-repeat 0 saveslot! MAIN_EVENT_NEW main-post-event "events/tutorial.df" $load-region to-mission ;
@@ -181,12 +181,12 @@ cyoa: ugnome-note
 cyoa: tutorial
 	"Tutorial" $upper cyoa-title!
 	someicon
-	($ "You can repeat the tutorial here!
-	This is handy if you missed info on things like dropping weapons, or throwing furniture.
-	This option will put you back on the title screen, just hit START to go into the tutorial again." $) cyoa-text! basic-tone
-	
-		choice( "EXIT" )choice
-		choice( "Repeat Tutorial" )choice: tutorial-repeat
+	($ "Tu peux repeter le tutoriel ici !
+	C'est pratique si tu as rate des infos sur des choses comme lacher des armes ou lancer des meubles.
+	Cette option te ramene a l'ecran titre, appuie juste sur DEMARRER pour relancer le tutoriel." $) cyoa-text! basic-tone
+
+		choice( "SORTIR" )choice
+		choice( "Repeter le Tutoriel" )choice: tutorial-repeat
 ;
 
 : dingus-deleted-dialog
@@ -198,82 +198,82 @@ cyoa: tutorial
 : deletedata-both deletedata-custchars deletedata-gstats ;
 
 cyoa-blank: deletedata-gstats-confirm
-	"Are you sure you want to delete your stats, perks, and traits? This will also delete things such as game mode progress." text!
-	"NOTE: Selecting this option will quit to the title screen." pbold +crtext
-	choice( "NO" )choice
-	choice( "YES, DELETE THEM" )choice: deletedata-gstats
+	"Es-tu sur de vouloir supprimer tes stats, perks et traits ? Cela supprimera egalement des choses comme la progression des modes de jeu." text!
+	"NOTE : Choisir cette option te renverra a l'ecran titre." pbold +crtext
+	choice( "NON" )choice
+	choice( "OUI, SUPPRIMER" )choice: deletedata-gstats
 ;
 
 cyoa-blank: deletedata-custchars-confirm
-	"Are you sure you want to delete all your custom characters?" text!
-	choice( "NO" )choice
-	choice( "YES, DELETE THEM" )choice: deletedata-custchars
+	"Es-tu sur de vouloir supprimer tous tes personnages personnalises ?" text!
+	choice( "NON" )choice
+	choice( "OUI, SUPPRIMER" )choice: deletedata-custchars
 ;
 
 cyoa-blank: deletedata-both-confirm
-	"Are you sure you want to delete stats, perks, traits, and your custom characters? This will also delete things such as game mode progress." text!
-	"NOTE: Selecting this option will quit to the title screen." pbold +crtext
-	choice( "NO" )choice
-	choice( "YES, DELETE ALL" )choice: deletedata-both
+	"Es-tu sur de vouloir supprimer les stats, perks, traits et tes personnages personnalises ? Cela supprimera egalement des choses comme la progression des modes de jeu." text!
+	"NOTE : Choisir cette option te renverra a l'ecran titre." pbold +crtext
+	choice( "NON" )choice
+	choice( "OUI, TOUT SUPPRIMER" )choice: deletedata-both
 ;
 
 // Do ARE YOU SURE? choices too
 cyoa: deletedata
 	"Data Clear" $upper cyoa-title!
-	"I'M THE DATA DELETION DINGUS
-	I WILL DELETE ALL OF YOUR DATA!" rbold text!
-	"The skeleton makes rattling noises.
-	You can delete your game data here! Though, you probably shouldn't." +crtext
-	choice( "EXIT" )choice
-	choice( "Custom Characters" )choice: deletedata-custchars-confirm
-	choice( "Stats and Perks" )choice: deletedata-gstats-confirm
-	choice( "Clear Both" )choice: deletedata-both-confirm
-; 
+	"JE SUIS LE DINGUS DE SUPPRESSION DE DONNEES
+	JE VAIS TOUT EFFACER !" rbold text!
+	"Le squelette fait du bruit en raclant.
+	Tu peux supprimer tes donnees de jeu ici ! Meme si tu ne devrais probablement pas." +crtext
+	choice( "SORTIR" )choice
+	choice( "Personnages Personnalises" )choice: deletedata-custchars-confirm
+	choice( "Stats et Perks" )choice: deletedata-gstats-confirm
+	choice( "Effacer les Deux" )choice: deletedata-both-confirm
+;
 
 cyoa-blank: freeZP-give-go
 	iicon
-	"ZOMBO POINTS increased to 99!" rainbold text!
+	"POINTS ZOMBO augmentes a 99 !" rainbold text!
 	goodfx gstats{ 99 to zombo-point save }
-	
+
 ;
 
 cyoa: freeZP-give
-	"Zombo Point Giveaway!" cyoa-title! iicon
-	"WELL IT'S THE TESTING BRANCH
-	SO I CAN GIVE YOU SOME ZOMBO POINTS" bbold text!
-	gstats{ zombo-point } 99 < if 
-		choice( "Give me those Zombo Points" )choice: freeZP-give-go
+	"Distribution de Points Zombo !" cyoa-title! iicon
+	"C'EST LA BRANCHE DE TEST
+	DONC JE PEUX VOUS DONNER DES POINTS ZOMBO" bbold text!
+	gstats{ zombo-point } 99 < if
+		choice( "Donne-moi ces Points Zombo" )choice: freeZP-give-go
 	else
-		"COME BACK WHEN YOU HAVE LESS THAN 99 ZP!" bbold
+		"REVIENS QUAND TU AS MOINS DE 99 PZ !" bbold
 	then +crtext
-	choice( "Leave for now" )choice
-	
+	choice( "Partir pour l'instant" )choice
+
 ;
 
 cyoa-blank: gamemode-unlockening
 	iicon
-	"Gamemodes unlocked!" rainbold text!
-	RED "TELL THE OTHER SYCAMORE, IF I SEE HIM, I AM GOING TO VAPORISE HIM." .. +crtext
-	WHITE "You had no idea the tree wars ran so deep." .. +crtext
-	goodfx 
-	
-	gstats{ 1 to wins-deadlier } 
-	gstats{ 1 to wins-infectionmode } 
+	"Modes de jeu debloques !" rainbold text!
+	RED "DIS A L'AUTRE SYCAMORE QUE SI JE LE VOIS, JE VAIS LE VAPORISER." .. +crtext
+	WHITE "Tu n'avais aucune idee que les guerres des arbres etaient si profondes." .. +crtext
+	goodfx
+
+	gstats{ 1 to wins-deadlier }
+	gstats{ 1 to wins-infectionmode }
 	gstats{ 1 to wins-4jerks }
-	gstats{ 1 to wins-4jerksEX } 
-	gstats{ 1 to wins-mutationmode } 
-	gstats{ 1 to wins-marathon } 
-	
+	gstats{ 1 to wins-4jerksEX }
+	gstats{ 1 to wins-mutationmode }
+	gstats{ 1 to wins-marathon }
+
 ;
 
 cyoa-blank: perk-unlockening
 	iicon
-	"Perks and traits unlocked!" rainbold text!
-	PURPLE "you don't seem so evil." .. +crtext
-	RED "OH YOU HAVE NO IDEA. JUST THIS WEEK I LOBBED A GNOME OFF A CLIFF." .. +crtext
-	WHITE "Who could admit such a heinous crime?" .. +crtext
-	goodfx 
-	
+	"Perks et traits debloques !" rainbold text!
+	PURPLE "tu n'as pas l'air si mauvais." .. +crtext
+	RED "OH TU N'AS AUCUNE IDEE. CETTE SEMAINE J'AI BALANCE UN GNOME DU HAUT D'UNE FALAISE." .. +crtext
+	WHITE "Qui pourrait avouer un crime si odieux ?" .. +crtext
+	goodfx
+
 	gstats{ 3 to perk-healthcare }
 	gstats{ 3 to perk-mechanic }
 	gstats{ 3 to perk-athlete }
@@ -327,21 +327,21 @@ cyoa-blank: perk-unlockening
 
 	gstats{ 1 to trait-rand }
 	gstats{ 1 to trait-backwall }
-	
+
 	filesave{ save-global-stats }
 	perkdef{ defperks }
-	
+
 ;
 
 cyoa: gamemode-unlocker
-	"TESTBRANCH UNLOCKER" cyoa-title! iicon
-	"I'M THE BIGGER AND EVIL-ER OF THE TWO
-	ANYWAY, I HEARD YOU NEED SOME GAMEMODES UNLOCKING
-	LET ME HACK THE MAINFRAME REAL QUICK" rbold text!
-	choice( "Give me those new gamemodes" )choice: gamemode-unlockening
-	choice( "Give me all the perks & traits" )choice: perk-unlockening
-	choice( "OK NERD" )choice
-	
+	"DEBLOQUEUR DE BRANCHE TEST" cyoa-title! iicon
+	"JE SUIS LE PLUS GRAND ET LE PLUS MALFAISANT DES DEUX
+	BON, J'AI ENTENDU QUE TU AS BESOIN DE DEBLOQUER DES MODES DE JEU
+	LAISSE-MOI PIRATER LE MAINFRAME RAPIDEMENT" rbold text!
+	choice( "Donne-moi ces nouveaux modes de jeu" )choice: gamemode-unlockening
+	choice( "Donne-moi tous les perks et traits" )choice: perk-unlockening
+	choice( "OK INTELLO" )choice
+
 ;
 
 } } }
@@ -376,7 +376,7 @@ map{ regiondef{
 
 	// <- me .loot@ dup 0= if drop 1 GREEN "$" .. else looticon then
 	// <- me GREEN "11" .. looticon - a ?
-	
+
 	<- perk 1 < if
 		<- me "?" pbold
 	else
@@ -417,35 +417,35 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 ;
 
 : perk-dingus unlocker-shared
-		
+
 	57 lt .character@ .specialtype!
 	' perk1-stockleft-event lt .events!
 	' perk-dingus lt .cyoa!
 ;
 
 : perk1-dingus unlocker-shared
-		
+
 	12 lt .character@ .specialtype!
 	' perk1-stockleft-event lt .events!
 	' perk1-dingus lt .cyoa!
 ;
 
 : perk2-dingus unlocker-shared
-		
+
 	25 lt .character@ .specialtype!
 	' perk2-stockleft-event lt .events!
 	' perk2-dingus lt .cyoa!
 ;
 
 : perk3-dingus unlocker-shared
-		
+
 	46 lt .character@ .specialtype!
 	' perk3-stockleft-event lt .events!
 	' perk3-dingus lt .cyoa!
 ;
 
 : trait1-dingus unlocker-shared
-		
+
 	24 lt .character@ .specialtype!
 	' trait1-stockleft-event lt .events!
 	' trait1-dingus lt .cyoa!
@@ -455,14 +455,14 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	// new-camper
 	nomove-npc
 	21 lt .character@ .specialtype!
-	
+
 	' trader-event lt .events!
 	1 lt .timer!
 
 	' jerk-dingus lt .cyoa!
 ;
 
-: challenge-statue1 
+: challenge-statue1
 	spawn special_objects48_base_id 0x 24 + 2 + lt .spriteid! bbox immovable
 	' challenge-statue1 lt .cyoa!
 ;
@@ -490,7 +490,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 : unlockgnome unlocker-shared
 	lt .character@ .gnomify2
 	' gnome-stockleft-event lt .events!
-	' unlockgnome lt .cyoa!	
+	' unlockgnome lt .cyoa!
 ;
 
 : ugnome-note wrotenote cyoa{ ' ugnome-note cyoa! } ;
@@ -500,7 +500,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	<- me ($ "*GNORT*" rbold $) <- me
 	.sprayit
 	// statmod{ .report } clear-cyoa
-	sfx{ sing 500 fx .d! 2.25 fx .pitch! 0.9 fx .q! <- me .adjust-vol } 
+	sfx{ sing 500 fx .d! 2.25 fx .pitch! 0.9 fx .q! <- me .adjust-vol }
 ;
 
 : capy-chat args( me )
@@ -509,7 +509,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	else
 		cyoa{ roaming-capyrun }
 	then
-	; 
+	;
 
 : roaming-capybara
 	new-camper lt .character@ .gerbilfy
@@ -523,9 +523,9 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 ;
 
 : freeZP-dingus
-	nomove-npc 
+	nomove-npc
 	40 lt .character@ .specialtype!
-	
+
 	' trader-event lt .events!
 	1 lt .timer!
 	' freeZP-give lt .cyoa!
@@ -535,7 +535,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	// new-camper
 	nomove-npc
 	147 lt .character@ .specialtype!
-	1 lt .character@ .female! 
+	1 lt .character@ .female!
 	' trader-event lt .events!
 	1 lt .timer!
 	' gamemode-unlocker lt .cyoa!
@@ -559,81 +559,81 @@ cyoa{ regiondef{
 
 cyoa: sycamore-dingus
 	"Professor Sycamore" cyoa-title!
-	"Don't say timber, it gives me bad memories." pbold text!
+	"Ne dis pas 'timber', ca me donne de mauvais souvenirs." pbold text!
 	"--- Professor Sycamore
 	Creator of: Death Road to Sycamore" +crtext
-	"Former modder, now DR2C's developer." rbold +crtext
-	"Contributed the PANCREAS, MANDIBLE, QUADRICEPS, RETINA & STOMACH updates." bbold +crtext
-	"BTW, the hatchet mafia is going to kill me." pbold +crtext 	
-	choice( "SICK-ERMORE" )choice
+	"Ancien moddeur, maintenant developpeur de DR2C." rbold +crtext
+	"A contribue aux mises a jour PANCREAS, MANDIBLE, QUADRICEPS, RETINA et STOMACH." bbold +crtext
+	"Au fait, la mafia a hache va me tuer." pbold +crtext
+	choice( "SY-CA-MORE" )choice
 ;
 
 cyoa: modguard-dingus
-	"Hut Within a Hut" cyoa-title!
-	"I am the guardian of the Contributor Hut!
-	Past me are creators that have contributed new content to the Death Road! They are creators of Death Road to Canada mods, from our Discord! " text! "#mod-showcase" pbold +text " and " +text "#deathroad-modding" pbold +text 
-	
-	"Come inside to read their words of inspiration, and learn what they have added in each update!
-	It is a hut within the larger Info Hut!" +crtext
-	choice( "Let's check out this hut" )choice
+	"Cabane dans la Cabane" cyoa-title!
+	"Je suis le gardien de la Cabane des Contributeurs !
+	Derriere moi se trouvent des createurs qui ont contribue du nouveau contenu a la Death Road ! Ce sont des createurs de mods de Death Road to Canada, depuis notre Discord ! " text! "#mod-showcase" pbold +text " and " +text "#deathroad-modding" pbold +text
+
+	"Entrez pour lire leurs mots d'inspiration et apprendre ce qu'ils ont ajoute dans chaque mise a jour !
+	C'est une cabane dans la grande Cabane d'Infos !" +crtext
+	choice( "Allons voir cette cabane" )choice
 ;
 
 // Omentum
 cyoa: arq-dingus
 	"Arq" cyoa-title!
-	"No really, I'm just some random guy." pbold cyoa-text!
+	"Non vraiment, je suis juste un type au hasard." pbold cyoa-text!
 	"--- Arq
 	Creator of: drtc+, 100%OJ DRTC crossover, and more" +crtext
-	"Contributions for OMENTUM Update: " rbold +crtext
-	"+ Special characters Br*ck, Carter, Johnny, and Arq
-	+ Perks Fierce Hitter, Supporter, and Jack of All Trades
-	+ Traits Unpredictable and BACK TO THE WALL" bbold +crtext
-	"+ The FIRE EXTINGUISHER
-	+ AI Support for Grappler" bbold +crtext
-	"+ Small bug fixes" bbold +crtext
-	choice( "Thanks bro" )choice
+	"Contributions pour la mise a jour OMENTUM : " rbold +crtext
+	"+ Personnages speciaux Br*ck, Carter, Johnny, et Arq
+	+ Perks Coup Feroce, Soutien, et Touche-a-Tout
+	+ Traits Imprevisible et DOS AU MUR" bbold +crtext
+	"+ L'EXTINCTEUR
+	+ Soutien IA pour Grappler" bbold +crtext
+	"+ Petites corrections de bugs" bbold +crtext
+	choice( "Merci mec" )choice
 ;
 
-\ stomach library 
+\ stomach library
 
 cyoa: librarian-dingus
-	"THE INFOMATIC LIBRARY" cyoa-title!
-	"hi there! welcome to the library." pbold text!
-	"Here you will find more detailed explanations of DRTC's stats and mechanics." +crtext
-	"All the info is labelled and free! You can read by interacting with the objects here." +crtext
-	"You may be wondering: how am I both here AND in the INFO HUT?" pbold +crtext
-	"It's very simple - UR MOM. Oh, and breaking causality, that too." pbold +crtext 	
-	choice( "OK JERK" )choice
+	"LA BIBLIOTHEQUE INFORMATIQUE" cyoa-title!
+	"Salut ! bienvenue a la bibliotheque." pbold text!
+	"Ici tu trouveras des explications plus detaillees des stats et mecaniques de DRTC." +crtext
+	"Toutes les infos sont etiquetees et gratuites ! Tu peux les lire en interagissant avec les objets ici." +crtext
+	"Tu te demandes peut-etre : comment suis-je a la fois ici ET dans la CABANE D'INFOS ?" pbold +crtext
+	"C'est tres simple - TA MERE. Oh, et briser la causalite, ca aussi." pbold +crtext
+	choice( "OK TOCARD" )choice
 ;
 
 cyoa: blackboard_combat_2
-	"NOTES ON COMBAT: 2" cyoa-title!
-	"Knocking down zombies is sometimes just as good as killing them." text!
-	"Knocked down zombies always take at least 1 damage. Even a punch can kill zombies this way!" +crtext
-	"In addition, zombies in this state take 2x the damage from weapons." pbold +crtext
-	"Zombies on the floor are harder to move compared to upright ones." +crtext
-	choice( "THANKS FOR THE INFODUMP" )choice 
-; 
+	"NOTES SUR LE COMBAT : 2" cyoa-title!
+	"Renverser les zombies est parfois aussi efficace que les tuer." text!
+	"Les zombies renverses prennent toujours au moins 1 degat. Meme un coup de poing peut les tuer de cette facon !" +crtext
+	"De plus, les zombies dans cet etat recoivent 2x les degats des armes." pbold +crtext
+	"Les zombies au sol sont plus difficiles a deplacer que ceux debout." +crtext
+	choice( "MERCI POUR L'INFO" )choice
+;
 
-cyoa: blackboard_combat_1 
-	"NOTES ON COMBAT: 1" cyoa-title!
-	"Nearly all melee and ranged hits inflict stun to a zombie." text!
-	"Whip class weapons are special, as they inflict stun for extra time compared to normal." +crtext
-	"Stunned zombies cannot do anything. This includes grappling and biting characters." +crtext
-	"You can also achieve this effect by knocking zombies down." pbold +crtext
-	choice( "THANKS NERD" )choice 
-	choice( "Study combat further" )choice: blackboard_combat_2
+cyoa: blackboard_combat_1
+	"NOTES SUR LE COMBAT : 1" cyoa-title!
+	"Presque tous les coups de corps-a-corps et a distance etourdissent le zombie." text!
+	"Les armes de type fouet sont speciales : elles etourdissent plus longtemps que la normale." +crtext
+	"Les zombies etourdit ne peuvent rien faire. Cela inclut attraper et mordre des personnages." +crtext
+	"Tu peux aussi obtenir cet effet en renversant les zombies." pbold +crtext
+	choice( "MERCI INTELLO" )choice
+	choice( "Etudier le combat plus loin" )choice: blackboard_combat_2
 ;
 
 cyoa: blackboard_combat
-	"NOTES ON COMBAT: 0" cyoa-title!
-	"All damage dealt to zombies, whether melee, explosion or bullet, is randomised." text!
-	"Damage is a random number from 1 to 5, multiplied by weapon power, rounded down." +crtext
-	"For example, a hatchet has a power of 1.25. If a hatchet swing hits a zombie and rolls a 3, it would deal..." +crtext
-	"1.25 * 3 = 3.75, rounded down -> 3 damage to the zombie." pbold +crtext
-	"On every mode except MUTATION EXTREME, zombies have 5 HP." +crtext 	
-	choice( "OK NERD" )choice
-	choice( "Study combat further" )choice: blackboard_combat_1
+	"NOTES SUR LE COMBAT : 0" cyoa-title!
+	"Tous les degats infliges aux zombies, corps-a-corps, explosion ou balle, sont aleatoires." text!
+	"Les degats sont un nombre aleatoire de 1 a 5, multiplie par la puissance de l'arme, arrondi a l'inferieur." +crtext
+	"Par exemple, une hache a une puissance de 1.25. Si un coup de hache touche un zombie et tire un 3, ca donnera..." +crtext
+	"1.25 * 3 = 3.75, arrondi a l'inferieur -> 3 degats au zombie." pbold +crtext
+	"Dans tous les modes sauf MUTATION EXTREME, les zombies ont 5 PV." +crtext
+	choice( "OK INTELLO" )choice
+	choice( "Etudier le combat plus loin" )choice: blackboard_combat_1
 ;
 
 \ : DX WHITE 0x e0 $chr .. ;
@@ -663,7 +663,7 @@ cyoa: blackboard_combat
 : ICY PINKFLASH2 BWFLASH .. ; // light blue and black!
 : YELLOWFLASH ICY BWFLASH .. ; // yellow and black
 : LIMEFLASH NAVYBLUE BWFLASH .. ; // lime and black
-: REDFLASH LIMEFLASH BWFLASH .. ; // red and black 
+: REDFLASH LIMEFLASH BWFLASH .. ; // red and black
 : MONTY GREEN BWFLASH .. ;
 
 : rbold ($ RED .. swap .. WHITE $) ;
@@ -682,147 +682,147 @@ cyoa: blackboard_combat
 : redflash ($ RED .. swap .. RAINBOW $) ;
 : iceflash ($ TEAL .. swap .. WHITE $) ;
 
-cyoa: blackboard_chars_2 
-	"NOTES ON CHARACTERS: 2" cyoa-title!
-	"A good team is made up of a mix of support and combat characters." text!
-	"GOOD MELEE CHAR COMBOS: " rbold "Megabuff + Warrior, Martial Artist + Warrior, Fighter + Warrior, Fighter + Craftsman, Kensai + Berserk" .. +crtext
-	"GOOD RANGED CHAR COMBOS: " obold "Natural Shot + Calm Under Fire, Ranger + Hyperfixated, Gun Collector + Calm Under Fire, Gun Collector + Hyperfixated" ..  +crtext
-	"GOOD SUPPORT CHAR COMBOS: " ybold "Health Care + Nurturing, Surgeon + Civilized, Car Nut + Paranoid, Car Nut + Craftsman" .. +crtext
-	"GOOD UTILITY OR HYBRID COMBOS: " bbold "Explorer + City Seeker, Explorer + Gourmand, Pathfinder + Paranoid, Gungineer + Civilized" .. +crtext 	
-	"Experiment for yourself!" +crtext
-	choice( "CHARACTER SCHMARACTER" )choice
+cyoa: blackboard_chars_2
+	"NOTES SUR LES PERSONNAGES : 2" cyoa-title!
+	"Une bonne equipe est composee d'un melange de personnages de soutien et de combat." text!
+	"BONS COMBOS MELEE : " rbold "Megabuff + Warrior, Martial Artist + Warrior, Fighter + Warrior, Fighter + Craftsman, Kensai + Berserk" .. +crtext
+	"BONS COMBOS DISTANCE : " obold "Natural Shot + Calm Under Fire, Ranger + Hyperfixated, Gun Collector + Calm Under Fire, Gun Collector + Hyperfixated" ..  +crtext
+	"BONS COMBOS SOUTIEN : " ybold "Health Care + Nurturing, Surgeon + Civilized, Car Nut + Paranoid, Car Nut + Craftsman" .. +crtext
+	"BONS COMBOS UTILITAIRES OU HYBRIDES : " bbold "Explorer + City Seeker, Explorer + Gourmand, Pathfinder + Paranoid, Gungineer + Civilized" .. +crtext
+	"Experimentez par vous-meme !" +crtext
+	choice( "BREF LES PERSONNAGES" )choice
 ;
 
 cyoa: blackboard_chars_1
-	"NOTES ON CHARACTERS: 1" cyoa-title!
-	"Angry-Strong" rbold " ... at most " D: " composure, at least " :D " strength." .. .. .. .. .. text!
-	"Paranoid" obold " ... at most " D: " attitude, at least " :D " wits." .. .. .. .. .. +crtext
-	"Calmshot" ybold " ... at least " :D " composure, at least " :D " shooting." .. .. .. .. .. +crtext
-	"Oblivious" bbold " ... at most " D: " wits, at least " :D " attitude." .. .. .. .. .. +crtext
-	"Bandit" ice " ... at most " D: " composure, at most " D: " loyalty." .. .. .. .. .. +crtext 	
-	"Charming" pbold " ... at least " :D " wits, at least " :D " attitude." .. .. .. .. .. +crtext
-	"Irritating" pibold " ... at most " D: " attitude, at most " D: " wits." .. .. .. .. .. +crtext
-	"Notable perk+trait combos are on the next page." +crtext 
-	choice( "THANKS FREAK" )choice
-	choice( "Study chars further" )choice: blackboard_chars_2
+	"NOTES SUR LES PERSONNAGES : 1" cyoa-title!
+	"Colere-Fort" rbold " ... au plus " D: " sangfroid, au moins " :D " force." .. .. .. .. .. text!
+	"Paranoiaque" obold " ... au plus " D: " attitude, au moins " :D " intuition." .. .. .. .. .. +crtext
+	"Tireur Calme" ybold " ... au moins " :D " sangfroid, au moins " :D " tir." .. .. .. .. .. +crtext
+	"Insouciant" bbold " ... au plus " D: " intuition, au moins " :D " attitude." .. .. .. .. .. +crtext
+	"Bandit" ice " ... au plus " D: " sangfroid, au plus " D: " loyaute." .. .. .. .. .. +crtext
+	"Charmant" pbold " ... au moins " :D " intuition, au moins " :D " attitude." .. .. .. .. .. +crtext
+	"Enervant" pibold " ... au plus " D: " attitude, au plus " D: " intuition." .. .. .. .. .. +crtext
+	"Les combos remarquables de perks+traits sont a la page suivante." +crtext
+	choice( "MERCI L'ORIGINAL" )choice
+	choice( "Etudier les personnages plus loin" )choice: blackboard_chars_2
 ;
 
 cyoa: blackboard_chars
-	"NOTES ON CHARACTERS: 0" cyoa-title!
-	"Character perks generally affect action and combat. Traits generally affect personality." text!
-	"Traits may give certain stat combos. These combos present useful options in road events." pbold +crtext
+	"NOTES SUR LES PERSONNAGES : 0" cyoa-title!
+	"Les perks de personnage affectent generalement l'action et le combat. Les traits affectent generalement la personnalite." text!
+	"Les traits peuvent donner certaines combinaisons de stats. Ces combos presentent des options utiles dans les evenements de route." pbold +crtext
 	"Stats are measured " DX " to " =D ", or 0 to 6 in numbers. MAX BONUSES move the range. A +1 bonus to a stat means the range is " D: " to "  =DD  .. .. .. .. .. .. .. ", or 1 to 7 in numbers." .. +crtext
 	"For example, the Paranoid stat combo is granted by at least " :D " Wits and at most " .. D: " attitude." .. .. .. +crtext
-	"Further stat combinations will be listed on the next page." +crtext 	
-	choice( "OK DORK" )choice
-	choice( "Study chars further" )choice: blackboard_chars_1
+	"D'autres combinaisons de stats seront listees a la page suivante." +crtext
+	choice( "OK BOULET" )choice
+	choice( "Etudier les personnages plus loin" )choice: blackboard_chars_1
 ;
 
 cyoa: book_melee_2
-	"NOTES ON MELEE STATS: DEXTERITY" cyoa-title!
-	"Dexterity is powerful, but the rarest stat to train." text!
-	"Dexterity increases movement speed, allowing you to juke or escape easier." pbold +crtext
-	"Sources of dexterity are difficult to come by. Under the most ideal conditions, you might reach 3 dexterity, if you're lucky and use the right trait." +crtext
-	"High dexterity can make it significantly more difficult to get bitten. In Extreme Weather Mode, high dexterity can be a hinderance due to ice." +crtext
-	"If you have high morale before the City of Crushed Hopes siege, your characters may gain dexterity. The easiest way to ensure this occurs is to have spare food supplies." pbold +crtext 	
-	choice( "THANKS GIGANERD" )choice
-	\ choice( "Study chars further" )choice: book_melee_2 
+	"NOTES SUR LES STATS MELEE : DEXTERITE" cyoa-title!
+	"La Dexterite est puissante, mais la stat la plus rare a entrainer." text!
+	"La Dexterite augmente la vitesse de deplacement, te permettant d'esquiver ou de fuir plus facilement." pbold +crtext
+	"Les sources de Dexterite sont rares. Dans les conditions ideales, tu pourrais atteindre 3 de Dexterite, avec de la chance et le bon trait." +crtext
+	"Une haute Dexterite rend beaucoup plus difficile d'etre mordu. Dans le Mode Meteo Extreme, elle peut etre un handicap a cause de la glace." +crtext
+	"Si tu as un moral eleve avant le siege de la Cite des Espoirs Brises, tes personnages peuvent gagner de la Dexterite. Le moyen le plus simple : avoir des provisions alimentaires en reserve." pbold +crtext
+	choice( "MERCI MEGA INTELLO" )choice
+	\ choice( "Study chars further" )choice: book_melee_2
 ;
 
 cyoa: book_melee_1
-	"NOTES ON MELEE STATS: FITNESS" cyoa-title!
-	"Fitness is also important, but harder to train." text!
-	"6 points in fitness increase stamina regen by 1x, additively. An additional 1x is added for every 5 levels of fitness afterwards." pbold +crtext
-	"For example, a char at 6 fitness recovers stamina at 2x as fast. At 11 fitness, 3x as fast." +crtext
-	"Intermittent levels of fitness (like 4, 5, 8 or 9) do " "NOT" rbold .. " provide regen benefits." .. +crtext
-	"Every 2 cumulative points in STR and FIT decrease melee weapon cooldown by 10%, up to 0.65s cooldown." pbold +crtext 	
-	choice( "THANKS MEGANERD" )choice
-	choice( "Study melee further" )choice: book_melee_2 
+	"NOTES SUR LES STATS MELEE : FORME" cyoa-title!
+	"La Forme est aussi importante, mais plus difficile a entrainer." text!
+	"6 points de Forme augmentent la regen d'endurance de 1x additivement. Un 1x supplementaire est ajoute pour chaque tranche de 5 niveaux de Forme ensuite." pbold +crtext
+	"Par exemple, un personnage a 6 Forme recupere son endurance 2x plus vite. A 11 Forme, 3x plus vite." +crtext
+	"Les niveaux intermediaires de Forme (comme 4, 5, 8 ou 9) n'" "APPORTENT PAS" rbold .. " de benefices de regen." .. +crtext
+	"Chaque 2 points cumulatifs de FOR et FORM reduisent le temps de recharge des armes de melee de 10%, jusqu'a 0.65s." pbold +crtext
+	choice( "MERCI SUPER INTELLO" )choice
+	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_2
 ;
 
 cyoa: book_melee
-	"NOTES ON MELEE STATS: STRENGTH" cyoa-title!
-	"Strength is an important melee stat. It is one of the easiest to train." text!
-	"Every point of strength (and fitness, too) reduces weapon swing stamina cost. Strength also allows you to throw heavier objects." pbold +crtext
-	"Chairs can be thrown with 0 strength. Most furniture requires at least 2. Most bathroom or kitchen pieces require 7 or more." +crtext
-	"Heavier objects tend to be more resilient and deal more damage on impact." +crtext
-	"IMPORTANT NOTE: STRENGTH DOES " "NOT" rbold .. " AFFECT MELEE DAMAGE." .. +crtext 	
-	choice( "OK NERD" )choice
-	choice( "Study melee further" )choice: book_melee_1 
+	"NOTES SUR LES STATS MELEE : FORCE" cyoa-title!
+	"La Force est une stat de melee importante. C'est l'une des plus faciles a entrainer." text!
+	"Chaque point de Force (et de Forme aussi) reduit le cout en endurance des coups d'arme. La Force permet aussi de lancer des objets plus lourds." pbold +crtext
+	"Les chaises peuvent etre lancees avec 0 Force. La plupart des meubles necessitent au moins 2. La plupart des pieces de salle de bain ou de cuisine necessitent 7 ou plus." +crtext
+	"Les objets plus lourds ont tendance a etre plus resistants et a infliger plus de degats a l'impact." +crtext
+	"NOTE IMPORTANTE : LA FORCE N'" "AFFECTE PAS" rbold .. " LES DEGATS AU CORPS-A-CORPS." .. +crtext
+	choice( "OK INTELLO" )choice
+	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_1
 ;
 
 cyoa: book_ranged_3
-	"NOTES ON RANGED STATS: RIFLE STATS" cyoa-title!
-	"Cowboy Rifle" rbold " - scales slowly. Penetrates 0-2 targets. Works best at 6 shooting." .. text!
-	"Hunting Rifle" obold " - scales normally. Penetrates 1-6 targets. Works best at 8 shooting." .. +crtext
-	"Sniper Rifle" ybold " - scales normally. Penetrates 1-5 targets. Quiet. Works best at 8 shooting." .. +crtext
-	"Slug Shotgun" bbold " - scales normally. Penetrates 2-8 targets. Works best at 9 shooting." .. +crtext
-	"M.O.A.R" ice " - scales quickly. Penetrates 3-11 targets. Max at 7 shooting." .. +crtext
-	"Mamba" pbold " - scales normally. Penetrates 1-4 targets. Max at 6 shooting." .. +crtext 
-	"Don't forget firearms. Save your ammo. Auto-weapons are powerful too!" +crtext
+	"NOTES SUR LES STATS A DISTANCE : STATS DES FUSILS" cyoa-title!
+	"Cowboy Rifle" rbold " - evolue lentement. Penetre 0-2 cibles. Optimal a 6 Tir." .. text!
+	"Hunting Rifle" obold " - evolue normalement. Penetre 1-6 cibles. Optimal a 8 Tir." .. +crtext
+	"Sniper Rifle" ybold " - evolue normalement. Penetre 1-5 cibles. Silencieux. Optimal a 8 Tir." .. +crtext
+	"Slug Shotgun" bbold " - evolue normalement. Penetre 2-8 cibles. Optimal a 9 Tir." .. +crtext
+	"M.O.A.R" ice " - evolue rapidement. Penetre 3-11 cibles. Max a 7 Tir." .. +crtext
+	"Mamba" pbold " - evolue normalement. Penetre 1-4 cibles. Max a 6 Tir." .. +crtext
+	"N'oublie pas les armes a feu. Garde tes munitions. Les armes auto sont aussi puissantes !" +crtext
 	choice( "OK SNIPER" )choice
-	\ choice( "Study ranged further" )choice: book_ranged_3 
+	\ choice( "Study ranged further" )choice: book_ranged_3
 ;
 
 cyoa: book_ranged_2
 	"RANGED STATS: LINEAR PENETRATION" cyoa-title!
-	"Linear penetration is exclusive to select weapons." text!
-	"This type is found on slow-firing rifles, including but not limited to..." pbold +crtext
+	"La penetration lineaire est exclusive a certaines armes." text!
+	"Ce type se trouve sur les fusils a tir lent, notamment mais sans s'y limiter..." pbold +crtext
 	"Cowboy Rifle, Hunting Rifle, Sniper Rifle, M.O.A.R, Slug Shotgun, Mamba" rainbold +crtext
-	"Linear penetration is consistent; every shot from these weapons will penetrate. The number of targets hit from these weapons scales LINEARLY with shooting." +crtext
-	"Under the right circumstances these weapons can penetrate objects and shelves." +crtext
-	"Every target penetrated incurs a multiplicative damage/knockback loss of 18% for the bullet." pbold +crtext 
-	"The next page outlines some common rifle stats." +crtext
-	choice( "OK MARKSMAN" )choice
-	choice( "Study ranged further" )choice: book_ranged_3 
+	"La penetration lineaire est constante : chaque tir de ces armes penetrera. Le nombre de cibles touchees s'ameliore LINEAIREMENT avec le Tir." +crtext
+	"Dans les bonnes circonstances, ces armes peuvent penetrer les objets et les etageres." +crtext
+	"Chaque cible penetree entraine une perte multiplicative de degats/recul de 18% pour la balle." pbold +crtext
+	"La page suivante decrit quelques stats communes de fusils." +crtext
+	choice( "OK FRANC-TIREUR" )choice
+	choice( "Etudier le tir plus loin" )choice: book_ranged_3
 ;
 
 cyoa: book_ranged_1
 	"RANGED STATS: NORMAL PENETRATION" cyoa-title!
-	"Normal penetration is the most common type." text!
-	"This type is found on many automatic weapons, and particularly in revolvers." pbold +crtext
-	"Normal penetration is RNG based. In order for a shot to penetrate in this way, it must kill the initial target." +crtext
-	"In most cases, this type of penetration may occasionally give an additional hit or two." +crtext
-	"Furthermore, these bullets are blocked by objects." +crtext 
-	"The next page outlines linear penetration." +crtext
-	choice( "OK HOTSHOT" )choice
-	choice( "Study ranged further" )choice: book_ranged_2 
+	"La penetration normale est le type le plus courant." text!
+	"Ce type se trouve sur de nombreuses armes automatiques, et particulierement dans les revolvers." pbold +crtext
+	"La penetration normale est basee sur l'aleatoire. Pour qu'un tir penetre de cette facon, il doit tuer la cible initiale." +crtext
+	"Dans la plupart des cas, ce type de penetration peut occasionnellement donner un ou deux impacts supplementaires." +crtext
+	"De plus, ces balles sont bloquees par les objets." +crtext
+	"La page suivante decrit la penetration lineaire." +crtext
+	choice( "OK AS DU TIR" )choice
+	choice( "Etudier le tir plus loin" )choice: book_ranged_2
 ;
 
 cyoa: book_ranged
-	"NOTES ON RANGED STATS: SHOOTING" cyoa-title!
-	"Shooting is helpful for all firearms and essential for some. Firing in bursts helps with recoil." text!
-	"Every point of shooting reduces post-shot recoil and improves bullet piercing." pbold +crtext
-	"Firearms have two types of penetration:" " normal" rbold .. " and " .. "linear." bbold .. +crtext
-	"Normal penetration is for nearly all non-rifle weapons. It scales with shooting and is RNG-based." +crtext
-	"Linear penetration is more powerful, more versatile and consistent." .. +crtext 
-	"The next page outlines their differences." +crtext
-	choice( "OK NERD" )choice
-	choice( "Study ranged further" )choice: book_ranged_1 
+	"NOTES SUR LES STATS A DISTANCE : TIR" cyoa-title!
+	"Le Tir est utile pour toutes les armes a feu et essentiel pour certaines. Tirer en rafales aide a controler le recul." text!
+	"Chaque point de Tir reduit le recul apres le coup et ameliore la penetration des balles." pbold +crtext
+	"Les armes a feu ont deux types de penetration :" " normale" rbold .. " et " .. "lineaire." bbold .. +crtext
+	"La penetration normale concerne presque toutes les armes autres que les fusils. Elle s'ameliore avec le Tir et est basee sur l'aleatoire." +crtext
+	"La penetration lineaire est plus puissante, plus polyvalente et constante." .. +crtext
+	"La page suivante decrit leurs differences." +crtext
+	choice( "OK INTELLO" )choice
+	choice( "Etudier le tir plus loin" )choice: book_ranged_1
 ;
 
 
 cyoa: book_support_1
-	"NOTES ON SUPPORT STATS: MECHANICAL" cyoa-title!
-	"The mechanical stat affects your ability to restore your car as it takes damage." text!
-	"Characters with a very low mechanical stat cannot repair the car. Different cars require different mechanical skill to repair." pbold +crtext
-	"Every repair made to a car increases the difficulty of the next. For example, if a car takes 2 mechanical skill to repair, next time it'll take 3." +crtext
-	"The normal starting car requires " :) .. " (4) mechanical skill to repair the first time. Car Nuts may roll for slightly easier-to-repair cars." .. +crtext
-	"Keeping your car intact makes the journey safer by preventing nasty events and allowing time (i.e day) progression." pbold +crtext
-	choice( "OK GREASEBALL" )choice
-\ 	choice( "Study support further" )choice: book_support_1  
+	"NOTES SUR LES STATS DE SOUTIEN : MECANIQUE" cyoa-title!
+	"La stat Mecanique affecte ta capacite a reparer ta voiture lorsqu'elle subit des degats." text!
+	"Les personnages avec une stat Mecanique tres basse ne peuvent pas reparer la voiture. Differentes voitures necessitent differents niveaux de Mecanique." pbold +crtext
+	"Chaque reparation augmente la difficulte de la suivante. Par exemple, si une voiture necessite 2 de Mecanique, la prochaine fois il en faudra 3." +crtext
+	"La voiture de depart normale necessite " :) .. " (4) de Mecanique pour etre reparee la premiere fois. Les Passionnes de Voitures peuvent avoir des voitures plus faciles a reparer." .. +crtext
+	"Garder ta voiture intacte rend le voyage plus sur en evitant les evenements desagreables et en permettant la progression des jours." pbold +crtext
+	choice( "OK MECANO" )choice
+\ 	choice( "Study support further" )choice: book_support_1
 ;
 
 cyoa: book_support
-	"NOTES ON SUPPORT STATS: MEDICAL" cyoa-title!
-	"The medical stat affects how efficiently your party can heal. Healing events occur inbetween every road event." text!
-	"Characters with very a low medical stat may improve slightly when healing. When improving in this way, they may not improve beyond " :| " (3) skill." .. .. +crtext
-	"Characters with a spectacularly high medical stat do not even require medical supplies (" medicon .. ") to heal." pbold .. pbold +crtext
-	"At 0 medical, you may heal once per heal event for 4 " medicon .. ". At 2 medical, you can heal 1x per heal event for 2 " medicon .. " per time. At 5 medical, twice per time, for 1 " medicon .. " per time." .. .. .. +crtext
-	"High medical also presents an easy counter for certain road events." pbold +crtext 
-	"The next page outlines the mechanical stat." +crtext
+	"NOTES SUR LES STATS DE SOUTIEN : MEDICAL" cyoa-title!
+	"La stat Medical affecte l'efficacite avec laquelle ton groupe peut soigner. Les evenements de soin se produisent entre chaque evenement de route." text!
+	"Les personnages avec une stat Medical tres basse peuvent s'ameliorer legerement en soignant. En s'ameliorant ainsi, ils ne peuvent pas depasser " :| " (3) de competence." .. .. +crtext
+	"Les personnages avec une stat Medical tres elevee n'ont meme pas besoin de fournitures medicales (" medicon .. ") pour soigner." pbold .. pbold +crtext
+	"A 0 Medical, tu peux soigner une fois par evenement pour 4 " medicon .. ". A 2 Medical, tu peux soigner 1x par evenement pour 2 " medicon .. " par fois. A 5 Medical, deux fois par fois, pour 1 " medicon .. " par fois." .. .. .. +crtext
+	"Un Medical eleve offre aussi une bonne option contre certains evenements de route." pbold +crtext
+	"La page suivante decrit la stat Mecanique." +crtext
 	choice( "OK DOC" )choice
-	choice( "Study support further" )choice: book_support_1  
+	choice( "Etudier le soutien plus loin" )choice: book_support_1
 ;
 
 } }

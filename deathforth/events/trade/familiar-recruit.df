@@ -25,21 +25,21 @@ cyoa{ road{
 
 : fam-text
 	0 stack
-		($ rHe .. " hasn't seen " .. thegroup .. " yet, and is real busy picking " .. rhis .. " nose." $) shove
-		($ rHe .. " is sleeping on a picnic table, right out in the open." $) shove
-		($ rHe .. " was found trying to pull open a door that said PUSH on it." $) shove
-		($ rHe .. " is humming a little song, and hasn't noticed " .. thegroup .. " yet." $) shove
-		($ rHe .. " is being thrown out by " .. rhis .. " former group. They seem pretty angry. " .. rname .. " shrugs." $) shove
-		($ rHe .. " was sleeping in an abandoned house. " .. rHe .. " is slightly irritated to have been woken up." $) shove
-		($ rHe .. " is sitting in a park, reading a book." $) shove
-		($ rHe .. " was making tons of noise, playing a portable game console at full blast." $) shove
-		($ rHe .. " is eating a candy bar. Those things still haven't gone bad." $) shove
-		($ rHe .. " stretches. Then " .. rhe .. " stretches some more. It's an elaborate stretching routine." $) shove
-		($ rHe .. " pokes the dirt with a stick. Maybe " .. rhe .. " is drawing plans, maybe just poking the dirt with a stick." $) shove
-		($ rHe .. " is staring at a map, with an expression of total confusion." $) shove
-		($ rHe .. " is yelling at some survivors, because they made fun of " .. rhis .. " hair." $) shove
-		($ rHe .. " is kicking a car in frustration. The car is emitting plumes of smoke." $) shove
-		($ rHe .. " is fighting a single zombie, then suddenly trips and falls down in an awkward mistake. " .. rHe .. " gets really embarassed when " .. rhe .. " notices " .. thegroup .. "." $) shove
+		($ rHe .. " n'a pas encore remarque " .. thegroup .. " et est tres occupe a se curer le nez." $) shove
+		($ rHe .. " dort sur une table de pique-nique, en plein air." $) shove
+		($ rHe .. " a ete surpris en train de tirer une porte marquee POUSSER." $) shove
+		($ rHe .. " fredonne une petite chanson et n'a pas encore remarque " .. thegroup .. "." $) shove
+		($ rHe .. " est en train de se faire virer par son ancien groupe. Ils semblent plutot en colere. " .. rname .. " hausse les epaules." $) shove
+		($ rHe .. " dormait dans une maison abandonnee. " .. rHe .. " est legerement irrite d'avoir ete reveille." $) shove
+		($ rHe .. " est assis dans un parc, en train de lire un livre." $) shove
+		($ rHe .. " faisait un bruit monstre en jouant a une console portable a fond les manettes." $) shove
+		($ rHe .. " mange une barre chocolatee. Ces trucs ne sont toujours pas perimes." $) shove
+		($ rHe .. " s'etire. Puis " .. rhe .. " s'etire encore. C'est une routine d'etirements tres elaboree." $) shove
+		($ rHe .. " gratte la terre avec un baton. Peut-etre que " .. rhe .. " trace des plans, peut-etre que " .. rhe .. " gratte juste la terre avec un baton." $) shove
+		($ rHe .. " fixe une carte avec une expression de total desarroi." $) shove
+		($ rHe .. " crie apres des survivants qui se sont moques de sa coiffure." $) shove
+		($ rHe .. " donne des coups de pied dans une voiture avec frustration. La voiture crache des volutes de fumee." $) shove
+		($ rHe .. " combat un zombie, puis trebuche soudainement et tombe dans un moment des plus maladroits. " .. rHe .. " devient vraiment embarrasse quand " .. rhe .. " remarque " .. thegroup .. "." $) shove
 		// ($ rHe .. " " $) shove
 	shuffles pops nip
 ;
@@ -47,24 +47,24 @@ cyoa{ road{
 : familiar-carnut-yes
 	perkdef{
 		carnut-picker to starting-car
-		starting-car get-car 
+		starting-car get-car
 	}
 ;
 
 cyoa: familiar-carnut-event
-	"Sweet Ride" cyoa-title! ricon
-		($ rname .. " said that " .. rhe .. " had " .. rhis .. " own car stashed nearby, and that it's a " .. "'pretty sweet ride'" pbold .. "
-		Would you like to switch to " .. rname .. "'s car?" $) cyoa-text!
-		choice( "Keep current car" )choice
-		choice( "Switch to new car" )choice: familiar-carnut-yes
-		
+	"Beau Bolide" cyoa-title! ricon
+		($ rname .. " a dit que " .. rhe .. " avait planque sa propre voiture dans le coin, et que c'est un " .. "'sacre beau bolide'" pbold .. "
+		Voulez-vous echanger votre voiture contre celle de " .. rname .. " ?" $) cyoa-text!
+		choice( "Garder la voiture actuelle" )choice
+		choice( "Changer pour la nouvelle voiture" )choice: familiar-carnut-yes
+
 ;
 
 : familiar-recruit-check
 	perkdef{
 		recruitee carnut? if
 			' familiar-carnut-event stack-road-action
-		then 
+		then
 	}
 	// Arq adding this for perk supplies checks
 	recruitee-perkcheck
@@ -72,7 +72,7 @@ cyoa: familiar-carnut-event
 
 cyoa-choice: recruit-familiarreplace
 	ricon
-	($ cname .. " gets booted out of the group to make room for " .. rname .. "." $) cyoa-text!
+	($ cname .. " est vire du groupe pour faire de la place a " .. rname .. "." $) cyoa-text!
 	decruit-bad-silent-takeweapons 0.5 600 tone
 	recruited
 	familiar-recruit-check
@@ -80,17 +80,17 @@ cyoa-choice: recruit-familiarreplace
 
 : recruit-familiarreplace?
 	' recruit-familiarreplace cyoa-team-choice
-	choice( "Leave " .. rname .. " behind" )choice
+	choice( "Laisser " .. rname .. " derriere" )choice
 ;
 
 cyoa: recruit-familiaryes
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) cyoa-text!
+		($ "Le groupe est complet.
+		Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) cyoa-text!
 			recruit-familiarreplace?
 	then;
 	ricon
-	($ Thegroup .. " accepts " .. rname .. " to the team!" $) cyoa-text! 2 300 tone
+	($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) cyoa-text! 2 300 tone
 	recruited
 	familiar-recruit-check
 ;
@@ -98,17 +98,17 @@ cyoa: recruit-familiaryes
 defer use-recruit-deck
 
 cyoa: famevent
-	"Familiar Faces" cyoa-title!
+	"Visages Familiers" cyoa-title!
 
-	draw-familiar dup not if drop "NO MORE PEOPLE!" text! use-recruit-deck then;
+	draw-familiar dup not if drop "PLUS PERSONNE !" text! use-recruit-deck then;
 
 	to recruitee ricon
 
-	($ "Whoa, it's " .. rname .. "! It's nice to see a familiar face! " .. fam-text $) text! 
-		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
-		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
-			choice( "Recruit " .. rname .. " to team" )choice: recruit-familiaryes
-			choice( "Leave " .. rname .. " behind" )choice
+	($ "Waouh, c'est " .. rname .. " ! Ca fait du bien de voir un visage familier ! " .. fam-text $) text!
+		($ "TRAIT : " pbold .. recruitee .trait@ $) +crtext
+		($ "  PERK : " pbold .. recruitee .perk@ $) +text
+			choice( "Recruter " .. rname .. " dans l'equipe" )choice: recruit-familiaryes
+			choice( "Laisser " .. rname .. " derriere" )choice
 ;
 
 } }

@@ -80,7 +80,7 @@
 : toiletwishC
 	cyoa-start
 		"Le Pouvoir de l'Amitie" cyoa-title!
-		"Le genie rougit. JE NE SAVAIS PAS QUE ÇA INTERESSERAIT QUELQU'UN. L'etre se met a te suivre partout." cyoa-text!
+		"Le genie rougit. JE NE SAVAIS PAS QUE cA INTERESSERAIT QUELQU'UN. L'etre se met a te suivre partout." cyoa-text!
 		// I want this one to replace the usually decorative genie that's spawned, and then have it follow you around, punching zombies.
 	cyoa-show
 ;

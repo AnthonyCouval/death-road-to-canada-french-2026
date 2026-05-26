@@ -266,14 +266,14 @@ cyoa: camp2-berry
 		"DES ALLERGIES AUX CACAHUETES !" shove
 		"DES GOBELINS QUI RIGOLENT !!!" shove
 		"DES GOBELINS !!" shove
-		"DES GOBELINS MENAÇANTS !" shove
+		"DES GOBELINS MENAcANTS !" shove
 	shuffles pops nip
 ;
 
 cyoa-choice: camp2-scary-go
 	($ Thegroup .. " decide de raconter des histoires effrayantes !" $) text!
 	solo if
-		($ "Mais il s'avere que " .. soloname .. " était seul, " .. "RACONTANT DES HISTOIRES EFFRAYANTES A DES FANTOMES !
+		($ "Mais il s'avere que " .. soloname .. " etait seul, " .. "RACONTANT DES HISTOIRES EFFRAYANTES A DES FANTOMES !
         BOUUUUUUUUUUUH !" fbold $) +crtext morale3+all someicon
 	else
 		choosehuman cicon

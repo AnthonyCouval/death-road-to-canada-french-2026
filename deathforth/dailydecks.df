@@ -111,7 +111,7 @@ cyoa-choice: rewardevent-haz5
 ;
 cyoa-choice: rewardevent-haz6
 	($ cname .. " devient tres doue pour courir !
-	" .. cname .. " court desormais plus vite de façon permanente !" rbold $) cyoa-text!
+	" .. cname .. " court desormais plus vite de facon permanente !" rbold $) cyoa-text!
 	dexterity++ morale++ goodfx rewardevent-end
 ;
 cyoa-choice: rewardevent-haz7

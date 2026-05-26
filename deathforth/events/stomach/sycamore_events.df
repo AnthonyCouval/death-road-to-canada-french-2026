@@ -196,7 +196,7 @@ cyoa-choice: drts-bison-nearby
 	($ "Choisissez un nouvel endroit a explorer :" bbold $) +crtext
 
 	choice( "Aire de Repos" )choice: rest-easy
-	choice( "Lidl Tranquille" )choice: yallmart-easy
+	choice( "Yall-Mart Tranquille" )choice: yallmart-easy
 	choice( "Abandonner l'exploration" )choice
 	\ deja vu...
 ;
