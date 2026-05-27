@@ -54,7 +54,7 @@ cyoa{
 : fishwink text! "Le poisson fait un petit clin d'oeil et replonge dans l'eau." +crtext goodfx 30 ' fishaway timer_add ;
 
 cyoa-choice: fishing-2
-	($ cname .. " wishes for power!" $) fishwink
+	($ cname .. " souhaite du pouvoir !" $) fishwink
 		strength++ fitness++ shooting++ vitality++ health++
 ;
 
@@ -80,7 +80,7 @@ cyoa-choice: fishing-2
 
 
 cyoa-choice: fishing-3
-	($ cname .. " wishes for a fancy weapon!" $) fishwink
+	($ cname .. " souhaite une belle arme !" $) fishwink
 	1 ' fishpoof timer_add
 ;
 

@@ -6,8 +6,8 @@
 	: BOXER-oneline6 "La vitesse est importante, la vitesse gagne, la vitesse tue..." ;
 	: BOXER-oneline7 "Je dois absolument continuer a m'entrainer" ;
 	: BOXER-oneline8 "Qui sera mon prochain partenaire d'entrainement ?" ;
-	: BOXER-oneline9 "Last fight seemed like the other guy was under the weight class..." ;
-	: BOXER-oneline10 "Stick and move... stick and move..." ;
+	: BOXER-oneline9 "Le dernier combat... l'autre gars etait pas dans la meme categorie..." ;
+	: BOXER-oneline10 "Frappe et bouge... frappe et bouge..." ;
 	: BOXER-oneline11 "Je vais frapper ce zombie!" ;
 	: BOXER-oneline12 "Tout est dans le jeu de jambes" ;
 	: BOXER-oneline13 "Qu'aurait voulu que je fasse mon entraineur ?" ;

@@ -73,7 +73,7 @@ cyoa-blank: social
 
 	"Read updates from Rocketcat Games on Twitter or Facebook for Death Road news and upcoming games!
 	Read Madgarden's Twitter for real Canadian Wisdom!" bbold text!
-	"We're quick to respond to feedback and suggestions on Twitter!" +crtext
+	"Nous repondons rapidement aux retours et suggestions sur Twitter !" +crtext
 
 	choice( "Back" )choice
 	choice( "Rocketcat Twitter" )choice: rocketcat-twitter
@@ -85,9 +85,9 @@ cyoa-blank: social
 cyoa-blank: weblinks
 	"NEWS OPTIONS" cyoa-title!
 
-	"Here are more ways to contact us, give feedback and suggestions, and see what we are up to for updates and new projects! 
+	"Here are more ways to contact us, give feedback and suggestions, and see what we are up to for updates and new projects!
 	We are very active on the Official Rocketcat Discord, where you can talk to us and other fans of our games." bbold text!
-	"You can also hide the news panel until the next major update." +crtext
+	"Vous pouvez aussi masquer le panneau de nouvelles jusqu'a la prochaine mise a jour majeure." +crtext
 
 	choice( "Back" )choice
 	choice( "Twitter/Facebook" )choice: social
