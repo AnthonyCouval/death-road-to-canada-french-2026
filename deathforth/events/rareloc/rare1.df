@@ -18,11 +18,11 @@ cyoa{ road{
 
 // Lab Office
 cyoa: rare1-lab
-	"Ominous Laboratory" cyoa-title!
-	($ Thegroup .. " drives past an office complex. The sign says " .. "OMNI-BIO-CORP LABS" rbold .. ", which sounds way too evil to be a real company." $) cyoa-text! basic-tone
+	"Laboratoire Sinistre" cyoa-title!
+	($ Thegroup .. " passe devant un complexe de bureaux. Le panneau dit " .. "OMNI-BIO-CORP LABS" rbold .. ", ce qui semble vraiment trop malfaisant pour etre une vraie entreprise." $) cyoa-text! basic-tone
 	1.7 8 18 rnd 1 2 rnd zforecast // former 2.5, 2
 	"events/rareloc/region/laboffice.df" $load-region
-		choice( "Investigate Office" )choice: premission
+		choice( "Investiguer le Bureau" )choice: premission
 		gas-draw
 ;
 
@@ -30,118 +30,118 @@ cyoa: rare1-lab
 
 cyoa: rare1-bunker
 	// image-cabin-in-woods
-	"Concrete Bunker" cyoa-title!
-	($ Thegroup .. " sees a monstrous army of zombs near a forest road! They are milling around a small concrete structure jutting from the ground." $) cyoa-text! basic-tone
+	"Bunker en Beton" cyoa-title!
+	($ Thegroup .. " voit une armee monstrueuse de zombs pres d'une route forestiere ! Ils grouillent autour d'une petite structure en beton qui depasse du sol." $) cyoa-text! basic-tone
 	2.4 12 16 rnd 0 zforecast // former 3.5, 2.4
 	"events/rareloc/region/bunker.df" $load-region
-		choice( "Check it out" )choice: premission
+		choice( "Voir ce que c'est" )choice: premission
 		gas-draw
 ;
 
 // Junkyard Pals
 
 cyoa: junkpalsrescue
-	"Junkyard Rescue" cyoa-title!
-	($ Thegroup .. " escapes the junkyard!" $) text! goodfx
+	"Sauvetage a la Casse" cyoa-title!
+	($ Thegroup .. " s'echappe de la casse !" $) text! goodfx
 	junkpal1 0= not if
 		0 junkpal1 .party!
 		junkpal1 .alive? if
-			($ "Clem" pbold .. " survives, and shows some great repair tips while he fixes up the car!" $) +crtext
+			($ "Clem" pbold .. " survit et montre de super conseils de reparation pendant qu'il repare la voiture !" $) +crtext
 			car-weld-rnd car-tune-rnd
 			' .mechanic++ foreach-team-char
 		else
-			($ "Clem" pbold .. " did not escape with you." $) +crtext
+			($ "Clem" pbold .. " ne s'est pas echappe avec vous." $) +crtext
 			morale--all
 		then
 	then
 	junkpal2 0= not if
 		0 junkpal2 .party!
 		junkpal2 .alive? if
-			($ "You rescued " .. "Leonard" pbold .. ". In thanks, he gives " .. thegroup .. " some shooting tips!" $) +crtext
+			($ "Vous avez sauve " .. "Leonard" pbold .. ". En remerciement, il donne a " .. thegroup .. " des conseils de tir !" $) +crtext
 			30 trunk-rifle-shell+
 			' .shooting++ foreach-team-char
 		else
-			($ "Leonard" pbold .. "'s adventures have ended." $) +crtext
+			($ "Les aventures de " .. "Leonard" pbold .. " sont terminees." $) +crtext
 			morale--all
 		then
 	then
 ;
 
 cyoa: rare1-junk
-	"Junkyard Pals" cyoa-title!
+	"Potes de la Casse" cyoa-title!
 	char-gen to recruitee 67 recruitee .specialtype! ricon
-	($ Thegroup .. " sees two people get trapped in a junkyard by a massive crowd of zombies. They could be saved from their fates, if you distract the horde!" $) text! basic-tone
+	($ Thegroup .. " voit deux personnes piegees dans une casse par une enorme foule de zombies. Ils pourraient etre sauves de leur sort si vous distrayez la horde !" $) text! basic-tone
 	2 12 16 rnd 3 zforecast // former 2.6
 	"events/rareloc/region/junkpals.df" $load-region
-		choice( "Save them!" )choice: premission
+		choice( "Les sauver !" )choice: premission
 		gas-draw
 ;
 
 // Fishing
 
 cyoa: rare1-fish
-	"Fishing Cabins" cyoa-title!
-	($ Thegroup .. " notices a small row of fishing cabins past a river. Let's go fishing! You're out of luck if underwater creatures are having their own zombie apocalypse." $) text! basic-tone
+	"Cabines de Peche" cyoa-title!
+	($ Thegroup .. " remarque une petite rangee de cabines de peche apres une riviere. Allons pecher ! Pas de chance si les creatures sous-marines ont leur propre apocalypse zombie." $) text! basic-tone
 	1.3 8 18 rnd 1 2 rnd zforecast
 	"events/rareloc/region/fishing.df" $load-region
-		choice( "Try fishing" )choice: premission
+		choice( "Essayer de pecher" )choice: premission
 		gas-draw
 ;
 
 // Museum
 
 cyoa: rare1-museum
-	"Museum Field Trip" cyoa-title!
+	"Sortie au Musee" cyoa-title!
 	someicon 0 3 rnd to museumtype
-	($ Thegroup .. " drives close to a museum. It must have been popular, as the undead are " .. "out in droves." rbold .. " Signs and banners outside advertise the " $) cyoa-text! basic-tone
+	($ Thegroup .. " s'approche d'un musee. Il devait etre populaire, car les morts-vivants y sont " .. "en masse." rbold .. " Des panneaux annoncent l'exposition " $) cyoa-text! basic-tone
 	museumtype case
-		0 of "MALL KATANAS OF THE UNITED STATES" endof
+		0 of "KATANAS DE CENTRE COMMERCIAL DES ETATS-UNIS" endof
 		1 of "CALL OF GUNS MODERN GUNFARE 20" endof
-		2 of "MEDIEVAL AXES AND ARMS" endof
-		3 of "SNACK FOODS OF THE KNOWN WORLD" endof
-	endcase rbold +text " exhibit." +text
+		2 of "HACHES ET ARMES MEDIEVALES" endof
+		3 of "SNACKS DU MONDE CONNU" endof
+	endcase rbold +text " exposition." +text
 	2 8 18 rnd 1 2 rnd zforecast
 	"events/rareloc/region/museum.df" $load-region
-		choice( "Visit Museum" )choice: premission
+		choice( "Visiter le Musee" )choice: premission
 		gas-draw
 ;
 
 // Mystery Factory
 
 cyoa: rare1-factory
-	"Mystery Factory" cyoa-title!
+	"Usine Mysterieuse" cyoa-title!
 	someicon 0 6 rnd to mystfactory
 	\ stomach
 	\ why yes,, i do love rolling a rare loc only to get umbrellas!!!!  NOT ANYMORE
-	($ Thegroup .. " spots a factory whose signs have rusted to nothing. The zombies are " .. "swarming" rbold .. " over the whole place. There's probably some of whatever the factory made left inside, whatever that was." $) cyoa-text! basic-tone
+	($ Thegroup .. " repere une usine dont les panneaux ont rouille jusqu'au neant. Les zombies " .. "grouillent" rbold .. " partout. Il reste probablement ce que l'usine fabriquait a l'interieur, quoi que ce soit." $) cyoa-text! basic-tone
 	1.5 8 18 rnd 1 2 rnd zforecast // former 1.8
 	"events/rareloc/region/industry.df" $load-region
-		choice( "Investigate Factory" )choice: premission
+		choice( "Investiguer l'Usine" )choice: premission
 		gas-draw
 ;
 
 // Sacrificial Altar
 
 cyoa: rare1-altar
-	"Malicious House" cyoa-title!
-	
-	($ Thegroup .. " runs into a house at the end of a cul-de-sac. It radiates an " .. "OVERWHELMING" rbold .. " sense of dread and malice.
-	There might be a can of food inside!" $) cyoa-text! basic-tone
+	"Maison Malefique" cyoa-title!
+
+	($ Thegroup .. " tombe sur une maison au bout d'un cul-de-sac. Elle degage un sentiment " .. "ECRASANT" rbold .. " de peur et de malice.
+	Il y a peut-etre une boite de nourriture dedans !" $) cyoa-text! basic-tone
 	1.6 8 18 rnd 0 1 rnd zforecast // former 2.3
 	"events/rareloc/region/altar.df" $load-region
-		choice( "Investigate House" )choice: premission
+		choice( "Investiguer la Maison" )choice: premission
 		gas-draw
 ;
 
 // Giant Pig Car
 
 cyoa: rare1-hotdog
-	"Giant Animal" cyoa-title!
-	
-	($ Thegroup .. " sees a gigantic animal on the side of the road, in the middle of a bunch of stores. Maybe it is a hallucination? Or some sort of trap?" $) cyoa-text! basic-tone
+	"Animal Geant" cyoa-title!
+
+	($ Thegroup .. " voit un animal gigantesque sur le bord de la route, au milieu d'un groupe de magasins. C'est peut-etre une hallucination ? Ou un piege ?" $) cyoa-text! basic-tone
 	2.3 8 18 rnd 0 1 rnd zforecast
 	"events/rareloc/region/hotdog.df" $load-region
-		choice( "Investigate Animal" )choice: premission
+		choice( "Investiguer l'Animal" )choice: premission
 		gas-draw
 ;
 
@@ -150,24 +150,24 @@ cyoa: rare1-hotdog
 cyoa: rare1-hermit
 	// image-cabin-in-woods
 	char-gen to recruitee 2 recruitee .specialtype! ricon
-	"Neighborly Visit" cyoa-title!
-	($ "While trying to drive away from a big horde, " .. thegroup .. " takes a detour through the deep woods. After taking a wrong turn, they spot a cabin. There's smoke coming from the chimney!" $) cyoa-text! basic-tone
+	"Visite de Voisinage" cyoa-title!
+	($ "En essayant de fuir une grande horde, " .. thegroup .. " fait un detour dans la foret profonde. Apres un mauvais virage, ils repèrent une cabane. De la fumee sort de la cheminee !" $) cyoa-text! basic-tone
 	3 12 16 rnd 1 siegecast // 2.2
 	"events/rareloc/region/hermit.df" $load-region
-		choice( "Check it out" )choice: premission
+		choice( "Voir ce que c'est" )choice: premission
 		gas-draw
 ;
 
 // Alien Car
 
 cyoa: rare1-ufo
-	"The Truth Is Out There" cyoa-title!
+	"La Verite Est Ailleurs" cyoa-title!
 		char-gen to recruitee 51 recruitee .specialtype! ricon
-		($ "While driving through the woods, " .. thegroup .. " SEES A UFO AMIDST THE TREES! WHOAAAAAAA!!!!" rbold .. "
-		Watch out! There's something moving near it!" $) cyoa-text!
+		($ "En roulant dans les bois, " .. thegroup .. " VOIT UN OVNI PARMI LES ARBRES ! WOOOOOUAAAAAH !!!!" rbold .. "
+		Attention ! Il y a quelque chose qui bouge pres de lui !" $) cyoa-text!
 		2.8 14 19 rnd 2 siegecast // untouched
 		"events/rareloc/region/alien.df" $load-region
-		choice( "Investigate UFO!" )choice: premission
+		choice( "Investiguer l'OVNI !" )choice: premission
 		gas-draw
 	 goodfx
 ;
@@ -175,97 +175,97 @@ cyoa: rare1-ufo
 // Hazmat Guys
 
 cyoa: hazmatrescue
-	"Hazmat Rescue" cyoa-title!
-	($ Thegroup .. " escapes the sewer!" $) text!
+	"Sauvetage Hazmat" cyoa-title!
+	($ Thegroup .. " s'echappe des egouts !" $) text!
 	hazmat1 0= hazmata 0= hazmatb 0= or or if
-		($ Thegroup .. " left before finding everyone, so there was no reward." $) +crtext
+		($ Thegroup .. " est parti avant de trouver tout le monde, donc pas de recompense." $) +crtext
 		morale--all badfx
 	then;
 		0 hazmat1 .party! 0 hazmata .party! 0 hazmatb .party!
 		hazmat1 .alive? hazmata .alive? hazmatb .alive? and and if
-			"The entire Hazmat Team made it out alive!" +crtext
+			"Toute l'equipe Hazmat s'en est sortie vivante !" +crtext
 			morale2+all
 		else
-			"Not all of the Hazmat Team made it out, but the help was still appreciated." +crtext
+			"Pas toute l'equipe Hazmat ne s'en est sortie, mais l'aide etait quand meme appreciee." +crtext
 		then
 
 		hazmat1 .alive? if
-			($ "Matt" pbold .. " reveals a stash of carefully sealed medical supplies!" $) +crtext
+			($ "Matt" pbold .. " revele un stock de fournitures medicales soigneusement scellees !" $) +crtext
 			10 trunk-medical+
 		else
-			($ "Matt" pbold .. " didn't survive his rescue mission." $) +crtext
+			($ "Matt" pbold .. " n'a pas survecu a sa mission de sauvetage." $) +crtext
 		then
 
 		hazmata .alive? if
-			($ "Matilda" pbold .. " shows off a cache of food. It may or may not have been stashed in the sewer..." $) +crtext
+			($ "Matilda" pbold .. " montre un cache de nourriture. Il etait peut-etre cache dans les egouts..." $) +crtext
 			20 trunk-food+
 		else
-			($ "Matilda" pbold .. " didn't make it out of the sewer." $) +crtext
+			($ "Matilda" pbold .. " n'est pas sortie des egouts." $) +crtext
 		then
 
 		hazmatb .alive? if
-			($ "Mattie" pbold .. " pantomimes some emergency medical techniques." $) +crtext
+			($ "Mattie" pbold .. " mime quelques techniques medicales d'urgence." $) +crtext
 			' .medical++ foreach-team-char
 		else
-			($ "Mattie" pbold .. " was left behind." $) +crtext
+			($ "Mattie" pbold .. " a ete laisse derriere." $) +crtext
 		then
 
 ;
 
 cyoa: rare1-hazmat
-	"Hazardous Materials" cyoa-title!
+	"Matieres Dangereuses" cyoa-title!
 	char-gen to recruitee 23 recruitee .specialtype! ricon
-	($ Thegroup .. " is driving through an empty city when they see a man in the road. He is in a hazmat suit and is beckoning " .. thegroup .. " for help. As the car gets closer, he opens a manhole and enters the sewer." $) cyoa-text! basic-tone
+	($ Thegroup .. " traverse une ville vide quand ils voient un homme sur la route. Il est en combinaison hazmat et fait signe a " .. thegroup .. " de l'aider. Quand la voiture s'approche, il ouvre une bouche d'egout et entre dans les egouts." $) cyoa-text! basic-tone
 		1.5 19 22 rnd 2 3 rnd zforecast
 		// mission{ ' door-no-escape to main-event-mission-location-leave }
 		"events/rareloc/region/hazmat.df" $load-region
-		choice( "Go after him!" )choice: premission
+		choice( "Le suivre !" )choice: premission
 		gas-draw
 ;
 
 // Danger Rangers
 
 cyoa: rangerrescue
-	"Danger Ranger Fan Club" cyoa-title!
-	($ Thegroup .. " escapes that swarmed suburb." $) text!
+	"Club des Fans des Danger Rangers" cyoa-title!
+	($ Thegroup .. " s'echappe de cette banlieue envahie." $) text!
 	rangerp 0= not if
 		0 rangerp .party!
 		rangerp .alive? if
-			($ "Pink" pbold .. " unleashes her Healing Ranger Ray!" $) +crtext
+			($ "Pink" pbold .. " declenche son Rayon Guerisseur de Ranger !" $) +crtext
 			6 groupheal
 		else
-			($ "Pink" pbold .. " is no longer there to support the group." $) +crtext
+			($ "Pink" pbold .. " n'est plus la pour soutenir le groupe." $) +crtext
 		then
 	then
 	rangero 0= not if
 		0 rangero .party!
 		rangero .alive? if
-			($ "Orange" pbold .. " bestows some of her energy and fitness." $) +crtext
+			($ "Orange" pbold .. " transmet une partie de son energie et sa forme physique." $) +crtext
 			' .fitness++ foreach-team-char
 		else
-			($ "Orange" pbold .. " didn't make it. Their team is lessened." $) +crtext
+			($ "Orange" pbold .. " n'y est pas arrive. L'equipe s'en trouve diminuee." $) +crtext
 		then
 	then
 	rangerg 0= not if
 		0 rangerg .party!
 		rangerg .alive? if
-			($ "Green" pbold .. " grants some of his famous strength." $) +crtext
+			($ "Green" pbold .. " accorde un peu de sa celebre force." $) +crtext
 			' .strength++ foreach-team-char
 		else
-			($ "Green" pbold .. "'s mighty strength will be missed." $) +crtext
+			($ "La puissante force de " .. "Green" pbold .. " va manquer." $) +crtext
 		then
 	then
 	rangerb 0= not if
 		0 rangerb .party!
 		rangerb .alive? if
-			($ "Blue" pbold .. " gives an inspirational pep talk!" $) +crtext
+			($ "Blue" pbold .. " donne un discours de motivation inspirant !" $) +crtext
 			morale2+all
 		else
-			($ "Blue" pbold .. " will no longer provide leadership." $) +crtext
+			($ "Blue" pbold .. " ne sera plus la pour diriger." $) +crtext
 		then
 	then
 	rangerp 0= rangero 0= rangerg 0= rangerb 0= or or or if
-		($ Thegroup .. " feels inadequate over not finding everyone." $) +crtext
+		($ Thegroup .. " se sent inadequat de ne pas avoir trouve tout le monde." $) +crtext
 		morale--all badfx
 	else
 		goodfx
@@ -275,23 +275,23 @@ cyoa: rangerrescue
 cyoa: rare1-rangers
 	"Danger Rangers" cyoa-title!
 	char-gen to recruitee 44 recruitee .specialtype! ricon
-	($ Thegroup .. " sees four people in bright, shiny outfits. They're running around punching zombies and doing little poses. They get overwhelmed by the swarm and flee in different directions." $) cyoa-text! basic-tone
+	($ Thegroup .. " voit quatre personnes en tenues brillantes et colorees. Elles courent en frappant des zombies et font de petites poses. Elles sont submergees par l'essaim et fuient dans differentes directions." $) cyoa-text! basic-tone
 	2.5 8 14 rnd 2 zforecast // former 3
 	"events/rareloc/region/city-rangers.df" $load-region
-		choice( "Try to save them" )choice: premission
+		choice( "Essayer de les sauver" )choice: premission
 		gas-draw
 ;
 
 // Bryce Li
 
-cyoa-choice: bruce-picked 
+cyoa-choice: bruce-picked
 	cchar .weapon_default@ WEAPON_KUNG = if
-		($ cname .. " gets taught some master-level techniques! " .. cHe .. " now hits even harder!
-		Now " .. chis .. " hands can hit three targets per attack!" $) text!
+		($ cname .. " apprend des techniques de niveau maitre ! " .. cHe .. " frappe encore plus fort !
+		Maintenant ses mains peuvent toucher trois cibles par attaque !" $) text!
 		WEAPON_MASTERKUNG
 	else
-		($ cname .. " gets a crash course in martial arts! " .. cHe .. " is able to learn one very handy move.
-		Now " .. chis .. " hands are anti-zombie weapons!" $) text!
+		($ cname .. " recoit un cours accelere en arts martiaux ! " .. cHe .. " apprend une technique tres pratique.
+		Maintenant ses mains sont des armes anti-zombie !" $) text!
 		WEAPON_KUNG
 	then cchar .weapon_default! goodfx
 ;
@@ -300,156 +300,156 @@ cyoa: brucerescued
 	rescue to recruitee ricon
 	0 rescue .party!
 	recruitee .alive? if
-		"Enter the Death Road" cyoa-title!
-		($ rname .. " gets out of the car once it drives safely past the swarmed city." $) text!
+		"Entrer sur la Death Road" cyoa-title!
+		($ rname .. " sort de la voiture une fois qu'elle passe en securite la ville envahie." $) text!
 		solohuman if
 			soloer choosechar
 			cchar .weapon_default@ WEAPON_KUNG = if
-				($ "In return for the help, he teaches " .. cname .. " an even more advanced form of martial arts!" $) +crtext WEAPON_MASTERKUNG
+				($ "En remerciement, il apprend a " .. cname .. " une forme encore plus avancee d'arts martiaux !" $) +crtext WEAPON_MASTERKUNG
 			else
-				($ "In return for the help, he teaches " .. cname .. " how to splat zombies with " .. chis .. " bare hands!" $) +crtext WEAPON_KUNG
+				($ "En remerciement, il apprend a " .. cname .. " comment ecraser les zombies a mains nues !" $) +crtext WEAPON_KUNG
 			then cchar .weapon_default! goodfx
-		else		
-			($ "In thanks for helping " .. rhim .. ", " .. rhe .. " offers to teach one person how to splat zombies bare-handed.
-			Who should get the training?" $) +crtext
+		else
+			($ "En remerciement d'avoir aide " .. rhim .. ", " .. rhe .. " propose d'apprendre a une personne comment ecraser les zombies a mains nues.
+			Qui devrait recevoir la formation ?" $) +crtext
 			' bruce-picked cyoa-human-choice
 		then
 	else
-		"Crushing Defeat" cyoa-title!
-		($ Thegroup .. " feels a great sense of loss over " .. rname .. " getting eaten.
-		His martial arts knowledge is now gone." $) cyoa-text!
+		"Defaite Ecrasante" cyoa-title!
+		($ Thegroup .. " ressent une grande perte apres que " .. rname .. " soit mange.
+		Son savoir en arts martiaux est maintenant perdu." $) cyoa-text!
 		morale2-all badfx
 	then
 ;
 
 cyoa: rare1-bruce
-	"Kung Fu to Canada" cyoa-title!
+	"Kung Fu vers le Canada" cyoa-title!
 	char-gen to recruitee 48 recruitee .specialtype! ricon
-	($ "While driving through a very crowded city, " .. thegroup .. " sees a survivor sneaking through the crowds. He's doing a pretty good job being sneaky, despite his bright yellow jumpsuit." $) cyoa-text! basic-tone
+	($ "En traversant une ville tres bondee, " .. thegroup .. " voit un survivant se faufiler dans la foule. Il s'en sort plutot bien en mode furtif, malgre sa combinaison jaune vif." $) cyoa-text! basic-tone
 	2.2 10 12 rnd 0 1 rnd zforecast // formerly 3.5, 2.7 diff
 	"events/rareloc/region/city-bruce.df" $load-region
-		choice( "Try to reach him" )choice: premission
+		choice( "Essayer de l'atteindre" )choice: premission
 		gas-draw
 ;
 
 
-cyoa: rare1-busdepot 
-	"Old Bus Graveyard" cyoa-title!
-	($ Thegroup .. " drives past a large bus garage. Although long-since abandoned, something glimmers still in one of the garages." $) cyoa-text! basic-tone
+cyoa: rare1-busdepot
+	"Vieux Cimetiere de Bus" cyoa-title!
+	($ Thegroup .. " passe devant un grand garage de bus. Bien que longtemps abandonne, quelque chose brille encore dans un des garages." $) cyoa-text! basic-tone
 	1.2 8 18 rnd 1 zforecast
 	"events/rareloc/region/busdepot.df" $load-region
-		choice( "Forget Your Ticket" )choice: premission
+		choice( "Oubliez votre Billet" )choice: premission
 		gas-draw
 ;
 
-cyoa: q-beach 
-	"Seaside Shanties" cyoa-title!
-	($ Thegroup .. " finds a beach, as sandy and grainy as in childhood memory. On the approach, the faint sound of sea waves draws near..." $) cyoa-text! basic-tone
+cyoa: q-beach
+	"Cabanons en Bord de Mer" cyoa-title!
+	($ Thegroup .. " trouve une plage, aussi sableuse que dans les souvenirs d'enfance. En approchant, le faible bruit des vagues de mer se rapproche..." $) cyoa-text! basic-tone
 	1.1 8 18 rnd 1 zforecast
 	"events/inner/region/beach.df" $load-region
-		choice( "Get Sand Between Your Toes" )choice: premission
+		choice( "Mettre du Sable Entre les Orteils" )choice: premission
 		gas-draw
 ;
 
 cyoa: rare1-warehouse
-	"Abandoned Warehouse" cyoa-title!
-	($ Thegroup .. " stumbles across an old, long forgotten warehouse. The exterior of the building is huge - perhaps something still remains inside?" $) cyoa-text! basic-tone
+	"Entrepot Abandonne" cyoa-title!
+	($ Thegroup .. " tombe sur un vieux hangar depuis longtemps oublie. L'exterieur du batiment est enorme - peut-etre qu'il reste quelque chose a l'interieur ?" $) cyoa-text! basic-tone
 	1.2 20 22 rnd 2 zforecast
 	"events/rareloc/region/arkwares.df" $load-region
-		choice( "Forget Your Membership Card" )choice: premission
+		choice( "Oubliez votre Carte de Membre" )choice: premission
 		gas-draw
 ;
 
-cyoa: q-hmp 
-	"Forgotten Prison" cyoa-title!
-	($ Thegroup .. " comes across a prison. Outside, the cameras are still churning left to right. Could somebody still be inside?" $) cyoa-text! basic-tone
+cyoa: q-hmp
+	"Prison Oubliee" cyoa-title!
+	($ Thegroup .. " tombe sur une prison. Dehors, les cameras tournent encore de gauche a droite. Quelqu'un pourrait-il encore etre a l'interieur ?" $) cyoa-text! basic-tone
 	1.1 8 18 rnd 1 zforecast
-	
-	50 %chance if 
+
+	50 %chance if
 		"events/inner/region/hmp.df" $load-region
-	else 
+	else
 		"events/inner/region/hmp2.df" $load-region
-	then 
-	\ dear roomgen, 
-	\ i hate you. love, sycamore 
-	
-		choice( "Read Your Miranda Rights" )choice: premission
+	then
+	\ dear roomgen,
+	\ i hate you. love, sycamore
+
+		choice( "Lire vos Droits Miranda" )choice: premission
 		gas-draw
 ;
 
 cyoa: rare1-marshland
-	"Putrid Bog" cyoa-title!
-	($ Thegroup .. " wanders into a marshland. Past the millions of reeds, various objects seem to be glistening in the water. Maybe they're something valuable?" $) cyoa-text! basic-tone
+	"Marecage Putride" cyoa-title!
+	($ Thegroup .. " erre dans un marais. Au-dela des millions de roseaux, divers objets semblent briller dans l'eau. Peut-etre sont-ils precieux ?" $) cyoa-text! basic-tone
 	1.2 10 16 rnd 2 zforecast
 	"events/retina/marshes.df" $load-region
-		choice( "Put Your Rainboots On" )choice: premission
+		choice( "Mettez vos Bottes de Pluie" )choice: premission
 		gas-draw
 ;
 
 
-cyoa: r-bank 
-	"Central Bank" cyoa-title!
-	($ Thegroup .. " comes across a branch's central bank. Although most of the vaults have likely been looted, perhaps something still remains inside?" $) cyoa-text! basic-tone
+cyoa: r-bankF
+	"Banque Centrale" cyoa-title!
+	($ Thegroup .. " tombe sur la banque centrale d'une succursale. Bien que la plupart des coffres aient probablement ete pilles, peut-etre qu'il reste quelque chose ?" $) cyoa-text! basic-tone
 	1.1 7 14 rnd 3 zforecast
 	"events/retina/treasury.df" $load-region
-		choice( "Evade Taxes" )choice: premission
+		choice( "Frauder le fisc" )choice: premission
 		gas-draw
 ;
 
 
 cyoa: rare1-train
-	"Maleficent Metro" cyoa-title!
-	($ Thegroup .. " is waltzing around an abandoned train station when a metro train shows up. It's one of the new-fangled self-piloting metro trains of the post-2000s era. Who knows where it might go?" $) cyoa-text! basic-tone
-	
-	($ "After a minute or two, zombies begin to swarm the train." $) +crtext
-\	($ RAINBOW "HOLDOUT FOR AS LONG AS YOU CAN!" .. $) +crtext 
+	"Metro Malefique" cyoa-title!
+	($ Thegroup .. " se balade dans une gare abandonnee quand un metro arrive. C'est un de ces nouveaux metros a pilotage automatique de l'ere post-2000. Qui sait ou il pourrait aller ?" $) cyoa-text! basic-tone
 
-	50 %chance if 
-		10 to timeofday 
-	else 
+	($ "Apres une minute ou deux, les zombies commencent a envahir le train." $) +crtext
+\	($ RAINBOW "HOLDOUT FOR AS LONG AS YOU CAN!" .. $) +crtext
+
+	50 %chance if
+		10 to timeofday
+	else
 		22 to timeofday
-	then 
-	
-	($ "HOLDOUT! SURVIVE AS LONG AS POSSIBLE!" fbold .. "
-		HORDE SIZE: " pbold .. "RUSH HOUR" rbold .. "
-		CURRENT TIME: " pbold .. timeforecast .. "
-		HOLDOUT LENGTH: " pbold .. "Variable" $) +crtext 
-	($ "YOU CAN PULL THE STOP LEVERS TO EXIT THE SIEGE!" fbold $) +crtext 
+	then
+
+	($ "TENEZ BON ! SURVIVEZ LE PLUS LONGTEMPS POSSIBLE !" fbold .. "
+		TAILLE DE LA HORDE : " pbold .. "HEURE DE POINTE" rbold .. "
+		HEURE ACTUELLE : " pbold .. timeforecast .. "
+		DUREE DU SIEGE : " pbold .. "Variable" $) +crtext
+	($ "VOUS POUVEZ TIRER LES LEVIERS STOP POUR QUITTER LE SIEGE !" fbold $) +crtext
 	\ Doesn't make sense to have a regular siegecast, coz its not a regular siege
-	\ Even down to the way zombies spawn. 
+	\ Even down to the way zombies spawn.
 
 	"events/stomach/train.df" $load-region
-		choice( "Forget Your Ticket" )choice: premission
-		\ forget your ticket.. like silly sycamore did one time!!! 
+		choice( "Oubliez votre Billet" )choice: premission
+		\ forget your ticket.. like silly sycamore did one time!!!
 		gas-draw
 ;
 
-cyoa: s-citadel 
-	"Antiquated Citadel" cyoa-title!
-	($ Thegroup .. " drives past a checkpoint, right outside of a military citadel. There's boxes of ammo everywhere; clearly some kind of force was holding here. As the group approach the gate, legions of zombies swarm out of nowhere." $) cyoa-text! basic-tone
+cyoa: s-citadel
+	"Citadelle Antique" cyoa-title!
+	($ Thegroup .. " passe devant un checkpoint juste a l'exterieur d'une citadelle militaire. Des caisses de munitions partout ; manifestement une force tenait ici. Quand le groupe s'approche du portail, des legions de zombies surgissent de nulle part." $) cyoa-text! basic-tone
 	2.1 14 19 rnd 1 siegecast
 	"events/stomach/citadel.df" $load-region
-		choice( "Avoid Military Tribunal" )choice: premission
+		choice( "Eviter le Tribunal Militaire" )choice: premission
 		gas-draw
 ;
 
 \ It's definitely not Murkywater from payday2 guys.
-\ Defffffffinitely not. 
+\ Defffffffinitely not.
 cyoa: s-railyard
-	"Dinguswater Station" cyoa-title! 
-	($ Thegroup .. " finds a train depot with lots of containers. Plenty are empty now and for the most part only loadless bogies remain, but maybe some still have loot." $) cyoa-text! basic-tone
+	"Gare de Dinguswater" cyoa-title!
+	($ Thegroup .. " trouve un depot de train plein de conteneurs. La plupart sont vides et il ne reste que des bogies sans chargement, mais peut-etre que certains ont encore du butin." $) cyoa-text! basic-tone
 	1.2 10 16 rnd 2 zforecast
 	"events/stomach/rail_yard.df" $load-region
-		choice( "Steal From Dinguswater Again" )choice: premission
+		choice( "Piller Dinguswater Encore" )choice: premission
 		gas-draw
 ;
 
 cyoa: s-multistory
-	"Reserved Parking" cyoa-title! 
-	($ Thegroup .. " peeks inside an old concrete parking lot. It's mostly brimming with rusty cars, although perhaps there's a functioning car left in there still." $) cyoa-text! basic-tone
+	"Stationnement Reserve" cyoa-title!
+	($ Thegroup .. " jette un oeil dans un vieux parking en beton. Il est surtout rempli de voitures rouillees, mais peut-etre qu'il y en a encore une qui fonctionne." $) cyoa-text! basic-tone
 	1.2 7 11 rnd 2 zforecast
 	"events/stomach/multistory.df" $load-region
-		choice( "Enter Scary Liminal Space" )choice: premission
+		choice( "Entrer dans l'Espace Liminaire Terrifiant" )choice: premission
 		gas-draw
 ;
 
