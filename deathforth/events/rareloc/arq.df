@@ -25,7 +25,7 @@ roomgen{
 cyoa{
 cyoa-choice: arq-toilet-cyoa-go
 	picon
-	($ "The experience is reminiscent of the days before the world got destroyed by zombies. A relief washes over " .. pname .. "." $) cyoa-text! goodfx
+	($ "L'experience rappelle les jours d'avant la destruction du monde par les zombies. Un lavage s'en va sur " .. pname .. "." $) cyoa-text! goodfx
 	pchar .morale3+ clear-cyoa
 ;
 
@@ -36,7 +36,7 @@ cyoa: arq-toilet-cyoa
 		($ pname .. " doesn't need to use it right now." $) +crtext
 	then;
 	"FINALLY!" cyoa-title!
-	($ pname .. " can't believe " .. phis .. " eyes: " .. "An actual functioning toilet!
+	($ pname .. " can't believe " .. phica .. " eyes: " .. "An actual functioning toilet!
 	" rainbold .. "This opportunity mustn't be wasted. Should " .. pname .. " use it?" $) cyoa-text!
 	choice( "Leave it be" )choice
 	pchar charchoice( ": I've been holding it in too long!" )choice: arq-toilet-cyoa-go
@@ -44,7 +44,7 @@ cyoa: arq-toilet-cyoa
 
 cyoa-choice: arq-bath-cyoa-go
 	picon
-	($ pname .. " runs a warm water shower and gets all soapy. A pastime long forgotten, returned." $) cyoa-text! goodfx
+	($ pname .. " prend une douche chaude et se savonne. Un passe-temps oublie, retrouve." $) cyoa-text! goodfx
 	pchar .morale++ clear-cyoa
 	1 1 1 pchar .tint.hair!
 	1 1 1 pchar .tint.skin!
@@ -54,7 +54,7 @@ cyoa-choice: arq-bath-cyoa-go
 cyoa: arq-bath-cyoa
 	pchar .arq? if
 		"Nothing Unusual Here" cyoa-title!
-		"It's a shower." cyoa-text!
+		"C'est une douche." cyoa-text!
 		($ pname .. " doesn't need to use it right now." $) +crtext
 	then;
 	"A Clean Shower" cyoa-title!
@@ -79,7 +79,7 @@ cyoa: arq-bath-cyoa
 ;
 }
 
-" 
+"
 :map 1
 :tags arqroom
 :scriptA arq-fridge
@@ -87,8 +87,8 @@ cyoa: arq-bath-cyoa
 :scriptC arq-bed
 :scriptD arq-table
 :size 11 10
-:off 4 0 
-:tiles 
+:off 4 0
+:tiles
 22222222222
 23333333332
 211A111B112
@@ -125,7 +125,7 @@ cyoa-bridge: arq-recruit
 	"Alright, let's go." pbold cyoa-text! clear-cyoa
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
 	team-full? if
-		"Kick someone from the group:" +crtext recruit-replace?
+		"Virer quelqu'un du groupe :" +crtext recruit-replace?
 	then;
 	recruited
 ;
@@ -133,9 +133,9 @@ cyoa-bridge: arq-recruit
 cyoa: arq-talk
 	"Some Guy" cyoa-title!
 	interactee .character@ choosechar cicon
-	($ pname .. " finds " .. "some guy" fbold .. " standing alone, here. 
+	($ pname .. " finds " .. "some guy" fbold .. " standing alone, here.
 	" .. "Sup? I'm just relaxing here, I'll come with ya if you want me to." pbold $) cyoa-text! basic-tone
-	choice( "Leave him for now" )choice
+	choice( "Laisser pour l'instant" )choice
 	choice( "Recruit him" )choice: arq-recruit
 ;
 
@@ -147,28 +147,28 @@ cyoa: arq-talk
 : .arq dup .arqify .thing@ cyoa{ ' arq-talk swap .cyoa! } ;
 
 locdef{
-		
+
 location
 		tags: arqhouse
 		max-rooms: 2
 		entry-tags: arqroom
 		script: set-theme-house
 		pre-script: set-theme-house
-		
+
 		: arqroom-script
 			w random-edge-door "arqtoilet" only-with-door
 			still-npc .arq
-		;	
+		;
 		room-choice: arqroom
 			room-weight: 300
 			room-count: 1
 			room-post-script: arqroom-script
 			filter-only
-		
+
 		room-choice: arqtoilet
 			room-script: nad floor-bath
 			room-post-script:
 			room-weight: 1
 			room-count: 1
-			
+
 }

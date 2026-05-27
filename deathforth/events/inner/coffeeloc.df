@@ -4,40 +4,40 @@ cyoa{
 : coffeed? pchar statmod{ .coffee? } ;
 
 cyoa-choice: coffee-get2
-	($ cname .. " uses all " .. chis .. " mechanical skills to figure out what the many, many buttons on the coffee brewer do.
-	" .. cHe .. " makes the perfect cup of coffee! It's delicious!
-	The coffee machine sparks, emits smoke, and dies." $) cyoa-text!
+	($ cname .. " utilise toutes ses competences mecaniques pour comprendre les tres, tres nombreux boutons de la machine a cafe.
+	" .. cHe .. " fait la tasse de cafe parfaite ! C'est delicieux !
+	La machine a cafe fait des etincelles, emet de la fumee et rend l'ame." $) cyoa-text!
 		coffeed	pchar statmod{ .unsick }
 		morale2+ dexterity++ goodfx clear-cyoa mechanicREV
 ;
 
 cyoa-choice: coffee-get1
 	pchar statmod{ .sick? } if
-		($ cname .. " is feeling too sick to enjoy coffee that's been sitting in a machine for what might be years." $) cyoa-text! badfx 50 %chance if sting-- then
+		($ cname .. " se sent trop malade pour apprecier du cafe qui attendait dans une machine depuis peut-etre des annees." $) cyoa-text! badfx 50 %chance if sting-- then
 	then;
 	coffeed? if
-		($ cname .. " drinks EVEN MORE coffee and then feels pretty sick afterwards. 
-		It's hard to say if it was the massive amount of caffeine, the filthy cups, or how the coffee has been rotting for an unknown amount of time." $) cyoa-text! badfx pchar statmod{ dup .sick .uncoffee }
+		($ cname .. " boit ENCORE PLUS de cafe et se sent plutot malade ensuite.
+		Difficile de savoir si c'est la quantite massive de cafeine, les tasses crasseuses, ou le cafe qui pourrissait depuis un temps indetermine." $) cyoa-text! badfx pchar statmod{ dup .sick .uncoffee }
 	else
-		($ cname .. " sprays some coffee into an old cup lying around and then drinks it.
-		" .. cHe .. " feels all COFFEE'D UP." $) cyoa-text!
+		($ cname .. " se sert du cafe dans une vieille tasse traInant par la et le boit.
+		" .. cHe .. " se sent completement CAFFEINATE." $) cyoa-text!
 			goodfx coffeed
 	then
 ;
 
 cyoa: coffee-get
-	"Apocalyptic Coffee" cyoa-title!
+	"Cafe Apocalyptique" cyoa-title!
 	picon!
-	"This enormous and complex coffee machine was built to survive a few different kinds of end of the world scenarios. This was a big part of this coffee shop's marketing campaign.
-	Truth in advertising, it still works!" cyoa-text!
+	"Cette enorme et complexe machine a cafe a ete concue pour survivre a plusieurs types de fin du monde. C'etait une grande partie de la campagne marketing de ce cafe.
+	Publicite veridique, elle fonctionne toujours !" cyoa-text!
 	chumany? not if
-		($ pname .. " doesn't have the first idea as to how to operate this thing. And really, " .. cdogcat .. "s shouldn't drink coffee anyway." $) +crtext	
+		($ pname .. " n'a aucune idee de comment faire fonctionner ce truc. Et vraiment, les " .. cdogcat .. "s ne devraient pas boire de cafe de toute facon." $) +crtext
 	then;
-		pchar charchoice( " gets some COFFEE" )choice: coffee-get1
+		pchar charchoice( " prend du CAFE" )choice: coffee-get1
 		cmechanic+ if
-			pchar charchoice( " messes with the settings" )choice: coffee-get2
+			pchar charchoice( " bidouille les reglages" )choice: coffee-get2
 		then
-	choice( "Leave it alone" )choice
+	choice( "Laisser ca tranquille" )choice
 ;
 
 }

@@ -2,9 +2,9 @@
 cyoa{		
 
 cyoa-choice: arcade-vidcon2
-	($ cname .. " starts taking the arcade machine apart to see how it runs.
-	After some quick rooting around, " .. che .. " figures out the reason.
-	It turns out all these old arcade machines are gas powered! " .. cname .. " carefully drains the gas out of its compartment." $) cyoa-text!
+	($ cname .. " commence a demonter la borne d'arcade pour voir comment elle fonctionne.
+	Apres quelques recherches rapides, " .. che .. " trouve la raison.
+	Il s'avere que toutes ces vieilles bornes sont a essence ! " .. cname .. " draine soigneusement l'essence de son compartiment." $) cyoa-text!
 	goodfx 40 70 rnd LOOT_GAS spawnloot clear-cyoa
 ;
 
@@ -18,37 +18,37 @@ cyoa-choice: arcade-vidcon2
 		6 of "U*L*T*R*A*D*E*A*T*H" endof
 	endcase
 ;
-		
+
 cyoa-choice: arcade-vidcon1
-	($ cname .. " plays an old arcade game named " .. arcade-names fbold .. " and really gets into it.
-	Like all video games ever made, playing it increases your skills with guns. The critics were right.
-	Before " .. cname .. " knew it, 2 hours had passed." $) cyoa-text!
+	($ cname .. " joue a un vieux jeu d'arcade intitule " .. arcade-names fbold .. " et s'y plonge vraiment.
+	Comme tous les jeux video jamais crees, y jouer ameliore vos competences avec les armes. Les critiques avaient raison.
+	Avant que " .. cname .. " s'en rende compte, 2 heures s'etaient ecoulees." $) cyoa-text!
 		shootingREV shooting++ morale++ goodfx
 		clear-cyoa
-		o'clock@ 2 + o'clock 
-		team-nearby? not if	
-			($ "There was no one around to defend " .. pname .. " during this, so " .. phe .. " had to fend off zombies while playing. Watch out!" $) +crtext
+		o'clock@ 2 + o'clock
+		team-nearby? not if
+			($ "Personne n'etait la pour defendre " .. pname .. " pendant ce temps, alors " .. phe .. " a du repousser des zombies en jouant. Attention !" $) +crtext
 			7 13 rnd roomgen{ .zombspawn }
 		then
 ;
 
 cyoa: arcade-vidcon
-	"Arcade Break" cyoa-title!
+	"Pause Arcade" cyoa-title!
 	picon!
-	"This arcade machine seems to be working! It's not very clear how it can run without electricity." cyoa-text!
+	"Cette borne d'arcade semble fonctionner ! On ne voit pas bien comment elle peut tourner sans electricite." cyoa-text!
 	chumany? not if
-		($ pname .. " stares at the arcade machine in confusion. What seperates people from animals is mostly that animals don't play video games. At least, for the most part." $) +crtext
-	then; 
+		($ pname .. " fixe la borne d'arcade avec confusion. Ce qui distingue les gens des animaux c'est surtout que les animaux ne jouent pas aux jeux video. En tout cas, la plupart." $) +crtext
+	then;
 	team-nearby? not if
-		($ "With no one trustworthy nearby to watch out for zombies, playing it could be dangerous." $) +crtext
+		($ "Sans personne de confiance pour surveiller les zombies, jouer pourrait etre dangereux." $) +crtext
 	else
-		($ pname .. " considers taking a videogame break while " .. phe .. " is guarded." $) +crtext
+		($ pname .. " envisage de faire une pause jeux video pendant que " .. phe .. " est garde." $) +crtext
 	then
-		pchar charchoice( " plays the arcade game" )choice: arcade-vidcon1
+		pchar charchoice( " joue a la borne d'arcade" )choice: arcade-vidcon1
 		cmechanic+ if
-			pchar charchoice( " dismantles the arcade machine" )choice: arcade-vidcon2
+			pchar charchoice( " demonte la borne d'arcade" )choice: arcade-vidcon2
 		then
-	choice( "Leave it for now" )choice
+	choice( "Laisser pour l'instant" )choice
 ;
 
 }

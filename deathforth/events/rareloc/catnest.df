@@ -3,8 +3,8 @@ cyoa{
 
 : npc-cat-recruit
 	cchar to recruitee goodfx clear-cyoa
-	($ "Should " .. pname .. " recruit the cat?" $) +crtext
-	pchar .morale3+ 
+	($ "Should " .. pname .. " recruter le chat ?" $) +crtext
+	pchar .morale3+
 	// pchar .loyaltyREV pchar .attitudeREV
 	recruitee .loyaltyREV recruitee .fitnessREV
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
@@ -15,10 +15,10 @@ cyoa-bridge: npc-cat-oscar
 	cchar to recruitee clear-cyoa
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
 	recruit-yes
-	pchar .morale3+ 
+	pchar .morale3+
 	recruitee .loyaltyREV recruitee .fitnessREV recruitee .temperREV
 	"BONUS: Oscar's morale always stays above zero!" fbold +crtext
-	
+
 ;
 
 cyoa-bridge: npc-cat-food
@@ -28,7 +28,7 @@ cyoa-bridge: npc-cat-food
 		npc-cat-recruit
 		-1 add-food
 	else
-		($ pname .. " has no food right now! Hopefully there's some in a nearby building..." $) text!
+		($ pname .. " n'a pas de nourriture en ce moment ! Peut-etre dans un batiment voisin..." $) text!
 	then
 ;
 
@@ -42,22 +42,22 @@ cyoa-bridge: npc-cat-poke
 
 cyoa: npc-catrecruit
 	nearest .character@ choosechar cicon
-	
+
 	cchar .bodytype@ 9 = if
-		"The Last Good Cat" cyoa-title!
-			($ pname .. " finds a cat that has made its den here. It seems different than all other post-zombocalypse cats. 
+		"Le Dernier Bon Chat" cyoa-title!
+			($ pname .. " finds a cat that has made its den here. It seems different than all other post-zombocalypse cats.
 			The cat is super calm and doesn't radiate a desire to murder humans! How bizarre!
 			He is wearing a name tag that reads:" .. " OSCAR" rainbold $) text!
 		choice( "Leave Oscar behind" )choice
 		choice( "Recruit Oscar!" )choice: npc-cat-oscar
 	then;
-	
-	"The Cat Nest" cyoa-title!
-	($ pname .. " finds a cat that has made its den in this trashed house. The cat stares at " .. phim .. " with a lazy glance that is tinged with " .. "MURDEROUS INTENT." rainbold $) text!
-	// "Cats got huge some time after the apocalypse. The small cats of the past are now a thing of distant memory." +crtext 
+
+	"Le Nid du Chat" cyoa-title!
+	($ pname .. " trouve un chat qui a fait son repaire dans cette maison sacagee. Le chat fixe " .. phim .. " d'un regard paresseux teinte de " .. "MURDEROUS INTENT." rainbold $) text!
+	// "Les chats sont devenus enormes quelque temps apres l'apocalypse. Les petits chats d'antan ne sont plus qu'un lointain souvenir." +crtext
 	"WARNING: Will kill you. If not now, maybe later." rbold +crtext
 		choice( "Leave it alone" )choice
-		choice( "Poke the cat! Yeah!" fbold )choice: npc-cat-poke
+		choice( "Titille le chat ! Yeah !" fbold )choice: npc-cat-poke
 		choice( "Coax it with food" )choice: npc-cat-food
 ;
 

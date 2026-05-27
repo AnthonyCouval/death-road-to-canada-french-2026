@@ -15,45 +15,45 @@ cyoa{
 ;
 
 : dmv-text-1
-	($ cname .. "'s name is now " $) text!
+	($ "Le nom de " .. cname .. " est maintenant " $) text!
 ;
 
 : dmv-text-2
-	($ cname .. "! The driver's license says so! It's legally binding!" $) +text clear-cyoa
+	($ cname .. " ! Le permis le dit ! C'est legalement contraignant !" $) +text clear-cyoa
 ;
 
 : dmv-text-badname
 	cchar dsyp? if
-		($ cname .. " doesn't really mind the name too much. It's kind of fitting!" $) +crtext goodfx
+		($ cname .. " ne s'offusque pas trop du nom. Ca lui va plutot bien !" $) +crtext goodfx
 		morale++ vitality++ statmod{ -5 to dsyp-farted }
 	then;
-	($ cname .. " instantly forms a massive chip on " .. chis .. " shoulder. " .. cHe .. " enters a permanent state of simmering rage!" $) +crtext strength++ fitness++ morale-- temper-- badfx
+	($ cname .. " prend immediatement la mouche. " .. cHe .. " entre dans un etat permanent de rage couvante !" $) +crtext strength++ fitness++ morale-- temper-- badfx
 ;
 
 cyoa-choice: dmv-machine-1
 	dmv-text-1 "Smellbert" pchar .name! dmv-text-2
-	"What a completely awful new name!" +crtext dmv-text-badname
+	"Quel nom completement affreux !" +crtext dmv-text-badname
 ;
 
 cyoa-choice: dmv-machine-2
 	dmv-text-1 "Fartfart" pchar .name! dmv-text-2
-	($ "This is still better than " .. chis .. " previous name." $) +crtext dmv-text-badname
+	($ "C'est encore mieux que son ancien nom." $) +crtext dmv-text-badname
 ;
 
 cyoa-choice: dmv-machine-3
 	dmv-text-1 "Harry Ham" pchar .name! dmv-text-2
-	$( cname .. " was the most popular name for centuries in the Late Medieval era, for both girls and boys. It was thought that it provided a blessing of good health." $) +crtext
+	$( cname .. " etait le prenom le plus populaire pendant des siecles a la fin du Moyen Age, pour les filles comme les garcons. On pensait qu'il apportait une benediction de bonne sante." $) +crtext
 	vitality++ goodfx
 ;
 
 cyoa-choice: dmv-machine-4
 	dmv-text-1 pchar dmv-cool-namer dmv-text-2
-	($ cname .. " feels way past cool with " .. chis .. " new name!" $) +crtext
+	($ cname .. " se sent tellement cool avec son nouveau nom !" $) +crtext
 	morale3+ goodfx
 ;
 
 cyoa-bridge: dmv-machine-go
-	"What should the name be on the driver's license?" text!
+	"Quel nom doit figurer sur le permis de conduire ?" text!
 	choice( "Smellbert" )choice: dmv-machine-1
 	choice( "Fartfart" )choice: dmv-machine-2
 	choice( "Harry Ham" )choice: dmv-machine-3
@@ -61,13 +61,13 @@ cyoa-bridge: dmv-machine-go
 ;
 
 cyoa: dmv-machine
-	"A License... to Drive" cyoa-title! picon!
-	"I can't believe you skipped the line! Very rude!
-	This is a machine used to print driver's licenses.
-	It can print one final license before running out of supplies." text!
-	($ pname .. " could use a new one, " .. phis .. " license is about to expire!" $) +crtext
-		choice( "Leave it for now" )choice
-		choice( "Print new license" )choice: dmv-machine-go
+	"Un Permis... de Conduire" cyoa-title! picon!
+	"Je n'arrive pas a croire que vous ayez saute la file ! Tres impoli !
+	C'est une machine qui imprime des permis de conduire.
+	Elle peut imprimer un dernier permis avant d'etre a court de fournitures." text!
+	($ pname .. " pourrait bien en avoir un nouveau, son permis est sur le point d'expirer !" $) +crtext
+		choice( "Laisser pour l'instant" )choice
+		choice( "Imprimer un nouveau permis" )choice: dmv-machine-go
 ;
 
 }
