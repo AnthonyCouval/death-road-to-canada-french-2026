@@ -14,169 +14,169 @@ cyoa{
 // Light Knight
 
 cyoa-choice: renfaire-light-1
-	iicon ($ pname .. " buys a " .. "GAUNTLET" bbold .. "!
-	" .. "I lost the other one of this pair!
-	If you punch a zombie with this, they'll usually go flying!" rbold $) text!
+	iicon ($ pname .. " achete un " .. "GANTELET" bbold .. " !
+	" .. "J'ai perdu l'autre de la paire !
+	Si tu frappes un zombie avec ca, il s'envole en general !" rbold $) text!
 	goodfx 1 WEAPON_GAUNTLET trunk.weapon+ -3 trunk-food+ ' rfbuy-light-1 ++
 ;
 
 cyoa-choice: renfaire-light-2
-	iicon ($ pname .. " buys a " .. "DAGGER" bbold .. "!
-	" .. "I have a ton of these!
-	Buy them as souvenirs for the whole family!" rbold $) text!
+	iicon ($ pname .. " achete une " .. "DAGUE" bbold .. " !
+	" .. "J'en ai une tonne !
+	Achetez-en comme souvenirs pour toute la famille !" rbold $) text!
 	goodfx 1 WEAPON_DAGGER trunk.weapon+ -5 trunk-food+
 ;
 
 cyoa-choice: renfaire-light-3
-	iicon ($ pname .. " buys a " .. "GLADIUS" bbold .. "!
-	" .. "This is my favorite sword! It's so quick!
-	It will become your favorite sword, too!" rbold $) text!
+	iicon ($ pname .. " achete un " .. "GLADIUS" bbold .. " !
+	" .. "C'est mon epee preferee ! Elle est si rapide !
+	Elle deviendra aussi ta preferee !" rbold $) text!
 	goodfx 1 WEAPON_GLADIUS trunk.weapon+ -12 trunk-food+ ' rfbuy-light-3 ++
 ;
 
 cyoa: renfaire-light
-	"Light Knight" cyoa-title!
-	"Sup thine! I deal in light armaments!
-	For the knight on a budget!" rbold text!
+	"Chevalier Leger" cyoa-title!
+	"Salut a toi ! Je vends des armements legers !
+	Pour le chevalier avec un petit budget !" rbold text!
 	+cr foodamt
 		trunk-food 3 < if
-			"The knight notices your lack of food and gives you a free dagger!" +crtext 
+			"Le chevalier remarque ton manque de nourriture et te donne une dague gratuite !" +crtext
 			clear-cyoa 1 WEAPON_DAGGER trunk.weapon+ goodfx
 		then;
-		choice( "Leave for now" )choice
+		choice( "Partir pour l'instant" )choice
 		trunk-food 2 > rfbuy-light-1 1 < and if
-			choice( "Buy Spare Gauntlet - 3 food" )choice: renfaire-light-1
+			choice( "Acheter Gantelet - 3 nourriture" )choice: renfaire-light-1
 		then
 		trunk-food 4 > if
-			choice( "Buy Dagger - 5 food" )choice: renfaire-light-2
+			choice( "Acheter Dague - 5 nourriture" )choice: renfaire-light-2
 		then
 		trunk-food 11 > rfbuy-light-3 1 < and if
-			choice( "Buy Gladius - 12 food" )choice: renfaire-light-3
+			choice( "Acheter Gladius - 12 nourriture" )choice: renfaire-light-3
 		then
 ;
 
 // Middle Knight
 
 cyoa-choice: renfaire-mid-1
-	iicon ($ pname .. " buys a " .. "MORNING STAR" bbold .. "!
-	" .. "Sends foes flying! The cleave can be hard to count on." rbold $) text!
+	iicon ($ pname .. " achete une " .. "ETOILE DU MATIN" bbold .. " !
+	" .. "Envoie les ennemis voler ! Le tranchant est parfois imprévisible." rbold $) text!
 	goodfx 1 WEAPON_MORNING trunk.weapon+ -15 trunk-food+ ' rfbuy-mid-1 ++
 ;
 
 cyoa-choice: renfaire-mid-2
-	iicon ($ pname .. " buys a " .. "KNIGHT SWORD" bbold .. "!
-	" .. "Exceedingly reliable!" rbold $) text!
+	iicon ($ pname .. " achete une " .. "EPEE DE CHEVALIER" bbold .. " !
+	" .. "Extremement fiable !" rbold $) text!
 	goodfx 1 WEAPON_KNIGHT trunk.weapon+ -15 trunk-food+ ' rfbuy-mid-2 ++
 ;
 
 cyoa-choice: renfaire-mid-3
-	iicon ($ pname .. " buys a " .. "HALBERD" bbold .. "!
-	" .. "Lighter than a claymore, with the same impressive cleave!" rbold $) text!
+	iicon ($ pname .. " achete une " .. "HALLEBARDE" bbold .. " !
+	" .. "Plus legere qu'un claymore, avec le meme tranchant impressionnant !" rbold $) text!
 	goodfx 1 WEAPON_HALBERD trunk.weapon+ -24 trunk-food+ ' rfbuy-mid-3 ++
 ;
 
 cyoa: renfaire-mid
-	"Knight of the Golden Locks" cyoa-title!
-	"Sup thou. 
-	My armaments are neither too heavy or too light.
-	They are just right." rbold text! +cr foodamt
+	"Chevalier aux Boucles d'Or" cyoa-title!
+	"Salut a toi.
+	Mes armements ne sont ni trop lourds ni trop legers.
+	Ils sont parfaits." rbold text! +cr foodamt
 		trunk-food 15 < if
-			"You can't afford anything from this knight." +crtext 
+			"Tu n'as pas les moyens d'acheter quoi que ce soit a ce chevalier." +crtext
 		then;
-		choice( "Leave for now" )choice
+		choice( "Partir pour l'instant" )choice
 		trunk-food 14 > rfbuy-mid-1 1 < and if
-			choice( "Buy Morning Star - 15 food" )choice: renfaire-mid-1
+			choice( "Acheter Etoile du Matin - 15 nourriture" )choice: renfaire-mid-1
 		then
 		trunk-food 14 > rfbuy-mid-2 1 < and if
-			choice( "Buy Knight Sword - 15 food" )choice: renfaire-mid-2
+			choice( "Acheter Epee de Chevalier - 15 nourriture" )choice: renfaire-mid-2
 		then
 		trunk-food 23 > rfbuy-mid-3 1 < and if
-			choice( "Buy Halberd - 24 food" )choice: renfaire-mid-3
+			choice( "Acheter Hallebarde - 24 nourriture" )choice: renfaire-mid-3
 		then
 ;
 
 // Heavy Knight
 
 cyoa-choice: renfaire-heavy-1
-	iicon ($ pname .. " buys a " .. "MEDIEVAL AXE" bbold .. "!
-	" .. "Not as chivalrous as a sword. Still, a certain appeal....." rbold $) text!
+	iicon ($ pname .. " achete une " .. "HACHE MEDIEVALE" bbold .. " !
+	" .. "Pas aussi chevaleresque qu'une epee. Pourtant, un certain charme....." rbold $) text!
 	goodfx 1 WEAPON_MEDIEVAL trunk.weapon+ -15 trunk-food+ ' rfbuy-heavy-1 ++
 ;
 
 cyoa-choice: renfaire-heavy-2
-	iicon ($ pname .. " buys a " .. "MIGHTY CLAYMORE" bbold .. "!
-	" .. "Truly! A " rbold .. "Chivalrous Blade......." rainbold $) text!
+	iicon ($ pname .. " achete un " .. "PUISSANT CLAYMORE" bbold .. " !
+	" .. "Vraiment ! Une " rbold .. "Lame Chevaleresque......." rainbold $) text!
 	goodfx 1 WEAPON_CLAYMORE trunk.weapon+ -30 trunk-food+ ' rfbuy-heavy-2 ++
 ;
 
 cyoa-choice: renfaire-heavy-3
-	iicon ($ pname .. " buys a " .. "MEGAKNIGHT BLADE" bbold .. "!
-	" .. "The... perfect sword....." rbold $) text!
-	($ "The knight throws in the promised " .. "Knightly Training!" fbold $) +crtext
+	iicon ($ pname .. " achete une " .. "LAME DU MEGA-CHEVALIER" bbold .. " !
+	" .. "La... lame parfaite....." rbold $) text!
+	($ "Le chevalier ajoute la promesse d'" .. "Entrainement de Chevalier !" fbold $) +crtext
 	goodfx 1 WEAPON_MEGAKNIGHT trunk.weapon+ -35 trunk-food+ ' rfbuy-heavy-3 ++
 	' .strength++ foreach-team-char
 ;
 
 cyoa: renfaire-heavy
-	"Heavy LARP" cyoa-title!
-	"I only selleth the HEAVIEST ARMAMENTS!
-	If thou havest the coin...... and mettle....??" rbold text!
+	"LARP Lourd" cyoa-title!
+	"Je ne vends que les ARMEMENTS LES PLUS LOURDS !
+	Si tu as les pieces...... et le courage....??" rbold text!
 	rfbuy-heavy-3 1 < if
-		"The knight offers a special deal if you buy the MegaKnight Blade: " +crtext
-		"Free Knightly Strength Training Session" rainbold +text 
+		"Le chevalier offre un deal special si tu achetes la Lame du Mega-Chevalier : " +crtext
+		"Seance de Force Offerte du Chevalier" rainbold +text
 	then +cr foodamt
 		trunk-food 15 < if
-			"The knight scoffs at your lack of food." +crtext 
+			"Le chevalier se moque de ton manque de nourriture." +crtext
 		then;
-		choice( "Leave for now" )choice
+		choice( "Partir pour l'instant" )choice
 		trunk-food 14 > rfbuy-heavy-1 1 < and if
-			choice( "Buy Medieval Axe - 15 food" )choice: renfaire-heavy-1
+			choice( "Acheter Hache Medievale - 15 nourriture" )choice: renfaire-heavy-1
 		then
 		trunk-food 29 > rfbuy-heavy-2 1 < and if
-			choice( "Buy Mighty Claymore - 30 food" )choice: renfaire-heavy-2
+			choice( "Acheter Puissante Claymore - 30 nourriture" )choice: renfaire-heavy-2
 		then
 		trunk-food 34 > rfbuy-heavy-3 1 < and if
-			choice( "Buy MegaKnight Blade - 35 food" )choice: renfaire-heavy-3
+			choice( "Acheter Lame du Mega-Chevalier - 35 nourriture" )choice: renfaire-heavy-3
 		then
 ;
 
 cyoa-choice: renfaire-armor-buy
-	iicon ($ pname .. " buys the " .. "SUIT OF ARMOR" bbold .. " and puts it on!
-	" .. "Finally! I can leave this Ren Faire!" pbold $) text!
+	iicon ($ pname .. " achete l'" .. "ARMURE COMPLETE" bbold .. " et la met !
+	" .. "Enfin ! Je peux quitter ce Ren Faire !" pbold $) text!
 	goodfx -40 trunk-food+ clear-cyoa
 	3 for pchar .vitality++ pchar .health++ next 53 pchar .specialbody! 0 interactee .character@ .specialbody!
-	
+
 ;
 
 cyoa: renfaire-armor
-	"Buying Knighthood" cyoa-title!
-	"I'm getting tired of all this LARPing!
-	I can sell you my armor. I don't have the helmet, so you won't be fully protected. You will still be able to take much more damage than before!
-	Just 40 food!" pbold text! foodamt
+	"Achat du titre de Chevalier" cyoa-title!
+	"J'en ai marre de ce jeu de role grandeur nature
+	Je peux te vendre mon armure. Je n'ai pas le casque, donc tu ne seras pas entierement protege. Tu pourras quand meme encaisser beaucoup plus de degats qu'avant !
+	Juste 40 nourriture !" pbold text! foodamt
 		trunk-food 40 < if
-			"You can't afford the armor." +crtext 
+			"Tu n'as pas les moyens pour l'armure." +crtext
 		then;
-		choice( "Leave for now" )choice
+		choice( "Partir pour l'instant" )choice
 		trunk-food 39 > if
-			pchar charchoice( ": Give me that armor! - 40 food " )choice: renfaire-armor-buy
+			pchar charchoice( ": Donnez-moi cette armure ! - 40 nourriture " )choice: renfaire-armor-buy
 		then
 ;
 
 cyoa-bridge: renfaire-bard-recruit
 	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
-	5 recruit-yes-food "I'm ready to L.A.R.P.!" pbold +crtext "*" rbold +text
-	"*TRANSLATOR'S NOTE: 'Live Action Role Play'" rbold +crtext
+	5 recruit-yes-food "Je suis pret a du G.N. !" pbold +crtext "*" rbold +text
+	"*NOTE DU TRADUCTEUR : 'Jeu de Role Grandeur Nature'" rbold +crtext
 	recruitee .witsREV recruitee .attitudeREV
 ;
 
 cyoa: renfaire-bard
-	"Song Request" cyoa-title!
+	"Demande de Chanson" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	"I shall sing you all the songs you like.
-	All I requireth... is 5 food!" pbold text!
-		choice( "Leave her for now" )choice
+	"Je chanterai toutes les chansons que vous aimez.
+	Tout ce qu'il me faut... c'est 5 nourriture !" pbold text!
+		choice( "La laisser pour l'instant" )choice
 		trunk-food 4 > if
-			choice( "Recruit the bard - 5 food" )choice: renfaire-bard-recruit
+			choice( "Recruter la barde - 5 nourriture" )choice: renfaire-bard-recruit
 		then
 ;
 

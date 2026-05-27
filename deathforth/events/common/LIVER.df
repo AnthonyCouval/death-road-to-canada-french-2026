@@ -8,74 +8,74 @@ cyoa{ road{
 // Military Bunker
 
 cyoa: liver-mbunker
-	"Ruined Military Depot" cyoa-title!
-	($ Thegroup .. " drives through the remains of a military depot. Everything is burnt and collapsed into rubble, with the exception of an isolated concrete bunker.
-	" .. "WARNING: EXTRA SPICY CENTER!" fbold $) cyoa-text! basic-tone
+	"Depot Militaire en Ruines" cyoa-title!
+	($ Thegroup .. " traverse les restes d'un depot militaire. Tout est brule et reduit en decombres, sauf un bunker en beton isole.
+	" .. "AVERTISSEMENT : CENTRE EXTRA EPICE !" fbold $) cyoa-text! basic-tone
 	2.4 12 16 rnd 0 zforecast // former 3.5, 2.4
 	"events/rareloc/region/mdepot.df" $load-region
-		choice( "Check it out" )choice: premission
+		choice( "Aller voir" )choice: premission
 ;
 
 cyoa-bridge: stamp-efudd-recruit
 	ricon
 	"THE CLIMACTIC STAMP BATTLE" cyoa-title!
 	"[STAND NAME] NUGS Chungus   [STAND MASTER] E*FUDD" bbold cyoa-text!
-	"DESTRUCTIVE POWER: S+   SPEED: C   RANGE: A
-	DURABILITY: S+   PRECISION: A   POTENTIAL: S" pbold +crtext goodfx
+	"PUISSANCE : S+   VITESSE : C   PORTEE : A
+	RESISTANCE : S+   PRECISION : A   POTENTIEL : S" pbold +crtext goodfx
 	team-count 3 > if
-		"This man's body and hat already take up way too much room! Who should leave?" +crtext recruit-replace?
+		"Le corps et le chapeau de cet homme prennent deja trop de place ! Qui doit partir ?" +crtext recruit-replace?
 	then;
 		recruited
 ;
 
 cyoa: stamp-efudd-event
 	50 to stampuser-countdown
-	"Unfathomable Power" cyoa-title!
+	"Puissance Insondable" cyoa-title!
 	char-gen to recruitee
 	recruitee .efuddify ricon
 	3 recruitee .morale!
-	($ Thegroup .. " sees yet another extremely buff man walking by the side of the road. This one seems even more buff than the others, though maybe it's just due to the enormous hat.
-	" .. pname .. " takes one look and knows he is a 'Stamp User'. " .. pname .. " frowns intensely." $) cyoa-text! basic-tone
+	($ Thegroup .. " voit encore un autre homme extremement muscle qui marche au bord de la route. Celui-ci semble encore plus muscle, peut-etre a cause de l'enorme chapeau.
+	" .. pname .. " le voit et sait que c'est un 'Utilisateur de Tampon'. " .. pname .. " fronce intensement les sourcils." $) cyoa-text! basic-tone
 	"YES, IT'S ME! E*FUDD!" pbold +crtext
-	"TRANSLATORS NOTE: WE HAD TO CHANGE E*FUDD'S STAMP NAME TO AVOID COPYRIGHT ISSUES, DESPITE THIS BEING AN ILLEGAL BOOTLEG TRANSLATION ANYWAY" rbold +crtext
-		choice( "Recruit him! Do it!" )choice: stamp-efudd-recruit
-		choice( "Don't recruit him, making a terrible mistake" )choice
+	"NOTE DU TRADUCTEUR : ON A DU CHANGER LE NOM DU TAMPON DE E*FUDD POUR EVITER DES PROBLEMES DE DROITS, MEME SI CETTE TRADUCTION EST DE TOUTE FACON UN BOOTLEG ILLEGAL" rbold +crtext
+		choice( "Recrutez-le ! Faites-le !" )choice: stamp-efudd-recruit
+		choice( "Ne pas le recruter, quelle terrible erreur" )choice
 ;
 
 cyoa-bridge: stamp-ziggy-recruit
 	ricon
 	"INTRODUCED IN SECOND HALF OF THE ANIME" cyoa-title!
 	"[STAND NAME] GIANT-DAWG   [STAND MASTER] Ziggy (the Dog)" bbold cyoa-text!
-	"DESTRUCTIVE POWER: C   SPEED: B   RANGE: B
-	DURABILITY: B   PRECISION: B   POTENTIAL: A" pbold +crtext goodfx
+	"PUISSANCE : C   VITESSE : B   PORTEE : B
+	RESISTANCE : B   PRECISION : B   POTENTIEL : A" pbold +crtext goodfx
 	team-count 3 > if
-		"There's too many people, and this dog needs stretching room! Who should leave?" +crtext recruit-replace?
+		"Il y a trop de monde, et ce chien a besoin d'espace ! Qui doit partir ?" +crtext recruit-replace?
 	then;
 		recruited
 ;
 
 cyoa: stamp-ziggy-event
 	30 to stampuser-countdown
-	"Is this dog... a Stamp User????!" cyoa-title!
+	"Ce chien... est-il un Utilisateur de Tampon ????!" cyoa-title!
 	char-gen to recruitee
 	recruitee .ziggify ricon
 	3 recruitee .morale!
-	($ Thegroup .. " sees a dog walking down the road. 
-	It's subtle at first, but on closer inspection the dog is also extremely buff and has nice cheekbones. It's probably a 'Stamp User', whatever that is. It's still a mystery, really." $) cyoa-text! basic-tone
+	($ Thegroup .. " voit un chien qui marche sur la route.
+	C'est subtil au debut, mais a y regarder de pres le chien est lui aussi extremement muscle et a de belles pommettes. C'est probablement un 'Utilisateur de Tampon', quoi que ce soit. C'est encore un mystere." $) cyoa-text! basic-tone
 	"SFX: [MENACING]" pbold +crtext
-	"TRANSLATORS NOTE: PLEASE DONATE SO I CAN CONTINUE MY TRANSLATIONS AND ALSO BUY A NEW MALL KATANA" rbold +crtext
-		choice( "Recruit the dog!" )choice: stamp-ziggy-recruit
-		choice( "Leave him be" )choice
+	"NOTE DU TRADUCTEUR : FAITES UN DON POUR QUE JE CONTINUE MES TRADUCTIONS ET ACHETE UN NOUVEAU KATANA DE CENTRE COMMERCIAL" rbold +crtext
+		choice( "Recrutez le chien !" )choice: stamp-ziggy-recruit
+		choice( "Laissez-le" )choice
 ;
 
 cyoa-bridge: stamp-hheck-recruit
 	ricon
 	"JUST LIKE IN MY PART 3 ANIMES" cyoa-title!
 	"[STAND NAME] ProPAIN   [STAND MASTER] Henk Heck" bbold cyoa-text!
-	"DESTRUCTIVE POWER: A   SPEED: D   RANGE: B
-	DURABILITY: D   PRECISION: C   POTENTIAL: B" pbold +crtext goodfx
+	"PUISSANCE : A   VITESSE : D   PORTEE : B
+	RESISTANCE : D   PRECISION : C   POTENTIEL : B" pbold +crtext goodfx
 	team-count 3 > if
-		"There's no room in the car for this hard working man! Who should leave?" +crtext recruit-replace?
+		"Il n'y a pas de place dans la voiture pour ce travailleur acharne ! Qui doit partir ?" +crtext recruit-replace?
 	then;
 		recruited
 ;
@@ -86,12 +86,12 @@ cyoa: stamp-hheck-event
 	char-gen to recruitee
 	recruitee .hheckify	ricon
 	3 recruitee .morale!
-	($ Thegroup .. " sees another extremely buff man walking by the side of the road. He is carrying a propane tank.
-	This man also claims to be a 'Stamp User', though " .. pname .. " still has no idea what this means and also interrupts any explanation." $) cyoa-text! basic-tone
+	($ Thegroup .. " voit un autre homme extremement muscle au bord de la route. Il porte une bonbonne de propane.
+	Cet homme se dit lui aussi 'Utilisateur de Tampon', mais " .. pname .. " n'a toujours aucune idee de ce que ca veut dire et interrompt toute explication." $) cyoa-text! basic-tone
 	"BWAAAAAAAAAAH!" pbold +crtext
-	"TRANSLATORS NOTE: IN THE ORIGINAL JAPANESE, THIS WAS 'EHHHHHHHHH???!!!'" rbold +crtext
-		choice( "Recruit him!" )choice: stamp-hheck-recruit
-		choice( "Leave him be" )choice
+	"NOTE DU TRADUCTEUR : EN JAPONAIS ORIGINAL, C'ETAIT 'EHHHHHHHHH???!!!'" rbold +crtext
+		choice( "Recrutez-le !" )choice: stamp-hheck-recruit
+		choice( "Laissez-le" )choice
 ;
 
 // Blank
@@ -110,11 +110,11 @@ cyoa: LIVER-
 
 : roadstandcheck
 	stampuser-countdown 49 > if then;
-	stampuser-countdown 38 > if 
+	stampuser-countdown 38 > if
 		' stamp-efudd-event stack-road-action
 	then;
 	stampuser-countdown 29 > if then;
-	stampuser-countdown 15 > if 
+	stampuser-countdown 15 > if
 		' stamp-ziggy-event stack-road-action
 	then;
 	stampuser-countdown 9 > if then;
@@ -129,10 +129,10 @@ cyoa{ regiondef{
 
 // Tribute
 
-: rom-bye ($ "Good luck out there. I think you can make it." pbold $) +crtext clear-cyoa goodfx ;
+: rom-bye ($ "Bonne chance dehors. Je crois que vous pouvez y arriver." pbold $) +crtext clear-cyoa goodfx ;
 
 cyoa-choice: trade-tribute-weapons
-	"He gives you a very genre-savvy loadout of weapons." cyoa-text!
+	"Il vous donne un assortiment d'armes tres adapte au genre." cyoa-text!
 	20 add-shell 20 add-gas
 	machete2 drop southofcyoa drop
 	dshotgun drop southofcyoa drop
@@ -141,7 +141,7 @@ cyoa-choice: trade-tribute-weapons
 ;
 
 cyoa-choice: trade-tribute-advice
-	"A little bit of advice can go a long way." cyoa-text!
+	"Un peu de conseil peut faire beaucoup de chemin." cyoa-text!
 	' .strength++ foreach-team-char
 	' .fitness++ foreach-team-char
 	' .shooting++ foreach-team-char
@@ -149,15 +149,15 @@ cyoa-choice: trade-tribute-advice
 ;
 
 cyoa: trade-rare-tribute
-	"Humble Assistance" cyoa-title!
+	"Aide Humble" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "You meet an older man who seems to radiate kindness. " .. Thegroup .. " talks to him for awhile, about nothing in particular. It's a pleasant conversation." $) cyoa-text!
+	($ "Vous rencontrez un homme plus age qui semble irradier la bonte. " .. Thegroup .. " lui parle un moment, de rien en particulier. C'est une conversation agreable." $) cyoa-text!
 	morale++all
-	($ "Well, I think I'll help you out a little bit." pbold $) +crtext
-	"He gives you a small gift before you leave:"
+	($ "Eh bien, je crois que je vais vous aider un peu." pbold $) +crtext
+	"Il vous offre un petit cadeau avant que vous partiez :"
 	basic-tone +cr
-		choice( "A few decent weapons" )choice: trade-tribute-weapons
-		choice( "Some good advice" )choice: trade-tribute-advice
+		choice( "Quelques armes correctes" )choice: trade-tribute-weapons
+		choice( "De bons conseils" )choice: trade-tribute-advice
 ;
 
 } }
@@ -168,17 +168,17 @@ cyoa{
 
 cyoa: rom-dead
 	the-rom choosechar cicon
-	"YOU'VE REALLY DONE IT NOW" cyoa-title!
-	($ "With this character's death, the thread of prophecy is severed. Restore a saved game to restore the weave of fate, or persist in the doomed world you have created." rbold .. "
-		
-	Just kidding about the saved game part. " .. "YOU LOSE!
-	YOU LOSE!
-	YOU DINGUS!" fbold $) text!
+	"LA T'AS VRAIMENT FAIT UNE BETISE" cyoa-title!
+	($ "Avec la mort de ce personnage, le fil de la prophetie est tranche. Restaurez une sauvegarde pour retisser la trame du destin, ou persistez dans le monde voue a la ruine que vous avez cree." rbold .. "
+
+	Blague pour la partie sauvegarde. " .. "VOUS AVEZ PERDU !
+	VOUS AVEZ PERDU !
+	ESPECE DE DINGUS !" fbold $) text!
 	sfx{ creepy }
 	clear-streak delete-the-game
 	mission{ killtally }
-	choice( "UH WOOPS" )choice: quit-to-title
-	choice( "DANG IT" )choice: quit-to-title
+	choice( "OH OUPS" )choice: quit-to-title
+	choice( "FLUTE" )choice: quit-to-title
 ;
 
 }
@@ -199,7 +199,7 @@ cyoa: rom-dead
 	99 <- chara .vitality!
 	99 <- chara .health!
 	"Director" <- chara .name!
-	"is a legend, and the reason that this game even exists. That and everything in this entire genre." <- chara .job!
+	"est une legende, et la raison pour laquelle ce jeu existe. Ca et tout ce genre dans son ensemble." <- chara .job!
 	100 STAT_FITNESS <- chara .bonus!
 	100 STAT_SHOOTING <- chara .bonus!
 	100 STAT_STRENGTH <- chara .bonus!
@@ -217,8 +217,8 @@ cyoa: rom-dead
 	
 	2 <- chara .carrying.slot_count!
 	<- chara .yesswap
-	
-	"is a supersoldier trained by the US Government to reach combat potentials that can exceed normal humans/dogs." <- chara .job!
+
+	"est un super-soldat entraine par le gouvernement americain pour atteindre des potentiels de combat depassant les humains/chiens normaux." <- chara .job!
 ;
 
 (* road{
@@ -231,16 +231,16 @@ cyoa: rom-dead
 	: CHARBRO-oneline4 "YARE YARE DAZE" ;
 	: CHARBRO-oneline5 "YARE YARE DAZE" ;
 	: CHARBRO-oneline6 "YARE YARE DAZE" ;
-	: CHARBRO-oneline7 "GOOD GRIEF! 'Translator's Note: This loosely means YARE YARE DAZE" ;
-	: CHARBRO-oneline8 "I feel like trying to open every wall for secret doors." ;
-	: CHARBRO-oneline9 "Needs more radioactive barrels..." ;
-	: CHARBRO-oneline10 "This three gun limit sucks." ;
-	: CHARBRO-oneline11 "Back in the day I could carry nine guns at once!" ;
-	: CHARBRO-oneline12 "I get more plasms ammo by cramming batteries and gum wrappers into my gun." ;
-	: CHARBRO-oneline13 "I have a ton of these chainsaws, I throw one away after each use." ;
-	: CHARBRO-oneline14 "I switched to disposable eco-friendly space chainsaws. No gas!" ;
-	: CHARBRO-oneline15 "I'm going to apologize in advance for accidentally blowing myself up." ;
-	: CHARBRO-oneline16 "I want all of the ammo!" ;
+	: CHARBRO-oneline7 "GOOD GRIEF ! 'Note du Traducteur : Ceci signifie approximativement YARE YARE DAZE" ;
+	: CHARBRO-oneline8 "J'ai envie d'essayer d'ouvrir chaque mur pour trouver des passages secrets." ;
+	: CHARBRO-oneline9 "Il faudrait plus de barils radioactifs..." ;
+	: CHARBRO-oneline10 "Cette limite de trois armes est nulle." ;
+	: CHARBRO-oneline11 "Dans le temps je pouvais porter neuf armes a la fois !" ;
+	: CHARBRO-oneline12 "J'obtiens plus de munitions de plasme en fourrant des piles et des emballages de chewing-gum dans mon arme." ;
+	: CHARBRO-oneline13 "J'ai une tonne de ces tronconneuses, j'en jette une apres chaque utilisation." ;
+	: CHARBRO-oneline14 "J'ai opte pour des tronconneuses spatiales jetables ecologiques. Sans essence !" ;
+	: CHARBRO-oneline15 "Je vais m'excuser d'avance pour m'etre accidentellement fait sauter." ;
+	: CHARBRO-oneline16 "Je veux toutes les munitions !" ;
 
 	deck-new
 		card: CHARBRO-oneline1
