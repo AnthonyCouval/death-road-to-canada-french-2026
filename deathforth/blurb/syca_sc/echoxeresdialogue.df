@@ -1,0 +1,61 @@
+    : ECHOXERES-oneline1 "nous sommes infinis." ;
+    : ECHOXERES-oneline2 "s-s t atique" ;
+    : ECHOXERES-oneline3 "p ar cou rir les pl ans  d-de  l'exis-tence" ;
+    : ECHOXERES-oneline4 "de-fectueuxueuxueux-ive" ;
+    : ECHOXERES-oneline5 "Nous sommes nombreux." ;
+    : ECHOXERES-oneline6 "bR-0s..3?..." ;
+    : ECHOXERES-oneline7 "a m e...m1ss in g" ;
+    : ECHOXERES-oneline8 "d o u l e u r" ;
+    : ECHOXERES-oneline9 "m0nde... etr-r an g e..." ;
+    : ECHOXERES-oneline10 "nous ch3rchons v3ng#*!##*--" ;
+    : ECHOXERES-oneline11 "comptez nos tetes" ;
+    : ECHOXERES-oneline12 "eth3 r e a l" ;
+    : ECHOXERES-oneline13 "nous sommes sans repos" ;
+    : ECHOXERES-oneline14 "nous n'abandonnerons pas." ;
+    : ECHOXERES-oneline15 "f a u t  ch3rch3r  v 3ng eanc-##*!#" ;
+    : ECHOXERES-oneline16 "qu ' e s t  r3el?..." ;
+    : ECHOXERES-oneline17 "quand...f-in?" ;
+    : ECHOXERES-oneline18 "fragm3nt...e..." ;
+    : ECHOXERES-oneline19 "morceaux d-de l'a-me" ;
+    : ECHOXERES-oneline20 "nous nous souvenons." ;
+    : ECHOXERES-oneline21 "sauvez   nous" ;
+
+	deck-new
+		card: ECHOXERES-oneline1
+		card: ECHOXERES-oneline2
+		card: ECHOXERES-oneline3
+		card: ECHOXERES-oneline4
+		card: ECHOXERES-oneline5
+		card: ECHOXERES-oneline6
+		card: ECHOXERES-oneline7
+		card: ECHOXERES-oneline8
+		card: ECHOXERES-oneline9
+		card: ECHOXERES-oneline10
+		card: ECHOXERES-oneline11
+		card: ECHOXERES-oneline12
+		card: ECHOXERES-oneline13
+		card: ECHOXERES-oneline14
+		card: ECHOXERES-oneline15
+		card: ECHOXERES-oneline16
+		card: ECHOXERES-oneline17
+		card: ECHOXERES-oneline18
+		card: ECHOXERES-oneline19
+		card: ECHOXERES-oneline20
+		card: ECHOXERES-oneline21
+	constant ECHOXERES-ONELINERS
+	ECHOXERES-ONELINERS var ECHOXERES-oneliners
+	ECHOXERES-ONELINERS shuffles to ECHOXERES-oneliners
+
+: ECHOXERES-oneliner
+	ECHOXERES-oneliners depths 0= if ECHOXERES-ONELINERS shuffles to ECHOXERES-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ECHOXERES-oneliner
+
+	constant BLURB-ECHOXERES-DECK
+	BLURB-ECHOXERES-DECK var blurb-ECHOXERES-deck
+	BLURB-ECHOXERES-DECK shuffles to blurb-ECHOXERES-deck

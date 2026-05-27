@@ -1,0 +1,107 @@
+
+cyoa{ road{
+
+cyoa: yallmart-easy
+	"YALLMART" cyoa-title!
+	($ Thegroup .. " repere un Yall-Mart abandonne au loin. Il a l'air d'avoir ete pille, mais il y a peut-etre du butin intact a l'interieur." $) cyoa-text! basic-tone
+	1 8 14 frnd 0 zforecast
+	"events/exterior/region/yallmart.df" $load-region
+		choice( "Faire des bonnes affaires" )choice: premission
+		gas-draw
+;
+
+cyoa: grocery1
+	"Epicerie" cyoa-title!
+	($ Thegroup .. " trouve une epicerie. Des zombies errent a l'interieur, comme s'ils gardaient la nourriture restante." $) cyoa-text! basic-tone
+	1.1 1.3 frnd 8 14 frnd 0 2 rnd zforecast
+	"events/exterior/region/grocery.df" $load-region
+		choice( "Faire les courses" )choice: premission
+		gas-draw
+;
+
+cyoa: hardware
+	"Quincaillerie" cyoa-title!
+	($ Thegroup .. " trouve une quincaillerie. Il y a peut-etre des bidons d'essence ou une tronconneuse, mais seulement si d'autres n'ont pas encore tout racle." $) cyoa-text! basic-tone
+	1.1 1.3 frnd 8 14 frnd 0 2 rnd zforecast
+	"events/exterior/region/hardware.df" $load-region
+		choice( "Faire les courses" )choice: premission
+		gas-draw
+;
+
+cyoa: grocery2
+	"Courses a l'Epicerie" cyoa-title!
+	($ Thegroup .. " repere une grande epicerie. De nombreux zombies rodent a l'interieur, gardant rayons et reserves." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 6 16 frnd 0 2 rnd zforecast
+	"events/exterior/region/grocery2.df" $load-region
+		choice( "Faire les courses" )choice: premission
+		gas-draw
+;
+
+cyoa: rescuegrocery
+	"Sauvetage a l'Epicerie" cyoa-title!
+	($ Thegroup .. " regarde un autre survivant se replier dans une grande epicerie. Le survivant est poursuivi par une grande horde en furie." $) cyoa-text! basic-tone
+	1.2 1.5 frnd 6 18 frnd 2 4 rnd zforecast
+	"events/exterior/region/rescuegrocery.df" $load-region
+		choice( "Tenter le Sauvetage !" )choice: premission
+		gas-draw
+;
+
+cyoa: yallmart-mid
+	"YALL-MART envahi" cyoa-title!
+	($ Thegroup .. " voit un grand Y'all-Mart. Une grande quantite de morts-vivants protege les provisions eparpillees a l'interieur." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 6 16 frnd 0 2 rnd zforecast
+	"events/exterior/region/yallmart-mid.df" $load-region
+		choice( "Faire des bonnes affaires" )choice: premission
+		gas-draw
+;
+
+cyoa: bookstore
+	"Librairie en Vue" cyoa-title!
+	($ Thegroup .. " voit une grande librairie. La plupart des livres et magazines ont ete mouilles et sont pourris, mais un exemplaire reste en bon etat." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 6 16 frnd 0 2 rnd zforecast
+	"events/inner/region/bookstore.df" $load-region
+		choice( "Trouver quelque chose a lire" )choice: premission
+		gas-draw
+;
+
+cyoa: sporting
+	"Magasin de Sport" cyoa-title!
+	($ Thegroup .. " repere un grand magasin de sport. De nombreux zombies rodent a l'interieur, probablement d'anciens pillards venus chercher une arme." $) cyoa-text! basic-tone
+	1.4 1.7 frnd 6 16 frnd 0 2 rnd zforecast
+	"events/exterior/region/sporting.df" $load-region
+		choice( "Faire les courses" )choice: premission
+		gas-draw
+;
+
+cyoa: grocery3
+	"Grande Course a l'Epicerie" cyoa-title!
+	($ Thegroup .. " repere une grande epicerie. Meme son parking est bonde de zombies. Pas beaucoup de pillards ont pu approcher toute la nourriture encore a l'interieur." $) cyoa-text! basic-tone
+	2.1 2.5 frnd 6 19 frnd 0 2 rnd zforecast
+	"events/exterior/region/grocery3.df" $load-region
+		choice( "Faire des courses dangereuses" )choice: premission
+		gas-draw
+;
+
+cyoa: yallmart-hard
+	"Yall-Mart : Economies Mortelles" cyoa-title!
+	($ Thegroup .. " repere un grand Yall-Mart bonde de zombies. En ignorant le danger extreme, ca pourrait etre une excellente experience de shopping." $) cyoa-text! basic-tone
+	2.1 2.5 frnd 6 19 frnd 0 2 rnd zforecast
+	"events/exterior/region/yallmart-hard.df" $load-region
+		choice( "Faire les courses dans la stampede" )choice: premission
+		gas-draw
+;
+
+cyoa: grocery-death
+	"Epicerie Intacte" cyoa-title!
+	($ "L'epidemie dans cette epicerie bondee s'est propagee si vite que la foule paniquee s'est transformee en zombies avant que le lieu puisse etre pille.
+	Beaucoup de produits sont encore sur les rayons." $) cyoa-text! basic-tone
+	3 4 frnd 6 22 frnd 0 2 rnd zforecast
+	"events/exterior/region/groceryraredeath.df" $load-region
+		choice( "Prendre un grand risque" )choice: premission
+		gas-draw
+;
+
+} }
+
+
+

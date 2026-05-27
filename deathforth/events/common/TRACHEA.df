@@ -1,0 +1,248 @@
+
+\ Just load this file after the STOMACH file, like last time. 
+
+
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ MOBSTER "LOOK HOW DEY MASSACRED MAH BOY" STUFF BELOW 
+\ ----------------------------------------------
+\ ----------------------------------------------
+
+\ TODO: 
+\ despair
+\ blurbs 
+\ endings 
+\ cyoa 
+\ death lines (inside the events) 
+
+
+\ death : "You can't touch me...I'm made!" 
+: godfather_lines 1 21 rnd case 
+
+	1 of "Combien de trahisons de plus je peux endurer ?" endof 
+	2 of "T'as vu la tete de ce nul ?" endof 
+	3 of "Je suis le grand patron." endof 
+	4 of "J'ai jamais eu l'etoffe d'un champion." endof 
+	5 of "20 ans dans une boite de sardines." endof 
+	6 of "Les zombies n'achetent pas a boire." endof 
+	7 of "Liquide." endof 
+	8 of "Capisce ?" endof 
+	9 of "Tu me comprends ?" endof 
+	10 of "Tu viens me voir...le jour de mon 4eme calcul renal..." endof 
+	11 of "Ca sera pas cinematographique." endof 
+	12 of "Fais juste ce qu'on te dit." endof 
+	13 of "Plus de genoux ? On negocie." endof 
+	14 of "La famille c'est tout. La mienne ce sont des zombies." endof 
+	15 of "Heyyyyyy comment t'vas ?" endof 
+	16 of "C'est la schmoutz." endof 
+	17 of "C'est ou le gabagoul ?" endof 
+	18 of "20 000 sur mon bureau avant la nuit." endof 
+	19 of "Chopez-les les gars !" endof 
+	20 of "Tu ferais mieux de faire gaffe !" endof 
+	21 of "T'as une abeille sur le chapeau !" endof 
+	endcase
+; 
+
+: mobster-thing-events args( me teid )
+	
+	<- teid THING_EVENT_SHOOT = if
+			weapondef{ <- me .wielded sel ammo_type@ } LOOT_BULLET = weapondef{ <- me .wielded sel ammo_type@ } LOOT_SHOTGUN_SHELL = weapondef{ <- me .wielded sel ammo_type@ } LOOT_RIFLE_SHELL = or or if 
+				\ Any basic firearm, not doing bows or explosives 
+				40 %chance if 
+					<- me .ammocount 0 > if
+						4 <- me .cooldown!
+						0 <- me .action_cooldown!
+						YELLOW "2x!" .. <- me .report \ Multishot 
+						weapondef{ <- me .wielded sel ammo_type@ } <- me .character@ .lootamt@ 1 + weapondef{ <- me .wielded sel ammo_type@ } <- me .character@ .lootamt!
+						<- me .attack
+					then
+			then
+		then
+	then
+	
+	<- teid THING_EVENT_DID_HIT = if 
+		<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if 
+			
+			<- me .just_hit_id@ #thing .vel.z@ -1 + <- me .just_hit_id@ #thing .vel.z! 
+			\ Kneecapping mechanic 
+			20 %chance if 
+				godfather_lines <- me .yellmsg 
+			then 
+		then 
+	then 
+			
+;
+
+
+: mobster-main-events args( chara eventid )
+	
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if 
+			<- chara .thing@ swap ( teid ) mobster-thing-events
+		then 
+;
+
+: .mobsterify args( chara ) 
+	"Mafioso" <- chara .name! 
+	"a fait 20 ans en taule a manger du gabagoul sur le radiateur a fromage grille." <- chara .job! 
+	4 <- chara .shooting! 
+	4 <- chara .strength! 
+	6 <- chara .wits! 
+	6 <- chara .attitude! 
+	0 <- chara .loyalty! 
+	0 <- chara .composure!
+	0 <- chara .female! 
+	\ as every mobster : a charming a-hole 
+	WEAPON_ALUMINUM <- chara .weapona! 
+	WEAPON_TYPEWRITER <- chara .weaponb! 
+	WEAPON_DOLT <- chara .weaponc! 
+	50 LOOT_BULLET <- chara .lootamt! 
+	154 <- chara .specialtype! 
+	"Cabrone" <- chara .perk! 
+	"Homme de Main" <- chara .trait! 
+	' mobster-main-events <- chara .main_events! 
+; 
+
+
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ SWISS GUARD STUFF BELOW 
+\ ----------------------------------------------
+\ ----------------------------------------------
+
+\ Arkhalis DRTS, essentially 
+
+: .swissguardify args( chara )
+	"Garde Suisse" <- chara .name! 
+	"n'est meme plus paye, il aime juste son boulot." <- chara .job! 
+	4 <- chara .strength!
+	4 <- chara .fitness! 
+	4 <- chara .wits! 
+	4 <- chara .attitude! 
+	4 <- chara .composure! 
+	6 <- chara .loyalty!
+	-10 STAT_SHOOTING <- chara .bonus! 
+	WEAPON_SWISSSLASH <- chara .weapona! 
+	WEAPON_SWISSTHRUST <- chara .weaponb!
+	"Hallebardier" <- chara .perk! 
+	"Mercenaire" <- chara .trait! 
+	<- chara .nocanshoot 
+	0 <- chara .female! 
+	1 <- chara .weapon_nodropa! 
+	1 <- chara .weapon_nodropb! 
+	6 <- chara .headoff.y! 
+	156 <- chara .specialtype! 
+	\ Halberd combo + some aura or something... 
+; 
+	
+	
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ NASCAR DRIVER BELOW, LOOSELY BASED ON TOP GEAR'S 'THE STIG' 
+\ ----------------------------------------------
+\ ----------------------------------------------	
+	
+
+
+0 stack 
+	" a modifie le moteur pour encore plus d'efficacite." shove
+	" a bidouille le calage des pistons." shove
+	" a regle le melange air-carburant." shove
+	" a remplace une piece obsolete du moteur." shove
+	" essaie une formule de carburant plus legere." shove
+	" conduit la voiture a une vitesse absurde." shove
+	" conduit comme un fou." shove
+	" a le pied presque collee chirurgicalement a l'accelerateur." shove
+var stig-fix-stack
+: stig-fix-phrase stig-fix-stack rndpicks nip ;
+
+
+: stig-main-events args( chara eventid )
+	
+	<- eventid MAIN_EVENT_MISSION_START = if		
+		mission.vehicle@ if
+			mission.vehicle@ .mpg@ 0.3 < not if
+				mission.vehicle@ .mpg@ -0.1 + mission.vehicle@ .mpg!
+				then
+			then			
+		then
+		
+	<- eventid MAIN_EVENT_DRIVING_START = if
+		mission.vehicle@ if
+		
+		car-speed 1 + 1 4 clamp to car-speed
+		
+		mission.vehicle@ .mpg@ 0.3 < car-speed 4 < and if then;
+			road{ qmsg ($ <- chara .name@ .. stig-fix-phrase $) txt }
+			road{ qmsg ($ GREEN "Consommation de la voiture amelioree !" .. $) txt }
+			road{ qmsg ($ GREEN "Vitesse de la voiture augmentee !" .. $) txt }
+		then
+	then
+		
+;
+
+	
+: .stigify args( chara ) 
+	155 <- chara .specialtype! 
+	0 <- chara .female! 
+	"Le Stug" <- chara .name! 
+	"Pilote de Rallye" <- chara .perk! 
+	"Non-Verbal" <- chara .trait! 
+	"est quelqu'un dont on ne sait que deux choses : il sait conduire, et il s'appelle Le Stug." <- chara .job! 
+	WEAPON_JAG <- chara .weapona! 
+	1 <- chara .dexterity! 
+	4 <- chara .mechanical! 
+	1 STAT_MECHANICAL <- chara .bonus! 
+	0 <- chara .composure! 
+	3 <- chara .loyalty! 
+	3 <- chara .wits! 
+	' stig-main-events <- chara .main_events! 
+	
+; 
+	
+
+\ Ragdoll physics experiment; crash test dummy character? 
+
+: ragdoll-phys-events args( me teid )
+	
+	<- teid THING_EVENT_WAS_HIT = if 
+
+		-5 <- me .vel.z! 
+		
+		7 50 %chance if -1 * then <- me .vel.x! 
+		7 50 %chance if -1 * then <- me .vel.y! 
+
+		0 <- me .angle! 
+		0 <- me .shudder! 
+	then 
+	
+	<- teid THING_EVENT_TIMER = if 
+		1 <- me .timer! 
+		
+			<- me .pos.z@ -3 < if 
+				1 <- me .stun! 
+		
+				6 <- me .rot@ + <- me .rot! 
+				<- me .rot@ <- me .angle!
+				
+				1 <- me .unseen! 
+				1 <- me .nocollide! 
+				
+			else 
+			
+				0 <- me .unseen! 
+				0 <- me .rot! 
+				0 <- me .nocollide! 
+			then 
+			
+		then 
+; 
+
+: ragdoll-main-events args( chara eventid )
+	
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if 
+			<- chara .thing@ swap ( teid ) ragdoll-phys-events
+			1 <- chara .thing@ .timer! 
+		then 
+; 

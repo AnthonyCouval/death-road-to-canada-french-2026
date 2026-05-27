@@ -1,0 +1,61 @@
+    : BAYONET-oneline1 "BAYY-OH-NETTIIII!" ;
+    : BAYONET-oneline2 "On ne roule jamais trop vite !~" ;
+    : BAYONET-oneline3 "Il y avait ces vampires, une fois..." ;
+    : BAYONET-oneline4 "Personne ne peut me suivre !~" ;
+    : BAYONET-oneline5 "PARADE BOTTE FRACAS PAN PAN PAN PAN !" ;
+    : BAYONET-oneline6 "Une fois, mes talons-flingues se sont declenches pendant mon sommeil." ;
+    : BAYONET-oneline7 "J'ai attache ces talons... mon pied n'est plus qu'une enorme ampoule." ;
+    : BAYONET-oneline8 "Curieusement - je n'ai jamais tenu de vrai mousquet ou de baïonnette." ;
+    : BAYONET-oneline9 "Des zombies ! Pourquoi a-t-il fallu que ce soit des zombies ?!" ;
+    : BAYONET-oneline10 "Regardez ce que ces zombies ont fait a ma tenue. Si impatients..." ;
+    : BAYONET-oneline11 "Vous savez ce dont j'ai besoin ? De talons sans flingues." ;
+    : BAYONET-oneline12 "Vous savez, j'essaie d'eviter de faire ca dans mes habits du dimanche." ;
+    : BAYONET-oneline13 "Les femmes de notre calibre n'ont pas besoin d'invitations, cherie." ;
+    : BAYONET-oneline14 "Un jour, un enfant m'a propose de sauter a la corde. C'est la DERNIERE fois que je fais ca." ;
+    : BAYONET-oneline15 "Quuuoiiii, vous n'avez pas aime ma performance a la chorale ?" ;
+    : BAYONET-oneline16 "C'EST MA SYMPHONIE DE LA DESTRUCTION !" ;
+    : BAYONET-oneline17 "Essaie un peu de gouter a mes 4 roues !~" ;
+    : BAYONET-oneline18 "Est-ce que je sens deja la poudre a canon selon toi ?" ;
+    : BAYONET-oneline19 "C'est l'heure des sorcieres~" ;
+    : BAYONET-oneline20 "BAY-AHHH-NETTII!!!" ;
+    : BAYONET-oneline21 "BAYYYYYOOOOONETTTTIIIIIII!" ;
+
+	deck-new
+		card: BAYONET-oneline1
+		card: BAYONET-oneline2
+		card: BAYONET-oneline3
+		card: BAYONET-oneline4
+		card: BAYONET-oneline5
+		card: BAYONET-oneline6
+		card: BAYONET-oneline7
+		card: BAYONET-oneline8
+		card: BAYONET-oneline9
+		card: BAYONET-oneline10
+		card: BAYONET-oneline11
+		card: BAYONET-oneline12
+		card: BAYONET-oneline13
+		card: BAYONET-oneline14
+		card: BAYONET-oneline15
+		card: BAYONET-oneline16
+		card: BAYONET-oneline17
+		card: BAYONET-oneline18
+		card: BAYONET-oneline19
+		card: BAYONET-oneline20
+		card: BAYONET-oneline21
+	constant BAYONET-ONELINERS
+	BAYONET-ONELINERS var BAYONET-oneliners
+	BAYONET-ONELINERS shuffles to BAYONET-oneliners
+
+: BAYONET-oneliner
+	BAYONET-oneliners depths 0= if BAYONET-ONELINERS shuffles to BAYONET-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: BAYONET-oneliner
+
+	constant BLURB-BAYONET-DECK
+	BLURB-BAYONET-DECK var blurb-BAYONET-deck
+	BLURB-BAYONET-DECK shuffles to blurb-BAYONET-deck

@@ -1,0 +1,61 @@
+    : RUBICK-oneline1 "Quelles merveilles vais-je voir aujourd'hui ?" ;
+    : RUBICK-oneline2 "ALOOORS... TU SAIS CONDUIRE LA VOITURE ? MERVEILLEUX." ;
+    : RUBICK-oneline3 "Ou devrais-je aller ensuite ? L'Universite d'Ultimyr ? Le Canada ? Hmmm..." ;
+    : RUBICK-oneline4 "Oh, si seulement j'avais le talent de mon pere pour la construction..." ;
+    : RUBICK-oneline5 "Non, le masque ne s'enleve pas." ;
+    : RUBICK-oneline6 "Ca te derange si je copie le volant ?" ;
+    : RUBICK-oneline7 "J'arrive, les Canadiens ! Attendez-moi !" ;
+    : RUBICK-oneline8 "Ma soif de connaissances ne peut etre etanchee." ;
+    : RUBICK-oneline9 "Aucune sorcellerie n'est hors de ma portee." ;
+    : RUBICK-oneline10 "Je ne suis pas un voleur. J'emprunte, simplement. La police... n'est pas d'accord." ;
+    : RUBICK-oneline11 "Hmmm. Quel test ce sera..." ;
+    : RUBICK-oneline12 "Ca te derange si je copie tes cheveux ? Il m'en manque un peu." ;
+    : RUBICK-oneline13 "Non non non, ce n'est pas de la 'fausse' monnaie, c'est..." ;
+    : RUBICK-oneline14 "Excellente idee !" ;
+    : RUBICK-oneline15 "Je pourrais invoquer un portail, mais ou serait le plaisir ?" ;
+    : RUBICK-oneline16 "Qu'est-ce que c'est que cette... 'musique' qui passe en boucle ?" ;
+    : RUBICK-oneline17 "QUI est le mage ultime ? C'est exact. C'est moi." ;
+    : RUBICK-oneline18 "Ce qui est a moi est a moi, et ce qui est a toi est a moi aussi." ;
+    : RUBICK-oneline19 "J'ai fait le reve le plus etrange, j'etais debout au milieu d'une riviere..." ;
+    : RUBICK-oneline20 "On ferait mieux d'esperer ne pas croiser l'anti-mage. C'est un vrai cretin." ;
+    : RUBICK-oneline21 "Des zombies partout, Obama, pas de jeux... j'en serais presque triste." ;
+
+	deck-new
+		card: RUBICK-oneline1
+		card: RUBICK-oneline2
+		card: RUBICK-oneline3
+		card: RUBICK-oneline4
+		card: RUBICK-oneline5
+		card: RUBICK-oneline6
+		card: RUBICK-oneline7
+		card: RUBICK-oneline8
+		card: RUBICK-oneline9
+		card: RUBICK-oneline10
+		card: RUBICK-oneline11
+		card: RUBICK-oneline12
+		card: RUBICK-oneline13
+		card: RUBICK-oneline14
+		card: RUBICK-oneline15
+		card: RUBICK-oneline16
+		card: RUBICK-oneline17
+		card: RUBICK-oneline18
+		card: RUBICK-oneline19
+		card: RUBICK-oneline20
+		card: RUBICK-oneline21
+	constant RUBICK-ONELINERS
+	RUBICK-ONELINERS var RUBICK-oneliners
+	RUBICK-ONELINERS shuffles to RUBICK-oneliners
+
+: RUBICK-oneliner
+	RUBICK-oneliners depths 0= if RUBICK-ONELINERS shuffles to RUBICK-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: RUBICK-oneliner
+
+	constant BLURB-RUBICK-DECK
+	BLURB-RUBICK-DECK var blurb-RUBICK-deck
+	BLURB-RUBICK-DECK shuffles to blurb-RUBICK-deck

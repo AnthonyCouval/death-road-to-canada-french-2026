@@ -1,0 +1,65 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+// Covers dogs but also other pets. Non-dog pets are rare enough where they really don't need their own despair events.
+
+cyoa{ road{
+
+cyoa: dog-lost
+	"Perdu dans le Desespoir" cyoa-title!
+	despair-start!
+	($ cname .. " a perdu toute confiance en sa meute. " .. cHe .. " s'assoit et refuse simplement de continuer le voyage." $) cyoa-text! badfx
+		
+	notsolo ccat? and if
+		notcchar to victim
+		($ cname .. " decide de mutiler " .. vname .. " rapidement avant d'abandonner. " .. "Un pour la route." rbold $) +crtext
+		victim .ouch2- bitefx
+	then
+	
+	decruit-bad-silent-takeweapons
+;
+	
+cyoa: dog-attack
+	despair-start-victim!
+	($ cDogcat .. " Attaque" $) cyoa-title!
+	($ cname .. " craque, apparemment de nulle part, et mutile " .. vname .. " dans une furie de " .. csnarlhiss .. "ements et de " .. cteethclaws .. "." $) cyoa-text!
+	cdog? if
+		victim .ouch2-
+	else
+		ccat? if
+			victim .kill
+		else
+			victim .ouch--
+		then
+	then bitefx
+	ccat? if
+		($ "Le " .. cdogcat .. " ne semble pas coupable de ce meurtre. En fait, " .. che .. " semble tres content de lui.
+		" $) +crtext
+		morale4+
+	else	
+		($ "Realisant ce qu'" .. che .. " a fait, le " .. cdogcat .. " prend la fuite et ne revient jamais." $) +crtext
+		decruit-bad-silent-takeweapons
+	then	
+;
+
+cyoa: dog-tantrum
+	despair-start!
+	($ cDogcat .. " Crise" $) cyoa-title!
+	($ cname .. " fait une enorme crise. " .. cHe .. " renifle et saute sur place. Apres avoir termine en arrachant de l'herbe et en faisant ses besoins de facon provocatrice, " .. che .. " se sent un peu mieux." $) cyoa-text! goodfx
+	morale++
+	notsolo if
+		ccat? if
+			($ "Pendant la crise, " .. cname .. " en a profite pour estropier " .. everyone .. "." $) +crtext
+			cchar ' .sting-- foreach-team-char-except bitefx
+		else
+			($ "Ces pitreries etaient amusantes a regarder." $) +crtext
+			cchar ' .morale++ foreach-team-char-except
+		then
+	then
+;
+
+} }
+
+

@@ -1,0 +1,274 @@
+uses paul/region-layout.df
+
+"../deathforth/rooms/duodenum.txt" $load-rooms
+
+locdef{
+
+location: traderlab
+		max-rooms: 1
+		entry-tags: traderlab-entry
+		pre-script: set-theme-bunker
+		script: set-theme-bunker
+		post-script: 
+		
+		room-choice: traderlab-entry
+			room-weight: 10
+			room-count: 1
+			room-script: ndx 
+			room-post-script:
+			filter-only
+
+}
+
+cyoa{
+
+0 value tradelab-bluebot-sold
+
+cyoa-choice: tradelab-bluebot-sale
+	iicon ($ pname .. " achete un " .. "ROBIT BLEU" bbold .. " !
+	Lancez-le par terre et il vous aidera jusqu'a ce que les piles soient epuisees." $) text!
+	goodfx 1 WEAPON_BLUEROBOT trunk.weapon+ -3 trunk-food+ ' tradelab-bluebot-sold ++
+	tradelab-bluebot-sold 1 > if clear-cyoa then
+;
+
+cyoa-choice: tradelab-redbot-sale
+	iicon ($ pname .. " achete un " .. "ROBIT ROUGE" rbold .. " !
+	Lancez-le par terre et il vous aidera jusqu'a ce que les piles soient epuisees." $) text!
+	goodfx 1 WEAPON_REDROBOT trunk.weapon+ -6 trunk-food+ clear-cyoa
+;
+
+cyoa: tradelab-bluebot
+	iicon "Robot Serviable" cyoa-title!
+	"C'est un robot serviable !
+	Pour ses temps libres, il est programme avec un discours de vente." text!
+	"1. BEEP 2. HONK
+	3. I AM SELLING ROBITS
+	4. UP TO TWO ROBITS" bbold +crtext
+	choice( "Pas question !" )choice
+	trunk-food 2 > tradelab-bluebot-sold 2 < and if
+		choice( "Acheter Robot Bleu - 3 nourriture" )choice: tradelab-bluebot-sale
+	else
+		"Il veut 3 nourriture pour un." +crtext
+	then
+;
+
+cyoa: tradelab-redbot
+	iicon "Robot Menacant" cyoa-title!
+	"Ce robot semble intense.
+	Ses griffes sont menaçantes. Ce doit etre un garde." text!
+	"1. BEEP 2. HONK
+	3. I AM SELLING A ROBIT
+	4. MAXIMUM OVERPOWER" rbold +crtext
+	choice( "Loin de moi" )choice
+	trunk-food 5 > if
+		choice( "Acheter Robot Rouge - 6 nourriture" )choice: tradelab-redbot-sale
+	else
+		"Il veut 6 nourriture." +crtext
+	then
+;
+
+0 value labsci-doodad
+0 value labsci-mazer
+
+cyoa-choice: tradelab-mazer-sale
+	iicon ($ pname .. " achete un " .. "PISTOLET MAZER" rainbold .. " !
+	" .. "Quelqu'un avec une meilleure visee que moi pourrait vraiment l'utiliser efficacement.
+	Le potentiel de penetration est immense grace a la puissance de l'" pbold .. "Energie Mazer !" fbold $) text!
+	goodfx 200 WEAPON_MAZER trunk.weapon+ -12 trunk-food+ ' labsci-mazer ++
+;
+
+cyoa-choice: tradelab-doodad-sale
+	iicon ($ pname .. " achete un " .. "BIDULE SCIENTIFIQUE" rainbold .. " !
+	" .. "Ca peut vous teleporter sur de courtes distances.
+	Il a 5 charges. Ne perdez pas le compte, j'ai oublie de construire un affichage utile. L'affichage actuel ne signifie rien, il clignote juste au hasard." pbold $) text!
+	goodfx 5 WEAPON_DOODAD trunk.weapon+ -5 trunk-food+ ' labsci-doodad ++
+;
+
+cyoa-bridge: tradelab-recruit
+	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
+	20 recruit-yes-food "Je suis prete a electrocuter des trucs ! J'ai apporte mon rechargeur solaire." pbold +crtext
+	recruitee .mechanicREV recruitee .witsREV recruitee .shootingREV
+;
+
+cyoa-bridge: tradelab-recruit-warn
+	"Bien sur, je peux vous rejoindre. Je m'ennuie ici, j'ai besoin de faire des recherches sur le terrain.
+	Finissez vos achats avant de me recruter ! Ce n'est pas que je ne vous fais pas confiance, mais apres avoir rejoint je vais verrouiller toutes mes armes sur mon empreinte digitale.
+	Juste au cas ou je mourrais mysterieusement." pbold text!
+		choice( "La recruter plus tard" )choice
+		choice( "La recruter ! - 20 nourriture" )choice: tradelab-recruit
+;
+
+cyoa: tradelab-scichat
+	"La Science des Achats" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	"Tous vos achats ici contribueront a l'avancement de la science !" pbold text!
+		trunk-food 5 < if
+			"La scientifique prend pitie de votre manque de nourriture. Elle vous donne un teleporteur gratuit, legerement utilise. 2 charges restantes !" +crtext clear-cyoa 2 WEAPON_DOODAD trunk.weapon+
+		then;
+		choice( "La laisser pour l'instant" )choice
+		trunk-food 4 > labsci-doodad 1 < and if
+			choice( "Acheter Teleporteur - 5 nourriture" )choice: tradelab-doodad-sale
+		then
+		trunk-food 11 > labsci-mazer 1 < and if
+			choice( "Acheter Pistolet Mazer - 12 nourriture" )choice: tradelab-mazer-sale
+		then
+		trunk-food 19 > if
+			labsci-doodad 1 < labsci-mazer 1 < and if
+				choice( "La recruter dans l'equipe - 20 nourriture" )choice: tradelab-recruit-warn
+			else
+				choice( "La recruter dans l'equipe ! - 20 nourriture" )choice: tradelab-recruit
+			then
+		then
+;
+
+}
+
+roomgen{
+
+: tradelab-bots 
+	still-npc .redbotify 2 movey cyoa{ ' tradelab-redbot cyoa! }
+	regiondef{ ' trader-event lt .events! 1 lt .timer! }
+	still-npc .bluebotify -0.5 movey cyoa{ ' tradelab-bluebot cyoa! }
+	regiondef{ ' trader-event lt .events! 1 lt .timer! }
+;
+: tradelab-scientist still-npc .madscify 
+	cyoa{ ' tradelab-scichat cyoa! } 
+	regiondef{ ' trader-event lt .events! 1 lt .timer! }
+;
+
+}
+
+map{ regiondef{
+
+trade-camp-reset
+
+: bldg tanchor!
+	"traderlab" $picklocid addloc prefab{ 7 bunker } 
+;
+
+0 value bfx
+0 value bfy
+0 value snx
+0 value sny
+
+: river tile@
+	dup LAYER_FLOOR particles32_base_id 0x 10 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	dup LAYER_FLOORTOP particles32_base_id 0x 11 + .lspriteid!
+	dup LAYER_FLOORTOP 0 0 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK over .id!
+	drop
+;
+
+: riveredge
+	2dup river
+	tile@ LAYER_FLOORTOP particles32_base_id 0x 12 + .lspriteid!
+;
+
+: cliff 2dup blocked tile@
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	LAYER_FLOORTOP street_tiles_base_id 0x a9 + 0 3 rnd + .lspriteid!
+;
+
+: cliffedge 2dup blocked tile@
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	LAYER_FLOORTOP street_tiles_base_id 0x ba + 0 3 rnd + .lspriteid!
+;
+
+: bank 2dup tile@ args( x y t )
+	<- t LAYER_WALLSIDE street_tiles_base_id 0x 99 + 0 3 rnd + .lspriteid!
+	<- t LAYER_FLOORTOP particles32_base_id 0x 12 + .lspriteid!
+	<- x <- y riveredge
+;
+
+: bushy >r tile@
+	// dup LAYER_WALLSIDE rnd5050 .tile_layer.flipx!
+	dup LAYER_WALLSIDE street_tiles_base_id 0x 89 + 0 3 rnd + .lspriteid!
+	LAYER_WALLSIDE 0 r> .tile_layer.off!
+;
+
+' plotgrass >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	xyp.i char G = if ' plotgrass to ft xyp.xy ft then;
+	xyp.i char x = if ' plotgravel to ft then;
+	xyp.i char ^ = if xyp.xy river then;
+	xyp.i char v = if xyp.xy riveredge then;
+	xyp.i char \ = if xyp.xy cliff then;
+	xyp.i char / = if xyp.xy cliffedge xyp.xy -4 -5 rnd bushy then;
+	xyp.i char | = if xyp.xy bank then;
+	xyp.i char o = if xyp.xy -8 -7 rnd bushy then;
+	xyp.i char $ = if xyp.xy grassedge then;
+	xyp.i char W = if trader-weapon-buyer then;
+
+	xyp.i char t = if pictable1 lt-here 8 rdrift then;		
+	xyp.i char @ = if xyp.xy bldg then;
+	xyp.i char T = if traderhere then;
+	xyp.i char Z = if tnomey-spawn then;
+;
+
+"G........................
+.........................
+.........................
+.........................
+...t.................t...
+.........................
+.........................
+/////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\
+|||||||||||||||||||||||||
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+ooooooooooooooooooooooooo
+.........................
+.........................
+....W...Z.@.........T....
+........................x
+$$$$$$$$$$$$$$$$$$$$$$$$$
+.........................
+.........................
+.........................
+.........................
+.........................
+........................."
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	1 no_time!
+	7 14 rnd o'clock
+
+	' plotgrass to ft
+
+	30 %chance if 0 0.5 frnd weather! -1 2 frnd wind_force! else -1 1 frnd wind_force! then
+
+	plotmap
+	mission{ no-edge-spawns }
+
+	// Put char and chars in middle of map
+	9 %mv-up
+	24 %chars-up
+;
+
+region: specialcamp-1
+	w: maplayout layoutw
+	h: maplayout layouth
+
+	trade-mode
+
+	post-script: site-setup
+
+} }

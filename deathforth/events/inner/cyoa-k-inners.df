@@ -1,0 +1,296 @@
+(* uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df *)
+
+cyoa{ road{
+
+cyoa: inner8-cyoa
+	"Appartement Envahi" cyoa-title!
+	someicon
+	($ Thegroup .. " trouve une ville sinistrement calme. A la lisiere des petits batiments, un immeuble d'appartements semble ne pas encore avoir ete pille." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/hellhotel.df" $load-region
+		choice( "Visiter l'Immeuble" )choice: premission
+		gas-draw
+;
+
+cyoa: inner7-cyoa
+
+	"Grande Maison sur la Colline" cyoa-title!
+	someicon
+	($ Thegroup .. " roule vers une ville rasee par les flammes. Une grande maison se dresse sur une colline proche. Meme de loin, elle semble entierement envahie de zombies." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/hardopen1.df" $load-region
+		choice( "Visiter la Maison" )choice: premission
+		gas-draw
+;
+
+cyoa: inner6-cyoa
+
+	"Maison Criblee de Balles" cyoa-title!
+	someicon
+	($ Thegroup .. " voit une maison de loin. En s'approchant, on dirait qu'une grosse fusillade a eu lieu ici entre humains. De la maison s'echappent de nombreux gemissements de morts-vivants. " $) cyoa-text! basic-tone
+	0.9 1.2 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/midopen1.df" $load-region
+		choice( "Explorer la Maison" )choice: premission
+		gas-draw
+;
+
+cyoa: inner5-cyoa
+
+	"Maison au Bord de la Route" cyoa-title!
+	someicon
+	($ Thegroup .. " repere une maison au bord de la route. Elle semble assez calme de l'exterieur, mais en regardant par les fenetres on distingue des silhouettes qui chancellent dans le noir." $) cyoa-text! basic-tone
+	0.4 1 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/easyopen1.df" $load-region
+		choice( "Entrer dans la Maison" )choice: premission
+		gas-draw
+;
+
+cyoa: inner4-cyoa
+	"Hotel Anime" cyoa-title!
+	someicon
+	($ Thegroup .. " repere un hotel en traversant une ville pillee. On dirait qu'un groupe a essaye de le barricader, mais a ete interrompu. Il ne reste plus que les morts-vivants." $) cyoa-text! basic-tone
+	0.9 1.2 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/midhotel.df" $load-region
+		choice( "Entrer dans l'Hotel" )choice: premission
+		gas-draw
+;
+
+cyoa: inner3-cyoa
+	"Hotel dans une Ville Calme" cyoa-title!
+	someicon
+	($ Thegroup .. " traverse une ville vide, sans provisions et peu d'activite zombie. Un petit hotel semble avoir plus de morts-vivants qui rodent que le reste." $) cyoa-text! basic-tone
+	0.4 1 frnd 9 15 frnd 0 1 rnd zforecast
+	"events/inner/region/easyhotel.df" $load-region
+		choice( "Explorer l'Hotel" )choice: premission
+		gas-draw
+;
+
+cyoa: policeHQ-cyoa
+
+	"Quartier General de la Police" cyoa-title!
+	someicon
+	($ Thegroup .. " repere le quartier general de la police locale. Les morts-vivants aux alentours semblent deja bien agites, mais il pourrait y avoir de bonnes choses la-dedans." $) cyoa-text! basic-tone
+	1.1 1.3 frnd 9 15 frnd 2 4 rnd zforecast
+	"events/inner/region/policeHQ.df" $load-region
+		choice( "Explorer le QG de la Police" )choice: premission
+		gas-draw
+;
+
+cyoa: hospital-cyoa
+
+	"Raid a l'Hopital" cyoa-title!
+	someicon
+	($ Thegroup .. " voit un hopital. Des fournitures medicales s'y trouvent souvent encore, en raison du grand nombre de morts-vivants qui rodent toujours." $) cyoa-text! basic-tone
+	1.1 1.3 frnd 9 15 frnd 0 2 rnd zforecast
+	"events/inner/region/hospital.df" $load-region
+		choice( "Explorer l'Hopital" )choice: premission
+		gas-draw
+;
+
+cyoa: doubleoffice-cyoa
+
+	"Grand Complexe de Bureaux" cyoa-title!
+	someicon
+	($ Thegroup .. " voit un grand immeuble de bureaux. La quantite de zombies dedans laisse entendre que les gens continuaient d'aller travailler normalement, meme apres l'epidemie." $) cyoa-text! basic-tone
+	1 1.2 frnd 8 17 frnd 0 2 rnd zforecast
+	"events/inner/region/doubleoffice.df" $load-region
+		choice( "Explorer les Bureaux" )choice: premission
+		gas-draw
+;
+
+cyoa: safeoffice-cyoa
+
+	"Bureau Chic" cyoa-title!
+	someicon
+	($ Thegroup .. " voit un immeuble de bureaux qui semble luxueux de l'exterieur. Il doit y avoir quelque chose qui vaut le coup la-dedans." $) cyoa-text! basic-tone
+	1 1.4 frnd 8 15 frnd 1 3 rnd zforecast
+	"events/inner/region/safeoffice.df" $load-region
+		choice( "Explorer les Bureaux" )choice: premission
+		gas-draw
+;
+
+cyoa: safeinhouse-cyoa
+
+	"Maison de Luxe" cyoa-title!
+	someicon
+	($ Thegroup .. " repere une maison qui semble luxueuse de l'exterieur. Il doit y avoir quelque chose qui vaut le coup de verifier." $) cyoa-text! basic-tone
+	1 1.3 frnd 7 18 frnd 1 3 rnd zforecast
+	"events/inner/region/safeinhouse.df" $load-region
+		choice( "Explorer la Maison" )choice: premission
+		gas-draw
+;
+
+cyoa: maginhouse-cyoa
+
+	"Maison en Effervescence" cyoa-title!
+	someicon
+	($ Thegroup .. " s'approche d'une maison et constate que les zombies etaient deja en colere a son arrivee. Pas de signes de vie, seulement des morts-vivants." $) cyoa-text! basic-tone
+	1 1.3 frnd 7 18 frnd 80 %chance if 2 3 rnd else 4 then zforecast
+	"events/inner/region/maginhouse.df" $load-region
+		choice( "Explorer la Maison" )choice: premission
+		gas-draw
+;
+
+cyoa: maginapt-cyoa
+
+	"Appartement en Effervescence" cyoa-title!
+	someicon
+	($ Thegroup .. " repere un appartement avec des zombies agites qui rodent aux alentours. Ils sont peut-etre en colere pour rien, car il n'y a aucun signe de quelqu'un d'autre." $) cyoa-text! basic-tone
+	1 1.3 frnd 7 18 frnd 80 %chance if 2 3 rnd else 4 then zforecast
+	"events/inner/region/maginapt.df" $load-region
+		choice( "Explorer les Appartements" )choice: premission
+		gas-draw
+;
+
+cyoa: rescuehouse-cyoa
+
+	"Sauvetage en Maison" cyoa-title!
+	someicon
+	($ Thegroup .. " voit une horde de zombies agites pourchasser quelqu'un qui se refugie dans une maison proche." $) cyoa-text! basic-tone
+	1.2 1.4 frnd 7 18 frnd 2 4 rnd zforecast
+	"events/inner/region/rescuehouse.df" $load-region
+		choice( "A la Rescousse !" )choice: premission
+		gas-draw
+;
+
+cyoa: rescueapt-cyoa
+
+	"Sauvetage en Appartement" cyoa-title!
+	someicon
+	($ "De loin, " .. thegroup .. " repere quelqu'un qui fuit une horde en colere. La personne disparait dans un immeuble." $) cyoa-text! basic-tone
+	1.2 1.4 frnd 7 18 frnd 2 4 rnd zforecast
+	"events/inner/region/rescueapt.df" $load-region
+		choice( "A la Rescousse !" )choice: premission
+		gas-draw
+;
+
+cyoa: gymapt-cyoa
+
+	"Grand Appartement" cyoa-title!
+	someicon
+	($ Thegroup .. " passe pres d'un grand immeuble d'appartements. Ca prendra peut-etre du temps a explorer, mais il y a peut-etre une piscine interieure !" $) cyoa-text! basic-tone
+	0.9 1.1 frnd 7 18 frnd 0 2 rnd zforecast
+	"events/inner/region/gymapt.df" $load-region
+		choice( "Explorer les Appartements" )choice: premission
+		gas-draw
+;
+
+cyoa: bigarcade-cyoa
+
+	"Arcade Fantome" cyoa-title!
+	someicon
+	($ Thegroup .. " trouve une arcade assez grande, remplie de jeux video maintenant silencieux. Peut-etre que l'un d'eux fonctionne encore au gaz ou a la batterie. Ca pourrait arriver." $) cyoa-text! basic-tone
+	0.9 1.1 frnd 7 18 frnd 0 2 rnd zforecast
+	"events/inner/region/bigarcade.df" $load-region
+		choice( "Explorer l'Arcade" )choice: premission
+		gas-draw
+;
+
+cyoa: 4suburb-cyoa
+
+	"Petite Banlieue" cyoa-title!
+	someicon
+	($ Thegroup .. " traverse une banlieue en ruines. Quelques batiments semblent ne pas avoir ete completement saccages." $) cyoa-text! basic-tone
+	0.8 1.1 frnd 7 20 frnd 0 2 rnd zforecast
+	"events/block/region/4suburb.df" $load-region
+		choice( "Explorer la Banlieue" )choice: premission
+		gas-draw
+;
+
+cyoa: 4apartment-cyoa
+
+	"Appartements Abandonnes" cyoa-title!
+	someicon
+	($ Thegroup .. " traverse une ville. Quelques immeubles se distinguent comme etant legerement moins en ruines que les environs." $) cyoa-text! basic-tone
+	0.9 1.2 frnd 7 20 frnd 0 2 rnd zforecast
+	"events/block/region/4apartment.df" $load-region
+		choice( "Explorer les Appartements" )choice: premission
+		gas-draw
+;
+
+cyoa: 4commercial-cyoa
+
+	"Rue Commerciale" cyoa-title!
+	someicon
+	($ Thegroup .. " passe pres du quartier commercial d'une ville. A courte distance, quelques commerces semblent valoir le detour." $) cyoa-text! basic-tone
+	1 1.3 frnd 7 20 frnd 0 2 rnd zforecast
+	"events/block/region/4commercial.df" $load-region
+		choice( "Explorer les Commerces" )choice: premission
+		gas-draw
+;
+
+cyoa: houserow-car
+
+	"Voiture Gratuite !" cyoa-title!
+	someicon
+	($ Thegroup .. " traverse une ville. Une voiture est garee dans la rue et semble presque comme neuve. Elle n'attend qu'a etre prise !" $) cyoa-text! basic-tone
+	1.3 7 20 frnd 1 3 rnd zforecast
+	"events/block/region/houserow-car.df" $load-region
+		choice( "Inspecter la Voiture" )choice: premission
+		gas-draw
+;
+
+cyoa: swarmarcade-cyoa
+	"Arcade Bondee" cyoa-title!
+	($ Thegroup .. " repere une arcade. Les morts envahissent completement l'interieur. C'est probablement une mauvaise idee d'y entrer. Ou pas ? Au moins, amenez quelqu'un pour surveiller vos arrieres." $) cyoa-text! basic-tone
+	2.0 2.4 frnd 9 20 rnd 0 1 rnd zforecast
+	"events/inner/region/swarmarcade.df" $load-region
+		choice( "Jeux video !" )choice: premission
+		gas-draw
+;
+
+cyoa: swarmgym-cyoa
+	"Obsession de la Salle de Sport" cyoa-title!
+	($ Thegroup .. " voit une salle de sport avec une enorme quantite de morts-vivants dedans. C'est une mauvaise idee d'y entrer, mais vous ne voulez pas rater votre programme d'entrainement. Il vous faudra un partenaire." $) cyoa-text! basic-tone
+	2.3 2.7 frnd 9 20 rnd 0 1 rnd zforecast
+	"events/inner/region/swarmgym.df" $load-region
+		choice( "S'entrainer !" )choice: premission
+		gas-draw
+;
+
+cyoa: malltest
+	"Centre Commercial" cyoa-title!
+	($ Thegroup .. " voit un centre commercial. Ces endroits sont des pieges mortels, mais il y a au moins quelques boutiques a l'interieur qui n'ont pas ete saccagees." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 9 20 rnd 0 1 rnd zforecast
+	"events/inner/region/mall.df" $load-region
+		choice( "Faites du Shopping jusqu'a l'Effondrement" )choice: premission
+		gas-draw
+;
+
+cyoa: rescuemall
+	"Urgence Shopping" cyoa-title!
+	($ Thegroup .. " voit un autre survivant fuir une grande horde. Il court directement dans un centre commercial. C'est une idee terrible. Essayer de le sauver serait une idee terrible." $) cyoa-text! basic-tone
+	1.3 1.5 frnd 9 20 rnd 2 4 rnd zforecast
+	"events/inner/region/rescuemall.df" $load-region
+		choice( "Essayez de le Sauver !" )choice: premission
+		gas-draw
+;
+
+cyoa: burnhouse
+	"Maison en Flammes !" cyoa-title!
+	($ Thegroup .. " est surpris quand une maison au bout de la route s'enflamme mysterieusement. La curiosite l'emporte sur " .. ghis .. " instincts de survie.
+	" .. "AVERTISSEMENT :" rainbold .. " LE CONTENU PEUT ETRE CHAUD !" rbold $) cyoa-text! basic-tone
+	1.2 1.4 frnd 18 19 rnd 1 3 rnd zforecast
+	"events/inner/region/burninghouse.df" $load-region
+		choice( "Investiguer l'Incendie" )choice: premission
+		gas-draw
+;
+
+cyoa: darkmansion
+	"Manoir Sombre" cyoa-title!
+	($ Thegroup .. " tombe sur un enorme manoir. Il peut y avoir beaucoup de butin, et beaucoup de pillards zombifies qui rodent dans le noir.
+	" .. "AVERTISSEMENT :" rainbold .. " LAMPE DE POCHE RECOMMANDEE !" rbold $) cyoa-text! basic-tone
+	1.3 1.5 frnd 24 0 2 rnd zforecast
+	0 to mansiontype
+	"events/inner/mansion.df" $load-region
+		choice( "Explorer le Manoir" )choice: premission
+		gas-draw
+;
+
+} }
+
+
+

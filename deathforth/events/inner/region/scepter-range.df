@@ -1,0 +1,422 @@
+uses paul/region-layout.df
+uses paul/region-road-layout.df
+
+
+
+uses paul/region-layout.df
+
+
+cyoa{
+
+0 value 4j-recruit-count
+
+: 4j-recruit-left 2 4j-recruit-count - rbold ;
+
+
+: .chara-link args( chara thing )
+
+	<- chara character# <- thing .charid!
+	<- thing thing# <- chara .cur_thingid!
+;
+
+: .4j-setup-familiar .thing@ 0 args( thing newchara )
+
+	// No familiars? Just go with the rando char
+	draw-familiar dup 0= if drop then;
+
+	// Save the familiar that we drew
+	-> newchara
+
+	// Free the old rando chara from the NPC
+	<- thing .character@ char-free
+
+	// Link the familiar character to the NPC
+	
+	
+	<- newchara <- thing .chara-link
+	<- newchara .ai_defaults
+;
+
+cyoa-bridge: 4j-campyes-familiar
+	($ rname .. " is raring to go!" $) cyoa-text! basic-tone
+	clear-cyoa
+	team-full? if
+		($ "The group is full.
+		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		road{ ' recruit-familiarreplace cyoa-team-choice }
+	else
+		recruited goodfx
+		road{ familiar-recruit-check }
+		' 4j-recruit-count ++
+		0.9 interactee .friction! 
+		\ 0 interactee .stun! 
+	then
+;
+
+cyoa: 4j-rec-familiar
+	"Pick Your Jerks" cyoa-title!
+	nearest .character@ choosechar
+	cchar to recruitee ricon
+		
+	($ rname .. " is ready for a road trip!" $) cyoa-text! basic-tone
+	
+	4j-recruit-count 1 > if ($ "You've recruited enough jerks! The car is full!" bbold $) +crtext then;
+	
+	recruitee .trait@ $len 0= if
+		($ rHe .. " claims to know you, but you swear you've never seen this person before..." $) +crtext
+	else
+		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
+		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
+	then
+
+	($ "You can recruit " bbold .. 4j-recruit-left .. " more jerks!" bbold $) +crtext
+	
+	choice( "Leave " .. rname .. " for now" )choice
+
+		choice( "Recruit " .. rname .. "!" )choice: 4j-campyes-familiar
+;
+
+deck-new
+	card-pair: 	4j-rec-familiar			.4j-setup-familiar
+constant 4J-LIST-FAMILIAR
+4J-LIST-FAMILIAR var 4j-list-familiar
+
+: 4j-drawpair-familiar 
+	// pick pulls pops 4j-rec-familiar 	pick 1- pulls pops .4j-setup-familiar
+	4J-LIST-FAMILIAR drawpair
+;
+
+: 4j-familiar-last lt .character@ args( ch )
+	regiondef{ \ ' trader-event lt .events!
+	1 lt .timer!
+
+	4j-drawpair-familiar }
+	lt .cyoa! <- ch swap execute
+
+;
+
+}
+
+: 4j-camper
+	regiondef{ new-camp-npc } lt .character@ args( ch )
+	185 rnd5050 + lt .aim_angle!
+
+	0 <- ch .ai.wander_chance!
+	0 <- ch .ai.safety_leash!
+	
+	
+	
+;
+
+// : 4jrecruit-in	still-npc cyoa{ ' 4j-recruit cyoa! }  NOT USED ' trader-event lt .events! 1 lt .timer! ;
+
+: tradermallsetup random-door map{ block-last-door } ;
+
+map{ regiondef{
+
+: 4j-familiar familiar-stack depths 0 = if drop then;
+	4j-camper cyoa{ 4j-familiar-last }
+	// regiondef{ new-familiar-recruit }
+	
+	
+	0 lt .friction! 
+	\ 60 3600 * lt .stun! 
+	
+;
+	
+
+: rangewall tile@ args( spriteid t ) <- t LAYER_WALLSIDE <- spriteid .lspriteid! TILE_BLOCK_FLOOR <- t .id! ;
+
+: fencerange	args( x y s )
+
+	building_misc_tiles_base_id 14 7 * + 7 + <- s + -> s
+
+	2 for
+		<- s i 1- 14 * + <- x <- y rangewall
+		<- x <- y tile@ TILE_BLOCK_FLOOR 0 0 .tile_layer.off!
+		<- x <- y tile@ TILE_BLOCK_FLOOR rnd5050 .tile_layer.flipx!
+		<- y 1- -> y
+	next
+;
+
+
+	
+cyoa{ 
+
+cyoa-choice: chosenmoralechar
+	($ cname .. " senses a strange surge of happiness. Maybe things really will be okay; this single thought gives them strength to carry on." $) cyoa-text!
+	($ RAINBOW "Bonus Morale!!!" .. $) +crtext goodfx
+	1 STAT_MORALE cchar .bonus+
+	;
+
+	cyoa: pickmoralecharnew
+	pchar choosechar
+	picon!
+
+	"After all, why shouldn't I?" cyoa-title!
+	($ "Watching the pure joy on that little face was enough to permanently change the feelings of a team member. Who feels inspired by this small act?" $) cyoa-text! basic-tone
+	;
+
+	: randstatpick 1 5 rnd case	
+		1 of STAT_STRENGTH endof
+		2 of STAT_FITNESS endof
+		3 of STAT_SHOOTING endof 
+		4 of STAT_MEDICAL endof
+		5 of STAT_MECHANICAL endof
+	endcase
+	;
+	
+	\ crafty is 268435456
+	: normiescepter case
+		1 of "Unlocked: A variety of special traits!" 234881152 268435456 + cchar .mod_flags! endof
+		2 of "Unlocked: Max out a random stat!" 6 randstatpick cchar .bonus+ endof
+		3 of "Unlocked: Endless happiness! This character will never enter despair again!" 1 STAT_MORALE cchar .bonus+ endof 
+		4 of "Unlocked: Bodypumped! Your strength stat bonus has increased by 10!" 10 STAT_STRENGTH cchar .bonus+ endof 
+		5 of "Unlocked: Elite! A sniper rifle has materialised in your trunk, and your max shooting stat has increased by 3!" 1 WEAPON_HUNTING trunk.weapon+ 3 STAT_SHOOTING cchar .bonus+ endof 
+		6 of "Unlocked: Steel Skin! Your vitality has substantially increased, up to a maximum of 6!" cchar .vitality@ 2 + 1 6 clamp dup cchar .vitality! cchar .health! endof   
+		endcase
+	; \ For pyros, bows, grapplers, kensai, ranger...since they have events 
+	
+	
+	: normiescepter_desc case 
+		1 of "VERY SPECIAL TRAIT COCKTAIL" endof 
+		2 of "RANDOM STAT MASSIVE BONUS" endof 
+		3 of "NO MORE DESPAIR" endof 
+		4 of "GIGA-BUFF" endof 
+		5 of "ELITE SNIPER" endof 
+		6 of "SUPER STEEL SKIN" endof 
+		endcase
+	; 
+	
+	: specialscepter_desc case 
+		1 of "CRYSTAL SHIELD" endof 
+		2 of "RIGHTEOUS SMITE" endof 
+		3 of "HIGH CALIBRE ROUNDS" endof 
+		4 of "MELEE MINIGUN" endof 
+		5 of "ECHO STRIKE" endof 
+		6 of "SUPERCRITTER" endof 
+		endcase
+	; 
+	
+	: specialscepter case 
+	
+		1 of RED "Unlocked: Crystal Shield! The shield protects against zombie grapples. Charge it by hitting stuff. Takes effect next mission." .. ' erosetta-main-events cchar .main_events! endof 
+		2 of BLUE "Unlocked: Righteous Smite! When at high morale, sometimes smite zombies on-hit for bonus damage! Damage scales with weapon and STR." .. ' izzy-main-events cchar .main_events! endof 
+		3 of GREEN "Unlocked: High Calibre Rounds! When firing single-shot firearms, your bullets hit much harder!" .. ' falcore-main-events cchar .main_events! endof 
+		4 of PURPLE "Unlocked: Melee Minigun! HIT, HIT, HIT! Every hit reduces the cooldown of the next." .. ' lienne-main-events cchar .main_events! endof 
+		5 of YELLOW "Unlocked: Echo Strike! Melee swings send forth a short-lived projection, which attacks again 0.5s later!" .. ' chronomancer-main-events cchar .main_events! endof 
+		6 of LIME "Unlocked: Supercrits! Supercrits activate 35% of the time whilst attacking in melee." .. ' echosenior-main-events cchar .main_events! endof 
+		endcase 
+	;
+	
+	: normiedialogue 1 10 rnd case
+		1 of "''WOAOOAAHHHH? HNGGG??''" endof
+		2 of "''WOWCHA''" endof
+		3 of "''Oh hey this actually kinda cool.''" endof
+		4 of "''GIVE ME BUR- oh okay I'll take this.''" endof
+		5 of "''YOU CAN'T HAVE THIS SCEPTER COZ YOU'RE A DINKKK!!!''" endof
+		6 of "''Now I can finally be like my favourite anime character!!!''" endof
+		7 of "''Was I meant to swallow it whole?''" endof
+		8 of "''TAKEEEEE ONNNNNN MEEEEEEEE.''" endof
+		9 of "''HNNNNGGGGGGGGGGG?''" endof 
+		10 of "''TRY THIS ONE FOR SIZE!''" endof 
+		endcase
+	;
+
+
+	: scepterpowermatch
+		normiescepter
+	;
+	
+	: scepterpowermatchnormal 
+		specialscepter
+	; 
+	
+	: checksceptertype
+		cchar .mod_flags2@ 2 = if RED "Make sure you pay attention next time! Scepter stacking is disabled." .. then;
+		normiedialogue
+	;
+
+	cyoa-choice: scepter-pick
+		($ cname .. " touches the scepter's crystal, causing it to radiate a gentle blue light before disappearing. They feel more powerful already." $) cyoa-text!
+		cchar .mod_flags2@ 2 = not if
+			($ RAINBOW "Sycamore Scepter Powerup Unlocked!!!" .. $) +crtext goodfx
+		else
+			($ RED "Sycamore Scepter already unlocked!" .. $) +crtext goodfx
+		then 
+		
+		($ "" .. checksceptertype $) +crtext
+		
+		cchar .mod_flags2@ 2 = not if
+			cchar .main_events@ 0 = if 
+				($ "" ..  interactee .weapon_state.val@ scepterpowermatchnormal $) +crtext
+			else
+				($ "" .. interactee .weapon_state.val@ scepterpowermatch $) +crtext
+			then 
+		then 
+		
+		2 cchar .mod_flags2!
+		// this will be my identifier across saves for whether or not scepter is unlocked.
+	;
+
+	
+	cyoa-choice: scepter-pickerer 
+	"OH GREAT, NOW WHAT SYCAMORE?" cyoa-title!
+	($ "Against their better judgement, somebody touches the crystal. But who?" $) cyoa-text! basic-tone
+	($ "FROM THIS SCEPTER YOU WILL RECIEVE..." rainbold $) +crtext 
+	($ interactee .weapon_state.val@ normiescepter_desc rbold " OR " .. interactee .weapon_state.val@ specialscepter_desc bbold .. "!" .. $) +crtext
+	
+	($ "Characters with complex perks/traits - like KENSAI or CHAIRMASTER - receive " "RED" rbold .. " pool upgrades." .. $) +crtext
+	($ "Characters with simpler perks/traits - like MEGABUFF or ATHLETE - receive " "BLUE" bbold .. " pool upgrades." .. $) +crtext
+	($ "Characters highlighted in " "PURPLE" pbold .. " already possess a scepter upgrade and will not benefit from another." .. $) +crtext
+		interactee silentkillit
+		
+		\ absolutely evil charchoice hacky thing 
+		
+		team-count for 
+			i 1 - #teamcharid #character .mod_flags2@ 0 = if 
+				i 1 - #teamcharid #character .main_events@ 0 = if 
+					i 1 - #teamcharid #character choice( over character# cyoa-choice-charid! swap .name@ bbold .. "" )choice: scepter-pick
+				else
+					i 1 - #teamcharid #character choice( over character# cyoa-choice-charid! swap .name@ rbold .. "" )choice: scepter-pick
+				then 
+			else 
+				i 1 - #teamcharid #character choice( over character# cyoa-choice-charid! swap .name@ pbold .. "" )choice: scepter-pick
+			then 
+		next 
+	
+	;
+	
+		
+	cyoa: somecodestuff
+	cyoa-start
+	pchar choosechar
+	picon!
+
+	"After all, why shouldn't I?" cyoa-title!
+	($ "These magical scepters appear to have manifested out of nowhere. Already, from the glow alone, it's clear that these are powerful objects. Perhaps somebody should touch them." $) cyoa-text! basic-tone
+	($ "FROM THIS SCEPTER YOU WILL RECIEVE..." rainbold $) +crtext 
+	($ interactee .weapon_state.val@ normiescepter_desc rbold " OR " .. interactee .weapon_state.val@ specialscepter_desc bbold .. "!" .. $) +crtext
+	\ ' scepter-pick cyoa-team-choice
+		goodfx
+		
+		choice( "Pick somebody to touch" )choice: scepter-pickerer 
+		choice( "Leave it be" )choice 
+		
+	;
+
+
+	cyoa: disappear
+	cyoa-start
+	
+	($ "There's a strange scepter laying on the floor. It gets tossed in with the other loot, for inspection afterwards." $) cyoa-text!
+	
+		goodfx
+		interactee silentkillit
+		road{ ' somecodestuff to post-mission-cyoa }
+	;
+	
+
+}
+
+: the_scepter 
+	spawn weapons_base_id 319 + lt .spriteid! immovable 1 lt .unseen! 1 lt .nocollide! 1 lt .layer! 10000 lt .hitpoints! 0 360 frnd lt .angle! cyoa{ ' somecodestuff lt .cyoa! } 
+	1 6 rnd lt .weapon_state.val! \ "What scepter shall I be?" 
+	\ 0.5 1 frnd lt .clr.r!
+	\ 0.5 1 frnd lt .clr.g!
+	\ 0.5 1 frnd lt .clr.b! 
+; 
+
+
+\ todo
+\ divine smites
+\ melee minigun 
+\ better bullets 
+\ +1 max morale 
+\ sudden tavern brawler 
+
+	
+} 
+	
+	
+} }
+
+
+map{ regiondef{
+
+trade-camp-reset
+
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+	xyp.i char ( = if xyp.xy to gby2 to gbx2 then;
+	xyp.i char ) = if gbx2 1- gby2 xyp.xy swap 1+ swap gravellot then;
+
+	xyp.i char 1 = if xyp.xy xyp.x 1 & if 2 else rnd5050 then fencerange then;
+	xyp.i char 2 = if xyp.xy 3 fencerange then;
+	xyp.i char 3 = if xyp.xy 4 fencerange then;
+	xyp.i char C = if the_scepter lt-here then;
+
+
+	xyp.i char G = if 4j-familiar lt-here then;
+	
+;
+
+
+
+
+"
+P(................................
+..................................
+...........C.C.C.C................
+..................................
+...........C.C.C.C................
+..................................
+11112..3111111111111111112..311111
+.......GGGGGGGGGGGGGGGG...........
+.......GGGGGGGGGGGGGGGG...........
+.......GGGGGGGGGGGGGGGG...........
+.......GGGGGGGGGGGGGGGG...........
+.......GGGGGGGGGGGGGGGG...........
+.......GGGGGGGGGGGGGGGG...........
+..................................)"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	11 o'clock // maybe random in future
+	1 no_time!
+
+	' plotdirt to ft
+
+	mission{ no-edge-spawns }
+	
+	\ 2.5 weather!
+	plotmap
+	0 1 "Make sure you pick your powerups before leaving." popup_dis 1 popup_mode!
+
+	
+	// Put char and chars in middle of map
+	\ 10 %mv-up 10 %chars-up
+	map{ street-junk }
+	
+	
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+	on-foot no-rest
+	post-script: site-setup 
+
+} }

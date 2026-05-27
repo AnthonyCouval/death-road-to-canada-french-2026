@@ -1,0 +1,395 @@
+uses paul/region-layout.df
+
+"../deathforth/rooms/duodenum.txt" $load-rooms
+
+locdef{
+
+: swolegym-lights
+	20000 70 50 ticklight
+	20000 130 60 ticklight
+	20000 200 50 ticklight
+;
+
+location: tradergym
+		max-rooms: 1
+		entry-tags: traderswole-entry
+		pre-script: yall-theme
+		script: yall-theme
+		post-script: 
+		
+		room-choice: traderswole-entry
+			room-weight: 10
+			room-count: 1
+			room-script: ndx 
+			room-post-script: swolegym-lights
+			filter-only
+
+}
+
+cyoa{
+
+// Stat Trainers
+
+0 value tradergym-strength+
+
+: swolegym-train-amt numhums 2 * tradergym-strength+ 1 + * 1 + ; 
+: swolegym-train-pay? trunk-food swolegym-train-amt 1 - > notsolo notsolohuman and and ;
+: swolegym-train-pay swolegym-train-amt -1 * trunk-food+ ;
+
+: swolegym-solo-amt tradergym-strength+ 2 * 3 + ;
+: swolegym-solo-pay? trunk-food swolegym-solo-amt 1 - > ;
+: swolegym-solo-pay swolegym-solo-amt -1 * trunk-food+ ;
+
+cyoa-choice: tradergym-strength-train
+	cchar .strength@ 6 < if
+		($ cname .. " est tout gonfle apres le programme d'entrainement en force !" $) goodfx
+	else
+		($ cname .. " a atteint les limites de ce que l'entrainement peut faire pour " .. chim .. " !" $) badfx
+	then cyoa-text!
+	swolegym-solo-pay strengthREV strength++ ' tradergym-strength+ ++
+;
+
+cyoa-choice: tradergym-strength-group
+	($ "Tout le groupe fait de l'entrainement en force !" $) cyoa-text! goodfx
+	swolegym-train-pay someicon
+	regiondef{ ' trade-strength-group! foreach-human-char } numhums ' tradergym-strength+ +!
+;
+
+cyoa: tradergym-strength-give
+	solohuman if
+		choosehuman tradergym-strength-train
+	then;
+	"Qui doit faire ce programme de force INTENSE ?" cyoa-text!
+	' tradergym-strength-train cyoa-human-choice
+;
+
+cyoa: tradergym-strength
+	($ "LA SALLE DE SPORT " rbold .. "OU TU DEVIENS" rainbold .. " MUSCLE" fbold $) cyoa-title!
+	"Bienvenue a SWOLE MOUNTAIN !
+	Avec les methodes brevetes de SWOLE MOUNTAIN, je peux t'entrainer au niveau de force que tu veux, VITE !
+	Tant que t'as de la nourriture, on continue a s'entrainer !" rbold text! +cr foodamt
+		swolegym-solo-pay? not if
+			"Tu n'as pas les moyens de t'entrainer davantage." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		swolegym-solo-pay? if
+			choice( "Donner " .. swolegym-solo-amt .. " nourriture pour entrainement solo" )choice: tradergym-strength-give
+		then
+		swolegym-train-pay? if
+			choice( "Donner " .. swolegym-train-amt .. " nourriture pour entrainement de groupe" )choice: tradergym-strength-group
+		then
+
+;
+
+0 value tradergym-fitness+
+
+: swolefit-train-amt numhums 2 * tradergym-fitness+ 1 + * 1 + ;
+: swolefit-train-pay? trunk-food swolefit-train-amt 1 - > notsolo notsolohuman and and ;
+: swolefit-train-pay swolefit-train-amt -1 * trunk-food+ ;
+
+: swolefit-solo-amt tradergym-fitness+ 2 * 3 + ;
+: swolefit-solo-pay? trunk-food swolefit-solo-amt 1 - > ;
+: swolefit-solo-pay swolefit-solo-amt -1 * trunk-food+ ;
+
+cyoa-choice: tradergym-fitness-train
+	cchar .fitness@ 6 < if
+		($ cname .. " est tout revigore apres le programme d'entrainement cardio !" $) goodfx
+	else
+		($ cname .. " a atteint les limites de ce que l'entrainement peut faire pour " .. chim .. " !" $) badfx
+	then cyoa-text!
+	swolefit-solo-pay fitnessREV fitness++ ' tradergym-fitness+ ++
+;
+
+cyoa-choice: tradergym-fitness-group
+	($ "Tout le groupe fait de l'entrainement cardio !" $) cyoa-text! goodfx
+	swolefit-train-pay someicon
+	regiondef{ ' trade-fitness-group! foreach-human-char } numhums ' tradergym-fitness+ +!
+;
+
+cyoa: tradergym-fitness-give
+	solohuman if
+		choosehuman tradergym-fitness-train
+	then;
+	"Qui doit faire ce programme cardio INTENSE ?" cyoa-text!
+	' tradergym-fitness-train cyoa-human-choice
+;
+
+cyoa: tradergym-fitness
+	($ "THE GYM " rbold .. "TU DEVIENS AUSSI" rainbold .. " FIT" fbold $) cyoa-title!
+	"Bienvenue a SWOLE MOUNTAIN !
+	Ici a SWOLE MOUNTAIN, on croit que l'entrainement cardio est tres important !
+	Tant que t'as de la nourriture, on continue a s'entrainer !" rbold text! +cr foodamt
+		swolefit-solo-pay? not if
+			"Tu n'as pas les moyens de t'entrainer davantage." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		swolefit-solo-pay? if
+			choice( "Donner " .. swolefit-solo-amt .. " nourriture pour entrainement solo" )choice: tradergym-fitness-give
+		then
+		swolefit-train-pay? if
+			choice( "Donner " .. swolefit-train-amt .. " nourriture pour entrainement de groupe" )choice: tradergym-fitness-group
+		then
+
+;
+
+// Boxing Training
+
+cyoa-choice: tradergym-boxing-train
+	cchar .weapon_default@ WEAPON_BOXING = if
+		($ cname .. " savait deja lancer un coup de poing !
+		" .. "Travaillons le jeu de jambes, alors !" bbold $) text!
+		dexterity++
+	else
+		($ cname .. " recoit un entrainement de boxe d'un expert !
+		" .. cname .. " : Coup de Poing de Boxe appris !" rbold $) text!
+		WEAPON_BOXING cchar .weapon_default!
+	then goodfx clear-cyoa
+	-20 trunk-food+ vitality++ strength++ strengthREV fitness++ fitnessREV
+;
+
+cyoa: tradergym-boxing-give
+	solohuman if
+		choosehuman tradergym-boxing-train
+	then;
+	"Qui doit recevoir l'ULTIME ENTRAINEMENT DE BOXE ?" cyoa-text!
+	' tradergym-boxing-train cyoa-human-choice
+;
+
+cyoa: tradergym-boxing
+	($ "ENTRAINEMENT DE BOXE SPECIAL" fbold $) cyoa-title!
+	"Offre speciale aujourd'hui, valable pour une personne !
+	Je peux te donner un cours accelere de boxe ! Tu apprendras a cogner, et j'ajoute un exercice intense pour te renforcer, booster ton energie et t'endurcir !
+	Tout ca pour 20 nourriture !" bbold text! +cr foodamt
+		choice( "Partir pour l'instant" )choice
+		trunk-food 19 > if
+			choice( "Donner 20 nourriture pour l'entrainement de boxe !" )choice: tradergym-boxing-give
+		then
+;
+
+
+0 value tradergym-shady-1-buy
+0 value tradergym-shady-2-buy
+0 value tradergym-shady-3-buy
+
+cyoa-choice: tradergym-shady-1
+	iicon ($ pname .. " achete des " .. "TIREPOING" bbold .. " !
+	" .. "Rien ne vaut une bonne paire de tirepoing." pbold $) text!
+	goodfx 1 WEAPON_KNUCKS trunk.weapon+ -3 trunk-food+ ' tradergym-shady-1-buy ++
+;
+
+: .shadypump args( chara )
+	<- chara .specialtype@ 0 > if
+		<- chara .specialtype@ 25 = if
+			<- chara .zombiewrestler
+			1.3 <- chara .scale.body.x!
+		else
+			<- chara .specialtype@ <- chara .specialhead!
+			0 <- chara .specialtype!
+			1 <- chara .headoff.y!
+		then
+	else
+		4 <- chara .headoff.y!
+	then
+	25 <- chara .specialbody!
+	100 STAT_STRENGTH <- chara .bonus! 6 <- chara .strength!
+	"est maintenant vraiment gonfle a bloc." <- chara .job!
+	<- chara .zombielifter
+	<- chara .specialhead@ 34 <> if <- chara .nocanshoot else "Swole Stallion" <- chara .name! then
+	statmod{ MOD_TLBB <- chara .setmod } <- chara .swapspecial <- chara .atkspecial
+;
+
+cyoa-choice: tradergym-shady-2-go
+	iicon ($ cname .. " apprend la " .. "POMPE INTERDITE" bbold .. " !" $) text!
+	cchar .specialtype@ 25 = if
+		($ "QU'AS-TU FAIT ?
+		QU'AS-TU FAAAAAAAAAAIT ????
+		" fbold .. cname .. " gagne LEGEREMENT PLUS DE MASSE MUSCULAIRE !
+		" rbold .. cname .. " peut maintenant soulever des zombies avant meme qu'ils tombent !" rbold $) +crtext
+	else
+		($ "Sa force est " .. "ELEVEE A DES NIVEAUX IMPOSSIBLES !!!" fbold $) +crtext
+		"Ca claque !" pbold +crtext
+	then goodfx
+	-20 trunk-food+ ' tradergym-shady-2-buy ++
+		cchar .shadypump
+;
+
+cyoa: tradergym-shady-2
+	solohuman if
+		choosehuman tradergym-shady-2-go
+	then;
+	"Qui doit apprendre la POMPE INTERDITE ?" cyoa-text!
+	' tradergym-shady-2-go cyoa-human-choice
+;
+
+cyoa-choice: tradergym-shady-3-go
+	iicon ($ cname .. " apprend le " .. "REGIME PARFAIT" bbold .. " !
+	" .. "La simple connaissance de cela declenche une metamorphose dans le corps de " .. cname .. "..." $) text!
+	"Euh, pas de remboursement." pbold +crtext goodfx
+	-20 trunk-food+ ' tradergym-shady-3-buy ++
+		cchar .specialbody@ 25 = cchar .specialtype@ 25 = or if -6 cchar .headoff.y! then
+		1.6 cchar .scale.body.y!
+		0.6 cchar .scale.body.x!
+		dexterity++
+;
+
+cyoa: tradergym-shady-3
+	solohuman if
+		choosehuman tradergym-shady-3-go
+	then;
+	"Qui doit apprendre le REGIME PARFAIT ?" cyoa-text!
+	' tradergym-shady-3-go cyoa-human-choice
+;
+
+cyoa: tradergym-shady
+	"Entraineur Louche" cyoa-title!
+	"Ces autres types sont des gros neeeerds.
+	Moi j'ai le vrai entrainement !" pbold text!
+	+cr foodamt
+		trunk-food 3 < if
+			"L'entraineur louche te ricane dessus." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		trunk-food 2 > tradergym-shady-1-buy 3 < and if
+			choice( "Acheter Tirepoing - 3 nourriture" )choice: tradergym-shady-1
+		then
+		trunk-food 19 > tradergym-shady-2-buy 1 < and if
+			choice( "Apprendre POMPE INTERDITE - 20 nourriture" )choice: tradergym-shady-2
+		then
+		trunk-food 19 > tradergym-shady-3-buy 1 < and if
+			choice( "Apprendre REGIME PARFAIT - 20 nourriture" )choice: tradergym-shady-3
+		then
+;
+
+}
+
+roomgen{
+
+: tradergym-npc still-npc regiondef{ ' trader-event lt .events! 1 lt .timer! } ;
+
+: .tradergym-fitness args( chara ) 
+	3 <- chara .bodytype!
+	19 <- chara .hairtype!
+	0 <- chara .hattype!
+	13 <- chara .legstype!
+	1 <- chara .torsotype! ;
+: tradergym-fitness
+	tradergym-npc .tradergym-fitness cyoa{ ' tradergym-fitness cyoa! } ;
+: .tradergym-strength args( chara ) 
+	12 <- chara .haircolour!
+	9 <- chara .torsotype!
+	0 <- chara .hattype!
+	10 <- chara .legstype! 
+	2 <- chara .bodytype! ;
+: tradergym-strength
+	tradergym-npc .tradergym-strength cyoa{ ' tradergym-strength cyoa! } ;
+: tradergym-boxing
+	tradergym-npc .tradergym-strength cyoa{ ' tradergym-boxing cyoa! } 
+	WEAPON_GLOVE lt .character@ .weapona! 
+	1 lt .character@ .weapon_nodropa! ;
+: tradergym-shady
+	still-npc .tradergym-fitness cyoa{ ' tradergym-shady cyoa! } 
+	0 lt .character@ .bodytype! ;
+
+}
+
+map{ regiondef{
+
+trade-camp-reset
+
+: bldg tanchor!
+	"tradergym" $picklocid addloc 
+		prefab{
+		GREEN "SWOLE MOUNTAIN " .. RED .. BLINKY .. "LA SALLE DE SPORT " .. RAINBOW .. "OU TU DEVIENS " .. FLASHY .. "MUSCLE" .. sign-text!
+		0 0 0 sign-bg!
+		0 1 0 sign-border!
+		1 1 1 sign-fg!
+		1 sign-glow!
+		0 3 rnd 15 4 shop }
+	
+;
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	xyp.i char < = if xyp.xy to gby to gbx then;
+	xyp.i char > = if gbx 1- gby xyp.xy swap 1+ swap gravellot then;
+	xyp.i char ( = if xyp.xy to gby2 to gbx2 then;
+	xyp.i char ) = if gbx2 1- gby2 xyp.xy swap 1+ swap gravellot then;
+		
+	xyp.i char P = if ' plotpave to ft xyp.xy ft then;
+	
+	xyp.i char x = if ' plotdirt to ft then;
+	xyp.i char G = if ' plotgrass to ft xyp.xy ft then;
+	xyp.i char $ = if xyp.xy grassedge then;
+	xyp.i char { = if dirtstart then;
+	xyp.i char } = if dirtend then;
+
+	xyp.i char t = if pictable2 lt-here 8 rdrift then;		
+	xyp.i char w = if pine lt-here drift then;
+	xyp.i char V = if tradercarhere then;
+	xyp.i char f = if campfirehere then;
+		
+	xyp.i char W = if trader-weapon-buyer then;
+	xyp.i char T = if traderhere then;
+	xyp.i char Z = if tnomey-spawn then;
+	
+	xyp.i char @ = if xyp.xy bldg then;
+;
+
+"
+P........................
+(........................
+................Z..W.....
+.........................
+.........................
+...................f.....
+.........................
+@.......................
+........................)
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+........................."
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	1 no_time!
+	19 24 rnd o'clock
+
+	' plotdirt to ft
+
+	30 %chance if 0 0.2 frnd weather! -1 2 frnd wind_force! else -1 1 frnd wind_force! then
+
+	plotmap
+	mission{ no-edge-spawns }
+
+	// Put char and chars in middle of map
+	25 %mv-up
+	45 %chars-up
+	
+	map{ street-junk }
+;
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+
+	trade-mode
+
+	post-script: site-setup
+
+} }

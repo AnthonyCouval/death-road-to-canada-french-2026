@@ -1,0 +1,32 @@
+
+0 value farmtype
+
+cyoa{ road{
+
+cyoa: farm-toolbarn
+	"Ferme Tranquille" cyoa-title!
+	($ Thegroup .. " trouve une ferme. Elle a l'air d'avoir ete abandonnee en vitesse, il y a longtemps.
+	Il devrait rester quelques outils agricoles." $) cyoa-text! basic-tone
+	1.0 1.2 frnd 8 14 frnd 0 2 rnd zforecast
+	0 to farmtype
+	"events/exterior/farm.df" $load-region
+		choice( "Visiter la Ferme" )choice: premission
+		gas-draw
+;
+
+: farm-animal-type farmtype 1 = if "un petit poulet" else "un cochon" rbold then ;
+
+cyoa: farm-pigbarn
+	1 2 rnd to farmtype
+	farmtype 1 = if "Sauvetage de Poulet" else "Sauvetage de Cochon" then cyoa-title!
+	($ Thegroup .. " conduit pres d'une ferme. Une grande foule de zombies poursuit lentement " .. farm-animal-type .. " dans une grange." $) cyoa-text! basic-tone
+	1.4 1.7 frnd 6 16 frnd 2 3 rnd zforecast
+	"events/exterior/farm.df" $load-region
+		choice( "Sauver l'Animal" )choice: premission
+		gas-draw
+;
+
+} }
+
+
+

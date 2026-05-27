@@ -1,0 +1,73 @@
+cyoa{
+
+: coffeed pchar statmod{ dup .coffee .untired } ;
+: coffeed? pchar statmod{ .coffee? } ;
+
+cyoa-choice: coffee-get2
+	($ cname .. " utilise toutes ses competences mecaniques pour comprendre les tres, tres nombreux boutons de la machine a cafe.
+	" .. cHe .. " fait la tasse de cafe parfaite ! C'est delicieux !
+	La machine a cafe fait des etincelles, emet de la fumee et rend l'ame." $) cyoa-text!
+		coffeed	pchar statmod{ .unsick }
+		morale2+ dexterity++ goodfx clear-cyoa mechanicREV
+;
+
+cyoa-choice: coffee-get1
+	pchar statmod{ .sick? } if
+		($ cname .. " se sent trop malade pour apprecier du cafe qui attendait dans une machine depuis peut-etre des annees." $) cyoa-text! badfx 50 %chance if sting-- then
+	then;
+	coffeed? if
+		($ cname .. " boit ENCORE PLUS de cafe et se sent plutot malade ensuite.
+		Difficile de savoir si c'est la quantite massive de cafeine, les tasses crasseuses, ou le cafe qui pourrissait depuis un temps indetermine." $) cyoa-text! badfx pchar statmod{ dup .sick .uncoffee }
+	else
+		($ cname .. " se sert du cafe dans une vieille tasse traInant par la et le boit.
+		" .. cHe .. " se sent completement CAFFEINATE." $) cyoa-text!
+			goodfx coffeed
+	then
+;
+
+cyoa: coffee-get
+	"Cafe Apocalyptique" cyoa-title!
+	picon!
+	"Cette enorme et complexe machine a cafe a ete concue pour survivre a plusieurs types de fin du monde. C'etait une grande partie de la campagne marketing de ce cafe.
+	Publicite veridique, elle fonctionne toujours !" cyoa-text!
+	chumany? not if
+		($ pname .. " n'a aucune idee de comment faire fonctionner ce truc. Et vraiment, les " .. cdogcat .. "s ne devraient pas boire de cafe de toute facon." $) +crtext
+	then;
+		pchar charchoice( " prend du CAFE" )choice: coffee-get1
+		cmechanic+ if
+			pchar charchoice( " bidouille les reglages" )choice: coffee-get2
+		then
+	choice( "Laisser ca tranquille" )choice
+;
+
+}
+		
+map{ roomgen{
+
+: coffeemachine
+	spawn special_objects48_base_id 0x 6 + lt .spriteid!
+	rndflip bbox immovable as-metal
+	cyoa{ ' coffee-get cyoa! }
+;
+} }
+
+locdef{
+	
+location: coffee
+		max-rooms: 2
+		entry-tags: coffee
+		script: set-theme-restaurant
+
+		room-choice: coffee
+			room-weight: 10
+			room-count: 1
+			room-script: 
+			room-post-script: 10diff %zombs map{ room-garbage }
+			filter-only		
+
+		room-choice: restroom
+			room-weight: 10
+			room-count: 1
+			room-script: floor-bath
+			
+}

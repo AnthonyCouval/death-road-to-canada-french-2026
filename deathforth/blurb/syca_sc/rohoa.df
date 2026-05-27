@@ -1,0 +1,61 @@
+    : ROHOA-oneline1 "Non, je ne crois pas en 'Kepa', ferme-la." ;
+    : ROHOA-oneline2 "Oui, oui je sais que la glue pue. Bon, si tu meurs, je ne veux pas t'entendre râler." ;
+    : ROHOA-oneline3 "Quelle ruine... tant de connaissances gâchees." ;
+    : ROHOA-oneline4 "Je me demande ce que mon papa fabriquerait a l'heure qu'il est..." ;
+    : ROHOA-oneline5 "Je garde d'autres choses dans ma sacoche tu sais. Tu as deja joue au poker ?" ;
+    : ROHOA-oneline6 "Tu ne veux pas savoir comment cette glue est fabriquee. CROIS-MOI." ;
+    : ROHOA-oneline7 "Je nous prepare un truc a manger ?" ;
+    : ROHOA-oneline8 "Tu ne t'es jamais pris de coup de sacoche derriere la tete, pas vrai ?" ;
+    : ROHOA-oneline9 "Je prefererais presque que les choses soient ainsi. Moins de cris, plus de gemissements." ;
+    : ROHOA-oneline10 "Je me demande si on va croiser d'autres medecins dans le coin..." ;
+    : ROHOA-oneline11 "Il me tarde deja que cette catastrophe soit terminee." ;
+    : ROHOA-oneline12 "On doit stocker des medicaments. On ne sait jamais ce qui nous attend au tournant." ;
+    : ROHOA-oneline13 "Je sais que je radote parfois, mais je suis la pour vous." ;
+    : ROHOA-oneline14 "Allez. Haut les coeurs. On peut encore y arriver." ;
+    : ROHOA-oneline15 "Regarde, regarde. Ce n'est pas de ma faute si tu pues le roseau violet." ;
+    : ROHOA-oneline16 "Hmm... vous auriez un briquet a silex de rechange ?" ;
+    : ROHOA-oneline17 "On va s'en sortir. Allez. On gere la situation." ;
+    : ROHOA-oneline18 "Tu as teste la drogue-medicament ? Seuls les idiots testent la drogue-medicament." ;
+    : ROHOA-oneline19 "Changez de chaussettes souvent, s'il vous plait." ;
+    : ROHOA-oneline20 "C'est notre fardeau, parce qu'on est les seuls a pouvoir le porter." ;
+    : ROHOA-oneline21 "Dans ce monde, les seules personnes en qui on peut avoir confiance, c'est nous." ;
+
+	deck-new
+		card: ROHOA-oneline1
+		card: ROHOA-oneline2
+		card: ROHOA-oneline3
+		card: ROHOA-oneline4
+		card: ROHOA-oneline5
+		card: ROHOA-oneline6
+		card: ROHOA-oneline7
+		card: ROHOA-oneline8
+		card: ROHOA-oneline9
+		card: ROHOA-oneline10
+		card: ROHOA-oneline11
+		card: ROHOA-oneline12
+		card: ROHOA-oneline13
+		card: ROHOA-oneline14
+		card: ROHOA-oneline15
+		card: ROHOA-oneline16
+		card: ROHOA-oneline17
+		card: ROHOA-oneline18
+		card: ROHOA-oneline19
+		card: ROHOA-oneline20
+		card: ROHOA-oneline21
+	constant ROHOA-ONELINERS
+	ROHOA-ONELINERS var ROHOA-oneliners
+	ROHOA-ONELINERS shuffles to ROHOA-oneliners
+
+: ROHOA-oneliner
+	ROHOA-oneliners depths 0= if ROHOA-ONELINERS shuffles to ROHOA-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ROHOA-oneliner
+
+	constant BLURB-ROHOA-DECK
+	BLURB-ROHOA-DECK var blurb-ROHOA-deck
+	BLURB-ROHOA-DECK shuffles to blurb-ROHOA-deck

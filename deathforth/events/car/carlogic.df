@@ -1,0 +1,329 @@
+// this is called after carstats.df
+events{ road{
+
+: car-lost-old
+	// 0 to car-working
+	0 vehicle.which!
+	walk-music
+	// temporary wear thingy
+	car-max-engine to car-engine
+	car-update-display
+	badfx
+	walk-day-pick
+	// OLD walk-day-chance
+;
+
+: car-boom
+	($ "VOITURE ANEANTIE !
+		Armes du coffre perdues !" rbold $) +cr +text
+	car-lost trunk.killer
+;
+
+: car-break
+	($ "VOITURE DETRUITE !" rbold $) +cr +text
+	car-lost
+;
+
+: car-stolen
+	($ "VOITURE VOLEE !" rbold $) +cr +text
+	car-lost
+;
+
+: car-abandon
+	($ "VOITURE ABANDONNEE !" rbold $) +cr +text
+	car-lost
+;
+
+: car-fullhealth
+	car-max-chassis to car-chassis
+;
+
+: car-fulltune
+	car-max-engine to car-engine
+;
+
+: car-gas+
+	trunk-gas+
+	trunk-gas 0 < if
+		0 LOOT_GAS trunk.loot!
+	then
+;
+
+: car-chassis+
+	' car-chassis +!
+	car-chassis car-max-chassis > if
+		car-fullhealth
+	then;
+	car-update-display
+	car-chassis 0 <= if
+		car-break
+	then
+;
+
+: car-armor+
+	dup ' car-max-chassis +!
+	dup car-chassis+
+	1 ' car-armor +!
+;
+
+: car-tune+
+	' car-engine +!
+	car-engine car-max-engine > if
+		car-fulltune
+	then
+;
+
+: car-megatune+
+	dup ' car-max-engine +!
+	dup car-tune+
+;
+
+: car-guzzle 10 car-mpg * car-armor + ;
+: guzzle-mpg
+	trunk-gas car-guzzle < if
+		trunk-gas
+	else
+		car-guzzle
+	then
+	"GUZZLE: " type dup print
+	-1 * trunk-gas+
+;
+
+// Logic for garage-choices
+
+: car-work-randnum
+	cchar .mechanical 7 < if 2 else 1.4 then // For over-max mechanical, get a tighter repair variance
+;
+
+: car-engine-rnd car-max-engine car-work-randnum / car-max-engine rnd ;
+: car-tune-rnd car-engine-rnd car-tune+ ;
+: car-tune-rnd-half car-engine-rnd 2 / car-tune+ ;
+
+: car-chassis-rnd car-max-chassis car-work-randnum / car-max-chassis rnd ;
+: car-weld-rnd car-chassis-rnd car-chassis+ ;
+: car-weld-rnd-half car-chassis-rnd 2 / car-chassis+ ;
+
+: mechanic-diff
+	cchar .mechanical car-repair -
+;
+: mechanic-silentrepair
+	mechanic-diff -1 > if car-tune-rnd car-weld-rnd else car-tune-rnd-half car-weld-rnd-half then
+;
+
+: mechanic-weldup // Combine with tuneup
+	mechanic-diff 1 > if
+		car-weld-rnd car-tune-rnd goodfx
+		($ cHe .. " repare la voiture avec expertise en un rien de temps !" $)
+	then;
+	mechanic-diff -1 > if
+		car-weld-rnd car-tune-rnd
+		"Les reparations prennent une bonne partie de la journee."
+	then;
+	mechanic-diff -2 > if
+		car-weld-rnd-half car-tune-rnd-half
+		"Les reparations prennent une bonne partie de la journee, et sont tres difficiles."
+	then;
+	($ cHe .. " n'a aucune idee de ce qu'" .. che .. " fait, et gaspille une journee a faire semblant de travailler sur la voiture." $)
+;
+: mechanic-day?
+	mechanic-diff 2 < if
+		fullcamp
+	then
+;
+
+// Used to repair a car that's fully broken down
+: mechanic-repair? cchar .mechanical car-repair ;
+: mechanic-repair
+	car-engine-rnd to car-engine
+	1 ' car-repair +!
+;
+: car-tunecheck
+	mechanic-repair? > if
+		($ cname .. " repare la voiture facilement en un rien de temps !" $) +cr +text goodfx
+		mechanic-repair mechanicREV
+	then;
+	mechanic-repair? = if
+		mechanicroll if
+			($ cHe .. " arrive d'une facon ou d'une autre a faire demarrer la voiture, mais ca prend une journee entiere." $) +cr +text goodfx
+			cchar .mechanical@ 6 > if
+				($ "La prochaine fois que cette voiture tombe en panne, " .. cname .. " ne pourra absolument pas la reparer." rbold $) +crtext
+			else
+				($ "La prochaine fois que cette voiture tombe en panne, " .. cname .. " ne pourra pas la reparer a moins que sa competence en mecanique ne soit plus elevee !" rbold $) +crtext
+			then
+			mechanic-repair
+		else
+			($ cHe .. " gaspille une journee a essayer de reparer la voiture, mais elle refuse de demarrer." $) +cr +text car-abandon
+		then
+	else
+		($ cHe .. " echoue completement a reparer la voiture apres y avoir gaspille une journee." $) +cr +text car-abandon
+	then mechanicREV +cr fullcamp
+;
+
+: car-strengthcheck
+	strengthroll if
+		($ cHe .. " est aussi surpris que les autres quand le moteur se met a rugir !" $) +cr +text
+		mechanic-repair
+		car-chassis cchar .strength - 1 < if
+			"La voiture ne fait pas long feu sur la route avant qu'une piece qui a pris un coup prenne feu." +cr +text
+		then
+		cchar .strength -1 * car-chassis+ strengthREV
+	then;
+		($ cHe .. " reussit juste a casser quelque chose dans la voiture et quelques os dans sa main." $) +cr +text car-abandon morale-- strengthREV strength--
+;
+
+// Road block encounter common stuff
+
+: detour-roll
+	car-mpg 0 = if
+		"Chose amusante, cette voiture ne consomme pas d'essence." +cr +text
+		goodfx
+	then;
+	50 %chance if
+		($ gThey .. " se perd pendant une journee entiere, avant de finalement trouver un itineraire alternatif." $)
+		+cr +text
+		trunk-gas 70 car-mpg * >= if
+			-55 -70 rnd car-mpg * car-gas+
+		else
+			bandit-gas
+		then
+		+cr fullcamp heal-event
+	else
+		"Ca prend un peu plus de temps et d'essence, mais pas trop !" +cr +text
+		trunk-gas 30 car-mpg * >= if
+			-25 -30 rnd car-mpg * car-gas+
+		else
+			bandit-gas
+		then
+	then
+;
+
+: car-plowthrough
+	car-armor 0 > if
+		"La voiture fonce a travers l'obstacle, mais une partie de son blindage de fortune finit par tomber." +cr +text goodfx
+		-1 ' car-armor +!
+	else
+		-2 -3 rnd car-chassis+ badfx
+		car-chassis 0 > if
+			"La voiture passe, mais prend des degats." +crtext
+		else
+			"La voiture est passee, mais a pris trop de degats. Elle s'est effondree un peu plus loin sur la route." +crtext
+		then
+	then
+;
+
+: car-jump
+	car-speed 2 < if
+		"La voiture lente se retourne immediatement et s'enflamme, sans meme franchir l'obstacle." +cr +text badfx
+		ouch2-all car-break
+	then;
+	car-speed 2 = if
+		"La voiture s'en sort de justesse, mais coule comme une enclume et s'ecrase au sol. Des morceaux de voiture volent dans tous les sens." +cr +text badfx
+		-2 -3 rnd car-chassis+
+		car-chassis 0 > if "Elle en a pris plein la figure, mais elle roule encore !" +crtext then
+	then;
+	car-speed 3 > if
+		"La voiture prend une vitesse incroyable, percute le tremplin, et se met a voler grace aux propulseurs ! C'est grisant !" +cr +text goodfx morale2+all
+	then;
+	car-speed 2 > if
+		"La voiture prend de la bonne vitesse, percute le tremplin, et passe l'obstacle en rase-mottes !" +cr +text goodfx
+	then;
+;
+
+// Option for shooting stuff in a frenzy, needs work later
+
+: car-shoot-ammo? trunk-bullet 0 > trunk-rifle-shell 0 > trunk-shotgun-shell 0 > or or ;
+: car-shoot-check trunk-bullet 29 > trunk-rifle-shell 20 > trunk-shotgun-shell 10 > and and ;
+: car-shoot // improve this later
+	trunk-bullet 0 > if -30 trunk-bullet+ then
+	trunk-rifle-shell 0 > if -20 trunk-rifle-shell+ then
+	trunk-shotgun-shell 0 > if -10 trunk-shotgun-shell+ then
+	trunk-bullet 0 < if
+		0 LOOT_BULLET trunk.loot!
+	then
+	trunk-shotgun-shell 0 < if
+		0 LOOT_SHOTGUN_SHELL trunk.loot!
+	then
+	trunk-rifle-shell 0 < if
+		0 LOOT_RIFLE_SHELL trunk.loot!
+	then
+;
+
+} }
+
+cyoa{ road{
+
+// Common used elements for road block encounters
+
+cyoa-choice: car-detour
+	someicon ($ Thegroup .. " decide de faire un detour ! C'est generalement une mauvaise idee." $) cyoa-text!
+	detour-roll
+;
+
+// Used to tune up a car in a garage, before it's broken
+: car-tuneup // partially combined with weldup now
+	car-engine car-max-engine >= if
+		"La voiture tourne comme neuve ! "
+	else
+		car-engine 14 > if
+			"La voiture tourne comme si elle etait en bon etat. "
+		then
+		car-engine 15 < car-engine 7 > and if
+			"La voiture a connu des jours meilleurs. "
+		then
+		car-engine 8 < if
+			"La voiture pourrait encore tomber en panne d'un moment a l'autre. "
+		then
+	then
+	+crtext
+;
+cyoa-choice: car-weldup
+	($ cname .. " essaie de reparer la voiture dans l'espoir qu'elle tienne un peu plus longtemps avant de tomber en panne. " $) cyoa-text!
+	mechanic-weldup +text
+	car-chassis car-max-chassis = if
+		"La voiture a l'air intacte !"
+	else
+		car-chassis 3 < if
+			"La voiture a toujours l'air completement bousilee."
+		else
+			"La voiture a l'air cabossee, mais encore solide."
+		then
+	then
+	car-tuneup
+	+text mechanicREV mechanic-diff -2 > if mechanic++ then +cr mechanic-day?
+;
+
+// Standard choices in every garage
+: garage-choices
+	mechanicest choosechar
+	choice( "Reparation et revision de la voiture" )choice: car-weldup
+	// choice( "Full tune up" )choice: car-tuneup
+	choice( "Repartir" )choice
+;
+
+cyoa: car-nogas
+	"PLUS D'ESSENCE" cyoa-title!
+	($ "La voiture est completement a court d'essence et s'arrete en douceur.
+	" .. "VOITURE ABANDONNEE !" rbold $) cyoa-text! badfx car-lost
+;
+
+cyoa-choice: car-abandoned
+	image-road-end
+	($ "Sans perdre de temps, " .. thegroup .. " decide d'abandonner la voiture et de marcher jusqu'a trouver un nouveau vehicule." $) cyoa-text!
+	car-abandon
+;
+cyoa-choice: car-breakdown-punch
+	($ cname .. " ouvre le capot de la voiture et commence a FRAPPER." $) cyoa-text! car-strengthcheck strengthREV
+;
+cyoa-choice: car-breakdown-fix
+	($ cname .. " ouvre le capot de la voiture." $) cyoa-text! car-tunecheck mechanicREV
+;
+cyoa: car-breakdown
+	"PANNE DE VOITURE" cyoa-title! image-broken-down-car
+	($ "La voiture est tombee en panne a force d'usage et d'abus. Elle ne redemarrera plus." $) cyoa-text!
+		choice( "Abandonner la voiture" )choice: car-abandoned
+		mechanicest charchoice( " tente de la reparer" )choice: car-breakdown-fix
+		someone charchoice( " frappe la voiture" )choice: car-breakdown-punch
+
+;
+
+} }

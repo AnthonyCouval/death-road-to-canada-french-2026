@@ -1,0 +1,109 @@
+
+:map 1 
+:tags citadelentry  
+:scriptA basicbed 
+:scriptB basicbed 1 lt .flip! 
+:scriptC mildrawers 
+:scriptD speaker_mil 
+:size 11 15 
+:off 14 10 
+:tiles 
+22222222222
+23333333332
+2BC11D11CA2
+21111111112
+2BC11111CA2
+21111111112
+2BC11111CA2
+21111111112
+2BC11111CA2
+21111111112
+2BC11111CA2
+21111111112
+21111111112
+22222222222
+33333333333
+
+:map 2 
+:tags bathroom  
+:scriptA bathtoilet -1 movey 
+:scriptB restsink -1 movey 
+:scriptC stall -1 movey 
+:scriptD wallshower skel 
+:scriptE 5 %chance if threeburst then 
+:size 15 10 
+:off 5 0 
+:tiles 
+222222222222222
+233333333333332
+2111D11DE1D1112
+212222222222212
+213333333333312
+211BBBCACACAC12
+211111111111112
+211111111111112
+222222222222222
+333333333333333
+
+:map 3 
+:tags armoryshot  
+:scriptA cellbars -0.3 movey 
+:scriptB cellbars48 -0.3 movey 
+:scriptC ammopile_shotgun 
+:scriptD 2 3 rnd for pipebomb next 
+:scriptE 33 %chance if speaker_mil then 
+:size 21 10 
+:off 2 0 
+:tiles 
+222222222222222222222
+233333333333323333332
+21111C1C1C11C21111112
+2112112112211221D2112
+21131B31B331B331B3112
+21111111111111E111112
+211111111111111111112
+211111111111111111112
+222222222222222222222
+333333333333333333333
+
+:map 4 
+:tags armorybullet  
+:scriptA cellbars -0.3 movey 
+:scriptB cellbars48 -0.3 movey 
+:scriptC ammopile_bullet 
+:scriptD 2 3 rnd for pipebomb next 
+:scriptE 33 %chance if speaker_mil then 
+:size 21 10 
+:off 2 0 
+:tiles 
+222222222222222222222
+233333333333323333332
+21111C1C1C11C21111112
+2112112112211221D2112
+21131B31B331B331B3112
+21111111111111E111112
+211111111111111111112
+211111111111111111112
+222222222222222222222
+333333333333333333333
+
+:map 5 
+:tags armoryrifle  
+:scriptA cellbars -0.3 movey 
+:scriptB cellbars48 -0.3 movey 
+:scriptC ammopile_rifle 
+:scriptD 2 3 rnd for pipebomb next 
+:scriptE 33 %chance if speaker_mil then 
+:size 21 10 
+:off 2 0 
+:tiles 
+222222222222222222222
+233333333333323333332
+21111C1C1C11C21111112
+2112112112211221D2112
+21131B31B331B331B3112
+21111111111111E111112
+211111111111111111112
+211111111111111111112
+222222222222222222222
+333333333333333333333

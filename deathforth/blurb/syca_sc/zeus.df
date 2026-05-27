@@ -1,0 +1,61 @@
+    : ZEUS-oneline1 "L'HOMME PROPOSE... ZEUS DISPOSE." ;
+    : ZEUS-oneline2 "DE TOUT LE MONT OLYMPE, C'EST MOI LE PATRON." ;
+    : ZEUS-oneline3 "PLUS RAPIDE AVEC LES ECLAIRS QU'USAIN BOLD !" ;
+    : ZEUS-oneline4 "QU'UNE MALEDICTION S'ABATTE SUR... oh, attends, c'est pas mon domaine." ;
+    : ZEUS-oneline5 "UNE VINGTAINE DE DESCENDANTS MORTELS... non, attends, c'est pas mon domaine." ;
+    : ZEUS-oneline6 "AU PREMIER JOUR DE... tant pis, c'est pas ma communaute." ;
+    : ZEUS-oneline7 "FOUDROUYYYYYYYYYEA !" ;
+    : ZEUS-oneline8 "ATTAQUE !" ;
+    : ZEUS-oneline9 "TU CONNAIS MON FILS, MARS ? DESOLE POUR TA PERTE SI C'EST LE CAS" ;
+    : ZEUS-oneline10 "J'AI SCULPTE CES ABDO-KROS MOI-MEME." ;
+    : ZEUS-oneline11 "LA PERFECTION EST PARTOUT OU JE POSE MON REGARD." ;
+    : ZEUS-oneline12 "QUAND TU ARRIVERAS AU FLEUVE STYX... DIS A MON CHIEN QU'IL PUE." ;
+    : ZEUS-oneline13 "TU VEUX QU'ON SE MARIE ? NON ? OK." ;
+    : ZEUS-oneline14 "TU VEUX QU'ON SORTE ENSEMBLE ? NON ? OK." ;
+    : ZEUS-oneline15 "VIENS CHEZ MOI. C'EST LITTERALEMENT LE PARADIS." ;
+    : ZEUS-oneline16 "CES ZOMBIES OSERAIENT TUER LEUR PROPRE CREATEUR ?" ;
+    : ZEUS-oneline17 "PERSONNE NE TE CROIRA JAMAIS." ;
+    : ZEUS-oneline18 "JE N'AI PAS BESOIN DE NOURRITURE... MAIS J'EN VEUX VRAIMENT." ;
+    : ZEUS-oneline19 "MOINS DE ZOMBIES... PLUS DE FEMMES !" ;
+    : ZEUS-oneline20 "SI JAMAIS TU ES TENTE, N'AILLEZ PAS AU VALHALLA. CA CRAINT." ;
+    : ZEUS-oneline21 "SI TU PENSES QUE JE SUIS HORRIBLE, TU DEVRAIS RENCONTRER ODIN." ;
+
+	deck-new
+		card: ZEUS-oneline1
+		card: ZEUS-oneline2
+		card: ZEUS-oneline3
+		card: ZEUS-oneline4
+		card: ZEUS-oneline5
+		card: ZEUS-oneline6
+		card: ZEUS-oneline7
+		card: ZEUS-oneline8
+		card: ZEUS-oneline9
+		card: ZEUS-oneline10
+		card: ZEUS-oneline11
+		card: ZEUS-oneline12
+		card: ZEUS-oneline13
+		card: ZEUS-oneline14
+		card: ZEUS-oneline15
+		card: ZEUS-oneline16
+		card: ZEUS-oneline17
+		card: ZEUS-oneline18
+		card: ZEUS-oneline19
+		card: ZEUS-oneline20
+		card: ZEUS-oneline21
+	constant ZEUS-ONELINERS
+	ZEUS-ONELINERS var ZEUS-oneliners
+	ZEUS-ONELINERS shuffles to ZEUS-oneliners
+
+: ZEUS-oneliner
+	ZEUS-oneliners depths 0= if ZEUS-ONELINERS shuffles to ZEUS-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: ZEUS-oneliner
+
+	constant BLURB-ZEUS-DECK
+	BLURB-ZEUS-DECK var blurb-ZEUS-deck
+	BLURB-ZEUS-DECK shuffles to blurb-ZEUS-deck

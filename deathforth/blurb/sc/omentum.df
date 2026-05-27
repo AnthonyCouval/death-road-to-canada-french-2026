@@ -1,0 +1,298 @@
+    : ARQ-oneline1 "Youhou, des zombies." ;
+    : ARQ-oneline2 "H est une consonne, une lettre de l'alphabet." ;
+    : ARQ-oneline3 "Les zombies se fatiguent-ils ?" ;
+    : ARQ-oneline4 "Et le reste du monde, comment ca va ?" ;
+    : ARQ-oneline5 "J'ai faim." ;
+    : ARQ-oneline6 "Quelqu'un veut du jus d'orange ?" ;
+    : ARQ-oneline7 "On peut bombarder les zombies ?" ;
+    : ARQ-oneline8 "N'oublie pas le Puits des Voeux dans la Crypte de la Degradation !" ;
+    : ARQ-oneline9 "Pourquoi j'etais encore en Floride deja ?" ;
+    : ARQ-oneline10 "Je n'aime pas le cafe." ;
+    : ARQ-oneline11 "Je me demande ou sont passes tous mes amis." ;
+    : ARQ-oneline12 "Je veux un minigun facile a transporter." ;
+    : ARQ-oneline13 "Pourquoi on doit conduire si vite ?" ;
+    : ARQ-oneline14 "JE DETESTE L'EXERCICE !" ;
+    : ARQ-oneline15 "J'aimerais bien manger chez Boyger Queen la tout de suite." ;
+    : ARQ-oneline16 "Est-ce que la neige fait du bien au toucher ?" ;
+    : ARQ-oneline17 ($ "C'est l'annee " .. time.year 1900 + .. " et on doit encore utiliser des voitures pour se deplacer." $) ;
+    : ARQ-oneline18 "Certains inconnus sont des cretins, soyons prudents." ;
+    : ARQ-oneline19 "C'est l'enfer sur terre, il fait beaucoup trop chaud." ;
+    : ARQ-oneline20 "On devrait trouver un magasin d'electronique pour que je puisse avoir un ordinateur portable." ;
+    : ARQ-oneline21 "Les gnomes sont bizarres." ;
+    : ARQ-oneline22 "Est-ce que ce zombie vient de marcher du haut d'une falaise ?" ;
+    : ARQ-oneline23 "Cool, mon doigt saigne." ;
+    : ARQ-oneline24 "J'ai besoin de manger." ;
+    : ARQ-oneline25 "Je vois, avec mon petit oeil, une personne tres laide. Non attends, c'est un zombie." ;
+    : ARQ-oneline26 "Je me demande si c'est trop meta." ;
+    : ARQ-oneline27 "Hum..." ;
+
+    deck-new
+       card: ARQ-oneline1
+       card: ARQ-oneline2
+       card: ARQ-oneline3
+       card: ARQ-oneline4
+       card: ARQ-oneline5
+       card: ARQ-oneline6
+       card: ARQ-oneline7
+       card: ARQ-oneline8
+       card: ARQ-oneline9
+       card: ARQ-oneline10
+       card: ARQ-oneline11
+       card: ARQ-oneline12
+       card: ARQ-oneline13
+       card: ARQ-oneline14
+       card: ARQ-oneline15
+       card: ARQ-oneline16
+       card: ARQ-oneline17
+       card: ARQ-oneline18
+       card: ARQ-oneline19
+       card: ARQ-oneline20
+       card: ARQ-oneline21
+       card: ARQ-oneline22
+       card: ARQ-oneline23
+       card: ARQ-oneline24
+       card: ARQ-oneline25
+       card: ARQ-oneline26
+       card: ARQ-oneline27
+    constant ARQ-ONELINERS
+    ARQ-ONELINERS var arq-oneliners
+    ARQ-ONELINERS shuffles to arq-oneliners
+
+    : ARQ-emote1 " veut conduire la voiture." ;
+    : ARQ-emote2 " a envie de peter." ;
+    : ARQ-emote3 " crache par la fenetre." ;
+    : ARQ-emote4 " se moque d'un zombie proche." ;
+    : ARQ-emote5 " s'endort." ;
+    : ARQ-emote6 " parle de la belle vie d'avant l'apocalypse." ;
+    : ARQ-emote7 " veut des frites." ;
+    : ARQ-emote8 " tousse a repetition." ;
+    : ARQ-emote9 " se plaint des mouches volantes dans ses yeux." ;
+    : ARQ-emote10 " demande de s'arreter pour une pause pipi." ;
+
+    deck-new
+       card: ARQ-emote1
+       card: ARQ-emote2
+       card: ARQ-emote3
+       card: ARQ-emote4
+       card: ARQ-emote5
+       card: ARQ-emote6
+       card: ARQ-emote7
+       card: ARQ-emote8
+       card: ARQ-emote9
+       card: ARQ-emote10
+    constant ARQ-EMOTES
+    ARQ-EMOTES shuffles var arq-emotes
+
+: arq-oneliner
+    arq-oneliners depths 0= if ARQ-ONELINERS shuffles to arq-oneliners then
+    blurbslot 0= if
+       drawcard blurbsay
+    else
+       drop
+    then
+;
+
+: arq-emote
+    arq-emotes depths- 0= if ARQ-EMOTES shuffles to arq-emotes then
+    blurbslot 0= if
+       qmsg ($ me .name@ .. arq-emotes drawcard $) txt
+    then
+;
+
+    deck-new
+       ARQ-EMOTES depths- cards: arq-emote
+       ARQ-ONELINERS depths- cards: arq-oneliner
+    constant BLURB-ARQ-DECK
+    BLURB-ARQ-DECK shuffles var blurb-arq-deck
+
+: arq-deck blurb-arq-deck depths 0= if BLURB-ARQ-DECK shuffles to blurb-arq-deck then ;
+
+    : CART-oneline1 "La carte dit d'aller par la !" ;
+    : CART-oneline2 "Carte, carte, petite carte..." ;
+    : CART-oneline3 "Faire une carte du Canada va etre trop cool !" ;
+    : CART-oneline4 "J'ai toujours du papier sur moi, je dois pouvoir faire une carte a tout moment !" ;
+    : CART-oneline5 "Vers le haut, gauche, nord-ouest, en haut a gauche, tout en haut..." ;
+
+    deck-new
+       card: CART-oneline1
+       card: CART-oneline2
+       card: CART-oneline3
+       card: CART-oneline4
+       card: CART-oneline5
+    constant CART-ONELINERS
+    CART-ONELINERS shuffles var cart-oneliners
+
+    : CART-emote1 " est en train de dessiner une nouvelle carte de la cote est." ;
+    : CART-emote2 " veut faire une autre carte." ;
+    : CART-emote3 " reorganise sa collection de cartes." ;
+    : CART-emote4 " etudie sa carte pour s'assurer qu'elle est exacte." ;
+    : CART-emote5 " chante une chanson sur le fait d'etre une carte." ;
+
+    deck-new
+       card: CART-emote1
+       card: CART-emote2
+       card: CART-emote3
+       card: CART-emote4
+       card: CART-emote5
+    constant CART-EMOTES
+    CART-EMOTES shuffles var cart-emotes
+
+: cart-oneliner
+    cart-oneliners depths 0= if CART-ONELINERS shuffles to cart-oneliners then
+    blurbslot 0= if
+       drawcard blurbsay
+    else
+       drop
+    then
+;
+
+: cart-emote
+    cart-emotes depths- 0= if CART-EMOTES shuffles to cart-emotes then
+    blurbslot 0= if
+       qmsg ($ me .name@ .. cart-emotes drawcard $) txt
+    then
+;
+
+    deck-new
+       CART-EMOTES depths- cards: cart-emote
+       CART-ONELINERS depths- cards: cart-oneliner
+    constant BLURB-CART-DECK
+    BLURB-CART-DECK shuffles var blurb-cart-deck
+
+: cart-deck blurb-cart-deck depths 0= if BLURB-CART-DECK shuffles to blurb-cart-deck then ;
+
+: .brck-charm-check args( me ) <- me .charm@ 0= if "Geyodyde" then; <- me .charm@ 2 < if "Groveler" then; "Galem" ;
+
+    : BRCK-oneline1 "Avec une bonne preparation et une planification minutieuse, on peut tous sortir d'ici sains et saufs !" ;
+    : BRCK-oneline2 "Quelqu'un a faim ? Je vais cuisiner un delicieux repas pour tout le monde !" ;
+    : BRCK-oneline3 "Le pouvoir de l'amitie est imparable, je crois en mes amis et ils croient en moi !" ;
+    : BRCK-oneline4 "On doit juste essayer plus fort la prochaine fois, la defaite n'arrive que quand on refuse de devenir plus fort." ;
+    : BRCK-oneline5 "Ce serait plus facile si on avait tous des Pukeymon avec nous mais on doit faire avec ce qu'on a !" ;
+
+    deck-new
+       card: BRCK-oneline1
+       card: BRCK-oneline2
+       card: BRCK-oneline3
+       card: BRCK-oneline4
+       card: BRCK-oneline5
+    constant BRCK-ONELINERS
+    BRCK-ONELINERS shuffles var brck-oneliners
+
+    : BRCK-emote1 " regarde par la fenetre, des visions de femmes dansent dans ses yeux." ;
+    : BRCK-emote2 " parle tout seul des ameliorations a apporter a certaines de ses recettes, tout en tapotant sur sa poele." ;
+    : BRCK-emote3 " ronfle bruyamment, tombe dans le coma a cause du manque de femmes a qui faire sa demande." ;
+    : BRCK-emote4 " fait l'inventaire avec soin. Il semble legerement insatisfait." ;
+    : BRCK-emote5 ($ " et " .. me .brck-charm-check .. " font un concours de regard. Attends, est-ce que " .. me .name@ .. " peut cligner des yeux ? Personne ne sait." $) ;
+
+    deck-new
+       card: BRCK-emote1
+       card: BRCK-emote2
+       card: BRCK-emote3
+       card: BRCK-emote4
+       card: BRCK-emote5
+    constant BRCK-EMOTES
+    BRCK-EMOTES shuffles var brck-emotes
+
+: brck-oneliner
+    brck-oneliners depths 0= if BRCK-ONELINERS shuffles to brck-oneliners then
+    blurbslot 0= if
+       drawcard blurbsay
+    else
+       drop
+    then
+;
+
+: brck-emote
+    brck-emotes depths- 0= if BRCK-EMOTES shuffles to brck-emotes then
+    blurbslot 0= if
+       qmsg ($ me .name@ .. brck-emotes drawcard $) txt
+    then
+;
+
+    deck-new
+       BRCK-EMOTES depths- cards: brck-emote
+       BRCK-ONELINERS depths- cards: brck-oneliner
+    constant BLURB-BRCK-DECK
+    BLURB-BRCK-DECK shuffles var blurb-brck-deck
+
+: brck-deck blurb-brck-deck depths 0= if BLURB-BRCK-DECK shuffles to blurb-brck-deck then ;
+
+: johnny-conv1
+    blurbslot 0= if
+       "ARGH ! *bip bip bip*"
+    else
+       blurbslot 3 < 50 %chance and if
+          STAT_MORALE me .stat--
+       then
+    then
+;
+
+    : JOHNNY-oneline1 "Merde alors !" ;
+    : JOHNNY-oneline2 ($ "Je " .. "deteste" rbold .. " vraiment ces zombies." $) ;
+    : JOHNNY-oneline3 "Un fusil a pompe va exploser ces zombies comme il faut." ;
+    : JOHNNY-oneline4 "BERSERKERRRRR !" fbold ;
+    : JOHNNY-oneline5 "Je deteste litteralement tout dans cette situation." ;
+    : JOHNNY-oneline6 "J'ai besoin d'une plus grosse arme." ;
+    : JOHNNY-oneline7 "Ou est l'armee ?" ;
+    : JOHNNY-oneline8 "AAARGH !" ;
+    : JOHNNY-oneline9 "Le berserk, c'est ma specialite." ;
+    : JOHNNY-oneline10 "Pourquoi on est la ? Juste pour souffrir ?" ;
+    : JOHNNY-oneline11 "Rappelle-moi de ne plus jamais respirer apres tout ca." ;
+    : JOHNNY-oneline12 "Merde a tout ca." ;
+
+
+    deck-new
+       card: JOHNNY-oneline1
+       card: JOHNNY-oneline2
+       card: JOHNNY-oneline3
+       card: JOHNNY-oneline4
+       card: JOHNNY-oneline5
+       card: JOHNNY-oneline6
+       card: JOHNNY-oneline7
+       card: JOHNNY-oneline8
+       card: JOHNNY-oneline9
+       card: JOHNNY-oneline10
+       card: JOHNNY-oneline11
+       card: JOHNNY-oneline12
+    constant JOHNNY-ONELINERS
+    JOHNNY-ONELINERS shuffles var johnny-oneliners
+
+    : JOHNNY-emote1 " a l'air tres en colere." ;
+    : JOHNNY-emote2 " hurle sur un zombie." ;
+    : JOHNNY-emote3 " scande qu'il est en mode berserk." ;
+    : JOHNNY-emote4 " serre son fusil a pompe dans sa main, en regardant dehors." ;
+    : JOHNNY-emote5 " dit plein de choses sur les zombies." ;
+
+    deck-new
+       card: JOHNNY-emote1
+       card: JOHNNY-emote2
+       card: JOHNNY-emote3
+       card: JOHNNY-emote4
+       card: JOHNNY-emote5
+    constant JOHNNY-EMOTES
+    JOHNNY-EMOTES shuffles var johnny-emotes
+
+: johnny-oneliner
+    johnny-oneliners depths 0= if JOHNNY-ONELINERS shuffles to johnny-oneliners then
+    blurbslot 0= if
+       drawcard blurbsay
+    else
+       drop
+    then
+;
+
+: johnny-emote
+    johnny-emotes depths- 0= if JOHNNY-EMOTES shuffles to johnny-emotes then
+    blurbslot 0= if
+       qmsg ($ me .name@ .. johnny-emotes drawcard $) txt
+    then
+;
+
+    deck-new
+       JOHNNY-EMOTES depths- cards: johnny-emote
+       JOHNNY-ONELINERS depths- cards: johnny-oneliner
+       card: johnny-conv1
+    constant BLURB-JOHNNY-DECK
+    BLURB-JOHNNY-DECK shuffles var blurb-johnny-deck
+
+: johnny-deck blurb-johnny-deck depths 0= if BLURB-JOHNNY-DECK shuffles to blurb-johnny-deck then ;

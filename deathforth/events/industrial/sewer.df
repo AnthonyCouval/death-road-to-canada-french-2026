@@ -1,0 +1,127 @@
+uses mission-events.df
+
+cyoa{
+
+// : cyoa-exit-ladder-go mission{ walk-try-end-mission } ;
+
+cyoa: cyoa-exit-ladder
+	"La Sortie" cyoa-title!
+	"Vous avez trouve l'echelle pour sortir d'ici !" cyoa-text!
+	cyoa-add-choice
+		"Grimper !" cyoa-choice-text!
+		mission{ ' walk-try-end-mission cyoa-choice-handler! }
+		choice( "Rester pour l'instant" )choice
+;
+
+: tutorial-ladder-end
+	quit-to-title
+	gstats{ ' tutorial-done ++ save }
+;
+
+cyoa: cyoa-exit-ladder-tutorial
+	"La Sortie du Tutoriel" cyoa-title!
+	($ "Vous avez trouve l'echelle pour sortir d'ici !
+	Ceci terminera l'histoire de " .. pname .. ", mais votre histoire est sur le point de commencer !
+	Vous allez trouver le chemin vers le Canada, en pillant toutes les provisions possibles en chemin. Vous devrez developper vos competences et votre equipe pour survivre !" $) cyoa-text!
+	cyoa-add-choice
+		"Terminer le Tutoriel !" cyoa-choice-text!
+		' tutorial-ladder-end cyoa-choice-handler!
+		choice( "Rester pour l'instant" )choice
+;
+
+
+}
+
+: poswet? 16 / swap 16 / swap map{ tile@ .wet@ } ;
+
+mission{
+thing-event: ladder-glow-effect
+	eventid THING_EVENT_TIMER <> if exit then
+	particle{ new me .pos 7 + pos! 1 ticks! ticks@ fade_out!
+//		1 madticks 120 * sin 0.025 * + scale! // shimmer
+		1.25 scalex!
+		particles_base_id 0x 51 + spriteid!
+		0.75 clr.r! 0.5 clr.g! 0.125 clr.b!
+		2 layer!
+		glowy
+		me .pos poswet? if
+			madticks 5 * sin 0.05 * scalex@ + scalex!
+			madticks 5 * cos 0.05 * scaley@ + scaley!
+			madticks 13 * cos 0.025 * scale@ + scale!
+		then
+	}
+	1 me .timer!
+;
+}
+
+: exit-ladder-setup
+	spawn special_objects32_base_id 0x 18 + lt .spriteid! immovable
+	0 %flammability!
+	0 lt .no_hit!
+
+	map{ postify }
+	// Make it squareish collision
+ 	4 lt .rad.x!
+	4 lt .rad.y!
+
+	mission{ ' ladder-glow-effect lt .events! }
+
+	1 lt .timer!
+;
+
+: exit-ladder
+
+	exit-ladder-setup
+	cyoa{ ' cyoa-exit-ladder cyoa! }
+;
+
+: exit-ladder-tutorial
+
+	exit-ladder-setup
+	cyoa{ ' cyoa-exit-ladder-tutorial cyoa! }
+;
+
+: sewer-junktest
+	spawn special_objects64_base_id 1 + lt .spriteid!
+	0 %flammability! bbox immovable
+
+;
+
+cyoa{ road{
+
+cyoa: sewer-test2
+	
+	"Riviere de la Mort" cyoa-title!
+	someicon
+	($ Thegroup .. " arrive dans une enorme ville conquise par les morts-vivants, et voit que sa seule chance est de braver le systeme d'egouts.
+	En ouvrant le regard, une cacophonie de gemissements en sort. C'est mauvais signe." $) cyoa-text! basic-tone
+		1.3 18 20 rnd 2 3 rnd zforecast
+		mission{ ' door-no-escape to main-event-mission-location-leave }
+		"events/industrial/region/sewertest2.df" $load-region
+		choice( "PLONGER DEDANS" )choice: premission
+;
+
+cyoa: sewer-test
+	
+	"Riviere de Boue" cyoa-title!
+	someicon
+	($ "Cette ville est couverte de hordes de morts-vivants et de debris touches par un incendie precedent. " .. Thegroup .. " se retrouve encercle, et sa seule chance est de " .. "SPRINTER A TRAVERS" fbold .. " les egouts." $) cyoa-text! basic-tone
+		0.8 20 24 rnd 2 3 rnd zforecast
+		mission{ ' door-no-escape to main-event-mission-location-leave }
+		"events/industrial/region/sewertest.df" $load-region
+		choice( "PLONGER DEDANS" )choice: premission
+;
+
+cyoa: rescuesewer
+	
+	"Sauvetage Malodorant" cyoa-title!
+	someicon
+	($ Thegroup .. " repere un survivant desespere fuir une horde en sautant dans les egouts. L'aider impliquerait de trouver une sortie plus sure." $) cyoa-text! basic-tone
+		0.9 1.2 frnd 19 22 rnd 2 3 rnd zforecast
+		mission{ ' door-no-escape to main-event-mission-location-leave }
+		"events/industrial/region/rescuesewer.df" $load-region
+		choice( "Tenter le sauvetage !" )choice: premission
+		gas-draw
+;
+
+} }

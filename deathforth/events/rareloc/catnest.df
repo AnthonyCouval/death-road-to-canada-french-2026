@@ -1,0 +1,93 @@
+
+cyoa{
+
+: npc-cat-recruit
+	cchar to recruitee goodfx clear-cyoa
+	($ "Should " .. pname .. " recruter le chat ?" $) +crtext
+	pchar .morale3+
+	// pchar .loyaltyREV pchar .attitudeREV
+	recruitee .loyaltyREV recruitee .fitnessREV
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
+	recruit-yesno
+;
+
+cyoa-bridge: npc-cat-oscar
+	cchar to recruitee clear-cyoa
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
+	recruit-yes
+	pchar .morale3+
+	recruitee .loyaltyREV recruitee .fitnessREV recruitee .temperREV
+	"BONUS: Oscar's morale always stays above zero!" fbold +crtext
+
+;
+
+cyoa-bridge: npc-cat-food
+	LOOT_FOOD pchar .lootamt@ 0 > if
+		($ pname .. " offers the cat some food.
+		The cat sniffs at it carefully, then devours it in an instant. It decides not to kill " .. pname .. " at this moment in time." $) text!
+		npc-cat-recruit
+		-1 add-food
+	else
+		($ pname .. " n'a pas de nourriture en ce moment ! Peut-etre dans un batiment voisin..." $) text!
+	then
+;
+
+cyoa-bridge: npc-cat-poke
+	($ "Well, your call, I suppose.
+	" .. pname .. " reaches out to poke the cat but is interrupted due to " .. "GETTING MURDERED" fbold .. " by a flurry of claws and bites." $) text!
+	pchar .kill
+;
+
+// pchar .nonfatal if then
+
+cyoa: npc-catrecruit
+	nearest .character@ choosechar cicon
+
+	cchar .bodytype@ 9 = if
+		"Le Dernier Bon Chat" cyoa-title!
+			($ pname .. " finds a cat that has made its den here. It seems different than all other post-zombocalypse cats.
+			The cat is super calm and doesn't radiate a desire to murder humans! How bizarre!
+			He is wearing a name tag that reads:" .. " OSCAR" rainbold $) text!
+		choice( "Leave Oscar behind" )choice
+		choice( "Recruit Oscar!" )choice: npc-cat-oscar
+	then;
+
+	"Le Nid du Chat" cyoa-title!
+	($ pname .. " trouve un chat qui a fait son repaire dans cette maison sacagee. Le chat fixe " .. phim .. " d'un regard paresseux teinte de " .. "MURDEROUS INTENT." rainbold $) text!
+	// "Les chats sont devenus enormes quelque temps apres l'apocalypse. Les petits chats d'antan ne sont plus qu'un lointain souvenir." +crtext
+	"WARNING: Will kill you. If not now, maybe later." rbold +crtext
+		choice( "Le laisser tranquille" )choice
+		choice( "Titille le chat ! Yeah !" fbold )choice: npc-cat-poke
+		choice( "L'appater avec de la nourriture" )choice: npc-cat-food
+;
+
+}
+
+: .catrecruit args( char )
+	<- char
+	2 %chance kspet-checker 1 < and if
+		.oscarcatify
+	else
+		.catify
+	then
+	<- char cyoa{ ' npc-catrecruit cyoa! }
+	drop
+;
+
+locdef{
+		
+location
+		tags: catnest
+		max-rooms: 2
+		entry-tags: trashed
+		script: set-theme-house
+		pre-script: set-theme-house
+		
+		room-choice: trashed
+			room-weight: 10
+			room-count: 2
+			room-script: nad
+			room-post-script: still-npc .catrecruit 3 5 rnd for skelscat next
+			filter-only
+			
+}

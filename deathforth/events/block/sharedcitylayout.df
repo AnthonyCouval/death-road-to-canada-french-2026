@@ -1,0 +1,81 @@
+uses paul/region-layout.df
+
+map{ regiondef{
+
+	: grass-lot LAYER_FLOORTOP max-layer! grass-lot ;
+
+	: locid-bungalow make-bungalow ;
+	: locid-gablehouse make-gable-house ;
+	: locid-2storeyhouse make-2storey-house ;
+
+	// Picks the more low-rent looking houses
+	: make-a-house rnd5050 if locid-bungalow else locid-2storeyhouse then grass-lot walkway ;
+
+	// Maybe replace office-signs and such for this later
+	: safe-options 
+	0 stack
+		"cul" shove
+		"anus" shove
+	shuffles pops nip
+	;
+
+	: office-signs
+		1 5 rnd case
+			1 of "DINKUS & SLOAN" endof
+			2 of "CODE DES VILAINS RELAX" endof
+			3 of "PERE & FILS" endof
+			4 of "iOmniTeleCorpCo" endof
+			5 of "IniTech" endof
+		endcase
+	;
+	: restaurant-signs
+		1 5 rnd case
+			1 of "POMMES DE TERRE BOUILLIES" endof
+			2 of "SPAGHETTI SEULEMENT" endof
+			3 of "VIANDE & ETC" endof
+			4 of "CURRY A EMPORTER" endof
+			5 of "LE PAYS DES BURGERS" endof
+		endcase
+	;
+
+	: prefab-shop sign-text! prefab{ 0 3 rnd 9 0 shop } paved-lot ;
+	: prefab-shop2 sign-text! prefab{ 0 3 rnd 9 0 shop2 } paved-lot ;
+	: prefab-apt sign-text! prefab{ mrand 7 9 rnd 0 building } paved-lot ;
+	: prefab-house sign-text! prefab{ mrand 6 0 building2 } paved-lot ;
+
+	: make-a-pub "BAR DE MOE" prefab-shop ;
+	: make-a-gunshop "FLINGUE*ARRET" sign-text! prefab{ 1 3 rnd 9 0 shop } paved-lot ;
+	: make-a-foodshop "BOUF & MEYERS" prefab-shop2 ;
+
+	: make-a-jockshop "SPORTS&BERMUDA" prefab-shop2 ;
+	: make-a-camping "DECACAMPE" prefab-shop2 ;
+	: make-a-hardware "QUINCAILLERIE ERNIE" prefab-shop2 ;
+	: make-a-umbrella "DES PARAPLUIES C'EST TOUT" prefab-shop2 ;
+	: make-a-drugshop "PHARMACIE SMALLGRENS" prefab-shop2 ;
+	: make-a-sportshop "SUPERSPORT" prefab-shop2 ;
+	: make-a-banner "ENDROIT SUR!" prefab-house ;
+	: make-a-infest "FORT DE FRED" prefab-house ;
+	: make-a-barkapt "OUAF ! OUAF !" prefab-apt ;
+	: make-a-rescueapt "A L'AIDE" prefab-apt ;
+
+	: make-a-bookshop "BIBLIOTARIUM" sign-text! prefab{ 0 9 0 shop } paved-lot ;
+	: make-a-police "POLICE DE CULVILLE" sign-text! prefab{ 5 9 0 shop } paved-lot ;
+	: make-a-clinic "IZI CLINIQUE" sign-text! prefab{ 4 9 0 shop } paved-lot ;
+	: make-a-office office-signs sign-text! prefab{ 0 1 rnd 9 0 shop } paved-lot ;
+	: make-a-gym
+		"MUSCLE! BOMBE!! GYM!!"
+		0.5 0.5 0.5 sign-border!
+		0.1 0.1 0.1 sign-bg!
+		1 0.5 0.5 sign-fg!
+		prefab-shop2
+	;
+	: make-a-coffee "CAFE APOCALYPSE" sign-text! prefab{ 0 9 0 shop } paved-lot ;
+	: make-a-restaurant restaurant-signs prefab-shop ;
+	: make-a-arcade "ARCADE AVALE-THUNE" prefab-shop2 ;
+	: make-a-furnshop "MEUBLIARIUM" prefab-shop2 ;
+
+	: make-apartments ( locationid ) prefab{ mrand 5 8 rnd 0 building } paved-lot ;
+
+	: aplot add-a-path+ grass-lot rnd5050 if 1 lot-back-fence+ then next-plot ;
+
+} }

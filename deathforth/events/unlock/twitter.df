@@ -1,0 +1,78 @@
+
+gstats{
+
+: twitter-tally
+	twitter-1 twitter-2 twitter-f + +
+;
+
+// Increase this number as more unlocks are added
+: twitter-twitsleft
+	3 twitter-tally -
+;
+
+}
+	
+defer twitterback	
+
+: followusthing
+	gstats{ twitter-twitsleft } 0 > if
+		($ "Suivez-nous pour les nouvelles et les " .. "POINTS ZOMBO" fbold .. " !" $) +crtext
+	then
+;
+
+cyoa-blank: twitter-zombop
+	gstats{ 5 ' zombo-point +! save }
+	"La chose poule bleue semble contente !" text!
+	"5 ZOMBO POINTS earned!" rainbold +crtext
+	zombopfull? if
+		zombo-point ZOMBOP_CAP > if
+			"Tu es au-dessus du maximum de Points Zombo !
+			Depense tes PZ en trop avant de commencer une partie !" fbold +crtext
+		else
+			zombopfull rbold +crtext
+		then
+	then
+;
+
+: rocketcat-twitter
+	gstats{ twitter-1 } 1 < if
+		gstats{ 1 to twitter-1 }
+		twitter-zombop
+	then
+	"http://www.twitter.com/rocketcatgames/" openurl
+;
+
+: rocketcat-facebook
+	gstats{ twitter-f } 1 < if
+		gstats{ 1 to twitter-f }
+		twitter-zombop
+	then
+	"http://www.facebook.com/rocketcatgames/" openurl
+;
+
+: madgarden-twitter
+	gstats{ twitter-2 } 1 < if
+		gstats{ 1 to twitter-2 }
+		twitter-zombop
+	then
+	"http://www.twitter.com/madgarden/" openurl
+;
+
+cyoa-blank: twitterbird gstats{
+	"POULET DES RESEAUX SOCIAUX" cyoa-title!
+
+	"C'est une sorte d'oiseau bleu. Il caquette :" text!
+	"Lisez les updates de Rocketcat Games sur Twitter ou Facebook pour les nouvelles de Death Road !
+	Lisez le Twitter de Madgarden pour decouvrir la veritable Sagesse Canadienne ! !" bbold +crtext
+
+	followusthing
+
+	choice( "Partir pour l'instant" )choice
+	choice( "Rocketcat Twitter" gstats{ twitter-1 } 1 < if fbold then )choice: rocketcat-twitter
+	choice( "Madgarden Twitter" gstats{ twitter-2 } 1 < if fbold then )choice: madgarden-twitter
+	choice( "Rocketcat Facebook" gstats{ twitter-f } 1 < if fbold then )choice: rocketcat-facebook
+	
+} ;
+	
+' twitterbird to twitterback
+

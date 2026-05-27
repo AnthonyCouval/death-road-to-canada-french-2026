@@ -1,0 +1,61 @@
+    : CLOCKKING-oneline1 "Rappelez-moi, lequel d'entre nous controle le temps, deja ?" ;
+    : CLOCKKING-oneline2 "TEMPUS... non, je deconne." ;
+    : CLOCKKING-oneline3 "Mon pere etait une horloge digitale. Et avant ca, une horloge grand-pere." ;
+    : CLOCKKING-oneline4 "En vrai, je prends tres mal le TICK TOCK." ;
+    : CLOCKKING-oneline5 "Je commence vraiment a etre REMONTER, haha... HAHAHAHAHA" ;
+    : CLOCKKING-oneline6 "DING DONG. Pour qui sonne le glas ? POUR TOI." ;
+    : CLOCKKING-oneline7 "NE DEMANDE PAS POUR QUI SONNE LE GLAS..." ;
+    : CLOCKKING-oneline8 "POUR QUI... SONNE CE GLAS A PRESENT ?" ;
+    : CLOCKKING-oneline9 "NE DIS PAS ZA WARUDO. JE TE SURVEILLE ! NE LE FAIS PAS !" ;
+    : CLOCKKING-oneline10 "C'EST QUI CE 'JO-JO' ?" ;
+    : CLOCKKING-oneline11 "J'AI ENCORE TOUT UN TAS DE HEROS ESOTERIQUES A COMBATTRE !" ;
+    : CLOCKKING-oneline12 "La couronne fait le roi." ;
+    : CLOCKKING-oneline13 "Oh, je voudrais deja etre roi." ;
+    : CLOCKKING-oneline14 "j'ai un compte a regler avec le cesium-133." ;
+    : CLOCKKING-oneline15 "ET QUAND JE SERAI LE ROI DU CANADA, LE TEMPS S'ARRETERA A JAMAIS !" ;
+    : CLOCKKING-oneline16 "Le probleme d'Einstein, c'est qu'il n'est pas ne en tant que divinite." ;
+    : CLOCKKING-oneline17 "J'ose esperer que tout ca fera sens avec le... peu importe." ;
+    : CLOCKKING-oneline18 "Oh ? Une course contre la MONTRE ? OUAIS. HAHA. TRES MARRANT." ;
+    : CLOCKKING-oneline19 "Je me demande si quelqu'un remarquerait si j'arretais le temps pour me curer le nez..." ;
+    : CLOCKKING-oneline20 "C'est une bonne chose que je n'aie pas de cou. Ma couronne le broierait." ;
+    : CLOCKKING-oneline21 "IF I COULD TURRRRNNNNN BACK TIMEEEEEEE..." ;
+
+	deck-new
+		card: CLOCKKING-oneline1
+		card: CLOCKKING-oneline2
+		card: CLOCKKING-oneline3
+		card: CLOCKKING-oneline4
+		card: CLOCKKING-oneline5
+		card: CLOCKKING-oneline6
+		card: CLOCKKING-oneline7
+		card: CLOCKKING-oneline8
+		card: CLOCKKING-oneline9
+		card: CLOCKKING-oneline10
+		card: CLOCKKING-oneline11
+		card: CLOCKKING-oneline12
+		card: CLOCKKING-oneline13
+		card: CLOCKKING-oneline14
+		card: CLOCKKING-oneline15
+		card: CLOCKKING-oneline16
+		card: CLOCKKING-oneline17
+		card: CLOCKKING-oneline18
+		card: CLOCKKING-oneline19
+		card: CLOCKKING-oneline20
+		card: CLOCKKING-oneline21
+	constant CLOCKKING-ONELINERS
+	CLOCKKING-ONELINERS var CLOCKKING-oneliners
+	CLOCKKING-ONELINERS shuffles to CLOCKKING-oneliners
+
+: CLOCKKING-oneliner
+	CLOCKKING-oneliners depths 0= if CLOCKKING-ONELINERS shuffles to CLOCKKING-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: CLOCKKING-oneliner
+
+	constant BLURB-CLOCKKING-DECK
+	BLURB-CLOCKKING-DECK var blurb-CLOCKKING-deck
+	BLURB-CLOCKKING-DECK shuffles to blurb-CLOCKKING-deck

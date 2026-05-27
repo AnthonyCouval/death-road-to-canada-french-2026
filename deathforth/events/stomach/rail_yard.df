@@ -1,0 +1,1274 @@
+
+
+uses paul/region-layout.df
+uses paul/region-road-layout.df
+
+"events/inner/baseapts.df" $load
+"../deathforth/rooms/TEMPROOM.txt" $load-rooms
+"../deathforth/rooms/city.txt" $load-rooms
+
+
+locdef{
+
+: bathroomplz 
+	50 %chance if 
+		n random-edge-door "bathroom" only-with-door
+	else 
+		n random-edge-door "bedroom" only-with-door
+	then 
+; 
+
+\ hate room gen... 
+location: fillerhouse
+		max-rooms: 4
+		entry-tags: hall
+		script: set-theme-house
+		pre-script: set-theme-house
+		post-script: 5diff %zombs 
+		room-post-script: bathroomplz
+
+		room-choice: hall
+			room-weight: 1
+			room-count: 1
+			room-script: ndx 
+			room-post-script: bathroomplz 
+			
+			\ 5bed5bath12apt evaluate
+				
+		room-choice: bathroom
+			room-weight: 1
+			room-count: 2
+			room-script: ndx 
+			\ room-script: floor-bath
+		
+		room-choice: bedroom
+			room-weight: 1
+			room-count: 1
+			room-script: ndx 
+			room-post-script: dbathroom
+			
+
+}
+
+
+map{ regiondef{
+
+
+: wave-events args( me eventid )
+	<- eventid THING_EVENT_TIMER = if 
+	
+	<- me .scale.y@ 0.2 < if 
+		<- me silentkillit
+	then;
+	
+		-1.4 <- me .vel.y!
+			particle{ new <- me .pos 0 360 frnd anglexy 2 -30 frnd xymul xyadd pos!
+				15 fade_in!
+				5 fade_out!
+				30 ticks!
+				-0.1 0.1 frnd vel.y!
+				-0.1 0.1 frnd vel.x!
+		//		waterclr 3 for 0.5 * 0.5 + rot next rgb!
+		//		waterclr rgb!
+
+				0.75 scale!
+				1.01 grow!
+				particles_base_id 0x 5d + spriteid!
+				1 layer!
+			}
+			
+		8 <- me .timer!
+		
+		<- me .scale.x@ -0.05 + <- me .scale.x!
+		<- me .scale.y@ -0.05 + <- me .scale.y!
+		
+	then
+	
+	<- eventid THING_EVENT_OVERLAP = if
+		<- me .overlapper .mass@ 1000001 = if then;
+			<- me .scale.x@ -2 * <- me .overlapper .vel.y!
+	
+	then
+	
+;
+
+
+: water_wave 
+	spawn
+	special_objects64_base_id 20 + lt .spriteid!
+	1 lt .layer!
+	1 lt .nocollide!
+	1 lt .walkover! 
+	1 1.25 rnd lt .scale.x!
+	1 1.25 rnd lt .scale.y!
+	0.8 lt .clr.a!
+	' wave-events lt .events!
+	8 lt .timer!
+	40000000 lt .mass!
+;
+
+0 value playerbound1
+0 value playerbound2
+
+: wave_spawning args( me eventid )
+	<- eventid THING_EVENT_TIMER = if 
+	
+	pchar .health@ 0 > if 
+	
+	player .pos.x@ -210 + 0 1200 clamp to playerbound1
+	player .pos.x@ 210 + 0 1200 clamp to playerbound2
+	
+			30 <- me .timer!
+			
+				water_wave 
+				508 lt .pos.y!
+				playerbound1 playerbound2 rnd lt .pos.x!
+				
+			then
+			
+	then
+;
+
+: wave_spawner
+	spawn
+	400000 lt .mass!
+	1 lt .invisible!
+	1 lt .walkover!
+	6 lt .timer!
+	' wave_spawning lt .events!
+;
+	
+
+: sycatile tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	// 10 for regular walltop
+	// 9 for right-hand up turn
+	// 8 for right-hand end
+	// 7 for left-facing-junction
+	// 6 for downfacing left turn
+	// 5 for straight up
+	// 4 for upward end
+	// 3 for upward left turn
+	// 2 for lefthand end
+	// 1 for downward end
+	// 0 for tiny square
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileblock tile@
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewall tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 240 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltop tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilewalltopend tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreetblock tile@ // main
+	dup LAYER_FLOOR street_tiles_base_id 17 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatilestreet1 tile@ // side
+	dup LAYER_FLOOR street_tiles_base_id 33 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet2 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 34 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet3 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 18 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet4 tile@ // corner
+	dup LAYER_FLOOR street_tiles_base_id 32 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet5 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 16 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet7 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 0 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet8 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 1 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet9 tile@ // sideup
+	dup LAYER_FLOOR street_tiles_base_id 2 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilestreet6 tile@ // road
+	dup LAYER_FLOOR street_tiles_base_id 105 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilesand tile@ // SAND. COARSE. ROUGH.
+	dup LAYER_FLOOR street_tiles_base_id 512 516 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	drop
+;
+
+: sycatilesandedge tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 527 530 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 536 + .lspriteid!
+
+	// 1 over .wet!
+	
+	drop
+;
+
+: sycatileseawalledge tile@ 
+	\ dup LAYER_FINAL street_tiles_base_id 542 + .lspriteid!
+	dup LAYER_WALLTOP street_tiles_base_id 542 + .lspriteid!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+	
+	drop
+;
+
+: sycatileseawalledgetele tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 517 + .lspriteid!
+	dup LAYER_FINAL street_tiles_base_id 540 + .lspriteid!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+	
+	drop
+;
+
+: sycatile_railwallmain tile@ 
+	dup LAYER_WALLSIDE street_tiles_base_id 543 545 rnd + .lspriteid!
+	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
+	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
+
+		TILE_BLOCK over .id!
+	
+	\ 10 .tile_layer.off! 
+	// 1 over .wet!
+
+	drop
+;
+
+: sycatileseawallmain_layerfix tile@ 
+	dup LAYER_WALLSIDE street_tiles_base_id 543 545 rnd + .lspriteid!
+	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
+	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
+
+		TILE_BLOCK over .id!
+	
+	\ 10 .tile_layer.off! 
+	// 1 over .wet!
+
+	drop
+;
+
+: sycatileseawallbot tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 546 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallangleleft tile@ 
+	dup LAYER_FINAL street_tiles_base_id 547 + .lspriteid!
+	dup LAYER_FINAL 0 0 .tile_layer.off!
+	dup LAYER_FINAL 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 536 + .lspriteid!
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallangleright tile@ 
+	dup LAYER_FINAL street_tiles_base_id 548 + .lspriteid!
+	dup LAYER_FINAL 0 0 .tile_layer.off!
+	dup LAYER_FINAL 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 536 + .lspriteid!
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+
+: sycatileseawallbotdanger tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 520 521 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id!
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallstairs tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 539 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatileseawallpier tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 540 542 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+
+	//	1 over .wet!
+
+	drop
+;
+
+: sycatilesea tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 522 526 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	1 over .wet!
+
+	drop
+;
+
+
+
+: sycatiledeepsea tile@
+	dup LAYER_FLOOR street_tiles_base_id 522 526 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	1 over .wet!
+	TILE_BLOCK over .id!
+
+	drop
+;
+
+: sycatileedgeright tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+: sycatileedgeleft tile@
+	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
+	
+	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+
+	TILE_BLOCK_FLOOR over .id!
+	drop
+;
+
+// using objs
+
+: streetlight-flicker args( me eventid )	
+	<- eventid THING_EVENT_TIMER = if
+			1 <- me .timer!		
+			
+		gameticks 200 360 frnd % if			
+			1 1 0.4 150 <- me .pos d-light
+				else
+				30 <- me .timer!
+				then
+			then
+	
+;
+
+: streetlamp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! ' streetlight-flicker lt .events! -1 lt .layer! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! 1 lt .tileflags! -4 lt .vel.y! -1 lt .vel.x! 1 lt .nocollide! ;
+: streetlomp spawn special_objects96_base_id 4 + lt .spriteid! 4000 lt .mass! 40 lt .hitpoints! 20 lt .timer! -1 lt .layer! 64 lt .rad.y! 6 lt .rad.x! 1 lt .no_hit! 54 lt .rad.y! 6 lt .rad.x! 1 lt .walkover! 1 lt .tileflags! ;
+
+: bldg2 tanchor!
+	"fillerhouse" $picklocid addloc 
+		prefab{
+		0 3 rnd 11 4 shop }
+;
+
+: beachumbrella	
+	spawn
+	special_objects32_base_id 200 202 rnd + lt .spriteid!
+	10 lt .mass!
+	bbox
+	45 -45 rnd lt .angle!
+	1.4 lt .scale.x!
+	1.4 lt .scale.y!
+;
+
+: deckchair
+	spawn
+	special_objects32_base_id 203 + lt .spriteid!
+	10 lt .mass!
+	bbox
+;
+
+: beachblanket
+	spawn
+	special_objects32_base_id 204 205 rnd + lt .spriteid!
+	10 lt .mass!
+	1 lt .walkover!
+	1 lt .layer!
+;
+
+: talktome
+	"Inspired by Walton-On-The-Naze, England." interactee .report
+;
+
+: beachsign
+	spawn
+	special_objects32_base_id 206 + lt .spriteid!
+	immovable
+	bbox
+	' talktome lt .cyoa!
+	1.3 lt .scale.x! 1.3 lt .scale.y!
+;
+
+
+: musicchange
+	interactee .weapon_state.val@ 1 = if 
+		0 interactee .weapon_state.val!
+		"Zombonita Beach.mp3" $music-load
+	then;
+
+	interactee .weapon_state.val@ 1 + interactee .weapon_state.val!
+	no-music
+;
+
+: beachradio
+	spawn
+	special_objects32_base_id 207 + lt .spriteid!
+	immovable
+	bbox
+	' musicchange lt .cyoa!
+
+;
+
+0 value totalcollected
+
+
+: collectthis
+	' totalcollected ++
+	totalcollected interactee .report
+	clear-cyoa
+	
+	totalcollected 8 = if
+	0 2 RAINBOW "YIPPEE!" .. popup_dis 1 popup_mode!
+	
+	niceweapons
+	player .pos lt .pos!
+	
+	then
+;
+
+: beachring
+	spawn
+	special_objects32_base_id 196 + lt .spriteid!
+	immovable
+	bbox
+	15 lt .hitpoints! 
+	' collectthis lt .cyoa!
+
+; 
+
+: roadsign1
+	spawn special_objects32_base_id 194 + lt .spriteid!
+	bbox
+	20000 lt .mass!
+	100 lt .hitpoints!
+	1 lt .unseen!
+	-3.2 lt .vel.y!
+;
+
+: roadsign2
+	spawn special_objects32_base_id 195 + lt .spriteid!
+	bbox
+	20000 lt .mass!
+	100 lt .hitpoints!
+	1 lt .unseen!
+	-3.2 lt .vel.y!
+;
+
+
+// tiles
+
+: rangewall tile@ args( spriteid t ) <- t LAYER_WALLSIDE <- spriteid .lspriteid! TILE_BLOCK_FLOOR <- t .id! ;
+
+: fencerange	args( x y s )
+
+	building_misc_tiles_base_id 14 7 * + 7 + <- s + -> s
+
+	2 for
+		<- s i 1- 14 * + <- x <- y rangewall
+		<- x <- y tile@ TILE_BLOCK_FLOOR 0 0 .tile_layer.off!
+		<- x <- y tile@ TILE_BLOCK_FLOOR rnd5050 .tile_layer.flipx!
+		<- y 1- -> y
+	next
+;
+
+: trashblock tile@ tbwreck ;
+
+		: .teammate? dup .character@ args( me chara ) <- me .charid@ 0= if 0 then;
+		<- chara .team_status@ TEAM_STATUS_RECRUITED =
+		;
+		
+		: .removegas dup .character@ args( me chara ) 
+			-5 <- me .wielded-stack+
+		;
+		
+		: .nogas dup .character@ args( me chara ) 
+			<- me .wielded-stack 0 =
+		;
+		
+		//				dup .wielded WEAPON_LIST_FUEL .is-weapon-type? if
+		//		  1 swap dup .wielded-stack+ 
+
+
+
+: cliff 2dup floorblocked tile@
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	LAYER_FLOORTOP street_tiles_base_id 0x a9 + 0 3 rnd + .lspriteid!
+;
+
+: sycatilegrassset tile@ 
+	dup LAYER_FLOOR street_tiles_base_id 7 11 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	drop
+;
+
+: choose_concrete
+	80 %chance if 
+		5
+	else
+		64 69 rnd 
+	then
+; 	
+
+: sycatileconcreteset tile@ 
+	dup LAYER_FLOOR street_tiles_base_id choose_concrete + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+
+	drop
+;
+
+: sycatilegrassseasection tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 540 541 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 536 + .lspriteid!
+
+	// 1 over .wet!
+	
+	drop
+;
+
+: sycatilecliffedge tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 540 541 rnd + .lspriteid!
+	dup LAYER_FLOOR 0 0 .tile_layer.off!
+	dup LAYER_FLOOR 0 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 0x a9 + 0 3 rnd + .lspriteid!
+
+	// 1 over .wet!
+	
+	drop
+;
+
+: sycatilecliffedgeflip tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 540 541 rnd + .lspriteid!
+	\ dup LAYER_FLOOR 16 0 .tile_layer.off!
+	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
+	
+	dup LAYER_FLOOR street_tiles_base_id 0x a9 + 0 3 rnd + .lspriteid!
+
+	// 1 over .wet!
+	
+	drop
+;
+
+: sycatile_railmain tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 549 + .lspriteid!
+	dup LAYER_FLOORTOP 0 0 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	
+
+	drop
+;
+
+: sycatile_railjoin tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 550 + .lspriteid!
+	dup LAYER_FLOORTOP 0 0 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	
+
+	drop
+;
+
+: sycatile_railbed tile@ 
+	dup LAYER_FLOORTOP street_tiles_base_id 551 + .lspriteid!
+	dup LAYER_FLOORTOP 0 0 .tile_layer.off!
+	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
+	
+	drop
+;
+
+: cemfence args( spr )
+	xyp.xy tile@ LAYER_FINAL street_tiles_base_id 0x 145 + <- spr + .lspriteid!
+	 xyp.xy blocked
+	xyp.xy 1- tile@ LAYER_FINAL street_tiles_base_id 0x 135 + <- spr + .lspriteid!
+	\ xyp.xy 1- blocked
+;
+
+
+: fencea 0 cemfence ;
+: fenceA 1 cemfence ;
+
+: fenceb 3 cemfence ;
+: fenceB 2 cemfence ;
+
+: sycatile_dirtstairs_up tile@ 
+	dup LAYER_WALLSIDE street_tiles_base_id 552 + .lspriteid!
+	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
+	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
+	
+	drop
+;
+
+: sycatile_GTFO tile@
+
+	TILE_BLOCK over .id!
+
+;
+
+
+: provide_light args( me eventid ) 
+	<- eventid THING_EVENT_TIMER = if 
+		1 1 1 45 <- me .pos d-light
+		1 <- me .timer!
+	then 
+; 
+
+: rail_overhang 
+
+
+	spawn 
+	special_objects64_base_id 22 + lt .spriteid! 
+	1000 lt .mass!
+	-3 lt .layer! 
+	1 lt .nocollide!
+	1 lt .no_hit!
+	1 lt .timer! 
+	' provide_light lt .events! 
+	5 lt .flammability! 
+ 
+; 
+
+: rail_signal
+
+
+	spawn 
+	special_objects64_base_id 23 + lt .spriteid! 
+	9 lt .mass!
+	35 lt .hitpoints!
+	bbox 
+	0 lt .friction! 
+	4 lt .rad.x! 
+	4 lt .rad.y! 
+	5 lt .flammability! 
+; 
+
+: car_parts_railyard
+	
+		car-armor 1 + to car-armor
+		0 3 "Free car armor!" popup_dis 1 popup_mode!
+		\ Good in theory. Bit silly in reality.
+		\ If you were very unlucky you might roll this 10 times in a row.
+		\ Suddenly your starter car eats 20 MPG. Lol
+; 
+
+
+: aturfeet
+	player FORTH_NONE = if then; 
+	player .pos lt .pos!
+; 
+
+
+
+
+: commonranged_ry \ mimics generic commonranged. will suck if that ever changes 
+	1 2 rnd case
+1 of 
+95 %chance if 
+	10 30 rnd sbullet aturfeet pistol 
+else 
+	50 %chance if
+		20 50 rnd sbullet aturfeet uzi 
+	else 
+		20 40 rnd srifle aturfeet ak47 
+	then 
+then endof
+2 of 
+	50 %chance if 10 20 rnd srifle aturfeet huntcowboy else 66 %chance if 6 15 rnd sshot aturfeet shotgun else 6 15 rnd sshot aturfeet flet then then
+endof endcase ;
+
+: niceranged_ry
+1 2 rnd case
+1 of commonranged_ry endof
+2 of 20 %chance if 8 30 rnd srifle aturfeet ak47 else 50 %chance if 17 40 rnd sbullet aturfeet uzi else 75 %chance if 17 40 rnd sbullet aturfeet fosbury else 17 40 rnd sbullet aturfeet blackmamba then then then endof
+endcase ;
+
+: exoticweapons_ry 75 %chance if 50 %chance if 20 50 rnd sgas aturfeet chainsaw else woodclub then else 50 %chance if blackmamba else fosbury then then ;
+
+: niceweapons_ry 30 %chance if meleeweapons else 30 %chance if commonranged_ry else 90 %chance if niceranged_ry else exoticweapons_ry then then then ;
+
+: crate_loot_railyard 1 10 rnd case 
+	1 of 1 2 rnd LOOT_FOOD spawnloot endof 
+	2 of 5 10 rnd LOOT_GAS spawnloot endof 
+	3 of 10 20 rnd LOOT_RIFLE_SHELL spawnloot endof 
+	4 of 10 20 rnd LOOT_BULLET spawnloot endof 
+	5 of 10 20 rnd LOOT_SHOTGUN_SHELL spawnloot endof 
+	6 of meleeweapons endof 
+	7 of blowtorch lt .item.charges@ 0.33 0.4 frnd * lt .item.charges! endof
+	8 of niceweapons_ry endof 
+	9 of commonranged_ry endof 
+	10 of healspray 1 lt .item.charges! endof 
+	endcase
+; 
+	\ IM LOSING MY MINDDDDDDDDD >:((((((((((( 
+	\ ARGHHHHHHHHHHHHHHHHHHHHHHHh
+	
+: open_crate args( me ) 
+	<- me .spriteid@ 1 + <- me .spriteid! 
+; 
+
+: check_crowbar_then_loot args( me ) 
+	team-has-breakin? if
+		<- me open_crate 
+		clear-cyoa
+		sfx{ goodfx } 
+		crate_loot_railyard <- me .pos -32 0 xyadd lt .pos!
+	else 
+		"I'd need something heavy to open it." <- me .interact_id@ #thing .yellmsg 
+	then 
+; 
+
+: rail_box
+
+	spawn 
+	special_objects96_base_id 6 + lt .spriteid! 
+	bbox 
+	15 lt .mass!
+	80 lt .hitpoints!
+	42 lt .rad.x! 
+	19 lt .rad.y! 
+	64 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	' check_crowbar_then_loot lt .cyoa! 
+; 
+
+: rail_box_rusty
+
+	spawn 
+	special_objects96_base_id 8 + lt .spriteid! 
+	bbox 
+	15 lt .mass!
+	80 lt .hitpoints!
+	42 lt .rad.x! 
+	19 lt .rad.y! 
+	64 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	\ ' check_crowbar_then_loot lt .cyoa! 
+; 
+
+: rail_bogie
+	
+	\ was originally going to have these slide along the tracks,
+	\ then i looked it up; these things weigh several tons. 
+
+	spawn 
+	special_objects96_base_id 9 + lt .spriteid! 
+	5000 lt .mass!
+	bbox 
+	400 lt .hitpoints!
+	28 lt .rad.x! 
+	13 lt .rad.y! 
+	48 lt .wallbox.y! 
+	0 lt .friction! 
+	\ 4 lt .rad.x! 
+	1 lt .flammability! 
+	\ ' check_crowbar_then_loot lt .cyoa! 
+; 
+
+
+0 value obj_in_question 
+\ probably belongs in globals or things someday 
+
+: %some-anyobj ( num, obj_word_name ) 
+
+	to obj_in_question
+	
+	w h + 4 / * 
+		for
+			obj_in_question evaluate scatter
+		next 
+
+;
+
+\ example usage:
+\ 1 "tire" %some-anyobj 
+
+
+map{ roomgen{ 
+
+: diningset
+	table
+	75 %chance if chair -1 movey drift then
+	75 %chance if chair 1 movey drift then
+	50 %chance if chair -1 movex drift then
+	50 %chance if chair 1 movex drift then
+;
+
+
+} }
+	
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotpave >defer ft
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	 xyp.i char b = if xyp.xy sycatilestreet3 then;
+	 xyp.i char c = if xyp.xy sycatilestreet2 then;
+	 xyp.i char d = if xyp.xy sycatilestreet then;
+	 xyp.i char e = if xyp.xy sycatilestreet1 then;
+	 xyp.i char g = if xyp.xy sycatilestreet4 then;
+	 xyp.i char h = if xyp.xy sycatilestreet5 then;
+	 xyp.i char j = if xyp.xy sycatilestreet6 then;
+	 xyp.i char p = if xyp.xy sycatilestreet7 then;
+	 xyp.i char i = if xyp.xy sycatilestreet8 then;
+	 xyp.i char o = if xyp.xy sycatilestreet9 then;
+	 xyp.i char E = if xyp.xy sycatilewalltop then;
+	 xyp.i char D = if xyp.xy sycatilewalltopend then;
+	\ xyp.i char T = if xyp.xy trashblock xyp.xy sycatilestreet1 then;
+	\  xyp.i char t = if xyp.xy trashblock xyp.xy sycatilestreet then;
+	 
+	 xyp.i char C = if xyp.xy streetlamp lt-here then;
+	 xyp.i char 5 = if xyp.xy streetlamp lt-here xyp.xy sycatilestreetblock then;
+	 xyp.i char 8 = if xyp.xy sycatilestreetblock then;	 
+	 xyp.i char J = if xyp.xy oldpine
+	 
+	 0.5 1 frnd lt .clr.r!
+	 0.5 1 frnd lt .clr.b!
+	 0.5 1 frnd lt .clr.g!
+	
+	 25 %chance if
+	 0.75 1.4 frnd lt .scale.x!
+	 0.74 1.5 frnd lt .scale.y!
+	 then 
+	 
+	 lt-here xyp.xy sycatilestreet then;
+	 
+	 
+ 
+	\ xyp.i char @ = if xyp.xy bldg2 xyp.xy sycatilestreet then;
+	 xyp.i char @ = if xyp.xy skel 50 %chance if 50 %chance if shovel else tire then then lt-here then;
+	
+	xyp.i char H = if xyp.xy sycatilegrassset map{ pine } lt-here  then;
+
+	xyp.i char I = if xyp.xy fencea xyp.xy sycatilestreet then;
+	
+	xyp.i char G = if xyp.xy sycatile_dirtstairs_up then;
+	
+	xyp.i char t = if xyp.xy sycatileseawallmain_layerfix then;
+	
+	xyp.i char R = if xyp.xy sycatile_railmain then;
+	xyp.i char T = if xyp.xy sycatile_railjoin then;
+	xyp.i char B = if xyp.xy sycatile_railbed then;
+	
+	xyp.i char Z = if xyp.xy tanchor! 5 zombs-clump then;
+	
+	xyp.i char ! = if xyp.xy sycatileseawalledge then;
+	xyp.i char - = if xyp.xy sycatileseawallbot then;
+	xyp.i char Q = if xyp.xy sycatile_railwallmain then;
+	
+	// decor
+	xyp.i char F = if xyp.xy sycatile_GTFO then;
+	xyp.i char 9 = if xyp.xy sycatilestreet then;
+	xyp.i char 1 = if xyp.xy sycatilegrassseasection then;
+	xyp.i char 2 = if xyp.xy sycatilecliffedge then;
+	xyp.i char 3 = if xyp.xy sycatilecliffedgeflip then;
+	xyp.i char 4 = if xyp.xy sycatileseawallangleleft then;
+	xyp.i char 6 = if xyp.xy sycatileseawallangleright then;
+	
+	xyp.i char 7 = if carwreck lootable car-loot lt-here then;
+	
+	xyp.i char O = if xyp.xy 5 for rail_overhang lt-here lt .pos 0 i 1 - 64 * 16 - xyadd lt .pos! next then;
+	 
+	xyp.i char S = if xyp.xy rail_signal lt-here lt .pos 0 26 xyadd lt .pos! then;
+	
+	xyp.i char r = if xyp.xy 66 %chance if rail_box else rail_box_rusty then lt-here lt .pos 0 26 xyadd lt .pos! then;
+	
+	xyp.i char > = if xyp.xy rail_bogie lt-here lt .pos 0 -6 xyadd lt .pos!  then;
+	
+	
+	
+;
+
+"
+999999999999999999999999999999999QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+999999999999999999999999999999999QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+999999999999999999999999999999999QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+999999999999999999999999999999999QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+IIIIIIIIIIIIIIIIIIIIIIIIIGGIIIIIIQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+!!!!!!!!!!!!!!!!!!!!!!!!!GG!!!!!!QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+-------------------------GG------------------------------------------------------
+....................................O...............O..............O.............
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.B.B.B.B.B>B.B.B.BrB@B.B.B.B.B.BZB.B@B>B>B.B.BrB.B.B@B.B.B.B.BZB.B.B@B.B.B.B.B.BZ
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.............@...........S...................>>..............S........r..........
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.B.B.B>B.B.BrB.B.B.B@B.B.B.B.BrBZB.B@B.B.B.B.B.B>B.B@B.B.B.B.BZB.B.B@B.B.B.B.B.BZ
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+........r.......................@.........r...............r..............S.......
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.B.B.B.B.B.B.B.B.B.B@B.B.B.B.BrBZB.B@B.B.B.B.B.B.B.B@B.B.B.B>BZB.B.B@B.B.B.B.B.BZ
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.............r...........S............r.........@.............S.........r........
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+.B.B>B.B.B.B.B.B.B.B@B.B.B.B.B.BZB.B@B.B.B.B>B.B.B.B@B.B.B.B.BZB.B.B@B.B.B.B.B.BZ
+RTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTRTR
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+
+
+: site-setup
+
+	' plotgravel to ft
+
+	plotmap
+
+	5diff 0.66 * %zombs 
+	
+	7 crowbar .scatter \ needed to open containers
+	5 pickaxe .scatter 
+	
+	99 %chars-up
+	\ 75 %mv-up
+
+	0.25 "tire" %some-anyobj
+	1 "skel" %some-anyobj
+	1 "indcrate" %some-anyobj
+	
+	map{ 1 water_colour_r! 1 water_colour_b! 1 water_colour_g! }
+
+	
+	
+;
+
+
+region: specialcamp-3
+	w: maplayout layoutw
+	h: maplayout layouth
+	on-foot no-rest
+	post-script: site-setup 
+	script: timeofday o'clock
+
+} }

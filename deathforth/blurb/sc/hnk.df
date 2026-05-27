@@ -1,0 +1,53 @@
+	: HNK-oneline1 "Autre jour, autre boite de conserve." ;
+	: HNK-oneline2 "Pret a commencer la mission." ;
+	: HNK-oneline3 "L'equipe Delta, plutot l'equipe Odeur-ta." ;
+	: HNK-oneline4 "La Mort ne peut pas mourir. Je parle de moi. C'est mon surnom." ;
+	: HNK-oneline5 "G-Virus, c'est plutot le C-Virus (pour 'cul')." ;
+	: HNK-oneline6 "Je ne peux pas vous dire quelle est ma mission ! C'est un secret !" ;
+	: HNK-oneline7 "Je pourrai peut-etre dire quelle est ma mission secrete une fois que je serai au Canada." ;
+	: HNK-oneline8 "Allons-y !" ;
+	: HNK-oneline9 "Nous devrions trouver un nom d'equipe qui sonne bien." ;
+	: HNK-oneline10 "Appelons-nous Equipe Epsilon. Ca sonne bien." ;
+	: HNK-oneline11 "Je vous promets de ne pas vous trahir." ;
+	: HNK-oneline12 "Je suis generalement le dernier a rester en vie." ;
+	: HNK-oneline13 "J'aime me considerer comme un joueur d'equipe." ;
+	: HNK-oneline14 "Il n'y a meme pas de zombies speciaux. Ca devrait etre facile." ;
+	: HNK-oneline15 "Je n'ai jamais echoue a une mission." ;
+	: HNK-oneline16 ($ "Ici " .. 1st-char .name@ .. ", termine. *kkkkrrrrrrrtzzzzzz*" $) ;
+	: HNK-oneline17 ($ 1st-char .name@ .. " est un acronyme. J'ai oublie ce qu'il signifie." $) ;
+
+	deck-new
+		card: HNK-oneline1
+		card: HNK-oneline2
+		card: HNK-oneline3
+		card: HNK-oneline4
+		card: HNK-oneline5
+		card: HNK-oneline6
+		card: HNK-oneline7
+		card: HNK-oneline8
+		card: HNK-oneline9
+		card: HNK-oneline10
+		card: HNK-oneline11
+		card: HNK-oneline12
+		card: HNK-oneline13
+		card: HNK-oneline14
+		card: HNK-oneline15
+		card: HNK-oneline16
+		card: HNK-oneline17
+	constant HNK-ONELINERS
+	HNK-ONELINERS var hnk-oneliners
+	HNK-ONELINERS shuffles to hnk-oneliners
+
+: hnk-oneliner
+	hnk-oneliners depths 0= if HNK-ONELINERS shuffles to hnk-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: hnk-oneliner
+
+	constant BLURB-HNK-DECK
+	BLURB-HNK-DECK var blurb-hnk-deck
+	BLURB-HNK-DECK shuffles to blurb-hnk-deck

@@ -1,0 +1,260 @@
+(* uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+uses charstatmods.df *)
+
+// Both Santas, Alvis, TLB, Wrestler, Fencer, Debutante, L*nk
+
+road{
+
+0 value lnk-countdown
+
+}
+
+cyoa{ road{
+
+: santajoins
+	+cr ($ "HO HO HO ! JOYEUX NOEL !" pbold $) +text
+	team-count 3 > if then;
+	4 recruitee .mechanical! 6 recruitee .attitude!
+	recruitee .attitudeREV
+	recruited
+;
+
+: evilsantajoins
+	team-count 3 > if then;
+	5 recruitee .strength! 0 recruitee .attitude!
+	recruitee .attitudeREV
+	recruited
+;
+
+cyoa-choice: santa-test-nice
+	ricon
+($ "Le Pere Noel offre un cadeau a " .. thegroup .. " ! C'est un tas de boites de mais, exactement ce qu'" .. gthey .. " a toujours voulu !" $) cyoa-text! 2 300 tone
+	5 LOOT_FOOD trunk.loot+
+	santajoins
+;
+cyoa-choice: santa-test-naughty
+	ricon
+	($ "Vous etes quand meme plus sympas que ces affreux zombies !
+	Le Pere Noel donne du charbon a " .. thegroup .. ". " .. cname-He .. " le bourre dans le port d'essence de la voiture." $) cyoa-text! 2 300 tone
+	50 LOOT_GAS trunk.loot+
+	santajoins
+;
+cyoa-choice: santa-test-pissoff
+	ricon
+	"Evil Santa" recruitee .name! 4 screcruit
+	($ cname .. " craque et s'en prend verbalement au Pere Noel." .. "
+	VA TE FAIRE FOUTRE, PERE NOEL. BIEN VU ! T'ES UN ABRUTI. BRAVO ! BEAU BOULOT POUR REPANDRE LA JOIE DES FETES ! ESPECE DE NAZE !" pbold .. "
+	Le Pere Noel perd foi en l'humanite et devient " .. rname .. " !" $) cyoa-text! goodfx morale2-
+	evilsantajoins	
+;
+
+cyoa: santa-test
+	"JOYEUX NOEL" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	3 screcruit
+	"Santa" recruitee .name!
+	4 recruitee .shooting! 0 recruitee .female! 6 recruitee .morale!
+	($ Thegroup .. " fouille une maison a la recherche de provisions quand quelque chose descend par la cheminee. C'est le Pere Noel !!!
+	" .. "HO HO HO ! AVEZ-VOUS ETE SAGES OU MECHANTS ?" pbold $) cyoa-text! basic-tone
+		choice( "Sages" )choice: santa-test-nice
+		choice( "Mechants" )choice: santa-test-naughty
+		goofus-pass if
+			goofus charchoice( ": VA TE FAIRE FOUTRE" )choice: santa-test-pissoff
+		then
+;
+
+cyoa-bridge: TLB-recruit
+	team-count 3 > if
+		ricon
+		($ "TROP DE MONDE, COMMENT JE SUIS SENSE POSER OU ME HUILER DANS LA VOITURE ?
+		" fbold ..
+		 rname .. " a un point ici. Virez quelqu'un pour faire de la place :" $) cyoa-text!
+		 recruit-replace?
+	then;
+	($ cname .. " convainc " .. "LE DERNIER CULTURISTE" pbold  .. " qu'il ne sert a rien d'etre le meilleur culturiste du monde si personne n'est la pour l'apprecier.
+	" .. "ON Y VA ! OUAIS !!!" fbold $) cyoa-text! goodfx
+		recruitee .attitudeREV recruitee .strengthREV recruitee .temperREV
+		recruited
+;
+
+cyoa-bridge: TLB-flex
+	"Quelle folie !" cyoa-title!
+	($ cname .. " defie " .. "LE DERNIER CULTURISTE" pbold .. " en concours de gonflette. Quelle imprudence !" $) text!
+	($ cname .. " EST ANEANTI DANS LE CONCOURS DES LE PREMIER COUP ! IL N'AVAIT AUCUNE CHANCE !" fbold $) +crtext
+	($ "Il ne reste plus rien de " .. chim .. ". " .. "T*L*B" pbold .. " a une seule larme dans l'oeil." $) +crtext
+	cchar .kill
+		team-count 0 > if
+			choice( "Essayer de le recruter" )choice: TLB-recruit
+			choice( "Le laisser la" )choice
+		then
+;
+
+cyoa-choice: TLB-train
+	"Pompage avec T*L*B" cyoa-title!
+	ricon
+	($ "LE DERNIER CULTURISTE " pbold .. "donne a " .. thegroup .. " d'excellents conseils pour se muscler en plein post-apocalypse.
+	Les conseils sont si bons qu'on ressent immediatement le pompage, sans meme s'entrainer." $) cyoa-text! goodfx
+	' .strength++ foreach-team-char
+;
+
+cyoa: TLB-test
+	"Le Dernier Culturiste" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	"T*L*B" recruitee .name!
+	5 recruitee .morale! 6 recruitee .attitude!	1 recruitee .composure! recruitee .tlbify
+	STAT_STRENGTH recruitee .effstat print
+	($ Thegroup .. " entre dans une salle de sport abandonnee. La, trone sur un trone de vieux pots de proteine, un culturiste bronze.
+	" .. "JE SUIS... " pbold .. "LE DERNIER CULTURISTE ! OUAIS !!!" fbold .. "
+	Il FLECHIT et GROGNE, de facon lugubre." $) cyoa-text! basic-tone
+		choice( "Demander des conseils musculation" )choice: TLB-train
+		choice( "Essayer de le recruter" )choice: TLB-recruit
+		cchar charchoice( " lance un concours de gonflette" )choice: TLB-flex
+		
+;
+
+cyoa-bridge: alvis-recruit
+	ricon
+	team-count 3 > if
+		($  rname .. " marmonne quelque chose. Le groupe est trop plein.
+		Virez quelqu'un pour faire de la place :" $) cyoa-text!
+		recruit-replace?
+	then;
+	($ rname  .. " dit assez clairement " .. "ON ROCK !" pbold $) cyoa-text! goodfx
+		recruitee .fitnessREV recruitee .strengthREV recruitee .temperREV
+		recruited
+;
+
+cyoa: alvis-test
+	"Le Roi du Chant" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	"Alvis" recruitee .name!
+	3 recruitee .strength! 4 recruitee .morale! 6 recruitee .fitness!
+	1 recruitee .composure! 4 recruitee .shooting! recruitee .alvify
+	($ Thegroup .. " pille une ville quand ils tombent sur un homme en costume dore, avec une incroyable banane. Il fait des mouvements de karate.
+	Il dit quelque chose qu'on ne peut pas comprendre, a cause d'un murmure harmonieux mais inintelligible." $) cyoa-text! basic-tone
+		choice( "Le recruter" )choice: alvis-recruit
+		choice( "Le laisser la" )choice
+;
+
+cyoa-bridge: debutante-recruit
+	ricon
+	team-count 3 > if
+		($  rname .. " accepte de rejoindre, mais voit ensuite a quel point votre vehicule est incroyablement surcharge, de personnes et de diverses saletees. " .. "EH BIEN, JE N'AI JAMAIS VU CA !" pbold .. "
+		Virez quelqu'un pour faire de la place :" $) cyoa-text!
+		recruit-replace?
+	then;
+	($ rname  .. " fait tournoyer son parapluie dans sa main a toute vitesse, puis le pose d'un claquement en position de repos contre son epaule. Elle a du beaucoup s'entrainer." $) cyoa-text! goodfx
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+cyoa: debutante-test
+	"Mode Haute Societe, Societe Hors-Service" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	4 recruitee .morale! recruitee .debutantify
+	($ Thegroup .. " ouvre la porte d'un salon de the et trouve une femme tres elegamment vetue, en train de comparer tranquillement deux boites de the.
+	Elle pose les boites, se tourne a moitie vers vous, et prend son parapluie." $) cyoa-text! basic-tone
+		choice( "La recruter" )choice: debutante-recruit
+		choice( "La laisser la" )choice
+;
+
+cyoa-bridge: fencer-recruit
+	ricon
+	team-count 3 > if
+		($  rname .. " n'est pas decouragee par votre voiture pleine et se glisse a peine a l'interieur. Elle finit par vraiment abimer l'interieur de la voiture avec son epee.
+		Quand on lui demande de mettre son rapiere dans le coffre, elle dit " .. "PAS QUESTION ! REMPLACEZ QUELQU'UN OU JE PARS !" pbold $) cyoa-text! recruit-replace?
+	then;
+	($ rname  .. " pointe son epee vers le ciel et lance un tonitruant " .. "PERSONNE NE PEUT ARRETER MA LAME ! HO HO HO !" pbold .. " C'est brievement perturbant apres qu'elle parlait si normalement.
+	Elle taille ensuite l'air de facon grandiose en riant pendant environ 4 minutes d'affilee." $) cyoa-text! goodfx
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+cyoa: fencer-test
+	"Flambeur au Fleuret" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	4 recruitee .morale! recruitee .fencify
+	($ Thegroup .. " tombe sur le campement de quelqu'un cache derriere une ville vide. Il y a une femme habilee comme pour une foire medievale. Elle s'escrime dans les airs avec un fleuret.
+	Elle finit par arreter de manier son epee, mais ne la pose jamais. En lui parlant, elle semble etre une personne tout a fait normale malgre les apparences." $) cyoa-text! basic-tone
+		choice( "La recruter" )choice: fencer-recruit
+		choice( "La laisser la" )choice
+;
+
+cyoa-bridge: wrestler-recruit
+	ricon
+	team-count 3 > if
+		($ "Je n'aime pas decevoir mes fans, mais vous avez vraiment trop de monde." pbold .. "
+		El Satan ne peut pas rejoindre a moins que quelqu'un ne parte :" $) cyoa-text!
+		recruit-replace?
+	then;
+	($ rname  .. " prend sa pose dramatique brevetee et dit ensuite " .. "Ouais, bien sur, je vais vous rejoindre." pbold $) cyoa-text! goodfx
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+cyoa: wrestler-test
+	"ON LUTTE" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	"El Satan" recruitee .name!
+	5 recruitee .morale! recruitee .wrestify
+	($ Thegroup .. " entend de gros bruits de fracas venant d'une maison voisine, et va voir.
+	Au milieu d'une mer de mobilier detruit et de sang de zombie se trouve le catcheur mondialement celebre, " .. rname .. " !
+	Il est en train de faire un pile-driver sur un zombie en criant " .. "PILE-DRIVER !" pbold .. " a pleins poumons." $) cyoa-text! basic-tone
+		choice( "Le recruter" )choice: wrestler-recruit
+		choice( "Le laisser la" )choice
+;
+
+cyoa-bridge: lnk-recruit
+	ricon
+	1 2 rnd to lnk-countdown
+	team-count 3 > if
+		($ "KYYYYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA !!!!" pbold .. "
+		Ca signifie que " .. rname .. " pense que le groupe est trop plein. Remplacez quelqu'un pour faire de la place :" $) cyoa-text!
+		recruit-replace?
+	then;
+	($ rname  .. " ramasse un baton et le tend vers le ciel de facon maladroite. De nulle part, un petit air se joue." $) cyoa-text! goodfx
+		recruitee .strengthREV recruitee .fitnessREV
+		recruited
+;
+
+: lnkname 1 6 rnd case
+	1 of "Lank" endof
+	2 of "Lenk" endof
+	3 of "Lonk" endof
+	4 of "Lunk" endof
+	5 of "Leyenk" endof
+	6 of "L*nk" endof
+endcase ;
+
+cyoa: lnk-test
+	"LNK" cyoa-title!
+	someone choosechar
+	char-gen to recruitee
+	ricon
+	lnkname recruitee .name!
+	3 recruitee .morale! recruitee .lnkify
+	($ Thegroup .. " va voir des bruits fracassants provenant d'un magasin d'artisanat.
+	Il y a un homme habille en vert, en train de casser des pots avec une epee gigantesque. L'epee claque contre le sol en traversant chaque pot, mais ne se plie pas.
+	Apres avoir observe ca pendant un bon moment, il est clair qu'il y a quelque chose qui cloche serieusement chez cette personne." $) cyoa-text! basic-tone
+		choice( "Le recruter" )choice: lnk-recruit
+		choice( "Le laisser la" )choice
+;
+
+} }
+
+

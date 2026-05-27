@@ -1,0 +1,169 @@
+cyoa{ 
+
+cyoa: gym-sweaty
+	"Beurk, degoutant" cyoa-title!
+	($ "Tout ce materiel de gym est couvert de sueur !
+	Pas question que " .. pname .. " y touche." $) text!
+	clear-cyoa badfx
+;
+
+: gym-barbell-end
+	pchar .dead? if ($ cname .. " meurt a cause de cet incident avec les halteres." $) +crtext
+	else
+		strengthREV "Une heure s'est ecoulee pendant cette seance d'entrainement impromptue." +crtext
+	then clear-cyoa ' gym-sweaty this-cyoa o'clock@ 1 + o'clock
+		team-nearby? not if
+			($ "Personne n'etait la pour defendre " .. pname .. " pendant l'entrainement, alors " .. phe .. " a du repousser des zombies entre les series. Attention !" $) +crtext
+			6 11 rnd roomgen{ .zombspawn }
+		then
+	;
+cyoa-choice: gym-barbell-1
+	($ cname .. " retire la plupart des poids de la barre puis commence a " .. "POUSSER DE LA FONTE" pbold .. " avec la barre presque vide." $) cyoa-text!
+	cstrength- if
+		($ "C'est quand meme un bon entrainement pour " .. chim .. ". Et rien de casse ni de rompu dans le processus !" $) +crtext
+		strength++ goodfx
+	else
+		"Ca n'etait juste pas assez lourd pour vraiment faire quelque chose. Les zombies n'etaient pas impressionnes non plus." +crtext badfx
+	then
+	gym-barbell-end
+;
+cyoa-choice: gym-barbell-2
+	($ cname .. " retire un peu de poids de la barre, mais pas au point de ne pas pouvoir " .. "ETRE SUPER POMPE" rbold .. "." $) cyoa-text!
+	cstrength- if
+		($ "C'etait trop lourd ! " .. cHe .. " entend quelque chose faire un drole de bruit de craquement dans son corps." $) +crtext
+		ouch-- badfx gym-barbell-end
+	then;
+	cstrength+ if
+		($ cname .. " etait decu par l'entrainement. " .. cHe .. " devra se surpasser davantage a l'avenir." $) +crtext badfx gym-barbell-end
+	then;
+	($ cHe .. " emet beaucoup de grognements d'effort en soulevant la barre. Quel entrainement !" $) +crtext goodfx strength++ gym-barbell-end
+;
+cyoa-choice: gym-barbell-3
+	($ cname .. " tente de soulever la barre completement surchargee. " .. "
+	SI LA BARRE NE PLIE PAS TU FAIS SEMBLANT" fbold .. "
+	-- Sagesse Ancestrale du Culturiste" $) cyoa-text!
+	cstrength+ if
+		($ cHe .. " la souleve, bien que ses yeux aient failli lui sortir de la tete." $) +crtext
+		strength++ morale++ goodfx
+	else
+		($ "Essayer de soulever ca etait une idee catastrophique ! " .. cname .. " sent quelque chose exploser dans son corps." $) +crtext
+		ouch2- badfx
+	then
+	gym-barbell-end
+;
+
+cyoa: gym-barbell
+	"S.L.B.N.P.T.F.S." cyoa-title!
+	picon!
+	"Il y a une barre olympique entierement chargee ici. La quantite de poids peut etre ajustee a la baisse pour un niveau moins provoquant de hernie." cyoa-text!
+	cpet? if
+		($ "Malheureusement, l'haltero-philie olympique n'est vraiment pas concue pour le corps de " .. pname .. "." $)
+	+crtext then;
+	team-nearby? not if
+		($ "Sans personne a proximite pour surveiller les zombies, s'entrainer pourrait etre dangereux." $) +crtext
+	else
+		($ pname .. " envisage de faire une pause pour travailler sa force pendant que " .. phe .. " est garde." $) +crtext
+	then
+		choice( "Soulever Leger" )choice: gym-barbell-1
+		choice( "Soulever Lourd" )choice: gym-barbell-2
+		choice( "Soulever Enorme" )choice: gym-barbell-3
+	choice( "Laisser ca pour l'instant" )choice
+;
+
+: gym-bike-end
+	pchar .dead? if ($ cname .. " meurt sur le velo d'appartement par pur epuisement." $) +crtext
+	else
+		fitnessREV "Une heure s'est ecoulee pendant cette seance d'exercice." +crtext
+	then clear-cyoa ' gym-sweaty this-cyoa o'clock@ 1 + o'clock
+	team-nearby? not if
+			($ "Personne n'etait la pour defendre " .. pname .. " pendant l'entrainement, alors " .. phe .. " a du repousser des zombies en pedalant. Attention !" $) +crtext
+			6 11 rnd roomgen{ .zombspawn }
+		then
+	;
+cyoa-choice: gym-bike-1
+	($ cname .. " regle le velo sur " .. "ROUTE PAVEE SUR LA LUNE" pbold .. " et commence a bouger ses jambes." $) cyoa-text!
+	cfitness- if
+		($ "C'est un bon exercice pour " .. chim .. ", vu la condition physique au plus bas." $) +crtext
+		fitness++ goodfx
+	else
+		"Cet exercice n'etait pas vraiment mieux que de rester assis dans la voiture." +crtext badfx
+	then
+	gym-bike-end
+;
+cyoa-choice: gym-bike-2
+	($ cname .. " regle le velo sur " .. "ROUTE RURALE EN MONTEE" rbold .. " et commence a pousser sur ses pedales." $) cyoa-text!
+	cfitness- if
+		($ cHe .. " se froisse quelque chose dans la jambe ! La douleur fait tomber " .. chim .. " du velo." $) +crtext
+		sting-- badfx gym-bike-end
+	then;
+	cfitness+ if
+		($ cname .. " n'a meme pas transpire ! Ca ne fait rien pour ameliorer sa forme." $) +crtext badfx gym-bike-end
+	then;
+	($ cHe .. " produit tout un fleuve de sueur. Quel entrainement !" $) +crtext goodfx fitness++ gym-bike-end
+;
+cyoa-choice: gym-bike-3
+	($ cname .. " regle le velo sur " .. "DEATH ROAD TO CANADA" fbold .. " et commence a pousser ses jambes jusqu'a la limite." $) cyoa-text!
+	cfitness+ if
+		($ cHe .. " ressent vraiment " .. "LA BRULURE !" rbold $) +crtext
+		fitness++ morale++ goodfx
+	else
+		($ cname .. " ne tient pas longtemps avant de tomber d'epuisement. " .. cHe .. " halette et crache un organe." $) +crtext
+		sting2- badfx
+	then
+	gym-bike-end
+;
+
+cyoa: gym-bike
+	"Entrainement Cardio" cyoa-title!
+	picon!
+	"Il y a un velo d'appartement de luxe de marque UltraMegaFit ici. Contrairement aux tapis roulants, il fonctionne meme sans electricite." cyoa-text!
+	cpet? if
+		($ "Malheureusement, cet appareil n'est pas concu pour le corps de " .. pname .. "." $)
+	+crtext then;
+	cchar .perk@ "T*S*T*C" $= if
+		($ "Malheureusement, " .. pname .. " ne fait PAS de cardio !" $)
+	+crtext then;
+	team-nearby? not if
+		($ "Sans personne a proximite pour surveiller les zombies, s'entrainer pourrait etre dangereux." $) +crtext
+	else
+		($ pname .. " envisage de faire une pause pour travailler sa forme pendant que " .. phe .. " est garde." $) +crtext
+	then
+		choice( "Exercice Leger" )choice: gym-bike-1
+		choice( "Exercice Intense" )choice: gym-bike-2
+		choice( "EXERCICE EXTREME" )choice: gym-bike-3
+	choice( "Laisser ca pour l'instant" )choice
+;
+
+}
+			
+map{ roomgen{
+			
+: gymcyoa 50 %chance if olympicbar cyoa{ ' gym-barbell cyoa! } else gymbike cyoa{ ' gym-bike cyoa! } then ;
+
+} }
+
+locdef{
+		
+location: gym
+		max-rooms: 2
+		entry-tags: gym-entry
+		script: yall-theme 
+
+	: gymstuff
+		4 9 rnd for roomgen{ dumbbell } scatter next
+		1 3 rnd for roomgen{ barbell } scatter next
+	;
+
+		room-choice: gym-entry
+			room-weight: 10
+			room-count: 1
+			room-script: 
+			room-post-script: 10diff %zombs gymstuff
+			filter-only		
+
+		room-choice: restroom
+			room-weight: 10
+			room-count: 1
+			room-script: floor-bath
+			
+}

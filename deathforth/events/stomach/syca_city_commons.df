@@ -1,0 +1,409 @@
+map{ regiondef{
+
+	: hydrant 
+		spawn
+		swolebolt--
+		10 health!
+		' breakpipe-event events! 
+		special_objects16_base_id 1 + lt .spriteid! 
+	;
+	
+	: give_light args( me eventid )
+		<- eventid THING_EVENT_TIMER = if 
+			1 <- me .timer! 
+			1 1 0.4 50 <- me .pos d-light
+		then
+	; 
+	
+	: hobobarrel
+		spawn
+		10 health!
+		8 lt .mass! 
+		
+		50 %chance if 
+			special_objects16_base_id 3 + lt .spriteid! 
+			' give_light lt .events!
+			1 lt .timer! 
+		
+		else 
+			special_objects16_base_id 2 + lt .spriteid! 
+		then 
+			
+	;
+	
+	: citytrash 
+		trashcan 1 lt .open! 0 lt .cyoa! 0 lt .action! 0 lt .loot! 
+	; 
+	
+	
+	: citybench
+		spawnflip special_objects32_base_id 0x B5 + lt .spriteid! 
+		bbox 4bolt 10 health!
+	;
+
+	: cityflowers
+		spawnflip special_objects32_base_id 0x B8 + 0 7 rnd + lt .spriteid! 50 health! low-profile on-floor immovable
+		xyp.xy tile>pos lt .pos!
+	;
+
+	: citybushes
+		spawnflip special_objects32_base_id 0x B0 + 0 1 rnd + lt .spriteid! 25 health! bbox immovable
+		xyp.xy tile>pos lt .pos!
+	;
+	
+	: citysign1
+		spawn special_objects32_base_id 194 + lt .spriteid!
+		bbox
+		10 lt .mass!
+		20 lt .hitpoints!
+		1 lt .unseen!
+	;
+
+	: citysign2
+		spawn special_objects32_base_id 195 + lt .spriteid!
+		bbox
+		10 lt .mass!
+		20 lt .hitpoints!
+		1 lt .unseen!
+	;
+	
+	: citygrave
+		spawnhere special_objects32_base_id 0x 8f + lt .spriteid!
+		rnd5050 lt .flip!
+		bbox immovable 
+	;
+	
+	: bbq_chair spawn special_objects32_base_id 223 + lt .spriteid! bbox 1 mass! 3 health! as-wood dropswood ;
+	
+	: grill spawn special_objects32_base_id 224 + lt .spriteid! bbox 6 mass! 11 health! ;
+	
+	: burb_roadsign spawn special_objects32_base_id 225 231 rnd + lt .spriteid! bbox swolebolt-- 10 mass! 8 health! as-metal ; 
+	
+	: citypost
+		
+		roadsigns 0 > if  
+			burb_roadsign
+			' roadsigns -- 
+		else
+			spawn
+			6 lt .mass! 
+			4 health!
+			special_objects16_base_id 6 9 rnd + lt .spriteid! 
+			3 lt .boltstr! 
+			2 bolts!
+			lt .pos 0 2 xyadd lt .pos! 
+		then 
+	; 
+	
+	: bbqset
+		table
+		75 %chance if bbq_chair -1 movey drift then
+		75 %chance if bbq_chair 1 movey drift then
+		50 %chance if bbq_chair -1 movex drift then
+		50 %chance if bbq_chair 1 movex drift then
+	;
+
+	\ no bushes.
+	: tree_exclusive spawn
+		trees_base_id road_theme@ 5 * + 0 2 rnd + lt .spriteid! treeify
+	;
+
+	: plot-a-tree-here
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -7 -2 rnd + -
+		tree_exclusive lt .pos!
+	;
+	
+	: plot-a-hoboset-here
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -4 0 rnd + -
+		hobobarrel lt .pos!
+		
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -4 0 rnd + -
+		skel lt .pos! 
+	;
+	
+	: plot-a-garbageset-here
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		dumpster lt .pos! 1 lt .open! 0 lt .cyoa! 0 lt .action! 0 lt .loot! 
+		
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		dumpster lt .pos! 1 lt .open! 0 lt .cyoa! 0 lt .action! 0 lt .loot!  
+	;
+	
+	: plot-a-busstop-here
+		anchorx 0 emptylotw 2 - rnd 16 * 4 8 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		citybench lt .pos!
+		
+		anchorx 0 emptylotw 2 - rnd 16 * -4 + +
+		anchory 1 blockh 2 - rnd 16 * - 
+		citybushes lt .pos! 
+		
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * - -4 4 rnd +
+		magazine lt .pos!
+		
+		2 for 
+			anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+			anchory 1 blockh 2 - rnd 16 * - -4 4 rnd +
+			skel lt .pos!
+		next 
+	;
+	
+	: plot-a-graveyard-here
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		citygrave lt .pos!
+		
+		20 %chance if 
+			anchorx 0 emptylotw 2 - rnd 16 * -4 + +
+			anchory 1 blockh 2 - rnd 16 * - 
+			tree_exclusive lt .pos!
+		then 
+	;
+	
+	: plot-a-bbq-here
+	4 for 
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		33 %chance if 
+		bbq_chair else chair then lt .pos!
+	next 
+	
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -  
+		table lt .pos!
+	
+	;
+	
+	: plot-a-grill-here
+	4 for 
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -
+		33 %chance if 
+		bbq_chair else chair then lt .pos!
+	next 
+	
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -  
+		table lt .pos!
+		
+		anchorx 0 emptylotw 2 - rnd 16 * -4 4 rnd + +
+		anchory 1 blockh 2 - rnd 16 * -  
+		grill lt .pos!
+	
+	;
+	
+	: plot-a-burbsign-here
+		anchorx 0 emptylotw 2 - rnd 16 * +
+		anchory 1 blockh 2 - rnd 16 * -
+		burb_roadsign lt .pos!
+	
+	;
+
+	: grassylot-plot-syca1 5 7 rnd new-lot grass-lotw rnd5050 1 or if
+			3 treemax rnd for plot-a-tree-here next
+		then
+		rnd5050 if lot-back-fence then next-plot
+	;
+	\ trees,, sometimes with backing 
+	
+	: grassylot-plot-syca2 5 7 rnd new-lot grass-lotw rnd5050 1 or if
+			3 treemax rnd for plot-a-tree-here next
+		then
+		lot-back-fence next-plot
+	;
+	\ trees with guaranteed backing 
+
+	: grassylot-plot-syca3 4 6 rnd new-lot paved-lotw rnd5050 1 or if
+		4 for 
+			plot-a-hoboset-here lot-back-fence 
+		next then lot-back-fence 
+		next-plot
+	;
+	\ "hobo zone" - madgarden 
+	
+	: grassylot-plot-syca4 5 new-lot grass-lotw rnd5050 1 or if
+		plot-a-garbageset-here lot-back-fence 
+		then lot-back-fence 
+		next-plot
+	;
+	\ dumpsters 
+	
+	: grassylot-plot-syca5 4 new-lot grass-lotw rnd5050 1 or if
+		plot-a-busstop-here
+		then
+		next-plot
+	;
+	\ bus stop
+
+	: grassylot-plot-syca6 8 new-lot grass-lotw rnd5050 1 or if
+		6 9 rnd for 
+		plot-a-graveyard-here
+		next then
+		next-plot
+	;
+	\ graves 
+	
+	: grassylot-plot-syca7 4 new-lot grass-lotw rnd5050 1 or if
+		plot-a-bbq-here
+		then
+		next-plot
+	;
+	\ BBQ 
+	
+	: grassylot-plot-syca8 4 new-lot grass-lotw rnd5050 1 or if
+		plot-a-grill-here
+		then
+		next-plot
+	;
+	\ BBQ and grill 
+	
+	: grassylot-plot-syca9 2 new-lot grass-lotw rnd5050 1 or if
+		plot-a-burbsign-here
+		then ' grassylots ++ 
+		\ dont count towards lim coz so small 
+		next-plot
+	;
+	\ Road sign 
+	
+	
+	: grassyplot-case 1 7 rnd case 
+		1 of grassylot-plot-syca1 endof 
+		2 of grassylot-plot-syca2 endof 
+		3 of grassylot-plot-syca3 endof 
+		4 of grassylot-plot-syca4 endof 
+		5 of grassylot-plot-syca5 endof
+		6 of grassylot-plot-syca6 endof
+		7 of grassylot-plot-syca8 endof
+		\ 8 of grassylot-plot-syca9 endof
+		endcase 
+	; 
+	\ modders - you can make your own tilesets and just lob them in here. 
+	\ they'll appear automatically in any of the reworked cities, which themselves appear ~50% of the time 
+	\ if you make your own layouts, you can get more or less tilesets by changing the grassplot number 
+
+	: try-grassy-lot-syca
+		grassylots 0= if 0 then;
+		grassylot% curbuild 3 * + %chance 0= if 0 then;
+		' grassylots --
+		grassyplot-case
+		1
+	;
+	
+		
+	\ modified trash patterns to reduce likelihood of player non-navigation 
+	\ also: car crashes. 
+	
+	: block-last-build-door-new
+		last-build-doorxy tile@ 0= if then;
+		last-build-doorxy crap-aroundxy
+		last-build-doorxy blocked
+		2 for last-build-doorxy swap -1 1 rnd + swap 0 2 rnd + crap-aroundxy next
+		last-build-doorxy 1+ crap-aroundxy
+		last-build-doorxy 1+ tile@ if last-build-doorxy 1+ tile@ LAYER_WALLSIDE -4 4 rnd -8 .tile_layer.off! then
+	;
+
+	: trashed-house-maker-new ( loctypeid )
+		dup if
+			addloc last-loc-pick-script evaluate
+		else drop
+			"trashed" $picklocid addloc	make-a-house
+			90 %chance if block-last-build-door-new then
+		then
+	;
+	
+	: trashed-apartment-maker-new ( loctypeid )
+		dup if
+			addloc last-loc-pick-script evaluate 
+		else drop
+			"trashed" $picklocid addloc	make-apartments
+			90 %chance if block-last-build-door-new then
+		then
+	;
+	
+	: trashed-maker-new 50 %chance if trashed-house-maker-new else trashed-apartment-maker-new then ;
+	
+	: just-apt
+		"
+			loc-choice: apartments
+			loc-weight: 30
+			loc-count: 1
+			loc-pick-script: make-apartments
+		"
+	;
+	
+	: just-apt-trash
+		"
+			loc-choice: trash-a
+			loc-weight: 30
+			loc-count: 1
+			loc-pick-script: make-apartments
+		"	
+	;
+	
+	
+	: easyregcity_apt 
+		just-apt evaluate
+		just-apt-trash evaluate
+	;
+	
+	: regcity_apt 
+		just-apt evaluate
+		just-apt evaluate
+		just-apt-trash evaluate
+		rarething evaluate
+	;
+	
+	\ Apartments logic for new cities 
+	
+	
+	: just-house 
+		"
+			loc-choice: house
+			loc-weight: 40
+			loc-count: 1
+			loc-pick-script: make-a-house
+		"
+	;
+	
+	: just-house-trash
+		"
+			loc-choice: trash-h
+			loc-weight: 30
+			loc-count: 1
+			loc-pick-script: make-a-house
+		"	
+	;
+	
+	
+	: easyregcity_house
+		just-house evaluate
+		just-house-trash evaluate
+	;
+	
+	: regcity_house
+		just-house evaluate
+		just-house evaluate
+		just-house-trash evaluate
+		rarething evaluate
+	;
+	
+	: easyregcity_house 
+		just-house evaluate
+		just-house-trash evaluate
+	;
+	
+	: easyregcity_apt
+		just-apt evaluate
+		just-apt-trash evaluate
+	;
+	
+	\ House logic for new cities 
+	
+	
+} } 

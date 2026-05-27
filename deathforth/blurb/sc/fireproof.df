@@ -1,0 +1,51 @@
+	: FIREPROOF-oneline1 "Les zombies sont clairement inflammables." ;
+	: FIREPROOF-oneline2 "Brulez tout !" ;
+	: FIREPROOF-oneline3 "Je me suis brule le petit doigt a cause d'une poele brulante une fois, du coup maintenant je porte ce costume." ;
+	: FIREPROOF-oneline4 "Quand les gens prennent feu, ce n'est pas vraiment de MA faute, c'est la leur." ;
+	: FIREPROOF-oneline5 "Ce costume me protege du feu et aussi de la sauce piquante super epicee." ;
+	: FIREPROOF-oneline6 "Ma strategie preferee consiste a lancer un molotov et a rester dedans." ;
+	: FIREPROOF-oneline7 "Un bon moyen de se servir d'un chalumeau et de mettre le feu a des meubles avec." ;
+	: FIREPROOF-oneline8 "J'ai toujours aime bruler des choses ! Maintenant, c'est juste plus socialement acceptable." ;
+	: FIREPROOF-oneline9 "Si seulement il avait ete plus facile d'acheter des lance-flammes avant l'apocalypse zombie." ;
+	: FIREPROOF-oneline10 "Le lance-flammes est la meilleure arme." ;
+	: FIREPROOF-oneline11 "J'aime les haches de pompier parce qu'elles me rappellent le feu." ;
+	: FIREPROOF-oneline12 "Si je recupere assez de cocktails Molotov, je pourrais m'occuper de ces zombies. De tous ces zombies." ;
+	: FIREPROOF-oneline13 "Il fait chaud ici ou c'est juste mon epais costume ignifuge ?" ;
+	: FIREPROOF-oneline14 "Je refuse d'enlever ce costume, a jamais. Un incendie peut survenir a tout moment." ;
+	: FIREPROOF-oneline15 "L'essence est la ressource la plus precieuse, car les lance-flammes utilisent de l'essence." ;
+	: FIREPROOF-oneline16 "Je me demande a quel point le Canada est inflammable." ;
+
+	deck-new
+		card: FIREPROOF-oneline1
+		card: FIREPROOF-oneline2
+		card: FIREPROOF-oneline3
+		card: FIREPROOF-oneline4
+		card: FIREPROOF-oneline5
+		card: FIREPROOF-oneline6
+		card: FIREPROOF-oneline7
+		card: FIREPROOF-oneline8
+		card: FIREPROOF-oneline9
+		card: FIREPROOF-oneline10
+		card: FIREPROOF-oneline11
+		card: FIREPROOF-oneline12
+		card: FIREPROOF-oneline13
+		card: FIREPROOF-oneline14
+		card: FIREPROOF-oneline15
+		card: FIREPROOF-oneline16
+	constant FIREPROOF-ONELINERS
+	FIREPROOF-ONELINERS var fireproof-oneliners
+	FIREPROOF-ONELINERS shuffles to fireproof-oneliners
+
+: fireproof-oneliner
+	fireproof-oneliners depths 0= if FIREPROOF-ONELINERS shuffles to fireproof-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: fireproof-oneliner
+
+	constant BLURB-FIREPROOF-DECK
+	BLURB-FIREPROOF-DECK var blurb-fireproof-deck
+	BLURB-FIREPROOF-DECK shuffles to blurb-fireproof-deck

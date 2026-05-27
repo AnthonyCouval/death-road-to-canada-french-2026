@@ -1,0 +1,76 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+: mason-missing 1 5 rnd case
+	1 of " a du s'eloigner." endof
+	2 of " a disparu de la surface de la terre." endof
+	3 of " va probablement bien." endof
+	4 of " a tres certainement abandonne." endof
+	5 of " va surement reapparaitre." endof
+endcase ;
+
+: mason-sad
+	($ "Trop triste pour continuer, il erre jusqu'au parc d'attractions abandonne le plus proche et boude pendant des annees jusqu'a ce que d'autres personnes arrivent." $) +cr +text badfx
+		decruit-bad-silent
+;
+: mason-kill
+	notcchar to victim
+	($ "Aussi, " .. vname .. " a disparu. " .. victim xHe .. mason-missing .. "
+	" .. vname .. " a quitte l'equipe !" $) +cr +text badfx
+		victim .weapons-to-trunk TEAM_STATUS_DIED victim .decruit morale2+ deadtally
+;
+
+cyoa: mason-alive
+	char-gen to recruitee "???" recruitee .name! 4 recruitee .morale! recruitee .masonify
+	ricon 2 3 rnd to mason-countdown 1 to mason-curse someone choosechar
+		($ "Votre ami est de retour, sain et sauf ! Vous pensiez qu'il etait perdu, mais non, il est juste la dans la voiture ! Vous avez vraiment de la chance !" $) text!
+	team-count 0 > if
+		($ "Aussi, il semble que " .. cname .. " ait disparu de l'equipe. " .. cHe .. mason-missing $) +crtext
+		cchar .kill
+	then
+		recruitee .strengthREV recruitee .fitnessREV recruited goodfx
+;
+
+cyoa: mason-camp
+	sc-camper choosechar cicon
+	"Souvenirs du Camp Massacre-Sang" cyoa-title!
+	($ "En campant pour la nuit, " .. cname .. " a plein de bons souvenirs de son dernier sejour en colonie de vacances !" $) cyoa-text!
+	mason-kill +cr fullcamp
+;
+
+cyoa: mason-timeup
+	stpick-mason if choosechar cicon else ($ "Mason Snoorhes" pbold .. " allait se lancer dans des " .. "AVENTURES FOLLES" fbold .. " mais il semble que ce soit lui qui ait disparu, pour changer." $) text! exit then
+	solo if
+		"L'Ultime Genki" cyoa-title!
+		($ cname .. " se sent seul au monde.
+		Mais il ne peut pas se laisser abattre ! En continuant, il sait qu'il rencontrera de nouveaux amis !" $) cyoa-text!
+		morale++
+	else
+	notcchar to victim
+	"Au moins quelqu'un garde le moral" cyoa-title!
+	($ cname .. " semble soudainement retrouver le moral !" $) cyoa-text!
+		mason-kill
+	then
+	3 4 rnd to mason-countdown
+;
+
+cyoa: mason-despair
+	bully choosechar
+	cicon
+	solo if
+		"Retour au Camp Massacre-Sang 2 : Le Retour" cyoa-title!
+		($ cname .. " se sent vraiment seul sans ses amis." $) cyoa-text!
+		mason-sad
+	then;
+	"Il est juste tres optimiste" cyoa-title!
+	($ cname .. " broie du noir mais se sent soudainement mieux !" $) cyoa-text!
+		mason-kill
+;
+
+} }
+
+

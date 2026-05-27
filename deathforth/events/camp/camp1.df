@@ -1,0 +1,96 @@
+
+cyoa{ road{
+
+cyoa-choice: camp1-boring-run
+	chumany? if
+		($ cname .. " decide que l'endroit semble TROP sur et " .. ghe .. " DEGAGE en vitesse, sans manger ni dormir.
+		" .. cname .. " se sent fier de savoir qu'" .. che .. " a evite ce danger." $)
+	else
+		($ cname .. " decide qu'il y a DANGER EN VUE alors " .. che .. " commence a aboyer dans le vide et ne s'arrete jamais, jamais, jusqu'au lendemain matin bien avance." $)
+	then cyoa-text!
+	cchar ' .morale-- foreach-team-char-except morale++ witsattREV attitude-- nosleep badfx ;
+cyoa-choice: camp1-boring-eat
+	($ Thegroup .. " monte le camp dans cet endroit ennuyeux mais sur.
+	" $) cyoa-text! fullcamp ;
+cyoa: camp1-boring
+	camp-pic
+	"Arret Ennuyeux" cyoa-title!
+	($ Thegroup .. " trouve un endroit vide sur le bord de la route qui semble aussi bon pour camper qu'un autre.
+	" $) cyoa-text! basic-tone
+		most-paranoid if
+				"Le temps est clair et il n'y a aucun signe de danger dans quelque direction que ce soit." +text
+				choice( "Manger et se Reposer" )choice: camp1-boring-eat
+				charchoice( ": On me la fait pas !" )choice: camp1-boring-run
+		then;
+		fullcamp
+;
+
+: campstoryreveal dup .temperREV dup .attitudeREV dup .witsREV dup .loyaltyREV ;
+cyoa-choice: camp1-story-tell
+	solo if
+	($ soloname .. " echange des histoires avec des potes imaginaires et c'est une experience de renforcement d'equipe tres revigorante malgre le fait que tout le monde soit imaginaire.
+	" .. soloname .. " oublie completement les marshmallows, et ils sont laisses derriere !" $) cyoa-text! soloer .morale3+ +cr fullcamp then;
+	($ Thegroup .. " echange des histoires sur eux-memes. Ils apprennent beaucoup les uns sur les autres, mais oublient completement les marshmallows !" $) cyoa-text!
+	' campstoryreveal foreach-team-char +cr fullcamp ;
+cyoa-choice: camp1-story-eat
+	($ Thegroup .. " monte le camp, puis mange un enorme sac de marshmallows au lieu de diner. Il en reste meme !" $) cyoa-text! 2 LOOT_FOOD trunk.loot+ +cr sleep goodfx ;
+cyoa: camp1-story
+	camp-pic
+	"Vieux Terrain de Camping" cyoa-title!
+	someone choosechar
+	($ Thegroup .. " trouve un terrain de camping abandonne avec un foyer. " .. cname-He .. " trouve meme un vieux paquet geant de marshmallows, un peu rassis !
+	" $) cyoa-text! basic-tone
+				choice( "Manger les Marshmallows" )choice: camp1-story-eat
+				choice( "Raconter des Histoires" )choice: camp1-story-tell
+;
+
+cyoa: camp1-quick
+	"Arret Rapide" cyoa-title! camp-pic
+	($ "Apres une longue conduite, " .. thegroup .. " trouve un endroit sur pour camper. La nuit se passe sans incident.
+	" $) cyoa-text! basic-tone fullcamp
+;
+
+cyoa: camp1-passout
+	"Effondrement" cyoa-title! camp-pic
+	($ "Epuise apres une conduite extra longue, " .. thegroup .. " repere un endroit pour camper et s'endort immediatement apres.
+	" $) cyoa-text! basic-tone fullcamp
+;
+
+cyoa-choice: camp1-gas-no
+	"Zut Alors" cyoa-title!
+	($ " Le lendemain matin, " .. thegroup .. " va siphonner les voitures, mais remarque une grande horde de zombies qui approche et doit abandonner l'essence.
+	" $) cyoa-text! fullcamp
+;
+cyoa-choice: camp1-gas-get
+	"Nuit Gazeuse" cyoa-title!
+	cpet? if
+		($ cname .. " essaie de siphonner de l'essence, mais sa morphologie est vraiment tres peu adaptee pour ca." $) cyoa-text! morale-- sleep
+	else
+		($ cname .. " siphonne l'essence, mais en avale accidentellement et est vraiment malade toute la nuit." $) cyoa-text! 40 70 rnd trunk-gas+ sleep-except morale2-
+	then	
+	+cr chowtime
+;
+
+cyoa-bridge: camp1-gas-get4
+	someicon
+	"Qui doit siphonner l'essence ?" cyoa-text!
+	' camp1-gas-get cyoa-team-choice
+;
+
+cyoa: camp1-gas
+	image-abandoned-cars
+	"Siphonnage Nocturne" cyoa-title!
+	($ Thegroup .. " monte le camp tard. Sur l'autoroute voisine se trouvent un tas de voitures abandonnees. Elles sont en panne, mais beaucoup devraient avoir un peu d'essence.
+	Voulez-vous envoyer quelqu'un siphonner l'essence ?" $) cyoa-text! basic-tone
+		team-count 3 > if
+			' camp1-gas-get 2 #cyoa-team-choice
+			choice( "Choisir quelqu'un d'autre" )choice: camp1-gas-get4
+		else
+			' camp1-gas-get 3 #cyoa-team-choice
+		then
+		choice( "Attendre le matin" )choice: camp1-gas-no			
+;
+
+} }
+
+

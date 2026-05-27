@@ -1,0 +1,64 @@
+: tlb-pumped
+    blurbslot 0= if // Conversation starter, then everyone in party responds
+       "ENVOYEZ ! ENVOYEZ !!" fbold blurbsay
+    else
+       blurbslot 2 < if
+          ($ "AUUUUUURRRRRGH!" $) blurbsay
+          me .strength++
+          me .morale2+
+       then
+    then
+;
+
+// Trying to make his text flash like the YOU ARE KILLED messages
+
+    : TLB-oneline1 "TROP GONFLE POUR CONTROLER ?! JE SUIS LARGEMENT AU DELA DE GONFLE !!" ;
+    : TLB-oneline2 "FAUT QUE JE DEVIENNE ENORME ! FAUT QUE JE RESTE ENORME !!" ;
+    : TLB-oneline3 "IL ME FAUT SOULEVER QUELQUE CHOSE RAPIDEMENT OU JE VAIS PERDRE MA MASSE !!" ;
+    : TLB-oneline4 "LES ZOMBIES PEUVENT PAS MORDRE cA ! ***FLEX*** OUAIS ! OUAIS !!!" ;
+    : TLB-oneline5 "PAS BESOIN D'ARMES QUAND J'AI CES BICEPS ! WOOOOO !" ;
+    : TLB-oneline6 "***GROGNEMENTS EN POMPAIENT FURIEUSEMENT UN ENORME HALTERE DANS LA VOITURE***" ;
+    : TLB-oneline7 "TOUS CES ZOMBIES SONT MORTS ET ONT TOTALEMENT PERDU LEUR MASSE MUSCULAIRE !" ;
+    : TLB-oneline8 "FAUT QUE JE DEVIENNE ENORME ! FAUT QUE JE RESTE ENORME ! FAUT QUE JE DEVIENNE ENORME ! FAUT QUE JE RESTE ENORME !" ;
+    : TLB-oneline9 "YEEEEAAAAAAAAAAHHHHHHHHHHH!!!! *FLEX*" ;
+    : TLB-oneline10 "A LA PROCHAINE OCCASION IL ME FAUT DES PROTEINES EN POUDRE !!" ;
+    : TLB-oneline11 "LES GENS NE REALISENT PAS QU'UN BON BRONZAGE PEUT DONNER L'AVANTAGE EN COMPETITION !" ;
+    : TLB-oneline12 "AUCUNE APOCALYPSE ZOMBIE N'AURA RAISON DE CES MUSCLES !" ;
+    : TLB-oneline13 "JE FAIS DES CURLS DANS LES CABINES DE BRONZAGE POUR GAGNER DU TEMPS !" ;
+    : TLB-oneline14 "DES ARMES ? J'AI MES ARMES JUSTE ICI ! *FLEX*" ;
+    : TLB-oneline15 "TU SAIS COUDRE ? PARCE QUE JE SUIS DECHIRE ! *FLEX*" ;
+
+    deck-new
+       card: TLB-oneline1
+       card: TLB-oneline2
+       card: TLB-oneline3
+       card: TLB-oneline4
+       card: TLB-oneline5
+       card: TLB-oneline6
+       card: TLB-oneline7
+       card: TLB-oneline8
+       card: TLB-oneline9
+       card: TLB-oneline10
+       card: TLB-oneline11
+       card: TLB-oneline12
+       card: TLB-oneline13
+       card: TLB-oneline14
+       card: TLB-oneline15
+    constant TLB-ONELINERS
+    TLB-ONELINERS var tlb-oneliners
+    TLB-ONELINERS shuffles to tlb-oneliners
+
+: tlb-oneliner
+    tlb-oneliners depths 0= if TLB-ONELINERS shuffles to tlb-oneliners then
+    blurbslot 0= if
+       drawcard fbold blurbsay
+    then
+;
+
+    deck-new
+       card: tlb-pumped
+    15 cards: tlb-oneliner
+
+    constant BLURB-TLB-DECK
+    BLURB-TLB-DECK var blurb-tlb-deck
+    BLURB-TLB-DECK shuffles to blurb-tlb-deck

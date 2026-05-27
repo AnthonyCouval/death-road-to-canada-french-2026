@@ -1,0 +1,51 @@
+	: BOXER-oneline1 "Un deux... un deux..." ;
+	: BOXER-oneline2 "J'suis brutal et sans pitie !" ;
+	: BOXER-oneline3 "Tu n'es pas Alexandre !" ;
+	: BOXER-oneline4 "Vole comme un papillon, pique comme une abeille..." ;
+	: BOXER-oneline5 "Coach, je suis pret pour le championnat!" ;
+	: BOXER-oneline6 "La vitesse est importante, la vitesse gagne, la vitesse tue..." ;
+	: BOXER-oneline7 "Je dois absolument continuer a m'entrainer" ;
+	: BOXER-oneline8 "Qui sera mon prochain partenaire d'entrainement ?" ;
+	: BOXER-oneline9 "Last fight seemed like the other guy was under the weight class..." ;
+	: BOXER-oneline10 "Stick and move... stick and move..." ;
+	: BOXER-oneline11 "Je vais frapper ce zombie!" ;
+	: BOXER-oneline12 "Tout est dans le jeu de jambes" ;
+	: BOXER-oneline13 "Qu'aurait voulu que je fasse mon entraineur ?" ;
+	: BOXER-oneline14 "Quand je sortirai de la je vais virer mon responsable des promotions." ;
+	: BOXER-oneline15 "Tout est de la faute de mon responsable des promotions !" ;
+	: BOXER-oneline16 "Je me souviens de mon premier combat contre 'Joe Machoire de Verre', j'ai perdu. " ;
+
+	deck-new
+		card: BOXER-oneline1
+		card: BOXER-oneline2
+		card: BOXER-oneline3
+		card: BOXER-oneline4
+		card: BOXER-oneline5
+		card: BOXER-oneline6
+		card: BOXER-oneline7
+		card: BOXER-oneline8
+		card: BOXER-oneline9
+		card: BOXER-oneline10
+		card: BOXER-oneline11
+		card: BOXER-oneline12
+		card: BOXER-oneline13
+		card: BOXER-oneline14
+		card: BOXER-oneline15
+		card: BOXER-oneline16
+	constant BOXER-ONELINERS
+	BOXER-ONELINERS var boxer-oneliners
+	BOXER-ONELINERS shuffles to boxer-oneliners
+
+: boxer-oneliner
+	boxer-oneliners depths 0= if BOXER-ONELINERS shuffles to boxer-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: boxer-oneliner
+
+	constant BLURB-BOXER-DECK
+	BLURB-BOXER-DECK var blurb-boxer-deck
+	BLURB-BOXER-DECK shuffles to blurb-boxer-deck

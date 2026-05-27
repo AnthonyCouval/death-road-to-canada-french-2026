@@ -1,0 +1,164 @@
+
+// Various MANDIBLE Events
+
+0 value parktype
+
+cyoa{ road{ 
+
+: mandible-garagestart ($ Thegroup .. " rentre dans le garage, et plusieurs mecaniciens experts commencent a faire leur MAGIE.
+	On voit que ce sont des experts parce qu'ils portent des " .. "SALOPETTES." rainbold $) text! goodfx car-fullhealth car-fulltune
+;
+
+cyoa: mandible-megagarage
+	"Service Complet : LE GRAND JEU" cyoa-title! image-car-garage
+	mandible-garagestart
+	1 ' car-speed +! ($ "VITESSE AUGMENTEE ! Completement repare !" rbold $) +crtext
+	10 car-megatune+ ($ "ULTRA REVISION ! La voiture est maintenant bien plus econome en essence !" fbold $) +crtext
+	car-mpg 0.6 * to car-mpg
+	3 car-armor+ ($ "SUPER BLINDAGE !" fbold $) +crtext
+		choice( "TROP BIEN" )choice
+;
+
+cyoa: mandible-repairgarage
+	"Reparations Completes" cyoa-title! image-car-garage 
+	mandible-garagestart
+	($ "Voiture completement reparee !" rbold $) +crtext
+		choice( "NICKEL" )choice
+;
+
+cyoa: mandible-graveyard
+	"Voiture Devant le Cimetiere" cyoa-title!
+	($ Thegroup .. " conduit pres d'un cimetiere. Devant, une voiture est garee en bon etat. Esperons qu'il n'y a pas trop de zombies dans ce cimetiere infeste de zombies." $) cyoa-text! basic-tone
+	1.4 1.7 frnd 16 21 frnd 1 3 rnd zforecast
+	"events/exterior/region/graveyardcar.df" $load-region
+		choice( "Explorer le Cimetiere" )choice: premission
+;
+
+cyoa: mandible-park
+	"Parc Public" cyoa-title!
+	($ Thegroup .. " trouve un parc. Ca pourrait etre sympa de faire une petite balade. Avec les zombies. Qui sait ce qu'on pourrait trouver ? Probablement des toilettes." $) cyoa-text! basic-tone
+	1.1 1.3 frnd 8 17 frnd 0 2 rnd zforecast
+	0 to parktype
+	"events/exterior/park.df" $load-region
+		choice( "Visiter le Parc" )choice: premission
+;
+
+cyoa: mandible-crowded
+	"Parc Bonde" cyoa-title!
+	($ Thegroup .. " repere un parc bonde de zombies. De l'autre cote, une voiture arrive en trombe. Quelqu'un en sort en courant, et meme a cette distance, il est evident qu'il fonce vers les toilettes." $) cyoa-text! basic-tone
+	1.4 1.7 frnd 8 17 frnd 2 3 rnd zforecast
+	1 to parktype
+	"events/exterior/park.df" $load-region
+		choice( "Sauvetage aux Toilettes" )choice: premission
+;
+
+// Blank
+(*
+cyoa-choice: MANDIBLE--
+
+;
+
+cyoa: MANDIBLE-
+	" " cyoa-title!
+	($ " " $) text!
+		choice( " " )choice
+		choice( " " )choice
+;
+*)
+
+
+} }
+
+cyoa{ regiondef{
+
+} }
+
+
+: punchbot-thing-init args( me )
+	0 <- me .flammability!
+	1 <- me .subtypeid! // No blood
+;
+
+
+: punchbot-main-events args( chara eventid )
+	<- chara .party@ 0= if then;
+
+	<- eventid MAIN_EVENT_DRIVING_START = if
+		<- chara WEAPON_CHARGEPUNCH <- chara .weaponb@ = if 
+			9 <- chara .stackedb!
+		then
+		<- chara WEAPON_SLAMPUNCH <- chara .weaponc@ = if 
+			5 <- chara .stackedc!
+		then
+	then;
+
+	<- eventid MAIN_EVENT_MISSION_START = if <- chara .thing@ punchbot-thing-init then
+;
+
+
+: .punchbotify args( chara )
+	120 <- chara .specialtype!
+	"#Bot Cogneur#" <- chara .name!
+	"est un robot, concu pour cogner." <- chara .job!
+	1 STAT_FITNESS <- chara .bonus!
+	5 <- chara .strength!
+	4 <- chara .fitness!
+	-1 <- chara .breathescale!
+	WEAPON_BOTPUNCH <- chara .weapona!
+	WEAPON_CHARGEPUNCH <- chara .weaponb! WEAPON_SLAMPUNCH <- chara .weaponc!
+	9 <- chara .stackedb! 5 <- chara .stackedc!
+	1 <- chara .weapon_nodropa! 1 <- chara .weapon_nodropb! 1 <- chara .weapon_nodropc!
+	' punchbot-main-events <- chara .main_events!
+
+	<- chara .thing@ punchbot-thing-init
+;
+
+120 is-specialchar: .pbot?
+
+: speedbot-main-events args( chara eventid )
+	<- chara .party@ 0= if then;
+	<- eventid MAIN_EVENT_DRIVING_START = if
+		WEAPON_MULTNAIL <- chara .weapona@ = <- chara .stackeda@ 300 < and if 
+			<- chara .stackeda@ 250 > if 300 else <- chara .stackeda@ 50 + then <- chara .stackeda!
+		then
+		<- chara WEAPON_MULTMODE <- chara .weaponb@ = if 
+			7 <- chara .stackedb!
+		then
+	then;
+
+;
+
+: .speedbotify args( chara )
+	119 <- chara .specialtype!
+	"#Bot Rapide#" <- chara .name!
+	"est un robot, concu pour aller vite." <- chara .job!
+	2 <- chara .strength!
+	3 <- chara .fitness!
+	-1 <- chara .breathescale!
+	WEAPON_MULTNAIL <- chara .weapona!
+	WEAPON_MULTMODE <- chara .weaponb!
+	200 <- chara .stackeda! 7 <- chara .stackedb!
+	1 <- chara .weapon_nodropa! 1 <- chara .weapon_nodropb!
+	WEAPON_POKIN <- chara .weapon_default!
+	' speedbot-main-events <- chara .main_events!
+;
+
+119 is-specialchar: .sbot?
+
+// LIVER testing words
+// : livert 40 trunk-food+ "events/trade/trader-camp-region-special6.df" $load-region to-mission ;
+// : liver1 "events/rareloc/region/mdepot.df" $load-region to-mission ;
+// : liver2 "events/trade/trader-camp-region-special1.df" $load-region to-mission ;
+
+// MANDIBLE testing words
+
+// : mand1 "events/exterior/region/graveyardcar.df" $load-region to-mission ;
+// : mand2 "events/exterior/park.df" $load-region to-mission ;
+// : mand3 "events/trade/trader-camp-region-special3.df" $load-region to-mission ;
+// : mand4 "events/trade/trader-camp-region-special4.df" $load-region to-mission ;
+// : mand5 "events/trade/trader-camp-region-special5.df" $load-region to-mission ;
+// : mand6 "events/trade/trader-camp-region-special6.df" $load-region to-mission ;
+// : mand7 "events/trade/trader-camp-region-special7.df" $load-region to-mission ;
+// : mand8 "events/trade/trader-camp-region-special8.df" $load-region to-mission ;
+// : mand9 "events/trade/trader-camp-region14.df" $load-region to-mission ;
+// : mand10 "events/trade/trader-camp-region1.df" $load-region to-mission ;

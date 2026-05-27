@@ -1,0 +1,197 @@
+: sharp-topic 1 7 rnd case
+	1 of "l'importance de se laver les mains" endof
+	2 of "l'importance de faire bouillir de l'eau" endof
+	3 of "comment soulever correctement des meubles" endof
+	4 of "les meilleures facons d'ouvrir des conserves" endof
+	5 of "pourquoi il ne faut pas faire confiance aux etrangers" endof
+	6 of "placement des tirs pour economiser des munitions" endof
+	7 of "l'importance du materiel medical sterile" endof
+	endcase ;
+
+: sharp-advice
+	blurbslot 0= if
+		qmsg ($ me .name@ .. "  parle de " .. sharp-topic .. "." $) txt
+	else
+		blurbslot 3 < if
+			STAT_MORALE me .stat++
+		then
+	then
+;
+
+: boring-stuff
+	2nd-char choosechar
+	blurbslot 0= if
+		"Nous devons inventorier toutes nos fournitures !" blurbsay
+	else
+		blurbslot 2 < if
+			ctemper- cwits- or if
+				($ "ON A PAS LE TEMPS POUR CE GENRE DE CONNERIES !" $) blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			($ "Bien sur, peut etre quand on aura un peu de temps libre, " .. 1st-char .name@ .. "." $) blurbsay
+
+		then then
+	then
+;
+
+: useful-info
+	blurbslot 0= if
+		"Si tu attaches une ficelle tres serre autour de ton doigt alors ton doigt deviendra violet !" blurbsay
+	else
+		blurbslot 2 < if
+			// sc-pick 0= works to check if there's a character in there or not, but I have no idea why. If it's the right character, printing it out says their phrase like Gnomey's "Vous etes un DINKUS !". If it's the wrong character, checking by printing either does a blank line or an underflow error. So not sure how this logic works with 0=, especially since there's no false in sc-pick.
+			sc-pick 0= if
+				rnd5050 if
+					// Similarly I'm not sure how this works either. It's also checking sc-pick. Does it count as 1 if there's simply any text in there? If so, why isn't it sc-pick 1 = above, too?
+					screply- 1 = if	1st-char .morale-- then;
+				else
+					// screply is neutral response, screply+ is happy, screply- is angry/sad. May expand on this later, but I like how this part turned out.
+					screply+ 1 = if	1st-char .morale++ then;
+				then
+			then
+			rnd5050 if
+				($ "Pourquoi aurais-je besoin de savoir ca, " .. 1st-char .name@ .. "?" $) blurbsay
+				"QUI SEN SOUCIE ?" blurbsay
+				1st-char .morale--
+			else
+				"Bon a savoir, merci!" blurbsay
+				me .morale++
+			then
+		then
+	then
+;
+
+: snare-trap
+	2nd-char choosechar
+	blurbslot 0= if
+		"La prochaine fois qu'on s'arrete je devrais te montrer comment faire des pieges a collets." blurbsay
+	else
+		blurbslot 2 < if
+			screply 1 = if exit then
+			ctemper- if
+				($ "Peut etre que la prochaine fois je devrais te montrer comment fermer ta gueule!" $) blurbsay
+				1st-char .morale--
+			else
+				($ "Ca me va " .. 1st-char .name@ .. "." $) blurbsay
+		then then
+	then
+;
+
+: sharp-too-swole
+	blurbslot 0= if
+		"Est ce qu'un humain peut vraiment etre trop muscle?" blurbsay
+	else
+		blurbslot 2 < if
+			rnd5050 if
+				($ "De quoi tu parles?" $) blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"TROP BARRAQUE POUR ETRE CONTROLE, BEBE. HE OUI !" blurbsay
+			STAT_MORALE me .stat++
+			STAT_MORALE 1st-char .stat++
+		then then
+	then
+;
+
+: sharp-dull1
+2nd-char choosechar
+	blurbslot 0= if
+		"Si on pouvait avoir des panneaux solaires et quelques batteries, ca pourrait etre utile." blurbsay
+	else
+		blurbslot 2 < if
+			cwits- if
+				($ "Super idee, " .. 1st-char .name@ .. "!" $) blurbsay
+				"Je pourrais y brancher ma console de jeux video !" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Gardons l'oeil ouvert alors. Je pense que ca pourrait etre utile." blurbsay
+		then then
+	then
+;
+
+: sharp-aggressive1
+2nd-char choosechar
+	blurbslot 0= if
+		"Assurez vous de garder les deux mains sur le volant lorsque vous conduisez ! " blurbsay
+	else
+		blurbslot 2 < if
+			ctemper- if
+				($ "Ferme la, " .. 1st-char .name@ .. "!" $) blurbsay
+				"Sinon comment vais je tirer sur les zombies en meme temps ?" blurbsay
+				STAT_MORALE 1st-char .stat--
+		else
+			"Bien, comme tu veux !" blurbsay
+			STAT_MORALE me .stat--
+		then then
+	then
+;
+
+	: sharp-oneline1 "On peut y arriver tant qu'on garde nos provisions et notre moral au beau fixe." ;
+	: sharp-oneline2 "Pas besoin de recruter de nouvelles personnes a chaque fois, sauf si on a beaucoup de nourriture." ;
+	: sharp-oneline3 "Parfois il semble preferable d'ignorer une horde plutot que de se battre." ;
+	: sharp-oneline4 "Les zombies ont beaucoup de mal avec les portes fermees." ;
+	: sharp-oneline5 "Nous devons vraiment faire attention a notre reserve d'essence..." ;
+// VVVVVVVV JONZ BLURBZ VVVVVVVVV
+	: sharp-oneline6 "Essayez de conserver vos munitions, attaquez seulement quand vous en avez besoin." ;
+	: sharp-oneline7 "Le placement des tirs est crucial pour economiser nos munitions." ;
+	// : sharp-oneline8 "Nous devrions garder le moteur a bas regime pour economiser notre carburant." ;
+	: sharp-oneline8 "Nous devrions essayer de trouver des voitures efficaces pour conserver notre essence." ;
+	: sharp-oneline9 "Jeter des meubles aux zombies semble assez efficace." ;
+	: sharp-oneline10 "Nous devrions attirer le moins d'attention possible sur nous." ;
+	: sharp-oneline11 "Cette conserve est bien meilleure quand on peut la chauffer." ;
+	: sharp-oneline12 "Il est important de garder des rations fixes pour conserver nos provisions." ;
+	: sharp-oneline13 "Les choses vont bien maintenant, mais nous devons etre prets pour tout." ;
+	: sharp-oneline14 "Etre prepare est l'une des parties les plus importantes de la survie." ;
+	: sharp-oneline15 "Gardez les yeux ouverts pour tout ce qui est suspect." ;
+	: sharp-oneline16 "Les zombies ne sont pas nos seuls problemes ici." ;
+	: sharp-oneline17 "Nous devons nous mefier des inconnus, on ne sait pas de quoi ils sont capables." ;
+	: sharp-oneline18 "Nous devons faire attention aux eventuelles embuscades de bandits." ;
+	: sharp-oneline19 "Ce ne serait pas une mauvaise idee d'essayer de chasser pour trouver de la nourriture quand c'est possible." ;
+	: sharp-oneline20 "Conservez votre eau, il faut eviter le gaspillage." ;
+	: sharp-oneline21 "Vous pouvez ralentir les zombies en deposant des meubles devant eux." ;
+
+	deck-new
+		card: sharp-oneline1
+		card: sharp-oneline2
+		card: sharp-oneline3
+		card: sharp-oneline4
+		card: sharp-oneline5
+		card: sharp-oneline6
+		card: sharp-oneline7
+		card: sharp-oneline8
+		card: sharp-oneline9
+		card: sharp-oneline10
+		card: sharp-oneline11
+		card: sharp-oneline12
+		card: sharp-oneline13
+		card: sharp-oneline14
+		card: sharp-oneline15
+		card: sharp-oneline16
+		card: sharp-oneline17
+		card: sharp-oneline18
+		card: sharp-oneline19
+		card: sharp-oneline20
+		card: sharp-oneline21
+
+	constant SHARP-ONELINERS
+	SHARP-ONELINERS var sharp-oneliners
+
+: sharp-oneliner
+	sharp-oneliners depths 0= if SHARP-ONELINERS shuffles to sharp-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+		card: snare-trap
+		card: sharp-too-swole
+		card: useful-info
+		card: sharp-dull1
+		card: sharp-aggressive1
+		card: boring-stuff
+		card: sharp-advice
+		21 cards: sharp-oneliner
+
+	constant BLURB-DECK-SHARP
+	BLURB-DECK-SHARP var blurb-deck-sharp

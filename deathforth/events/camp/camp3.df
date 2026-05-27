@@ -1,0 +1,418 @@
+
+cyoa{ road{
+
+// Fire escape
+
+cyoa-choice: camp3-fire-paranoid
+	($ cname .. " a TOUJOURS un plan d'evacuation pret en cas d'incendie. Peu importe ou " .. che .. " est, " .. cname .. " pense constamment a de nouveaux plans d'evacuation en cas d'incendie.
+	Toutes les provisions ont ete sauvees ! " $) text! notsolo if "Personne n'a ete blesse." +text then goodfx morale++ witsattREV
+	+cr fullcamp
+;
+
+: isfireproof? statmod{ .fireproof? }
+	// old way - .trait@ "Fireproof" $=
+;
+
+cyoa-choice: camp3-fire-pick
+	cchar isfireproof? if
+		($ cname .. " est completement ignifuge.
+		 " .. cHe .. " sauve les provisions a un rythme tranquille. Pas de stress !" $) text!
+		 notsolo if ($ Theothers .. " s'echappe" .. g2s .. ", personne n'est blesse." $) +crtext then
+		 +cr fullcamp
+	then;
+	
+	($ cname .. " essaie de rester calme et attentif." $) text!
+			
+	ctemper- if
+		($ cHe .. " ne peut pas du tout rester calme ! " .. Thegroup .. " panique !" $) +crtext badfx morale2-all
+	else
+		temper+roll if
+			($ cHe .. " reste tres calme !" $) +crtext goodfx
+		else
+			($ cHe .. " panique, et ca gaspille un temps precieux." $) +crtext morale--all badfx
+		then temperREV
+	then
+	
+	wits+roll if
+		($ cHe .. " trouve une sortie rapide. " .. gThey .. " part" .. g1s .. " indemne !" $) +crtext
+	else
+		($ cHe .. " va dans la mauvaise direction. " .. Thegroup .. " se brule !" $) +crtext ouch--all bitefx
+	then witsREV
+	
+	choosehuman alive? if
+		($ Thegroup .. " s'en tire ! " $) +crtext fullcamp
+	then
+;
+
+cyoa-bridge: camp3-fire-choose
+	solo if
+		soloer choosechar camp3-fire-pick
+	then;
+		picon
+		"Qui planifie et dirige l'evacuation ?" text!
+		' camp3-fire-pick cyoa-team-choice
+;
+
+cyoa-choice: camp3-fire-ditch
+	($ Thegroup .. " sort de la en courant. Malheureusement, beaucoup de provisions non rangees dans la voiture ont ete laissees derriere." $) text! bandit-ammomed2 bandit-food2 badfx +cr fullcamp
+;
+
+cyoa: camp3-fire
+	image-dog-on-fire
+	"Au Feu !" cyoa-title!
+	($ Thegroup .. " va contre son jugement et campe dans un appartement en ville, car il n'y a pas de zombies autour." $) text!
+	($ "Quand " .. gthey .. " se reveille" .. g1s .. ", le batiment est en feu. " $) +crtext 1 600 tone
+		most-paranoid if
+			charchoice( " est cool avec les consignes anti-incendie" )choice: camp3-fire-paranoid
+		else
+			choice( "Planifier l'evasion" )choice: camp3-fire-choose
+		then
+		choice( "Sortir MAINTENANT" )choice: camp3-fire-ditch
+;
+
+// Grocery store trust exercise
+
+cyoa-choice: camp3-grocery-pick
+	($ Theothers .. " montent la garde dehors pour surveiller si des pilleurs arrivent pendant que " .. cname .. " fouille l'epicerie." $) text!
+	cloyalty- if cchar to bully
+		cchar .morale 3 < if
+			($ cname .. " prend la nourriture et se barre discretement, pour ne jamais revenir. Quelle fouine !" $) +crtext
+			loyaltyREV decruit-bad
+		else
+			($ cname .. " dit qu'il n'y avait pas de nourriture." $) +crtext cchar morale--all-except badfx
+			most-paranoid if choosechar
+				cloyalty- not if
+				($ cname .. " suspecte que c'est un mensonge ! " .. cHe .. " commence a surveiller " .. bname .. "." $) +crtext bully .loyaltyREV
+				then
+			then
+		then +cr fullcamp
+	then;
+	($ cname .. " rapporte de la nourriture !" $) +crtext
+	morale++ cloyalty+ if 6 9 else 50 %chance if 3 6 else 2 9 then then trunk-food+ goodfx +cr fullcamp
+;
+
+cyoa-choice: camp3-grocery-solo
+	someicon
+	($ cname .. " ramasse des boites de conserve sur les etageres, evitant un petit groupe de zombies. Un autre groupe de pilleurs arrive.
+	Les pilleurs commencent a tirer ! Ils veulent vraiment ces boites !
+	" .. cname .. " retourne au camp pour se battre. Ils ne suivent jamais, mais " .. cname .. " reste eveille toute la nuit." $) text! 3 4 rnd trunk-food+ badfx +cr tiredcamp
+;
+
+cyoa-choice: camp3-grocery-no
+	($ Thegroup .. " choisit sagement de ne pas se bagarrer pour des boites de conserve. Il y aura d'autres epiceries, avec moins d'humains de qui s'inquieter." $) text! +cr fullcamp
+;
+
+cyoa-bridge: camp3-grocery-pick4
+	someicon
+	"Qui doit piller l'epicerie ?" cyoa-text!
+	' camp3-grocery-pick cyoa-team-choice
+;
+
+cyoa: camp3-grocery
+	image-mob-at-store
+	($ Thegroup .. " monte le camp devant une epicerie. " .. gThey .. " remarque" .. g1s .. " qu'un autre groupe les suit et va probablement essayer de piller l'endroit." $) cyoa-text!
+		solo if
+			"Camping dans le Parking" cyoa-title!
+			choice( "Essayer de piller l'epicerie" )choice: camp3-grocery-solo
+		else
+			"Exercice de Confiance a l'Epicerie" cyoa-title!
+			($ "Envoyer quelqu'un piller a l'interieur ?" $) +crtext
+			// The other" .. g3s .. " will stand guard."
+			team-count 3 > if
+				' camp3-grocery-pick 2 #cyoa-team-choice
+				choice( "Choisir quelqu'un d'autre" )choice: camp3-grocery-pick4
+			else
+				' camp3-grocery-pick 3 #cyoa-team-choice
+			then
+		then
+		choice( "Les laisser faire, eviter les ennuis" )choice: camp3-grocery-no
+;
+
+// Sharing camp with other survivor group
+
+cyoa-choice: camp3-crowd-paranoid
+	($ cname .. " ne fait confiance a personne dans le camp. " .. cHe .. " reste eveille toute la nuit, surveillant les signes de probleme. Rien ne se passe, et " .. che .. " est epuise le matin." $) cyoa-text! +cr chowtime sleep-except witsattREV
+;
+
+cyoa-choice: camp3-crowd-rob
+	($ cname .. " n'a aucun mal a voler le camp paisible. " .. Thegroup .. " vole rapidement de la nourriture et part en trombe. " .. gThey .. " conduit" .. g1s .. " toute la nuit et est fatigue le lendemain." $) cyoa-text!
+	8 15 rnd trunk-food+
+	aholeREV
+	// notsolo if ($ Theothersare .. " sont entraines dedans." $) +crtext then
+	rob-guilt +cr tiredcamp
+;
+
+cyoa-choice: camp3-crowd-coolit
+	cpet? if
+		($ cname .. " va au milieu du camp bonde et commence a " .. "PETER EN MASSE." rbold $)
+	else
+		($ cname .. " monte sur une petite caisse et dit a tout le camp de " .. "SE CALMER." pbold $)
+	then text!
+	cool-it-7 if
+		"Les autres groupes du camp prennent ca comme un signe qu'ils devraient SE RELAXER et LACHER PRISE davantage et ils organisent un grand festin !" +crtext
+		cooled-it goodfx sleep 15 trunk-food+ morale3+all
+	else cool-it++
+		($ "Tous dans le camp se retournent presque immediatement contre " .. thegroup .. ". " .. gTheyare .. " expulse, et monte" .. g1s .. " le camp dans un endroit bien moins confortable." $) +crtext
+		morale--all +cr fullcamp
+	then witsattREV 	
+;
+
+cyoa-choice: camp3-crowd-camp
+	($ Thegroup .. " prend le risque de dormir dans le camp bonde." $) cyoa-text!
+	60 %chance if "Rien d'inhabituel ne se passe." +crtext
+	else
+		50 %chance if
+			"Un des autres groupes apprend le voyage vers le Canada. Ils donnent des provisions, car ils disent que vous en aurez plus besoin qu'eux." +crtext ammosearch1 5 8 rnd trunk-food+ 2 6 rnd trunk-medical+ morale++all
+		else
+			50 %chance if
+				someicon
+				($ "Quelqu'un, et on ne saura jamais qui, a fait la blague de la main dans l'eau chaude a " .. cname .. "." $) +crtext badfx morale2-
+			else
+				"Le matin, les autres groupes sont partis et des provisions manquent !" +crtext badfx bandit-ammomed2
+			then
+		then
+	then +cr fullcamp
+;
+
+cyoa-choice: camp3-crowd-tired
+	($ Thegroup .. " ne peut pas se resoudre a faire confiance a autant d'etrangers. " .. gThey .. " decide" .. g1s .. " que c'est plus sur de partir des que possible." $) cyoa-text! +cr tiredcamp
+;
+
+cyoa: camp3-crowd
+	image-wandering-off
+	"Camping Bonde" cyoa-title!
+	($ Thegroup .. " trouve un grand camping occupe par quelques voitures d'autres survivants. Camper avec des etrangers est risque, mais il n'y a nulle part ailleurs ou aller.
+	Aucun ne va au Canada." $) cyoa-text! basic-tone
+		choice( "Camper avec eux" )choice: camp3-crowd-camp
+		most-paranoid if
+			charchoice( " ne leur fait pas confiance" )choice: camp3-crowd-paranoid
+		then
+		most-ahole if
+			charchoice( " les vole et se barre" )choice: camp3-crowd-rob
+		then
+		most-grating if
+			charchoice( " dit au camp de 'SE CALMER'" fcoolit )choice: camp3-crowd-coolit
+		then
+		choice( "Partir sans dormir" )choice: camp3-crowd-tired
+;
+
+// Repair shop camp
+
+cyoa-choice: camp3-tinker-go
+	($ cname .. " passe toute la nuit a demonter et remonter des trucs. C'est tres bruyant.
+	" .. Thegroup .. " sera tres fatigue demain !" $) text!
+	mechanicREV mechanic++ nosleep goodfx
+;
+
+cyoa: camp3-tinker-pick
+	solohuman if
+		choosehuman camp3-tinker-go
+	then;
+	"Qui doit bricoler les machines cassees ?" cyoa-text!
+	' camp3-tinker-go cyoa-human-choice
+;
+
+cyoa: camp3-tinker
+	// Have someone tinker. They can get a point of mechanical skill in exchange for group sleeplessness.
+	"Bric-a-Brac Utile" cyoa-title!
+	($ Thegroup .. " campe dans un batiment solide. Ca ressemble a un vieux atelier de reparation, avec des machines cassees qui trainent.
+	Ce serait un bon moment pour s'entrainer a reparer des choses, mais ca ferait beaucoup de bruit." $) text! +cr fullcamp
+		choice( "Aller juste dormir" )choice
+		choice( "Bricoler toute la nuit" )choice: camp3-tinker-pick
+;
+
+// Precious antique cans
+
+: camp3-cans-check args( @ )
+	<- @ .cloyalty- if
+		($ <- @ .colourname .. " s'en fout." $) +crtext
+		<- @ .loyaltyREV
+	then;
+	<- @ .morale--
+
+;
+
+cyoa-choice: camp3-cans-bort
+	char-gen to recruitee ricon recruitee .bortify
+	"Le rituel secret est accompli !" fbold text!
+	"Bort a ete invoque..." rbold +crtext
+	cooled-it goblin-laugh
+	team-count 3 > if
+		($ "Le groupe est plein, mais Bort a ete invoque. Qui doit partir ?" $) +crtext
+			' recruit-replace cyoa-team-choice
+	then;
+		recruited
+;
+
+cyoa-blank: camp3-cans-shoot
+		($ Thegroup .. " s'entraine au tir en faisant exploser les boites." $) text!
+		' .shooting++ foreach-team-char
+		($ "Un homme en calecon long rouge debarque avec une fourche.
+		" .. "Mes boites ! Mes precieuses boites antiques ! Regardez ce que vous leur avez fait !" rbold ..
+		" Il agite la fourche en criant." $) +crtext goodfx badfx
+		' camp3-cans-check foreach-team-char
+		choice( "Aie" )choice
+		choice( "HA ha !" )choice
+		cool-it-7 if
+			most-grating if
+				charchoice( ": PAS DE PANIQUE MON VIEUX !" rbold )choice: camp3-cans-bort
+			then
+		then
+;
+
+cyoa: camp3-cans
+	image-camp-2
+	"Grand Champ" cyoa-title!
+	($ Thegroup .. " campe dans un grand champ." $) cyoa-text! +cr fullcamp
+		choice( "Quitter le camp" )choice
+		roadtrip-has-firearm? if
+			"Entrainement au Tir sur Boites" cyoa-title!
+			($ gThey .. " trouve" .. g1s .. " une rangee de boites posees sur une cloture en bois." $) +crtext
+			choice( "Tirer sur les boites" )choice: camp3-cans-shoot
+		then
+;
+
+// Setting up barricades before sleeping
+
+cyoa-choice: camp3-trap-pick
+	($ cname .. " barricade la maison en mauvais etat." $) text!
+	mechanic+roll if
+		($ cHe .. " renforce rapidement les points problematiques. Ca semble maintenant tres solide !" $) +crtext goodfx mechanicREV cchar .mechanical@ 4 < if mechanic++ then +cr fullcamp
+	then;
+	wits+roll if
+		($ cHe .. " improvise. Le resultat n'est pas joli, mais reussit a tenir les zombies dehors." $) +crtext goodfx witsREV mechanicREV cchar .mechanical@ 3 < if mechanic++ then +cr fullcamp
+	then;
+		($ cHe .. " cloue quelques planches sur des portes, mais elles n'arretent pas de tomber." $) +crtext witsREV mechanicREV +cr fullcamp
+		($ Thegroup .. " est attaque pendant la nuit !" $) +crtext ouch--all bitefx
+;
+
+cyoa-choice: camp3-trap-no
+	($ "Ne faisant pas confiance a sa capacite a barricader la maison, " .. cname .. " reste en veille toute la nuit a la place. " $) text!
+	cchar statmod{ .soundsleep? } if
+		($ cHe .. " reussit quand meme a fonctionner le lendemain." $)
+	else
+		($ cHe .. " est epuise le matin." $)
+	then +text
+	sleep-except +cr chowtime
+	
+;
+
+cyoa-bridge: camp3-trap-watch
+	someicon
+	solo if
+		soloer choosechar camp3-trap-no
+	then;
+	"Qui doit rester de garde pour la nuit ?" cyoa-text!
+	' camp3-trap-no cyoa-team-choice
+;
+
+cyoa-bridge: camp3-trap-list
+	someicon
+	"Qui doit barricader la maison ?" cyoa-text!
+	' camp3-trap-pick cyoa-team-choice
+;
+
+cyoa: camp3-trap
+	"Barricades avant le Coucher" cyoa-title!
+	($ "En fin de journee, " .. Thegroup .. " se cache dans une vieille maison peu isolee. Des zombies rodent dehors, et les portes de la maison tiennent a peine.
+	Quelqu'un doit-il barricader la maison ?" $) cyoa-text!
+		numhums 4 < if
+			' camp3-trap-pick cyoa-human-choice
+		else
+			choice( "Choisir quelqu'un pour la securiser" )choice: camp3-trap-list
+		then
+		choice( "Rester de garde toute la nuit" )choice: camp3-trap-watch
+;
+
+// Moosing around
+
+cyoa-choice: camp3-moose-heal
+	($ cname .. " essaie d'aider l'orignal blesse." $) text!
+	trunk-medical 1 < if
+		($ cname .. " a oublie qu'il n'y avait pas de provisions medicales ! L'orignal apprecie quand meme le geste, alors il ne le maltraite qu'a moitie aussi fort pour s'etre approche." $) +crtext ouch-- bitefx
+	then;
+	medical+roll if
+		($ cHe .. " le soigne un peu. L'orignal est trop confus par ce geste de gentillesse pour le malmener." $) +crtext goodfx -1 trunk-medical+ medicalREV morale2+ loyaltyREV loyalty++
+	then;
+		($ cHe .. " ne connait pas grand chose aux soins pour un orignal et finit par le mettre en colere ! L'orignal lui envoie un coup de pied bien sec." $) +crtext morale-- ouch-- medicalREV bitefx
+;
+
+cyoa-choice: camp3-moose-shoot
+	($ cname .. " essaie de tirer sur l'orignal. C'est vraiment peu fair-play !" $) text!
+	roadtrip-has-firearm? not if
+		($ Thegroup .. " n'a aucune arme a tir ! L'orignal et " .. cname .. " s'en amusent bien. Puis l'orignal commence a malmener tout le monde." $) +crtext ouch2-all bitefx
+	then;
+	cshooting+ shootingroll or if
+		($ cHe .. " descend l'orignal. " .. Thegroup .. " recupere le plus de viande filandreuse possible avant de devoir partir." $) +crtext goodfx
+		shootingREV 12 trunk-food+
+	then;
+		($ cHe .. " rate son tir ! L'orignal n'est pas content, et le pietine severement." $) +crtext morale-- ouch2- shootingREV bitefx		
+;
+
+cyoa-choice: camp3-moose-wrestle
+	($ cname .. " lutte contre l'orignal ! Bras contre sabots dans un test de force et de volonte !" $) text!
+	cstrength+ strengthroll or if
+		($ cHe .. " gagne ce concours inutile ! C'est un triomphe sur la nature. L'orignal rage de la defaite et s'eloigne." $) +crtext goodfx
+		cchar .strength@ 5 > if fitness++ fitnessREV strengthREV else strength++ strengthREV then morale++
+	then;
+		($ cHe .. " ne gagne pas ! Dans un mepris flagrant des regles de catch, l'orignal l'ecrase avec ses sabots." $) +crtext morale-- ouch2- strengthREV bitefx
+;
+
+cyoa: camp3-moose-2
+	image-camp-1
+	"L'Orignal du Matin" cyoa-title!
+	($ "Le matin, il y a un orignal dehors ! Il semble blesse, et fixe " .. thegroup .. " du regard.
+	Meme blesse, un orignal est une creature vraiment puissante. Mieux vaut ne pas le chercher." $) cyoa-text!
+		choice( "Laisser l'orignal tranquille" )choice
+		medicalest charchoice( " soigne sa blessure" )choice: camp3-moose-heal
+		shootest charchoice( " tire sur l'orignal" )choice: camp3-moose-shoot
+		strongest charchoice( " lutte contre l'orignal" )choice: camp3-moose-wrestle
+;
+
+cyoa: camp3-moose
+	image-camp-1
+	"Orignal au Matin" cyoa-title!
+	($ Thegroup .. " campe pour la nuit, sur un troncon calme de la route." $) cyoa-text! +cr fullcamp
+		choice( "OK" )choice: camp3-moose-2
+;
+
+: camp3-precanada-saying
+	0 stack
+		" se sent bien par rapport aux chances !" shove
+		" pense qu'il n'y a pas TANT de zombies que ca." shove
+		" est pret a ecraser des zombies !" shove
+		" est partant !" shove
+		" se sent pompe pour demain !" shove
+		" est excite par le Canada !" shove
+		" a hate !" shove
+	shuffles pops nip
+;
+		
+: camp3-precanada-check args( @ )
+	<- @ .cmorale+ if
+		($ <- @ .colourname .. camp3-precanada-saying $) +crtext
+		<- @ .dexterity++
+	then
+;
+
+cyoa: camp3-precanada
+	"Dernier Repos Avant le Canada" cyoa-title!
+	($ Thegroup .. " se prepare pour la brutale journee qui l'attend. Le Canada est proche, mais les previsions zombies sont mauvaises !" $) cyoa-text! +cr fullcamp
+	fullmeal if
+		($ "Il reste de la nourriture pour que " .. thegroup .. " mange un deuxieme repas." $) +crtext
+		chowday
+		' .morale2+ foreach-team-char
+	else
+		halfmeal if
+			($ "Il reste de la nourriture pour que " .. thegroup .. " mange davantage." $) +crtext
+			chowday
+			' .morale++ foreach-team-char
+		then
+	then
+		' camp3-precanada-check foreach-team-char
+		choice( "OK" )choice
+;
+
+} }
+
+

@@ -1,0 +1,542 @@
+: .open 1 swap .open! ;
+: .close 0 swap .open! ;
+
+
+// TESTFOOD
+
+: test1 8 1500 tone ;
+: testloot 1 LOOT_FOOD addloot ;
+: give-food
+	cyoa-start
+		"Yo, BRO" cyoa-title!
+		"Tu veux manger un morceau ?" cyoa-text!
+		cyoa-add-choice
+			' testloot cyoa-choice-handler!
+		cyoa-add-choice
+			"Nah" cyoa-choice-text!
+	cyoa-show
+;
+: does-nothing
+	cyoa-start
+		"GRANDE NOUVELLE" cyoa-title!
+		"Ca n'a pas servi a grand-chose." cyoa-text!
+		cyoa-add-choice
+			"Dang." cyoa-choice-text!
+	cyoa-show
+;
+: cyoa-test
+	cyoa-start
+	"Hey, frerot" cyoa-title!
+	"Tu veux cliquer sur un bouton ?" cyoa-text!
+	cyoa-add-choice
+		"Quoi ?" cyoa-choice-text!
+		' test1 cyoa-choice-handler!
+	cyoa-add-choice
+		"Non, mais j'ai faim." cyoa-choice-text!
+		' give-food cyoa-choice-handler!
+	cyoa-add-choice
+		"Bien sur." cyoa-choice-text!
+		' does-nothing cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-test-fridge cyoa-test .open clear-cyoa ;
+: cyoa-fridge fridge noloot ' cyoa-test-fridge cyoa! ; 
+
+// TOILETS
+
+// TEST
+: gimme 1 LOOT_COUNT 1- rnd 1 3 rnd addloot ;
+
+: toiletsaying 50 %chance if "Degueu." else " OH PITIE" then ;
+: toilet-cyoa nearest ( DUP WAS REMOVED HERE ) .open toiletsaying player .say clear-cyoa ;
+// : toilet-cyoa get-loot-act ;
+// : noloot LOOT_BULLET loot! 3 amount! ;
+: test-toilet-cyoa toilet noloot ' toilet-cyoa cyoa! ;
+
+: zomb-toilet-act nearest dup .open .tpos anchor! 10 zombs
+	"OH CRAP" player .say clear-cyoa ;
+: death-toilet toilet noloot ' zomb-toilet-act cyoa! ;
+
+// WISHING TOILET
+
+: toiletwishA
+	cyoa-start
+		"Or et richesse" cyoa-title!
+		"Des pieces d'or se mettent a pleuvoir du plafond. Tu es riche !
+		 Puis tu te rends compte que ce ne sont que des dechets et des morceaux de zombies qui tombent a mesure que le toit s'effondre." cyoa-text!
+		nearest dup .open .tpos anchor! 10 zombs
+	cyoa-show
+;
+: toiletwishB
+	cyoa-start
+		"La terrible Malediction de l'Immortalite" cyoa-title!
+		"Tu regardes avec horreur ta peau se transformer en pierre, te figant sur place pour toujours sous la forme d'une statue.
+		Non, attends, en fait, ca a juste rendu ta peau grise." cyoa-text!
+		cyoa-add-choice
+			"Bon, peu importe." cyoa-choice-text!
+			// Turn the character that opened the CYOA gray for rest of game, maybe heal up to max health.
+	cyoa-show
+;
+: toiletwishC
+	cyoa-start
+		"Le Pouvoir de l'Amitie" cyoa-title!
+		"Le genie rougit. JE NE SAVAIS PAS QUE cA INTERESSERAIT QUELQU'UN. L'etre se met a te suivre partout." cyoa-text!
+		// I want this one to replace the usually decorative genie that's spawned, and then have it follow you around, punching zombies.
+	cyoa-show
+;
+: toiletwishD
+	cyoa-start
+		"La Reponse Surprenante" cyoa-title!
+		"OUI A-PEU-PRES dit le genie. Puis il reste la, a tourner autour de toi en te fixant du regard." cyoa-text!
+		nearest dup .open .tpos anchor! 20 zombs
+	cyoa-show
+;
+: cyoa-toiletwish
+	cyoa-start
+	"Les Toilettes a Souhaits" cyoa-title!
+	"Quand tu ouvres la cuvette des toilettes, un genie sort comme par magie. MERCI DE M'AVOIR LIBERE DES TOILETTES, dit-il. MAINTENANT, FAIS UN SOUHAIT.
+	Tu decides de faire le voeu de:" cyoa-text!
+	cyoa-add-choice
+		"Je veux... etre riche" cyoa-choice-text!
+		' toiletwishA cyoa-choice-handler!
+	cyoa-add-choice
+		"Immortalite" cyoa-choice-text!
+		' toiletwishB cyoa-choice-handler!
+	cyoa-add-choice
+		"Amitie" cyoa-choice-text!
+		' toiletwishC cyoa-choice-handler!
+	cyoa-add-choice
+		"Fais-tu partie de ces connards de genie ?" cyoa-choice-text!
+		' toiletwishD cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-wishing-toilet cyoa-toiletwish .open clear-cyoa ;
+: wishing-toilet toilet noloot ' cyoa-wishing-toilet cyoa! ; 
+
+// PIGOUT FRIDGE
+
+: poutloot 3 LOOT_FOOD addloot ;
+: poutfridgeA
+	cyoa-start
+	"Patissefete" cyoa-title!
+	"Tu te gaves de patisseries. Tu es plutot content de ce choix.
+	Tu te sens bien repu." cyoa-text!
+	cyoa-add-choice	
+		"Arg, je suis gave" cyoa-choice-text!
+	// I'd like to make this increase morale for both characters, but make their sprites 30% wider for rest of game.
+	cyoa-show
+;
+: poutfridgeB
+	cyoa-start
+	"Mousse Sucree" cyoa-title!
+	"Tu fourres quelques patisseries dans un sac en plastique. Ca se transforme en une boule collante de pate et de garniture, mais ca devrait quand meme etre mangeable plus tard." cyoa-text!
+	cyoa-add-choice
+		' poutloot cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-poutfridge
+	cyoa-start
+	"Le Frigo des Delices" cyoa-title!
+	"Ce frigo regorge de delicieuses patisseries ! Leurs emballages sont fragiles, et on sait bien qu'elles vont s'ecraser si on essaie de les ramener a la maison.
+	Would you like to:" cyoa-text!
+	cyoa-add-choice
+		"Manges-en plein tout de suite" cyoa-choice-text!
+		' poutfridgeA cyoa-choice-handler!
+	cyoa-add-choice
+		"Essaie d'en glisser quelques-unes dans ton sac a dos" cyoa-choice-text!
+		' poutfridgeB cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-pigout-fridge cyoa-poutfridge .open clear-cyoa ;
+: pigout-fridge fridge noloot ' cyoa-pigout-fridge cyoa! ; 
+
+// ZOMBMEAT FRIDGE
+
+: zfridgeloot 7 LOOT_FOOD addloot ;
+: zombfridgeA1
+	cyoa-start
+	"Butin Inattendu" cyoa-title!
+	"Degoute de toi-meme, tu emportes un peu de cette viande de zombie. Tu devras trouver un bon pretexte plus tard pour expliquer d'ou vient cette viande." cyoa-text!
+	cyoa-add-choice	
+		' zfridgeloot cyoa-choice-handler!
+	// Add a bunch of food, take some morale away from party characters, but also add a flag for an event that happens some random amount of nights later
+	cyoa-show
+;
+: zombfridgeA2
+	cyoa-start
+	"La Nourriture Riposte" cyoa-title!
+	"Alors que tu prends un peu de viande, l'un des zombies commence a bouger ! En reculant tout en titubant, tu remarques que d'autres zombies se sont faufiles derriere toi !" cyoa-text!
+	cyoa-add-choice	
+		' testloot nearest dup .open .tpos anchor! 5 zombs cyoa-choice-handler!
+	cyoa-show
+;
+: zfridgeroll 66 %chance if zombfridgeA1 else zombfridgeA2 then ;
+: zombfridgeB
+	cyoa-start
+	"Mieux Vaut Ne Pas S'en Meler" cyoa-title!
+	"Tu fais comme si tu n'avais rien vu. Le fait de savoir que tu n'etais pas assez desespere pour manger de la viande de zombie te reconforte un peu." cyoa-text!
+	cyoa-add-choice
+		"Ca pourrait etre pire" cyoa-choice-text!
+	// Later add a tiny morale bonus.
+	cyoa-show
+;
+: cyoa-zombfridge
+	cyoa-start
+	"Frigo a Viande de Zombie" cyoa-title!
+	"Le frigo est rempli de morceaux de zombies que quelqu'un a dacoupes et fourres la-dedans. Une pensee effrayante te traverse l'esprit : certains morceaux pourraient presque passer pour de la viande normale.
+    Que souhaites-tu faire :" cyoa-text!
+	cyoa-add-choice
+		"Prends-en un peu, mais n'en parle a personne" cyoa-choice-text!
+		' zfridgeroll cyoa-choice-handler!
+	cyoa-add-choice
+		"Laisse tomber !" cyoa-choice-text!
+		' zombfridgeB cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-zomb-fridge cyoa-zombfridge .open clear-cyoa ;
+: zomb-fridge fridge noloot ' cyoa-zomb-fridge cyoa! ; 
+
+// LOVE TESTER
+
+: ltestskill ;
+: ltestgas 50 LOOT_GAS addloot ;
+: ltestnames 1 5 rnd case 1 of "un BEAU GOSSE" endof 2 of "une BOMBE" endof 3 of "a DATE HAVER" endof 4 of "a POWER WAIF" endof 5 of "a HANDSOME LAD" endof endcase ;
+: ltestbad 1 5 rnd case 1 of "a FART BUTT" endof 2 of "an ICEY DINK" endof 3 of "a SMELLY JERK" endof 4 of "a DINGUS" endof 5 of "a COLD FISH" endof endcase ;
+: lovetestend 50 %chance if "Puis le Testeur d'Amour se met a cracher des nuages de fumee, juste avant d'exploser." else "Le Testeur d'Amour emet un horrible bruit de grincement, puis explose." then ;
+: ltestbreak 1 3 rnd case
+1 of "detruire la machine a l'aide d'une arme de corps a corps." cyoa-text-append 1 LOOT_BULLET addloot ltestskill "Strength" endof
+2 of "sortir un flingue et mitrailler la machine." cyoa-text-append 2 LOOT_BULLET addloot ltestskill "Shooting" endof
+3 of "forcer l'ouverture du panneau frontal et en arracher les cables et les circuits imprimes." cyoa-text-append 3 LOOT_BULLET addloot ltestskill "Mechanics" endof endcase ;
+// For ltestbreak, currently just using rnd case but I want it to check to see what skills the target doesn't have maxed, then pick one at random to increase. Also check if that character has a gun/melee weapon.
+: lovetestboom ;
+// Need a line named "lovetestboom" that makes the love tester object break apart/send the piece flying.
+: ltestuse1
+	cyoa-start
+	"Le Testeur d'Amour declare que ce NAME est " cyoa-text-append ltestnames cyoa-text-append cyoa-text-cr2
+	lovetestend cyoa-text-append cyoa-text-cr2 "NAME se sent un peu plus confiant et gagne 5 points de moral !" cyoa-text-append
+	cyoa-add-choice	
+		"NICE" cyoa-choice-text!
+	// Add a handler that increases morale for the person that used it
+	cyoa-show
+;
+: ltestuse2
+	cyoa-start
+	"Le Testeur d'Amour declare que ce NAME est " cyoa-text-append ltestbad cyoa-text-append cyoa-text-cr2
+	"NAME hurle de rage face a cette accusation tandis que " cyoa-text-append ltestbreak cyoa-text-cr2 "NAME perd 15 points de moral, mais gagne 1 point en " cyoa-text-append ltestskill cyoa-text-append
+	// Add a handler that decreases morale for the person that used it, while adding 1 point in a skill.
+	// If a skill is full, pick a different skill. If ALL skills are full, provide a different message?
+	cyoa-show
+;
+: ltestsmash1
+	cyoa-start
+	"NAME crie JE N'AI BESOIN DE PERSONNE et reduit la machine en morceaux. NAME recupere quelques debris en souvenir de cet exploit.
+	Received 2 scrap metal!" cyoa-text!
+	// Picks a random character out of your duo to use for the name. Or just uses your only character, if solo. Adds scrap metal to loot.
+	cyoa-show
+;
+: ltestsmash2
+	cyoa-start
+	"NAME delivers a clumsy kick to the side of the machine, which mostly causes a lot of pain in NAME's foot. A panel falls off, revealing that these old love testers run on tiny gas engines!
+	Siphoned 50 units of gas! NAME lost 10 morale!" cyoa-text!
+	cyoa-add-choice
+		' ltestgas cyoa-choice-handler!
+	// After it picks someone for the name, it then reduces that character's morale by 10.
+	cyoa-show
+;
+: lovetestsmashroll 50 %chance if ltestsmash1 else ltestsmash2 then ;
+: lovetestuseroll 50 %chance if ltestuse2 else ltestuse1 then ;
+: cyoa-lovetest
+	cyoa-start
+	"Love Tester" cyoa-title!
+	"You have come across a working personality tester vending machine. Its sign says LOVE TESTER, but there are no instructions or even a coin slot.
+	You decide to:" cyoa-text!
+	cyoa-add-choice
+		"Have [NAME1] use it." cyoa-choice-text!
+	// I want this to let you pick one of two characters in your mission party, while filling in their names. Then the result works on the character you picked.
+		' lovetestuseroll cyoa-choice-handler!
+	cyoa-add-choice
+		"Have [NAME2] use it." cyoa-choice-text!
+	// This won't show up if you're solo instead of in a duo.
+		' lovetestuseroll cyoa-choice-handler!
+	cyoa-add-choice
+		"Smash it!" cyoa-choice-text!
+		' lovetestsmashroll cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-love-tester cyoa-lovetest clear-cyoa ;
+: love-tester fridge noloot ' cyoa-love-tester cyoa! ; 
+
+// GUN SAFE
+
+: safebat baseball 5 LOOT_FOOD addloot ;
+: safespatula spatula 5 LOOT_FOOD addloot ;
+: safeplacehold1 50 LOOT_GAS addloot ;
+: safeplacehold2 6 LOOT_GAS addloot 5 LOOT_MEDICAL addloot ;
+: safeblowt blowtorch 20 LOOT_GAS addloot ;
+: saferifle rifle 40 LOOT_RIFLE_SHELL addloot ;
+: safeshot shotgun 30 LOOT_SHOTGUN_SHELL addloot ;
+: saferevo dolt 50 LOOT_BULLET addloot ;
+: safeuzi uzi 30 LOOT_BULLET addloot ;
+
+: gunsafe4 1 2 rnd case 
+1 of "AK-47 but no ammo" cyoa-choice-text! ' ak47 endof 
+2 of "50 units of gas" cyoa-choice-text! ' safeplacehold1 endof endcase ;
+: gunsafe3 1 2 rnd case
+1 of "Blowtorch and 20 units gas" cyoa-choice-text! ' safeblowt endof 
+2 of "6 units of gas and 5 medical" cyoa-choice-text! ' safeplacehold2 endof endcase ;
+: gunsafe2 1 3 rnd case 
+1 of "Spatula and 5 cans of food" cyoa-choice-text! ' safespatula endof 
+2 of "Rifle and 40 ammo" cyoa-choice-text! ' saferifle endof
+3 of "Shotgun and 30 shells" cyoa-choice-text! ' safeshot endof endcase ;
+: gunsafe1 1 3 rnd case 
+1 of "Baseball Bat" cyoa-choice-text! ' safebat endof 
+2 of "Revolver and 50 bullets" cyoa-choice-text! ' saferevo endof
+3 of "Uzi and 30 bullets" cyoa-choice-text! ' safeuzi endof endcase ;
+// Need example of good way to spawn the weapons just south of the safe
+: cyoa-gunsafe
+	cyoa-start
+	"CYOW: Choose Your Own Weapon" cyoa-title!
+	"You spin the dial on the safe and pull the handle. By some miracle, it opens up, revealing a weapon someone took great pains to stash away.
+	You find a shiny new:" cyoa-text!
+	cyoa-add-choice
+		gunsafe2 cyoa-choice-handler!
+	cyoa-add-choice
+		gunsafe1 cyoa-choice-handler!
+	cyoa-add-choice
+		gunsafe3 cyoa-choice-handler!
+	cyoa-add-choice
+		gunsafe4 cyoa-choice-handler!	
+	cyoa-show
+;
+: cyoa-gun-safe cyoa-gunsafe .open clear-cyoa ;
+: gun-safe fridge noloot ' cyoa-gun-safe cyoa! ; 
+
+// WEIRD SAFE
+
+: safe50ammo 50 LOOT_BULLET addloot 50 LOOT_RIFLE_SHELL addloot 50 LOOT_SHOTGUN_SHELL addloot ;
+: safechain chainsaw 100 LOOT_GAS addloot ;
+: safechair 20 for chair scatter next ;
+: safeskel 20 for skelscat next ;
+
+: weirdsafe3 "Chainsaw and 100 units gas" cyoa-choice-text! ' safechain ;
+: weirdsafe2 1 2 rnd case 
+1 of "30 chairs" cyoa-choice-text! ' safechair endof 
+2 of "50 of all ammo types" cyoa-choice-text! ' safe50ammo endof endcase ;
+: weirdsafe1 1 2 rnd case 
+1 of "Wrench" cyoa-choice-text! ' wrench endof 
+2 of "Sledgehammer" cyoa-choice-text! ' sledge endof endcase ;
+// Need example of good way to spawn the weapons just south of the safe
+: cyoa-weirdsafe
+	cyoa-start
+	"CYOW: Choose Your Own Weapon" cyoa-title!
+	"The safe looks really strange to you, but you can't quite place why. It bursts open on its own as you approach it.
+	Suddenly, something spills out of the safe:" cyoa-text!
+	cyoa-add-choice
+		 "20 skeletons" cyoa-choice-text!
+		 ' safeskel "AUGH SKELETONS" player .say cyoa-choice-handler!
+	cyoa-add-choice
+		weirdsafe1 cyoa-choice-handler!
+	cyoa-add-choice
+		weirdsafe2 cyoa-choice-handler!
+	cyoa-add-choice
+		weirdsafe3 cyoa-choice-handler!	
+	cyoa-show
+;
+: cyoa-weird-safe cyoa-weirdsafe .open clear-cyoa ;
+: weird-safe fridge noloot ' cyoa-weird-safe cyoa! ; 
+
+// GACHAPON
+
+: gachafood1 2 LOOT_FOOD addloot ;
+: gachafood2 3 LOOT_FOOD addloot ;
+: gachatoys1 ;
+: gachabullet 48 LOOT_BULLET addloot ;
+: gachaooze "AUUUUUUUUUGH MUTAGENIC OOZE!!!" player .say ;
+: gachamegaooze "AUUUUUUUGH COLLECTOR'S OOZE!!!" player .say ;
+: gachar ;
+: gacharpills "pills." cyoa-text-append 6 LOOT_MEDICAL addloot gachar "6 units of medical supply." ;
+: gacharbullets "bullets." cyoa-text-append 48 LOOT_BULLET addloot gachar "48 bullets." ;
+// BUG: Getting a pistol or uzi from the gun-safe IMMEDIATELY after getting this seems to give way more bullets than it should.
+: gacharesource 50 %chance if gacharpills else gacharbullets then ;
+: gachafstat ;
+: gachastr "SWOLE" cyoa-text-append 1 LOOT_BULLET addloot gachafstat "strength" ;
+: gachafit "FLEXIBLE" cyoa-text-append 1 LOOT_BULLET addloot gachafstat "fitness" ;
+: gachashoot "DEADEYE" cyoa-text-append 1 LOOT_BULLET addloot gachafstat "shooting skill" ;
+: gachafigurine 33 %chance if gachastr else 50 %chance if gachafit else gachashoot then then ;
+: gachacoin "AAA" ;
+// : gachacoin "NAME inserts a quarter and twists the knob. The capsules in the machine all come pouring out." ;
+// BUG: The longer gachacoin seems to crash the game with gachamega1 and gachamega3. "AAA" gachacoin doesn't.
+: gachabreak 50 %chance if "The machine's dome shatters, revealing the plastic capsules inside." else "The machine cracks open, giving access to all the capsules." then ;
+
+: gachamega1
+	"The capsules are all full of MUTAGENIC OOZE that open and splatter on NAME. OH MY GOD, yells NAME, THIS OOZE IS A DISCONTINUED LIMITED EDITION! A COLLECTORS ITEM!!!
+	NAME's strength is permanently boosted by 1!" cyoa-text-append
+	cyoa-add-choice
+		' gachamegaooze cyoa-choice-handler!
+	// Adds 1 strength to this character. If strength is maxed, add a point of fitness instead. If that's also maxed, do nothing.
+	cyoa-show
+;
+: gachamega2
+	"The capsules each contained a few " cyoa-text-append gacharesource
+	" What kind of children's toy dispenser is this?
+	Got " cyoa-text-append gachar cyoa-text-append
+	cyoa-show
+;
+: gachamega3
+	"The capsules are all full of DUDEBROS Figurines. NAME finds an ultra-rare limited edition MR " cyoa-text-append gachafigurine
+	" figure for the collection!
+	NAME's morale goes up by 10 and NAME's " cyoa-text-append gachafstat cyoa-text-append " is permanently boosted by 1!" cyoa-text-append
+	cyoa-add-choice
+		"VERY NICE" cyoa-choice-text!
+	cyoa-show
+;
+: gacha1
+	"The capsules contain rubber balls, tiny plastic novelty spiders, fake barf, and so on. Nice!
+	Everyone gains 5 morale!" cyoa-text-append
+	cyoa-add-choice
+		"THANKS FOR THIS BOUNTY" cyoa-choice-text!
+		' gachatoys1 cyoa-choice-handler!
+	// Food and morale 
+	cyoa-show
+;
+: gacha2
+	"The capsules mostly contain chocalatey candies. The added up amount is a sweet trove of deliciousness.
+	Got 3 units of food! Everyone gains 5 morale!" cyoa-text-append
+	cyoa-add-choice
+		' gachafood2 cyoa-choice-handler!
+	// Food and morale 
+	cyoa-show
+;
+: gacha3
+	"The capsules are all full of MUTAGENIC OOZE. This used to be really popular with kids before the government recalled it.
+	It turns NAME1 green, but does nothing else." cyoa-text-append
+	cyoa-add-choice
+		' gachaooze cyoa-choice-handler!
+	// Turns the character you used to open it green.
+	cyoa-show
+;
+: gacha4
+	"The capsules are all full of gumballs. NAME collects them, just in case everyone gets desperate enough to subsist on a huge amount of gum.
+	Got 2 units of food!" cyoa-text-append
+	cyoa-add-choice
+		' gachafood1 cyoa-choice-handler!
+	// After it picks someone for the name, it then reduces that character's morale by 10.
+	cyoa-show
+;
+: gachaspecial cyoa-start gachacoin cyoa-text-append cyoa-text-cr2 1 3 rnd case 1 of gachamega1 endof 2 of gachamega2 endof 3 of gachamega3 endof endcase ;
+: gacharoll cyoa-start gachabreak cyoa-text-append cyoa-text-cr2 1 4 rnd case 1 of gacha1 endof 2 of gacha2 endof 3 of gacha3 endof 4 of gacha4 endof endcase ;
+: cyoa-gachapon
+	cyoa-start
+	"Prize Capsule Machine" cyoa-title!
+	"It's a toy capsule vending machine. The sign is scratched out, so there's no telling what's actually inside the capsules until you open one.
+	You decide to:" cyoa-text!
+	cyoa-add-choice
+		"Smash it open!" cyoa-choice-text!
+		' gacharoll cyoa-choice-handler!
+	cyoa-add-choice
+		"Insert a quarter." cyoa-choice-text!
+	// Check if you have a quarter, get it from a previous CYOA event. If you don't have one, replaces this with a "push machine over" option that is the same as "smash it open".
+		' gachaspecial cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-gacha-pon cyoa-gachapon clear-cyoa ;
+: gacha-pon fridge noloot ' cyoa-gacha-pon cyoa! ; 
+
+// STRANGE COMPUTER
+
+// Too much text, gets cut off for Strangehack1 and 2.
+: strangehack1 
+	cyoa-start
+	"This program has been a closely guarded secret for over 30 years, and is still hidden on every computer.
+	A tiny and crudely drawn bodybuilder goes through his entire routine. SWOLE.BAS exercises *for* the hacker.
+	NAME gets 10 morale and 1 extra point of strength!" cyoa-text!
+	// If full on strength, give different message and 15 morale instead.
+	cyoa-show
+; 
+: strangehack2 
+	cyoa-start
+	"Of course the *regular* internet went down after civilization died off... but the Secret Hacker's Cyberspace internet is still alive and well.
+	You browse www.friendlydads.SHC for the latest tips on grilling and firearms maintenance.
+	Two hours pass! NAME gets 10 morale and 1 extra shooting skill! " cyoa-text!
+	// If shooting skill is maxed, get 15 morale instead.
+	cyoa-show
+;
+: strangehack3 
+	cyoa-start
+	"You do a SSHL/TCUP reverse loop into the Secret Hacker's Cyberspace and download the savvy hacker's favorite: ANARCHYGUIDE.TXT. Brushing up on it refreshes some of your skills!
+	Four hours pass! NAME gets 1 point in Mechanics and Shooting!" cyoa-text!
+	// Random selection of skills to give one point in
+	cyoa-show
+;  
+: strangehack4 
+	cyoa-start
+	"> ALL STATS FOR NAME INCREASED TO MAXIMUM
+	> UNRECOVERABLE MEMORY CORRUPTION DETECTED
+	> ENDING PROGRAM" cyoa-text!
+	cyoa-add-choice
+	"??????" cyoa-choice-text!
+	// Increases that character's stats to max, but adds a flag that makes the character have worse "glitch effects" until they glitch out of existence.
+	cyoa-show
+; 
+: strangecomphack 
+	cyoa-start
+	"WELCOME TO THE HACKZ ZONE" cyoa-title!
+	"After navigating a complex 3d maze full of wireframe SECURITY-PROGRAMS, you've successfully hacked the mainframe.
+	You've made more commands available:" cyoa-text!
+	cyoa-add-choice
+		"SWOLE.BAS" cyoa-choice-text!
+		' strangehack1 cyoa-choice-handler!
+	cyoa-add-choice
+		"BROWSE INTERNET" cyoa-choice-text!
+		' strangehack2 cyoa-choice-handler!
+	cyoa-add-choice
+		"ANARCHYGUIDE.TXT" cyoa-choice-text!
+		' strangehack3 cyoa-choice-handler!
+	cyoa-add-choice
+		"DR2CHACKZ.EXE" cyoa-choice-text!
+	// Check for the even higher wits for the last two choices, or possibly flags for COMPUTER HACKER as a character background
+		' strangehack4 cyoa-choice-handler!
+	cyoa-show
+;
+: oldpcend cyoa-text-append cyoa-text-cr2 "NAME and NAME's morale goes up by 5!" cyoa-text-append cyoa-show 1 LOOT_BULLET addloot ;
+: oldpcdesc cyoa-start "NAME and NAME plays an old computer game. It's a welcome distraction, but an hour swiftly passes." cyoa-text-append cyoa-text-cr2 ;
+// MAKE AN HOUR PASS
+: oldpcdesc1 oldpcdesc "The game let you control a snake that ate numbers. Each time you ate a number, the snake got longer." oldpcend ;
+: oldpcdesc2 oldpcdesc "The game had you type in numbers to determine the trajectory that a monkey used to throw a banana." oldpcend ;
+: oldpcdesc3 oldpcdesc "The game had you make a car change lanes to avoid crashing into donkeys. There was only one button." oldpcend ;
+// NOTE: IF the descriptions get any longer than they are now, the game crashes when trying to load them.
+: cyoa-strangecomputer
+	cyoa-start
+	"Strange Computer" cyoa-title!
+	"It's a bulky, old computer that has been forgotten by time. Somehow, it seems to be running with no visible power source.
+	You stumble to use the computer and find some programs:" cyoa-text!
+	cyoa-add-choice
+		"NIBBLES.BAS" cyoa-choice-text!
+		' oldpcdesc1 cyoa-choice-handler!
+	cyoa-add-choice
+		"GORILLA.BAS" cyoa-choice-text!
+		' oldpcdesc2 cyoa-choice-handler!
+	// Look into a way to only show 2 options, picked randomly from a list of 4?
+	cyoa-add-choice
+		"DONKEY.BAS" cyoa-choice-text!
+		' oldpcdesc3 cyoa-choice-handler!
+	cyoa-add-choice
+		"[USE ELITE HACKING SKILLZ]" cyoa-choice-text!
+	// Check for the highest WITS stat in your party. Add extra options if it's high enough.
+		' strangecomphack cyoa-choice-handler!
+	cyoa-show
+;
+: cyoa-strange-computer cyoa-strangecomputer clear-cyoa ;
+: strange-computer fridge noloot ' cyoa-strange-computer cyoa! ;
+
+: cyoatest1 zomb-fridge ;
+: cyoatest2 love-tester ;
+: cyoatest3 pigout-fridge ;
+: cyoatest4 wishing-toilet ;
+: cyoatest5 gun-safe ;
+: cyoatest6 weird-safe ;
+: cyoatest7 gacha-pon ;
+: cyoatest8 strange-computer ;
+
+load? kepa/cyoatest/testregion.df
+load? kepa/cyoatest/testlocation.df

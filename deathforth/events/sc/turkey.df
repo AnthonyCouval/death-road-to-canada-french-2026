@@ -1,0 +1,33 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa-choice: turkey-rid
+	turkey-meal
+	"Ca aura au moins pris le temps que ca a pris." +cr +text
+	cchar .kill
+;
+
+cyoa-choice: turkey-kick
+	($ vname .. " est expulse du groupe !
+	" .. "Je n'en reviens pas ! Comment cette dinde est encore vivante ?" pbold $) cyoa-text!
+		victim .weapons-to-trunk TEAM_STATUS_BAD_LEFT victim .decruit badfx
+;
+
+cyoa: turkey-despair
+	bully choosechar cicon
+	notcchar to victim
+	"Bagarre de Dinde" cyoa-title!
+	($ cname .. " picote " .. vname .. " en faisant des gloussements frenetiques !
+	Il n'y a visiblement pas de compromis possible ici.
+	Soit la dinde degage, soit c'est " .. vname .. " qui doit partir." $) cyoa-text!
+		choice( "Se debarrasser de la dinde" )choice: turkey-rid
+		choice( "Virer " .. vname .. " de l'equipe" )choice: turkey-kick
+;
+	
+} }
+
+

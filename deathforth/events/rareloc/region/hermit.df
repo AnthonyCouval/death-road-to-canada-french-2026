@@ -1,0 +1,130 @@
+
+"../deathforth/rooms/cabin.txt" $load-rooms
+"../deathforth/rooms/city.txt" $add-rooms
+
+cyoa{
+
+cyoa-choice: cabin1-hermitchat-wisdom
+	ricon
+	($ "L'ermite apprend a " .. pname .. " quelques precieux conseils de tir, et lui revele aussi les secrets de la " .. "ROBUSTESSE DE L'ERMITE ENDURCI !" rbold .. "
+	MAINTENANT DEHORS ET NE REVENEZ JAMAIS !" pbold $) cyoa-text! goodfx
+		pchar .vitality++ pchar .shooting++
+;
+
+cyoa-choice: cabin1-hermitchat-recruit
+	ricon
+	pchar charming? if
+		($ "L'ermite est seduit par le charme de " .. pname .. " !
+		" .. "Bon, je suis un ermite, mais vous savez quoi ? Vous etes correct !" pbold $) cyoa-text! goodfx
+		recruit-yesno
+	else
+		($ "Evidemment que je ne vais pas vous rejoindre ! J'allais tres bien avant que vous ameniez la horde !" pbold .. "
+		L'ermite n'est pas seduit par le charme de " .. pname .. "." $) cyoa-text! badfx
+	then
+;
+
+cyoa-bridge: cabin1-hermitchat-coolit
+	ricon
+	cool-it-7 if
+		($ "L'ermite se calme immediatement ! Il partage son stock de cartouches avec vous, ainsi que son savoir d'ermite. Il propose aussi de rejoindre l'equipe !
+		" .. pname .. " est surpris que ca ait marche !" $) cyoa-text!
+		pchar .morale2+ goodfx cooled-it 40 add-shell pchar .shooting++ pchar .vitality++
+		recruit-yesno
+	else cool-it++
+		($ "L'ermite ne se calme pas. Au lieu de ca, il lache une tirade de gros mots.
+		La sensibilite de " .. pname .. " est offensee !" $) cyoa-text!
+		pchar .morale2- badfx
+	then
+;
+
+cyoa: cabin1-hermitchat
+	ricon 1 nearest .character@ .party!
+	image-angry-hermit
+	"L'Ermite le Plus En Colere" cyoa-title!
+	region.zombie_basespawn@ 0 > if
+		($ "L'ermite est deja furieux." .. "
+		C'EST VOUS QUI AVEZ AMENE TOUS CES ZOMBIES, NON ?
+		FOUTEZ LE CAMP DE CHEZ MOI !" pbold .. "
+		Reessayez peut-etre quand il y aura moins de zombies." $) cyoa-text!
+	else
+		0 nearest .character@ .party!
+		($ "L'ermite est un peu moins furieux maintenant, mais pas beaucoup." .. "
+		Alors ? C'est quoi ?
+		J'ai beaucoup de choses importantes d'ermite a faire !" pbold $) cyoa-text!
+		choice( "Demander la sagesse de l'ermite" )choice: cabin1-hermitchat-wisdom
+		choice( "Lui demander de vous rejoindre" )choice: cabin1-hermitchat-recruit
+		choice( "Dire a l'Ermite de 'Se Calmer'" fcoolit )choice: cabin1-hermitchat-coolit
+		clear-cyoa
+	then
+;
+
+}
+
+: .hermitify
+	2 over .specialtype!
+	5 over .shooting!
+	4 over .strength!
+	4 over .fitness!
+	4 over .vitality!
+	4 over .health!
+	"Hermit" over .name!
+	0 over .female!
+	0 over .attitude!
+	0 over .composure!
+	0.88 over .ai.threat_threshold!
+	"etait surpris d'avoir rejoint l'equipe, vu qu'il est ermite et tout." over .job!
+	WEAPON_SHOTGUN over .weapona!
+	WEAPON_FIRE over .weaponb!
+	40 LOOT_SHOTGUN_SHELL 2 pick .lootamt!
+	0.1 over .ai.wander_chance!
+	dup to recruitee
+	dup cyoa{ ' cabin1-hermitchat cyoa! } drop drop
+;
+
+: hermit
+	new-npc 0 lt .leaveok! lt .character@ .hermitify
+;
+
+: cabinloot 
+	looseloot
+	30 %chance if 30 60 rnd sgas chainsaw .scatter then
+;
+
+location
+		tags: cabin-hermit
+		max-rooms: 1
+		entry-tags: randcabin
+		script: set-theme-cabin 
+		pre-script: set-theme-cabin
+		post-script: 0 %zombs
+		
+		room-choice: randcabin
+			room-weight: 80
+			room-count: 1
+			room-script: nad
+			room-post-script: hermit cabinloot
+
+regiondef{
+
+	 region: forest cabin
+		w: 20 // 35
+		h: 15 // 35
+		script: timeofday o'clock
+
+		no-prefab // Don't build that default city
+		on-foot
+		
+		: make-a-cabin map{
+			"cabin-hermit" $picklocid // Pick a cabin location definition if it exists ( tags -- locdefid )
+			addloc // Add a location using the resulting location definition  ( locdefid -- locid )
+			prefab{ 10 cabin } // Create a cabin of 5 width using the new location ( locid w -- <build cabin centered in upper part of map> )
+			}
+		;
+
+		: setup-cabin-forest
+			map{ grass make-a-cabin 5 pines }
+			mission{ siege-start-dig 100 left-spawn 100 bottom-spawn 0 top-spawn 0 right-spawn }
+		;
+
+		post-script: setup-cabin-forest 5sdiff %zombs
+}

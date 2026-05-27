@@ -1,0 +1,158 @@
+
+moment{
+
+: subjname subject .colourname ;
+
+: guilt
+
+	subject? if "Il y a juste un leger pique de culpabilite, mais cela passe.," +crtext then;
+
+	($ subjname .. " ressentir comme " .. subject xhe .. "  est responsable de tout cela." $) +crtext
+
+	subject .morale2-
+;
+
+: winner
+
+	subject? if "Hourra !" +crtext then;
+
+	alone? if
+		($ "Victoire ! " .. subjname .. " patent sur soi meme " .. subject xhim .. "se felicite" $) +crtext
+	else
+		($ "Victoire ! Tous applaudissent et se felicitent " .. subjname .. "  sur le dos." $) +crtext
+	then
+
+	morale++all
+	subject attitude++
+;
+
+
+: loser
+
+	subject? if "Bien joue !" +crtext then;
+
+	// TODO: Add your own stats logic to determine if people respond at
+	// all, and/or if a specific person responds and acts up etc.
+
+	alone? if
+		($ subjname .. "  secoue " .. subject xhis .. "  hoche la tete " .. subject xhim .. "soi meme." $) +crtext
+	else
+		($ Everyone .. "  donne " .. subjname .. "  le regard noir." $) +crtext
+	then
+
+	morale--all
+	subject attitude--
+;
+
+
+: death
+	subject? if then; // Nobody died?!
+
+	team-count 1 < if
+		"'Il n'y a personne autour pour poursuivre le reve du Canada." +crtext
+	then;
+	
+	($ rando .colourname .. "  est profondement affecte par " .. subject .colourname .. "''s mort." $) +crtext
+
+	rando .morale--
+	rando .attitude--
+;
+
+
+// TODO: Possible moment types
+// - some abstract/generic, some more specific
+(*
+
+: ahole ;
+: inappropriate ;
+: frustrating ;
+: annoying ;
+: awkward ;
+: happy ;
+: sad ;
+: gain ;
+: loss ;
+: scary ;
+: creepy ;
+: fart ;
+: satisfaction ;
+: funny ;
+: revenge ;
+*)
+
+(*
+	SYNTAX:
+	social [blameless] [<character> instigated/subject!] <moment-word> moment
+
+		* stuff in [] is optional
+		* by default, the subject is set to the current CYOA
+		choicechar
+			* if the subject is 0=, then nobody in particular was to
+			blame for the event
+		* a randomly shuffled stack of affected team members is set in
+			the value "affecte"
+		* you can use RANDO to get the top "affecte" character and
+		have them respond, or handle them all using forech. Up to you
+		and the type of moment. The affected stack is pre-shuffled.
+
+	CALL EXAMPLES
+
+	social ahole moment 								// SUBJECT (usually CHOICECHAR) does something assholish or stupid
+	social blameless death moment						// Someone died
+	social death moment									// SUBJECT caused someone to die
+	social blameless creepy moment 						// Something general happens with zombies or a dead body
+	social funny moment									// SUBJECT is a comedian
+	social blameless funny moment						// Something generally funny happens
+
+Handy stuff to put in your hack.df file for testing the below:
+
+	: newguy char-gen to recruitee recruited beep ;
+	' mtest 1 hotkey!
+	' newguy 2 hotkey!
+	
+*)
+
+}
+
+cyoa{
+
+cyoa-choice: mresult5 
+	"Il y aura dautres concours de mangeurs de hot dogs a lavenir." cyoa-text! 
+	someicon
+	social blameless winner moment
+	social guilt moment
+;
+
+cyoa-choice: mresult4
+	"Cela aurait pu etre evite !" cyoa-text! 
+	social blameless loser moment
+	team-count 0 > if 
+		choice( "Eh bien, la vie continue" )choice: mresult5
+	then
+;
+
+cyoa-choice: mresult3 
+	($ cname .. "  explose dans un desordre pateux !" $) cyoa-text! 
+	TEAM_STATUS_DIED cchar .decruit
+	social death moment	bitefx
+	choice( "Zut" )choice: mresult4
+;
+
+cyoa-choice: mresult2 
+	($ cname .. " mange 100 autres hot dogs!" $) cyoa-text! 
+	social winner moment 
+	charchoice( ": Wooooo!" )choice: mresult3
+;
+
+cyoa-choice: mresult1 
+	($ cname .. " mange 99 hot dogs et etouffe, au sens propre, pas figure." $) cyoa-text! 
+	social loser moment 
+	charchoice( "attends je peux le faire!" )choice: mresult2
+;
+
+cyoa: mtest
+	"Il y a une competition de hotdog! Yee haw!" cyoa-text!
+	soloer charchoice( " mange 100 hot dogs" )choice: mresult1
+;
+
+}

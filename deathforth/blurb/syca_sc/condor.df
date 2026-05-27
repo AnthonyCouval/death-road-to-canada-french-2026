@@ -1,0 +1,61 @@
+    : CONDOR-oneline1 "APPPROCHEEZ, APPRROCHEEZ ou pas, je m'en fous. C'est pas comme si c'etait capital..." ;
+    : CONDOR-oneline2 "UN CLAQUEMENT DE FOUET FERA FUIR LE BANDIT !" ;
+    : CONDOR-oneline3 "Ces CHENAPANS ne connaissent pas la DISCIPLINE comme moi." ;
+    : CONDOR-oneline4 "Ne t'inquiete pas, je sais que je vaux mieux que toi." ;
+    : CONDOR-oneline5 "PAR JUPITER j'ai besoin d'aller aux toilettes." ;
+    : CONDOR-oneline6 "ET LE STAND DE CONFISERIES ouvrira approximativement JAMAIS." ;
+    : CONDOR-oneline7 "Je suis tellement fatigue de faire le spectacle tout le temps." ;
+    : CONDOR-oneline8 "'The show must go on'... au diable ce foutu spectacle." ;
+    : CONDOR-oneline9 "Flute, Spidey a encore sali le siege." ;
+    : CONDOR-oneline10 "Le monde semble tellement determine a s'autodetruire." ;
+    : CONDOR-oneline11 "ET POUR MON PROCHAIN TOUR... CONDUITE SANS LES MAINS" ;
+    : CONDOR-oneline12 "ET POUR NOTRE PREMIER NUMERO... DEPASSER LA LIMITATION DE VITESSE" ;
+    : CONDOR-oneline13 "ACCUEILLEZ SUR SCENE S'IL VOUS PLAIT... UNE TRISTESSE DEPRIMANTE !" ;
+    : CONDOR-oneline14 "Au moins, le public est plus nombreux. Un peu plus mort que d'habitude cela dit." ;
+    : CONDOR-oneline15 "Spidey a un bon gout pour le zombie. Ce qui est super, vu qu'il ne va pas me manger." ;
+    : CONDOR-oneline16 "Je me demande si je peux fouetter les zombies depuis la voiture..." ;
+    : CONDOR-oneline17 "La detresse de notre public est la notre." ;
+    : CONDOR-oneline18 "Un soupcon de maquillage pourrait aider. Et aussi : une douche." ;
+    : CONDOR-oneline19 "Tout ca me ferait presque regretter ma collection de robes." ;
+    : CONDOR-oneline20 "Cigarette ? Je deconne, fumer est INTERDIT dans mon cirque." ;
+    : CONDOR-oneline21 "Je me sens si fatigue... comme si je pouvais dormir un million d'annees et ne pas etre repose." ;
+
+	deck-new
+		card: CONDOR-oneline1
+		card: CONDOR-oneline2
+		card: CONDOR-oneline3
+		card: CONDOR-oneline4
+		card: CONDOR-oneline5
+		card: CONDOR-oneline6
+		card: CONDOR-oneline7
+		card: CONDOR-oneline8
+		card: CONDOR-oneline9
+		card: CONDOR-oneline10
+		card: CONDOR-oneline11
+		card: CONDOR-oneline12
+		card: CONDOR-oneline13
+		card: CONDOR-oneline14
+		card: CONDOR-oneline15
+		card: CONDOR-oneline16
+		card: CONDOR-oneline17
+		card: CONDOR-oneline18
+		card: CONDOR-oneline19
+		card: CONDOR-oneline20
+		card: CONDOR-oneline21
+	constant CONDOR-ONELINERS
+	CONDOR-ONELINERS var CONDOR-oneliners
+	CONDOR-ONELINERS shuffles to CONDOR-oneliners
+
+: CONDOR-oneliner
+	CONDOR-oneliners depths 0= if CONDOR-ONELINERS shuffles to CONDOR-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: CONDOR-oneliner
+
+	constant BLURB-CONDOR-DECK
+	BLURB-CONDOR-DECK var blurb-CONDOR-deck
+	BLURB-CONDOR-DECK shuffles to blurb-CONDOR-deck

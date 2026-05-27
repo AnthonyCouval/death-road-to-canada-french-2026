@@ -1,0 +1,35 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: knight-timeup
+	53 stpick if choosechar cicon else ($ "On dirait que " .. "le chevalier" pbold .. " ne pourra pas poursuivre sa quete." $) text! exit then
+	"La Voie du Chevalier" cyoa-title!
+	solo if
+		($ "Le chevalier" pbold .. " est proche de sa destination, alors elle quitte la voiture pour poursuivre sa quete sacree.
+		Sa quete continue, mais il ne reste personne pour la quete du Canada." $) cyoa-text! badfx
+	else
+	($ "Le chevalier" pbold .. " demande a sortir de la voiture.
+	" .. "Il est temps pour moi de reprendre ma quete !" pbold .. "
+	En guise de remerciement, elle donne a " .. thegroup .. " son epee de rechange !
+	" .. "Epee de Chevalier" pbold .. " obtenue !" $) cyoa-text! goodfx 1 WEAPON_KNIGHT trunk.weapon+
+	then
+	decruit-good-silent
+	// TEAM_STATUS_GOOD_LEFT cchar .decruit
+;
+
+cyoa: knight-despair
+	bully choosechar cicon
+	"Mes SENTIMENTS ne sont pas en armure eux" cyoa-title!
+	($ cname .. " decide qu'elle n'a plus besoin de ces conneries.
+	" .. "Cette voiture est MAUDITE ! J'aurais juste du trouver un autre cheval !" pbold .. "
+	Elle s'eloigne en colere, l'armure cliquetant." $) cyoa-text!
+	decruit-bad
+;
+
+} }
+
+

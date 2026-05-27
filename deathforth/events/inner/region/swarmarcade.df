@@ -1,0 +1,133 @@
+"../deathforth/rooms/arcadegym.txt" $load-rooms
+"../deathforth/rooms/restroom.txt" $add-rooms
+"events/inner/arcadeloc.df" $load
+
+0 value gachapon
+
+: gachainit 0 5 rnd to gachapon ;
+
+cyoa{
+
+cyoa-choice: gachapon-go
+
+	($ cname .. " brise larme automatique " $) text!
+
+	gachapon case
+		0 of
+			($ cHe .. "  bourre tous les gumballs dans un sac. Ils sont techniquement de la nourriture si vous en mangez beaucoup." $) +crtext 4 trunk-food+
+		endof
+		1 of
+			"Les capsules contiennent des balles en caoutchouc, de minuscules araignees en plastique, du faux vomi, etc. Sympa !" +crtext morale++
+		endof
+		2 of
+			"'L'une des figurines dans les capsules etait une EDITION LIMITEE ULTRA RARE ! Waouh ! C'est tres inspirant." +crtext morale2+ 
+		endof
+		3 of
+			($ "Les capsules sont toutes pleines de LIMON MUTAGENE qui souvrent et eclaboussent " .. chim .. ".
+			" .. "THIS OOZE IS A DISCONTINUED LIMITED EDITION! A COLLECTORS ITEM!!! WHOAAAAA!" pbold $) +crtext
+			strength++ fitness++ 
+			// 0 cchar .tint.skin.b! 0.4 cchar .tint.skin.r! 
+			cchar .hulkclr
+			1.3 cchar .scale.body.y!
+		endof
+		4 of
+			($ cname .. " ' recupere les bonbons dans la machine. C'est " .. chis .. "  prefere !" $) +crtext
+			morale++ 3 trunk-food+
+		endof
+		5 of
+			($ cHe .. "  prend lun des pistolets jouets et tire immediatement accidentellement sur " .. chim .. "self in the eye! Ouch!
+			An important lesson about firearms is learned." $) +crtext shooting++
+		endof
+	endcase
+	
+	goodfx 1 nearest .open! clear-cyoa
+;
+
+cyoa: gachapon
+	"Gachapon !" cyoa-title!
+	picon!
+	($ cname .. " ' trouve une machine a sous intacte. Avant on mettait une piece de  cents pour obtenir quelque chose. Maintenant il est plus pratique de la casser." $) text!
+		
+	gachapon case
+		0 of "La machine est pleine de gumballs." endof
+		1 of "Il contient de petites capsules remplies de jouets bon marche." endof
+		2 of "Les prix sont des capsules avec de petites figurines." endof
+		3 of "La machine contient des capsules remplies de liquide vert." endof
+		4 of "La machine est a moitie vide, mais contient des bonbons." endof
+		5 of "'C'est plein de capsules abritant des petites arme a feu." endof
+	endcase +crtext
+	
+	choice( "Frappe le ouvert!" )choice: gachapon-go
+	choice( "Laisse le tranquille" )choice
+	
+;
+
+}
+
+map{ roomgen{
+
+: gachapon-cyoa
+	gachapon cyoa{ ' gachapon cyoa! }
+;
+
+} }
+
+locdef{
+
+location: swarmarcade
+		max-rooms: 4
+		entry-tags: arcadestart
+		pre-script: set-theme-arcade
+		script: set-theme-arcade
+		
+		: swarmarcadeentry
+		random-door "jeu darcade" only-with-door
+		random-door "gacharoom" only-with-door
+		random-door "salle de bain" only-with-door
+		gachainit
+		;
+		
+		room-choice: arcadestart
+			room-weight: 10
+			room-count: 1
+			room-script: nad 
+			room-post-script: 5diff %zombs swarmarcadeentry
+			filter-only
+			
+		room-choice: arcade-play
+			room-weight: 10
+			room-count: 1
+			room-script: 
+			room-post-script: 10diff %zombs
+			filter-only
+			
+		room-choice: gacharoom
+			room-weight: 10
+			room-count: 1
+			room-script: 
+			room-post-script: 10diff %zombs
+			filter-only
+
+		room-choice: restroom
+			room-weight: 10
+			room-count: 1
+			room-script: nad floor-bath
+			room-post-script: 5diff %zombs
+			filter-only
+
+}	
+regiondef{
+	
+	 region: arcade
+		w: 15
+		h: 12
+		script: timeofday o'clock
+		post-script: inspawn
+
+		inside no-prefab
+		
+		loc-choice: swarmarcade
+			loc-weight: 1
+			loc-count: 1
+
+}

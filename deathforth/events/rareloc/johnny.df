@@ -1,0 +1,132 @@
+
+cyoa{
+cyoa-bridge: johnny-recruit
+	cchar to recruitee
+	"Nouveau Combat" cyoa-title! ricon goodfx
+	"Bien sur, j'aime trainer avec des TOCARDS. Voyons jusqu'ou on peut aller !" pbold cyoa-text! clear-cyoa
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
+	2 cchar .morale!
+	team-full? if
+		"Virer quelqu'un du groupe :" +crtext recruit-replace? // ' recruit-replace? cyoa-team-choice
+	else
+		recruited
+	then
+;
+
+cyoa: johnny-talk
+	interactee .character@ choosechar cicon
+	"Gars de l'Armee" cyoa-title!
+	"... Qu'est-ce que TU REGARDES comme ca, hein ?" pbold cyoa-text!
+	choice( "Le laisser tranquille" )choice
+	choice( "Essayer de le recruter" )choice: johnny-recruit
+;
+}
+
+"
+:map 1
+:tags johnnystart
+:size 7 9 
+:off 10 3 
+:tiles 
+2222222
+2333332
+2111112
+2112112
+2112662
+2112662
+2112112
+2222222
+3333333
+
+:map 2
+:tags johnnystairs
+:size 7 18 
+:off 18 7 
+:tiles 
+2222222
+2333332
+2111112
+2111112
+2111112
+2211122
+3211123
+0266620
+0266620
+0266620
+0266620
+0266620
+0266620
+0266620
+0266620
+0211120
+0222220
+0333330
+
+:map 3
+:tags johnnyend
+:scriptA spawn-johnny
+:scriptB johnny-furniture
+:scriptC johnny-table
+:size 10 9
+:off 12 12 
+:tiles 
+2222222222
+2333333332
+2111111112
+2111111112
+21B11A11C2
+2111111112
+2111111112
+2222222222
+3333333333
+" $parse-rooms
+
+map{ roomgen{
+
+: spawn-johnny
+	new-npc@ 0 over .ai.wander_chance! .johnnyfy
+	cyoa{ ' johnny-talk cyoa! }
+;
+
+: johnny-furniture
+	bed 50 movey
+	officedesk -1 movey
+	officechair
+;
+: johnny-table
+	chair -1 movex 1.5 movey
+	table 1.5 movey
+	toilet -2 movey 0 lt .flies!
+;
+: johnnystart-script s edge-inc s random-edge-door "johnnystairs" only-with-door ;
+: johnnystairs-script s edge-inc s random-edge-door "johnnyend" only-with-door ;
+
+locdef{
+location: johnny-house
+	max-rooms: 3
+	entry-tags: johnnystart
+	script: set-theme-bunker 
+	pre-script: set-theme-bunker
+	post-script: nad
+	
+	room-choice: johnnystart
+		room-weight: 300
+		room-count: 1
+		room-script:
+		room-post-script: johnnystart-script
+		filter-only
+	
+	room-choice: johnnystairs
+		room-weight: 300
+		room-count: 1
+		room-script: gcloset-theme
+		room-post-script: johnnystairs-script
+		filter-only
+	
+	room-choice: johnnyend
+		room-weight: 300
+		room-count: 1
+		room-script: gcloset-theme
+		room-post-script:
+		filter-only
+} } }

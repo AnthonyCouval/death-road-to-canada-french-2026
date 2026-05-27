@@ -1,0 +1,37 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: santa-despair
+	bully choosechar cicon
+	solo if
+		"NOEL EST FINI POUR TOUJOURS" cyoa-title!
+		($ cname .. ", seul et vaincu, s'arrete dans une maison vide. " .. cHe .. " monte dans la cheminee, et ne fut jamais revu." $) cyoa-text! badfx
+		decruit-bad-silent
+	then;
+	notcchar to victim
+	"CE FILM TIM ALLEN EN GROS" cyoa-title!
+	($ cname .. " s'allonge sur la route dans un etat de desespoir. Dans un accident bizarre, " .. vname .. " lui passe dessus avec la voiture.
+	En raison de la MALEDICTION DE SAINT NICOLAS, " .. vname .. " est instantanement transforme en nouveau Pere Noel." $) cyoa-text! badfx
+		cchar .kill
+		3 victim .specialtype!		
+;
+
+cyoa: santa-camp
+	"La Nuit Avant Noel" cyoa-title!
+	($ Thegroup .. " se reveille apres une nuit de camping pour trouver un Pere Noel en plus. " .. gHe .. " decide de ne rien dire, et de faire comme si tout allait bien." $) cyoa-text! basic-tone
+	char-gen to recruitee 4 recruitee .shooting! 0 recruitee .female! 6 recruitee .morale!  ricon
+	50 %chance if
+		3 screcruit "Santa" recruitee .name! santajoins
+	else
+		4 screcruit "Evil Santa" recruitee .name! evilsantajoins
+	then
+	+cr fullcamp
+;
+
+} }
+
+

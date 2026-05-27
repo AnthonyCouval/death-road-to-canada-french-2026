@@ -1,0 +1,30 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: oldalvis-despair
+    bully choosechar cicon
+    "ALVIS A QUITTE LE BATIMENT" cyoa-title!
+    alvis-music
+    cheevo: alvis-leftbuilding
+    solo if
+       ($ cname .. ", sans personne pour entendre sa musique, perd tout espoir. Il derive et finit par oublier completement la promesse du Canada." $) cyoa-text! badfx
+       decruit-bad-silent
+    then;
+    ($ cname .. " dit au reste du groupe qu'il doit aller aux toilettes. Les autres attendent et attendent, mais il ne revient tout simplement jamais." $) cyoa-text! badfx
+       decruit-bad-silent
+;
+
+cyoa: alvis-despair
+    "Le Jeune Alvis contre le Vieux Alvis" cyoa-title!
+    bully choosechar
+    cicon
+    ($ Thegroup .. " revient les mains vides du pillage pour constater que " .. cname .. " a completement change d'apparence.
+    " .. Thegroup .. " est perplexe pendant un moment, et est particulierement trouble quant a savoir quel Alvis il prefere." $) cyoa-text! basic-tone
+    2 cchar .morale! 37 cchar .specialtype! 0 cchar .fitness!
+;
+
+} }

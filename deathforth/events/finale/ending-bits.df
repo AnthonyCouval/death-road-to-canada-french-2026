@@ -1,0 +1,471 @@
+
+// First ending text shown, after the kill count and streak count
+
+: ending-bit-1
+
+	// See Line 57, modedefeated, to see how all the game modes are called
+	
+	gamedef{ ' defaultmode gamemode? } if 
+
+		rndchar , "Boooooooon... C'est le Canada hein" , 3 ,
+		solo if
+			char1 , "Je suppose que j'ai reussi tout seul." , 3 ,
+		else	
+			char2 , "Yep." , 2 ,
+		then
+	
+		char1 , "Il fait un peu... frisquet" , 2 ,
+	
+		solo if
+			char1 , "Ah, d'accord." , 2 ,
+		else
+			char2 , "Tu penses ?" , 3 ,
+		then
+
+		5 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		rndchar , "Hey regarde ! Des pingouins!!" ,
+
+		3 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		0.5 , canuck , "Attends quoi" , 2 ,
+		char1 , "Quoi ?" , 1 ,
+		canuck , "Il n'y a pas de pingouins au Canada..." , 2 ,
+		char1 , "Mais... la glace, la neige... LES PINGOUINS ! " 0x e6 $chr $cat , 3 ,
+		canuck , "...soupir" , 1 ,
+		
+	then;
+	
+	gamedef{ ' longroad gamemode? } if
+	
+		rndchar , "Quelle route interminable !" , 3 ,
+		
+		solo if 
+            rndchar , "J'ai l'impression que ca a pris une eternite." , 2 ,
+            rndchar , "Ah, d'accord." , 1 ,
+            rndchar , "Au moins, j'ai reussi !" , 1 ,
+		else 
+            char1 , "Rappelle-moi..." , 1 ,
+            char1 , "C'etait l'idee de qui, deja, de prendre le chemin le plus long ?" , 2 ,
+            char2 , "... ferme-la." , 2 ,
+            canuck , "Vous allez passer un moment tellement agreable au Canada tous les deux, hein ?" , 2 ,
+		then 
+		
+	then;	
+	
+	gamedef{ ' specialchars gamemode? } if
+	
+		rndchar , "J'ai rencontre un tas d'originaux !" , 3 ,
+
+		solo if
+			rndchar , "Ah, zut ! Je viens juste de m'en souvenir." , 1 ,
+			rndchar , "J'ai pas eu leurs pseudos Twitter..." , 1 ,
+		else
+			char1 , "Je me demande s'il y a encore plus d'originaux par la ?" , 1 ,
+			char2 , "Ouais, d'autres TOCARDS, peut-etre." , 2 ,
+		then
+
+		canuck , "Ils feraient mieux d'avoir leurs passeports aussi !" , 2 ,
+
+	then;
+
+	gamedef{ ' familiarchars gamemode? } if
+
+		rndchar , "J'ai vu beaucoup de visages familiers !" , 2 ,
+
+		solo if
+			rndchar , "...pas que je les aimais vraiment beaucoup." , 2 ,
+			rndchar , "ENFIN, JE PEUX ME DEBARRASSER DE CES TOCARDS." , 2 ,
+		else
+			char2 , "Ils ne m'avaient pas l'air tres familiers." , 1 ,
+			char1 , "Mmh, bon, tu devrais faire verifier tes yeux." , 1 ,
+		then
+
+		canuck , "Qui sait qui a ete laisse derriere par l'apocalypse ?" , 2 ,
+
+	then;
+
+	gamedef{ ' specialcharsEX gamemode? } if
+
+		rndchar , "J'ai reussi !" , 2 ,
+		char1 , "Et j'ai rencontre tellement de gens interessants en chemin !" , 2 ,
+		char1 , "...et aussi des gens, c'est vrai, VRAIMENT SACREMENT MALODORANTS." , 1 ,
+		canuck , "Ahh... le savon me manque..." , 1 ,
+
+	then;
+
+	gamedef{ ' familiarcharsEX gamemode? } if
+
+		rndchar , "Heureusement que j'avais tous mes amis !" , 3 ,
+
+		solo if
+			rndchar , "Enfin, avant..." , 1 ,
+			rndchar , "Je suppose qu'il va falloir que j'en trouve de nouveaux." , 2 ,
+			canuck , "Je serai ton ami !" , 1 ,
+			rndchar , "L'amour triomphe." , 3 ,
+		else
+			char1 , "Qu'est-ce que je ferais sans toi ?" , 2 ,
+			char2 , "Rends pas ca bizarre." , 2 ,
+			char1 , "D'accord..." 0x e2 $chr $cat , 2 ,
+		then
+
+	then;
+
+	gamedef{ ' kepamode gamemode? } if
+
+		rndchar , "J'ai vaincu... le MODE K*E*P*A !" rainbold , 3 ,
+
+		rndchar , "Mode Garde-Toujours-Les-Poires-De-Tout-Le-Monde, c'est ca ?" , 2 ,
+		rndchar , "ou... Mode Tue-Toujours-Les-Poneys-Electriques ?..." , 2 ,
+		rndchar , "Bah, j'oublie toujours." , 2 ,
+		canuck , "Les survivants de nos jours..." , 2 ,
+
+	then;
+
+	gamedef{ ' shortroad gamemode? } if
+
+		rndchar , "Speedrun termine !" , 3 ,
+		rndchar , "J'ai battu mon record ?" , 1 ,
+		rndchar , "Non, je crois pas." , 1 ,
+		rndchar , "BON SANG " 0x e1 $chr $cat , 1 ,
+
+	then;
+
+	gamedef{ ' marathonmode gamemode? } if
+
+		rndchar , "C'etait un sacre grand detour !" , 3 ,
+		rndchar , "Je suis epuise ! Il me faut un verre." , 1 ,
+		rndchar , "OU PLUSIEURS ! " 0x e4 $chr $cat , 1 ,
+
+		solo if
+			rndchar , "Mmh... mieux vaut en prendre plusieurs." , 1 ,
+		then
+
+	then;
+
+	gamedef{ ' deadlier gamemode? } if
+
+		rndchar , "C'etait plutot mortel !" , 3 ,
+
+		rndchar , "On pourrait meme dire que c'etait une route de la mort." , 1 ,
+		rndchar , "...une Death Road to Canada, meme." , 1 ,
+		canuck , "Generique de fin. Oh, attendez..." , 1 ,
+
+	then;
+
+	gamedef{ ' 4jerksmode gamemode? } if
+
+		rndchar , "Voyage en voituurrrre !" , 3 ,
+
+		solo if
+			rndchar , "Ca aurait ete bien mieux s'il y avait eu quelqu'un avec qui le partager." , 2 ,
+			rndchar , "Laisse tomber..." , 1 ,
+			canuck , "Je suis la, hein !" , 1 ,
+			rndchar , "Je me sens si seul..." , 1 ,
+		else
+			char2 , "On y est ! Ensemble !" , 2 ,
+			char1 , "Mais c'est moi qui ai tout fait non ?" , 1 ,
+			char2 , "T'AS REVE, TOCARD !" , 1 ,
+			canuck , "Ahhh, l'amitie..." , 1 ,
+		then
+
+	then;
+
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+
+		rndchar , "VOOOOYAAAAGE EN VOIIITUUURE EXTREEEEME !" fbold , 3 ,
+		canuck , "Ca m'avait pas l'air si extreme que ca, hein ?" , 1 ,
+		rndchar , "T'avais AUCUNE idee." , 2 ,
+		rndchar , "C'etait horrible !" , 1 ,
+
+		solo if
+			canuck , "Ca explique surement pourquoi t'es seul." , 1 ,
+		then
+	then;
+
+	gamedef{ ' theinfection gamemode? } if
+
+		rndchar , "Pourquoi je me sens tout a coup si... fatigue ?" , 3 ,
+		canuck , "T'es pas sur le point d'exploser, j'espere ?" , 2 ,
+		rndchar , "Non ? Pourquoi, je devrais ? " 0x e1 $chr $cat , 1 ,
+		canuck , "Oh. Pour rien." , 1 ,
+
+	then;
+
+	gamedef{ ' thelongsiege gamemode? } if
+
+		canuck , "Waouh, tellement de joueurs de role de nos jours." , 3 ,
+		canuck , "Vous devez etre la pour le congres des tocards." , 2 ,
+		canuck , "PAR ICI !" , 1 ,
+		rndchar , "OUAIS CARREMENT !" , 2 ,
+
+	then;
+
+	gamedef{ ' weathermode gamemode? } if
+
+		solo if
+			rndchar , "Quel beau temps on a eu !" , 3 ,
+			canuck , "...t'es aveugle, hein ?" , 2 ,
+		else
+			char2 , "Quel beau temps on a eu !" , 2 ,
+			char1 , "OUAIS ?" , 1 ,
+			char1 , "C'EST QUOI DE SI AGREABLE LA-DEDANS ?" , 2 ,
+		then
+
+	then;
+
+	gamedef{ ' mutationmode gamemode? } if
+
+		rndchar , "Hey, mon porte-monnaie vient de grossir." , 2 ,
+		rndchar , "...JE SUIS PLEIN AUX AS !" , 3 ,
+
+		solo not if
+			char1 , "Tu vas depenser ta part en quoi ?" , 2 ,
+			char2 , "Hmm...." , 2 ,
+			char2 , "ENCORE DES CHIENS !" , 2 ,
+			canuck , "soupir" , 3 ,
+		then
+
+	then;
+
+	gamedef{ ' mutationmodeEX gamemode? } if
+
+		rndchar , "Attends une seconde, c'est quoi ca dans ma poche ?" , 2 ,
+		rndchar , "Un cheque en blanc ?" , 3 ,
+		rndchar , "ON EST RIIIICCCHHHES !!!" , 2 ,
+		rndchar , "ET ON A JUSTE FAILLI MOURIR POUR CA !" , 2 ,
+		canuck , "Depensez pas tout au meme endroit !" , 2 ,
+
+	then;
+
+	gamedef{ ' horrormode gamemode? } if
+
+		rndchar , "Hahaha, on y est ! On y est vraiment !" , 2 ,
+		rndchar , "J'ai besoin d'un nouveau pantalon !" , 3 ,
+		canuck , "Je peux vous indiquer un bon magasin de salopettes." , 2 ,
+		canuck , "Vous vous integrerez parfaitement." , 2 ,
+
+	then;
+
+	gamedef{ ' theinfectionEX gamemode? } if
+
+		rndchar , "Aueghh... je crois que je vais gerber..." , 3 ,
+		canuck , "Vomir c'est autorise. Exploser non, s'il vous plait." , 2 ,
+		rndchar , "EXPLOSER ?" , 2 ,
+		canuck , "...longue histoire. T'inquiete pas." , 2 ,
+
+	then;
+
+	\ As the hardest classic mode, you get an extended convo tree as a reward.
+	gamedef{ ' quicknightmare gamemode? } if
+
+		canuck , "T'as de la chance d'etre encore en vie !" , 3 ,
+		canuck , "Felicitations pour y etre arrive, hein ?" , 2 ,
+		canuck , "C'est quoi la premiere chose que tu vas faire maintenant que t'es au Canada ?" , 2 ,
+
+		solo if
+			50 %chance if
+				rndchar , "Preparer le plus grand bol de nachos du monde." , 3 ,
+			else
+				rndchar , "Lutter avec des orignaux !" , 3 ,
+			then
+		else
+			50 %chance if
+				char1 , "Je suis pas sur. Je me suis pas encore decide." , 2 ,
+				char2 , "NUUUUUUUUL. JE VEUX ME NOYER DANS DE LA POUTINE !" , 2 ,
+			else
+				char2 , "Pas sur... j'ai encore besoin d'y reflechir." , 2 ,
+				char1 , "Qu'est-ce qu'il y a a reflechir ? Ils ont des Tim Hortons !" , 2 ,
+			then
+		then
+
+		50 %chance if
+			canuck , "Ca me semble bien. Je peux venir ?" , 2 ,
+		else
+			canuck , "Bien sur, parce que c'est une chose TRES normale a faire." , 3 ,
+		then
+
+	then;
+
+
+	// Below just as a failsafe in case the player is somehow playing a game mode not covered above
+
+		rndchar , "J'ADORE ETRE FORT" , 2 ,
+		rndchar , "J'AIME AUSSI : NE PAS MOURIR." , 2 ,
+
+;
+
+// Second ending text shown, after the credits
+
+: ending-bit-2
+
+	gamedef{ ' defaultmode gamemode? } if
+
+		3 for
+			' penguin , 0.2 0.5 frnd ,
+		next
+
+		1 , char1 , "Encore des pingouins !" , 2 ,
+		canuck , "...soupir" , 1 ,
+
+	then;
+
+	gamedef{ ' longroad gamemode? } if
+
+		canuck , "T'y es arrive, mais il y a un mode encore plus long !" , 3 ,
+
+	then;
+
+	gamedef{ ' specialchars gamemode? } if
+
+		canuck , "Plein de gens interessants sur la Death Road !" , 3 ,
+
+	then;
+
+	gamedef{ ' familiarchars gamemode? } if
+
+		canuck , "Bienvenue au Canada !" , 3 ,
+
+	then;
+
+	gamedef{ ' specialcharsEX gamemode? } if
+
+		canuck , "FEH" rbold , 2 ,
+		canuck , "C'ETAIT QUOI DE SI RARE AVEC CES PERSONNAGES ?" rbold , 3 ,
+
+	then;
+
+	gamedef{ ' familiarcharsEX gamemode? } if
+		50 %chance if
+			canuck , "WAOUH ! QUELLE BANDE DE TOCARDS !" rbold , 2 ,
+		else
+			canuck , "AVEC DES AMIS COMME EUX..." , 2 ,
+			canuck , "QUI A BESOIN D'ENNEMIS ??" , 2 ,
+		then
+	then;
+
+	gamedef{ ' kepamode gamemode? } if
+
+		cheevo{ team-stack ' kepa? stack-filter } nip 0 > if
+			canuck , "Felicitations ! Vous avez sauve Kepa !" , 2 ,
+			canuck , "Vous etes un vrai Death Roadeur !" , 2 ,
+		else
+			canuck , "Mais... avez-vous vraiment gagne ?" , 2 ,
+			canuck , "Ou avez-vous perdu Kepa ?" , 2 ,
+		then
+
+	then;
+
+	gamedef{ ' shortroad gamemode? } if
+
+		canuck , "J'espere que le voyage n'a pas pris trop de temps pour vous !" , 3 ,
+
+	then;
+
+	gamedef{ ' marathonmode gamemode? } if
+
+		canuck , "T'as pris le chemin pittoresque, hein ?" , 3 ,
+
+	then;
+
+	gamedef{ ' deadlier gamemode? } if
+
+		rndchar , "Ca aurait pu etre pire !" , 3 ,
+
+	then;
+
+	gamedef{ ' endlessmode gamemode? } if
+
+		rndchar , "C'etait sense etre Infini !" , 3 ,
+		rndchar , "Quelle arnaque !" , 3 ,
+
+	then;
+
+	gamedef{ ' OPPmode gamemode? } if
+
+		canuck , "WAOUH ! TELLEMENT SURPUISSANT !" , 3 ,
+
+	then;
+
+	gamedef{ ' quicknightmare gamemode? } if
+
+		canuck , "T'as pris le raccourci, hein ?" , 3 ,
+
+	then;
+
+	gamedef{ ' 4jerksmode gamemode? } if
+
+		solo if
+			canuck , "T'as ton passeport ?" , 3 ,
+		else
+			canuck , "Vous avez vos passeports ?" , 3 ,
+		then
+
+	then;
+
+	gamedef{ ' 4jerksmodeEX gamemode? } if
+
+		canuck , "J'arrive pas a croire qu'on a encore des touristes !" , 3 ,
+
+	then;
+
+	gamedef{ ' theinfection gamemode? } if
+
+		canuck , "Personne n'a de symptomes, j'espere ?" , 3 ,
+
+	then;
+
+	gamedef{ ' thelongsiege gamemode? } if
+
+		canuck , "Desole que vous ne soyez pas arrives au niveau 12 !" , 3 ,
+
+	then;
+
+	gamedef{ ' weathermode gamemode? } if
+
+		canuck , "La semaine derniere ma voiture s'est fait frapper par un eclair." , 3 ,
+
+	then;
+
+
+	gamedef{ ' theinfectionEX gamemode? } if
+
+		canuck , "T'as l'air a bout de souffle. Tout va bieng ?" , 3 ,
+
+	then;
+
+	gamedef{ ' mutationmode gamemode? } if
+
+		canuck , "Okay... alors ils sont jaunes ?" , 3 ,
+
+	then;
+
+	gamedef{ ' mutationmodeEX gamemode? } if
+
+		canuck , "Je croyais avoir vu du graphite par terre." , 3 ,
+		canuck , "Hmph. Apparemment non." , 2 ,
+
+	then;
+
+	gamedef{ ' horrormode gamemode? } if
+
+		canuck , "Jumpscare in 3...2...1..." , 3 ,
+
+	then;
+
+
+
+	// Below just as a failsafe in case the player is somehow playing a game mode not covered above
+
+		solo if
+			char1 , "NNNNNNNNNNG." , 2 ,
+		else
+			char2 , "WAOUH ! SYMPA ?" , 3 ,
+		then
+	
+;
+

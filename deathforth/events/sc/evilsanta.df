@@ -1,0 +1,22 @@
+
+cyoa{ road{
+
+: santafy 3 swap .specialtype! ;
+
+cyoa: evilsanta-despair
+	bully choosechar cicon
+	
+	($ cname .. " pousse un cri percant qui secoue la terre. Il explose alors spontanement dans une rafale de flocons de neige et ce qui semble etre une sorte de paillettes." $) cyoa-text!
+		cchar .kill
+	team-count 0 > if
+		"NOEL 2 : LA MALEDICTION CONTINUE" cyoa-title!
+		+cr ($ Thegroup .. " est horrifie d'inhaler ces spores du Pere Noel." $) +text
+		cchar ' santafy foreach-team-char-except
+	then;
+	"NOEL FINAL : LE NOEL" cyoa-title!	
+	+cr "C'est fini. Noel est termine, tout le monde." +text
+;
+
+} }
+
+

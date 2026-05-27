@@ -1,0 +1,20 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: jerk-camp
+	sc-camper choosechar cicon
+	"QUEL CONNARD" cyoa-title!
+	($ "En pleine nuit, " .. cname .. " decide de voler autant de nourriture qu'il peut porter avant d'abandonner la mission.
+	" .. "Quel connard." rbold $) cyoa-text! decruit-bad-silent
+	trunk-food 5 < if "Au moins il n'y avait pas grand chose a voler." +crtext then
+		trunk-food 30 < if eat-all else -30 trunk-food+ then
+	team-count 0 > if +cr fullcamp then
+;
+
+} }
+
+

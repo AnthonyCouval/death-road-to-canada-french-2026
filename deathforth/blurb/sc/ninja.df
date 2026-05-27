@@ -1,0 +1,60 @@
+	: NINJA-oneline1 "Si seulement notre ennemi n'etait pas si facile a couper en deux." ;
+	: NINJA-oneline2 "Ce n'est pas la lame qui compte, c'est la personne qui la manie." ;
+	: NINJA-oneline3 "Hmmm......." ;
+
+	deck-new
+		card: NINJA-oneline1
+		card: NINJA-oneline2
+		card: NINJA-oneline3
+	constant NINJA-ONELINERS
+	NINJA-ONELINERS var ninja-oneliners
+	NINJA-ONELINERS shuffles to ninja-oneliners
+
+	: NINJA-emote1 " fait passer sa lame par la fenetre et decapite un zombie." ;
+	: NINJA-emote2 " sort legerement son katana de son fourreau puis le remet tout doucement." ;
+	: NINJA-emote3 " lui remet silencieusement son bandeau fantaisie." ;
+	: NINJA-emote4 " coince son bandeau dans le siege." ;
+	: NINJA-emote5 " fait claquer sa langue sur son palais." ;
+	: NINJA-emote6 " fixe l'horizon au loin." ;
+	: NINJA-emote7 " deboucle et boucle sa ceinture de securite sans un bruit." ;
+	: NINJA-emote8 " s'assoit en silence." ;
+	: NINJA-emote9 " refuse de chanter pendant la chanson." ;
+	: NINJA-emote10 " aiguise silencieusement son katana." ;
+
+	deck-new
+		card: NINJA-emote1
+		card: NINJA-emote2
+		card: NINJA-emote3
+		card: NINJA-emote4
+		card: NINJA-emote5
+		card: NINJA-emote6
+		card: NINJA-emote7
+		card: NINJA-emote8
+		card: NINJA-emote9
+		card: NINJA-emote10
+	constant NINJA-EMOTES
+	NINJA-EMOTES var ninja-emotes
+	NINJA-EMOTES shuffles to ninja-emotes
+
+: ninja-oneliner
+	ninja-oneliners depths 0= if NINJA-ONELINERS shuffles to ninja-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+: ninja-emote
+	ninja-emotes depths 0= if NINJA-EMOTES shuffles to ninja-emotes then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. ninja-emotes drawcard $) txt
+	then
+;
+
+	deck-new
+	6 cards: ...say
+	10 cards: ninja-emote
+	3 cards: ninja-oneliner
+
+	constant BLURB-NINJA-DECK
+	BLURB-NINJA-DECK var blurb-ninja-deck
+	BLURB-NINJA-DECK shuffles to blurb-ninja-deck

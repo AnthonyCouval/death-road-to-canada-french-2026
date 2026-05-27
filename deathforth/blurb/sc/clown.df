@@ -1,0 +1,70 @@
+	: CLOWN-oneline1 "HA HA HA" ;
+	: CLOWN-oneline2 "HAHAHAHAHA" ;
+	: CLOWN-oneline3 "HA HA HA HA HA HA HA" ;
+	: CLOWN-oneline4 "HAHAHA! HAHAHAHAHAHA!" ;
+	: CLOWN-oneline5 "HAHA, QU'EST-CE QU'IL Y A ? ON DIRAIT QUE TU VIENS DE VOIR UN CLOWN !" ;
+	: CLOWN-oneline6 "*TUT* *TUT*" ;
+	: CLOWN-oneline7 "HAHA, CE N'EST PAS DU MAQUILLAGE !" ;
+	: CLOWN-oneline8 "C'EST MA COULEUR DE CHEVEUX NATURELLE ! HAHA !" ;
+
+	deck-new
+		card: CLOWN-oneline1
+		card: CLOWN-oneline2
+		card: CLOWN-oneline3
+		card: CLOWN-oneline4
+		card: CLOWN-oneline5
+		card: CLOWN-oneline6
+		card: CLOWN-oneline7
+		card: CLOWN-oneline8
+	constant CLOWN-ONELINERS
+	CLOWN-ONELINERS var clown-oneliners
+	CLOWN-ONELINERS shuffles to clown-oneliners
+
+	: CLOWN-emote1 " remonte une petite boite a musique et elle se met a jouer quelque chose de flippant." ;
+	: CLOWN-emote2 " fait un animal en ballon, mais il a etrangement un visage humain." ;
+	: CLOWN-emote3 " fixe du regard tout en emettant des ricanements bizarres." ;
+	: CLOWN-emote4 " se comporte de maniere perturbante en permanence." ;
+	: CLOWN-emote5 " commence a cirer ses chaussures surdimensionnees." ;
+	: CLOWN-emote6 " enleve un faux nez pour en reveler un autre." ;
+	: CLOWN-emote7 " sort une petite corne et commence a la caresser." ;
+	: CLOWN-emote8 " commence a jongler avec des boites de conserve." ;
+	: CLOWN-emote9 " commence a jongler avec des armes." ;
+	: CLOWN-emote10 " siffle des chansons de carnaval." ;
+
+	deck-new
+		card: CLOWN-emote1
+		card: CLOWN-emote2
+		card: CLOWN-emote3
+		card: CLOWN-emote4
+		card: CLOWN-emote5
+		card: CLOWN-emote6
+		card: CLOWN-emote7
+		card: CLOWN-emote8
+		card: CLOWN-emote9
+		card: CLOWN-emote10
+	constant CLOWN-EMOTES
+	CLOWN-EMOTES var clown-emotes
+	CLOWN-EMOTES shuffles to clown-emotes
+
+: clown-oneliner
+	clown-oneliners depths 0= if CLOWN-ONELINERS shuffles to clown-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+: clown-emote
+	clown-emotes depths 0= if CLOWN-EMOTES shuffles to clown-emotes then
+	blurbslot 0= if
+		qmsg ($ me .name@ .. clown-emotes drawcard $) txt
+	then
+;
+
+	deck-new
+	card: ...say
+	10 cards: clown-emote
+	8 cards: clown-oneliner
+
+	constant BLURB-CLOWN-DECK
+	BLURB-CLOWN-DECK var blurb-clown-deck
+	BLURB-CLOWN-DECK shuffles to blurb-clown-deck

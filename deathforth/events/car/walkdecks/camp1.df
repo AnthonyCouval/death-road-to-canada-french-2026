@@ -1,0 +1,145 @@
+cyoa{ road{
+
+: camp-pic
+	50 %chance if
+		image-camp-1
+	else
+		image-camp-2
+	then
+;
+
+cyoa: walk-camp1
+	camp-pic
+	"LA VIE SAUVAGE" cyoa-title!
+	($ "" .. Thegroup .. " trouve un bon endroit pour camper la nuit dans les bois. Le vent et la pluie s'installent pendant la nuit, prenant " .. thegroup .. " par surprise. C'est une nuit miserable sans voiture ou se refugier." $) cyoa-text! morale2-all +cr fullcamp
+;
+cyoa: walk-camp2
+	image-cabin-in-woods
+	"COUP DE CHANCE ABANDONNE" cyoa-title!
+	($ "" .. Thegroup .. " a la chance de trouver une cabane abandonnee dans les bois pour passer la nuit. Peu apres s'etre installe, une tempete arrive. Heureusement pour " .. ghim .. " que " .. gthey .. " a trouve la cabane a temps." $) cyoa-text! morale++all +cr fullcamp
+;
+cyoa: walk-camp3
+	camp-pic
+	"SIMPLE CAMPING" cyoa-title!
+	($ "" .. Thegroup .. " decide de monter le camp pour la nuit et d'essayer de manger un repas." $) cyoa-text! +cr fullcamp
+;
+cyoa: walk-camp4
+	camp-pic
+	"CAMP PAISIBLE" cyoa-title!
+	($ "Apres une longue randonnee " .. thegroup .. " trouve une belle clairiere pour monter le camp. Le temps est agreable et " .. thegroup .. " peut se reposer tranquillement." $) morale++all cyoa-text! +cr fullcamp
+;
+cyoa: walk-camp5
+	camp-pic
+	"INSECTES ET CAMPING" cyoa-title!
+	($ "Apres une longue marche " .. thegroup .. " decide de monter le camp. Malheureusement " .. thegroup .. " est assailli par des moustiques pendant la nuit et " .. gthey .. " ne dor" .. g1s .. " pas du tout." $) cyoa-text! morale--all +cr tiredcamp
+;
+cyoa: walk-camp6
+	camp-pic
+	"LONGUE JOURNEE" cyoa-title!
+	($ "Apres une journee entiere de marche " .. thegroup .. " trouve un endroit sur pour camper. " .. gHe .. " a tres faim, et " .. gthey .. " mange" .. g1s .. " un repas supplementaire." $) cyoa-text!
+	chowday +cr fullcamp
+;
+cyoa: walk-camp7
+	camp-pic
+	"ATTAQUE DE FOURMIS" cyoa-title!
+	($ "Apres une dure journee a chercher une voiture " .. thegroup .. " trouve un endroit pour camper. Pendant la nuit " .. gtheyare .. " ATTAQUE PAR DES FOURMIS" rbold .. " et doit repartir sans avoir dormi." $) cyoa-text! bitefx sting--all +cr tiredcamp
+;
+
+: walk-camp8-medcheck
+	most-paranoid trunk-gas 30 > and if choosechar
+		($ cname .. ", pensant a la route a venir, fait tout ce qu'" .. che .. " peut pour economiser l'essence en trop." $) +crtext witsattREV sting--
+	else
+		bandit-gas
+	then
+	loyalest-pass trunk-medical 1 > and if
+		loyalest choosechar
+		($ cname .. ", pensant aux autres dans le besoin, fait tout ce qu'" .. che .. " peut pour sauver les fournitures medicales." $) +crtext loyaltyREV sting--
+	else
+		bandit-med
+	then
+;
+: walk-camp8-solocheck
+	solo if
+		($ "Etant seul, " .. che .. " ne peut rien attraper d'autre que ses propres armes." $) +crtext
+	else
+		($ "Ils attrapent le plus de provisions possible !" $) +crtext
+		walk-camp8-medcheck
+	then
+;
+
+cyoa-choice: walk-camp8-food
+	($ Thegroup .. " reussit a attraper toute la nourriture avant de fuir ! " $) cyoa-text!
+	walk-camp8-solocheck
+	solo if
+		trunk.killer bandit-ammo
+	else
+		trunk.killer bandit-ammo2
+	then +cr morale--all +cr tiredcamp
+;
+cyoa-choice: walk-camp8-ammo
+	($ Thegroup .. " reussit a attraper toutes les munitions avant de fuir ! " $) cyoa-text!
+	walk-camp8-solocheck
+	solo if
+		trunk.killer bandit-food
+	else
+		trunk.killer bandit-food2
+	then +cr morale--all +cr tiredcamp
+;
+cyoa-choice: walk-camp8-weapons
+	($ Thegroup .. " reussit a attraper toutes les armes avant de fuir ! " $) cyoa-text!
+	walk-camp8-solocheck
+	solo if
+		bandit-ammofood
+	else
+		bandit-food2 bandit-ammo2
+	then +cr morale--all +cr tiredcamp
+;
+cyoa-choice: walk-camp8-bear
+	($ Thegroup .. ", pris en embuscade par un ours pendant son sommeil, decide de se battre ! C'est le chaos !" $) cyoa-text! someicon bandithurt
+	choosehuman alive? if
+		($ "L'ours recule ! " .. Thegroup .. " peut se rendormir." $) +crtext +cr fullcamp
+	then
+
+;
+cyoa-choice: walk-camp8-flee
+	($ Thegroup .. " prend ses jambes a son cou et abandonne le camp !" $) cyoa-text!
+	walk-camp8-solocheck
+	trunk.killer bandit-ammofood
+	+cr morale--all +cr tiredcamp
+;
+cyoa-choice: walk-camp8-angry
+	($ cname .. " fonce vers l'ours, saute a bonne hauteur, et lui assene un grand coup sur le nez de toutes ses forces.
+	L'ours panique et s'enfuit !
+	" .. Thegroup .. " peut se rendormir." $) cyoa-text!
+	morale++all +cr fullcamp
+;
+
+cyoa-choice: walk-camp8-shoot
+	($ cname .. " recupere calmement l'une de ses armes et tire tranquillement sur l'ours. Pas de probleme !
+	" .. Thegroup .. " fait un festin enorme ce soir-la, mais n'a malheureusement pas le temps de conserver beaucoup de viande pour plus tard." $) cyoa-text!
+	12 trunk-food+ morale3+all sleep
+;
+
+cyoa: walk-camp8
+	camp-pic
+	"CET OURS A VOLE MES AFFAIRES" cyoa-title!
+	($ Thegroup .. " tente de camper mais est interrompu par un ours tres en colere. " .. gTheyare .. " force d'abandonner le camp avec peu de sommeil, et doit prendre une decision paniquee sur ce qu'ils vont attraper, " .. "VITE." rbold $) cyoa-text! badfx
+	trunk-food 1 > if
+		choice( "Prendre toute la nourriture" )choice: walk-camp8-food
+	then
+	most-angrystrong if
+		charchoice( " frappe l'ours sur le nez" )choice: walk-camp8-angry
+	then
+	calmshot-check if
+		charchoice( " descend calmement l'ours" )choice: walk-camp8-shoot
+	then
+	anyammo? if
+		choice( "Attraper toutes les munitions" )choice: walk-camp8-ammo
+	then
+	trunk.count 0 > if
+		choice( "Attraper les armes en trop" )choice: walk-camp8-weapons
+	then
+	choice( "Affronter l'ours mortel" )choice: walk-camp8-bear
+	choice( "Tout abandonner" )choice: walk-camp8-flee
+;
+} }

@@ -1,0 +1,34 @@
+cyoa{ mission{
+
+cyoa: garf-survived
+	"Mardi" cyoa-title!
+	($ Thegroup .. " erre dans la foret hors de ce monde pendant un court moment.
+		En un clin d'oeil, " .. gtheyare .. " de retour la ou " .. gtheywere .. " avant d'etre transporte dans cet endroit.
+		C'etait terrifiant !" $) text! badfx
+		bully .alive? if ($ bname .. " deteste toujours les lundis." rbold $) +crtext 6 bully .morale! else
+		($ "Garf" pbold " est introuvable." rbold .. $) +crtext then
+;
+
+} }
+
+cyoa{ road{
+
+cyoa: garf-despair
+	bully choosechar cicon
+	solo if
+		"Le Lundi Final" cyoa-title!
+		($ cname .. " se plaint des lundis a la voiture vide. Chaque jour ressemble a un lundi.
+		Il devient progressivement transparent, puis disparait. Se fondant dans les lundis dont il est issu." $) cyoa-text! decruit-bad-silent sfx{ creepy }
+	else
+		"Le Lundi" cyoa-title!
+		($ cname .. " est malheureux. Il se retire lentement la tete devant " .. everyone ..
+			". Le temps fait un bond en avant et le groupe se retrouve dans une foret etrange. " .. "C'EST LE JOUR QUE JE DETESTE" rbold .. " crie " .. cname .. ". " .. "C'EST LUNDI !" rbold $) cyoa-text!
+		2.8 18 20 rnd 2 siegecast // untouched
+		"events/siege/region/garf.df" $load-region
+		choice( "Qu'est-ce qui se passe ?" )choice: premission
+	then badfx
+;
+
+} }
+
+

@@ -1,0 +1,67 @@
+    : IZZY-oneline1 "On va y arriver. C'est sur !" ;
+    : IZZY-oneline2 "Appelez-moi 'tournesol', vu comment mon armure est jaune." ;
+    : IZZY-oneline3 "Je me demande comment sont les choses la-haut au nord ?" ;
+    : IZZY-oneline4 "SYCAMORE... ECOUTE MON APPEL !" ;
+    : IZZY-oneline5 "MON SERMENT M'OBLIGE... a conduire un petit moment." ;
+    : IZZY-oneline6 "TERRASSEZ LES HERETIQUES !" ;
+    : IZZY-oneline7 "Je n'abandonne pas. Pas maintenant. Pas encore." ;
+    : IZZY-oneline8 "^W^" ;
+    : IZZY-oneline9 "'L'aube sera radieuse !'... ainsi parle le sage soleil." ;
+    : IZZY-oneline10 "Ca donne faim de trimballer cette armure partout." ;
+    : IZZY-oneline11 "MON SERMENT M'OBLIGE... a arreter la voiture pour une pause pipi." ;
+    : IZZY-oneline12 "CHATIEZ LES MONSTRES ! TUEZ LES MONSTRES ! POUR LA LUMIERE DU SOLEIL !" ;
+    : IZZY-oneline13 "J'avais un chiot autrefois. J'espere qu'elle a survecu..." ;
+    : IZZY-oneline14 "Je prefererais mourir plutot que de laisser les zombies gagner." ;
+    : IZZY-oneline15 "Desolee pour toutes ces lumieres aveuglantes. Ca arrive comme ca." ;
+    : IZZY-oneline16 "CETTE VOITURE A BESOIN DE PLUS DE LUMIERES !" ;
+    : IZZY-oneline17 "Ok. Je vais vous dire un truc. Portez une epee pendant 20 ans et on comparera nos notes." ;
+    : IZZY-oneline18 "C'est sur !" ;
+    : IZZY-oneline19 "Si vous voyez des robes, elles sont a moi. Quoi, une fille paladin n'a pas le droit de bien s'habiller ?" ;
+    : IZZY-oneline20 "AUCUN MONSTRE N'EST TROP GRAND, AUCUNE CREATURE N'EST TROP GRANDE, a moins de faire plus de 2 metres 50." ;
+    : IZZY-oneline21 "J'adore les tournesols. Ils sont trop adorables." ;
+
+	// road{ qmsg } for on the road stuff
+
+	// : IZZY-oneline21 qmsg ($ me .name@ .. " really loves cheese." $) txt ;
+	// example for actions characters can perform
+
+
+	deck-new
+		card: IZZY-oneline1
+		card: IZZY-oneline2
+		card: IZZY-oneline3
+		card: IZZY-oneline4
+		card: IZZY-oneline5
+		card: IZZY-oneline6
+		card: IZZY-oneline7
+		card: IZZY-oneline8
+		card: IZZY-oneline9
+		card: IZZY-oneline10
+		card: IZZY-oneline11
+		card: IZZY-oneline12
+		card: IZZY-oneline13
+		card: IZZY-oneline14
+		card: IZZY-oneline15
+		card: IZZY-oneline16
+		card: IZZY-oneline17
+		card: IZZY-oneline18
+		card: IZZY-oneline19
+		card: IZZY-oneline20
+		card: IZZY-oneline21
+	constant IZZY-ONELINERS
+	IZZY-ONELINERS var IZZY-oneliners
+	IZZY-ONELINERS shuffles to IZZY-oneliners
+
+: IZZY-oneliner
+	IZZY-oneliners depths 0= if IZZY-ONELINERS shuffles to IZZY-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: IZZY-oneliner
+
+	constant BLURB-IZZY-DECK
+	BLURB-IZZY-DECK var blurb-IZZY-deck
+	BLURB-IZZY-DECK shuffles to blurb-IZZY-deck

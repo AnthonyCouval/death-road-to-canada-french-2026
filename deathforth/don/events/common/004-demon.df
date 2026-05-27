@@ -1,0 +1,180 @@
+cyoa{ road{ 
+
+(*
+------------------------------------------------------------------------------------------------------------------------
+	004 - "L'Invocation Indesirable" - Don Thacker
+	Un membre du groupe est possede par le demon HEKTATRIUS. Il veut de la PIZZA et des CLOPES.
+	C'est cool, non ? Il a l'air plutot sympa en fait.
+------------------------------------------------------------------------------------------------------------------------
+*)
+
+cyoa-choice: don-common-demon-offload
+	victim to cchar
+	($ notcname .. " jette " .. vname .. " par la portiere passager.
+	En tombant, " .. vhe .. " explose en un essaim de petites chauves-souris noires." $) cyoa-text!
+	victim .kill
+	morale--all
+;
+
+: don-common-demonify
+	victim .morale-- 
+	0 victim .tint.skin.g!
+	0 victim .tint.skin.b!
+	victim .strength++ victim .fitness++
+	victim statmod{ .fireproof }
+	victim ispet? if
+		0 victim .pet! victim statmod{ .undog } 0 3 rnd victim .bodytype! 73 victim .specialhead!
+		WEAPON_FIERCE victim .weapon_default!
+	else
+		victim .weapons-to-trunk
+		WEAPON_DEVILFORK victim .weapona!
+		1 victim .weapon_nodropa!
+	then
+;
+
+cyoa-choice: don-common-demon-pizza-refuse
+	($ "BEURK, BON, MERCI QUAND MEME J'IMAGINE.
+	" rbold .. "Le demon libere " .. vname .. ", qui est transforme par l'experience." $) cyoa-text!
+	don-common-demonify sfx{ creepy }
+;
+
+: don-common-demon-pizzaboost dup .strength++ dup .fitness++ dup .morale-- ;
+
+cyoa-choice: don-common-demon-pizza2
+	($ "MERCI POUR L'AAAAAAAME.
+	" rbold .. "Tous les survivants sont infuses de puissance demoniaque." $) cyoa-text!
+	cchar .kill
+	cchar ' don-common-demon-pizzaboost foreach-team-char-except
+;
+
+cyoa-bridge: don-common-demon-pizza2-4
+	someicon
+	"Qui doit etre sacrifie a HEKATRIUS ?" cyoa-text!
+	' don-common-demon-pizza2 cyoa-team-choice
+;
+
+cyoa: don-common-demon-pizza
+
+image-demon
+solo if
+	soloer choosechar
+	($ "MERCI BIEN, IMBECILE.
+	" rbold .. "Le demon bombarde " .. cname .. " de pouvoirs sinistres, puis disparait !" $) cyoa-text!
+	cchar to victim
+	don-common-demonify sfx{ creepy }
+else
+	($ "Les chips etaient parfumees pizza. CA FERA L'AFFAIRE." .. " HEKATRIUS" rbold .. " reclame une ame pour faire passer ca.
+	" .. "QUI SERA SACRIFIE ?" rbold $) cyoa-text!
+	team-count 3 > if
+		' don-common-demon-pizza2 2 #cyoa-team-choice
+		choice( "Choisir quelqu'un d'autre" )choice: don-common-demon-pizza2-4
+	else
+		' don-common-demon-pizza2 3 #cyoa-team-choice
+	then
+	choice( "Euh, ne sacrifier personne." )choice: don-common-demon-pizza-refuse
+then
+	-1 trunk-food+
+;	
+
+
+cyoa-choice: don-common-demon-facepunch
+
+	($ "MAUDIT SOIS-TU, HUMAIN ! MAUDIT !
+	" pbold .. "HEKATRIUS" rbold .. " disparait. " .. cname .. " se sent plutot fier de lui." $) cyoa-text!
+		($ "Quel coup de poing miraculeux !" $) +crtext
+		morale2+ strengthREV strength++ temperREV goodfx
+
+;	
+
+cyoa-choice: don-common-demon-freakout
+
+	($ Thegroup .. " panique !" rbold $) text!
+	notsolo if
+		($ "HEKATRIUS" rbold .. " panique un moment ! Il reprend ensuite l'apparence de " .. vname .. ", qui explose !" $) +crtext
+		victim .kill
+	else
+		($ "HEKATRIUS" rbold .. " panique un moment, puis disparait dans un nuage de fumee ! C'est tres traumatisant !" $) +crtext
+		morale--
+	then badfx
+;	
+
+cyoa-choice: don-common-isabelle-oath 
+	
+	-20 fade_to 1 1 0 fade_clr 20 fade_count!
+	sfx{ thump 2 scale! 0.5 pitch! 350 r! 600 d! 40 a! }
+
+	($ "QU-QUE SE PASSE-T-IL ? NOOOOON ! NOOOON ! VOUS SAVEZ COMBIEN J'AI PAYE CE COSTUUUU-
+	" pbold .. "HEKATRIUS LE PUANT" rbold .. " est vaincu par le serment d'Isabelle. L'equilibre est restaure dans l'univers ! " .. cname .. " est soulage que ca se soit termine si vite." $) cyoa-text!
+		($ YELLOW "''DISPARAIS, IMMONDE VERMINE!''" .. $) +crtext
+		morale2+
+;
+
+
+
+: don-common-demon-angrypunch
+	most-angrystrong if
+		choice( "Lui mettre un pain" )choice: don-common-demon-facepunch
+	then
+;	
+
+: don-common-demon-choiceblock
+		trunk-food 0 > if
+			choice( "Lui offrir un sachet de chips - 1 nourriture" )choice: don-common-demon-pizza
+		then
+		choice( "Paniquer" )choice: don-common-demon-freakout
+;
+
+: don-common-demon-transmutetext
+	($ "Les yeux de " .. cname .. " se retournent et " .. che .. " commence a convulser ! " .. cHe .. " tremble et crie dans des langues arcanes." $) +crtext
+	($ "A la place de " .. vname .. " est maintenant assis " .. "LE DEMON HEKATRIUS" rbold .. ". Il demande si vous avez de la pizza. Il serait ravi d'avoir une part bien chaude." $) +crtext
+
+	don-common-demon-choiceblock
+;	
+	
+
+
+0 value paladins
+0 value isabelle 
+
+: count_paladins args( chara )
+	<- chara .specialtype@ 144 = if
+			<- chara .party@ 1 = if 
+					<- chara .health@ 0 > if 
+						paladins 1 + to paladins
+					<- chara to isabelle
+	then then then 
+;
+	
+	
+// Enter HEKTATRIUS
+cyoa: don-common-demon
+	"L'Invoque Indesirable" cyoa-title!
+	($ Thegroup .. " remarque une odeur pestilentielle venant du plancher. Du soufre. Du mouton pourri. Des bonbons maiz." $) cyoa-text! basic-tone
+	($ "Un eclair de lumiere et le son de " .. "mille baleines qui explosent" pbold .. " envahit la voiture." $) +crtext
+
+	' count_paladins foreach-team-char
+	
+	paladins 0 > if
+		isabelle
+		charchoice( ": FRAPPER L'ENNEMI" )choice: don-common-isabelle-oath
+	then
+
+	solo if
+		image-demon
+		soloer choosechar
+		($ "La fumee se dissipe pour reveler " .. "LE DEMON HEKATRIUS" rbold .. "." $) +crtext
+		($ "Il demande si vous avez de la pizza. Il serait ravi d'avoir une part bien chaude." $) +crtext
+		don-common-demon-angrypunch
+		don-common-demon-choiceblock
+		
+	else // not alone
+		someicon
+		cchar to victim 
+		// added cchar to victim here so it's really easy to keep track of who turned into a demon. This lets me use victim and vname up above, instead of having to constantly keep track of cname.
+			don-common-demon-transmutetext
+	then
+
+	
+;
+
+} }

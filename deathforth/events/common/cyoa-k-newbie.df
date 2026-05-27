@@ -1,0 +1,547 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+0 value wyk-checker
+0 value wyk-name
+0 value wyk-key1
+0 value wyk-key2
+0 value wyk-key3
+0 value wyk-key4
+0 value wyk-win1
+0 value wyk-win2
+0 value wyk-win3
+
+load? wyk/wyk.df
+
+: puppymode ;
+: kittenmode ;
+
+load? puppy.df
+load? kitten.df
+
+: wyk? wyk-checker 0 > ;
+
+cyoa{ road{
+
+	0 stack
+        "Courez a chaque fois que vous le pouvez ! Combattez quand vous y etes oblige. Ces zombies ne laissent pas tomber de butin de zombie." shove
+		"Fouillez pour trouver toutes les munitions que vous pouvez. Developpez les competences de votre equipe. Vous devrez devenir plus fort !" shove
+		"Manier des armes de melee est epuisant jusqu'a ce que vous augmentiez votre force et votre condition physique !" shove
+		"Lorsque vous etes epuise, vous commencez a transpirer. Arretez de vous balancer pendant un moment ou vous ferez beaucoup moins de degats." shove
+		"Vous pouvez faire durer votre voiture beaucoup plus longtemps si vous avez un excellent mecanicien dans l'equipe." shove
+		"Si vous n'aimez pas vos choix Always Be Looting, essayez de conduire pour trouver de nouveaux endroits." shove
+		"Plus il y a de monde plus il y a de combattants ! Cela signifie egalement une plus grande consommation de nourriture." shove
+		"Quelqu'un avec une competence medicale maximale a besoin de moins de fournitures medicales pour guerir, ou parfois aucune." shove
+		"Une competence de tir plus elevee signifie une meilleure manipulation des armes a feu, chaque tir percant plus de zombies !" shove
+		"La force vous permet de soulever et de lancer des meubles plus lourds. Les meubles lances sont les meilleures armes." shove
+		"Une combinaison de Force et de Forme physique determine la vitesse de balancement de larme et l'utilisation d'energie." shove
+		"Creez des personnages personnalises! Ils peuvent apparaitre aleatoirement dans le jeu." shove
+		"Pour la derniere etape du voyage, vous aurez besoin d'un bon groupe ou de grandes armes." shove
+		"La forme physique determine la quantite d'energie de melee que vous avez et la vitesse a laquelle vous la recuperez." shove
+		"FATIGUE donne de gros malus de stats! Eliminez la en dormant au prochain camp ou en vous reposant avant une mission." shove
+		"Si le moral des membres de l'equipe devient trop bas, ils commenceront a se disputer, a desesperer et a se poignarder dans le dos." shove
+		"Jeter des meubles en les ramassant puis en appuyant sur attaquer. Jeter peut etre puissant et efficace." shove
+		"Les personnages peuvent avoir des traits de personnalite qui leur donnent plus d'options lors d'evenements !" shove
+		"Les personnages paranoiaques peuvent reduire la gravite des attaques de bandits ou reveler les statistiques des nouvelles recrues." shove
+		"Les personnages oublieux peuvent manquer de moral en toute securite. Plusieurs fois." shove
+		"Les personnages charmants obtiennent toutes sortes de bonus, en particulier dans les camps de commercants." shove
+		"Les personnages irritants savent toujours la pire chose a dire. Ils ont un AVANTAGE SECRET." shove
+		"Les personnages de bandits peuvent voler de nombreux commercants et d'autres personnes. Cela peut se retourner contre eux selon la personne volee." shove
+		"Les armes lentes et lourdes peuvent etre puissantes avec une force et une forme physique elevees. Sinon, ils peuvent etre horribles." shove
+		"Certaines armes de melee se cassent et d'autres non ! De nombreuses armes cassables courantes compensent en etant legeres." shove
+		"Les zombies doivent s'agripper a vous pendant un court moment avant de pouvoir vous blesser. Fuyez pour vous liberer !" shove
+		"Perdre votre voiture vous expose a des evenements negatifs et a des attaques de bandits presque constants." shove
+		"De nombreux commercants vous proposent differentes choses en fonction de la quantite de nourriture dont vous disposez." shove
+		"Si vous avez peu ou pas de nourriture, certains commercants vous plaindront et vous donneront des trucs gratuits !" shove
+		"Les aboiements de chiens, les klaxons, les coups de feu et autres bruits attirent l'attention des zombies." shove
+		"Les aboiements de chiens, les klaxons, les coups de feu et autres bruits attirent l'attention des zombies." shove
+		"Les zombies peuvent vous poursuivre pendant longtemps, selon leur agressivite et leur irritation." shove
+		"Certains endroits sont des pieges mortels! Lisez les previsions zombies avant d'explorer une zone." shove
+		"Le feu et les explosifs peuvent endommager vos propres personnages, alors faites attention. Le feu est particulierement dangereux." shove
+		"Un feu peut eliminer une armee de zombies si vous avez de la chance. Par contre il est tres dangereux d'en utiliser a l'interieur." shove
+		"Donner un coup de poing a un zombie sans arme ne sert quasiment a rien, si ce n'est le faire lacher prise pendant un court instant." shove
+		"Vous pouvez changer le personnage que vous controlez dans le menu Pause, ce qui offre une meilleure maitrise." shove
+		"Les personnages proches peuvent echanger des armes dans le menu Pause." shove
+		"Essayez de sacrifier quelqu'un que vous n'aimez pas en le laissant se faire manger volontairement. Cela distrait les zombies." shove
+		"Les caracteristiques des personnages sont initialement cachees. Les personnes que vous recrutez peuvent mentir sur leurs competences!" shove
+		"Beaucoup de voleurs peuvent etre achetes avec de la nourriture. Certains voleurs peuvent etre battus par un type de personnalite specifique." shove
+		"Si vos personnages ont tous la sante pleine, les voleurs ne tuent generalement pas l'un deux." shove
+		"Toutes les statistiques vont de 0 a 6. Une statistique de 0 1 echouera generalement automatiquement. 5 6 reussira generalement." shove
+		"Fermer des portes retardera les zombies pendant un temps, car ils ont oublie comment ouvrir une porte." shove
+		"Les zombies attaquent les meubles qui s'interposent. Vous pouvez laisser tomber ou jeter des objets pour creer des obstacles." shove
+		"Certains types de voitures sont plus faciles a reparer que d'autres, exigeant une competence mecanique inferieure." shove
+		"Une competence mecanique tres elevee vous permettra de reparer une voiture immediatement. Les reparations ulterieures deviennent plus difficiles." shove
+		"Les armes a tir lent sont tres efficaces en munitions. Parfois vous voudrez gacher des munitions avec une automatique." shove
+		"Certaines armes de melee ont une attaque en zone, touchant plusieurs zombies en un seul coup. Certaines attaques en zone sont basees sur le hasard." shove
+		"Les zombies deviennent plus agressifs et plus nombreux la nuit. Les zombies vous sentent mieux si vous saignez." shove
+		"Les zombies sont touches pour des degats supplementaires s'ils sont d'abord renverses. Certaines armes ont un fort renversement." shove
+		"Quelques excellentes armes de melee pour les personnes ayant des statistiques elevees: Epee de chevalier. Machette robuste. Hache a incendie. Masse." shove
+		"Voici quelques excellentes armes de melee pour ceux qui ont peu de force ou de condition physique : Batte en aluminium, Matraque, crosse de hockey Xtreme." shove
+		"Les fusils a pompe sont toujours tres efficaces pour les personnes ayant de faibles competences en tir. Degats et renversement eleves." shove
+		"Les pistolets et le uzi ont l'avantage d'utiliser le type de munitions le plus courant." shove
+		"Les armes automatiques sont tres difficiles a controler si vous avez de faibles competences en tir." shove
+		"Les fusils ont des degats eleves et une grande capacite de perforation. Un seul tir peut pulveriser toute une rangee de zombies." shove
+		"Vous pouvez souvent faire reposer vos coequipiers dans la voiture. Utile si quelqu'un est blesse ou si vous voulez un groupe plus petit." shove
+		"Il n'y a pas vraiment de penalite pour qu'un coequipier soit mange par des zombies. Je vous donne juste ce fait." shove
+
+		\ new hints for STOMACH
+        "La penetration des fusils depend de ton tir. Les fusils de haut niveau ont un plafond plus eleve de cibles percees." shove
+        "Les armes automatiques sont bonnes pour se frayer un chemin dans une horde en cas de besoin." shove
+        "Les modes de jeu difficiles requierent presque toujours une composition d equipe bien pensee." shove
+        "DRTC est en developpement constant ! Rejoins-nous sur le discord et dis-nous ce que tu penses des nouveaux changements !" shove
+        "Craftsman est un trait qui peut rendre certaines armes faibles utilisables et puissantes. Par exemple : la rame." shove
+        "La voiture de depart de base necessite 4 en mecanique pour etre reparee. Choisis bien tes perks et traits si tu veux la garder !" shove
+        "En comparant tous les fusils, le cowboy rifle a la pire progression de penetration, gagnant 1 pierce tous les 3 points de tir." shove
+        "En comparant tous les fusils, le M.O.A.R a le nombre maximum de pierce le plus eleve, atteignant 11 cibles par tir." shove
+        "Quelques bons combos de stats : haut wits avec bas attitude, haut attitude avec bas wits, bas composure et bas loyalty." shove
+        "Si tes coequipiers ne font pas ce que tu veux, essaie de changer ta TACTIQUE dans le menu pause." shove
+        "Mettre la TACTIQUE sur RUNNIN est souvent un bon moyen de faire rentrer les PNJ dans la voiture." shove
+        "Beaucoup d armes cassables compensent leur fragilite en etant de bonnes armes de debut de partie." shove
+        "Utilise les fouets sur les personnages avec de faibles stats pour aider tes autres coequipiers a maintenir le nombre de kills." shove
+        "Les zombies peuvent envahir un lieu si tu restes apres 21H. Assure-toi de partir a temps, ou prepare-toi a un combat !" shove
+        "Parle au Professeur Sycamore dans l INFO HUT. J ai entendu dire qu elle etait plutot cool." shove
+        "La nourriture et l essence sont souvent les ressources les plus precieuses. Fais tout pour les preserver !" shove
+        "La vitesse de deplacement est tres puissante ! Cherche des occasions de l augmenter sur la route !" shove
+        "Tu galeres ? Quelques bons combos de combat en debut de partie : Fighter + Warrior, Megabuff + Hyperfixated, Gun Collector + Calm Under Fire." shove
+        "Tu galeres ? Quelques bons combos de soutien en debut de partie : Car Nut + Inventive, Surgeon + Civilized, Mechanic + Craftsman." shove
+        "Certaines armes automatiques restent utiles meme avec un faible tir si tu tires par petites rafales." shove
+        "La minigun offre une puissance immense pour une consommation immense de munitions. Attention !" shove
+        "Les personnages parano, coleriques-forts et calmes-en-tir sont de bons choix pour gerer les bandits." shove
+        "Si tu as assez de sprays de soin et que ton personnage mort n est pas trop abime, tu peux le ressusciter !" shove
+        "Tu detestes un perk ou un trait ? Tu le trouves faible ? Parle-en sur le discord ! Il peut etre retravaille." shove
+        "Les fouets ont un effet d etourdissement, indique par un 'X' sur le coup. Cela garde les zombies au sol plus longtemps." shove
+        "L Animal Geant legendaire est une voiture extremement resistante, mais consomme de l essence a un rythme astronomique." shove
+        "Les armes ont des niveaux ! Les lieux rares contiennent souvent de meilleures armes, et les PNJ les ramassent." shove
+        "Les fusils ont les portees de pierce suivantes : Cowboy 0-2, Hunting 1-6, Sniper 1-5, Slug 2-8." shove
+        "Meme si Ranger promet une reduction de 30% du temps de recharge a distance, pour certaines armes la reduction est plus importante." shove
+        "Les degats sont tires aleatoirement entre 1 et 5, puis multiplies par la puissance de l arme." shove
+        "Les zombies ont toujours 5 points de vie. Avec des degats de 2.5, une arme tue en un coup 80% du temps." shove
+        "A chaque pierce, les fusils perdent 18% de puissance et de recul. C est une penalite multiplicative par pierce." shove
+        "Des fusils suffisamment puissants avec un tir eleve peuvent tirer a travers les etageres !" shove
+        "Des fusils suffisamment puissants peuvent tirer a travers les objets, meme les epaves de voiture ! Utilise le couvert a ton avantage !" shove
+        "Il n y a aucune difference fonctionnelle de degats entre le Zweihander et le Dragonslayer." shove
+        "De maniere generale, les coups multiples viennent surtout des armes de melee lourdes." shove
+        "Les fouets ont un grand cleave, peu de degats et un etourdissement. Les haches ont un grand cleave et des degats eleves, mais mettent longtemps a frapper." shove
+        "Il y a de bonnes raisons de skipper un lieu rare ; beaucoup ont beaucoup plus de zombies que la normale." shove
+        "La force n'augmente pas les degats ! Par contre elle reduit le temps de recharge des armes et le cout en endurance par coup." shove
+		"La penetration des fusils depend de votre Tir. Les fusils de meilleure qualite ont un plafond de penetration plus eleve." shove
+		"Les armes automatiques sont bonnes pour se frayer un chemin dans une horde en urgence." shove
+		"Les modes de jeu plus difficiles necessitent presque certainement une composition d'equipe bien pensee." shove
+		"DRTC est en developpement constant ! Rejoignez-nous sur notre discord et dites-nous ce que vous pensez des changements !" shove
+		"Artisan est un trait qui peut rendre certaines armes mediocres utilisables et puissantes. Par exemple : la rame." shove
+		"La voiture de depart necessite 4 en Mecanique pour etre reparee. Choisissez vos perks et traits judicieusement !" shove
+		"Le fusil de cowboy a la progression de penetration la plus lente parmi les fusils, gagnant 1 penetration par tranche de 3 en Tir." shove
+		"Le M.O.A.R a le plus grand nombre de penetrations possibles parmi les fusils, plafonnant a 11 cibles par tir." shove
+		"Bonnes combinaisons de stats : reflexes eleves avec attitude basse, attitude elevee avec reflexes bas, calme et loyaute bas." shove
+		"Si vos coequipiers ne font pas ce que vous voulez, changez votre TACTIQUE dans le menu pause." shove
+		"Mettre la TACTIQUE sur RUNNIN' est souvent un bon moyen de faire monter les PNJ dans la voiture." shove
+		"De nombreuses armes cassables compensent leur fragilite en etant de bonnes armes en debut de partie." shove
+		"Utilisez des fouets sur les personnages a faibles stats pour aider vos autres membres a maintenir un compte de kills eleve." shove
+		"Les zombies peuvent envahir un endroit si vous restez apres 21h. Partez a temps, ou preparez-vous au combat !" shove
+		"Parlez au Professeur Sycamore dans l'INFO HUT. Il parait qu'elle est plutot cool ou quelque chose comme ca." shove
+		"La nourriture et l'essence sont souvent les ressources les plus precieuses. Faites de votre mieux pour les preserver !" shove
+		"La vitesse de deplacement est puissante ! Cherchez des occasions de l'augmenter sur la route !" shove
+		"Du mal a jouer ? Bonnes combos de combat precoces : Fighter + Warrior, Megabuff + Hyperfixated, Gun Collector + Calm Under Fire." shove
+		"Du mal a jouer ? Bonnes combos de soutien precoces : Car Nut + Inventive, Surgeon + Civilized, Mechanic + Craftsman." shove
+		"Certaines armes automatiques peuvent etre utiles meme avec un faible Tir si vous tirez en rafales courtes." shove
+		"La mitrailleuse offre une puissance immense pour une consommation de munitions immense. Prudence !" shove
+		"Les personnages Paranoiacs, Forts-en-colere et Calmes-tireurs sont de bonnes options contre les bandits." shove
+		"Si vous avez assez de sprays de soin et que votre personnage mort n'est pas trop loin, vous pouvez le ranimer !" shove
+		"Vous detestez un perk ou trait ? Vous le trouvez sous-puissant ? Parlez-en sur le discord ! Il sera peut-etre retravaille." shove
+		"Les fouets ont un effet d'etourdissement, indique par un 'X' au contact. Ca garde les zombies a terre plus longtemps." shove
+		"Le legendaire Giant Animal est une voiture extremement resistante, mais consomme de l'essence a un rythme astronomique." shove
+		"Les armes ont des niveaux ! Les endroits rares contiennent souvent de meilleures armes, et les IA les ramasseront." shove
+		"Plages de penetration des fusils : Cowboy 0-2, Chasse 1-6, Sniper 1-5, Slug 2-8." shove
+		"Bien que Ranger promette 30% de reduction de recharge a distance, pour certaines armes ce CDR est en realite plus grand." shove
+		"Les degats sont tires aleatoirement entre 1 et 5, puis multiplies par la stat de puissance de l'arme." shove
+		"Les zombies ont toujours 5 points de vie. Une arme a 2.5 de puissance tuera en un coup 80% du temps." shove
+		"A chaque penetration, les fusils perdent 18% de puissance et de renversement. C'est une penalite multiplicative." shove
+		"Des fusils suffisamment puissants avec un Tir assez eleve peuvent tirer a travers les etageres !" shove
+		"Des fusils suffisamment puissants peuvent tirer a travers les objets, meme les epaves ! Utilisez les couvertures !" shove
+		"Il n'y a fonctionnellement aucune difference de degats entre le Zweihander et le Dragonslayer." shove
+		"En general, les coups multiples ne viennent que des armes de melee plus lourdes." shove
+		"Les fouets ont fort clivage, peu de degats et etourdissent. Les haches ont fort clivage et degats, mais sont tres lentes." shove
+		"Il y a de bonnes raisons d'eviter un emplacement rare ; beaucoup ont bien plus de zombies que d'habitude." shove
+		"La Force n'augmente pas les degats ! Elle reduit cependant le temps de recharge et le cout en endurance par frappe." shove
+	constant HINT-LIST
+	HINT-LIST var hint-list HINT-LIST shuffles to hint-list
+
+: hintlist
+	hint-list depths 0= if "- Determinez vos traits et avantages preferes, puis creez un tas de personnages personnalises avec eux.
+	- Si vous avez de l'essence dans le reservoir, vous pouvez ignorer de nombreux endroits. Chaque endroit ignore augmente les chances de reussir !
+	- Pour la fin de partie, vous aurez besoin de statistiques elevees et d\'armes de melee efficaces ou d\'une arme automatique + ammo.
+	Nous n\'avons plus de conseils ! Bonne chance !" else shuffles pops nip then pbold
+;
+
+: warptocanada "events/exterior/region/canada-crossing-region.df" $load-region premission
+	300 trunk-rifle-shell+
+	2 WEAPON_AK47 trunk.weapon+
+;
+
+cyoa: special-losthope
+	1.3 to diff-scalar 1.2 to road-difficulty 15 to road-trip-days
+	"TESTER LA VILLE DE L\'ESPOIR PERDUE EN MODE ROUTE PLUS MORTELLE!" text!
+	2.3 12 14 rnd 4 siegecast "events/finale/deathcity.df" $load-region
+	choice( "TOUT OU RIEN !" rbold )choice: premission
+	150 trunk-rifle-shell+ 1 WEAPON_AK47 trunk.weapon+
+;
+
+cyoa: test-newcity
+	"New City Tester" cyoa-title!
+	someicon
+	($ "Test this and post a comment if there are:
+	1. Missing buildings: There should be 4 lootable
+	2. Buildings where the door is off the map" $) cyoa-text! basic-tone
+	1 1.3 frnd 7 15 frnd 2 zforecast
+	0.4 1 frnd weather! -1 1 frnd wind_force!
+	// citylayoutdeck
+	// "events/city/region/burb-vary-3x4.df" $load-region
+	"events/city/region/test/region-downtown-custom.df" $load-region
+	// "events/city/region/test/region-downtown-test2.df" $load-region
+
+		lot-draw
+;
+
+cyoa: crashtest
+	($ "Cette option vous emmene directement au Canada, la mission finale du dernier jour !
+	Le but est d'aider les gens avec le bug de crash.
+	" .. "AVERTISSEMENT SPOILERS" fbold $) text!
+		choice( "Oops non jouer normalement" )choice
+		choice( "Teleporter directement au Canada !" )choice: warptocanada
+;
+
+cyoa: special-testing
+	($ "Get ready... for a superior JoJo experience." rbold $) text!
+		char-gen to recruitee
+		recruitee .charbroify
+		(* WEAPON_MOODYSAW recruitee .weaponb!
+		WEAPON_MOODYROCKET recruitee .weaponc!
+		50 recruitee .stackedb!
+		10 recruitee .stackedc! *)
+		recruitee choosechar cicon
+		recruit-yesno
+;
+
+cyoa: location-testing
+	($ "Get ready... for a Mechnical shopping experience." rbold $) text!
+	80 trunk-food+ "events/trade/trader-camp-region-special8.df" $load-region to-mission
+;
+
+cyoa: location-testing2
+	($ "Get ready... for a relaxing park experience." rbold $) text!
+	"events/exterior/park.df" $load-region to-mission
+;
+
+(* cyoa: location-testing
+	($ "Get ready... for a spooky graveyard experience." rbold $) text!
+	"events/exterior/region/graveyardcar.df" $load-region to-mission
+; *)
+
+: weapon-testing
+	goblin-laugh
+
+	100 trunk-bullet+
+	100 trunk-shotgun-shell+
+	100 trunk-rifle-shell+
+	// 200 trunk-gas+
+	// 200 WEAPON_NAPALM trunk.weapon+
+	// 160 WEAPON_EJHAMMER trunk.weapon+
+	// 1 WEAPON_JACKHAMMER trunk.weapon+
+	// 1 WEAPON_CHAINSAW trunk.weapon+
+	// 20 WEAPON_FIRECRACKERS trunk.weapon+
+	// WEAPON_EBLOWER trunk.weapon+
+	// WEAPON_EWHACKER trunk.weapon+
+	// WEAPON_LANDMINE trunk.weapon+
+	// 24 WEAPON_GLAUNCH trunk.weapon+
+	// 12 WEAPON_BAZOOKA trunk.weapon+
+	// 1 WEAPON_CAVALRY trunk.weapon+
+
+	\ 1 WEAPON_SLAMFIRE trunk.weapon+
+	\ 1 WEAPON_SIXSHOOTER trunk.weapon+
+	\ 1 WEAPON_FLIPARI trunk.weapon+
+;
+
+: weapon-testing-2 ;
+
+cyoa: wykreset
+	"Codes WYK reinitialises !" text! goodfx gstats{ 0 to wyk-highscore }
+;
+
+: arq-testing 30 trunk-food+ "events/arqregion.df" $load-region to-mission ;
+
+cyoa-choice: update-testing
+	\ 30 trunk-food+
+	"UPDATE TESTING" cyoa-title!
+	($ "Notes for the " .. "STOMACH" rainbold .. " Update:" $) text!
+	($ "BTTW compatibility has been improved with other perks. There are many more new trademark weapon combinations!
+	Axes were reworked! They now have an AoE around the point of impact. There's also a citadel, train and rail yard to find!" rbold $) +crtext
+	($ "Also, most major firearms have been animated!" $) +crtext
+	($ "REMEMBER: ART IS SUBJECT TO CHANGE." $) +crtext
+	weapon-testing "events/testregion.df" $load-region
+		choice( "Test Things Out" )choice: premission
+;
+
+defer hintrepeat
+
+: startchoices
+	\ Q addition - RPG mode
+	gamedef{ ' thelongsiege gamemode? } if to_the_fare then
+	gamedef{ ' sceptermode gamemode? } if to_the_range then
+	choice( "EN ROUTE !" )choice
+//	choice( "WARP TO CANADA [crashdebug]" )choice: crashtest
+	DEBUG_BUILD TEST_BRANCH or if
+		(*
+		// choice( "START WITH JOJO REFERENCE" fbold )choice: special-testing
+		choice( "START IN MECHANICAL FORTRESS" fbold )choice: location-testing
+		choice( "START IN PARK" fbold )choice: location-testing2
+		// choice( "START WITH NEW WEAPONS" fbold )choice: weapon-testing
+		*)
+		choice( "PREVIEW NEW STUFF" fbold )choice: update-testing
+	then
+//	choice( "Try New City" fbold )choice: test-newcity
+	puppymode kittenmode
+	wyk? if choice( "REINITIALISER LES CODES WYK" rbold )choice: wykreset then;
+	hint-list depths 0= not if choice( "Lire un autre Conseil" )choice: hintrepeat then
+;
+
+: 4morale-team args( char )
+	STAT_MORALE <- char .bonus@ -3 < if
+		6 <- char .morale!
+	else
+		4 <- char .morale!
+	then	
+;
+\ starting in despair is poopy ... relevant to D.I.N.K 
+
+: startcheck
+	8 trunk-food+
+	2 WEAPON_FLASHLIGHT trunk.weapon+
+	
+	// 4 pchar .morale!
+	// notsolo if 4 1 #teamchar .morale! then
+	
+	' 4morale-team foreach-team-char
+;
+
+cyoa: starthintme
+	startchoices
+	hintlist text!
+;
+
+' starthintme to hintrepeat
+
+cyoa: knoobstartP
+	wyk? if
+		($ "COURSE WYK : " .. wyk-name .. " Edition" $) cyoa-title!
+	else
+		"Death Road to Canada" cyoa-title!
+	then
+	// choice( "EN ROUTE !" )choice
+		soloer choosechar cicon
+
+		time.month 6 = time.month.day 1 = and if
+			' beaver-scget stack-road-action
+		then
+
+		time.month 6 = time.month.day 4 = and if
+			' july4-scget stack-road-action
+		then
+
+		time.month 11 = time.month.day 25 = and if
+			' santa-test stack-road-action
+		then
+
+		time.month 11 = time.month.day 24 = and if
+			' santa-test stack-road-action
+		then
+
+		time.month 10 = time.week.day 4 = and if
+			time.month.day 21 > time.month.day 29 < and if
+				' turkey-test stack-road-action
+			then
+		then
+
+		halloween? if
+			' halloween-event stack-road-action
+		then
+
+		time.month 1 = time.month.day 14 = and if
+			' feb14-scget stack-road-action
+		then
+
+		// Placeholder.. accidental LNK DAY that one time
+		// time.month 2 = time.month.day 29 = and if
+		//	' lnk-test stack-road-action
+		// then
+
+	cheevo{ post-all }
+
+	' startcheck stack-road-action
+
+	gamedef{ ' OPPmode gamemode? } if
+		"events/OPPmode.df" $load-region to-mission
+		someperkchecks
+	then;
+
+	gamedef{ ' 4jerksmode gamemode? ' 4jerksmodeEX gamemode? } or if
+		"events/4jerksmode.df" $load-region to-mission
+		someperkchecks
+	then;
+
+	// Arq new word for perk supply checks
+	' someperkchecks stack-road-action
+
+	($ cname .. " a entendu des rumeurs selon lesquelles le Canada etait un endroit sur, a l'abri de la menace des zombies.
+	N'ayant rien a gagner a rester en Floride, " .. che .. " decide de braver la Death Road et de conduire vers le nord." $) cyoa-text!
+
+	hintlist +crtext
+
+	wyk? if "COURSE WYK : " +crtext
+		gstats{ wyk-highscore } case
+			0 of "7 cles Steam sont cachees sur la Death Road !" fbold endof
+			1 of "6 cles Steam restantes !" rbold endof
+			2 of "5 cles Steam restantes !" rbold endof
+			3 of "4 cles Steam encore cachees !" rbold endof
+			4 of "Terminez le jeu pour obtenir les 3 dernieres cles Steam !" fbold endof
+			5 of "Toutes les cles ont ete trouvees ! Felicitations !" pbold endof
+		endcase +text
+	then
+
+		startchoices
+
+;
+
+// *********** OLD STUFF BELOW *************
+
+// BEGIN temporary beta start message
+
+cyoa: knoobstartB
+	"The Death Road to Canada 8/26 Alpha" cyoa-title!
+	choice( "EN ROUTE !" )choice
+		soloer choosechar cicon
+
+	($ "Welcome to the Death Road to Canada Alpha!
+	Currently Testing: Special Characters
+	You can find a full list of recent changes and instructions to help us test the game by clicking the NEWS link on the Death Road to Canada Steam page.
+	Send us feedback via Kickstarter messages!" $) cyoa-text!
+		8 LOOT_FOOD trunk.loot+ 1 WEAPON_BASEBALL trunk.weapon+ 30 WEAPON_GRENADE trunk.weapon+ 30 WEAPON_PIPEBOMB trunk.weapon+ 1 WEAPON_FLAMETHROWER trunk.weapon+ 500 LOOT_GAS trunk.loot+
+;
+
+// END temporary beta start message
+
+cyoa-choice: kn1recruit
+	recruitee character# cyoa-char-icon!
+	WEAPON_WRENCH recruitee .weapona!
+	($ rname .. " fait maintenant partie de l'equipe !
+	" .. cname .. " grogne discretement un peu a ce sujet.
+	En avant vers le Canada !" $) cyoa-text! 2 300 tone
+	morale-- recruitee .recruit
+;
+cyoa-choice: kn1nope
+	($ cname .. " degage de la.
+	" .. "A PLUS IMBECILE." pbold .. "
+	Ca semble un bon debut." $) cyoa-text! morale2+ goodfx
+;
+
+cyoa: knoobevent1
+	"Allies Puissants" cyoa-title!
+	char-gen to recruitee
+	recruitee character# cyoa-char-icon!
+	soloer choosechar
+	choice( "Recruit " .. rname )choice: kn1recruit
+	cchar charchoice( " PEELS OUT" )choice: kn1nope
+
+	($ "Alors que " .. cname .. " commence le voyage vers le Canada, il rencontre son voisin, " .. rname .. ".
+	" .. cname .. " a toujours deteste cette personne, mais pourrait utiliser l'aide et/ou le leurre." $) cyoa-text! basic-tone
+;
+
+: 4food2med 4 LOOT_FOOD trunk.loot+ 2 LOOT_MEDICAL trunk.loot+ ;
+cyoa-choice: kn2-shotty
+	($ soloname .. " a nomme ce fusil BIG DAWG. Il est capable d'exploser les zombies, de pres comme de loin. Pour un novice, c'est peut-etre le meilleur choix d'arme a feu.
+	" .. Thegroup .. " acquiert " .. RED .. "BIG DAWG" .. WHITE .. "." $)
+	cyoa-text! goodfx 1 WEAPON_SHOTGUN trunk.weapon+ 8 LOOT_SHOTGUN_SHELL trunk.loot+ 4food2med
+;
+cyoa-choice: kn2-rifle
+	($ "Les fusils peuvent traverser plusieurs cranes de zombies, entre les mains d'un excellent tireur ! " .. soloname .. " n'est pas necessairement un grand tireur, mais c'est en forgeant qu'on devient forgeron.
+	" .. Thegroup .. " acquiert le fusil !" $)
+	cyoa-text! goodfx 1 WEAPON_RIFLE trunk.weapon+ 12 LOOT_RIFLE_SHELL trunk.loot+ 4food2med
+;
+cyoa-choice: kn2-pistol
+	($ "Le modeste pistolet n'a peut-etre pas la puissance des grandes armes, mais il fait le travail. Et les balles de pistolet sont encore assez abondantes. Ouvrez n'importe quel tiroir et il en sortira probablement !
+	" .. Thegroup .. " acquiert le pistolet !" $)
+	cyoa-text! goodfx 1 WEAPON_PISTOL trunk.weapon+ 20 LOOT_BULLET trunk.loot+ 4food2med
+;
+cyoa-choice: kn2-gas
+	"Les armes : qui en a besoin ? La voiture est une arme. Plus ce gros bloc de metal peut rouler avant de tomber en panne d'essence, plus le voyage est sur.
+	Aussi, vous trouverez peut-etre une tronconneuse." cyoa-text! goodfx 150 LOOT_GAS trunk.loot+ 4food2med
+;
+cyoa: knoobevent2
+	"En Armes et Prets" cyoa-title! 0 to cyoaicon cyoaicon
+	soloer choosechar
+	($ Thegroup .. " fait un petit detour vers une cache de provisions laissee la avant.
+ En plus d'un peu de nourriture et de medecine, la cache contenait : " $) cyoa-text! 2 500 tone
+
+		choice( "Fusil a pompe et 8 cartouches" )choice: kn2-shotty
+		choice( "Fusil et 12 munitions" )choice: kn2-rifle
+		choice( "Pistolet et 20 balles" )choice: kn2-pistol
+		choice( "150 d'essence supplementaire" )choice: kn2-gas
+;
+
+cyoa-choice: kn3recruit
+	recruitee character# cyoa-char-icon!
+	($ rname .. " fait maintenant partie de l'equipe !
+	" .. cname .. " grimace en voyant la nouvelle recrue engloutir les deux boites de conserve longuement thesaurisees.
+	En avant vers le Canada !" $) cyoa-text! 2 300 tone
+	-2 LOOT_FOOD trunk.loot+ recruitee .recruit
+;
+cyoa-choice: kn3nope
+	($ cname .. " degage de la.
+	" .. "PERSONNE NE TOUCHE MES BOITES DE CONSERVE." pbold .. "
+	C'etait probablement le bon choix." $) cyoa-text! goodfx morale++
+;
+
+cyoa: knoobevent3
+	"Recrutement d'un Vaurien" cyoa-title!
+	soloer choosechar
+	char-gen to recruitee
+	WEAPON_SLEDGE recruitee .weapona!
+	recruitee character# cyoa-char-icon!
+	($ "Pas loin de la planque de " .. cname .. ", " .. thegroup .. " tombe sur quelqu'un qui erre sur la route, masse sur l'epaule.
+	" .. rname .. " se presente et propose de rejoindre la mission vers le Canada en echange d'un peu de nourriture." $) cyoa-text! basic-tone
+		choice( "Recruter " .. rname .. " pour 2 Nourriture" )choice: kn3recruit
+		cchar charchoice( ": C'EST MA NOURRITURE" )choice: kn3nope
+;
+
+: knoob4text ($ "Quelle incroyable sagesse.
+" .. cname .. " est enrichi de ce savoir. " .. cHe .. " n'oubliera jamais ces mots." $) cyoa-text! goodfx morale++
+;
+cyoa-choice: kn4-eyes knoob4text wits++ ;
+cyoa-choice: kn4-hitit knoob4text mechanic++ ;
+cyoa-choice: kn4-sick knoob4text medical++ ;
+cyoa-choice: kn4-sayit knoob4text attitude++ loyalty++ cool-it++ ;
+cyoa: knoobevent4
+	"Sage Mentor" cyoa-title! 0 to cyoaicon cyoaicon
+	soloer choosechar
+	($ cname .. " decide de rendre visite a son vieux mentor une derniere fois avant de partir vers le nord.
+	Le mentor de " .. cname .. " se souvient avec " .. chim .. " et offre quelques derniers conseils avant le depart :" $) cyoa-text! 2 500 tone
+
+	choice( "NE JAMAIS FAIRE CONFIANCE A PERSONNE NI A RIEN" )choice: kn4-eyes
+	choice( "SI QUELQUE CHOSE CASSE, FRAPPE-LE" )choice: kn4-hitit
+	choice( "LES MALADES FONT SEMBLANT" )choice: kn4-sick
+	choice( "DIS-LE NE LE CRACHE PAS" )choice: kn4-sayit
+;
+
+cyoa: knoobstart1
+	"The Death Road to Canada 5/27 Alpha" cyoa-title!
+	choice( "EN ROUTE !" )choice
+		soloer choosechar cicon
+
+	($ cname .. " hears rumors that Canada is a safe place, free of the threat of zombies.
+	With nothing to gain from waiting around Florida, " .. che .. " decides to gather up some hoarded supplies and head north.
+	" .. cname .. " brings along a trusty baseball bat!" $) cyoa-text!
+		100 LOOT_GAS trunk.loot+ 2 LOOT_MEDICAL trunk.loot+ 8 LOOT_FOOD trunk.loot+ 1 WEAPON_BASEBALL trunk.weapon+
+;
+
+} }

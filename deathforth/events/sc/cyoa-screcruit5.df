@@ -1,0 +1,187 @@
+// Nimbus Ordeal, Kaiju, Canada Day Beaver, July 4th
+
+cyoa{ road{
+
+cyoa-bridge: nimbus-recruit
+	ricon
+	($ rname .. " monte dans la voiture. Son epee geante ostentatoire racle partout, devastant la sellerie." $) cyoa-text! goodfx
+	team-count 3 > if
+		"Votre groupe est plein ! Qui doit partir pour faire de la place ?" +crtext recruit-replace?
+	then;
+		recruited
+;
+
+cyoa: nimbus-scget
+	"Niveau Insuffisant" cyoa-title!
+	char-gen to recruitee ricon	3 recruitee .morale! recruitee .nimbusify
+	($ Thegroup .. " repere un auto-stoppeur au bord de la route.
+	Il manie une enorme epee ridicule. Il est evident qu'elle est bien trop grande pour etre maniee efficacement.
+	L'homme est aussi de Niveau 1, Niveau 2 au mieux. Il va avoir besoin d'un serieux entrainement s'il veut affronter " .. "L'Ultime Bizarro-Krankor Transcende" rainbold .. " a la fin de ce jeu." $) cyoa-text! basic-tone
+		choice( "Le recruter" )choice: nimbus-recruit
+		choice( "Le laisser la" )choice
+;
+
+cyoa-bridge: kaiju-recruit
+	ricon
+	($ Thegroup .. " avance de quelques metres et manque d'ecraser le monstre. C'etait en fait quelqu'un dans un costume de monstre, en train de pietiner une petite ville en carton.
+	" .. "Desole, je suis coince dans ce costume !" pbold .. " Elle monte dans la voiture." $) cyoa-text! goodfx
+	team-count 3 > if
+		"Il n'y a pas de place dans l'equipe pour ce monstre ! Qui doit partir ?" +crtext recruit-replace?
+	then;
+		recruited
+;
+
+cyoa: kaiju-scget
+	"Monstre Geant en Ville" cyoa-title!
+	char-gen to recruitee 3 recruitee .morale! recruitee .kaijuify
+	($ "Un gigantesque monstre prehistorique detruit la ville !
+	Il pietine partout, aneantissant des batiments. Qui sait combien de boites de conserve il est en train d'ecraser ?
+	Vous etes les seuls a pouvoir l'arreter !" $) cyoa-text! basic-tone
+	"Vos previsions zombies :" pbold +crtext
+	($ "TAILLE DE LA HORDE : " pbold .. "PLUTOT GRANDE" fbold $) +crtext
+	($ "AGRESSIVITE : " pbold .. "SUPER ENERVE" fbold $) +crtext
+	($ "HEURE ACTUELLE : " pbold .. "L'HEURE DU MONSTRE" fbold $) +crtext
+		choice( "Hors de question, on deguerpie" )choice
+		choice( "Sauver la ville !" )choice: kaiju-recruit
+
+;
+
+cyoa: july4-scget
+	"Bonne Fete de l'Amerique" cyoa-title!
+	char-gen to recruitee ricon 4 recruitee .morale! recruitee .unclesamify
+	($ rname .. " apparait ! C'est la personnification vivante de " .. "L'AMERIQUE" fbold .. ", qui a cesse d'exister il y a des annees.
+	Vous vous sentez " .. "VAGUEMENT PLUS PATRIOTIQUE" rbold .. ", mais pas vraiment.
+	Il est temps de fuir ce wasteland de zombies !" $) cyoa-text! basic-tone
+		choice( "Demander a " .. rname .. " de rejoindre le groupe" )choice: recruit-yes
+		choice( "Fuir vers le Canada" )choice
+;
+
+cyoa: beaver-scget
+	"Bonne Fete du Canada" cyoa-title!
+	char-gen to recruitee ricon 6 recruitee .morale! recruitee .beaverify
+	255 WEAPON_HOCKEY trunk.weapon+
+	($ "Quelqu'un a rempli votre voiture de crosses de hockey ! Ca ressemble a une blague de " .. "FETE DU CANADA" rbold .. " !
+	Quelque chose remue dans le gigantesque tas de crosses de hockey. Un gros rongeur pointe le bout de son nez hors du tas." $) cyoa-text! basic-tone
+		choice( "Demander a " .. rname .. " de rejoindre le groupe" )choice: recruit-yes
+		choice( "Ignorer le rongeur" )choice
+;
+
+cyoa: feb14-scget
+	"Saint-Valentin : Cette Fois C'est Personnel" cyoa-title!
+	char-gen to recruitee ricon 4 recruitee .morale! recruitee .cupidify
+	($ rname .. " est la ! C'est la personnification vivante de " .. "L'AMOUR" fbold .. ". Exactement comme sur ces petits bonbons en forme de coeur.
+	Vous vous sentez " .. "UN PEU PLUS ROMANTIQUE" rbold .. ", mais pas vraiment." $) cyoa-text! basic-tone
+		choice( "Demander a " .. rname .. " de rejoindre le groupe" )choice: recruit-yes
+		choice( "Trop guimauve pour moi" )choice
+;
+
+// HALLOWEEN Event
+
+
+cyoa-choice: sans-test
+	"WOOOOOOOOOOOOAAAAAAAAAAAAAAAH !" cyoa-title!
+	"Excellent choix ! Le voila !" cyoa-text! goodfx
+	char-gen to recruitee recruitee .skelify
+	"Cameo Character" recruitee .name!
+	recruited
+;
+
+: sans2-test
+	sans-test ' .skelify foreach-team-char
+;
+
+cyoa-choice: halloween-cameos2
+	"ENCORE MIEUX COMME CAMEOS" cyoa-title!
+
+	($ "Pas de panique ! On a d'autres cameos en reserve ! Plein d'autres ! " .. "4 de plus !" rainbold $) cyoa-text! goodfx
+
+	choice( "Freddie, celui de FNAF Partie 12 [?]" rbold )choice: sans-test
+	choice( "Votre cameo prefere de FNF" rbold )choice: sans-test
+	choice( "Le tres souvent reclame " .. "SHREK de FNFAFNF 8" rbold )choice: sans-test
+	choice( "Choisir Sans finalement, et regretter de ne pas l'avoir fait plus tot" )choice: sans2-test
+;
+
+cyoa-choice: halloween-cameos
+	"L'HEURE DES CAMEOS" cyoa-title! picon
+
+	($ "Des cameos croisements avec des jeux video populaires ???? " .. "WOOOOOOOOOOOOAAAAAAAAAAAAAAAH !" rbold .. "
+	Enfin ! Mais choisissez bien, car on ne propose ca qu'une fois par an ! " .. "A HALLOWEEN" rainbold $) cyoa-text! goodfx
+
+	"NOTE DES DEVELOPPEURS : On mettra ca a jour chaque annee pour rester a la pointe des cameos" bbold +crtext
+
+	choice( "Sans et Helvetica de Undertale" rbold )choice: sans2-test
+	choice( "Amogus de Among Us" rbold )choice: sans-test
+	choice( "Fall Guys je suppose ?" rbold )choice: sans-test
+	choice( "Pas assez bien, j'" .. "AI BESOIN" rbold .. " de voir plus d'options" )choice: halloween-cameos2
+;
+
+cyoa-bridge: event-dracula
+	"Tout Droit Sorti de Mes Romans Twilight" cyoa-title!
+	char-gen to recruitee ricon 4 recruitee .morale! recruitee .dracufy
+	($ "Tiens, c'est Dracula ! Salut Dracula." $) text! " SANGUE ! BLAAARGH !" rbold +text
+	($ pname .. " n'aurait jamais cru rencontrer une celebrite ! Il accepte de bien vouloir reciter ses repliques cultes." $) +crtext
+	recruitee .fitnessREV goodfx
+	($ "Est-ce que " .. pname .. " devrait recruter " .. rname .. " ? Il a l'air plutot seul apres tout ce temps enferme dans une crypte." $) +crtext
+	recruit-yesno
+;
+
+cyoa-choice: halloween-monsters
+	"L'HEURE DU MONSTRE" cyoa-title!
+
+	($ "Vous avez fait le bon choix ! Les bonbons de l'option " .. "FRIANDISE" bbold .. " etaient " .. "EXTREMEMENT empoisonnes." rbold .. "
+	Choisissez votre monstre prefere, en recompense :" $) cyoa-text! goodfx
+
+	choice( "Un " .. "clown" rbold .. " rigolo" )choice: clown-test
+	choice( "MASON" rbold .. ", le monstre sympa" )choice: mason-test
+	choice( "G*RF" rbold .. ", le Fleau des Lundis" )choice: grf-test
+	choice( "DRACULA" rbold .. ", un cameo de celebrite" )choice: event-dracula
+;
+
+cyoa-choice: halloween-treat
+	"Bonbons d'Halloween" cyoa-title!
+
+	($ "Vous avez fait le bon choix ! Si vous aviez choisi autre chose, j'aurais " .. "detruit tous vos personnages, instantanement !" rbold .. " Voici votre recompense." $) cyoa-text! goodfx
+	"Vous avez obtenu un seul bonbon dur.
+	Ca sent l'interieur d'un vieux sac a main." bbold +crtext
+	1 trunk-food+
+
+	choice( "MERCI " .. "beaucoup Obama" bbold )choice
+;
+
+
+cyoa-choice: halloween-hand2
+
+	($ cname .. " perd sa vieille " .. chis .. " main ennuyeuse et en obtient une " .. "Main-Tronconneuse !" rainbold .. " C'est peut-etre le Halloween le plus festif de tous les temps !" $) cyoa-text!
+	ctakeweapons WEAPON_CHAINHAND cchar .weapona! 1 cchar .weapon_nodropa!
+	cchar .trait@ "Specialist" $= if
+		($ cname .. " se sent INCROYABLEMENT fier !" rainbold $) +crtext
+		2 cchar .carrying.slot_count! morale4+
+	then goodfx
+
+	choice( "Joyeux Halloween !" )choice
+
+;
+
+cyoa-bridge: halloween-hand
+	"Main-Tronconneuse" cyoa-title! picon
+	solohuman if
+		choosehuman cchar halloween-hand2
+	then;
+	"Rien ne dit mieux Halloween que de remplacer sa main par une tronconneuse !
+	A qui voulez-vous donner une main-tronconneuse ?" text!
+	' halloween-hand2 cyoa-human-choice
+;
+
+cyoa: halloween-event
+	"Halloween SPECTRE-ACULAIRE" cyoa-title!
+	($ "C'est " .. "HALLOWEEN !" fbold .. " Preparez-vous a une experience " .. "TERRIFIANTE !" fbold .. "
+	Vous pouvez choisir parmi la liste suivante de " .. "TOURS" rbold .. ", ou opter pour l'option sure, delicieuse mais ennuyeuse d'une " .. "FRIANDISE." bbold $) cyoa-text! basic-tone
+
+		choice( "TOUR : " rbold .. "Recruter un MONSTRE" )choice: halloween-monsters
+		choice( "TOUR : " rbold .. "Cameo croisement avec un jeu populaire !" )choice: halloween-cameos
+		choice( "TOUR : " rbold .. "Obtenir une MAIN-TRONCONNEUSE" )choice: halloween-hand
+		choice( "Donnez-moi cette " .. "FRIANDISE" bbold )choice: halloween-treat
+
+;
+
+} }

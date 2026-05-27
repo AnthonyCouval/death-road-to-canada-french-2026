@@ -1,0 +1,86 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: solo-haze-no
+"Quitter la Death Road" cyoa-title! soloer choosechar
+($ cname .. " finit par abandonner. " .. cHe .. " bat en retraite vers un destin inconnu.
+Le voyage vers le Canada est termine." $) cyoa-text! 0 cyoa-image-icon! 1 500 tone
+	clear-streak delete-the-game
+	choice( "ZUTTT" )choice: quit-to-title
+;
+
+cyoa: solo-haze
+	"Brume de Desespoir" cyoa-title!
+	despair-start!
+	($ cname .. ", dans une brume de desespoir, cesse de faire attention en conduisant. " .. cHe .. " se retrouve au milieu d'une horde massive qu'" .. che .. " aurait pu eviter. Un batiment est a proximite, mais ca semble sans espoir..." $) cyoa-text! badfx
+		solo-haze-siege
+		choice( "Abandonner le voyage vers le Canada" )choice: solo-haze-no
+;
+
+cyoa: solo-drive
+	"Desespoir sur la Route" cyoa-title!
+	despair-start!
+	($ "L'esprit obscurci par la solitude et le faible moral, " .. cname .. " finit par percuter la voiture." $) cyoa-text! bitefx -2 -3 rnd car-chassis+ sting--
+	car-chassis 0 > if
+		($ cname .. " est soulage quand la voiture redema rre !" $) +crtext morale++
+	then
+;
+	
+cyoa: solo-strength
+	despair-start!
+	"Perte de Force" cyoa-title!
+	($ "Le desespoir et l'isolement font perdre des forces a " .. cname .. "." $) cyoa-text! badfx
+		strength--
+;
+
+cyoa: solo-wasting
+	despair-start!
+	"Deperi ssement" cyoa-title!
+	($ "Le corps de " .. cname .. " est affecte par le stress de cette situation sans espoir." $) cyoa-text! badfx
+		strength-- fitness--
+;
+
+cyoa: solo-skill
+	despair-start!
+	"Mains Tremblantes" cyoa-title!
+	($ cname .. ", sous une pression intense, commence a avoir les mains qui tremblent a cause du stress." $) cyoa-text! badfx
+		medical-- shooting-- mechanic--
+;
+
+cyoa: solo-leg
+	despair-start! image-male-zombie-1
+	"Morsure a la Jambe" cyoa-title!
+	($ "Distrait et seul, " .. cname .. " se fait attraper par un zombie rampant en errant dans une ville en ruine.
+	" .. cHe .. " s'en tire, mais sa jambe ne sera plus jamais tout a fait la meme." $) cyoa-text! bitefx
+		fitness-- sting--
+;
+
+cyoa: solo-bitter
+	despair-start!
+	"Amertume" cyoa-title!
+	($ "En errant seul, " .. cname .. " rumine le passe. " .. cHe .. " devient amer dans son isolement." $) cyoa-text! badfx
+		loyalty-- attitude--
+;
+
+cyoa: solo-anger
+	despair-start!
+	"Crise Solitaire" cyoa-title!
+	($ cname .. " se coince accidentellement la main dans la portiere de la voiture. De colere, " .. che .. " sort et donne un coup de pied dans un pneu, se cognant l'orteil. Ca lui fait PETER UN CABLE." rbold $) cyoa-text! bitefx
+		temper-- sting-- -1 car-chassis+
+;
+
+cyoa: solo-mindrot
+	despair-start!
+	"Ennui Ecrasant" cyoa-title!
+	($ "Sans personne avec qui interagir, " .. cname .. " s'ennuie a mourir. " .. cHe .. " sent son energie et sa vigilance lui echapper." $) cyoa-text! badfx
+		wits-- nosleep
+		($ cname .. " devient fatigue !" pbold $) +crtext
+;
+
+} }
+
+

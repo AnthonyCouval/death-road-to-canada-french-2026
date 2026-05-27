@@ -1,0 +1,318 @@
+uses paul/region-layout.df
+
+cyoa{
+
+0 value rfbuy-heavy-1
+0 value rfbuy-heavy-2
+0 value rfbuy-heavy-3
+0 value rfbuy-mid-1
+0 value rfbuy-mid-2
+0 value rfbuy-mid-3
+0 value rfbuy-light-1
+0 value rfbuy-light-3
+
+// Light Knight
+
+cyoa-choice: renfaire-light-1
+	iicon ($ pname .. " achete un " .. "GANTELET" bbold .. " !
+	" .. "J'ai perdu l'autre de la paire !
+	Si tu frappes un zombie avec ca, il s'envole en general !" rbold $) text!
+	goodfx 1 WEAPON_GAUNTLET trunk.weapon+ -3 trunk-food+ ' rfbuy-light-1 ++
+;
+
+cyoa-choice: renfaire-light-2
+	iicon ($ pname .. " achete une " .. "DAGUE" bbold .. " !
+	" .. "J'en ai une tonne !
+	Achetez-en comme souvenirs pour toute la famille !" rbold $) text!
+	goodfx 1 WEAPON_DAGGER trunk.weapon+ -5 trunk-food+
+;
+
+cyoa-choice: renfaire-light-3
+	iicon ($ pname .. " achete un " .. "GLADIUS" bbold .. " !
+	" .. "C'est mon epee preferee ! Elle est si rapide !
+	Elle deviendra aussi ta preferee !" rbold $) text!
+	goodfx 1 WEAPON_GLADIUS trunk.weapon+ -12 trunk-food+ ' rfbuy-light-3 ++
+;
+
+cyoa: renfaire-light
+	"Chevalier Leger" cyoa-title!
+	"Salut a toi ! Je vends des armements legers !
+	Pour le chevalier avec un petit budget !" rbold text!
+	+cr foodamt
+		trunk-food 3 < if
+			"Le chevalier remarque ton manque de nourriture et te donne une dague gratuite !" +crtext
+			clear-cyoa 1 WEAPON_DAGGER trunk.weapon+ goodfx
+		then;
+		choice( "Partir pour l'instant" )choice
+		trunk-food 2 > rfbuy-light-1 1 < and if
+			choice( "Acheter Gantelet - 3 nourriture" )choice: renfaire-light-1
+		then
+		trunk-food 4 > if
+			choice( "Acheter Dague - 5 nourriture" )choice: renfaire-light-2
+		then
+		trunk-food 11 > rfbuy-light-3 1 < and if
+			choice( "Acheter Gladius - 12 nourriture" )choice: renfaire-light-3
+		then
+;
+
+// Middle Knight
+
+cyoa-choice: renfaire-mid-1
+	iicon ($ pname .. " achete une " .. "ETOILE DU MATIN" bbold .. " !
+	" .. "Envoie les ennemis voler ! Le tranchant est parfois imprevisible." rbold $) text!
+	goodfx 1 WEAPON_MORNING trunk.weapon+ -15 trunk-food+ ' rfbuy-mid-1 ++
+;
+
+cyoa-choice: renfaire-mid-2
+	iicon ($ pname .. " achete une " .. "EPEE DE CHEVALIER" bbold .. " !
+	" .. "Extremement fiable !" rbold $) text!
+	goodfx 1 WEAPON_KNIGHT trunk.weapon+ -15 trunk-food+ ' rfbuy-mid-2 ++
+;
+
+cyoa-choice: renfaire-mid-3
+	iicon ($ pname .. " achete une " .. "HALLEBARDE" bbold .. " !
+	" .. "Plus legere qu'un claymore, avec le meme tranchant impressionnant !" rbold $) text!
+	goodfx 1 WEAPON_HALBERD trunk.weapon+ -24 trunk-food+ ' rfbuy-mid-3 ++
+;
+
+cyoa: renfaire-mid
+	"Chevalier aux Boucles d'Or" cyoa-title!
+	"Salut a toi.
+	Mes armements ne sont ni trop lourds ni trop legers.
+	Ils sont parfaits." rbold text! +cr foodamt
+		trunk-food 15 < if
+			"Tu n'as pas les moyens d'acheter quoi que ce soit a ce chevalier." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		trunk-food 14 > rfbuy-mid-1 1 < and if
+			choice( "Acheter Etoile du Matin - 15 nourriture" )choice: renfaire-mid-1
+		then
+		trunk-food 14 > rfbuy-mid-2 1 < and if
+			choice( "Acheter Epee de Chevalier - 15 nourriture" )choice: renfaire-mid-2
+		then
+		trunk-food 23 > rfbuy-mid-3 1 < and if
+			choice( "Acheter Hallebarde - 24 nourriture" )choice: renfaire-mid-3
+		then
+;
+
+// Heavy Knight
+
+cyoa-choice: renfaire-heavy-1
+	iicon ($ pname .. " achete une " .. "HACHE MEDIEVALE" bbold .. " !
+	" .. "Pas aussi chevaleresque qu'une epee. Pourtant, un certain charme....." rbold $) text!
+	goodfx 1 WEAPON_MEDIEVAL trunk.weapon+ -15 trunk-food+ ' rfbuy-heavy-1 ++
+;
+
+cyoa-choice: renfaire-heavy-2
+	iicon ($ pname .. " achete un " .. "PUISSANT CLAYMORE" bbold .. " !
+	" .. "Vraiment ! Une " rbold .. "Lame Chevaleresque......." rainbold $) text!
+	goodfx 1 WEAPON_CLAYMORE trunk.weapon+ -30 trunk-food+ ' rfbuy-heavy-2 ++
+;
+
+cyoa-choice: renfaire-heavy-3
+	iicon ($ pname .. " achete une " .. "LAME DU MEGA-CHEVALIER" bbold .. " !
+	" .. "La... lame parfaite....." rbold $) text!
+	($ "Le chevalier ajoute la promesse d'" .. "Entrainement de Chevalier !" fbold $) +crtext
+	goodfx 1 WEAPON_MEGAKNIGHT trunk.weapon+ -35 trunk-food+ ' rfbuy-heavy-3 ++
+	' .strength++ foreach-team-char
+;
+
+cyoa: renfaire-heavy
+	"LARP Lourd" cyoa-title!
+	"Je ne vends que les ARMEMENTS LES PLUS LOURDS !
+	Si tu as les pieces...... et le courage....??" rbold text!
+	rfbuy-heavy-3 1 < if
+		"Le chevalier offre un deal special si tu achetes la Lame du Mega-Chevalier : " +crtext
+		"Seance de Force Offerte du Chevalier" rainbold +text
+	then +cr foodamt
+		trunk-food 15 < if
+			"Le chevalier se moque de ton manque de nourriture." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		trunk-food 14 > rfbuy-heavy-1 1 < and if
+			choice( "Acheter Hache Medievale - 15 nourriture" )choice: renfaire-heavy-1
+		then
+		trunk-food 29 > rfbuy-heavy-2 1 < and if
+			choice( "Acheter Puissante Claymore - 30 nourriture" )choice: renfaire-heavy-2
+		then
+		trunk-food 34 > rfbuy-heavy-3 1 < and if
+			choice( "Acheter Lame du Mega-Chevalier - 35 nourriture" )choice: renfaire-heavy-3
+		then
+;
+
+cyoa-choice: renfaire-armor-buy
+	iicon ($ pname .. " achete l'" .. "ARMURE COMPLETE" bbold .. " et la met !
+	" .. "Enfin ! Je peux quitter ce Ren Faire !" pbold $) text!
+	goodfx -40 trunk-food+ clear-cyoa
+	3 for pchar .vitality++ pchar .health++ next 53 pchar .specialbody! 0 interactee .character@ .specialbody!
+
+;
+
+cyoa: renfaire-armor
+	"Achat du titre de Chevalier" cyoa-title!
+	"J'en ai marre de ce jeu de role grandeur nature
+	Je peux te vendre mon armure. Je n'ai pas le casque, donc tu ne seras pas entierement protege. Tu pourras quand meme encaisser beaucoup plus de degats qu'avant !
+	Juste 40 nourriture !" pbold text! foodamt
+		trunk-food 40 < if
+			"Tu n'as pas les moyens pour l'armure." +crtext
+		then;
+		choice( "Partir pour l'instant" )choice
+		trunk-food 39 > if
+			pchar charchoice( ": Donnez-moi cette armure ! - 40 nourriture " )choice: renfaire-armor-buy
+		then
+;
+
+cyoa-bridge: renfaire-bard-recruit
+	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
+	5 recruit-yes-food "Je suis pret a du G.N. !" pbold +crtext "*" rbold +text
+	"*NOTE DU TRADUCTEUR : 'Jeu de Role Grandeur Nature'" rbold +crtext
+	recruitee .witsREV recruitee .attitudeREV
+;
+
+cyoa: renfaire-bard
+	"Demande de Chanson" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	"Je chanterai toutes les chansons que vous aimez.
+	Tout ce qu'il me faut... c'est 5 nourriture !" pbold text!
+		choice( "La laisser pour l'instant" )choice
+		trunk-food 4 > if
+			choice( "Recruter la barde - 5 nourriture" )choice: renfaire-bard-recruit
+		then
+;
+
+}
+
+map{ regiondef{
+
+trade-camp-reset
+
+: renfaire-bard
+	still-npc .renfairify cyoa{ ' renfaire-bard cyoa! }
+	' trader-event lt .events! 1 lt .timer!
+;
+
+: renfaire-knight still-npc .knightify ' trader-event lt .events! 1 lt .timer! ;
+// : renfaire ;
+
+: renfaire-knight-heavy 
+	renfaire-knight cyoa{ ' renfaire-heavy cyoa! } WEAPON_MEGAKNIGHT lt .character@ .weapona! ;
+: renfaire-knight-mid 
+	renfaire-knight cyoa{ ' renfaire-mid cyoa! } WEAPON_HALBERD lt .character@ .weapona! ;
+: renfaire-knight-light
+	renfaire-knight cyoa{ ' renfaire-light cyoa! } WEAPON_GLADIUS lt .character@ .weapona! ;
+: renfaire-knight-armor
+	53 still-npc .specialbody! ' trader-event lt .events! 1 lt .timer! cyoa{ ' renfaire-armor cyoa! } ;
+
+0 value gbx
+0 value gby
+0 value gbx2
+0 value gby2
+
+' plotgrass >defer ft
+
+: fenceit	args( x y s )
+
+	building_misc_tiles_base_id 14 7 * + 7 + <- s + -> s
+
+	2 for
+		<- s i 1- 14 * + <- x <- y solidwall
+		<- x <- y tile@ LAYER_WALLTOP 0 0 .tile_layer.off!
+		<- x <- y tile@ LAYER_WALLTOP rnd5050 .tile_layer.flipx!
+		<- y 1- -> y
+	next
+;
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+
+	xyp.i char < = if xyp.xy to gby to gbx then;
+	xyp.i char > = if gbx 1- gby xyp.xy swap 1+ swap gravellot then;
+	xyp.i char ( = if xyp.xy to gby2 to gbx2 then;
+	xyp.i char ) = if gbx2 1- gby2 xyp.xy swap 1+ swap gravellot then;
+	
+	xyp.i char K = if renfaire-knight lt-here then;
+	xyp.i char H = if renfaire-knight-heavy lt-here then;
+	xyp.i char M = if renfaire-knight-mid lt-here then;
+	xyp.i char L = if renfaire-knight-light lt-here then;
+	xyp.i char S = if renfaire-knight-armor lt-here then;
+	xyp.i char B = if renfaire-bard lt-here then;
+	
+	xyp.i char x = if ' plotdirt to ft then;
+	xyp.i char G = if ' plotgrass to ft xyp.xy ft then;
+	xyp.i char $ = if xyp.xy grassedge then;
+	xyp.i char { = if dirtstart then;
+	xyp.i char } = if dirtend then;
+
+	xyp.i char A = if trader-awning lt-here then;
+	xyp.i char t = if pictable2 lt-here 8 rdrift then;		
+	xyp.i char w = if pine lt-here drift then;
+	xyp.i char V = if tradercarhere then;
+	xyp.i char f = if campfirehere then;
+	
+	xyp.i char 1 = if xyp.xy xyp.x 1 & if 2 else rnd5050 then fenceit then;
+	xyp.i char 2 = if xyp.xy 3 fenceit then;
+	xyp.i char 3 = if xyp.xy 4 fenceit then;
+	
+	xyp.i char W = if trader-weapon-buyer then;
+	xyp.i char T = if traderhere then;
+	xyp.i char Z = if tnomey-spawn then;
+;
+
+"
+.........................
+..w....w....w....w....w..
+.........................
+.........................
+1111111111111111111111111
+....<....A..A..A..A......
+.........H..M..L..S......
+.....t...................
+.........................
+...........(........>....
+................{........
+.................B.......
+.....W..Z..........f.....
+.........................
+.............)........}..
+.........................
+11111111112...31111111111
+........................x
+$$$$$$$$$$$$$$$$$$$$$$$$$
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+........................."
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+
+: site-setup
+	1 no_time!
+	7 14 rnd o'clock
+
+	' plotgrass to ft
+
+	30 %chance if 0 0.5 frnd weather! -1 2 frnd wind_force! else -1 1 frnd wind_force! then
+
+	plotmap
+	mission{ no-edge-spawns }
+
+	// Put char and chars in middle of map
+	20 %mv-up
+	30 %chars-up
+;
+
+region: specialcamp-2
+	w: maplayout layoutw
+	h: maplayout layouth
+
+	trade-mode
+
+	post-script: site-setup
+
+} }

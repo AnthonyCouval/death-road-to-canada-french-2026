@@ -1,0 +1,138 @@
+
+uses paul/region-layout.df
+
+: testrecruit
+	// still-npc cyoa{ ' opp-recruit cyoa! }
+	// ' trader-event lt .events! 1 lt .timer!
+	inside-npc
+	// Could possibly have recruits be similar to OPPmode later for testregion. RE: No food reqs, uses still-npc, and includes a 0.25 recruitee .ai.wander_chance! on recruit
+	// For now I just let them wander around
+;
+
+cyoa{
+
+cyoa-bridge: camp-testing-recruit
+	ricon 4 recruitee .morale! clear-cyoa
+	0 recruit-yes-food 
+	"J'espere que vous appreciez le nouveau personnage ! N'hesitez pas a nous faire vos retours." pbold +crtext
+	\ recruitee .strengthREV recruitee .fitnessREV recruitee .attitudeREV
+;
+
+cyoa: camp-rec-rohoa
+	"NOUVEAUX PERSOS" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	($ "Essayez le nouveau personnage gratuitement ! Vous le trouverez ici, mais dans la nouvelle mise a jour, il se trouvera dans les camps." $) cyoa-text! basic-tone
+	"Admiral Raven obtient des bonus de CD importants sur les tuiles d'eau et sous la pluie. Elle est une bonne tireuse, mecanicienne et contre-bandit. Aussi : harpon." rbold +crtext
+
+		choice( "Laisser pour l'instant" )choice
+		choice( "Les engager" )choice: camp-testing-recruit
+;
+
+cyoa: camp-rec-ember
+	"NOUVEAUX PERSOS" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	($ "Essayez le nouveau personnage gratuitement ! Vous le trouverez ici, mais dans la nouvelle mise a jour, il se trouvera dans les camps." $) cyoa-text! basic-tone
+	"Zeus a de la foudre en chaine qui se charge via les attaques de melee. Il peut aussi causer des eclairs a l'impact." rbold +crtext
+
+		choice( "Laisser pour l'instant" )choice
+		choice( "Les engager" )choice: camp-testing-recruit
+;
+
+cyoa: camp-rec-ringmaster
+	"NOUVEAUX PERSOS" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	($ "Essayez le nouveau personnage gratuitement ! Vous le trouverez ici, mais dans la nouvelle mise a jour, il se trouvera dans les camps." $) cyoa-text! basic-tone
+	"Ce personnage obtient une nouvelle arme quand elle tue avec son arme verrouilee. Cela fait aussi voler des balles partout !" rbold +crtext
+
+		choice( "Laisser pour l'instant" )choice
+		choice( "Les engager" )choice: camp-testing-recruit
+;
+
+cyoa: camp-rec-rubick
+	"NOUVEAUX PERSOS" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	($ "Essayez le nouveau personnage gratuitement ! Vous le trouverez ici, mais dans la nouvelle mise a jour, il se trouvera sur la route." $) cyoa-text! basic-tone
+	"Ce personnage peut copier les armes des autres personnages. Il peut aussi manier la magie." rbold +crtext
+
+		choice( "Laisser pour l'instant" )choice
+		choice( "Les engager" )choice: camp-testing-recruit
+;
+
+cyoa: camp-rec-pew
+	"NOUVEAUX PERSOS" cyoa-title!
+	nearest .character@ choosechar cchar to recruitee ricon
+	($ "Essayez le nouveau personnage gratuitement ! Vous le trouverez ici, mais dans la nouvelle mise a jour, il se trouvera sur la route." $) cyoa-text! basic-tone
+	"This character has a unique shotgun with high knockback. They're also quite beefy." rbold +crtext
+
+		choice( "Laisser pour l'instant" )choice
+		choice( "Les engager" )choice: camp-testing-recruit
+;
+
+}
+
+map{ regiondef{
+' plotgrass >defer ft
+
+: new_weapons_rectum 
+
+fn_fal 
+the1911
+goldenaxe1 
+goldenaxe2 
+fire
+pickaxe 
+bardiche 
+medieval 
+
+; 
+
+: pt
+	xyp.xy ft // Plot the current floor by default
+	
+	xyp.i char R = if ' plotpave to ft then;
+	xyp.i char r = if xyp.xy grassedge then;
+	
+	xyp.i char g = if ' plotpave to ft xyp.xy ft xyp.xy grassedge then;
+	xyp.i char G = if ' plotpave to ft xyp.xy grassedge then;
+	
+	xyp.i char A = if testrecruit lt-here cyoa{ ' camp-rec-ringmaster lt .cyoa! } .bayonetta_ify lt-here then;
+	xyp.i char B = if testrecruit lt-here cyoa{ ' camp-rec-rohoa lt .cyoa! } .ravenify lt-here then;
+	xyp.i char C = if testrecruit lt-here cyoa{ ' camp-rec-ember lt .cyoa! } .zeusify lt-here then;
+	xyp.i char D = if testrecruit lt-here cyoa{ ' camp-rec-rubick lt .cyoa! } .rubick_ify lt-here then;
+	xyp.i char E = if testrecruit lt-here cyoa{ ' camp-rec-pew lt .cyoa! } .pewterify lt-here then;
+	
+	xyp.i char f = if campfire-simple lt-here then;
+	xyp.i char w = if new_weapons_rectum then;
+
+;
+
+"
+.....................
+.D.B..A..C...........
+E.....f..............
+.....................
+...................w.
+gGGGGGGGGGGGGGGGGGGGG
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRR"
+constant maplayout
+
+: plotmap
+	0 -1 maplayout xyplot: pt
+;
+: site-setup
+	1 no_time! 12 o'clock
+	plotmap
+	mission{ no-edge-spawns }
+	// 50 %mv-up 48 %chars-up
+;
+
+trade-camp-reset
+region: arq-testing-loc
+	w: maplayout layoutw
+	h: maplayout layouth
+	trade-mode
+	post-script: site-setup
+} }

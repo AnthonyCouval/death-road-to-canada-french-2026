@@ -1,0 +1,64 @@
+
+: evilsanta-hohoho
+	blurbslot 0= if // Conversation starter, then everyone in party responds
+		"HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO HO" fbold blurbsay
+	else
+		rnd5050 if
+			blurbslot 2 < if ($ "SORS DE MA TETE !" $) blurbsay
+			STAT_MORALE me .stat--
+			then
+		then
+	then
+;
+
+: evilsanta-christmas
+	blurbslot 0= if
+		($ ICON_SKULL textclr$ .. me .name@ .. " hurle quelque chose d'incomprehensible a propos de Noel." .. 0 textclr$ $) blurbevent
+	else
+		blurbslot 3 < if
+			STAT_MORALE me .stat--
+		then
+	then
+;
+
+	: ESANTA-oneline1 "JE JUGERAI QUI A ETE MECHANT ET QUI A ETE GENTIL" ;
+	: ESANTA-oneline2 "HO HO HO" ;
+	: ESANTA-oneline3 "HO HO HO, HO HO HO" ;
+	: ESANTA-oneline4 "JE DETERMINERAI QUI A ETE GENTIL ET QUI A ETE MECHANT" ;
+	: ESANTA-oneline5 "TU VAS T'ARRACHER L'OEIL, GAMIN" ;
+	: ESANTA-oneline6 "LES GENTILS ONT ETE ELIMINES DE LA SURFACE DE LA TERRE ET IL NE RESTE QUE LES MECHANTS" ;
+	: ESANTA-oneline7 "LES VILAINS MARCHENT SUR LA TERRE ET JE SUIS LE SEUL A POUVOIR LES ARRETER." ;
+	: ESANTA-oneline8 "QUE LES VILAINS SOIENT CHASSES DE CE PAYS DEVASTE" ;
+	: ESANTA-oneline9 "JE SUIS LE JUGE DE L'HUMANITE ET UN JOUR, IL NE RESTERA QUE MOI SUR CETTE TERRE" ;
+	: ESANTA-oneline10 "J'AIME LE LAIT ET LES COOKIES" ;
+
+	deck-new
+		card: ESANTA-oneline1
+		card: ESANTA-oneline2
+		card: ESANTA-oneline3
+		card: ESANTA-oneline4
+		card: ESANTA-oneline5
+		card: ESANTA-oneline6
+		card: ESANTA-oneline7
+		card: ESANTA-oneline8
+		card: ESANTA-oneline9
+		card: ESANTA-oneline10
+	constant EVILSANTA-ONELINERS
+	EVILSANTA-ONELINERS var evilsanta-oneliners
+	EVILSANTA-ONELINERS shuffles to evilsanta-oneliners
+
+: evilsanta-oneliner
+	evilsanta-oneliners depths 0= if EVILSANTA-ONELINERS shuffles to evilsanta-oneliners then
+	blurbslot 0= if
+		drawcard fbold blurbsay
+	then
+;
+
+	deck-new
+		2 cards: evilsanta-hohoho
+		card: evilsanta-christmas
+	10 cards: evilsanta-oneliner
+
+	constant BLURB-EVILSANTA-DECK
+	BLURB-EVILSANTA-DECK var blurb-evilsanta-deck
+	BLURB-EVILSANTA-DECK shuffles to blurb-evilsanta-deck

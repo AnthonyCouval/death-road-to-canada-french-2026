@@ -1,0 +1,415 @@
+"../deathforth/rooms/duodenum.txt" $load-rooms
+"../deathforth/rooms/city.txt" $add-rooms
+
+cyoa{ 
+
+
+: ghosty-sound
+	sfx{ fm_sweep 1 j! 50 a! 4 freq! 500 ramp_start! 400 ramp_end! 1500 d! 0.15 value! 0.5 1 frnd pitch! 0.5 scale!
+	40 delay!
+	}
+;
+
+: mghost-spooky 
+	picon
+	($ "Le fantome est " .. "TRES FLIPPANT" fbold .. " pour " .. pname .. " ! Il disparait !" $) +crtext
+	morale2- ghosty-sound deleteme
+;
+
+: mghost-warn
+	text! "Parler a un fantome est EXTREMEMENT flippant et causera forcement un coup au moral, en plus de tout le reste." rbold +crtext
+		choice( "Ignorer le fantome pour l'instant" )choice
+		cheevo: ghostfound
+;
+
+cyoa-choice: mghost-shy-talk
+	"Le Fantome s'enfuit ! Je veux dire qu'il flotte vraiment vite loin d'ici." text!
+	($ pname .. " est amuse d'avoir fait peur a un fantome." $) +crtext
+	morale++ goodfx deleteme
+;
+
+cyoa-choice: mghost-shy-kiss
+	($ "Le Fantome emet de la vapeur des cotes de sa tete pendant une seconde, puis " .. "EXPLOSE !" fbold $) text!
+	($ pname .. " est blesse, mais le souffle l'impregne de mysterieuse " .. "ENERGIE FANTOMATIQUE !" rainbold $) +crtext
+	morale3+ sting2- fitness++ bitefx deleteme
+	// Make character glow?
+;
+
+cyoa-blank: mghost-shy
+	($ "Ce fantome alterne rapidement entre tenter d'effrayer " .. pname .. " et etre submerge par la timidite." $) mghost-warn
+		pchar charchoice( " parle au fantome de sa timidite" )choice: mghost-shy-talk
+		pchar charchoice( " embrasse le fantome" )choice: mghost-shy-kiss
+;
+
+cyoa-choice: mghost-bite-go
+	"CROMP CROMP CROMP TOUTE LA JOURNEE" rainbold text!
+	($ "Le Fantome mord " .. pname .. " avec ses dents de fantome ! La douleur paranormale l'endurcit !" $) +crtext
+	sting-- vitality++ mghost-spooky bitefx
+;
+
+cyoa-blank: mghost-bite
+	"C'est un fantome ! Il a de belles quenottes." mghost-warn
+		pchar charchoice( " parle au fantome de ses dents" )choice: mghost-bite-go
+;
+
+cyoa-choice: mghost-sass-sass
+	"EVIDEMMENT QUE JE ME FOUS DE TOI ! PRENDS CA TA DANS TA FACE !" rainbold text!
+	($ "Le Fantome se moque de " .. pname .. " sans aucune retenue !" $) +crtext
+	morale-- badfx
+;
+
+cyoa-choice: mghost-sass-flex
+	"EVIDEMMENT QUE JE GONFLE LES MUSCLES ! J'ADORE ETRE FORT !" rainbold text!
+	($ "Le Fantome maudit " .. pname .. " ... avec de la force !" $) +crtext
+	strength++ mghost-spooky
+;
+
+cyoa-blank: mghost-sass
+	"Malediction de l'Effronterie" cyoa-title!
+	"Ce fantome semble gonfler les muscles, ou peut-etre fait-il un geste vraiment insolent ? Difficile a dire vu que le fantome n'a pas de forme corporelle." mghost-warn
+		pchar charchoice( " demande au fantome s'il gonfle les muscles" )choice: mghost-sass-flex
+		pchar charchoice( " demande si c'est de l'effronterie" )choice: mghost-sass-sass
+;
+
+cyoa-choice: mghost-lick-coolit
+	cpet? if
+		($ cname .. " pete sur le fantome." $)
+	else
+		($ cname .. " dit au fantome de" .. " SE CALMER." pbold $)
+	then cyoa-text!
+	cool-it-7 if
+		char-gen to recruitee "Fantome Enervant" recruitee .name!
+		"JE N'AI JAMAIS ENTENDU TELLE PERFECTION !
+		TU AS LEVE MA MALEDICTION ! CHOISIS UNE RECOMPENSE FANTOMATIQUE !" rainbold +crtext
+		morale3+all rescue-trainitem cooled-it goodfx
+	else cool-it++
+		"QUOI ? TU PEUX PAS ME DIRE DE ME CALMER !
+		T... T'ES UN BOUFFON !" rainbold +crtext
+		($ "Le Fantome disparait dans un petit nuage de fumee fantomatique irrite. " .. cname .. " est vraiment fier de lui." $) +crtext
+		goodfx morale2+
+	then witsattREV deleteme
+;
+
+cyoa-choice: mghost-lick-go
+	"EUH, PEUT-ETRE QUE TU DEVRAIS TE CALMER" rainbold text!
+	($ "Le Fantome maudit " .. pname .. " avec la " .. "Malediction du Calme-Toi !" fbold $) +crtext
+	($ "La personnalite de " .. pname .. " devient tres enervante !" $) +crtext
+	0 pchar .wits! 0 pchar .attitude! witsattREV mghost-spooky cool-it++
+;
+
+cyoa-blank: mghost-lick
+	"Le fantome n'arrete pas d'agiter la langue. Il semble deja etre un etre tres enervant." mghost-warn
+		pchar grating? if
+			pchar charchoice( " dit au fantome de 'Se Calmer'" fcoolit )choice: mghost-lick-coolit
+		else
+			pchar charchoice( " crie apres le fantome" )choice: mghost-lick-go
+		then
+;
+
+} 
+
+roomgen{
+
+: ghost-events args( me eventid )
+	
+	<- eventid THING_EVENT_TIMER <> if then;
+
+	rnd5050 if <- me .anim.flop@ 1+ 1 & <- me .anim.flop! then
+
+	special_objects32_base_id 0x a8 + <- me .anim.hint@ + <- me .anim.flop@ + <- me .spriteid!
+
+	<- me .overlap dup if <- me .turn-toward else drop then
+
+	8 <- me .timer!
+;
+
+
+: ghostcommon args( sprite )
+	spawn scatter
+
+	<- sprite 2 * lt .anim.hint!
+
+	special_objects32_base_id 0x a8 + lt .anim.hint@ + lt .spriteid!
+
+	1 lt .nocollide!
+	1 lt .uncentered!
+	16 lt .rad.x!
+	0 lt .flammability!
+	0 lt .spreadability!
+
+	1 lt .no_hit!
+
+	1 lt .glow!
+	1 lt .no_lighting!
+
+	0.3 lt .clr.a!
+	0.5 lt .clr.r!
+	0.5 lt .clr.g!
+
+	3 lt .anim.floatval!
+	10 lt .anim.floatheight!
+
+	' ghost-events events!
+	10 lt .timer! 50 health! low-profile
+;
+
+
+: mghost-shy 0 ghostcommon cyoa{ ' mghost-shy cyoa! } ;
+: mghost-bite 1 ghostcommon cyoa{ ' mghost-bite cyoa! } ;
+: mghost-sass 2 ghostcommon cyoa{ ' mghost-sass cyoa! } ;
+: mghost-lick 3 ghostcommon cyoa{ ' mghost-lick cyoa! } ;
+
+0 stack
+	' mghost-bite shove
+	' mghost-shy shove
+	' mghost-sass shove
+	' mghost-lick shove
+value ghost-cyoa-picker-base
+ghost-cyoa-picker-base shuffles var ghost-cyoa-picker
+
+: ghost-cyoa-pick ghost-cyoa-picker depths 0= if ghost-cyoa-picker-base shuffles to ghost-cyoa-picker then pops nip execute ;
+
+: ghostcheck mansiontype 0 > if ghost-cyoa-pick then ;
+
+}
+
+// mansion house doors
+
+0 stack
+	"bathroom" shove
+	"open1" shove	
+	"open1" shove
+	"open1" shove
+	"living" shove
+	"kitchen" shove
+	"mansionpantry" shove
+value mansionhall-doors-base
+mansionhall-doors-base shuffles var mansionhall-doors
+
+: mansionhall-doors-pick mansionhall-doors depths 0= if drop "open1" then; pops nip ;
+
+: mansionhalldoors
+	2 for random-door mansionhall-doors-pick only-with-door next
+;
+
+0 value force_mansionloot 
+
+: mansionhouseloot
+	force_mansionloot 0 = if 
+		mansionloot-pick
+		2 4 rnd for skelscat next 10diff %zombs
+		1 to force_mansionloot
+		"MANSION LOOT SPAWNED" print 
+	then 
+;
+
+0 stack
+	"bathroom" shove
+	"bedroom" shove
+	"bedroom" shove
+	"bedroom" shove
+	"bedroom" shove
+	"bedroom" shove
+	"bedroom" shove
+	"mansionend" shove
+	"bedroom" shove
+value mansionend-doors-base
+mansionend-doors-base shuffles var mansionend-doors
+
+: mansionend-doors-pick mansionend-doors depths 0= if then; pops nip ;
+
+: mansionenddoors
+	3 for random-door mansionend-doors-pick only-with-door next
+;
+		
+		: haunted-chair-chance
+			60 %chance if haunted-chair lt .scatter then
+		;
+		: haunted-fridge-chance
+			50 %chance if haunted-fridge lt .drift then
+		;
+		: haunted-drawers-chance
+			40 %chance if haunted-drawers lt .drift then
+		;
+		: haunted-living-chance	70 %chance if haunted-chair-chance else haunted-drawers-chance then ;
+		
+		: mansionbathloot 50 %chance if looseloot then 10diff %zombs ;
+		: mansionkitchenloot 2 4 rnd sfood 10diff %zombs 10 %chance if hauntedware then haunted-chair-chance ;
+
+		: mansion-loc-events args( eventid )
+			<- eventid MAP_EVENT_VIEW_ENTER = if
+				1 light_mode! toodark 0.01 gloom_lighting! // Maybe 0.02 instead?
+			then;
+		;
+
+		: set-mansion-events 
+			' mansion-loc-events loc_here_events! 
+		;
+		
+		\ before publish:
+		\ reenable loc events
+		\ disable sfx 
+		
+		\ "Force mansion loot" 
+		: fml   
+			rooms-left 0 = if 
+			force_mansionloot 0 = if 
+				mansionhouseloot
+				map{ pixelw 0.5 * } lt .pos.x! 
+				map{ pixelh 0.5 * } lt .pos.y! 
+				1 to force_mansionloot
+				"FORCED MANSION LOOT" print 
+			then then 
+		
+		\ Probably needs further adjustment 
+			rooms-created 28 rooms-left - <> doors-unopened 0 = and if 
+				force_mansionloot 0 = if 
+				mansionhouseloot
+				map{ pixelw 0.5 * } lt .pos.x! 
+				map{ pixelh 0.5 * } lt .pos.y! 
+				1 to force_mansionloot
+				"FORCED MANSION LOOT || POTENTIAL SOFTLOCK" print 
+			then then 
+		
+		; 
+					
+location: darkmansion
+
+		max-rooms: 28
+		entry-tags: mansionstart
+		// VVV script is executed once before any rooms are created. Location id is not known yet.
+		script: set-theme-museum
+
+		// VVV pre-script is executed before each room is created
+		pre-script: set-theme-museum set-mansion-events
+		post-script: fml 
+		
+		
+		: mansionopendoors
+			random-door "mansionhall" only-with-door
+			// random-door mansionhall-doors-pick only-with-door
+			random-door "bathroom" only-with-door
+			random-door "bedroom" only-with-door			
+		;
+		
+		: mansionstartdoors
+			2 for random-door "hall" only-with-door next
+			random-door "living" only-with-door
+		;
+						
+		room-choice: open1
+			room-weight: 10
+			room-count: 3
+			room-script: nad
+			room-post-script: 10diff %zombs mansionopendoors
+			filter-only
+	
+		room-choice: kitchen
+			room-weight: 1
+			room-count: 1
+			room-script: nad floor-kitchen
+			room-post-script: mansionkitchenloot
+			filter-only
+	
+		room-choice: bathroom
+			room-weight: 1
+			room-count: 1
+			room-script: nad floor-bath
+			room-post-script: mansionbathloot
+			filter-only
+			
+		room-choice: bathroom
+			room-weight: 1
+			room-count: 3
+			room-script: nad floor-bath
+			room-post-script: 5diff %zombs
+			filter-only
+		
+		room-choice: hall
+			room-weight: 10
+			room-count: 2
+			room-script: nad
+			room-post-script: 10diff %zombs hallset mansionhalldoors
+			filter-only
+			
+		room-choice: mansionhall
+			room-weight: 10
+			room-count: 3
+			room-script: nad
+			room-post-script: 10diff %zombs mansionenddoors
+			filter-only
+					
+		room-choice: bedroom
+			room-weight: 3
+			room-count: 5
+			room-script: nad		
+			room-post-script: looseloot 10diff %zombs
+			
+		room-choice: bedroom
+			room-weight: 3
+			room-count: 5
+			room-script: nad		
+			room-post-script: 5diff %zombs haunted-living-chance
+			filter-only
+			
+		room-choice: living
+			room-weight: 10
+			room-count: 2
+			room-script: nad		
+			room-post-script: looseloot mansionhalldoors 10diff %zombs haunted-living-chance
+			filter-only
+			
+		room-choice: mansionend
+			room-weight: 99
+			room-count: 1
+			room-script: nad		
+			room-post-script: 10diff %zombs
+			filter-only
+			
+		room-choice: mansionstart
+			room-weight: 10
+			room-count: 1
+			room-script: nad
+			room-post-script: 5diff %zombs mansionstartdoors
+			filter-only
+			
+		room-choice: mansionpantry
+			room-weight: 10
+			room-count: 1
+			room-script: nad
+			room-post-script: 2 4 rnd sfood 10diff %zombs haunted-fridge-chance
+			filter-only
+			
+regiondef{			
+
+: dig-diff
+	12 1 difficulty / >int 3 8 clamp * // Multiplied directly to timer
+	// 1 difficulty / - when it was 120 to 360 rnd, lower diff increased the timer
+;
+
+: dodigadd
+
+	// zomb-count maxzombs < if
+		2 map{ w 3 - } rnd 2 map{ h 3 - } rnd tile>pos xyzombdig
+	// then
+
+	40 dig-diff 100 dig-diff rnd timer_dur! timer_retrigger
+
+;
+
+: dodigcheck mansiontype 0 > if 60 6 * ' dodigadd timer_add then ;
+	
+	region: darkmansion
+		script: dodigcheck
+		
+		inside spooky-music
+		
+		loc-choice: darkmansion
+			loc-weight: 99
+			loc-count: 1
+
+		post-script: 1 no_time! inspawn // timeofday 10diff %zombs
+	
+}
+
+root{ : ght } roomgen{ ghost-cyoa-pick } ;

@@ -1,0 +1,54 @@
+
+cyoa{
+
+cyoa-bridge: npc-bogan-recruit
+	cchar to recruitee goodfx clear-cyoa
+	($ "Il sort ses griffes avec un petit bruit de " .. "fwiiiiiiink" pbold .. ".
+	" .. "En route, GUS !" pbold .. "
+		-- " .. cname $) text!
+	recruitee .strengthREV recruitee .fitnessREV
+	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
+	team-count 3 > if
+		($  rname .. " a besoin d'une quantite surprenante de place dans la voiture. Il va falloir se debarrasser de quelqu'un :" $) +crtext ' recruit-replace cyoa-team-choice
+	else
+		recruited
+		choice( "Tu es mon nouveau meilleur ami, " .. rname .. " !" )choice
+	then
+;
+
+cyoa: npc-bogan
+	"Petit Homme Poilu Feroce" cyoa-title!
+	interactee .character@ choosechar cicon
+	($ "On dirait un petit homme poilu. Peut-etre une nouvelle espece de gnome ? C'est bizarre que les gnomes n'aient jamais ete vus avant la zombocalypse.
+	Desolee, je me suis laisse embarquer." $) text!
+	($ "Qu'est-ce que tu veux, GUS ?" pbold .. "
+		-- " .. cname $) +crtext
+		choice( "Le laisser tranquille pour l'instant" )choice
+		choice( "Le recruter" )choice: npc-bogan-recruit
+;
+
+}
+
+: .bogan args( char )
+	<- char .boganify
+	<- char cyoa{ ' npc-bogan cyoa! }
+	drop
+;
+
+locdef{
+		
+location
+		tags: bogan
+		max-rooms: 2
+		entry-tags: trashed
+		script: set-theme-house
+		pre-script: set-theme-house
+		
+		room-choice: trashed
+			room-weight: 10
+			room-count: 2
+			room-script: nad
+			room-post-script: still-npc .bogan
+			filter-only
+			
+}

@@ -1,0 +1,61 @@
+    : PEWTER-oneline1 "Hehehe... J'aurais probablement pas du faire ca." ;
+    : PEWTER-oneline2 "Hey les gars, vous vous rappelez quand ce n'etait pas de ma faute ?" ;
+    : PEWTER-oneline3 "Aïe. Aïe. Toujours aïe." ;
+    : PEWTER-oneline4 "C'est pire que la fois ou j'ai battu un poulet." ;
+    : PEWTER-oneline5 "Ne vous inquietez pas. J'ai un truc. Je sais pas encore ce que c'est." ;
+    : PEWTER-oneline6 "Je veux alarmer personne, mais je fais de mon mieux." ;
+    : PEWTER-oneline7 "C'est bon, que personne ne panique. Je l'ai deja fait." ;
+    : PEWTER-oneline8 "JE VOUS DETESTE LES ABEILLES, JE VOUS DETESTE, JE VOUS DETESTE..." ;
+    : PEWTER-oneline9 "J'ai une CARTOUCHE ENTIERE DE CIGARETTES !" ;
+    : PEWTER-oneline10 "BEEEEN VOUILAAAAA IL EST TEMPS POUR MOI DE PRENDRE LE VIEUX CHEMIN POUSSIEREUX..." ;
+    : PEWTER-oneline11 "Je peux pas croire qu'on va au Canada !" ;
+    : PEWTER-oneline12 "Mes cerebres Alphabet ont un message mysterieux. Ca dit ooooooooo." ;
+    : PEWTER-oneline13 "ROADHOUSE." ;
+    : PEWTER-oneline14 "Quand tu fais caca dans tes reves... Tu fais caca pour de vrai." ;
+    : PEWTER-oneline15 "Ouais je suis un DEBILE. Un vrai GOGO. Comment ca j'ai pas le droit de dire ca ?" ;
+    : PEWTER-oneline16 "C'est pire que la seule fois ou je suis alle au Canada." ;
+    : PEWTER-oneline17 "Je parie... 5 dollars que J*e est toujours en fauteuil roulant." ;
+    : PEWTER-oneline18 "Vous savez ce qui me broute vraiment les engrenages ?" ;
+    : PEWTER-oneline19 "Est-ce que tu es, oui ou non, au courant pour l'oiseau ?" ;
+    : PEWTER-oneline20 "C'est comme la fois ou je suis passe a la tele l'apres-midi." ;
+    : PEWTER-oneline21 "Hehehehehehehehe." ;
+
+	deck-new
+		card: PEWTER-oneline1
+		card: PEWTER-oneline2
+		card: PEWTER-oneline3
+		card: PEWTER-oneline4
+		card: PEWTER-oneline5
+		card: PEWTER-oneline6
+		card: PEWTER-oneline7
+		card: PEWTER-oneline8
+		card: PEWTER-oneline9
+		card: PEWTER-oneline10
+		card: PEWTER-oneline11
+		card: PEWTER-oneline12
+		card: PEWTER-oneline13
+		card: PEWTER-oneline14
+		card: PEWTER-oneline15
+		card: PEWTER-oneline16
+		card: PEWTER-oneline17
+		card: PEWTER-oneline18
+		card: PEWTER-oneline19
+		card: PEWTER-oneline20
+		card: PEWTER-oneline21
+	constant PEWTER-ONELINERS
+	PEWTER-ONELINERS var PEWTER-oneliners
+	PEWTER-ONELINERS shuffles to PEWTER-oneliners
+
+: PEWTER-oneliner
+	PEWTER-oneliners depths 0= if PEWTER-ONELINERS shuffles to PEWTER-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	21 cards: PEWTER-oneliner
+
+	constant BLURB-PEWTER-DECK
+	BLURB-PEWTER-DECK var blurb-PEWTER-deck
+	BLURB-PEWTER-DECK shuffles to blurb-PEWTER-deck

@@ -1,0 +1,69 @@
+
+
+:map 1
+:tags busstart
+:scriptA nuclearloot
+:scriptB policebench  
+:scriptC pylonloot
+:scriptD diningset
+:scriptE gasvend
+:size 11 10 
+:off 8 1 
+:tiles 
+22222222222
+23333333332
+21111111112
+211A11EEE12
+211D1111112
+211111A1B12
+211DA111112
+21111111112
+22222222222
+33333333333
+
+:map 2
+:tags restroom  
+:scriptA bathtoilet -1 movey 
+:scriptB restsink -1 movey 
+:scriptC stall -1 movey 
+:size 16 14 
+:off 4 0 
+:tiles 
+2222222222222222
+2333333333333332
+2111111111111112
+2112222212222112
+2112323212332112
+2113A3A313BB3112
+2111111111111112
+2112222122222112
+2112332123232112
+2113BB313A3A3112
+2111111111111112
+2111111111111112
+2222222222222222
+3333333333333333
+
+:map 3
+:tags outgarage
+:size 14 11
+:scriptA rustingbus
+:scriptB wrench
+:scriptC tire
+:scriptD hospitalmachine
+:scriptE generatorbus
+:scriptF buskeys
+:scriptG nuclearloot
+:off 9 0 
+:tiles 
+22222222222222
+23233333333333
+2121E11111D111
+21211111111111
+2121111A111B11
+2121B111111111
+2131C1111B1111
+211111G11111F1
+212111CCC11111
+22222222222222
+33333333333333

@@ -1,0 +1,115 @@
+
+0 value alienopen
+0 value grayalien
+
+cyoa{ mission{
+
+cyoa: cyoa-alien-car
+	alienopen 1 > if cyoa-car then;
+//	PRINTSTACK thing# to them# player .id@ to me#
+	alienopen 0 > if
+	"C'est parti !" cyoa-title!
+		($ "La porte s'ouvre en glissant quand " .. pname .. " la touche !
+		Cette voiture extraterrestre est deja impressionnante !" $) cyoa-text!
+			morale++all
+			2 to alienopen goodfx
+			choice( "Monter dans la voiture" )choice: get-into-car
+			choice( "Laisser pour l'instant" )choice
+	else
+	"Objet Rapide Non Identifie" cyoa-title!
+		"En regardant de plus pres, ce truc n'est pas un OVNI. C'est une sorte de voiture bizarre ! Il n'y a aucune porte visible." cyoa-text!
+		grayalien .alive? if
+			"Le petit alien gris doit savoir comment ouvrir ca."
+		else
+			"Avec l'alien mange par les zombies, il n'y a plus moyen d'ouvrir ca ! Il ne reste qu'a partir quand vous pouvez."
+		then +crtext
+		choice( "Laisser pour l'instant" )choice
+	then
+	STAT_STRENGTH cyoachar .effstat 99 > if
+		choice( "Soulever la voiture" )choice: lift-car
+	then
+
+;
+
+} }
+
+cyoa{
+
+cyoa: maninblack
+	nearest .character@ to recruitee
+	recruitee choosechar cicon
+	dead? if npc-died then;
+	"Homme en Noir" cyoa-title!
+	($ "C'est un homme sans expression en costume noir.
+	" .. "Il n'y a pas d'aliens ici ! Les aliens ca n'existe pas ! Et aussi, les zombies n'existent pas !" pbold $) cyoa-text! clear-cyoa
+;
+
+cyoa: alien
+	1 nearest .character@ .party!
+	grayalien choosechar cicon
+	dead? if npc-died then;
+	"Je Veux Croire" cyoa-title!
+	($ "Les aliens existent pour de vrai !" .. " TU LE SAVAIS !" rbold $) text!
+	region.zombie_basespawn@ 1 < if
+		1 to alienopen clear-cyoa deleteme goodfx
+		($ "L'alien touche " .. pname .. " avec un doigt lumineux. " .. "Son cerveau est rempli d'informations sur comment ouvrir des portes de voiture deverrouillees un peu plus compliquees !
+		L'alien en profite pour s'enfuir." $)
+	else
+		"L'alien est un peu occupe en ce moment ! Essaie de lui parler plus tard, s'il survit a ce siege !"
+	then +crtext
+;
+
+}
+
+: .maninblack
+	47 over .specialtype!
+	4 over .strength!
+	3 over .fitness!
+	4 over .shooting!
+	0 over .female!
+	"MiB" over .name!
+	WEAPON_PISTOL over .weapona!
+	30 LOOT_BULLET 2 pick .lootamt!
+	drop
+;
+
+: alien map{ selected } . cr new-npc@ .alien lt .character@ to grayalien
+	lt cyoa{ ' alien cyoa! } drop ;
+
+: maninblack map{ selected } . cr new-npc@ .maninblack lt cyoa{ ' maninblack cyoa! } drop ;
+
+: spawn-alien-car 
+	18 spawncar mission{ cyoa{ ' cyoa-alien-car cyoa! } } 1 lt .no_hit!
+;
+
+: alien-trees map{
+	20 for
+		tree
+		-60 60 frnd anglexy 0.5 pixelw * xymul 0.6 0.4 frnd * lt .pos xyadd lt .pos!
+	next
+
+	1 light_mode!
+	0 1 0 tint_thing_near!
+} ;
+
+
+regiondef{
+
+	 region: forest ufo
+		w: 24
+		h: 15
+		on-foot
+		script: timeofday o'clock
+
+		no-prefab // Don't build that default city
+		
+		: setup-ufo-forest
+			map{ grass } spawn-alien-car
+			alien maninblack
+			mission{ siege-start-dig }
+			alien-trees
+			// ' garf-survived to post-mission-cyoa
+		;
+
+		post-script: setup-ufo-forest 
+}

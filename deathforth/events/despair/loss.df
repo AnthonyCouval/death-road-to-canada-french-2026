@@ -1,0 +1,94 @@
+uses base.df
+uses charfilt.df
+uses charstats.df
+uses road.df
+
+cyoa{ road{
+
+cyoa: loss-lost
+	"Perdu dans le Desespoir" cyoa-title!
+	despair-start!
+	($ cname .. " a perdu tout espoir, et refuse de continuer. " .. cHe .. " s'eloigne vers un destin inconnu." $) cyoa-text! badfx
+	($ "Quel nerd ! Qui en a besoin de toute facon ?" $) +crtext
+		decruit-bad-silent-takeweapons morale++all
+;
+	
+cyoa: loss-hustle
+	despair-start!
+	"Il Faut Tous se Bouger" cyoa-title!
+	($ cname .. " dit que " .. "QUELQU'UN" rbold .. " dans le groupe ne fait pas sa part, et exige qu'on le vire.
+	Qui doit quitter le groupe ?" $) cyoa-text! basic-tone
+		' victim-kick bully cyoa-team-choice-except
+		bully charchoice( "" )choice: bully-all-kick
+;
+
+cyoa-choice: loss-obliv
+	($ cname .. " ignore " .. bname .. ". Il s'avere qu'" .. che .. " n'avait pas entendu.
+	" .. bname .. " fulmine !" $) cyoa-text!
+		bully .morale-- badfx
+;
+
+cyoa: loss-ultimatum
+	despair-start-victim!
+	"Ultimatum" cyoa-title!
+	team-count 2 > if
+		($ cname .. " exige que soit " .. vname .. " parte, soit " .. cname .. " s'en va." $)
+	else
+		($ cname .. " exige que " .. vname .. " parte. " .. cname .. " dit qu'" .. che .. " prendra la voiture et les provisions et continuera jusqu'au Canada." $)
+	then cyoa-text! basic-tone
+		victim charchoice( " est vire" )choice: victim-kick
+		bully charchoice( " est vire" )choice: bully-kick
+		bully-charm?
+		bully-sprayit?
+		victim oblivious? if
+			victim charchoice( " n'entend pas " .. bname )choice: loss-obliv
+		then			
+;
+
+: sneak-everyone team-count 2 < if notcname else "tout le monde" then ;
+
+cyoa: loss-quietly
+	despair-start-victim!
+	"Disparition Silencieuse" cyoa-title!
+	($ cname .. " se faufile quand " .. everyone .. " est occupe.
+	" $) cyoa-text! badfx
+	cloyalty- if
+		($ bHe .. " est une vraie fouine qui vole les cles de la voiture, avec l'intention de tout prendre pour " .. bhim .. "." $) +text
+	else
+		cloyalty+ if
+			($ bHe .. " part en ne prenant rien, meme pas ses provisions personnelles." $) +text
+			loyaltyREV decruit-bad-silent-takeweapons
+			($ "Il y a une note laissee derriere, souhaitant bonne chance a " .. sneak-everyone .. " !" $) +crtext +cr morale++all
+			exit
+		else
+			($ bHe .. " vole autant de nourriture que possible avant de partir. " $) +text
+		then
+	then loyaltyREV decruit-bad-silent
+	
+		most-paranoid if choosechar
+		//	cloyalty+ if exit then
+			($ "Cependant, " .. cname .. " a senti que quelque chose clochait et a suivi " .. bname .. ". " $) +crtext
+			
+			bully .loyalty low if
+				($ "Le traitre a ete empeche de voler la voiture et tout ce qu'elle contenait. " .. bHe .. " prend la fuite." $)
+			else
+				"Le voleur a ete surpris, et a fini par laisser tomber la nourriture en s'enfuyant."
+			then +text +cr witsattREV goodfx morale++all
+		then;
+		
+	cloyalty- if
+		($ bHe .. " part avec la plupart des provisions." rbold $) +crtext car-stolen trunk.killer bandit-gas bandit-food bandit-med bandit-ammo2 morale3-all
+	else
+		trunk-food 0 = if
+			($ "Tant pis pour " .. bname .. " qu'il n'y avait pas de nourriture de toute facon." $) +crtext victim .morale++ badfx
+		then;
+		trunk-food 20 < if
+			($ "Le peu que le groupe avait a ete vole." $) +crtext eat-all badfx
+		then;
+		($ "Le voleur a pris tout ce qu'" .. bhe .. " pouvait porter." $) +crtext -20 LOOT_FOOD trunk.loot+
+	then badfx
+;
+
+} }
+
+

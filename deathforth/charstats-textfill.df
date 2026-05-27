@@ -1,0 +1,88 @@
+
+voc{ textfill
+
+: job-maker args( chara )
+	0 stack
+		($ "caquette " .. <- chara xhis .. "  tire souvent la langue." $) shove
+		" etait carrement fait pour la fin du monde. Surtout parce que c'etait un sale con." shove
+		"continue a regarder autour de lui nerveusement." shove
+		($ "affirme qu'" .. <- chara xhe .. "  etait autrefois une celebrite." $) shove
+		"est couvert de salete." shove
+		"a une drole d'odeur. Et pas drole dans le bon sens." shove
+		"occupe vraiment beaucoup de place dans la voiture." shove
+		"a une allure noble." shove
+		"ne semble jamais transpirer." shove
+		"transpire abondamment." shove
+		($ "ronfle, mais nie ensuite qu' " .. <- chara xhe .. "  ronfle." $) shove
+		"a un regard percant." shove
+		"ne maintient pas le contact visuel." shove
+		"est un nerd secret." shove
+		"court d'une maniere totalement ridicule." shove
+		"deteste vraiment les conserves." shove
+		"espere voir un vrai elan." shove
+		"semble exceptionnellement calme." shove
+		"continue de macher du chewing gum." shove
+		($ "affirme qu'" .. <- chara xhe .. "  etait un supersoldat top secret." $) shove
+		"balance toujours des citations de la culture pop." shove
+		"semble toujours un peu distrait." shove
+		"pretend connaitre un ancien art martial anti zombie." shove
+		"n'est pas sur de cette idee d'aller Canada, mais est la quand meme." shove
+		"est, a l'insu de tous, allergique a tout ce qui se trouve au Canada." shove
+		($ "affirme qu'" .. <- chara xhe .. "  etait un athlete vedette." $) shove
+		($ "triture " .. <- chara xhis .. "  pouces presque constamment." $) shove
+		"a une belle voix chantante." shove
+		"ne peut pas arreter de parler de bacon." shove
+		"ce qui lui manque le plus, ce sont les chauffe-eau." shove
+		"ne derange pas les zombies mais deteste VRAIMENT les fantomes." shove
+		"est terrifie par les squelettes, mais parvient quand meme a s'en sortir." shove
+		"espere trouver un lance flammes." shove
+		($ "aime parler de " .. <- chara xhis .. " aliments congeles preferes." $) shove
+		($ "croit que la chance va bientot etre de " .. <- chara xhis .. " cote !" $) shove
+		"pretend etre expert de la tronconneuse." shove
+		"veut trouver le katana parfait." shove
+		"aime les os, aime les morceaux de bois, deteste etre mange." shove
+		"a peur des poulets." shove
+		"va reussir a se rendre au Canada cette fois." shove
+		($ "n'arrete pas de revoir " .. <- chara xhis .. " plans durgence." $) shove
+		"croit au Pere Noel." shove
+		"ne sent pas mauvais, ce qui est rare en ces temps de zombopocalypse." shove
+		"espere se rendre au Canada en voiture de luxe." shove
+		"deteste quand il pleut." shove
+		($ "dit qu'" .. <- chara xhe .. "  etait un celebre streamer de jeux video." $) shove
+		($ "pratique " .. <- chara xhis .. " exercices de zombies tous les matins." $) shove
+		"prevoit d'entrainer une armee de chiens anti-zombies." shove
+		($ "ecrit sur " .. <- chara xhis .. " aventures, quand " .. <- chara xhe .. " n'est pas occupe." $) shove
+		"est en train de faire une chanson sur ce voyage au Canada." shove
+		($ "est en train de dessiner une bande dessinee sur " .. <- chara xhis .. " vie." $) shove
+		"a une coupe de cheveux qui est tellement de la saison derniere." shove
+		"porte un pantalon qui nest plus a la mode." shove
+		// "" shove
+	shuffles pops nip
+;
+
+: blahblah menu_selected_charid #character args( chara )
+	// "BONJOUR JE SUIS " +text +purple <- chara .name@ +text +white " OK TU ES BETE." +text
+	// " J'AIME " +text +red <- chara .seed@ 1 & if "LES CHATS ?" else "LES CHIENS !" then +text +white " AINSI SOIT IL." +text
+	<- chara .trait@ $len 0= not if
+		"TRAIT : " +text +purple <- chara .trait@ +text 
+		+white " AVANTAGE : " +text +purple <- chara .perk@ +text +white +cr
+	then
+	<- chara .weapona@ <- chara .weaponb@ <- chara .weaponc@ + + 0 > if
+		"Regle :" +text 0
+		<- chara .weapona@ if " " +text +purple <- chara .weapona@ weaponid$ +text 1+ then
+		<- chara .weaponb@ if dup if ", " else " " then +text +purple <- chara .weaponb@ weaponid$ +text 1+ then
+		<- chara .weaponc@ if dup if ", " else " " then +text +purple <- chara .weaponc@ weaponid$ +text then
+		drop
+		+cr
+	then +cr
+	<- chara .job@ $len 0= if
+		<- chara job-maker <- chara .job!
+	then
+	<- chara .job@ $len 0= not if
+		<- chara .colourname +text " " +text <- chara .job@ +text
+	then
+;
+
+last to textfill-stats-tab
+
+}

@@ -1,0 +1,36 @@
+
+cyoa{ road{
+
+cyoa: clown-survived
+	"Apres le Cirque" cyoa-title!
+	someone choosechar
+	($ Thegroup .. " s'echappe du " .. "CIRQUE DE LA MORT !" rbold .. "
+		La voiture dehors a ete ecrasee par la stampede de clowns et ne demarre plus. " .. cname .. " verifie l'une des nombreuses voitures de clown maintenant disponibles, et elle demarre.
+		En route vers le Canada !" $) text!
+		CAR_CLOWN get-car
+;
+
+cyoa: clown-despair
+	bully choosechar cicon
+	solo if
+		"Arretez de Faire le Clown" cyoa-title!
+		($ "Sans personne a faire rire, " .. cname .. " s'ennuie de conduire partout.
+		Il abandonne la voiture et commence a faire du stop, esperant trouver un nouveau groupe de gens avec qui jouer." $) cyoa-text!
+	else
+		"La Nuit du Clown" cyoa-title!
+		($ Thegroup .. " fouille une maison dans une ville vide. Parmi les dechets se trouvent des objets de grande valeur ! Juste la, a portee de main !
+		" .. cname .. " sort une petite boite a musique.
+		La boite joue un air grele et sinistre.
+		" .. notcname .. " est sur le point de crier au clown d'arreter quand il remarque que celui-ci a disparu...
+		" .. RED .. "UN SENTIMENT D'EFFROI INTENSE EMPLIT L'AIR." $) cyoa-text!
+		2.8 18 20 rnd 2 siegecast // untouched
+		"events/siege/region/clown.df" $load-region
+		mission{ ' clown-survived to post-mission-cyoa }
+		choice( "La musique de cirque commence a jouer" )choice: premission
+	then
+	decruit-bad-silent-takeweapons sfx{ creepy }
+;
+
+} }
+
+

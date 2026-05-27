@@ -1,0 +1,186 @@
+cyoa{
+
+cyoa-choice: anime-go
+	($ cname .. " prend une heure pour lire le manga." $) text!
+	deleteme clear-cyoa o'clock@ 1 + o'clock
+	cchar .trait@ "Anime Fan" $= if
+		($ cname .. " adore le manga !!! La lecture de ceci confere " .. "DE MYSTERIEUX POUVOIRS DE MANGA !" rainbold $) +crtext
+		goodfx morale2+
+		road{ animefan-checker }
+	then;
+	cwits+ if
+		($ cname .. " est un goujat inculte qui n'a pas le gout raffine necessaire pour apprecier cette oeuvre." $) +crtext
+		badfx morale-- witsREV
+	else
+		($ cname .. " est une personne de culture et de gout qui apprecie grandement ce manga." $) +crtext
+		goodfx morale++
+	then witsREV
+;
+
+: animechoice
+	choice( "Laisser ca tranquille pour l'instant" )choice
+	cchar charchoice( " lit le manga" )choice: anime-go
+;
+
+cyoa: anime1
+	"Manga Trouve" cyoa-title!
+	picon!
+	($ cname .. " trouve un manga intitule " .. "SANDWICH-CHAN" pbold .. "
+	 C'est un roman graphique sur une magique fille de manga qui est aussi un sandwich vivant dans un refrigerateur. Ou peut-etre que c'est un sandwich qui est aussi une magique fille de manga.
+	 L'intrigue est un peu difficile a suivre." $) text!
+		animechoice
+;
+
+cyoa: anime2
+	"Manga Trouve" cyoa-title!
+	picon!
+	($ cname .. " trouve un manga intitule " .. "JE N'EN REVIENS PAS : MON FIANCE EST UNE SORTE DE CREATURE MARINE !" pbold .. "
+	 C'est un comic sur une femme qui a un boulot ennuyeux dans un bureau. Sa vie s'egaye quand elle adopte un poisson a visage humain qui parle.
+	 L'intrigue les voit obliges de se marier a cause de la malediction d'un sorcier." $) text!
+		animechoice
+;
+
+cyoa: anime3
+	"Manga Trouve" cyoa-title!
+	picon!
+	($ cname .. " trouve un manga intitule " .. "SAC DE PISTACHES" pbold .. "
+	 C'est un manga sur un sac de pistaches. Le protagoniste est surpris de decouvrir que les pistaches sont sensibles. Chaque pistache est une fille de manga differente.
+	 Il n'y a pas vraiment de trame narrative." $) text!
+		animechoice
+;
+
+cyoa-choice: animebox-go
+	62 65 rnd cchar .specialhead!
+	($ cname .. " est maintenant officiellement une fille de manga ! Sympa !" $) text! goodfx
+;
+
+cyoa: animebox
+	"Boite de Manga Mysterieuse" cyoa-title!
+	picon!
+	($ cname .. " trouve une boite de manga. Elle contient un tas de masques de filles de manga." $) text!
+		choice( "Laisser ca tranquille pour l'instant" )choice
+		cchar charchoice( " met le masque de manga" )choice: animebox-go
+;
+
+: anime-recruit nearest .character@ choosechar cicon 1 cchar .party-familiar goodfx clear-cyoa ;
+
+: animegirl-anime-check
+	pchar anime? if
+		($ cname .. " n'en revient pas de l'existence de " .. pname .. " !
+		" .. "LE MANGA EST REEL !" rainbold $) text!
+		road{ anime-countdown } 50 < if
+			($ "La purete de l'amour de " .. cname .. " pour le manga arrete la " .. "MALEDICTION DU MANGA" rbold .. " placee sur " .. pname .. " ! Profitez-en !" $) +crtext road{ 1000 to anime-countdown }
+		then \ retina fix
+	then
+;
+
+cyoa: anime-mort
+	anime-recruit
+	"Le Club Manga" cyoa-title!
+	($ cname .. " semble irrite par l'existence de " .. pname .. ".
+	" .. "Je suppose qu'on peut t'aider, mais c'est pas parce qu'on t'aime bien ou quoi que ce soit !" pbold $) text!
+	animegirl-anime-check
+;
+
+cyoa: anime-mark
+	anime-recruit
+	"Le Club Manga" cyoa-title!
+	($ cname .. " regarde " .. pname .. " avec un calme sentiment de superiorite.
+	" .. "Je suppose qu'on peut t'aider, mais c'est pas parce qu'on t'aime bien ou quoi que ce soit !" pbold $) text!
+	animegirl-anime-check
+;
+
+cyoa: anime-clyde
+	anime-recruit
+	"Le Club Manga" cyoa-title!
+	($ cname .. " semble trouble et nerveux. Pas a cause de " .. pname .. ", juste en general.
+	" .. "Je suppose qu'on peut t'aider, mais c'est pas parce qu'on t'aime bien ou quoi que ce soit !" pbold $) text!
+	animegirl-anime-check
+;
+
+cyoa: anime-dave
+	anime-recruit
+	"Le Club Manga" cyoa-title!
+	($ cname .. " ne dit rien, mais commence a suivre " .. pname .. ".
+	" .. "Je suppose qu'on peut t'aider, mais c'est pas parce qu'on t'aime bien ou quoi que ce soit !" pbold $) text!
+	animegirl-anime-check
+;
+
+}
+
+: animeclubstats args( char )
+	WEAPON_OTAKU <- char .weapona!
+	WEAPON_OTAKU <- char .weaponb!
+	WEAPON_OTAKU <- char .weaponc!
+	0.1 <- char .ai.wander_chance!
+	2 <- char .strength!
+	1 <- char .fitness!
+	0 <- char .female!
+;
+
+: .animemort args( char )
+	56 <- char .specialtype!
+	"Mort" <- char .name!
+	<- char animeclubstats
+	<- char cyoa{ ' anime-mort cyoa! }
+	drop
+;
+
+: .animemark args( char )
+	55 <- char .specialtype!
+	"Mark" <- char .name!
+	<- char animeclubstats
+	<- char cyoa{ ' anime-mark cyoa! }
+	drop
+;
+
+: .animedave args( char )
+	57 <- char .specialtype!
+	<- char animeclubstats
+	"Dave" <- char .name!
+	<- char cyoa{ ' anime-dave cyoa! }
+	drop
+;
+
+: .animeclyde args( char )
+	54 <- char .specialtype!
+	<- char animeclubstats
+	"Clyde" <- char .name!
+	<- char cyoa{ ' anime-clyde cyoa! }
+	drop
+;
+
+// : animeshop-npc new-npc 0 lt .leaveok! 1 lt .unseen! lt .character@ ;
+
+locdef{
+		
+location: animestore
+		max-rooms: 2
+		entry-tags: shop
+		script: yall-theme
+		
+: animeshoploot
+	map{ room-papers }
+//	4 for magazine scatter next
+	5 for otaku .scatter next
+	magazine cyoa{ ' anime1 cyoa! } scatter
+	magazine cyoa{ ' anime2 cyoa! } scatter
+	magazine cyoa{ ' anime3 cyoa! } scatter
+	spawn 0x 4 themed spriteid! bbox as-cloth cyoa{ ' animebox cyoa! } scatter
+	inside-npc .animemort inside-npc .animeclyde inside-npc .animedave inside-npc .animemark 
+	
+;
+		
+		room-choice: shop
+			room-weight: 10
+			room-count: 1
+			room-script: 
+			room-post-script: animeshoploot
+			filter-only		
+ 
+		room-choice: restroom
+			room-weight: 10
+			room-count: 1
+			room-script: floor-bath
+	
+}

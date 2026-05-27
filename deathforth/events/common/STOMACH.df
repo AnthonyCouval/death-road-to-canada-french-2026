@@ -1,0 +1,1135 @@
+
+
+
+\ Just load this file after the RETINA file, like last time. 
+
+\ Note: after using any of the "ify" words, use the "to-mission" command. 
+\ Some events take one mission to kick in, so to speak. (Technical hitch.) 
+
+\ Think I'll make these trader camp chars, as to not saturate the road pool. 
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ BAYONETTA "BULLET BLITZ" STUFF BELOW 
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+: new_bay_wep_heavy 1 6 rnd case 
+	1 of WEAPON_MEGAMAUL endof 
+	2 of WEAPON_CLAYMORE endof
+	3 of WEAPON_HALBERD endof 
+	4 of WEAPON_ZWEI endof
+	5 of WEAPON_SLEDGE endof 
+	6 of WEAPON_METAL endof 
+	endcase
+; 
+
+: new_bay_wep_light 1 6 rnd case 
+	1 of WEAPON_TRUEKATANA endof 
+	2 of WEAPON_ALUMINUM endof 
+	3 of WEAPON_SICKLE endof 
+	4 of WEAPON_DAGGER endof 
+	5 of WEAPON_HATCHET endof 
+	6 of WEAPON_MACHETE2 endof 
+endcase
+; 
+
+
+: fire_bayonettabolts args( me )
+		
+		2 for \ red 
+		
+			bullet
+			
+			1 lt .anim.info! 
+			
+			weapons_base_id 346 + lt .spriteid! 
+			
+			<- me thing# lt .throwerid!
+			45 i 90 * + lt .angle!
+			<- me .pos lt .pos! 
+			 
+			0.1 lt .hitcheck.shoot_thru!
+			2 lt .hitcheck.knockback!
+			2.5 lt .hitcheck.power! 		
+
+			40 lt .anim.counter!
+			
+			1 lt .anim.extra! 
+			
+			lt .angle@ anglexy 3 xymul lt .vel! // Speed
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+		
+		next 
+		
+		2 for \ blu 
+		
+			bullet
+			
+			1 lt .anim.info! 
+			
+			weapons_base_id 347 + lt .spriteid! 
+			
+			<- me thing# lt .throwerid!
+			180 45 + i 90 * + lt .angle!
+			<- me .pos lt .pos! 
+			 
+			0.1 lt .hitcheck.shoot_thru!
+			2 lt .hitcheck.knockback!
+			2.5 lt .hitcheck.power! 		
+
+			40 lt .anim.counter!
+			
+			1 lt .anim.extra! 
+			
+			lt .angle@ anglexy 3 xymul lt .vel! // Speed
+			1 lt .timer!
+			-3 <- me .breath - lt .pos.z!
+		
+		next 
+		sfx{ noise 100 freq! 1.05 0.95 frnd pitch! 2 scale!  } 
+		sfx{ thump 0.96 q! 0.66 scale! pitch@ 0.8 1.2 frnd * pitch! 150 1500 frnd filt!  }
+		
+		4 for
+			<- me .pos
+				particle{
+					new pos!
+					15 ticks! 
+					90 i * 15 - 45 + angle! 
+					glowy
+					0.9 grow!
+					11 fade_out!
+					particles_base_id 0x 51 + spriteid!
+					angle@ anglexy 2 3 frnd xymul vel! 
+					pos@ angle@ anglexy 1 xymul xyadd pos!
+					\ gameticks angle!
+					1 scale!
+					1 0.4 0.4 rgb!
+				}
+			next 
+			
+		4 for
+			<- me .pos
+				particle{
+					new pos!
+					15 ticks! 
+					90 i * 15 + 45 + angle! 
+					glowy
+					0.9 grow!
+					11 fade_out!
+					particles_base_id 0x 51 + spriteid!
+					angle@ anglexy 2 3 frnd xymul vel! 
+					pos@ angle@ anglexy 1 xymul xyadd pos!
+					\ gameticks angle!
+					1 scale!
+					0.4 0.4 1 rgb!
+				}
+			next 	
+		
+		
+;
+
+: bayonet_lines 1 20 rnd case  
+	1 of "ESSAIE DE SUIVRE~" endof
+	2 of "UN PROBLEME ?~" endof
+	3 of "TROP RAPIDE ?~" endof
+	4 of "I'M OUTPACING YOU!~" endof
+	5 of "FAIS PLUS D'EFFORTS !~" endof
+	6 of "ALLEZ~" endof
+	7 of "BON SANG~" endof
+	8 of "JE SUIS VRAIMENT FORTE~" endof
+	9 of "RECOMMENCE !~" endof
+	10 of "TROP RAPIDE !~" endof
+	11 of "REGARDE-MOI ALLER !~" endof
+	12 of "Oups !" endof
+	13 of "Hehe, oups !~" endof
+	14 of "IL VA FALLOIR ALLER PLUS VITE QUE CA !" endof
+	15 of "SUIS-MOI !~" endof
+	16 of "SMASH!~" endof
+	17 of "BASH!~" endof
+	18 of "I'M SO GOOD~" endof
+	19 of "TU VOUDRAIS ETRE AUSSI RAPIDE !~" endof
+	20 of "BAY-OH-NETTI!~" endof
+	endcase
+;
+
+: bayonet-thing-events args( me eventid )
+
+	<- eventid THING_EVENT_DIED = if
+		"BAYONETTI...BAYO-MORTE-TTI..." <- me .yellmsglong
+	then
+
+	<- eventid THING_EVENT_DID_HIT = if \ if i hit
+		<- me .weapon_slot_using@ 2 = if \ and am using the combo slot
+			<- me .character@ .weapon_nodropc@ 1 = if \ and still have a combo slot, even
+				<- me .action_cooldown@ 0 = if \ and havent changed recently
+					<- me .just_hit_id@ #thing .hitpoints@ 1 < if \ and killed the target
+						<- me .anim.weapon_counter@ <- me .action_cooldown! \ GIVE ME A NEW WEAPON!!!!
+						50 %chance if new_bay_wep_heavy <- me .character@ .weaponc! else new_bay_wep_light <- me .character@ .weaponc! then
+						<- me fire_bayonettabolts
+						33 %chance if
+							50 %chance if
+								RED bayonet_lines .. <- me .yellmsg
+							else
+								BLUE bayonet_lines .. <- me .yellmsg
+							then
+
+						then
+					then
+				then
+			then
+		then
+	then
+;
+
+
+: bayonet-main-events args( chara eventid )
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .location@ 1 = if
+			<- chara .thing@ swap ( teid ) bayonet-thing-events
+	then
+;
+
+: .bayonetta_ify args( chara )
+
+	"Bayonetti" <- chara .name!
+	6 <- chara .strength!
+\	4 <- chara .shooting!
+	6 <- chara .fitness!
+	2 <- chara .health!
+	2 <- chara .vitality!
+	3 <- chara .carrying.slot_count!
+	"decollerait probablement comme une fusee si elle continuait a claquer ses talons ensemble." <- chara .job!
+	6 <- chara .loyalty!
+	1 <- chara .dexterity!
+	WEAPON_MEGAMAUL <- chara .weaponc!
+	' bayonet-main-events <- chara .main_events!
+
+	WEAPON_THE1911 <- chara .weapona!
+	WEAPON_THE1911 <- chara .weaponb!
+
+	1 <- chara .weapon_nodropc!
+
+	0.5 <- chara .bounceval! \ skip & saunter about
+
+	2 <- chara .wits!
+	4 <- chara .attitude!
+	2 <- chara .composure!
+
+	148 <- chara .specialtype!
+	1 <- chara .female!
+	6 <- chara .morale!
+	"Pugnala" <- chara .perk!
+	"Vampire Survivor" <- chara .trait!
+
+;
+
+\ todo: hiring event
+\ todo: dial ogg
+
+
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ ZEUS "SURELY NOT FROM DOTA2" STUFF BELOW
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+
+
+: zeus_yells 1 21 rnd case
+1 of "PUNY MORTALS..." endof
+2 of "TRIBUTE ONTO ME!" endof
+3 of "I AM YOUR SUPERIOR" endof
+4 of "BEHOLD, THE MIGHTY!" endof
+5 of "BEHOLD, ZEUS!" endof
+6 of "WAIT, YOU AREN'T MY WIFE" endof
+7 of "I AM YOUR DEITY! PAY RESPECT!" endof
+8 of "WANT TO DATE?" endof
+9 of "PATHETIC." endof
+10 of "DISAPPOINTING..." endof
+11 of "THIS IS YOUR 'EARTH'?" endof
+12 of "MY CURRENT, YOUR VEINS" endof
+13 of "BEHOLD...ZEUS!" endof
+14 of "MY POWER INCREASES!" endof
+15 of "AAHHH... A TRIBUTE." endof
+16 of "WITNESS A DEITY'S POWER!" endof
+17 of "YOUR PRAYER, ANSWERED" endof
+18 of "BY MY WHISKERS." endof
+19 of "THUNDEROUS APPLAUSE..." endof
+20 of "THUNDER-STRUCK!" endof
+21 of "I TAKETH AWAY." endof
+endcase
+;
+
+: aoe-damage args( me eventid )
+
+	<- eventid THING_EVENT_TIMER = if
+		1 <- me .timer!
+
+		<- me .pos.z@ -40 > if
+
+				14 for
+			<- me .pos
+				particle{
+					new pos!
+					10 ticks!
+					0 360 frnd angle!
+					glowy
+					0.99 grow!
+					5 fade_out!
+					particles_base_id 149 + spriteid!
+					// angle@ anglexy 0.04 0.08 frnd xymul vel!
+					pos@ -15 15 frnd + swap -15 15 frnd + swap pos!
+					0.25 0.4 frnd scale!
+					0 0.4 1 rgb!
+					}
+			next
+
+		15 <- me .smashybits
+		0 <- me .spriteid!
+		0 <- me .hitpoints!
+		<- me silentkillit
+
+
+		then
+	then
+
+
+	<- eventid THING_EVENT_BREAK = if
+			15 for
+			<- me .pos
+				particle{
+					new pos!
+					10 ticks!
+					0 360 frnd angle!
+					glowy
+					0.99 grow!
+					5 fade_out!
+					particles_base_id 149 + spriteid!
+					// angle@ anglexy 0.04 0.08 frnd xymul vel!
+					pos@ -20 20 frnd + swap -15 15 frnd + swap pos!
+					0.25 0.4 frnd scale!
+					0 0.4 1 rgb!
+					}
+			next
+
+
+		0 <- me .spriteid!
+		0 <- me .hitpoints!
+		<- me silentkillit
+
+	then
+;
+
+: initiate_lightning args( me )
+
+
+		spawn special_objects96_base_id 5 + lt .spriteid! 100 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z!
+
+		 1 lt .timer!
+		 1 lt .tileflags!
+		 1 lt .anim.info!
+		 1 lt .nocollide!
+		 0 lt .rad.x! 0 lt .rad.y!
+		 -350 lt .pos.z!
+		 13 lt .vel.z!
+		 173 185 rnd lt .angle!
+		' aoe-damage lt .events!
+		<- me .vel lt .vel xyadd lt .vel!
+
+		<- me .pos lt .pos!
+		sfx{ thump 2 scale! 2.7 3.3 frnd pitch! 30 180 rnd a! 700 d! 120 r! }
+
+		<- me .pos xyblast
+			-1 lt .hitcheck.blast! 13 lt .hitcheck.rad!
+			1.5 lt .hitcheck.power! 6 lt .hitcheck.knockback!
+
+
+;
+
+
+: zeus-thing-events args( me teid )
+
+	<- teid THING_EVENT_DIED = if
+		"OHHHH, JOURRRR TRAGIQUE !!!" <- me .yellmsglong
+	then
+
+	<- teid THING_EVENT_DID_HIT = if
+
+	<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
+
+			6 7 rnd for
+			<- me .just_hit_id@ #thing dup .pos
+			particle{
+				new pos!
+				15 ticks!
+				<- me .aim_angle@ angle!
+				glowy
+				0.8 grow!
+				3 fade_out!
+				particles_base_id 0x 51 + spriteid!
+				i 20 40 rnd * 90 - angle@ + anglexy 2 3 frnd xymul vel!
+				pos@ angle@ anglexy 8.5 xymul xyadd pos!
+				gameticks angle!
+				1 scale!
+				0 0.7 1 rgb!
+			}
+			next
+
+			20 %chance if
+				FLASHY zeus_yells .. <- me .yellmsg
+			then
+
+			33 %chance if
+			<- me .pos 600 things-in-xyrad
+				depths for i picks .zombie? if
+					\ i picks .pos <- me .pos xysub xymag print
+					i picks .pos <- me .pos xysub xymag 21 > if
+					i picks initiate_lightning
+						break
+					then then
+				next drop
+			then
+
+			<- me .character@ .stackedc@ 101 < if
+
+			weapondef{ <- me .wielded sel power@ } 2 * <- me .character@ .stackedc@ + <- me .character@ .stackedc!
+
+			then
+
+		then
+	then
+
+
+;
+
+: zeus-main-events ( teid ) args( chara eventid )
+
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+
+	 <- chara .thing@ swap ( teid ) zeus-thing-events
+
+
+;
+
+: .zeusify args( chara )
+
+	"Zeus" <- chara .name!
+	14 STAT_STRENGTH <- chara .bonus!
+	6 <- chara .strength!
+
+	' zeus-main-events <- chara .main_events!
+
+	-6 STAT_FITNESS <- chara .bonus!
+	6 <- chara .fitness!
+
+	4 <- chara .health!
+	4 <- chara .vitality!
+	"a ete bannie aux USA apres un incident disgracieux impliquant un orignal et son mari." <- chara .job!
+	0 <- chara .wits!
+	0 <- chara .loyalty!
+
+	1 <- chara .weapon_nodropc!
+	WEAPON_ZEUSFIRE <- chara .weaponc!
+	WEAPON_SUNDER <- chara .weapon_default!
+
+	0 <- chara .female!
+
+
+	3 <- chara .carrying.slot_count!
+
+	0 <- chara .attitude!
+	0 <- chara .composure!
+
+	149 <- chara .specialtype!
+
+	6 <- chara .morale!
+	"Electric" <- chara .perk!
+	"Chiselled" <- chara .trait!
+
+;
+
+
+
+
+\ -----------------------------------------------
+\ ----------------------------------------------
+\ CAPTAIN "RUNS AROUND IN THE RAIN" MERENJA RAVEN STUFF BELOW
+\ -----------------------------------------------
+\ -----------------------------------------------
+
+0 value HAS_YAPPED
+
+: merenja-thing-events args( me teid )
+
+	<- teid THING_EVENT_DIED = if
+		"ENTERREZ-MOI...DANS UN SIPHON..." <- me .yellmsglong
+		\ Would have preferred a reference to Hanna, but oh well.
+		2 weather!
+		2 wind_force!
+	then
+
+	<- teid THING_EVENT_SWING = <- teid THING_EVENT_SHOOT = or if
+
+		weather@ 0.1 > if
+			<- me .cooldown@ 0.6 * <- me .cooldown!
+		then;
+
+	map{ <- me .pos pos>tile tile@ } 0 = not if
+		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if
+
+			<- me .cooldown@ 0.6 * <- me .cooldown!
+
+		then then;
+
+	then
+
+	<- teid THING_EVENT_TIMER = if
+
+		1 <- me .timer!
+	<- me .character@ .health@ 1 < if then;
+
+	weather@ 0 > if
+		HAS_YAPPED 0 = if
+			<- me .inside_id@ 0 = if
+				"Ah, c'est comme etre en mer a nouveau !" <- me .yellmsglong
+				1 to HAS_YAPPED
+			then
+		then
+	then
+
+	weather@ 0.1 > if
+		<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++
+		0.25 <- me .character@ .speed_bonus!
+	then;
+
+	map{ <- me .pos pos>tile tile@ } 0 = not if
+		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if
+
+			<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++
+			0.25 <- me .character@ .speed_bonus!
+
+			else
+
+			0.05 <- me .character@ .speed_bonus!
+
+			then
+		then;
+	then
+
+;
+
+
+: merenja-main-events ( teid ) args( chara eventid )
+
+	<- eventid MAIN_EVENT_MISSION_START = if
+		0 to HAS_YAPPED
+	then
+
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+
+	<- chara .location@ 1 = if
+		1 <- chara .thing@ .timer!
+		<- chara .thing@ swap ( teid ) merenja-thing-events
+	then
+	 \ I can't forego a timer here ... sorry modders.
+
+;
+
+: .ravenify args( chara )
+
+	"Admiral" <- chara .name!
+
+	5 <- chara .shooting!
+	5 <- chara .mechanical!
+
+	' merenja-main-events <- chara .main_events!
+
+	"se demande si ce sentiment d'angoisse en se regardant dans le miroir disparaitra un jour." <- chara .job!
+	6 <- chara .wits!
+	6 <- chara .loyalty!
+	6 <- chara .composure!
+	0 <- chara .attitude!
+	1 <- chara .female!
+
+	3 <- chara .carrying.slot_count!
+
+	150 <- chara .specialtype!
+
+	WEAPON_JAG <- chara .weapona!
+	WEAPON_MERENJAHARP <- chara .weaponb!
+	WEAPON_SUPPLYDROP <- chara .weaponc!
+	20 LOOT_SHOTGUN_SHELL <- chara .lootamt!
+	\ IM LOCKED AND LOADEDDDDDDDDD
+
+	6 <- chara .morale!
+	"Alert" <- chara .perk!
+	"Waterborne" <- chara .trait!
+
+	1 weather! \ Rain follows Merenja wherever she goes
+;
+
+
+
+cyoa{
+
+\ Admiral Raven
+
+cyoa-bridge: camp-admiral-recruit
+    ricon 4 recruitee .morale! clear-cyoa
+    15 recruit-yes-food
+    "Le monde entier est une baignoire, et nous ne sommes que ses marins." bbold +crtext
+    recruitee .shootingREV recruitee .mechanicREV
+;
+
+cyoa: camp-rec-admiral
+    "Commandante des Mers et de Votre Baignoire" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "Au debut, cette personne en uniforme est juste en train de barboter dans une flaque d'eau. Quel que soit ce rituel, elle s'amuse comme une folle.
+    Elle ressemble a un membre important d'une force navale, ou peut-etre a une pecheuse tres excentrique." $) cyoa-text! basic-tone
+    "Ce personnage peut echanger de la nourriture contre des ravitaillement d'essence. Elle est tres puissante par temps pluvieux ou dans les environnements aquatiques." rbold +crtext
+    trunk-food 14 > if
+       choice( "La laisser pour l'instant" )choice
+       choice( "L'embaucher - 15 nourriture" )choice: camp-admiral-recruit
+    else
+       "Vous avez besoin de 15 nourriture pour recruter l'Amiral Raven dans l'equipe." +crtext
+       choice( "Pas de marine de baignoire pour vous !" )choice
+    then
+;
+\ Zeus
+\ for TRACHEA, we are definitely making Rubick
+\ "IM COMING FRIENDS. WAIT FOR MEEEEEEE"
+
+cyoa-bridge: camp-zeus-recruit
+    ricon 4 recruitee .morale! clear-cyoa
+    25 recruit-yes-food
+    "CET HOMMAGE EST...SUFFISANT. DE PLUS, SAVOUREUX. CES CHIPS SONT-ELLES PARFUMEES A LA FOUDRE ?" fbold +crtext
+    "Peut-etre que le groupe ARRIVERA au Canada, apres tout !" +crtext
+;
+
+cyoa-choice: camp-zeus-rude
+    ($ ". . ." $) cyoa-text!
+    "TOI, CHER MORTEL. TOI, MORTEL QUI EST CHETIF, MINUSCULE, PATHETIQUE, FAIBLE, DANS TA FORME DE CHAIR TOUTE FRAGILE..." fbold +crtext
+    ". . . " +crtext
+    "Tu oserais ME demander - A MOI ? - ZEUS DU MONT OLYMPE...DE ME CALMER ?" fbold +crtext
+    ($ "Avec le recul, c'etait une idee aussi foireuse que de crever un pneu sur l'autoroute. D'un claquement de doigts, Zeus transforme les organes de " cname .. " en pur Zombie Points. Il n'en reste plus rien." .. $) +crtext
+    "Zeus, au moins, a l'air content de lui." +crtext
+    cchar .kill
+    cool-it++
+    20 zombop!
+;
+
+cyoa: camp-rec-zeus
+    "TRUE SIGHT" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "C'est litteralement Zeus. Le DIEU. Le mythe. La legende. Ici et maintenant, juste en face de vous, arpentant la Terre sous forme humaine !" $) cyoa-text! basic-tone
+    "MORTELS... QUEL HOMMAGE AVEZ-VOUS POUR VOTRE DIEU ?" fbold +crtext
+    "Le tonnerre gronde au loin entre chacun de ses mots." rbold "... cela pourrait aussi juste etre un paquet de chips qu'on ouvre." .. +crtext
+    "Ce personnage manie la foudre avec une grande efficacite, mais elle doit etre chargee par des attaques au corps a corps." rbold +crtext
+    trunk-food 24 > if
+       choice( "Le laisser pour l'instant" )choice
+       choice( "L'embaucher - 25 nourriture" )choice: camp-zeus-recruit
+
+    else
+       "Vous avez besoin de 25 nourriture pour le recruter dans l'equipe." +crtext
+       choice( "Impossible de sacrifier la nourriture" )choice
+    then
+       most-grating if
+          charchoice( " dit a Zeus de 'Se Calmer'" )choice: camp-zeus-rude
+          \ Il n'y a pas d'issue positive quand on dit a Dieu de se calmer. Surtout si ce dieu est ZEUS.
+       then
+
+;
+\ Bayonetta
+\ Idk how I feel about Bayonetta. I think I would've rather made a different char.
+\ Oh well.
+
+cyoa-bridge: camp-bayonetta-recruit
+    ricon 6 recruitee .morale! clear-cyoa
+    15 recruit-yes-food
+    "OUIOUIOUIOUIOUI ! CA VA ETRE CARREMENT GENIAL ! ;3" fbold +crtext
+    recruitee .showitall
+;
+\ She starts with 6 morale because she extracted 2 morale from me.
+
+cyoa: camp-rec-bayonetta
+    "SURVIVORS OF THE VAMPIRIC VARIETY" cyoa-title!
+    nearest .character@ choosechar cchar to recruitee ricon
+    ($ "Cette femme n'arrete pas de parler. C'est un assaut implacable de confiance en soi qui agresse les sens. Neanmoins, elle semble trimballer une grande variete de bonnes armes, ainsi que deux pistolets." $) cyoa-text! basic-tone
+    "OOH OOH ENGAGE-MOI ! ENGAGE-MOI ! JE VAIS ETRE SI RAPIDE QUE TU NE POURRAS PAS SUIVRE, CHERI~" fbold +crtext
+    "Je suis assis dans ce cyoa et meme moi je la trouve deja agacante." +crtext
+    "Ce personnage possede un systeme de combo. En tuant avec votre arme a emplacement verrouille, vous debloquerez une nouvelle arme juste apres." rbold +crtext
+    trunk-food 14 > if
+       choice( "Epargner vos oreilles" )choice
+       choice( "L'engager - 15 nourriture" )choice: camp-bayonetta-recruit
+    else
+       "Vous avez besoin de 15 nourriture pour la recruter dans l'equipe." +crtext
+       choice( "Impossible de sacrifier la nourriture" )choice
+    then
+;
+
+}
+
+
+: .kepaify args( chara )
+	"Kepa" <- chara .name!
+	0 <- chara .female!
+	0 <- chara .hairtype!
+	0 <- chara .bodytype!
+	6 <- chara .headtype!
+	0 <- chara .torsotype!
+	2 <- chara .legstype!
+	0 <- chara .facetype!
+	1 <- chara .hairtype!
+	0 <- chara .hattype!
+	0 <- chara .glassestype!
+	0 <- chara .specialtype!
+	0 <- chara .speed_bonus!
+	0 <- chara .skincolour!
+	15 <- chara .haircolour!
+	1234512345 <- chara .seed!
+	"IS KEPA" <- chara .trait!
+	($ "est coince dans cette dimension en guise de punition pour le systeme roomgen." $) <- chara .job!
+	"GAME DESIGNER" <- chara .perk!
+	WEAPON_CARDBOARD <- chara .weapona!
+	5 <- chara .shooting! 5 <- chara .strength! 3 <- chara .fitness!	2 <- chara .morale!
+	0 <- chara .wits! 0 <- chara .attitude! 0 <- chara .composure! 0 <- chara .loyalty!
+	<- chara .fitnessREV <- chara .strengthREV <- chara .shootingREV
+	<- chara .witsREV <- chara .attitudeREV <- chara .temperREV <- chara .loyaltyREV
+	1 <- chara .vitality! 1 <- chara .health!
+;
+
+\ can't wait for this to get griefed...
+: .syca_ify args( chara )
+	121 <- chara .specialtype!
+	1 <- chara .female!
+	WEAPON_FOSBURY <- chara .weapona!
+	200 LOOT_BULLET <- chara .lootamt!
+	WEAPON_HUNTING <- chara .weaponb!
+	200 LOOT_RIFLE_SHELL <- chara .lootamt!
+	4 <- chara .shooting!
+	4 <- chara .mechanical!
+	6 <- chara .loyalty!
+	"Deciduous" <- chara .perk!
+	"Developer" <- chara .trait!
+	"is mostly here on accident after 'quit-to-title' stopped working for her." <- chara .job!
+	"Hazel" <- chara .name!
+;
+
+
+
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ 			RUBICK SPELLSTEALER BELOW
+\ ----------------------------------------------
+\ ----------------------------------------------
+
+: rubick-thing-events args( me eventid )
+	<- eventid THING_EVENT_SWING <> if
+		1 <- me .character@ .weapon_nodropb!
+	then
+
+	<- eventid THING_EVENT_DIED = if
+		GREEN "i lost?" .. <- me .yellmsg
+	then
+;
+
+
+: never_drop_things args( chara eventid )
+	\ 1 <- me .character@ .weapon_nodropc!
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .thing@ swap ( teid ) rubick-thing-events
+
+;
+
+: .rubick_ify args( chara )
+	151 <- chara .specialtype!
+	0 <- chara .female!
+
+	WEAPON_FADEBOLT_REAL <- chara .weapona!
+	WEAPON_SHOVEL <- chara .weaponb! \ Need to put something here or the AI tries to pick up stuff that it cant
+
+	\ Think of it as like that old shovel neutral item that dug up consumables
+
+	WEAPON_COPYCOPY <- chara .weaponc!
+	1 <- chara .stackedc!
+	\ Copy weapon does not need charges
+	\ It has charges because it enables the weapon to "aim" nicely
+	\ they will never be used or run out
+
+	1 <- chara .weapon_nodropc!
+	1 <- chara .weapon_nodropb!
+	1 <- chara .weapon_nodropa!
+
+	0 <- chara .female!
+
+	2 <- chara .strength!
+	1 <- chara .fitness!
+	6 <- chara .wits!
+	3 <- chara .attitude!
+
+	2 <- chara .vitality!
+	2 <- chara .health!
+
+	0 <- chara .loyalty!
+	0 <- chara .composure!
+
+	' never_drop_things <- chara .main_events!
+
+	"Level 30" <- chara .perk!
+	"Spellstealer" <- chara .trait!
+	"volera aussi votre partenaire, vos enfants et votre maison si vous ne surveillez rien. Un voleur jusqu'au bout des doigts !" <- chara .job!
+	"Magus" <- chara .name!
+;
+
+\ "MOOOON TOUR MAINTENANT"
+\ my most played dota char by far
+
+: pewt_laugh 1 19 rnd case
+	1 of "NYEHEHEHEHEH" endof
+	2 of "Nyheheheheh" endof
+	3 of "hehehehehh" endof
+	4 of "HEHEHEHEH" endof
+	5 of "HEY LEWIS" endof
+	6 of "hey lewis" endof
+	7 of "NYEHEHEH HEHEHEH" endof
+	8 of "nyehehehehh" endof
+	9 of "Je suis... ELECTRIC MAN" endof
+    10 of "pewter... les zombies sont la." endof
+    11 of "c'est encore pire que la fois ou..." endof
+    12 of "FERME LA MEG." endof
+    13 of "INSERER UN GAG EN FLASHBACK" endof
+    14 of "au moins je ne bois pas." endof
+    15 of "je veux juste lui parler." endof
+    16 of "Gratte-cul." endof
+    17 of "La vie est une chose terrible !" endof
+    18 of "IL SE PREND TRES AU SERIEUX." endof
+    19 of "OOOH ! UN DOLLAR." endof
+	endcase
+;
+
+: familyguy-thing-events args( me eventid )
+	<- eventid THING_EVENT_SWING = if
+
+		player 0 = not if
+			16 %chance if
+				<- me .id@ pchar .thing@ .id@ = if
+					pewt_laugh <- me .yellmsg
+				else
+					50 %chance if
+						"hey, hey " pchar .name@ .. "..." .. <- me .yellmsg
+							else
+						"hey " pchar .name@ .. <- me .yellmsg
+					then
+				then
+			then
+		then
+	then
+
+	<- eventid THING_EVENT_DIED = if
+		RED "*gasp*...aaaaaah...*gasp*...ahhhh..." .. <- me .yellmsg
+	then
+;
+
+
+: familyguy-main-events args( chara eventid )
+	\ 1 <- me .character@ .weapon_nodropc!
+	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
+		<- chara .thing@ swap ( teid ) familyguy-thing-events
+
+;
+
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ 	PETER "I JUST WANNA TALK TO HIM" GRIFFIN BELOW
+\ ----------------------------------------------
+\ ----------------------------------------------
+
+: .pewterify args( chara )
+	152 <- chara .specialtype!
+	0 <- chara .female!
+
+	3 <- chara .strength!
+
+	6 <- chara .fitness!
+	-6 STAT_FITNESS <- chara .bonus!
+
+	WEAPON_ROUNDHOUSE <- chara .weapon_default!
+	' familyguy-main-events <- chara .main_events!
+	WEAPON_PEWSHOTGUN <- chara .weapona!
+
+	1 <- chara .wits!
+	2 <- chara .attitude!
+
+	6 <- chara .vitality!
+	6 <- chara .health!
+
+	0 <- chara .loyalty!
+	2 <- chara .composure!
+
+	-3 STAT_MORALE <- chara .bonus!
+	6 <- chara .morale!
+
+    "Electric Man" <- chara .perk!
+    "Gourmand" <- chara .trait!
+    "se demande ou sont passees les bonnes vieilles valeurs d'autrefois. Nyehehehe." <- chara .job!
+    "Pewter" <- chara .name!
+;
+
+\ ----------------------------------------------
+\ ----------------------------------------------
+\ 			JIMBO "JON BALATRO" BELOW
+\ ----------------------------------------------
+\ ----------------------------------------------
+
+: .jimboify args( chara )
+	153 <- chara .specialtype!
+	0 <- chara .female!
+
+	-6 6 rnd STAT_STRENGTH <- chara .bonus!
+	-6 6 rnd STAT_FITNESS <- chara .bonus!
+	-6 6 rnd STAT_SHOOTING <- chara .bonus!
+	-6 6 rnd STAT_MEDICAL <- chara .bonus!
+	-6 6 rnd STAT_MECHANICAL <- chara .bonus!
+	\ meet potential man
+
+	0 6 rnd <- chara .wits!
+	0 6 rnd <- chara .attitude!
+	0 6 rnd <- chara .loyalty!
+	0 6 rnd <- chara .composure!
+
+	3 dup <- chara .vitality! <- chara .health!
+
+	0 <- chara .female!
+
+	6 <- chara .morale!
+
+    "Blind" <- chara .perk!
+    "Joker" <- chara .trait!
+    "chuchote continuellement que" " LA PLANTE MALEFIQUE DOIT PAYER." fbold .. <- chara .job!
+    "Jumbo" <- chara .name!
+
+	1 <- chara .carrying.slot_count!
+;
+
+cyoa{ road{
+cyoa-choice: magic-tips
+    ($ GREEN "EH BIEN, IL VOUS FAUDRAIT QUELQUES MILLIERS D'ANNEES POUR APPRENDRE CE QUE J'AI APPRIS..." .. $) cyoa-text!
+    ($ PURPLE "ok, pas la peine d'etre un abruti avec ca." .. $) +crtext
+    morale--all
+    ($ GREEN "HMM... J'AVAIS ACHETE CES OBJETS DE SOIN POUR LA BATAILLE A VENIR. ILS NE ME SERONT PLUS D'UNE GRANDE UTILITE MAINTENANT. VOUS POUVEZ LES PRENDRE A LA PLACE." .. $) +crtext
+    ($ WHITE "Magus donne au groupe 2 sprays de soin !" .. $) +crtext
+    ($ "Ensuite, il effectue un mouvement circulaire de la main. Un cercle de rituel apparait a ses pieds. En une seconde, il disparait dans les airs ! Magique." $) +crtext
+    morale++all
+    2 WEAPON_HEALSPRAY trunk.weapon+
+;
+
+cyoa: rubick-scget
+    "CHIENS DE LA RUCHE 2... ATTENDS, NON" cyoa-title!
+    char-gen to recruitee ricon 3 recruitee .morale! recruitee .rubick_ify
+    ($ "Quand le groupe sort de la voiture pour une pause, une musique celeste retentit. Des flashs blancs dans leurs yeux. Devant eux, une sorte de truc magique ressemblant a un gobelin vert se materialise." $) cyoa-text! basic-tone
+    ($ rname .. " regarde autour de lui, confus, jetant un oeil a ses mains puis vers " thegroup .. ". Il a une sorte de baton." .. $) +crtext
+    ($ GREEN "SOOOOO, C'ETAIT LA MORT. IN-TE-RES-SANT. Oh, bonjour les amis !" .. $) +crtext
+    ($ WHITE "C'est pas tous les jours que quelqu'un sur la route respawn devant vous." .. $) +crtext
+    ($ RED "Magus peut copier les armes des autres et utiliser de la magie." .. $) +crtext
+       choice( "Demander a " .. rname .. " de rejoindre" )choice: recruit-yes
+       choice( "Demander a " .. rname .. " des conseils magiques" )choice: magic-tips
+       choice( "Oublier cet abruti" )choice
+;
+
+
+cyoa: recruit-peter-yes
+    team-full? if
+       ($ "Le groupe est complet.
+       Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) cyoa-text!
+       recruit-replace?
+    then;
+    ricon
+    ($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) cyoa-text! 2 300 tone
+       recruited
+    ($ rname .. " manque presque de s'etouffer avec les galettes de riz !" $) +crtext
+    -5 trunk-food+
+    3 5 rnd for
+       recruitee .ouch--
+    next badfx
+;
+
+cyoa: peter-scget
+    "MALE HUMANOIDE DE LA VARIETE FAMILIALE" cyoa-title!
+    char-gen to recruitee ricon 3 recruitee .morale! recruitee .pewterify
+    ($ "NYEHEHEHEHEHE. NYEHEHEHEHEHE..." fbold $) cyoa-text! basic-tone
+    ($ "EH...EH " pname .. " EH, " .. pname .. "!" .. $) +crtext
+    ($ pname .. " regarde autour de lui, terrifie. Qui a dit ca ?" $) +crtext
+    ($ WHITE "Il y a un grand homme avec des lunettes de dessin anime devant." .. $) +crtext
+    ($ "Entre deux rires, il dit qu'il vous rejoindra, pour des" " galettes de riz." rbold ..  $) +crtext
+
+       trunk-food 4 > if
+          choice( "Offrir a " .. rname .. " 5 nourriture de galettes de riz" )choice: recruit-peter-yes
+       then
+          choice( "Le rejeter" )choice
+
+;
+
+\ ---------------------------
+\ ---------------------------
+\ Code originally intended for Jimbo...
+\ Not allowed - aw!
+\ ---------------------------
+\ ---------------------------
+
+
+\ The Jimventory
+
+: diff-up-jim "road{ road-difficulty 0.1 + to road-difficulty }" evaluate ;
+: mega-diff-up-jim "road{ road-difficulty 0.3 + to road-difficulty }" evaluate ;
+
+: jim1 1 STAT_STRENGTH cchar .bonus+ ;
+: jim2 1 STAT_FITNESS cchar .bonus+ ;
+: jim3 1 STAT_SHOOTING cchar .bonus+ ;
+: jim4 1 STAT_MEDICAL cchar .bonus+ ;
+: jim5 1 STAT_MECHANICAL cchar .bonus+ ;
+
+: jim6 2 STAT_STRENGTH cchar .bonus+ diff-up-jim ;
+: jim7 2 STAT_FITNESS cchar .bonus+ diff-up-jim ;
+: jim8 2 STAT_SHOOTING cchar .bonus+ diff-up-jim ;
+: jim9 2 STAT_MEDICAL cchar .bonus+ diff-up-jim ;
+: jim10 2 STAT_MECHANICAL cchar .bonus+ diff-up-jim ;
+
+: jim11 cchar .carrying.slot_count@ 1 + 1 3 clamp cchar .carrying.slot_count! ;
+
+: jim12 cchar .vitality@ 1 + 1 6 clamp cchar .vitality! ;
+: jim13 cchar .vitality@ 2 + 1 6 clamp cchar .vitality! diff-up-jim ;
+
+: jim14 1 6 rnd cchar .wits! 1 6 rnd cchar .attitude! 1 6 rnd cchar .composure! 1 6 rnd cchar .loyalty! ;
+
+: jim1choice choice( "+1 Strength" bbold )choice: jim1 ;
+: jim2choice choice( "+1 Fitness" bbold )choice: jim2 ;
+: jim3choice choice( "+1 Shooting" bbold )choice: jim3 ;
+: jim4choice choice( "+1 Medical" bbold )choice: jim4 ;
+: jim5choice choice( "+1 Mechanical" bbold )choice: jim5 ;
+: jim6choice choice( "+2 Strength" bbold " +0.1x zombs" rbold .. )choice: jim6 ;
+: jim7choice choice( "+2 Fitness" bbold " +0.1x zombs" rbold .. )choice: jim7 ;
+: jim8choice choice( "+2 Shooting" bbold " +0.1x zombs" rbold .. )choice: jim8 ;
+: jim9choice choice( "+2 Medical" bbold " +0.1x zombs" rbold .. )choice: jim9 ;
+: jim10choice choice( "+2 Mech" bbold " +0.1x zombs" rbold .. )choice: jim10 ;
+
+: jim11choice choice( "+1 Carry Slot" bbold )choice: jim11 ;
+
+: jim12choice choice( "+1 Max HP" bbold )choice: jim12 ;
+: jim13choice choice( "+2 Max HP" bbold " +0.1x zombs" rbold .. )choice: jim13 ;
+
+: jim14choice choice( "Reroll Personality" bbold )choice: jim14 ;
+
+	deck-new
+		card: jim1choice
+		card: jim2choice
+		card: jim3choice
+		card: jim4choice
+		card: jim5choice
+		card: jim6choice
+		card: jim7choice
+		card: jim8choice
+		card: jim9choice
+		card: jim10choice
+		card: jim11choice
+		card: jim12choice
+		card: jim13choice
+		card: jim14choice
+	constant JIM-DECK
+	JIM-DECK var jim-deck
+
+: drawjim
+	jim-deck depths 0= if
+		regiondef{ JIM-DECK shuffles to jim-deck }
+	then
+	drawcard
+	jim-deck depths 0= if
+		choice( "ALL OUTTA UPGRADES!" fbold )choice
+	else
+		drawcard
+	then
+;
+
+
+\ A la demande de Kepa, cette tech est reutilisee pour un rework de Nimbus.
+cyoa: jumbo-getjoker
+    "NIVEAU SUPERIEUR !" cyoa-title!
+    93 stpick if choosechar cicon else ($ "Nimbus" pbold .. " est absent. Tant pis. " Thegroup .. " n'allait de toute facon jamais atteindre " .. "la fin de cette campagne" rainbold .. "." .. $) text! exit then
+    ($ "Avec chaque jour qui passe," " Nimbus Ordeal " pbold .. "accumule de plus en plus de puissance." .. $) cyoa-text!
+    ($ "Il devra accumuler encore plus de puissance s'il veut terminer sa" " quete legendaire" rainbold .. " et gagner." .. $) +crtext
+    ($ "Choisissez une amelioration pour lui :" $) +crtext
+       3 for drawjim next
+;
+
+\ Ca devrait etre relativement trivial pour tout moddeur potentiel de restaurer Jimbo, s'il le souhaite.
+\ Remplacez juste le "93" ici et dans road.df par "153" et appelez l'evenement de recrutement via console
+\ SAUVEZ-MOI DE LA PLANTE
+
+cyoa: recruit-jumbo-yes
+
+    ($ rname .. " accepte un as de coeur de rechange. En passant dans sa main, il devient soudainement " "comme de l'acier" rbold .. " et un " .. "sceau rouge" rainbold .. " apparait de nulle part." .. $) cyoa-text!
+    ($ "Des que " rname .. " pose la carte sur la table, le pot de fleurs explose !" .. $) +crtext
+    ($ "T'ES UN VRAI JOKER ! MERCI. JE VOUS SUIVRAI, AU MOINS JUSQU'A LA FIN DE CETTE ANTE." fbold $) +crtext
+
+    team-full? if
+       ($ "Le groupe est complet.
+       Qui voulez-vous remplacer pour faire de la place pour " .. rname .. " ?" $) +crtext
+       recruit-replace?
+    then;
+    ricon
+    ($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) +crtext 2 300 tone
+       recruited
+    recruitee .showitall
+;
+
+cyoa: jumbo-scget
+    "DECK CANADIEN COLD STAKE" cyoa-title!
+    char-gen to recruitee ricon 2 recruitee .morale! recruitee .jimboify
+    ($ "Le groupe se promene dans un parc quand il tombe sur un bouffon." $) cyoa-text! basic-tone
+    ($ rname .. " semble plonge dans une partie de poker completement dingue. En face de lui est assis une plante en pot." $) +crtext
+    ($ "LA MAUVAISE PLANTE DOIT PAYER. LA MAUVAISE PLANTE DOIT PAYER." pbold  $) +crtext
+    ($ WHITE "Etrangement, malgre le fait de jouer contre un objet inanime, il semble perdre." .. $) +crtext
+
+       choice( "Le soudoyer avec une carte" )choice: recruit-jumbo-yes
+       choice( "Le laisser derriere" )choice
+;
+
+} }
+
+ : to_the_railyard
+	"events/stomach/rail_yard.df" $load-region premission 
+ ;  
+
+: to_the_citadel
+	"events/stomach/citadel.df" $load-region premission 
+;  
+
+: to_the_train
+	"events/stomach/train.df" $load-region premission 
+;  
+
+: to_the_forge
+	\ Testing new way of creating buildings so i dont have to plot everything by hand AGAIN 
+	"events/stomach/parking_lot_test.df" $load-region premission 
+;  
+
+: to_the_multistory
+	\ Testing new way of creating buildings so i dont have to plot everything by hand AGAIN 
+	"events/stomach/multistory.df" $load-region premission 
+;  
+
+: to_the_harbour 
+	"events/stomach/harbour.df" $load-region premission
+;
+
+: arm_sycamore 
+\ So I don't have to do this every time I want to test in mission...
+	2000 LOOT_RIFLE_SHELL pchar .lootamt!
+	20 STAT_DEXTERITY pchar .bonus!
+	6 pchar .shooting!
+	2000 LOOT_BULLET pchar .lootamt!
+	WEAPON_FOSBURY pchar .weaponb! 
+	WEAPON_HUNTING pchar .weapona! 
+; 

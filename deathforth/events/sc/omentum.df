@@ -1,0 +1,99 @@
+cyoa{ road{
+
+cyoa: cart-despair
+	bully choosechar cicon
+	"Ou suis-je ?" cyoa-title! badfx
+	($ cname .. " perd completement le sens de l'orientation et ne sait plus du tout ou " .. che .. " est." $) cyoa-text!
+	solo if
+		($ cHe .. " s'aventure dans des territoires inexplores sur ses cartes, sans meme prendre la peine de les noter. " .. cHe .. " ne fut jamais revu." $) +crtext
+	else
+		regiondef{ cartmap-bought } if
+			"Vous ne meritez pas ca, je le reprends !" pbold +crtext
+			($ cHe .. " arrache furieusement la carte que " .. thegroup .. " lui avait achetee et part en colere !" $) +crtext
+			regiondef{ 0 to cartmap-bought }
+		else
+			($ cHe .. " dit a " .. theothers .. " qu'il est en train de tracer une nouvelle carte, et part en random.
+			Apres de nombreuses heures, il est clair qu'" .. che .. " n'a aucune intention de revenir." $) +crtext
+		then
+	then
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
+;
+
+// 0 value brck-countdown <- value in events/trade/camp-recruit.df
+
+cyoa-bridge: brck-mon-recruit
+	THEBRCKMON #character to recruitee ricon
+	"Un Pukeymon ?" cyoa-title!
+	($ "Waouh ! " .. rname .. " a reussi a survivre. Sympa !
+	Son maitre est peut-etre mort, mais il a l'air de vouloir rester quand meme.
+	Qu'est-ce que " .. thegroup .. " devrait faire ?" $) cyoa-text! goodfx
+	recruit-yesno
+;
+
+// :noname THEBRCKMON dup if choosechar brck-mon-recruit else drop then ; last to get-brckmon
+:noname
+	THEBRCKMON 0?; // valid char id?
+	THEBRCKMON #character .brckmon? 0?; // is it the pukeymon?
+	// THEBRCKMON #character choosechar brck-mon-recruit
+	brck-mon-recruit
+; last to get-brckmon
+
+cyoa: brck-timeup
+	4 6 rnd to brck-countdown
+	stpick-brck if choosechar else ($ "On dirait que " .. "Brik" fbold .. " a disparu ! Comme c'est etrange." $) text! exit then
+	"Hein ? Il se passe quelque chose..." cyoa-title!
+	($ "Felicitations ! " fbold .. "Le Pukeymon de " .. cname .. " a evolue ! Il a l'air plus fort qu'avant." $) text! goodfx
+	cchar .charm@ 0= if
+		char-gen to recruitee 127 recruitee .specialtype! ricon
+		1 cchar .charm!
+	else
+		cchar .charm@ 2 < if
+			char-gen to recruitee 128 recruitee .specialtype! ricon
+			2 cchar .charm!
+		else
+			"Il grogne sourdement, pret au combat !" +crtext
+		then
+	then
+	morale++
+	cchar charchoice( ": Allez !" )choice
+;
+
+cyoa: brck-despair
+	bully choosechar cicon
+	"Defaite" cyoa-title! badfx
+	($ cname .. " ne semble pas satisfait de l'entrainement de son Pukeymon." $) cyoa-text!
+	solo if
+		($ cHe .. " le rentre dans sa Pukeyball, et s'en va quelque part, pour ne jamais etre revu." $)
+	else
+		"Desole les gars, mais mon pote et moi devons se separer maintenant. On se reverra surement sur la route !" pbold
+	then +crtext
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
+;
+
+cyoa: johnny-despair
+	bully choosechar cicon
+	"CA SUFFIT" rbold cyoa-title!
+	($ cname .. " explose dans un acces de rage, incapable de se controler ou de voir raison." $) cyoa-text! badfx
+	solo if
+		($ cHe .. " part en tirant dans tous les sens, attirant une horde, pour ne jamais etre revu." $) +crtext
+	else
+		($ cHe .. " insulte copieusement " .. theothers .. " avant de partir en trombe. C'est un jeu familial, donc on ne va pas ecrire ce qu'" .. che .. " a dit." $) +crtext
+		cchar ' .morale2- foreach-team-char-except
+	then
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
+;
+
+cyoa: arq-despair
+	bully choosechar cicon
+	"C'est pas cool" cyoa-title! badfx
+	($ cname .. " se sent mal a l'aise avec lui-meme. Sans parler du fait qu'il n'a pas mange correctement." $) cyoa-text!
+	($ cHe .. " decide que le mieux est de retourner dans la maison ou " .. che .. " se trouvait quand " .. che .. " a ete recrute dans l'equipe." $) +crtext
+	solo if
+		($ cHe .. " fait demi-tour avec la voiture et retrouve sa maison !" $)
+	else
+		($ cHe .. " commence a marcher en arriere jusqu'a ce que " .. theothers .. " le voient disparaitre a l'horizon." $)
+	then +crtext
+	($ cname .. " a quitte l'equipe." $) +crtext decruit-bad-silent-takeweapons
+;
+} }
+

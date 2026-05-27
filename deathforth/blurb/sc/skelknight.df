@@ -1,0 +1,51 @@
+	: SKELKNIGHT-oneline1 "Ces zombies ne sont rien. J'ai survecu aux Guerres des Gobelins moi !" ;
+    : SKELKNIGHT-oneline2 "Je n'arrive pas a croire que je fais encore du travail de mercenaire." ;
+    : SKELKNIGHT-oneline3 "Astuce secrete de chevalier squelette : j'ai eu mon armure au Puy du Fou." ;
+    : SKELKNIGHT-oneline4 "Comment ca comment je parle ? Et toi comment tu parles ?" ;
+    : SKELKNIGHT-oneline5 "Si c'etait une apocalypse squelette, on aurait deja detruit le Canada." ;
+    : SKELKNIGHT-oneline6 "Je me demande pourquoi les squelettes ont perdu en popularite face aux zombies au cinema." ;
+    : SKELKNIGHT-oneline7 "Tu sais ce qu'on ne voit plus du tout ? Des momies." ;
+    : SKELKNIGHT-oneline8 "Le systeme monetaire squelette c'est 3 pieces de bronze pour un os. 13 os font un dollar." ;
+    : SKELKNIGHT-oneline9 "Urg, mon arthrite." ;
+    : SKELKNIGHT-oneline10 "Quand est-ce qu'on va piller un donjon ?" ;
+    : SKELKNIGHT-oneline11 "Quand on a vecu aussi longtemps que moi, on realise l'importance d'avoir de bonnes chaussettes." ;
+    : SKELKNIGHT-oneline12 "On devrait se trouver des chevaux." ;
+    : SKELKNIGHT-oneline13 "J'avais un cheval squelette il y a quelque temps. Bien mieux qu'une voiture." ;
+    : SKELKNIGHT-oneline14 "Je pense qu'on va y arriver. Je le sens dans mes os." ;
+    : SKELKNIGHT-oneline15 "*cliquete*" ;
+    : SKELKNIGHT-oneline16 "Mon objectif futur c'est de devenir un crane desincarne qui claque des machoires." ;
+
+	deck-new
+		card: SKELKNIGHT-oneline1
+		card: SKELKNIGHT-oneline2
+		card: SKELKNIGHT-oneline3
+		card: SKELKNIGHT-oneline4
+		card: SKELKNIGHT-oneline5
+		card: SKELKNIGHT-oneline6
+		card: SKELKNIGHT-oneline7
+		card: SKELKNIGHT-oneline8
+		card: SKELKNIGHT-oneline9
+		card: SKELKNIGHT-oneline10
+		card: SKELKNIGHT-oneline11
+		card: SKELKNIGHT-oneline12
+		card: SKELKNIGHT-oneline13
+		card: SKELKNIGHT-oneline14
+		card: SKELKNIGHT-oneline15
+		card: SKELKNIGHT-oneline16
+	constant SKELKNIGHT-ONELINERS
+	SKELKNIGHT-ONELINERS var skelknight-oneliners
+	SKELKNIGHT-ONELINERS shuffles to skelknight-oneliners
+
+: skelknight-oneliner
+	skelknight-oneliners depths 0= if SKELKNIGHT-ONELINERS shuffles to skelknight-oneliners then
+	blurbslot 0= if
+		drawcard blurbsay
+	then
+;
+
+	deck-new
+	16 cards: skelknight-oneliner
+
+	constant BLURB-SKELKNIGHT-DECK
+	BLURB-SKELKNIGHT-DECK var blurb-skelknight-deck
+	BLURB-SKELKNIGHT-DECK shuffles to blurb-skelknight-deck

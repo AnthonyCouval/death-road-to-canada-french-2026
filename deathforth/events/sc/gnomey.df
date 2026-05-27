@@ -1,0 +1,28 @@
+cyoa{ road{
+
+cyoa: gnomey-despair
+	someicon
+	solo if
+		"La Conclusion Dechiranteee" cyoa-title!
+		($ cname .. " part sur son rongeur dans les bois.
+		Il trouve une clairiere tranquille et se tient au milieu.
+		La, il se transforme en arbre. Pour toujours.
+		Le rongeur en est temoin et des larmes se forment dans ses yeux.
+		" .. "LA FIN.... OU PAS ?" rbold $) cyoa-text!
+	else
+		"Furie du Gnome" cyoa-title!
+		($ cname .. " trepigne et fume de rage bouillonnante.
+		" .. "OOOOH ! JE SUIS TELLEMENT EN COLERE LA ! OOOOOH !" pbold .. "
+		Son rongeur s'enfuit en panique pendant que " .. cname .. " commence a flotter dans les airs.
+		Des rayons de lumiere emanent de son corps, et avec un eclair, il disparait. Sa voix fantomatique resonne partout :
+		" .. "JE SUIS DEVENU UN DIEU, BANDE DE NULS" rbold .. "
+		" .. cname .. " a quitte l'equipe !" $) cyoa-text!
+		"Cependant, il a laisse quelque chose dans le coffre !" bbold +crtext
+		2 WEAPON_PUNCHQUEST trunk.weapon+
+	then
+	decruit-bad-silent-takeweapons
+;
+
+} }
+
+
