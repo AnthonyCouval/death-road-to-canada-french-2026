@@ -5,25 +5,25 @@ cyoa{
 
 : ltestnames 
 	0 stack
-		"HUNKY STUD" shove
-		"ULTRA BABE" shove
-		"DATE HAVER" shove
-		"POWER WAIF" shove
-		"HANDSOME LAD" shove
+		"BEAU GOSSE MUSCU" shove
+		"ULTRA BOMBE" shove
+		"DRAGUEUR PRO" shove
+		"GRINGALET PUISSANT" shove
+		"BEL HOMME" shove
 		"CASANOVA" shove
-		"CLEOPATRA" shove
+		"CLEOPATRE" shove
 	shuffles pops nip
 ;
 
 : ltestbad
 	0 stack
-		"FART BUTT" shove
-		"ICEY WIENER" shove
-		"SMELLY JERK" shove
+		"DERRIERE PETEUR" shove
+		"SAUCISSE GLACEE" shove
+		"TOCARD MALODORANT" shove
 		"DINGUS" shove
-		"COLD FISH" shove
-		"STINK DUDE" shove
-		"FUTURE SKELETON" shove
+		"POISSON FROID" shove
+		"TYPE QUI PUE" shove
+		"FUTUR SQUELETTE" shove
 	shuffles pops nip
 ;
 
@@ -41,7 +41,7 @@ cyoa-choice: lovetest-go
 	lovetest-used 2 < if
 		($ cname .. " feels oddly flattered by this!" $) +crtext
 		morale++ goodfx
-		"The Love Tester makes a terrible grinding noise. Something in it must have broken." +crtext
+		"Le Testeur d'Amour emet un terrible bruit de grincement. Quelque chose a du se casser." +crtext
 	else
 		cchar .morale 1 < if
 			ctemper+ if
@@ -63,16 +63,16 @@ cyoa-choice: lovetest-go
 		then
 	then
 ;
-	
+
 	cyoa: lovetest
-	"The Love Tester" cyoa-title!
+	"Le Testeur d'Amour" cyoa-title!
 	picon!
-	($ "It's an old fashioned Love Tester machine! 
-	Will this reveal HIDDEN TRUTHS about " .. pname .. "?" $) cyoa-text!
+	($ "C'est une vieille machine Testeuse d'Amour !
+	Cela va-t-il reveler des VERITES CACHEES sur " .. pname .. " ?" $) cyoa-text!
 	cpet? if
-		($ "This wasn't designed with " .. pname .. " in mind. Yet another example of human and more-or-less human favoritism." $)
+		($ "Ce n'etait pas concu avec " .. pname .. " en tete. Encore un exemple de favoritisme envers les humains et les plus-ou-moins humains." $)
 	+crtext then;
-		choice( "Leave it for now" )choice
+		choice( "Laisser pour l'instant" )choice
 		pchar charchoice( ": Use Love Tester" )choice: lovetest-go
 ;
 

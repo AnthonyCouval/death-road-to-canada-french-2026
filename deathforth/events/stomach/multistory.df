@@ -24,33 +24,33 @@ map{ roomgen{
 cyoa{ 
 
 	cyoa: leaveonfoot 
-	"The Way Out" cyoa-title!
-	"You've found the exit to the parking lot. You can either leave the lot on foot and return to your current car, or stay and take the car in the parking lot." cyoa-text!
-	choice( "Stay for Now" )choice
+	"La Sortie" cyoa-title!
+	"Vous avez trouve la sortie du parking. Vous pouvez partir a pied et retourner a votre voiture actuelle, ou rester et prendre la voiture du parking." cyoa-text!
+	choice( "Rester pour l'instant" )choice
 	cyoa-add-choice
-		"Return to Current Car" cyoa-choice-text!
+		"Retourner a la Voiture Actuelle" cyoa-choice-text!
 		mission{ ' walk-try-end-mission cyoa-choice-handler! }
 ;
 
-: foot_leave_zone 
-	spawn 
-	0 lt .clr.a! 
-	1 lt .nocollide! 
+: foot_leave_zone
+	spawn
+	0 lt .clr.a!
+	1 lt .nocollide!
 	1 lt .walkover!
-	100000 lt .mass! 
-	3 lt .mass! 
-	26 lt .rad.y! 
-	8 lt .rad.x! 
-	3 lt .tileflags! 
-	' leaveonfoot lt .cyoa! 
-; 
+	100000 lt .mass!
+	3 lt .mass!
+	26 lt .rad.y!
+	8 lt .rad.x!
+	3 lt .tileflags!
+	' leaveonfoot lt .cyoa!
+;
 
 cyoa: lot_car_choice
-	"Let's Roll!" cyoa-title!
-		($ "This car isn't even locked, and is in pristine condition." $) cyoa-text!
-		($ "Don't enter the car unless you intend to drive away in it." rbold $) +crtext 
-			choice( "Get in the car" )choice: get-into-car
-			choice( "Leave it be for now" )choice
+	"C'est parti !" cyoa-title!
+		($ "Cette voiture n'est meme pas verrouillee et est en parfait etat." $) cyoa-text!
+		($ "N'entrez pas dans la voiture sauf si vous avez l'intention de partir avec." rbold $) +crtext
+			choice( "Monter dans la voiture" )choice: get-into-car
+			choice( "Laisser pour l'instant" )choice
 			interactee .car-cyoa-default
 ; 
 

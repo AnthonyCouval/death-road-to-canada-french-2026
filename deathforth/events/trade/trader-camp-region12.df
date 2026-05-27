@@ -12,44 +12,44 @@ cyoa{ regiondef{
 
 : trader-ruined-1name
 	trader-ruined-1 case
-		0 of "NOTHING" endof
-		1 of "50 Bullets" endof
-		2 of "60 Gas" endof
-		3 of "30 Shotgun Shells" endof
+		0 of "RIEN" endof
+		1 of "50 Balles" endof
+		2 of "60 Essence" endof
+		3 of "30 Cartouche de Fusil" endof
 		4 of "40 Rifle Ammo" endof
-		5 of "6 Medical" endof
+		5 of "6 Kits Medicaux" endof
 	endcase
 ;
 
 : trader-ruined-2name
 	trader-ruined-2 case
-		0 of "NOTHING" endof
+		0 of "RIEN" endof
 		1 of "3 Grenades" endof
-		2 of "Sturdy Machete" endof
-		3 of "5 Pipebombs" endof
-		4 of "Aluminum Bat" endof
-		5 of "Double Barrel Shotgun" endof
-		6 of "Bow + 50 Arrows" endof
+		2 of "Machette Solide" endof
+		3 of "5 Bombes artisanales" endof
+		4 of "Batte en Aluminium" endof
+		5 of "Fusil a Double Canons" endof
+		6 of "Arc + 50 Fleches" endof
 	endcase
 ;
 
 : trader-ruined-3name
 	trader-ruined-3 case
-		0 of "NOTHING" endof
+		0 of "RIEN" endof
 		1 of "Uzi" endof
-		2 of "Chainsaw" endof
+		2 of "Tronconneuse" endof
 		3 of "9 Molotovs" endof
-		4 of "Mega Maul" endof
-		5 of "Scythe" endof
-		6 of "Ultimate Log" endof
-		7 of "Blowtorch XL" endof
-		8 of "Napalm Launcher" endof
+		4 of "Mega Marteau" endof
+		5 of "Faux" endof
+		6 of "Rondin Ultime" endof
+		7 of "Chalumeau XL" endof
+		8 of "Lance-Napalm" endof
 	endcase
 ;
 
 cyoa-choice: trader-ruined-buy1
-	($ Thegroup .. " gets an amazing fire sale deal for " .. trader-ruined-1name fbold .. "!" $) cyoa-text!
-	"THESE DEALS ARE SO HOT! I MIGHT CATCH ON FIRE!" fbold +crtext goodfx someicon
+	($ Thegroup .. " obtient un incroyable deal en solde pour " .. trader-ruined-1name fbold .. " !" $) cyoa-text!
+	"CES PROMOS SONT SI CHAUDES ! JE POURRAIS PRENDRE FEU !" fbold +crtext goodfx someicon
 	trader-ruined-1 case
 		0 of goblin-laugh endof
 		1 of 50 trunk-bullet+ endof
@@ -62,9 +62,9 @@ cyoa-choice: trader-ruined-buy1
 ;
 
 cyoa-choice: trader-ruined-buy2
-	($ Thegroup .. " gets an amazing fire sale deal for " .. trader-ruined-2name fbold .. "!" $) cyoa-text!
-	"YOU KNOW, I'VE ALWAYS HATED THIS LOCATION!
-	TOO MANY SKELETONS!" fbold +crtext goodfx someicon
+	($ Thegroup .. " obtient un incroyable deal en solde pour " .. trader-ruined-2name fbold .. " !" $) cyoa-text!
+	"VOUS SAVEZ, J'AI TOUJOURS DETESTE CET ENDROIT !
+	TROP DE SQUELETTES !" fbold +crtext goodfx someicon
 	trader-ruined-2 case
 		0 of 1 WEAPON_FEMUR endof
 		1 of 3 WEAPON_GRENADE endof
@@ -78,8 +78,8 @@ cyoa-choice: trader-ruined-buy2
 ;
 
 cyoa-choice: trader-ruined-buy3
-	($ Thegroup .. " gets an amazing fire sale deal for " .. trader-ruined-3name fbold .. "!" $) cyoa-text!
-	"WOW! WHAT AN AMAZING FIRE SALE DEAL! WOOOOOW!" fbold +crtext goodfx someicon
+	($ Thegroup .. " obtient une incroyable promo pour " .. trader-ruined-3name fbold .. " !" $) cyoa-text!
+	"WAOUH ! QUELLE INCROYABLE PROMO DU FEU DE DIEU ! WOOOOOOU !" fbold +crtext goodfx someicon
 	trader-ruined-3 case
 		0 of 1 WEAPON_FEMUR endof
 		1 of 1 WEAPON_UZI endof
@@ -95,33 +95,33 @@ cyoa-choice: trader-ruined-buy3
 ;
 
 cyoa: trader-ruined
-	"Last Trader in Ruined Camp" cyoa-title!
-	
+	"Dernier Marchand dans le Camp en Ruines" cyoa-title!
+
 	trunk-food 6 < if 0 to trader-ruined-2 then
 	trunk-food 10 < if 0 to trader-ruined-3 then
-	
+
 	trader-ruined-1 0 > trader-ruined-2 0 > trader-ruined-3 0 > or or if
-	
+
 		trunk-food 3 < if
-			"YOU'RE MY LAST CUSTOMER!
-			AND YOU DON'T HAVE ANY FOOD??
-			I GOT OUT OF BED
-			FOR THIS???!??!!!" fbold cyoa-text! clear-cyoa badfx
+			"T'ES MON DERNIER CLIENT !
+			ET T'AS PAS DE NOURRITURE ??
+			JE ME SUIS LEVE
+			POUR CA ???!??!!!" fbold cyoa-text! clear-cyoa badfx
 		else
-			"I'M HAVING A FIRE SALE!
-			ABSOLUTELY EVERYTHING MUST GO!" fbold cyoa-text! +cr foodamt
-		
-			choice( "Resist hot deals for now" )choice
-			trader-ruined-1 0 > if choice( trader-ruined-1name .. " for 3 food" )choice: trader-ruined-buy1 then
-			trader-ruined-2 0 > if choice( trader-ruined-2name .. " for 6 food" )choice: trader-ruined-buy2 then
-			trader-ruined-3 0 > if choice( trader-ruined-3name .. " for 10 food" )choice: trader-ruined-buy3 then
-			
+			"JE FAIS DES SOLDES !
+			TOUT ABSOLUMENT DOIT PARTIR !" fbold cyoa-text! +cr foodamt
+
+			choice( "Resister aux offres brulantes" )choice
+			trader-ruined-1 0 > if choice( trader-ruined-1name .. " pour 3 nourriture" )choice: trader-ruined-buy1 then
+			trader-ruined-2 0 > if choice( trader-ruined-2name .. " pour 6 nourriture" )choice: trader-ruined-buy2 then
+			trader-ruined-3 0 > if choice( trader-ruined-3name .. " pour 10 nourriture" )choice: trader-ruined-buy3 then
+
 		then
-				
+
 	else
-	
-	"SALE OVER! NOW I'M OUTTA BUSINESS!
-	SMELL YOU LATER!" fbold cyoa-text! clear-cyoa
+
+	"SOLDES TERMINES ! MAINTENANT JE SUIS SANS BOULOT !
+	On se retrouve !" fbold cyoa-text! clear-cyoa
 	
 	then 
 ;
