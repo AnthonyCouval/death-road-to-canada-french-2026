@@ -73,7 +73,7 @@ cyoa-choice: prepperturret-hack
 		cstrength+ if
 			"Etonnamment, ca marche vraiment !" +crtext prepperturret-grab
 		else
-			($ "Ca marche aussi bien qu'on pouvait s'y attendre. De plus, " .. pname .. " prend une sacrée decharge." $) +crtext bitefx sting-- morale--
+			($ "Ca marche aussi bien qu'on pouvait s'y attendre. De plus, " .. pname .. " prend une sacree decharge." $) +crtext bitefx sting-- morale--
 		then strengthREV
 	then
 ;

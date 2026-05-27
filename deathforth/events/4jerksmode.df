@@ -55,11 +55,11 @@ cyoa{
 ;
 
 cyoa-bridge: 4j-campyes-familiar
-	($ rname .. " is raring to go!" $) cyoa-text! basic-tone
+	($ rname .. " est pret a y aller !" $) cyoa-text! basic-tone
 	clear-cyoa
 	team-full? if
-		($ "The group is full.
-		Who would you like to replace to make room for " .. rname .. "?" $) +crtext
+		($ "Le groupe est plein.
+		Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) +crtext
 		road{ ' recruit-familiarreplace cyoa-team-choice }
 	else
 		recruited goodfx
@@ -69,26 +69,26 @@ cyoa-bridge: 4j-campyes-familiar
 ;
 
 cyoa: 4j-rec-familiar
-	"Pick Your Jerks" cyoa-title!
+	"Choisissez vos Tocards" cyoa-title!
 	nearest .character@ choosechar
 	cchar to recruitee ricon
-		
-	($ rname .. " is ready for a road trip!" $) cyoa-text! basic-tone
-	
-	4j-recruit-count 1 > if ($ "You've recruited enough jerks! The car is full!" bbold $) +crtext then;
-	
+
+	($ rname .. " est pret pour un road trip !" $) cyoa-text! basic-tone
+
+	4j-recruit-count 1 > if ($ "Vous avez recrute assez de tocards ! La voiture est pleine !" bbold $) +crtext then;
+
 	recruitee .trait@ $len 0= if
-		($ rHe .. " claims to know you, but you swear you've never seen this person before..." $) +crtext
+		($ rHe .. " pretend vous connaitre, mais vous jurez ne jamais avoir vu cette personne avant..." $) +crtext
 	else
-		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
-		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
+		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext
+		($ "  PERK: " pbold .. recruitee .perk@ $) +text
 	then
 
-	($ "You can recruit " bbold .. 4j-recruit-left .. " more jerks!" bbold $) +crtext
-	
-	choice( "Leave " .. rname .. " for now" )choice
+	($ "Vous pouvez recruter " bbold .. 4j-recruit-left .. " tocard(s) de plus !" bbold $) +crtext
 
-		choice( "Recruit " .. rname .. "!" )choice: 4j-campyes-familiar
+	choice( "Laisser " .. rname .. " pour l'instant" )choice
+
+		choice( "Recruter " .. rname .. " !" )choice: 4j-campyes-familiar
 ;
 
 deck-new

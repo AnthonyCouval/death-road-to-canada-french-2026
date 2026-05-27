@@ -59,7 +59,7 @@ cyoa: renfaire-light
 
 cyoa-choice: renfaire-mid-1
 	iicon ($ pname .. " achete une " .. "ETOILE DU MATIN" bbold .. " !
-	" .. "Envoie les ennemis voler ! Le tranchant est parfois imprévisible." rbold $) text!
+	" .. "Envoie les ennemis voler ! Le tranchant est parfois imprevisible." rbold $) text!
 	goodfx 1 WEAPON_MORNING trunk.weapon+ -15 trunk-food+ ' rfbuy-mid-1 ++
 ;
 

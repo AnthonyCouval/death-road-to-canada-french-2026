@@ -9,20 +9,20 @@ cyoa-choice: caveman-recruit
 	recruitee .strengthREV recruitee .fitnessREV
 ;
 
-: caveman-done "The caveman runs off to enjoy the zombie future." +crtext goodfx deleteme ;
+: caveman-done "L'homme des cavernes part profiter du futur zombie." +crtext goodfx deleteme ;
 
 cyoa-choice: caveman-reward1
-	($ rname .. " teaches " .. cname .. " some ancient fighting secrets that were lost to time!" $) text!
+	($ rname .. " apprend a " .. cname .. " d'anciens secrets de combat perdus depuis longtemps !" $) text!
 	caveman-done
-	($ cname .. "'s MAXIMUM STRENGTH INCREASED!" rbold $) +crtext
+	($ "La FORCE MAXIMUM de " .. cname .. " A AUGMENTE !" rbold $) +crtext
 	1 STAT_STRENGTH cchar .bonus+
 	vitality++
 ;
 
 cyoa-choice: caveman-reward2
-	($ rname .. " teaches " .. cname .. " some ancient techniques in medicine and conserving energy!" $) text!
+	($ rname .. " apprend a " .. cname .. " d'anciennes techniques de medecine et de conservation d'energie !" $) text!
 	caveman-done
-	($ cname .. "'s MAXIMUM FITNESS INCREASED!" rbold $) +crtext
+	($ "La FORME MAXIMUM de " .. cname .. " A AUGMENTE !" rbold $) +crtext
 	1 STAT_FITNESS cchar .bonus+
 	medical++
 ;
@@ -30,22 +30,22 @@ cyoa-choice: caveman-reward2
 cyoa: caveman-chat
 	nearest .character@ to recruitee
 	recruitee choosechar cicon
-	"Prehistoric Pal" cyoa-title!
-	"I overslept! Urghhghhg..." pbold text!
-	($ "The " .. rname .. " doesn't understand the mysterious ways of the future/present, and can't fire guns.
-	She is capable of " .. "very high" rbold .. " amounts of maximum strength and fitness! She needs several training sessions to reach her full potential." $) +crtext
-	choice( "Leave her for now" )choice
-	choice( "Recruit her to team" )choice: caveman-recruit
-	pchar charchoice( ": Ask for fighting tips" )choice: caveman-reward1
-	pchar charchoice( ": Ask for survival tips" )choice: caveman-reward2
-	
+	"Amie Prehistorique" cyoa-title!
+	"J'ai trop dormi ! Urghhghhg..." pbold text!
+	($ rname .. " ne comprend pas les mysterieuses voies du futur/present et ne peut pas tirer avec des armes a feu.
+	Elle est capable d'" .. "enormes" rbold .. " quantites de force et forme maximum ! Elle a besoin de plusieurs sessions d'entrainement pour atteindre son plein potentiel." $) +crtext
+	choice( "La laisser pour l'instant" )choice
+	choice( "La recruter dans l'equipe" )choice: caveman-recruit
+	pchar charchoice( ": Demander des conseils de combat" )choice: caveman-reward1
+	pchar charchoice( ": Demander des conseils de survie" )choice: caveman-reward2
+
 ;
 
 cyoa-blank: frozen-ice
-	"Breaking the Ice" cyoa-title!
-	"A caveman is frozen in this giant hunk of ice!
-	There's really no way to get the caveman out without blasting the ice into chunks. Preferably with guns.
-	This could take awhile, unless you have strong weapons!" text!
+	"Briser la Glace" cyoa-title!
+	"Un homme des cavernes est gele dans ce gros bloc de glace !
+	Il n'y a vraiment aucun moyen de le sortir sans faire exploser la glace en morceaux. De preference avec des armes.
+	Ca pourrait prendre du temps, sauf si vous avez des armes puissantes !" text!
 ;
 
 }

@@ -30,7 +30,7 @@ cyoa-choice: mghost-shy-talk
 
 cyoa-choice: mghost-shy-kiss
 	($ "Le Fantome emet de la vapeur des cotes de sa tete pendant une seconde, puis " .. "EXPLOSE !" fbold $) text!
-	($ pname .. " est blesse, mais le souffle l'imprègne de mysterieuse " .. "ENERGIE FANTOMATIQUE !" rainbold $) +crtext
+	($ pname .. " est blesse, mais le souffle l'impregne de mysterieuse " .. "ENERGIE FANTOMATIQUE !" rainbold $) +crtext
 	morale3+ sting2- fitness++ bitefx deleteme
 	// Make character glow?
 ;

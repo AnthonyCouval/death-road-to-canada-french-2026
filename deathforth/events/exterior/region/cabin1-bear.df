@@ -9,17 +9,17 @@ cyoa-choice: cyoa-bear-wrestle
 ;
 
 cyoa-choice: cyoa-bear-search
-	($ cname .. " searches the stuffed bear on a hunch.
-	Hey! There was a bunch of food and medical supplies hidden in a flap behind it!" $) cyoa-text! 15 add-food 5 add-medical goodfx clear-cyoa
+	($ cname .. " fouille l'ours en peluche par intuition
+	He ! Il y avait plein de nourriture et de fournitures medicales cachees dans un compartiment derriere !" $) cyoa-text! 15 add-food 5 add-medical goodfx clear-cyoa
 ;
 
 cyoa: cyoa-bear
 	// NEED IMAGE
-	"Stuffed Bear" cyoa-title!
-	"A huge stuffed bear looms in the cabin." cyoa-text!
+	"Ours Empaille" cyoa-title!
+	"Un enorme ours empaille domine la cabane." cyoa-text!
 		pchar charchoice( " wrestles it for a few hours" )choice: cyoa-bear-wrestle
 		pchar charchoice( " searches the bear quickly" )choice: cyoa-bear-search
-		choice( "Leave it for now" )choice
+		choice( "Laisser pour l'instant" )choice
 ;
 
 }

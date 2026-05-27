@@ -17,11 +17,11 @@ cyoa: brucerescue
 	rescue choosechar cicon
 	"Bryce Lu" rescue .name!
 	dead? if npc-died then;
-	"The Way of the Zombie" cyoa-title!
-	($ cname .. " says " .. che .. " is glad " .. pname .. " showed up.
-	" .. cHe .. " got cornered while trying to sneak past the city on foot. " .. cHe .. " offers to teach " .. pname .. " an anti-zombie martial arts technique if he can get a ride out of here." $) cyoa-text!
-		choice( "Let " .. chim .. " follow you"  )choice: brucerescue-2
-		choice( "Leave " .. chim .. " for now" )choice
+	"La Voie du Zombie" cyoa-title!
+	($ cname .. " dit que " .. che .. " est content que " .. pname .. " soit arrive.
+	" .. cHe .. " s'est fait coincer en essayant de passer furtivement a pied dans la ville. " .. cHe .. " propose d'apprendre a " .. pname .. " une technique d'arts martiaux anti-zombie en echange d'un moyen de sortir d'ici." $) cyoa-text!
+		choice( "Laisser " .. chim .. " vous suivre" )choice: brucerescue-2
+		choice( "Laisser " .. chim .. " pour l'instant" )choice
 ;
 
 }

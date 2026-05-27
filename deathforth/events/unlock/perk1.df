@@ -72,13 +72,13 @@ constant perk1-perklist
 // This NPC handles all the perks for support skills, mostly non-combat, with Anime Fan in there for fun
 
 cyoa: perk1-mechanic-buy
-	"THE CAR IS A SYMBOL OF HOPE" cyoa-title!
+	"LA VOITURE EST UN SYMBOLE D'ESPOIR" cyoa-title!
 	"Mechanic" "perk-mechanic" gstats{ perk-mechanic } perk-buy! ;
 cyoa-blank: perk1-mechanic
 	"Mechanic" MECHANIC_COST gstats{ perk-mechanic } ' perk1-mechanic-buy ' perk1back perk-confirm! ;
 
 cyoa: perk1-healthcare-buy
-	"CAN'T DIE WITH ALL THIS GAUZE" cyoa-title!
+	"ON PEUT PAS MOURIR AVEC TOUT CE PANSEMENT" cyoa-title!
 	"Health Care" "perk-healthcare" gstats{ perk-healthcare } perk-buy! ;
 cyoa-blank: perk1-healthcare
 	"Health Care" HEALTHC_COST gstats{ perk-healthcare } ' perk1-healthcare-buy ' perk1back perk-confirm! ;
@@ -92,83 +92,83 @@ cyoa-blank: perk1-
 *)
 
 cyoa: perk1-dogfriend-buy
-	"PRECIOUS PUPS" cyoa-title!
+	"DE PRECIEUX PETITS TOUTOUS" cyoa-title!
 	"Friend of Dog" "perk-dogfriend" gstats{ perk-dogfriend } perk-buy! ;
 cyoa-blank: perk1-dogfriend
 	"Friend of Dog" DOGPAL_COST gstats{ perk-dogfriend } ' perk1-dogfriend-buy ' perk1back perk-confirm! ;
-	
+
 cyoa: perk1-carnut-buy
-	"License Plate: SWEETRIDEZ" cyoa-title!
+	"Plaque: SWEETRIDEZ" cyoa-title!
 	"Car Nut" "perk-carnut" gstats{ perk-carnut } perk-buy! ;
 cyoa-blank: perk1-carnut
 	"Car Nut" CARNUT_COST gstats{ perk-carnut } ' perk1-carnut-buy ' perk1back perk-confirm! ;
-	
+
 cyoa: perk1-explorer-buy
-	"NO STONE UNTURNED, NO TOILET UNOPENED" cyoa-title!
+	"AUCUNE PIERRE NON RETOURNEE, AUCUNE TOILETTE NON OUVERTE" cyoa-title!
 	"Explorer" "perk-explorer" gstats{ perk-explorer } perk-buy! ;
 cyoa-blank: perk1-explorer
 	"Explorer" EXPLORER_COST gstats{ perk-explorer } ' perk1-explorer-buy ' perk1back perk-confirm! ;
 
 cyoa: perk1-pathfinder-buy
-	"UGH MY FEET HURT" cyoa-title!
+	"ARG MES PIEDS ME FONT MAL" cyoa-title!
 	"Pathfinder" "perk-pathfinder" gstats{ perk-pathfinder } perk-buy! ;
 cyoa-blank: perk1-pathfinder
 	"Pathfinder" PATHFINDER_COST gstats{ perk-pathfinder } ' perk1-pathfinder-buy ' perk1back perk-confirm! ;
 
 cyoa: perk1-haggler-buy
-	"SALES LEADER IN THE ZOMBOCALYPSE" cyoa-title!
+	"LEADER DES VENTES DANS LA ZOMBOCALYPSE" cyoa-title!
 	"Top Seller" "perk-haggler" gstats{ perk-haggler } perk-buy! ;
 cyoa-blank: perk1-haggler
 	"Top Seller" HAGGLER_COST gstats{ perk-haggler } ' perk1-haggler-buy ' perk1back perk-confirm! ;
 
 cyoa: perk1-shieldofhope-buy
-	"POWER OF POSITIVE THINKING" cyoa-title!
+	"POUVOIR DE LA PENSEE POSITIVE" cyoa-title!
 	"Shield of Hope" "perk-shieldofhope" gstats{ perk-shieldofhope } perk-buy! ;
 cyoa-blank: perk1-shieldofhope
 	"Shield of Hope" SHIELDOFHOPE_COST gstats{ perk-shieldofhope } ' perk1-shieldofhope-buy ' perk1back perk-confirm! ;
 
 cyoa: perk1-support-buy
-	"HELPY HELPERSON" cyoa-title!
+	"SUPER SERVIABLE" cyoa-title!
 	"Supporter" "perk-support" gstats{ perk-support } perk-buy! ;
 cyoa-blank: perk1-support
 	"Supporter" SHIELDOFHOPE_COST gstats{ perk-support } ' perk1-support-buy ' perk1back perk-confirm! ;
-	
+
 cyoa: perk1-dingus gstats{
-	"Perks of the Mind" cyoa-title!
-	
-	($ "The Debutante is holding a tiny teacup.
-	" .. "Running around, flailing, just has no GRACE to it! You should use INTELLIGENCE and DECORUM." pbold .. "
-	She crushes the teacup into a fine dust." $) text!
-	
+	"Perks de l'Esprit" cyoa-title!
+
+	($ "La Debutante tient une petite tasse a the.
+	" .. "Courir partout en s'agitant n'a aucune GRACE ! Utilisez l'INTELLIGENCE et le DECORUM." pbold .. "
+	Elle reduit la tasse a the en fine poussiere." $) text!
+
 	perk1-stockleft 15 < if
-		($ "I'm all out of teacups now!
-		Well, I can get more later." pbold .. "
-		She shrugs in an elegant manner." $) text!
+		($ "Je n'ai plus de tasses maintenant !
+		Bon, je peux en avoir d'autres plus tard." pbold .. "
+		Elle hausse les epaules avec elegance." $) text!
 	then
-	
+
 	perk1-stockleft 12 < if
-		($ "I think Explorer is underrated.
-		You can use its cheaper 'drive around' option to seek out the best locations, so you can keep well stocked with supplies!" pbold $) text!
+		($ "Je pense qu'Explorer est sous-estime.
+		Vous pouvez utiliser son option moins chere 'conduire' pour trouver les meilleurs endroits et rester bien approvisionne !" pbold $) text!
 	then
-	
+
 	perk1-stockleft 9 < if
-		($ "One of my favorite strategies is focusing on mechanical and medical skills, and then filling my group with useful meat shields!" pbold $) text!
+		($ "Une de mes strategies preferees est de me concentrer sur les competences mecaniques et medicales, puis de remplir mon groupe de boucliers de chair utiles !" pbold $) text!
 	then
-	
+
 	perk1-stockleft 6 < if
-		($ "Keep calm and alert!
-		Keep your car running and your meat shields healed!" pbold $) text!
+		($ "Restez calme et alerte !
+		Gardez votre voiture en marche et vos boucliers de chair soignes !" pbold $) text!
 	then
-	
+
 	perk1-stockleft 1 < if
-		($ "I have nothing left to teach you!
-		Keep thinking things through, and you'll make it!" pbold .. "
-		She crushes a handful of fine dust, and when she opens her hands it has turned into a teacup." $) text!
-	then 
-	
+		($ "Je n'ai plus rien a vous apprendre !
+		Continuez a reflechir et vous y arriverez !" pbold .. "
+		Elle ecrase une poignee de fine poussiere, et quand elle ouvre les mains ca s'est transforme en tasse a the." $) text!
+	then
+
 	+cr zpwallet perk1-remaining
-	
-	choice( "Leave for now" )choice
+
+	choice( "Partir pour l'instant" )choice
 	
 	perk-healthcare 3 < if 
 		"HEALTH CARE" HEALTHC_COST perk-healthcare zpview ' perk1-healthcare perk-view!

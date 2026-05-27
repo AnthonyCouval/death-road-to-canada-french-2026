@@ -12,18 +12,18 @@
 	CAT-ONELINERS var cat-oneliners
 	CAT-ONELINERS shuffles to cat-oneliners
 
-	: CAT-emote1 " starts coughing up a hairball." ;
-	: CAT-emote2 " tries to lie down comfortably, but is too big." ;
-	: CAT-emote3 " purrs." ;
-	: CAT-emote4 " sheds copious amounts of fur." ;
-	: CAT-emote5 " claws up the interior." ;
-	: CAT-emote6 " menaces with murderous intent." ;
-	: CAT-emote7 ($ " squints " .. chis .. " eyes as " .. chis .. " tail flicks around." $) ;
-	: CAT-emote8 " sits completely still and stares at nothing." ;
-	: CAT-emote9 " hisses randomly." ;
-	: CAT-emote10 " falls asleep." ;
-	: CAT-emote11 ($ " starts grooming " .. chim .. "self." $) ;
-	: CAT-emote12 " whines." ;
+	: CAT-emote1 " commence a recracher une boule de poils." ;
+	: CAT-emote2 " essaie de s'allonger confortablement, mais est trop gros." ;
+	: CAT-emote3 " ronronne." ;
+	: CAT-emote4 " perd d'enormes quantites de poils." ;
+	: CAT-emote5 " griffe l'interieur." ;
+	: CAT-emote6 " est menacant avec des intentions meurtrieres." ;
+	: CAT-emote7 ($ " plisse ses yeux pendant que sa queue fouette l'air." $) ;
+	: CAT-emote8 " reste completement immobile et fixe le vide." ;
+	: CAT-emote9 " siffle au hasard." ;
+	: CAT-emote10 " s'endort." ;
+	: CAT-emote11 ($ " commence a se toiletter." $) ;
+	: CAT-emote12 " geint." ;
 
 
 	deck-new
@@ -67,11 +67,11 @@
 
 // Generic pet emotes as a failsafe
 
-	: PET-emote1 " slowly ruins the interior of the car." ;
-	: PET-emote2 " gets everything steadily more filthy." ;
-	: PET-emote3 " takes up valuable resources and should be eaten." ;
-	: PET-emote4 " acts all lazy." ;
-	: PET-emote5 " is sort of cute but not really." ;
+	: PET-emote1 " detruit lentement l'interieur de la voiture." ;
+	: PET-emote2 " rend tout progressivement plus crasseux." ;
+	: PET-emote3 " prend des ressources precieuses et devrait etre mange." ;
+	: PET-emote4 " fait le paresseux." ;
+	: PET-emote5 " est un peu mignon mais pas vraiment." ;
 
 	deck-new
 		card: PET-emote1
@@ -99,11 +99,11 @@
 
 // Goat Emotes
 
-	: GOAT-emote1 " bleats." ;
-	: GOAT-emote2 " thrashes around in its seat." ;
-	: GOAT-emote3 " eats part of the upholstery." ;
-	: GOAT-emote4 " stares at things with its weird eye." ;
-	: GOAT-emote5 " does goat things." ;
+	: GOAT-emote1 " bele." ;
+	: GOAT-emote2 " se debat dans son siege." ;
+	: GOAT-emote3 " mange une partie de la sellerie." ;
+	: GOAT-emote4 " fixe les choses avec son oeil bizarre." ;
+	: GOAT-emote5 " fait des trucs de chevre." ;
 
 	deck-new
 		card: GOAT-emote1
@@ -131,11 +131,11 @@
 
 // Pig Emotes
 
-	: PIG-emote1 " oinks." ;
-	: PIG-emote2 " sits in its seat quietly." ;
-	: PIG-emote3 " squeals a little." ;
-	: PIG-emote4 " snorts for a bit." ;
-	: PIG-emote5 " waggles its ears." ;
+	: PIG-emote1 " grogne." ;
+	: PIG-emote2 " reste assis tranquillement dans son siege." ;
+	: PIG-emote3 " couine un peu." ;
+	: PIG-emote4 " renifle un moment." ;
+	: PIG-emote5 " remue ses oreilles." ;
 
 	deck-new
 		card: PIG-emote1
