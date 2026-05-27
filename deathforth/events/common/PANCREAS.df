@@ -38,202 +38,202 @@ WEAPON_DAGGER clone-to: Cowboy Dagger
 : ringout 1 12 rnd case
 	1 of RED "GAME!!!" .. endof 
 	2 of RED "K.O!!!" .. endof 
-	3 of RED "FATALITY!!!" .. endof 
-	4 of RED "MATCHPOINT!!!" .. endof 
-	5 of RED "RINGOUT!!!" .. endof 
-	6 of RED "KNOCKOUT!!!" .. endof 
-	7 of RED "TOUCHDOWN!!!" .. endof 
-	8 of RED "KILLSTREAK!!!" .. endof 
-	9 of RED "RAMPAGE!!!" .. endof 
-	10 of RED "TALK ABOUT A HOLE IN ONE!!!" .. endof
+	3 of RED "FATALITE !!!" .. endof
+	4 of RED "BALLE DE MATCH !!!" .. endof
+	5 of RED "RINGOUT!!!" .. endof
+	6 of RED "ASSOMME !!!" .. endof
+	7 of RED "TOUCHDOWN!!!" .. endof
+	8 of RED "SERIE MEURTRIERE !!!" .. endof
+	9 of RED "CARNAGE !!!" .. endof
+	10 of RED "CA C'EST UN TROU D'UN COUP !!!" .. endof
 	11 of RED "SCORE!!!" .. endof
 	12 of RED "HOMERUN!!!" .. endof
 	endcase
 ;
 
 : no-more-di args( me eventid )
-\	-4 <- me .vel.z! 
+\	-4 <- me .vel.z!
 
 	<- eventid THING_EVENT_WALL = if
-		\ 50 %chance if 
+		\ 50 %chance if
 		\	RED "GAME!!!" .. <- me .report
 		\ else
-		\ 	RED "K.O!!!" .. <- me .report 
+		\ 	RED "K.O!!!" .. <- me .report
 		72 %chance if \ ~50% chance to bounce twice
-			180 <- me .weapon_state.val@ - anglexy 9 xymul <- me .vel! \ Rungout zombs store their movement dir. as weapon_state.val. 
-		else 
-			
+			180 <- me .weapon_state.val@ - anglexy 9 xymul <- me .vel! \ Rungout zombs store their movement dir. as weapon_state.val.
+		else
+
 		 <- me .pos 1 xypowboom
 			-1 lt .hitcheck.blast!
 			0 <- me .hitpoints!
-			ringout <- me .report 
-			then 
-		then 
+			ringout <- me .report
+			then
+		then
 
-	<- eventid THING_EVENT_TIMER = if 
+	<- eventid THING_EVENT_TIMER = if
 		1 <- me .timer!
-		\ -1.5 <- me .vel.z! 
-		<- me .vel xyangle <- me .weapon_state.val! \ move angle as weapon_state.val 
-		
-		<- me .pos 
-				particle{ new pos! 10 ticks! 
+		\ -1.5 <- me .vel.z!
+		<- me .vel xyangle <- me .weapon_state.val! \ move angle as weapon_state.val
+
+		<- me .pos
+				particle{ new pos! 10 ticks!
 				\	pos@ -5 5 frnd + swap -5 5 frnd + swap pos!
-					
+
 				weapons_base_id 301 + spriteid!
-				\ This is the red trail sprite from DRTS, originally meant for Eldritch Blast. 
-				
+				\ This is the red trail sprite from DRTS, originally meant for Eldritch Blast.
+
 				\ angle@ -1 * 10 -10 frnd + anglexy 1 2 frnd xymul vel!
-				
-				20 ticks! 
-				10 fade_out! 
+
+				20 ticks!
+				10 fade_out!
 				\ 1 clr.r!
-				
+
 				\ 0.8 1 frnd clr.g!
 				\ 0 clr.b!
 				\ glowy
-				2 scalex! 
+				2 scalex!
 				-3 pos.z!
-				0.5 clr.a! 
+				0.5 clr.a!
 				1 layer!
 				}
-				
-			<- me .vel xyangle particle{ angle! } 
-		
-		
-		camera.pos.x@ view_w 0.5 * + to xboundright 
-		camera.pos.x@ view_w -0.5 * + to xboundleft 
-		
-		camera.pos.y@ view_h 0.5 * + to ybounddown 
+
+			<- me .vel xyangle particle{ angle! }
+
+
+		camera.pos.x@ view_w 0.5 * + to xboundright
+		camera.pos.x@ view_w -0.5 * + to xboundleft
+
+		camera.pos.y@ view_h 0.5 * + to ybounddown
 		camera.pos.y@ view_h -0.5 * + to yboundup
 
-		<- me .pos.x@ xboundright > <- me .pos.x@ xboundleft < or if 
-			ringout <- me .report 
+		<- me .pos.x@ xboundright > <- me .pos.x@ xboundleft < or if
+			ringout <- me .report
 			<- me .pos 1 xypowboom
 			-1 lt .hitcheck.blast!
 			0 <- me .hitpoints!
-			
-		then 
-		
-		\ Offscreen logic.... 
-		
-		<- me .pos.y@ ybounddown > <- me .pos.y@ yboundup < or if 
-			ringout <- me .report 
-			<- me .pos 1 xypowboom
-			-1 lt .hitcheck.blast!
-			0 <- me .hitpoints!
-		then 
-		
-		<- me .vel xymag 0.1 < if 
-			ringout <- me .report  
-			<- me .pos 1 xypowboom
-			-1 lt .hitcheck.blast!
-			0 <- me .hitpoints!
-		then 
 
-	then 
-; 
-	
+		then
+
+		\ Offscreen logic....
+
+		<- me .pos.y@ ybounddown > <- me .pos.y@ yboundup < or if
+			ringout <- me .report
+			<- me .pos 1 xypowboom
+			-1 lt .hitcheck.blast!
+			0 <- me .hitpoints!
+		then
+
+		<- me .vel xymag 0.1 < if
+			ringout <- me .report
+			<- me .pos 1 xypowboom
+			-1 lt .hitcheck.blast!
+			0 <- me .hitpoints!
+		then
+
+	then
+;
+
 : naginata-smash args( me )
-	<- me .mass@ 100 > not if  \ Not relevant for base game; covers zombie bosses 
-		1 <- me .timer! 
-		-6 <- me .vel.z! 
-		' no-more-di <- me .events! 
+	<- me .mass@ 100 > not if  \ Not relevant for base game; covers zombie bosses
+		1 <- me .timer!
+		-6 <- me .vel.z!
+		' no-more-di <- me .events!
 		0 <- me .rad.x!
 		0 <- me .rad.y!
-		0 <- me .rad.z! 
-		1 <- me .nocollide! 
-		\ 0.7 <- me .bounce_friction! 
-	then 
+		0 <- me .rad.z!
+		1 <- me .nocollide!
+		\ 0.7 <- me .bounce_friction!
+	then
 ;
 
 : rosettagf-thing-events args( me teid )
 
 
-	(* <- teid THING_EVENT_TIMER = if 
+	(* <- teid THING_EVENT_TIMER = if
 		1 <- me .timer!
-		
-		<- me .character@ .weapona@ 0 = <- me .character@ .weaponb@ 0 = and if 
+
+		<- me .character@ .weapona@ 0 = <- me .character@ .weaponb@ 0 = and if
 			0.2 <- me .character@ .speed_bonus!
-		then; 
-		
-		<- me .character@ .weapona@ 0 <> <- me .character@ .weaponb@ 0 = and if
-			0 <- me .character@ .speed_bonus! 
-		then; 
-		
-		<- me .character@ .weapona@ 0 = <- me .character@ .weaponb@ 0 <> and if
-			0 <- me .character@ .speed_bonus! 
 		then;
-		
+
+		<- me .character@ .weapona@ 0 <> <- me .character@ .weaponb@ 0 = and if
+			0 <- me .character@ .speed_bonus!
+		then;
+
+		<- me .character@ .weapona@ 0 = <- me .character@ .weaponb@ 0 <> and if
+			0 <- me .character@ .speed_bonus!
+		then;
+
 		<- me .character@ .weapona@ 0 <> <- me .character@ .weaponb@ 0 <> and if
-			-0.1 <- me .character@ .speed_bonus! 
+			-0.1 <- me .character@ .speed_bonus!
 		then;
 		\ Logic to determine how many weapons are carried.
 		\ This logic assumes that the third slot is always locked
-		\ which it is, for Lasija. 
-		\ Speed bonus based on this. 
-		
-	then *) 
+		\ which it is, for Lasija.
+		\ Speed bonus based on this.
 
-	<- teid THING_EVENT_DID_HIT = if			
+	then *)
 
-		<- me .pos <- me .just_hit_id@ #thing .pos xysub xymag weapondef{ <- me .wielded sel melee_range@ } - 5 - 5 - print 
+	<- teid THING_EVENT_DID_HIT = if
+
+		<- me .pos <- me .just_hit_id@ #thing .pos xysub xymag weapondef{ <- me .wielded sel melee_range@ } - 5 - 5 - print
 		<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
-			<- me .pos <- me .just_hit_id@ #thing .pos xysub xymag weapondef{ <- me .wielded sel melee_range@ } - 5 - 5 - >int 10.89 > if 
-			\ First, find the distance from the hit target. subtract melee range, player and zomb rad. if we are left at 11 or more, we 
-			\ must have hit near the tip. award extra damage 
+			<- me .pos <- me .just_hit_id@ #thing .pos xysub xymag weapondef{ <- me .wielded sel melee_range@ } - 5 - 5 - >int 10.89 > if
+			\ First, find the distance from the hit target. subtract melee range, player and zomb rad. if we are left at 11 or more, we
+			\ must have hit near the tip. award extra damage
 
-			
-			<- me .fatigue@ 13 - 0 127 clamp <- me .fatigue! \ Reward with stamina recovery. 
-			
+
+			<- me .fatigue@ 13 - 0 127 clamp <- me .fatigue! \ Reward with stamina recovery.
+
 			// <- me .character@ .mod_flags2@ 2 = not
 			90 %chance if \ Normal functionality, i.e non-scepter code
-				<- me .pos <- me .just_hit_id@ #thing .pos xysub xynorm -9 xymul <- me .just_hit_id@ #thing .vel! 
-				50 %chance if 
-					-3 <- me .just_hit_id@ #thing .vel.z! 
+				<- me .pos <- me .just_hit_id@ #thing .pos xysub xynorm -9 xymul <- me .just_hit_id@ #thing .vel!
+				50 %chance if
+					-3 <- me .just_hit_id@ #thing .vel.z!
 				else
-					3 <- me .just_hit_id@ #thing .vel.z! 
-				then 
-				
-				<- me .just_hit_id@ #thing .pos xyblast 
+					3 <- me .just_hit_id@ #thing .vel.z!
+				then
+
+				<- me .just_hit_id@ #thing .pos xyblast
 				weapondef{ <- me .wielded sel power@ } 2 / lt .hitcheck.power!
 				10 lt .hitcheck.rad!
-				-1 lt .hitcheck.blast! 
-				\ 5 lt .hitcheck.knockback! 
-			
-			else \ RINGOUT scepter code...for crits? 
-	
-				5 <- me .just_hit_id@ #thing .hitpoints! \ don't die before ringout! 
+				-1 lt .hitcheck.blast!
+				\ 5 lt .hitcheck.knockback!
+
+			else \ RINGOUT scepter code...for crits?
+
+				5 <- me .just_hit_id@ #thing .hitpoints! \ don't die before ringout!
 				\ 1 <- me .just_hit_id@ #thing .anim.state!
-				
-				
-				<- me .just_hit_id@ #thing .anim.state@ 1 = if 
-					<- me .pos <- me .just_hit_id@ #thing .pos xysub xynorm -21 xymul <- me .just_hit_id@ #thing .vel! \ off the stage with you! 
+
+
+				<- me .just_hit_id@ #thing .anim.state@ 1 = if
+					<- me .pos <- me .just_hit_id@ #thing .pos xysub xynorm -21 xymul <- me .just_hit_id@ #thing .vel! \ off the stage with you!
 				else
 					<- me .pos <- me .just_hit_id@ #thing .pos xysub xynorm -31 xymul <- me .just_hit_id@ #thing .vel!
-				then 
-				
-				<- me .pos <- me .just_hit_id@ #thing .pos xysub xyangle <- me .just_hit_id@ #thing .weapon_state.val! 
-				<- me .character@ .voice.fhi@ 1 + <- me .character@ .voice.fhi! \ Ringout score popup  
-				($ "POINTS: " .. <- me .character@ .voice.fhi@ $) <- me .report \ flyhead breaks this >:<<< 
-				<- me .just_hit_id@ #thing naginata-smash \ NO ITEMS, NO BS. 
-			then 
-				
-					sfx{ zelda 0 d! 0 a! } 
-				then 
+				then
+
+				<- me .pos <- me .just_hit_id@ #thing .pos xysub xyangle <- me .just_hit_id@ #thing .weapon_state.val!
+				<- me .character@ .voice.fhi@ 1 + <- me .character@ .voice.fhi! \ Ringout score popup
+				($ "POINTS: " .. <- me .character@ .voice.fhi@ $) <- me .report \ flyhead breaks this >:<<<
+				<- me .just_hit_id@ #thing naginata-smash \ NO ITEMS, NO BS.
+			then
+
+					sfx{ zelda 0 d! 0 a! }
+				then
 			then
 		then
-	
+
 
 ;
 
 : rosettagf-main-events ( teid ) args( chara eventid )
-	 	
+
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-	
+
 	1 <- chara .thing@ .timer!
 	 <- chara .thing@ swap ( teid ) rosettagf-thing-events
-	 
-	
+
+
 ;
 
 \ .................................................................
@@ -241,116 +241,116 @@ WEAPON_DAGGER clone-to: Cowboy Dagger
 \ .................................................................
 
 : do-and-die args( me eventid )
-	<- eventid THING_EVENT_TIMER = if 
-			1 <- me .timer! 
-			6 <- me .character@ .health! \ don't ever die 
-			1 <- me .unseen! \ don't get bit 
+	<- eventid THING_EVENT_TIMER = if
+			1 <- me .timer!
+			6 <- me .character@ .health! \ don't ever die
+			1 <- me .unseen! \ don't get bit
 				1 <- me  .character@ .weapon_nodropa!
 		1 <- me  .character@ .weapon_nodropb!
 			1 <- me .character@ .weapon_nodropc!
-			
-			\ dont pick up weapons 
-			
-			"" <- me .report \ dont complain when hurt 
-			
-			
-			
+
+			\ dont pick up weapons
+
+			"" <- me .report \ dont complain when hurt
+
+
+
 	LOOT_BULLET <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_BULLET <- me .character@ .lootamt!
-	LOOT_RIFLE_SHELL <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_RIFLE_SHELL <- me .character@ .lootamt! 	
-	LOOT_SHOTGUN_SHELL <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_SHOTGUN_SHELL <- me .character@ .lootamt! 
-	LOOT_GAS <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_GAS <- me .character@ .lootamt! 
-	LOOT_JUNK <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_JUNK <- me .character@ .lootamt! 
-	
-	\ share all of my partner's ammo 
-	
-	0 <- me .weapon_state.frame! \ weapon reload black magic prevention 
-	
-	<- me .character@ .user.special_counter@ #thing .inside_id@ <- me .inside_id! 
-	\ if im in the car, get in the car 
-	
-	
+	LOOT_RIFLE_SHELL <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_RIFLE_SHELL <- me .character@ .lootamt!
+	LOOT_SHOTGUN_SHELL <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_SHOTGUN_SHELL <- me .character@ .lootamt!
+	LOOT_GAS <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_GAS <- me .character@ .lootamt!
+	LOOT_JUNK <- me .character@ .user.special_counter@ #thing .character@ .lootamt@ LOOT_JUNK <- me .character@ .lootamt!
+
+	\ share all of my partner's ammo
+
+	0 <- me .weapon_state.frame! \ weapon reload black magic prevention
+
+	<- me .character@ .user.special_counter@ #thing .inside_id@ <- me .inside_id!
+	\ if im in the car, get in the car
+
+
 						<- me .character@ .user.special_counter@ #thing .move_angle@ <- me .move_angle!
 				\	<- me .character@ .user.special_counter@ #thing <- me .turn-toward
-				\ do as i do  
-	
-	
-	<- me .character@ .user.special_counter@ #thing .targetid@ <- me .targetid! 
-			\ share my target... 
-			
+				\ do as i do
+
+
+	<- me .character@ .user.special_counter@ #thing .targetid@ <- me .targetid!
+			\ share my target...
+
 		<- me .character@ .user.special_counter@ #thing .character@ .health@ 1 < if
 			2 <- me .stun!
-			0 <- me .clr.a! \ disappear when im dead 
-		else 
-			1 <- me .clr.a! \ and come back when im not 
-		then 
-		
-		<- me .ammocount 0 = <- me .cooldown@ 0 <> weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > and and if 
-			\ if this was my last shot, and i have finished shooting it, and i am not holding a melee 
-			2 <- me .stun!
-			0 <- me .anim.weapon_counter! 
-		then 
-			
-			
-		100 <- me .ai.wait! 
-		
-	then 
-	
-; 
+			0 <- me .clr.a! \ disappear when im dead
+		else
+			1 <- me .clr.a! \ and come back when im not
+		then
 
-: create-dualwielder args( me ) 
-		
-	dummy-npc 
+		<- me .ammocount 0 = <- me .cooldown@ 0 <> weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > and and if
+			\ if this was my last shot, and i have finished shooting it, and i am not holding a melee
+			2 <- me .stun!
+			0 <- me .anim.weapon_counter!
+		then
+
+
+		100 <- me .ai.wait!
+
+	then
+
+;
+
+: create-dualwielder args( me )
+
+	dummy-npc
 	\ lt .invisible
-	 \ 0 lt .clr.a! 
-	1 lt .character@ .carrying.slot_count!  
-	<- me .character@ .weaponb@ lt .character@ .weapona! 
+	 \ 0 lt .clr.a!
+	1 lt .character@ .carrying.slot_count!
+	<- me .character@ .weaponb@ lt .character@ .weapona!
 	\ <- me .character@ .weaponb@ lt .character@ .weaponb!
-	\ <- me .character@ .weaponb@ lt .character@ .weaponc! 	
-	
-	
+	\ <- me .character@ .weaponb@ lt .character@ .weaponc!
+
+
 	1 lt .character@ .weapon_nodropa!
 		1 lt .character@ .weapon_nodropb!
 			1 lt .character@ .weapon_nodropc!
-	
-	 \ 22 STAT_DEXTERITY lt .character@ .bonus! 
-	
+
+	 \ 22 STAT_DEXTERITY lt .character@ .bonus!
+
 	<- me .pos lt .pos!
 	\ <- me .move_angle@ lt .move_angle!
-	\ <- me .angle@ lt .angle! 
-	
+	\ <- me .angle@ lt .angle!
+
 	0 lt .cooldown!
 	0 lt .action_cooldown!
-	0 lt .stun! 
-	
+	0 lt .stun!
+
 	\ 12 <- me .weapon_state.angle_add!
-	"SPAWN TICK:" print 
-	gameticks print 
-	
-	\ <- me .aim_angle@ lt .character@ .user.special_counter! 
+	"SPAWN TICK:" print
+	gameticks print
+
+	\ <- me .aim_angle@ lt .character@ .user.special_counter!
 	<- me .aim_angle@ lt .aim_angle!
-	 \ <- me .vel lt .vel! 
+	 \ <- me .vel lt .vel!
 	<- me lt .turn-toward
 	1 lt .unseen!
 	3 lt .tileflags! \ can go off map if necessary
-	1 lt .nocollide! \ dont hit obbjs 
-	\ <- me .targetid@ lt .targetid! 
-	1 lt .anim.weapon_counter! 	
-		
-		
+	1 lt .nocollide! \ dont hit obbjs
+	\ <- me .targetid@ lt .targetid!
+	1 lt .anim.weapon_counter!
+
+
 	<- me .character@ .shooting@ lt .character@ .shooting!
 
-	
-	\ lt .swapattack 
-	
+
+	\ lt .swapattack
+
 	\ lt .attack
-\ 	lt .aim_angle@ print 
-	
+\ 	lt .aim_angle@ print
+
 	1 lt .timer!
 	' do-and-die lt .events!
-	
-;	
-	
-	
+
+;
+
+
 : lobotomise args( chara )
 	0 <- chara .ai.loot_chance!
 	0.1 <- chara .ai.attack_dist!
@@ -363,78 +363,78 @@ WEAPON_DAGGER clone-to: Cowboy Dagger
 	4	<- chara .ai.attack_level!
 	\ -1   <- chara .ai.pickup_gun_max!
 	\ -1  <- chara .ai.pickup_melee_max!
-	0 <- chara .ai.threat_respond_chance! 
-	
-	
-; 
+	0 <- chara .ai.threat_respond_chance!
 
-	
 
-: zeichboast 1 16 rnd case 
-	1 of RAINBOW "IT'S 12PM." .. endof
-	2 of RAINBOW "IT'S 12:00." .. endof
-	3 of RAINBOW "IT'S HIGH NOON." .. endof
+;
+
+
+
+: zeichboast 1 16 rnd case
+	1 of RAINBOW "IL EST 12H." .. endof
+	2 of RAINBOW "IL EST 12:00." .. endof
+	3 of RAINBOW "C'EST L'HEURE DE GLOIRE." .. endof
 	4 of RAINBOW "YEEHAW." .. endof
-	5 of RAINBOW "YA FEEL LOVELY, PUNK?" .. endof
+	5 of RAINBOW "T'AS BONNE MINE, BANDIT ?" .. endof
 	6 of RAINBOW "ROOTEM TOOTEM." .. endof
-	7 of RAINBOW 50 %chance if "I'M A SHOOTIN COWBOY, NOT A SINGIN COWBOY." else "SOMEBODY'S POISONED THE WATERIN HOLE." then .. endof
+	7 of RAINBOW 50 %chance if "JE SUIS UN COWBOY TIREUR, PAS UN COWBOY CHANTEUR." else "QUELQU'UN A EMPOISONNE L'ABREUVOIR." then .. endof
 	8 of RAINBOW "YIPPEE KI YAY." .. endof
-	9 of RAINBOW "THERE'S A SNAKE IN MY BOOT." .. endof
-	10 of RAINBOW "IT'S HIGH NOON?" .. endof 
-	11 of RAINBOW "TOO SLOW ON THE DRAW." .. endof 
+	9 of RAINBOW "Y'A UN SERPENT DANS MA BOTTE." .. endof
+	10 of RAINBOW "C'EST L'HEURE DE GLOIRE ?" .. endof
+	11 of RAINBOW "TROP LENT A DEGAINER." .. endof
 	12 of RAINBOW "YEE HAW." .. endof
-	13 of RAINBOW "HIGH NOON." .. endof 
-	14 of RAINBOW "IT'S HIGH NOON..." .. endof 
-	15 of RAINBOW "IT'S HIIIIIGH NOON." .. endof
-	16 of RAINBOW "IT'S HONCHO NOON." .. endof
-	
+	13 of RAINBOW "L'HEURE DE GLOIRE." .. endof
+	14 of RAINBOW "C'EST L'HEURE DE GLOIRE..." .. endof
+	15 of RAINBOW "C'EST L'HEEEURE DE GLOOOIRE." .. endof
+	16 of RAINBOW "C'EST L'HEURE D'HONCHO." .. endof
+
 	endcase
 ;
-	
+
 
 : dualwielder-thing-events args( me teid )
 
 	<- teid THING_EVENT_TIMER = if
-	
-	1 <- me .timer! 
-		<- me .character@ .health@ 1 < if then; 
-		<- me .character@ .user.special_counter@ #thing 0 = if then; 
-			
-				\ <- me .wielded-stack 0 = not if 
-				<- me .inside_id@ 0 = if 
 
-					<- me .pos <- me .aim_angle@ sin 4 * <- me .aim_angle@ cos -4 * xyadd 0 -3 xyadd \ Without this minimum distance, the AI FREAKS OUT 
-					
+	1 <- me .timer!
+		<- me .character@ .health@ 1 < if then;
+		<- me .character@ .user.special_counter@ #thing 0 = if then;
+
+				\ <- me .wielded-stack 0 = not if
+				<- me .inside_id@ 0 = if
+
+					<- me .pos <- me .aim_angle@ sin 4 * <- me .aim_angle@ cos -4 * xyadd 0 -3 xyadd \ Without this minimum distance, the AI FREAKS OUT
+
 					\ the AI is admittedly still freaking out a little bit
 					\ but all they do is just wander a bit more than usual, that's all
-					\ it LOOKS natural enough 
-					
-					<- me .character@ .user.special_counter@ #thing .pos! \ stay attached 
-					
-					<- me .mapid@ <- me .character@ .user.special_counter@ #thing .mapid! \ stay on this map 
-					
-					<- me .flip@ 1 = if 
+					\ it LOOKS natural enough
+
+					<- me .character@ .user.special_counter@ #thing .pos! \ stay attached
+
+					<- me .mapid@ <- me .character@ .user.special_counter@ #thing .mapid! \ stay on this map
+
+					<- me .flip@ 1 = if
 						<- me .aim_angle@ 12 + <- me .character@ .user.special_counter@ #thing .aim_angle!  \ ...why? why the 12 diff?
-					else 
-						<- me .aim_angle@ 12 - <- me .character@ .user.special_counter@ #thing .aim_angle!  
-					then 	
-				\ No idea 
-					
-					<- me .weapon_slot_using@ 0 = weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > <- me .ammocount 0 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } 3 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt@ 0 > and and and and if  
-						\ using first slot 
-						\ and takes ammo 
-						\ and other wep takes ammo 
-						\ and other wep has ammo 
-						
-						
-						<- me .character@ .weaponb@ <- me .character@ .user.special_counter@ #thing .character@ .weapona!  
 					else
-						0 <- me .character@ .user.special_counter@ #thing .character@ .weapona!  
+						<- me .aim_angle@ 12 - <- me .character@ .user.special_counter@ #thing .aim_angle!
+					then
+				\ No idea
+
+					<- me .weapon_slot_using@ 0 = weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > <- me .ammocount 0 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } 3 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt@ 0 > and and and and if
+						\ using first slot
+						\ and takes ammo
+						\ and other wep takes ammo
+						\ and other wep has ammo
+
+
+						<- me .character@ .weaponb@ <- me .character@ .user.special_counter@ #thing .character@ .weapona!
+					else
+						0 <- me .character@ .user.special_counter@ #thing .character@ .weapona!
 						1 <- me .character@ .user.special_counter@ #thing .stun!
-					then 
-					\ copy my weapon if im eligble else do nothin 
-					
-						\ particle{ 
+					then
+					\ copy my weapon if im eligble else do nothin
+
+						\ particle{
 							\ new
 						\ pos!
 
@@ -442,90 +442,90 @@ WEAPON_DAGGER clone-to: Cowboy Dagger
 						\ 1 ticks!
 						\ 1 fade_out!
 						\ 1 layer! }
-						\ weapondef{ <- me .character@ .weapona@ sel spriteid@ } particle{ spriteid! } 
-						\ <- me .aim_angle@ particle{ angle! } 
-						\ <- me .flip@ particle{ flipx! } 
-						\ <- me .pos.z@ particle{ pos.z! } 
-						\ <- me .vel.z@ particle{ vel.z! } 
-						\ <- me .vel particle{ vel! } 
-					\ \ gameticks 9 * sin 10 * <- me .weapon_state.angle_add!	
-				\ then 	
+						\ weapondef{ <- me .character@ .weapona@ sel spriteid@ } particle{ spriteid! }
+						\ <- me .aim_angle@ particle{ angle! }
+						\ <- me .flip@ particle{ flipx! }
+						\ <- me .pos.z@ particle{ pos.z! }
+						\ <- me .vel.z@ particle{ vel.z! }
+						\ <- me .vel particle{ vel! }
+					\ \ gameticks 9 * sin 10 * <- me .weapon_state.angle_add!
+				\ then
 				then
-		then 
-		
-		<- teid THING_EVENT_SHOOT = if 
-		
-			15 %chance if 
-				zeichboast <- me .yellmsg \ I'm sure you can replace this as desired 
-			then 
-			
-			<- me .character@ .mod_flags2@ 2 = if \ Scepter powerup 
-				50 %chance if 
+		then
+
+		<- teid THING_EVENT_SHOOT = if
+
+			15 %chance if
+				zeichboast <- me .yellmsg \ I'm sure you can replace this as desired
+			then
+
+			<- me .character@ .mod_flags2@ 2 = if \ Scepter powerup
+				50 %chance if
 				weapondef{ <- me .wielded sel ammo_type@ } <- me .character@ .lootamt@ 1 + weapondef{ <- me .wielded sel ammo_type@ } <- me .character@ .lootamt!
-			then then \ 50 % ammo efficiency 
-			
-			<- me .character@ .user.special_counter@ #thing 0 = if then; 
-			\ <- me .character@ .weaponb@ WEAPON_LIST_FIREARM .is-weapon-type? if 
-			<- me .weapon_slot_using@ 0 = weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } 3 > <- me .ammocount 0 > and and and if   \ holding a..."firearm"? 
-		
-			<- me .character@ .user.special_counter@ #thing .cooldown@ 0 = if 
-				<- me .character@ .user.special_counter@ #thing .ammocount 0 > if 
-					weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt@ 0 >	if 
-					<- me .character@ .user.special_counter@ #thing .attack 
+			then then \ 50 % ammo efficiency
+
+			<- me .character@ .user.special_counter@ #thing 0 = if then;
+			\ <- me .character@ .weaponb@ WEAPON_LIST_FIREARM .is-weapon-type? if
+			<- me .weapon_slot_using@ 0 = weapondef{ <- me .character@ .weapona@ sel ammo_type@ } 3 > weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } 3 > <- me .ammocount 0 > and and and if   \ holding a..."firearm"?
+
+			<- me .character@ .user.special_counter@ #thing .cooldown@ 0 = if
+				<- me .character@ .user.special_counter@ #thing .ammocount 0 > if
+					weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt@ 0 >	if
+					<- me .character@ .user.special_counter@ #thing .attack
 					weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt@ -1 + 0 999 clamp weapondef{ <- me .character@ .weaponb@ sel ammo_type@ } <- me .character@ .lootamt!
 				then then then
 			\ STOP EATING MY AMMO UNNECESSARILY!!!
-			\ ammo logic for shooting the other gun in your inventory 
-			
+			\ ammo logic for shooting the other gun in your inventory
+
 			\ IMPORTANT NOTE!!!!
 			\ DUAL WIELD ONLY ACTIVATES WHEN USING THE FIRST WEAPON IN YOUR INVENTORY!!!!
-			\ THIS IS AN INTENTIONAL DESIGN CHOICE 
-			\ SO YOU CAN CHOOSE TO DUALWIELD OR NOT 
+			\ THIS IS AN INTENTIONAL DESIGN CHOICE
+			\ SO YOU CAN CHOOSE TO DUALWIELD OR NOT
 
-		
-			<- me .character@ .weapona@ <- me .character@ .weaponb@ = if 
-				<- me .cooldown@ 0.85 * <- me .cooldown! 
-			then 
-			
-			\ synergy bonus. made sense to me 
-		
-			then 
-		then 
-	
-				
+
+			<- me .character@ .weapona@ <- me .character@ .weaponb@ = if
+				<- me .cooldown@ 0.85 * <- me .cooldown!
+			then
+
+			\ synergy bonus. made sense to me
+
+			then
+		then
+
+
 
 ;
 
 
 : dualwielder-main-events ( teid ) args( chara eventid )
 
-	<- eventid MAIN_EVENT_MISSION_START = if 
-		
-		<- chara .location@ 1 = if \ Not on rest... 
+	<- eventid MAIN_EVENT_MISSION_START = if
+
+		<- chara .location@ 1 = if \ Not on rest...
 			<- chara .thing@ create-dualwielder
 			lt .character@ lobotomise
-			<- chara .thing@ .id@ lt .character@ .user.special_counter! 
-			lt .id@ <- chara .user.special_counter! 
-			
-			<- chara .mod_flags2@ lt .character@ .mod_flags2! 
-			\ 241 lt .character@ .specialtype! 
+			<- chara .thing@ .id@ lt .character@ .user.special_counter!
+			lt .id@ <- chara .user.special_counter!
+
+			<- chara .mod_flags2@ lt .character@ .mod_flags2!
+			\ 241 lt .character@ .specialtype!
 			0 lt .character@ .scale.head.x!
 		\	0 lt .character@ .scale.head.y!
 			0 lt .character@ .scale.body.x!
 		\	0 lt .character@ .scale.body.y!
 			-5 lt .rad.x!
-			-5 lt .rad.y! \ stops weird object pickup inhibition  
-			0 lt .rad.z! 
-		then 
-	then 
-	 	
+			-5 lt .rad.y! \ stops weird object pickup inhibition
+			0 lt .rad.z!
+		then
+	then
+
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-		<- chara .location@ 1 = if 
+		<- chara .location@ 1 = if
 			1 <- chara .thing@ .timer!
 			 <- chara .thing@ swap ( teid ) dualwielder-thing-events
-		then 
+		then
 
-	
+
 ;
 
 \ .................................................................
@@ -570,54 +570,54 @@ cyoa-choice: trade-special-1
 cyoa-choice: trade-special-0
 	($ Thegroup .. " buys a Kukri.
 	" .. "- Single target
-	- Low cooldown 
-	- Maims the target, slowing them 
+	- Low cooldown
+	- Maims the target, slowing them
 	- OK damage" pbold $) cyoa-text! goodfx
 	1 WEAPON_KUKRI trunk.weapon+ -4 trunk-food+ someicon
 ;
 
 cyoa-choice: trade-special-banner
 	($ Thegroup .. " buys a trumpet with a flag.
-	" .. "- Empowers teammates whilst held 
-	- Comes with 30s of charge time 
-	- Charge depletes whilst held  
+	" .. "- Empowers teammates whilst held
+	- Comes with 30s of charge time
+	- Charge depletes whilst held
 	- Minicrits apply to melee only" pbold $) cyoa-text! goodfx
 	200 WEAPON_BUFFBANNER trunk.weapon+ -6 trunk-food+ someicon
 ;
 
 
 cyoa: trade-special
-	"Special Gimmick Weapons" cyoa-title!
-	($ "I've modified all of these weapons personally! They all have a SPECIAL GIMMICK!" pbold $) cyoa-text! basic-tone foodamt
-	"Duckhunter: A shotgun that ricochets constantly!
-	Lever-Action: Fires much faster if you shoot right after it flips!
-	Dolt Big Iron: A pistol that encourages you to shoot fast!
-	Buff Banner: A support weapon that provides mini-crits!
-	Kukri: A knife that maims zombs, slowing them!" rbold +crtext
+	"Armes a Gimmick Special" cyoa-title!
+	($ "J'ai modifie toutes ces armes personnellement ! Elles ont toutes un GIMMICK SPECIAL !" pbold $) cyoa-text! basic-tone foodamt
+	"Duckhunter : Un fusil a pompe qui ricoches constamment !
+	Levier-Action : Tire bien plus vite si vous tirez juste apres qu'il se retourne !
+	Dolt Big Iron : Un pistolet qui vous encourage a tirer vite !
+	Buff Banner : Une arme de soutien qui fournit des mini-crits !
+	Kukri : Un couteau qui mutile les zombs, les ralentissant !" rbold +crtext
 	(* most-ahole if
-		charchoice( " robs the trader" )choice: trade-special-rob
+		charchoice( " devalise le marchand" )choice: trade-special-rob
 	then
-	most-grating if 
-		charchoice( " tells him to COOL IT" fcoolit )choice: trade-special-coolit
+	most-grating if
+		charchoice( " lui dit de SE CALMER" fcoolit )choice: trade-special-coolit
 	then *)
 	trunk-food 1 < if
-		($ "You're out of food! The trader gives " .. thegroup .. " an old snubnose pistol as a consolation prize." $) +crtext goodfx 1 WEAPON_SNUBNOSE trunk.weapon+ clear-cyoa
+		($ "Tu n'as plus de nourriture ! Le marchand donne a " .. thegroup .. " un vieux pistolet canon court en prix de consolation." $) +crtext goodfx 1 WEAPON_SNUBNOSE trunk.weapon+ clear-cyoa
 	else
-		choice( "Leave for now" )choice back-esc
+		choice( "Partir pour l'instant" )choice back-esc
 		trunk-food 29 > special-3  1 < and if
-			choice( "Duckhunter for 30 food" )choice: trade-special-3
+			choice( "Duckhunter pour 30 nourriture" )choice: trade-special-3
 		then
 		trunk-food 19 > special-2 1 < and if
-			choice( "Lever-Action for 20 food" )choice: trade-special-2
+			choice( "Levier-Action pour 20 nourriture" )choice: trade-special-2
 		then
 		trunk-food 19 > special-1 2 < and if
-			choice( "Dolt Big Iron for 20 food" )choice: trade-special-1
+			choice( "Dolt Big Iron pour 20 nourriture" )choice: trade-special-1
 		then
 		trunk-food 5 > special-banner 1 < and if
-			choice( "Buff Banner for 6 food" )choice: trade-special-banner
+			choice( "Buff Banner pour 6 nourriture" )choice: trade-special-banner
 		then
 		trunk-food 3 > if
-			choice( "Kukri for 4 food" )choice: trade-special-0
+			choice( "Kukri pour 4 nourriture" )choice: trade-special-0
 		then
 	then
 ;
@@ -641,7 +641,7 @@ cyoa: trade-special
 	1 <- chara .strength!
 	1 <- chara .fitness!
 	"Pool Champ" <- chara .name!
-	"was a professional pool player. He has turned this into his own warrior-philosophy." <- chara .job!
+	"etait un joueur de billard professionnel. Il en a fait sa propre philosophie de guerrier." <- chara .job!
 	' rosettagf-main-events <- chara .main_events!
 	2 <- chara .carrying.slot_count!
 	WEAPON_MEGAPOOLCUE <- chara .weapona!
@@ -656,7 +656,7 @@ cyoa: trade-special
 	1 <- chara .fitness!
 	2 <- chara .shooting!
 	"Honcho" <- chara .name!
-	"is an OLD WEST cowboy. Dual-wields firearms if they're in the top two slots!" <- chara .job!
+	"est un cowboy du VIEUX WEST. Manie deux armes a feu si elles sont dans les deux premiers emplacements !" <- chara .job!
 	' dualwielder-main-events <- chara .main_events!
 	// Originally tried a 2 slot lock, but was too limiting. However, 3 slots messed up the dual wield sometimes, so gave him a C locked melee weapon.
 	WEAPON_WESTKNIFE <- chara .weaponc!
@@ -673,7 +673,7 @@ cyoa: trade-special
 	4 <- chara .shooting!
 	3 <- chara .headoff.y!
 	"Van Smelt" <- chara .name!
-	"is a big game hunter. Aim for long distance headshot combos!" <- chara .job!
+	"est un chasseur de grand gibier. Visez les combos de tirs en tete a longue distance !" <- chara .job!
 	// ' dualwielder-main-events <- chara .main_events!
 	// 2 <- chara .carrying.slot_count!
 	WEAPON_MARBELLE <- chara .weapona!
@@ -683,78 +683,78 @@ cyoa: trade-special
 
 // CYOA
 
-cyoa{ 
+cyoa{
 
 // Pool Champ
 
 cyoa-bridge: camp-pool-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	"You just have to think of the whole world as a pool table!" pbold +crtext
+	15 recruit-yes-food
+	"Il suffit de penser au monde entier comme une table de billard !" pbold +crtext
 	recruitee .strengthREV recruitee .fitnessREV recruitee .attitudeREV
 ;
 
 cyoa: camp-rec-pool
-	"Professional Pool Player" cyoa-title!
+	"Joueur de Billard Professionnel" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This man has the physicality and demeanor of a pro athlete. You instantly know, just from looking at him, that he plays darts or pool.
-	He might POSSIBLY be into bowling, instead." $) cyoa-text! basic-tone
-	"This character gets stamina and power bonuses for hitting zombies at the furthest tip of his melee range! He also has a 10% chance of getting explosive results from his tip attacks!" rbold +crtext
+	($ "Cet homme a la physique et le comportement d'un athlete pro. On sait instantanement, rien qu'en le regardant, qu'il joue aux flechettes ou au billard.
+	Il est PEUT-ETRE plutot fan de bowling." $) cyoa-text! basic-tone
+	"Ce personnage obtient des bonus d'endurance et de puissance en frappant les zombies a la pointe de sa portee melee ! Il a aussi 10% de chance d'obtenir des resultats explosifs avec ses attaques de pointe !" rbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Hire him - 15 food" )choice: camp-pool-recruit
+		choice( "Laisser pour l'instant" )choice
+		choice( "L'engager - 15 nourriture" )choice: camp-pool-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Honcho the Gunslinger
 
 cyoa-bridge: camp-honcho-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	"WHERE'D MY PISTOLS GO?
-	CONSARN IT!" rainbold +crtext
+	15 recruit-yes-food
+	"OU SONT PASSES MES PISTOLETS ?
+	SACREBLEU !" rainbold +crtext
 	recruitee .attitudeREV
 ;
 
 cyoa: camp-rec-honcho
-	"HIGH NOON" cyoa-title!
+	"L'HEURE DE GLOIRE" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "This grizzled man is dressed up in a poncho and sombrero. He has two pistol holsters at his sides. On closer inspection, his holsters are empty." $) cyoa-text! basic-tone
-	"WHAT TIME IS IT?
-	IT'S HIGH NOON." rainbold +crtext
-	"Honcho the Gunslinger can dual wield firearms, if they have ammo! Just put them in your top two slots, or just swap (or lock in the pause menu) until he's holding both." rbold +crtext
+	($ "Cet homme bourru est vetu d'un poncho et d'un sombrero. Il a deux holsters de pistolet a ses cotes. En regardant de plus pres, les holsters sont vides." $) cyoa-text! basic-tone
+	"QUELLE HEURE EST-IL ?
+	C'EST L'HEURE DE GLOIRE." rainbold +crtext
+	"Honcho le Pistolero peut manier deux armes a feu, si elles ont des munitions ! Mettez-les dans vos deux premiers emplacements, ou echangez (ou verrouillez dans le menu pause) jusqu'a ce qu'il tienne les deux." rbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Hire him - 15 food" )choice: camp-honcho-recruit
+		choice( "Laisser pour l'instant" )choice
+		choice( "L'engager - 15 nourriture" )choice: camp-honcho-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
-	then		
+		"Il faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
+	then
 ;
 
 // Van Smelt the Big Game Hunter
 
 cyoa-bridge: camp-vansmelt-recruit
 	ricon 4 recruitee .morale! clear-cyoa
-	15 recruit-yes-food 
-	"The hunt is on!" pbold +crtext
+	15 recruit-yes-food
+	"La chasse est ouverte !" pbold +crtext
 	recruitee .shootingREV
 ;
 
 cyoa: camp-rec-vansmelt
-	"THE DEADLIEST GAME OF ALL" cyoa-title!
+	"LE GIBIER LE PLUS DANGEREUX" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
-	($ "The man resting by this campfire has the appearance of an old-timey big game hunter. Pith helmet, dapper hunting outfit, heavy rifle." $) cyoa-text! basic-tone
-	"This character has a rifle can be manually aimed for zombie headshots! The rifle gets more powerful as you land longer distance headshots. This gets even stronger as you get headshot streaks, especially past 30 headshots!" rbold +crtext
+	($ "L'homme qui se repose pres de ce feu de camp a l'apparence d'un chasseur de grand gibier d'antan. Casque colonial, tenue de chasse elegante, fusil lourd." $) cyoa-text! basic-tone
+	"Ce personnage a un fusil qui peut etre vise manuellement pour des tirs en tete ! Le fusil devient plus puissant au fil des tirs en tete a longue distance. C'est encore plus fort avec des series de tirs en tete, surtout au-dela de 30 !" rbold +crtext
 	trunk-food 14 > if
-		choice( "Leave him for now" )choice
-		choice( "Hire him - 15 food" )choice: camp-vansmelt-recruit
+		choice( "Laisser pour l'instant" )choice
+		choice( "L'engager - 15 nourriture" )choice: camp-vansmelt-recruit
 	else
-		"You need 15 food to recruit him to the party." +crtext
-		choice( "Can't spare the food" )choice
+		"Il faut 15 nourriture pour le recruter." +crtext
+		choice( "Pas assez de nourriture" )choice
 	then		
 ;
 
