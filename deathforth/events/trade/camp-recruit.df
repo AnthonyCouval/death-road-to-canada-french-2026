@@ -958,7 +958,7 @@ cyoa: camp-recruit-dog
 	nearest .character@ choosechar
 	cchar to recruitee ricon
 
-	($ rname .. " traine dans le camp, apprivoise mais sans personne a suivre. " .. rHe .. " a dû etre abandonne ici." $) cyoa-text! basic-tone
+	($ rname .. " traine dans le camp, apprivoise mais sans personne a suivre. " .. rHe .. " a du etre abandonne ici." $) cyoa-text! basic-tone
 
 	choice( "Laisser le chien" )choice
 	trunk-food 4 > if

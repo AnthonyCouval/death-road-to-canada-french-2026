@@ -870,7 +870,7 @@ cyoa{
 
 cyoa-choice: train_halt
 
-	($ "Le train freine sans grace jusqu'a l'arret, comme une espece de chauve-souris mecanique grinçante." $) cyoa-text!
+	($ "Le train freine sans grace jusqu'a l'arret, comme une espece de chauve-souris mecanique grincante." $) cyoa-text!
 	($ "Une fois le train arrete, les survivants de l'assaut ferroviaire ont l'opportunite d'explorer de nouveaux lieux." $) +crtext
 
 	road{ get-train-ride-results }

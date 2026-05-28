@@ -151,7 +151,7 @@ cyoa: rare1-hermit
 	// image-cabin-in-woods
 	char-gen to recruitee 2 recruitee .specialtype! ricon
 	"Visite de Voisinage" cyoa-title!
-	($ "En essayant de fuir une grande horde, " .. thegroup .. " fait un detour dans la foret profonde. Apres un mauvais virage, ils repèrent une cabane. De la fumee sort de la cheminee !" $) cyoa-text! basic-tone
+	($ "En essayant de fuir une grande horde, " .. thegroup .. " fait un detour dans la foret profonde. Apres un mauvais virage, ils reperent une cabane. De la fumee sort de la cheminee !" $) cyoa-text! basic-tone
 	3 12 16 rnd 1 siegecast // 2.2
 	"events/rareloc/region/hermit.df" $load-region
 		choice( "Voir ce que c'est" )choice: premission
@@ -387,7 +387,7 @@ cyoa: rare1-marshland
 ;
 
 
-cyoa: r-bankF
+cyoa: r-bank
 	"Banque Centrale" cyoa-title!
 	($ Thegroup .. " tombe sur la banque centrale d'une succursale. Bien que la plupart des coffres aient probablement ete pilles, peut-etre qu'il reste quelque chose ?" $) cyoa-text! basic-tone
 	1.1 7 14 rnd 3 zforecast

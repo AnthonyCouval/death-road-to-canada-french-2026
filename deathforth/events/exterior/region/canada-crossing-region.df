@@ -556,9 +556,9 @@ zomb-wave-calc constant ZOMB_WAVES // formerly 5
 mission{
 	: .mountie-saying args( thing )
 		<- thing .character@ .weapona@ if
-			rnd5050 if "Tir frappé !" else "Mise en jeu !" then
+			rnd5050 if "Tir frappe !" else "Mise en jeu !" then
 		else
-			rnd5050 if "Desolé !" else "Y'etait temps !" then
+			rnd5050 if "Desole !" else "Y'etait temps !" then
 		then
 		BLUE swap $cat <- thing statmod{ .yellmsg }
 	;

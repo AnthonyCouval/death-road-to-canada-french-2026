@@ -315,7 +315,7 @@ cyoa: trade-medical-give
 
 cyoa-choice: trade-medical-coolit
 	cpet? if
-		($ cname .. " parvient d'une maniere ou d'une autre a dire quelque chose comme « DIS LE NE LE POSTILLONNE PAS » d'une voix animale etrange." $)
+		($ cname .. " parvient d'une maniere ou d'une autre a dire quelque chose comme 'DIS LE NE LE POSTILLONNE PAS' d'une voix animale etrange." $)
 	else
 		($ cname .. " lache un " .. "DIS LE NE LE POSTILLONNE PAS" pbold .. " a l'homme en salopette." $)
 	then cyoa-text!

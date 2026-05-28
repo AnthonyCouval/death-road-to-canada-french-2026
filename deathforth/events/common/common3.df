@@ -497,7 +497,7 @@ cyoa: common3-traptown
 cyoa-choice: common3-creepy-go
 	($ cname .. " entre dans le magasin sombre et inquietant." $) text!
 	cchar paranoid? if
-		($ cHis .. " sens habituel de la paranoia se retourne contre lui ! " .. cHe .. " est super effray€. " .. cname .. " voit une petite souris et commence a " .. "hurler comme un Youtubeur" fbold .. " !" $) +crtext morale2- witsattREV sfx{ creepy }
+		($ cHis .. " sens habituel de la paranoia se retourne contre lui ! " .. cHe .. " est super effraye. " .. cname .. " voit une petite souris et commence a " .. "hurler comme un Youtubeur" fbold .. " !" $) +crtext morale2- witsattREV sfx{ creepy }
 	then;
 	cchar oblivious? if
 		($ cHe .. " ne remarque rien d'effrayant la-dedans. Meme quand un " .. "SQUELETTE DANSANT FLIPPANT" fbold .. " tombe du plafond et commence a cliquer !" $) +crtext

@@ -18,7 +18,7 @@ cyoa-choice: common5-toilet-water
 
 cyoa-blank: common5-toilet-note
 	"Chanson des Toilettes" cyoa-title!
-	"La toilette joue une belle musique. Sans paroles, elle transmet pourtant un message fort et envoûtant d'espoir." text!
+	"La toilette joue une belle musique. Sans paroles, elle transmet pourtant un message fort et envoutant d'espoir." text!
 	morale4+all common5-toilet-end
 ;
 

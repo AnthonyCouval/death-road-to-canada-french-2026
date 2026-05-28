@@ -9,21 +9,21 @@ cyoa{ road{
 ;
 
 cyoa-choice: OMENT-gymcamp-A
-	($ Thegroup .. " gets a good workout in on the ancient, awkward gym equipment. The results seem a bit random." $) text!
-	numpets 0 > if "Even the animals work out!" +crtext then
+	($ Thegroup .. " fait une bonne seance sur les anciens appareils de sport bizarres. Les resultats semblent un peu aleatoires." $) text!
+	numpets 0 > if "Meme les animaux font du sport !" +crtext then
 	chow_calc_anytime -2 * trunk-food+ 2 calendar-day+ goodfx
 	' OMENT-gymcamp-buff foreach-team-char
 ;
 
 cyoa: OMENT-gymcamp
-	"The Great Indoors" cyoa-title!
-	($ Thegroup .. " camps out in a small gym." $) text! +cr fullcamp someicon
-		choice( "Leave the camp" )choice
+	"Le Grand Interieur" cyoa-title!
+	($ Thegroup .. " passe la nuit dans un petit gymnase." $) text! +cr fullcamp someicon
+		choice( "Quitter le camp" )choice
 	trunk-food chow_calc_anytime 2 * > if
-		($ "The gym is full of ancient exercise equipment. " .. Thegroup .. " has no idea how to use any of it, but " .. gthey .. " could stay a couple days to try to figure it out." $) +crtext
-			choice( "Work out for 2 days" )choice: OMENT-gymcamp-A
+		($ "La salle de sport est pleine de vieux appareils de musculation. " .. Thegroup .. " ne sait pas du tout comment les utiliser, mais " .. gthey .. " pourrait rester quelques jours pour essayer." $) +crtext
+			choice( "S'entrainer 2 jours" )choice: OMENT-gymcamp-A
 		then
-		
+
 ;
 
 // bandit events
@@ -32,12 +32,12 @@ cyoa: OMENT-gymcamp
 
 : bandit-wager-pay
 	bandit-toll? if
-		bandit-toll-pay haggler-morale 
+		bandit-toll-pay haggler-morale
 	else
 		trunk-food 4 > if
-			eat-all bandit-ammomed2 haggler-morale			
+			eat-all bandit-ammomed2 haggler-morale
 		else
-			bandit-ammomed 
+			bandit-ammomed
 			// check if in car
 			vehicle.which@ 0 if
 				bandit-gas
@@ -53,16 +53,16 @@ cyoa: OMENT-gymcamp
 		($ bandit-toll .. " food." rbold $) +text
 	else
 		trunk-food 4 > if
-			ezbandit? if 
-				($ "the remainder of your food, and a quarter of your ammo and medical supplies." rbold $) 
+			ezbandit? if
+				($ "le reste de votre nourriture et un quart de vos munitions et fournitures medicales." rbold $)
 			else
-				($ "the remainder of your food, and half of your ammo and medical supplies." rbold $) 
+				($ "le reste de votre nourriture et la moitie de vos munitions et fournitures medicales." rbold $)
 			then +text
 		else
 			ezbandit? if
-				($ "all your extra gas, and half of your ammo and medical supplies!" rbold $)
+				($ "toute votre essence supplementaire et la moitie de vos munitions et fournitures medicales !" rbold $)
 			else
-				($ "all of your ammo, medical supplies, and extra gas tanks!" rbold $)
+				($ "toutes vos munitions, fournitures medicales et jerricanes d'essence !" rbold $)
 			then +text
 		then
 	then
@@ -70,54 +70,54 @@ cyoa: OMENT-gymcamp
 
 cyoa-choice: OMENT-bandit-chess-go
 	cpet? cchar isgourmand? or if
-		($ cname .. " starts eating the chess pieces!
-		The perfect opening move!" .. "
-		YOU CAN'T DO THAT! YOU CAN'T DO THAT!" pbold .. " shrieks the chessmaster. The game is postponed until the chess pieces 'pass'. Medical science says this will take about 20 years.
-		" .. cname .. " feels extremely satisfied." $) text! goodfx morale3+
+		($ cname .. " commence a manger les pieces d'echecs !
+		Le parfait mouvement d'ouverture !" .. "
+		TU NE PEUX PAS FAIRE CA ! TU NE PEUX PAS FAIRE CA !" pbold .. " s'ecrie le maitre des echecs. La partie est reportee jusqu'a ce que les pieces 'passent'. Selon la science medicale, cela prendra environ 20 ans.
+		" .. cname .. " se sent extremement satisfait !" $) text! goodfx morale3+
 	then;
 	cchar angrystrong? if
-		($ cname .. " begins by picking up a Rook!" $) text!
-		($ cname .. " then bellows " .. "BOARD GAMES ARE FOR NEEEEERDS" fbold .. " and flips the chessboard and its pieces with " .. "INCREDIBLE FORCE! " rbold .. cHe .. " flings " .. chis .. " Rook right between the eyes of the chessmaster, knocking him out." $) +crtext attitudeREV strengthREV goodfx morale++all
-		($ Thegroup .. " gets a free SHOTGUN and HUNTING RIFLE!" rbold $) +crtext
+		($ cname .. " commence par prendre une tour !" $) text!
+		($ cname .. " hurle alors " .. "LES JEUX DE SOCIETE C'EST POUR LES NEEEERDS" fbold .. " et retourne l'echiquier avec " .. "UNE FORCE INCROYABLE ! " rbold .. cHe .. " envoie " .. chis .. " Tour entre les yeux du champion, l'assommant." $) +crtext attitudeREV strengthREV goodfx morale++all
+		($ Thegroup .. " recoit un fusil de chasse et un fusil a pompe gratuits !" rbold $) +crtext
 		1 WEAPON_HUNTING trunk.weapon+ 1 WEAPON_SHOTGUN trunk.weapon+
 		12 20 rnd trunk-rifle-shell+ 9 15 rnd trunk-shotgun-shell+
 	then;
 	cchar oblivious? if
-		($ cname .. " claims to have never heard of chess." $) text!
-		($ "What do you mean you've never heard of chess?" rbold .. " says the chessmaster." $) +crtext
-		"Never heard of it, sorry. Is it like Fortnite?" bbold +crtext
-		"JUST LEAVE!" rbold +crtext
+		($ cname .. "  pretend n'avoir jamais entendu parler des echecs" $) text!
+		($ "Comment ca vous n'avez jamais entendu parler des echecs ?" rbold .. " dit le champion." $) +crtext
+		"Jamais entendu parler, desole. C'est comme Fortnite ?" bbold +crtext
+		"PARTEZ !" rbold +crtext
 		witsattREV goodfx
 	then;
 	cchar grating? if
-		($ cname .. " plays against the chessmaster in the most annoying way that " .. che .. " can possibly muster. Nearly endless throat clearing, long pauses between every move, off-tune humming, zany catch phrases. The works!
-		The chessmaster gets so angry that he can't even think. " .. cname .. " declares " .. "Checkmate! Also, I don't even know how to play chess!" pbold $) text!
-		" The chessmaster is too mad to shoot straight!" +text
+		($ cname .. " joue contre le champion d'echecs de la facon la plus irritante que " .. che .. " puisse trouver. Presque infinily endless throat clearing, long pauses between every move, off-tune humming, zany catch phrases. The works!
+		Le champion echiqueen devient si furieux qu'il ne peut plus reflechir. " .. cname .. " declare " .. "Echec et mat ! Je ne sais meme pas jouer aux echecs !" pbold $) text!
+		" Le champion est trop en colere pour viser juste !" +text
 		goodfx cool-it++ witsattREV morale++all
-		"*Using the above Cool It Strategem in Chess counted as an honorary Cool It Point" rbold +crtext
+		"*Utiliser la Strategie Se Calmer aux Echecs compte comme un Point Se Calmer honoraire" rbold +crtext
 	then;
 	ctemper- if
-		($ cHe .. " loses " .. chis .. " temper during the chess match. " .. cHe .. " flips the board and attacks the chessmaster at close range." $) text! bitefx ouch--
-		"The chessmaster flees! He can't collect his winnings, as this scenario counts as a 'draw' in chess." +crtext temperREV
+		($ cHe .. " perd " .. chis .. "  calme pendant la partie d'echecs. " .. cHe .. " renverse l'echiquier et attaque le champion de presnge." $) text! bitefx ouch--
+		"Le champion fuit ! Il ne peut pas recuperer ses gains, ce sczdnario comptant comme un 'match nul' aux echecs." +crtext temperREV
 	then;
-	($ cname .. " tries " .. chis .. " hardest, but can't win against the chessmaster." $) text!
+	($ cname .. " tries " .. chis .. " de son mieux, mais ne peut pas battre le champion d'echecs." $) text!
 	bandit-wager-pay badfx
 ;
 
 cyoa-bridge: OMENT-bandit-chess-pick4
 	someicon
-	"Who should challenge the chessmaster?" cyoa-text!
+	"Qui devrait affronter le champion aux echecs ?" cyoa-text!
 	' OMENT-bandit-chess-go cyoa-team-choice
 ;
 
 cyoa: OMENT-bandit-chess
-	"Chess Match for your LIFE" cyoa-title! image-chess-board
-	($ Thegroup .. " meets a man who claims to be a travelling chess master. Armed to the teeth, he challenges the group to a " .. "not optional" bbold .. " game of chess!" .. " If you lose, he demands " rbold $) cyoa-text!
+	"Partie d'Echecs pour votre VIE" cyoa-title! image-chess-board
+	($ Thegroup .. " rencontre un homme qui se dit maitre des echecs itinerant. Arme jusqu'aux dents, il defie le groupe a une " .. "partie non optionnelle" bbold .. " d'echecs !" .. " Si vous perdez, il exige " rbold $) cyoa-text!
 		bandit-wager
-		"Who should challenge this chessmaster?" +crtext
+		"Qui devrait affronter ce champion aux echecs ?" +crtext
 		team-count 3 > if
 			' OMENT-bandit-chess-go 2 #cyoa-team-choice
-			choice( "Pick someone else" )choice: OMENT-bandit-chess-pick4
+			choice( "Choisir quelqu'un d'autre" )choice: OMENT-bandit-chess-pick4
 		else
 			' OMENT-bandit-chess-go 3 #cyoa-team-choice
 		then
@@ -137,27 +137,27 @@ cyoa: OMENT-bandit-chess
 	5 WEAPON_SHURIKEN trunk.weapon+ 5 WEAPON_OTAKU trunk.weapon+
 	18 27 trunk-bullet+ 12 20 rnd trunk-rifle-shell+ 9 15 rnd trunk-shotgun-shell+
 	2 4 trunk-medical+
-	
+
 ;
 
 cyoa-choice: OMENT-bandit-anime-coolit
 	cpet? if
-		($ cname .. " farts at the very concept of anime. The anime bandits somehow get the message." $)
+		($ cname .. " pete a l'idee meme du manga. Les bandits manga comprennent le message d'une facon ou d'une autre." $)
 	else
-		($ cname .. " tells the anime bandits that " .. "ANIME ISN'T REAL! 
+		($ cname .. " dit aux bandits manga que " .. "LE MANGA C'EST PAS REEL !
 	ALSO, COOL IT!" pbold $) then cyoa-text!
 	cool-it-7 if
-		($ "This shakes the bandits to their very core.
-			" .. "IT'S TRUE! WE'VE BEEN WASTING OUR LIVES!!" rbold .. "
+		($ "Cela ebranle les bandits jusqu'au plus profond d'eux-memes.
+			" .. "C'EST VRAI ! ON A GACHE NOS VIES !!" rbold .. "
 			The anime bandits leave in great shame. A lot of their supplies are left behind!" $) +crtext
 			OMENT-bandit-megaloot cooled-it
 	else
 		cool-it++
-			($ "The bandits don't take this well.
-			" .. "NO! YOU'RE WRONG! STOP IT! STOP IT!!" rbold .. "
+			($ "Les bandits le prennent mal.
+			" .. "NON ! VOUS AVEZ TORT ! ARRETEZ ! ARRETEZ !!" rbold .. "
 			The bandits all focus their weapons on " .. cname .. "!" $) +crtext
 			ouch2- bitefx ' OMENT-anime-fancrush foreach-team-char
-	then attitudeREV witsREV 
+	then attitudeREV witsREV
 ;
 
 : cguyorgirl
@@ -166,14 +166,14 @@ cyoa-choice: OMENT-bandit-anime-coolit
 ;
 
 cyoa-choice: OMENT-bandit-animefan
-	($ cname .. " states a controversial, and somewhat disgusting opinion: " .. "I like anime!" pbold $) cyoa-text!
-	($ "Heh... Hey, this " rbold .. cguyorgirl rbold .. "'s alright!" rbold $) +crtext
-	"The bandits let you pass!" +crtext goodfx morale++all
+	($ cname .. " exprime une opinion controversee et quelque peu degoutante : " .. "J'aime le manga !" pbold $) cyoa-text!
+	($ "Heh... Hey, ce " rbold .. cguyorgirl rbold .. " est correct !" rbold $) +crtext
+	"Les bandits vous laissent passer !" +crtext goodfx morale++all
 ;
 
 cyoa-choice: OMENT-bandit-animegirl
-	($ cname .. " booms out: " .. "I AM ANIME! I AM ANIME INCARNATE!" fbold $) cyoa-text!
-	($ "The bandits bow down as their object of worship walks the earth!" .. " Please accept our offerings! We love anime!" rbold $) +crtext
+	($ cname .. " tonne : " .. "JE SUIS LE MANGA ! JE SUIS LE MANGA INCARNE !" fbold $) cyoa-text!
+	($ "Les bandits s'inclinent quand leur objet de culte marche sur terre !" .. " Veuillez accepter nos offrandes ! On adore le manga !" rbold $) +crtext
 	OMENT-bandit-megaloot
 ;
 
@@ -204,9 +204,9 @@ cyoa-choice: OMENT-bandit-obliv
 ;
 
 cyoa: OMENT-bandit-anime
-	"The Anime Bandits" cyoa-title!
-	($ "Bandits are guarding a narrow section of the road. They are dressed in ridiculous anime outfits.
-	" .. "In order for you to pass, they want " rbold $) cyoa-text!
+	"Les Bandits Manga" cyoa-title!
+	($ "Des bandits gardent un etroit troncon de route. Ils portent des tenues manga ridicules.
+	" .. "Pour que vous puissiez passer, ils veulent " rbold $) cyoa-text!
 		numanimefans 0 > if
 			' animefancheck pick-team-char 0= if false then; pickchar true if choosechar then
 			cchar charchoice( ": I like anime!" )choice: OMENT-bandit-animefan
@@ -232,18 +232,18 @@ cyoa: OMENT-bandit-anime
 // Precognition - Seeing the Future
 
 cyoa-choice: OMENT-thirdeye-A
-	($ "True to the prophecy, " .. thegroup .. " finds a small cache of supplies a little later in the day!" $) text!
+	($ "Conformement a la prophetie, " .. thegroup .. " trouve un petit cache de fournitures un peu plus tard dans la journee !" $) text!
 	homesearch1 ammosearch1 goodfx
 ;
 
 cyoa-choice: OMENT-thirdeye-B
-	($ "True to the prophecy, " .. cname .. " learns an important life lesson brought on by hallucinations. These were caused from " .. chim .. " also eating a can of mystery meat." $) text!
+	($ "Conformement a la prophetie, " .. cname .. " apprend une importante lecon de vie via des hallucinations causees par " .. chim .. " ayant aussi mange une boite de viande mysterieuse." $) text!
 	sting-- badfx
 	// cchar statmod{ .sick }
-	// ($ cname .. " is sick, with lower fitness and morale until resting!" rbold $) +crtext
+	// ($ cname .. " est malade, avec moins de Forme et de moral jusqu'au repos !" rbold $) +crtext
 	// Commented the sickness mod out because it's really harsh
 	morale--
-	33 %chance if 
+	33 %chance if
 		medical++
 	else
 		50 %chance if shooting++ else mechanic++ then
@@ -254,58 +254,58 @@ cyoa-choice: OMENT-thirdeye-B
 defer innereventdefer
 
 : surprise-location innereventdefer
-	"Surprise Location!" cyoa-title!
-	($ "While driving on the Death Road, " .. thegroup .. " stumbles into an unexpected location: " $) text! ;
+	"Lieu Surprise !" cyoa-title!
+	($ "En roulant sur la Death Road, " .. thegroup .. " tombe sur un lieu inattendu : " $) text! ;
 
 cyoa-choice: OMENT-thirdeye-C
 	solo if
-		($ "True to the prophecy, " .. cname .. " stubs " .. chis .. " toe." $)
+		($ "Conformement a la prophetie, " .. cname .. " se cogne l'orteil." $)
 	else
-		($ "True to the prophecy, in a series of freak accidents, the entire group stubs their respective toes." $)
+		($ "Conformement a la prophetie, dans une serie d'accidents bizarres, tout le groupe se cogne les orteils respectifs." $)
 	then text!
 		sting--all morale--all bitefx badfx
-	($ "Right after, " .. thegroup .. " unexpectedly stumbles into a dangerous location!" $) +crtext
+	($ "Juste apres, " .. thegroup .. " tombe de maniere inattendue sur un lieu dangereux !" $) +crtext
 	' surprise-location stack-road-action
 ;
 
 cyoa: OMENT-thirdeye
-	"Seeing the Future" cyoa-title! image-third-eye choosehuman badfx
-	($ cname .. " hallucinates after eating a can of mystery meat. It was probably cat food." $) text!
+	"Voir l'Avenir" cyoa-title! image-third-eye choosehuman badfx
+	($ cname .. " hallucine apres avoir mange une boite de viande mysterieuse. C'etait probablement de la nourriture pour chat." $) text!
 		sting-- morale--
-	($ "This somehow opens up " .. chis .. " 'third eye'" rbold .. ", granting a temporary moment of " .. "PRECOGNITION" fbold .. "! " .. cname .. " sees the future:" $) +crtext
-		choice( I-or-We .. "will find something good!" )choice: OMENT-thirdeye-A
+	($ "Cela ouvre d'une facon ou d'une autre " .. chis .. " 'troisieme oeil'" rbold .. ", accordant un moment de " .. "PRECOGNITION" fbold .. " ! " .. cname .. " voit l'avenir :" $) +crtext
+		choice( I-or-We .. "va trouver quelque chose de bien !" )choice: OMENT-thirdeye-A
 		choosehuman cchar charchoice( " will learn something important!" )choice: OMENT-thirdeye-B
-		choice( I-or-We .. "will face great danger!" )choice: OMENT-thirdeye-C
+		choice( I-or-We .. "va faire face a un grand danger !" )choice: OMENT-thirdeye-C
 ;
 
 // Dead End Detour
 
 cyoa-choice: OMENT-deadend-A
-	"The Long Detour" cyoa-title! image-dead-end
-	($ Thegroup .. " starts the long detour." $) text!
+	"Le Long Detour" cyoa-title! image-dead-end
+	($ Thegroup .. " commence le long detour." $) text!
 	detour-roll
-	car-mpg 0 > if 
-		"The second leg of the detour begins." +crtext
+	car-mpg 0 > if
+		"La deuxieme partie du detour commence." +crtext
 		detour-roll
 	then
-	($ "The long detour ends, and " .. thegroup .. " reaches an area that seems like it may be good for looting..." $) +crtext
+	($ "Le long detour se termine et " .. thegroup .. " atteint une zone qui semble propice au pillage..." $) +crtext
 	' innereventdefer stack-road-action
 ;
 
 cyoa: OMENT-deadend
-	"Dead End Detour" cyoa-title! image-dead-end
-	($ Thegroup .. " gets confused by the route becoming a maze of blocked roads. " .. gThey .. " arrive" .. g1s .. " at a dead end." $) text!
+	"Detour en Impasse" cyoa-title! image-dead-end
+	($ Thegroup .. " se perd dans ce labyrinthe de routes bloquees. " .. gThey .. " arrive" .. g1s .. " a a dead end." $) text!
 	vehicle.which@ 0 = if
-		($ gThey .. " get lost for a full day, until finally finding an alternate route. " $) +crtext
+		($ gThey .. " se perdent pendant une journee entiere, avant de trouver un itineraire alternatif. " $) +crtext
 		+cr fullcamp heal-event
 	then;
 	($ gHis .. " choices are now between a detour, or a longer detour that may lead to loot. " $) +crtext
 	vehicle.which@ 0 > if
-		($ gThey .. " could also ditch the car to continue on foot." $) +text
+		($ gThey .. " pourrait aussi abandonner la voiture pour continuer a pied." $) +text
 	then
-		choice( "Take a detour" )choice: car-detour
-		choice( "Take the longer detour" )choice: OMENT-deadend-A
-	vehicle.which@ 0 > if choice( "Ditch the car" )choice: car-abandoned then
+		choice( "Prendre un detour" )choice: car-detour
+		choice( "Prendre le plus long detour" )choice: OMENT-deadend-A
+	vehicle.which@ 0 > if choice( "Abandonner la voiture" )choice: car-abandoned then
 ;
 
 // Lone Dog
@@ -336,10 +336,10 @@ cyoa: OMENT-deadend
 ;
 
 cyoa-choice: OMENT-lonedog-go
-	($ cname .. " approaches the dog." $) text!
+	($ cname .. " s'approche du chien." $) text!
 	cchar isdogpal? if
-		($ pname .. " uses every bit of " .. phis .. " DOG PSYCHOLOGY. This involves picking up some garbage off the ground, acting really excited about it, and then stepping away from the garbage." $) +crtext
-		($ cname .. " steals the dog's precious " .. lonedogprize rbold .. " while it is distracted!" $) +crtext
+		($ pname .. " uses every bit of " .. phis .. " PSYCHOLOGIE CANINE. Ca consiste a ramasser des ordures par terre, a faire semblant d'etre super excite, puis a s'eloigner des ordures." $) +crtext
+		($ cname .. " vole le precieux " .. lonedogprize rbold .. " du chien pendant qu'il est distrait !" $) +crtext
 		lonedogget trunk.weapon+ goodfx
 	then;
 	cloyalty- if
@@ -347,37 +347,37 @@ cyoa-choice: OMENT-lonedog-go
 		" .. cname .. " chases it, and doesn't see a lone zombie in the area until " .. che .. " practically runs into it." $) +crtext loyaltyREV ouch-- bitefx
 	then;
 	cchar oblivious? if
-		($ cHe .. " frolics with the old dog, and they both have a lot of fun and get some good exercise. However, " .. cname .. " completely forgets about the " .. lonedogprize rbold .. "!" $) +crtext witsattREV goodfx morale2+ fitness++
+		($ cHe .. " s'amuse avec le vieux chien, ils s'amusent bien et font de l'exercice. Cependant, " .. cname .. " oublie completement le " .. lonedogprize rbold .. " !" $) +crtext witsattREV goodfx morale2+ fitness++
 	then;
 	cattitude+ ctemper+ or if
-		($ "The dog runs away from " ..  chim .. " for quite awhile, but " .. che .. " keeps at it!" $) +crtext
-		($ cname .. " steals the dog's precious " .. lonedogprize rbold .. "." $) +crtext
+		($ "Le chien fuit " .. chim .. " pendant un bon moment, mais " .. che .. " persiste !" $) +crtext
+		($ cname .. " vole le precieux " .. lonedogprize rbold .. "." $) +crtext
 	lonedogget trunk.weapon+ goodfx
 	ctemper+ if temperREV then cattitude+ if attitudeREV then
 	then;
 	cwits+ if
-		($ cHis .. " clever tricks are no match for the dog's simple, singleminded tactics of pick up thing, run a short distance, sit down, repeat." $) +crtext
+		($ cHis .. " les ruses ingenieuses ne font pas le poids face aux tactiques simples du chien : prendre l'objet, courir un peudistance, sit down, repeat." $) +crtext
 	then
-	($ cHe .. " ends up chasing the dog for awhile, but eventually gets too frustrated and gives up!" $) +crtext morale-- cwits+ if witsREV then badfx
+	($ cHe .. " finit par courir apres le chien un moment, mais finit par se decourager et abandonner !" $) +crtext morale-- cwits+ if witsREV then badfx
 ;
 
 cyoa-choice: OMENT-lonedog-4
-	"Who should try to get the dog's toy?" cyoa-text!
+	"Qui devrait essayer d'attraper le jouet du chien ?" cyoa-text!
 	' OMENT-lonedog-go cyoa-team-choice
 ;
 
 cyoa: OMENT-lonedog
-	"The Dog and the Dinguses" cyoa-title! image-lone-dog
+	"Le Chien et les Dingus" cyoa-title! image-lone-dog
 	1 6 rnd to OMENT-lonedogprize
-	($ "There's an old dog sitting across the road. It is near a " .. lonedogprize rbold .. " lying on the ground. Whenever " .. thegroup .. " tries to approach the dog, it picks up the object and runs a small distance away." $) text!
-		choice( "Ignore the dog!" )choice
+	($ "Il y a un vieux chien assis de l'autre cote de la route. Il est pres d'un " .. lonedogprize rbold .. " par terre. Chaque fois que " .. thegroup .. " essaie d'approcher, il prend l'objet et s'enfuit un peu plus loin." $) text!
+		choice( "Ignorer le chien !" )choice
 	solo if
 		soloer choosechar choice( "Try to get that item" )choice: OMENT-lonedog-go
 	else
-		"Who should try to get the item?" +crtext
+		"Qui devrait essayer d'attraper l'objet ?" +crtext
 		team-count 3 > if
 				' OMENT-lonedog-go 2 #cyoa-team-choice
-				choice( "Pick someone else" )choice: OMENT-lonedog-4
+				choice( "Choisir quelqu'un d'autre" )choice: OMENT-lonedog-4
 			else
 				' OMENT-lonedog-go 3 #cyoa-team-choice
 			then
@@ -417,7 +417,7 @@ cyoa-choice: OMENT-cooking-snack
 ;
 
 cyoa-choice: OMENT-cooking-gourmand
-	($ cname .. " prepares a MEGA MEAL! The flavor is MEGA MAXIMIZED, not to mention the portions." $) text!
+	($ cname .. " prepare un MEGA REPAS ! La saveur est MEGA MAXIMISEE, sans parler des portions." $) text!
 	food-required 2 * neg trunk-food+
 	morale4+all goodfx
 	' OMENT-cooking-megameal foreach-team-char
@@ -431,7 +431,7 @@ cyoa-choice: OMENT-cooking-gourmand
 ;
 
 cyoa-choice: OMENT-cooking-fire
-	($ cname .. " almost immediately sets the entire kitchen on fire by accident. NOW things are starting to get spicy!" $) text! badfx
+	($ cname .. " met presque immediatement toute la cuisine en feu par accident. MAINTENANT les choses commencent a chauffer!" $) text! badfx
 	' OMENT-cooking-burn foreach-team-char
 	cchar isfireproof? if
 		($ cname .. " feels adequately spicy!" $) +crtext
@@ -440,24 +440,24 @@ cyoa-choice: OMENT-cooking-fire
 		ouch--
 		cchar alive? if
 			($ cname .. " gets forged in the fires!
-			" .. cHe .. " is now " .. "mostly fireproof!" fbold $) +crtext
+			" .. cHe .. " est maintenant " .. "quasiment ignifuge !" fbold $) +crtext
 			cchar statmod{ .fireproof } goodfx
 		else
-			"Maybe a little too spicy." +crtext
+			"Peut-etre un peu trop epice." +crtext
 		then;
 	then
 
 ;
 
 cyoa: OMENT-cooking
-	"Cooking with Gas" cyoa-title! image-cooking-on-fire
-	($ Thegroup .. " attempts to loot a restaurant. " .. gThey  .. " find" .. g1s .. " no food, but there's bunch of spices and a functioning kitchen, thanks to a gas generator!" $) text!
-		choice( "Take Gas from Generator" )choice: OMENT-cooking-gas
+	"Cuisine au Gaz" cyoa-title! image-cooking-on-fire
+	($ Thegroup .. " attempts to loot a restaurant. " .. gThey  .. " find" .. g1s .. " pas de nourriture, mais plein d'epices et une cuisine fonctionnelle, grace a un generateur !" $) text!
+		choice( "Prendre le Gaz du Generateur" )choice: OMENT-cooking-gas
 		trunk-food team-count >= if
-			choice( "Cook a Snack - " .. team-count .. " Food" )choice: OMENT-cooking-snack
+			choice( "Cuisiner un Snack - " .. team-count .. " Nourriture" )choice: OMENT-cooking-snack
 		then
-		trunk-food food-required >= if 
-			choice( "Cook a Meal - " .. food-required .. " Food" )choice: OMENT-cooking-full
+		trunk-food food-required >= if
+			choice( "Cuisiner un Repas - " .. food-required .. " Nourriture" )choice: OMENT-cooking-full
 		then
 		numgourmands 0 > trunk-food food-required 2 * >= and if
 			' gourmandcheck pick-team-char 0= if false then; pickchar true if choosechar then
@@ -471,32 +471,32 @@ cyoa: OMENT-cooking
 // Maple Street
 
 cyoa-choice: OMENT-maplest-run
-	($ Thegroup .. " runs as the angry mob pelts " .. ghim .. " with rocks!" $) text!
+	($ Thegroup .. " fuit pendant que la foule en colere le bombarde de pierres !" $) text!
 	sting--all
-	"But what hurts the most is the mean shouting." +crtext
+	"Mais ce qui fait le plus mal c'est les cris mechants." +crtext
 	morale--all badfx
 ;
 
 cyoa-choice: OMENT-maplest-go
-	($ cname .. " talks to the angry mob." $) text!
+	($ cname .. " parle a la foule en colere." $) text!
 	cpet? if
 		($ cHe .. " can't talk, so instead " .. che .. " spins around excitedly! How fun!
 		The mob forgets whatever their problem was." $) +crtext goodfx morale++all
 	then;
 	cchar grating? if
-		($ cHe .. " screeches " .. "YOU PEOPLE... ARE THE REAL ZOMBIES!" pbold .. "
+		($ cHe .. " hurle " .. "VOUS AUTRES... VOUS ETES LES VRAIS ZOMBIES !" pbold .. "
 		The people of Maple Street are thus made ashamed of their words and deeds.
 		" .. Thegroup .. " is let through." $) +crtext witsattREV goodfx cool-it++
 	then;
 	cchar oblivious? if
-		($ cHe .. " asks, " .. "What's a zombie?" pbold .. "
-		The mob is bewildered and exasperated by this. 
+		($ cHe .. " demande, " .. "C'est quoi un zombie ?" pbold .. "
+		The mob is bewildered and exasperated by this.
 		After failing to explain ANYTHING to " .. cname .. ", they decide the whole 'angry mob' thing is a waste of time. They put their pitchforks down and wander off. Hey, free pitchforks!" $) +crtext witsattREV goodfx 9 WEAPON_PITCHFORK trunk.weapon+
 	then;
 	cchar charming? if
-		($ cHe .. " says, " .. "Sorry about causing that zombie outbreak!" pbold .. "
+		($ cHe .. " dit, " .. "Desole d'avoir cause cette epidemie de zombies !" pbold .. "
 		" .. cname .. " winks.
-		That's all the mob really wanted. An apology. 
+		That's all the mob really wanted. An apology.
 		" .. cname .. " still gets beaten up, but it's a light beating." $) +crtext witsattREV sting-- bitefx goodfx
 	then;
 	ctemper- if
@@ -504,60 +504,60 @@ cyoa-choice: OMENT-maplest-go
 		The angry mob and " .. cname .. " shout at each other for a long time until they both storm off. Each side thinks they won the argument, and somehow, no one gets hurt." $) +crtext goodfx temperREV morale++
 	then;
 	cwits+ if
-		($ cHe .. " expertly picks apart the mob's shouted accusations. The angry mob apologizes for saying mean things, and then beats " .. cname .. " up for being a know-it-all.
+		($ cHe .. " demonte expertement les accusations criees de la foule. La foule en colere s'excuse d'avoir dit des mechancetes, puis bat " .. cname .. " up for being a know-it-all.
 		" .. cHe .. " still feels smug for being right." $) +crtext witsREV sting2- morale++ goodfx bitefx
 	then;
-	($ "This goes very badly for " .. chim .. "!" $) +crtext ouch-- sting-- morale-- bitefx badfx
+	($ "Ca se passe tres mal pour " .. chim .. " !" $) +crtext ouch-- sting-- morale-- bitefx badfx
 ;
 
 cyoa-choice: OMENT-maplest-pick4
-	"Who reasons with the angry mob?" text!
+	"Qui raisonne avec la foule en colere ?" text!
 	' OMENT-maplest-go cyoa-team-choice
 ;
 
 cyoa: OMENT-maplest
-	"The Monsters of Maple Street" cyoa-title! image-maple-street
-	($ Thegroup .. " stops on Maple Street, which has formed a fortified village to defend from zombies. Soon after, a mob gathers with pitchforks and torches, and blames " .. thegroup .. " for the zombie outbreak!" $) text!
-		choice( "Run away!" )choice: OMENT-maplest-run
+	"Les Monstres de la Rue de l'Erable" cyoa-title! image-maple-street
+	($ Thegroup .. " s'arrete sur la Rue de l'Erable, qui a forme un village fortifie pour se defendre des zombies. Peu apres, une foule se forme avec des fourches et des torches, et blame " .. thegroup .. " pour l'epidemie de zombies !" $) text!
+		choice( "Fuir !" )choice: OMENT-maplest-run
 		solo if
 			soloer charchoice( ": Try to reason with them" )choice: OMENT-maplest-go
 		then;
-		"Should someone try to reason with them?" +crtext
+		"Quelqu'un devrait-il essayer de les raisonner ?" +crtext
 	team-count 3 > if
 		' OMENT-maplest-go 2 #cyoa-team-choice
-		choice( "Pick someone else" )choice: OMENT-maplest-pick4
+		choice( "Choisir quelqu'un d'autre" )choice: OMENT-maplest-pick4
 	else
 		' OMENT-maplest-go 3 #cyoa-team-choice
-	then	
+	then
 ;
 
 // THE RIDDLE OF THE SPHINX
 
 cyoa-choice: OMENT-cat-go image-seat-cat
-	"CONGRATULATIONS, YOU HAVE SOLVED MY RIDDLE! " rbold text!
-	($ "The cat then mauls " .. solo if cname else "everyone" then .. "." $) +text bitefx
-	solo if "In a rare act of mercy for a cat, it doesn't go for the kill." +crtext else ouch-- then 
+	"FELICITATIONS, VOUS AVEZ RESOLU MON ENIGME ! " rbold text!
+	($ "Le chat griffe alors " .. solo if cname else "tout le monde" then .. "." $) +text bitefx
+	solo if "Dans un rare acte de clemence pour un chat, il ne cherche pas a tuer." +crtext else ouch-- then
 	sting--all
-	($ "In the rest of the house, " .. thegroup .. " finds a big haul of loot!" $) +crtext
+	($ "Dans le reste de la maison, " .. thegroup .. " trouve un enorme butin !" $) +crtext
 		9 12 trunk-food+ 18 27 trunk-bullet+ 12 20 rnd trunk-rifle-shell+ 9 15 rnd trunk-shotgun-shell+
 		2 4 trunk-medical+
-	"The morale loss from getting mauled is perfectly counteracted by this." +crtext
+	"La perte de moral due a l'agression est parfaitement compensee par ca." +crtext
 ;
 
-0 stack 
-	"Uh... cardboard?" shove
-	"A mouse! That must be it!" shove
-	"THE ANSWER..... IS MAN" shove
-	"I dunno, something gross?" shove
+0 stack
+	"Euh... du carton ?" shove
+	"Une souris ! Ce doit etre ca !" shove
+	"LA REPONSE..... C'EST L'HOMME" shove
+	"Je sais pas, quelque chose de degoutant ?" shove
 	"... Cat food?" shove
-	"Is this a trick question? This is a trick question." shove
-	"You're the riddle! YOU'RE the riddle!" shove
-	"How should I know?!" shove
+	"C'est un piege ? C'est un piege." shove
+	"Tu es l'enigme ! TOI tu es l'enigme !" shove
+	"Comment je le saurais ?!" shove
 value OMENT-catsayings-base
 OMENT-catsayings-base shuffles var OMENT-catsayings
 
 
-: OMENT-catsay 
+: OMENT-catsay
 	OMENT-catsayings depths 0= if OMENT-catsayings-base shuffles to OMENT-catsayings then
 	pops nip
 ;
@@ -565,7 +565,7 @@ OMENT-catsayings-base shuffles var OMENT-catsayings
 : OMENT-cat-choice-with-handler
 	// dup choice( over character# cyoa-choice-charid! swap .name@ )choice choosechar
 	dup charchoice( ": " .. OMENT-catsay )choice choosechar
-	// dup cyoa-add-char-choice	
+	// dup cyoa-add-char-choice
 	dup cyoa-choice-handler!
 ;
 
@@ -580,7 +580,7 @@ OMENT-catsayings-base shuffles var OMENT-catsayings
 defer OMENT-cat-what
 
 : OMENT-cat-choices
-		choice( "What?" )choice: OMENT-cat-what
+		choice( "Quoi ?" )choice: OMENT-cat-what
 		' OMENT-cat-go team-count 4 < if team-count else 3 then OMENT-cat-choices2
 ;
 
@@ -592,15 +592,15 @@ defer OMENT-cat-what
 
 cyoa-choice: OMENT-cat-what_
 	image-seat-cat
-	($ "The cat clears its throat and repeats the riddle:  " $) text!
+	($ "Le chat se racle la gorge et repete l'enigme :  " $) text!
 	OMENT-cat-riddle
 ;
 
 last to OMENT-cat-what
 
 cyoa: OMENT-rare-cat
-	"The Riddle of the Sphinx" cyoa-title! image-seat-cat
-	($ "When searching for loot in a ruined house, " .. thegroup .. " encounters a cat sitting in a mouldy chair.
+	"L'Enigme du Sphinx" cyoa-title! image-seat-cat
+	($ "En cherchant du butin dans une maison en ruines, " .. thegroup .. " rencontre un chat assis dans un fauteuil moisi.
 	The cat speaks from its throne! It's a riddle:  " $) text!
 		OMENT-cat-riddle
 ;
@@ -608,7 +608,7 @@ cyoa: OMENT-rare-cat
 // SECRET DOCUMENTS, EXPOSED
 
 : OMENT-secretdoc-fail
-	($ cname .. " tries to decipher the secret documents, but gets frustrated after awhile and gives up." $) text! badfx morale--
+	($ cname .. " essaie de dechiffrer les documents secrets, mais se frustre apres un moment et abandonne." $) text! badfx morale--
 ;
 
 cyoa-choice: OMENT-secretdoc-go
@@ -620,11 +620,11 @@ cyoa-choice: OMENT-secretdoc-go
 
 	cchar paranoid? if
 		($ cname .. " gets PUMPED over the secret documents.
-		" .. "Secret GOVERNMENT papers? Don't mind if I do!" bbold $)
-		($ cname .. " claims the papers document a secret organization called " .. "S*T*I*N*K*L*E" bbold .. " whose goal was to create the Milk Duds shortage that lead to the zombocalype!
-		FINALLY, the truth has been revealed!" $) text! witsattREV morale3+ 
-		solo not if 
-			($ "Absolutely no one believes what " .. cname .. " is saying." $) +crtext
+		" .. "Des papiers secrets du GOUVERNEMENT ? Avec plaisir !" bbold $)
+		($ cname .. " pretend que les papiers documentent une organisation secrete appelee " .. "S*T*I*N*K*L*E" bbold .. " dont le but etait de creer la penurie de Milk Duds qui a conduit a la zombocalypse !
+		FINALLY, the truth has been revealed!" $) text! witsattREV morale3+
+		solo not if
+			($ "Absolument personne ne croit ce que " .. cname .. " dit." $) +crtext
 			cchar morale--all-except
 		then
 	then;
@@ -634,10 +634,10 @@ cyoa-choice: OMENT-secretdoc-go
 		However, " .. che .. " stumbles onto a small cache of supplies elsewhere in the office!" $) text!
 		homesearch1 witsattREV goodfx
 	then;
-	
+
 	cchar grating? if
-		($ cname .. " tries to figure out the secret message for a little bit. Then " .. che .. " frowns and halfheartedly writes " .. "COOL IT!" rbold .. " on one of the pieces of paper." $) text! witsattREV 
-		($ cHe .. " just isn't feeling it today." $) +crtext
+		($ cname .. " essaie de dechiffrer le message secret un moment. Puis " .. che .. " fronce les sourcils et ecrit sans conviction " .. "SE CALMER !" rbold .. " sur un des papiers." $) text! witsattREV
+		($ cHe .. " n'est pas dans son assiette aujourd'hui." $) +crtext
 		morale-- cool-it++ badfx
 	then;
 
@@ -656,43 +656,43 @@ cyoa-choice: OMENT-secretdoc-go
 		" .. cHe .. " recognizes some patterns in the papers. These are blueprints! It's designs for an engine that runs off canned beans and expired cat food. Very interesting!" $) text!
 		morale2+ mechanic++ mechanicREV goodfx
 	then;
-	
+
 	cmedical+ if
 		($ cname .. " attempts to decipher the secret documents.
 		" .. cHe .. " figures out that these are actually medical papers. They are talking about a theory on how to possibly prevent future zombification through an all-cheese diet. Interesting!" $) text!
 		morale2+ medical++ medicalREV goodfx
 	then;
-	
+
 	ctemper- if
 		($ cname .. " completely loses " .. chis .. " patience while trying to decode the papers!
 		" .. cHe .. " takes out " .. chis .. " rage by kicking something. Unfortunately, that something was the heavy safe the papers came from." $) text!
 		temperREV bitefx sting-- morale2-
 	then;
-	
+
 	cwits+ if
 		($ cname .. " decodes some of the secret documents!
 		The papers are full of incredibly dry technical jargon, so they're still unreadable. Still, " .. cname .. " feels satisfied for decoding them." $) text!
 		witsREV goodfx morale++
 	then;
-	
+
 	OMENT-secretdoc-fail
 
 ;
 
 cyoa-bridge: OMENT-secretdoc-pick
-	"Who should decipher these secret documents?" text!
+	"Qui devrait dechiffrer ces documents secrets ?" text!
 	' OMENT-secretdoc-go cyoa-human-choice
 
 ;
 
 cyoa: OMENT-secretdoc
-	"Secret Documents" cyoa-title! image-secret-documents
-	($ "While looking through an office building, " .. thegroup .. " finds a safe that has been left open. There's nothing in there but papers. The text is all jumbled and makes no sense.
+	"Documents Secrets" cyoa-title! image-secret-documents
+	($ "En fouillant un immeuble de bureaux, " .. thegroup .. " trouve un coffre laisse ouvert. Il n'y a que des papiers. Le texte est brouille et incomprehensible.
 	They were locked up, they must be important! Who should decipher them?" $) text!
-		choice( "Leave them alone" )choice
+		choice( "Les laisser tranquilles" )choice
 	numhums 3 > if
 		' OMENT-secretdoc-go 2 #cyoa-team-choice
-		choice( "Pick someone else" )choice: OMENT-secretdoc-pick
+		choice( "Choisir quelqu'un d'autre" )choice: OMENT-secretdoc-pick
 	else
 		' OMENT-secretdoc-go cyoa-team-choice
 	then
@@ -704,10 +704,10 @@ cyoa: OMENT-secretdoc
 
 : OMENT-wheelspintext
 	OMENT-wheelspin case
-		0 of badfx "DINGUS-DOO" endof
-		1 of badfx "HARD LABOR" endof
-		2 of goodfx "GIFT BASKET" endof
-		3 of goodfx "DANG IT" endof
+		0 of badfx "TOCARD-DOO" endof
+		1 of badfx "TRAVAUX FORCES" endof
+		2 of goodfx "PANIER CADEAU" endof
+		3 of goodfx "MINCE ALORS" endof
 	endcase
 ;
 
@@ -716,7 +716,7 @@ cyoa: OMENT-secretdoc
 		<- @ .fitness++
 		<- @ .fitnessREV
 	then;
-	<- @ .strength++ 
+	<- @ .strength++
 	<- @ .strengthREV
 ;
 
@@ -735,32 +735,32 @@ cyoa-choice: OMENT-thewheel-go
 	OMENT-wheelspintext cyoa-title! image-death-wheel
 	OMENT-wheelspin 0 = if
 		someicon
-		"The villagers start chanting. This seems bad..." text!
-		"DINGUS-DOO! DINGUS-DOO FOR YOU!" bbold +crtext
+		"Les villageois commencent a scander. Ca semble mauvais..." text!
+		"TOCARD-DOO ! TOCARD-DOO POUR TOI !" bbold +crtext
 		($ "They change " .. thegroup .. "'s hairstyle" .. gs .. " in a forced makeover. This seems mildly irritating!" $) +crtext ' OMENT-thewheel-hair foreach-team-char morale--all badfx
 	then;
 	OMENT-wheelspin 1 = if
-		($ "The villagers sentence " .. thegroup .. " to a week of hard labor in the Toilet Paper Factory!
+		($ "Les villageois condamnent " .. thegroup .. " a une semaine de travaux forces a la Fabrique de Papier Toilette !
 		It's grueling work, but at least they feed you. It's also good exercise!" $) text!
 		' OMENT-thewheel-labor foreach-team-char 7 calendar-day+ morale2-all goodfx
 	then;
 	OMENT-wheelspin 2 = if
-		($ "The villagers present " .. thegroup .. " with a tasteful gift basket! They don't want to do this, but they have to absolutely follow the will of " .. "THE WHEEL" rbold .. "
+		($ "Les villageois presentent a " .. thegroup .. " un panier cadeau de bon gout ! Ils ne veulent pas le faire, mais ils doivent absolument suivre la volonte de " .. "LA ROUE" rbold .. "
 		It's delightful!" $) text! morale++all homesearch1 goodfx
 	then;
-		($ "DANG IT" rbold .. "? That sounds really bad!" $) text!
-		($ "DANG IT! Looks like we have to let " bbold .. ghim bbold .. " go!" bbold $) +crtext
-		($ "What a relief! Thanks, " .. "THE WHEEL" rbold .. "!" $) +crtext morale++all goodfx
+		($ "MINCE ALORS" rbold .. " ? Ca semble vraiment mauvais !" $) text!
+		($ "MINCE ALORS ! On dirait qu'on doit laisser " bbold .. ghim bbold .. " partir !" bbold $) +crtext
+		($ "Quel soulagement ! Merci, " .. "LA ROUE" rbold .. " !" $) +crtext morale++all goodfx
 ;
 
 : OMENT-thewheel-spin
-	"THE WHEEL spins... it stops at: " rbold +crtext
+	"LA ROUE tourne... elle s'arrete sur : " rbold +crtext
 	0 3 rnd to OMENT-wheelspin
 	OMENT-wheelspintext fbold +text
 ;
 
 cyoa-choice: OMENT-thewheel-run
-	"RUN FOR IT" cyoa-title! image-death-wheel
+	"FUYEZ" cyoa-title! image-death-wheel
 	($ Thegroup .. " refuses to let " .. ghis .. " fate be decided by some weird wheel!
 	" .. gThey .. " decide" .. g1s .. " to run for it, but " .. gthey .. " must ditch the car during the escape." $) text!
 	car-abandon
@@ -769,22 +769,22 @@ cyoa-choice: OMENT-thewheel-run
 
 
 : OMENT-thewheel-choices
-		choice( "Accept this fate" )choice: OMENT-thewheel-go
-		choice( "Run away, but lose car!" )choice: OMENT-thewheel-run
+		choice( "Accepter ce sort" )choice: OMENT-thewheel-go
+		choice( "Fuir, mais perdre la voiture !" )choice: OMENT-thewheel-run
 ;
 
 cyoa-choice: OMENT-thewheel-again
-	"FACE THE WHEEL... AGAIN" cyoa-title! image-death-wheel
-	"Do-overs? How'd you know about our most sacred rule?
+	"AFFRONTEZ LA ROUE... ENCORE" cyoa-title! image-death-wheel
+	"Recommencer ? Comment avez-vous su pour notre regle la plus sacree ?
 	Well, fine, but you only get one!" bbold text!
 	OMENT-thewheel-spin OMENT-thewheel-choices
 ;
 
 cyoa: OMENT-thewheel
-	"FACE THE WHEEL" cyoa-title! image-death-wheel
-	($ Thegroup .. " stops at a small village. Rather than being a safe trading spot, things quickly take a bad turn with the locals. As punishment, they bring out..." .. "THE WHEEL" rbold $) text!
+	"AFFRONTEZ LA ROUE" cyoa-title! image-death-wheel
+	($ Thegroup .. " s'arrete dans un petit village. Plutot qu'etre un lieu de commerce sur, les choses tournent vite mal avec les locaux. En guise de punition, ils sortent..." .. "LA ROUE" rbold $) text!
 		OMENT-thewheel-spin
-		choice( "Demand do-overs!" )choice: OMENT-thewheel-again
+		choice( "Exiger de recommencer !" )choice: OMENT-thewheel-again
 		OMENT-thewheel-choices
 ;
 
