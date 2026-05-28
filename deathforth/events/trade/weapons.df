@@ -154,16 +154,16 @@ cyoa: trade-shotgun
 			choice( "Fusil a deux canons pour 12 nourriture" )choice: trade-shotgun-4
 		then
 		(* trunk-food 14 > if
-			choice( "75 shells for 15 food" )choice: trade-shotgun-shell-15
+			choice( "75 cartouches pour 15 nourriture" )choice: trade-shotgun-shell-15
 		then *)
 		trunk-food 6 > shotgun-1 3 < and if
 			choice( "Fusil a pompe pour 7 nourriture" )choice: trade-shotgun-1
 		then
 		(* trunk-food 9 > if
-			choice( "50 shells for 10 food" )choice: trade-shotgun-shell-10
+			choice( "50 cartouches pour 10 nourriture" )choice: trade-shotgun-shell-10
 		then
 		trunk-food 4 > if
-			choice( "25 shells for 5 food" )choice: trade-shotgun-shell-5
+			choice( "25 cartouches pour 5 nourriture" )choice: trade-shotgun-shell-5
 		then *)
 
 	then
@@ -249,16 +249,16 @@ cyoa: trade-rifle
 			choice( "Fusil de chasse pour 15 nourriture" )choice: trade-rifle-3
 		then
 		(* trunk-food 14 > if
-			choice( "90 rifle ammo for 15 food" )choice: trade-rifle-shell-15
+			choice( "90 balles fusil pour 15 nourriture" )choice: trade-rifle-shell-15
 		then *)
 		trunk-food 9 > rifle-1 3 < and if
 			choice( "Fusil de cow-boy pour 10 nourriture" )choice: trade-rifle-1
 		then
 		(* trunk-food 9 > if
-			choice( "60 rifle ammo for 10 food" )choice: trade-rifle-shell-10
+			choice( "60 balles fusil pour 10 nourriture" )choice: trade-rifle-shell-10
 		then
 		trunk-food 4 > if
-			choice( "30 rifle ammo for 5 food" )choice: trade-rifle-shell-5
+			choice( "30 balles fusil pour 5 nourriture" )choice: trade-rifle-shell-5
 		then *)
 	then
 ;
@@ -1039,7 +1039,7 @@ cyoa: trade-silent
 	($ "Cette personne suspecte porte un masque et tient un beau fusil de sniper silencieux.
 	" .. "Mes armes sont tellement silencieuses. Vous attirerez bien moins de zombies par tir." pbold $) cyoa-text! basic-tone foodamt
 	(* most-ahole if
-		charchoice( " robs the trader" )choice: trade-silent-rob
+		charchoice( " devalise le marchand" )choice: trade-silent-rob
 	then
 	most-grating if
 		charchoice( " tells him to COOL IT" fcoolit )choice: trade-silent-coolit
@@ -1094,7 +1094,7 @@ cyoa: trade-handy
 	($ "Ce marchand agite une solide lampe torche militaire. C'est une vieille astuce commerciale pour attirer les clients.
 	" .. "Mieux vaut etre prepare !" pbold $) cyoa-text! basic-tone foodamt
 	(* most-ahole if
-		charchoice( " robs the trader" )choice: trade-handy-rob
+		charchoice( " devalise le marchand" )choice: trade-handy-rob
 	then
 	most-grating if
 		charchoice( " tells him to COOL IT" fcoolit )choice: trade-handy-coolit

@@ -16,9 +16,9 @@ cyoa-bridge: johnny-recruit
 cyoa: johnny-talk
 	interactee .character@ choosechar cicon
 	"Gars de l'Armee" cyoa-title!
-	"... Qu'est-ce que TU REGARDES comme ca, hein ?" pbold cyoa-text!
+	"... What are YOU lookin' at, huh?" pbold cyoa-text!
 	choice( "Le laisser tranquille" )choice
-	choice( "Essayer de le recruter" )choice: johnny-recruit
+	choice( "Essayer de recruter" )choice: johnny-recruit
 ;
 }
 

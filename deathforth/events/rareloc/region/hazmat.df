@@ -22,7 +22,7 @@ cyoa: hazmata
 	dead? if npc-died then;
 	"Hazmatilda" cyoa-title!
 	($ cname .. " is ready to get out of this sewer! 
-	" .. "Living here worked at first! Sure the beds were soggy, but otherwise it was fine!" pbold $) cyoa-text!
+	" .. "Vivre ici marchait au debut ! Les lits etaient detrempes, mais sinon c'etait bien !" pbold $) cyoa-text!
 		road{ ' hazmatrescue to post-mission-cyoa }
 ;
 
@@ -31,8 +31,8 @@ cyoa: hazmat1
 	hazmat1 choosechar cicon
 	dead? if npc-died then;
 	"Hazmatt" cyoa-title!
-	($ cname .. " asks for help! He offers a reward if " .. thegroup .. " can help him rescue his two team members, then get out of this sewer through the door.
-	" .. "We tried living down here for awhile. It turned out to not be such a great idea." pbold $) cyoa-text!
+	($ cname .. " demande de l'aide ! Il offre une recompense si " .. thegroup .. " peut l'aider a sauver ses deux coequipiers et sortir par la porte des egouts.
+	" .. "On a essaye de vivre ici un moment. Ca s'est avere pas si genial." pbold $) cyoa-text!
 		road{ ' hazmatrescue to post-mission-cyoa }
 ;
 

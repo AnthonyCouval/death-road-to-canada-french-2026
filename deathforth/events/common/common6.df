@@ -56,7 +56,7 @@ cyoa-choice: common6-fastfood-toys
 ;
 
 cyoa: common6-fastfood
-    "The Big McDowell" cyoa-title! choosehuman cicon
+    "Le Grand McDowell" cyoa-title! choosehuman cicon
     ($ Thegroup .. " pille un McDowell's, qui etait le restaurant le plus populaire des Etats-Unis avant la chute de la civilisation. Meme apres tout ce temps, la nourriture trouvee ici est encore conservee grace aux produits chimiques." $) text! "ATTENTION : S'empiffrer de burgers est mauvais pour la sante mais ne vous tuera pas." rbold +crtext
        choice( "Trouver et manger des burgers, payer le prix fort" )choice: common6-fastfood-burgin
        choice( "Chercher des jouets de menu enfant a la place" )choice: common6-fastfood-toys
@@ -263,7 +263,7 @@ cyoa-choice: common6-othercar-lwit
 ;
 
 cyoa-choice: common6-othercar-hwit
-    ($ cname .. " se lance dans un discours inspirant et contemplatif sur le fait que nous avons tous des squelettes en nous, et que feindre d'ignorer ces " .. "squelettes interieurs" bbold .. " is what makes life precious." $) text!
+    ($ cname .. " se lance dans un discours inspirant et contemplatif sur le fait que nous avons tous des squelettes en nous, et que feindre d'ignorer ces " .. "squelettes interieurs" bbold .. " est ce qui rend la vie precieuse." $) text!
     solo if
        ($ "Franchement, j'ai trop gere ce discours" bbold .. ", dit " .. cname .. " devant un public compose d'absolument personne." $) +crtext morale++ goodfx
     else
@@ -297,7 +297,7 @@ cyoa-choice: common6-othercar-loot
 
 cyoa: common6-othercar
     "Death Car to Right Here" cyoa-title! someicon
-    ($ Thegroup .. " runs into another car, much like " .. ghis .. " car. It's rotting, nearly totaled, and it is full of " .. "SKELETONS" rbold .. " and probably a bunch of bugs and other gross things.
+    ($ Thegroup .. " runs into another car, much like " .. ghis .. " voiture. Elle est en train de pourrir, presque demolie, et est pleine de " .. "SKELETONS" rbold .. " and probably a bunch of bugs and other gross things.
     Yet another sign that many attempt the Death Road to Canada, and not very many make it." $) text!
        dumbest-pass if dumbest charchoice( ": Faire le philosophe" )choice: common6-othercar-lwit then
        smartest-pass if smartest charchoice( ": Faire le philosophe" )choice: common6-othercar-hwit then

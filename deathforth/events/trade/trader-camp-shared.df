@@ -78,7 +78,7 @@ cyoa-choice: cyoa-fire-rest
 	someicon clear-cyoa "Une journee passe dans le camp de commerce." text!
 	road{ dailyheal } basic-tone
 	($ Thegroup .. " arrive a se reposer comme il le fallait." $) +crtext
-	trade_chow road{ 1 calendar-day+ } sleep
+	trade_chow road{ 1 calendar-day+ } sleep 
 	' .morale++ foreach-team-char o'clock@ 3 6 rnd + o'clock
 ;
 
@@ -204,9 +204,9 @@ random-sayings-base shuffles var random-sayings
 ;
 
 
-: camper-unique-chat args( me ) random-npc-saying <- me .sprayit clear-cyoa ( $cyoa-ok-dialog ) ;
+: camper-unique-chat args( me ) random-npc-saying <- me .sprayit clear-cyoa ( $cyoa-ok-dialog ) ; 
 
-: camper-same-chat args( me ) <- me .random-npc-same-saying <- me .sprayit ;
+: camper-same-chat args( me ) <- me .random-npc-same-saying <- me .sprayit ; 
 
 : camper-chat camper-same-chat ; // Change to camper-unique-chat if you don't like this way
 
@@ -278,7 +278,7 @@ random-sayings-base shuffles var random-sayings
 : new-camper-or-recruit
 	// Hijacking new-camper above. Set to always be a camprecruit for now.
 	// Likely change this to always be a chatter like it was, and then go into campfirehere below and other places to change when new-camprecruit-npc's are spawned.
-
+	
 	camprecruit-spawned 1 < if
 		new-recruit
 		' camprecruit-spawned ++
@@ -434,7 +434,7 @@ random-sayings-base shuffles var random-sayings
 : quietgravehere 3 onein if then;
 	spawnhere special_objects32_base_id 0x 8f + lt .spriteid!
 	rnd5050 lt .flip!
-	bbox immovable
+	bbox immovable 
 	8 rdrift
 ;
 

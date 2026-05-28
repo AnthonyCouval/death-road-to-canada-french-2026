@@ -305,77 +305,77 @@
 	3 <- chara .carrying.slot_count!
 	WEAPON_MEDICBAG <- chara .weapona!
 	WEAPON_HAWKEJUICE <- chara .weaponb!
-	70 <- chara .stackedb!
+	70 <- chara .stackedb! 
 	5 <- chara .attitude!
 	3 <- chara .wits!
-	6 <- chara .loyalty!
-	5 <- chara .medical!
-	<- chara .nocanshoot
+	6 <- chara .loyalty! 
+	5 <- chara .medical! 
+	<- chara .nocanshoot 
 	1 <- chara .female!
 	2 <- chara .vitality!
-	2 <- chara .health!
-	3 LOOT_MEDICAL <- chara .lootamt!
+	2 <- chara .health! 
+	3 LOOT_MEDICAL <- chara .lootamt! 
 ;
 
-\ Note: after using either of this "ify" words, use the "to-mission" command.
-\ Some events take one mission to kick in, so to speak. (Technical hitch.)
+\ Note: after using either of this "ify" words, use the "to-mission" command. 
+\ Some events take one mission to kick in, so to speak. (Technical hitch.) 
 
 : .emberify args( chara )
 	133 <- chara .specialtype!
 	"Ember" <- chara .name!
 	"jette des regards flirtatifs au reservoir de carburant de la voiture." <- chara .job!
-	' licht-main-events <- chara .main_events! \ ember was originally going to be called "Licht".
+	' licht-main-events <- chara .main_events! \ ember was originally going to be called "Licht". 
 	3 <- chara .carrying.slot_count!
 	WEAPON_ROBOFUEL <- chara .weaponc!
-	WEAPON_SLEDGESLAMMER <- chara .weapona!
-	1 <- chara .weapon_nodropc!
-	70 <- chara .stackedb!
+	WEAPON_SLEDGESLAMMER <- chara .weapona! 
+	1 <- chara .weapon_nodropc! 
+	70 <- chara .stackedb! 
 	5 <- chara .attitude!
 	3 <- chara .wits!
-	6 <- chara .loyalty!
+	6 <- chara .loyalty! 
 	1 <- chara .female!
 	1 <- chara .health!
 	1 <- chara .vitality!
 	2 <- chara .strength!
-	2 <- chara .shooting!
-	HIGHCHARGE <- chara .user.special_counter!
-	20 LOOT_GAS <- chara .lootamt!
+	2 <- chara .shooting! 
+	HIGHCHARGE <- chara .user.special_counter! 
+	20 LOOT_GAS <- chara .lootamt! 
 ;
 
-cyoa{ road{
+cyoa{ road{ 
 
 cyoa: rohoa-scget
-	"LA DROGUE MEDICINALE" cyoa-title! \ current cultural reference xd
+	"LA DROGUE MEDICINALE" cyoa-title! \ current cultural reference xd 
 	char-gen to recruitee ricon 5 recruitee .morale! recruitee .rohoaify
-	($ rname .. " goute un liquide violet etrange sur le bout de son doigt quand elle remarque le groupe a proximite." $) cyoa-text! basic-tone
+	($ rname .. " goutte un etrange liquide violet du bout de son doigt quand elle remarque le groupe." $) cyoa-text! basic-tone
 	($ "
-	Tu as l'air en mauvais etat. Si tu me laisses te rejoindre, je peux te retaper." bbold $) +text
+	You look rough. If you let me join, I can patch you up." bbold $) +text 
 	($ "
-	Le Dr. Hawke peut soigner d'autres personnages avec sa sacoche, si celle-ci est chargee de materiel MEDICAL et tenue en main !"  $) +text
+	Dr. Hawke can heal other chars with her satchel, if her satchel is loaded with MEDICAL and held!"  $) +text
 	($ "
-	Elle peut meme reanimer des personnages morts en versant sa propre mixture speciale sur eux ! Elle ne porte cependant aucune arme." $) +text
+	She can even revive dead characters by pouring her own special brew on them! She's not carrying any weapons, though." $) +text 	
 	// team-count 4 < if recruited then
-		choice( "Demander a " .. rname .. " de vous rejoindre" )choice: recruit-yes
+		choice( "Demander a " .. rname .. " de rejoindre" )choice: recruit-yes
 		choice( "LA BIOLOGIE C'EST POUR LES INTELLOS" )choice
 ;
 
-\ road{ cyoa{ rohoa-scget } }
+\ road{ cyoa{ rohoa-scget } } 
 
 cyoa: ember-scget
-	"CE MOIS DE JUILLET...UNE HISTOIRE D'AMOUR AU DIESEL" cyoa-title!
+	"CE JUILLET...UNE HISTOIRE D'AMOUR AU DIESEL" cyoa-title!
 	char-gen to recruitee ricon 5 recruitee .morale! recruitee .emberify
-	($ rname .. " frappe a repetition avec un marteau sur un boitier electrique quand le groupe la trouve." $) cyoa-text! basic-tone
+	($ rname .. " fracasse repetitivement un boitier electrique avec un marteau quand le groupe la trouve." $) cyoa-text! basic-tone
 	($ "
-	BONJOUR, AUTOMATES DEBUTANTS. VOUS DEVRIEZ M'EMBAUCHER. J'AI BATTU UN ARBRE CONSCIENT EN VENANT ICI." rbold $) +text
+	HELLO, ENTRY-LEVEL AUTOMATONS. YOU SHOULD HIRE ME. I BEAT UP A SENTIENT TREE ON THE WAY HERE." rbold $) +text 
 	($ "
-    Quel argument convaincant."  $) +text
+	What a convincing argument."  $) +text
 	($ "
-	Ember consomme du carburant ! Tu peux la ravitailler manuellement ou laisser l'IA s'en charger. La tactique FIGHTIN' l'amenera a se ravitailler plus souvent."  $) +text
+	Ember drinks gas! You can refuel her manually or let the AI handle it. The FIGHTIN' tactic will make her refuel more."  $) +text
 	($ "
-	La puissance de combat d'Ember depend de sa jauge de charge." $) +text
+	Ember's combat power is dependent on her charge meter." $) +text 	
 	// team-count 4 < if recruited then
-		choice( "Demander a " .. rname .. " de vous rejoindre" )choice: recruit-yes
-		choice( "Laisser ce fou accro a l'essence" )choice
+		choice( "Demander a " .. rname .. " de rejoindre" )choice: recruit-yes
+		choice( "Laisser ce fou a l'essence" )choice
 ;
 
 } }
@@ -389,23 +389,23 @@ cyoa: ember-scget
 
 
 
-
-
+ 
+ 
 \ ----------------------------------------------------------
 \ ----------------------------------------------------------
 \ RINGMASTER CHARACTER AND ALL ASSOCIATED STUFF BELOWWWWWW.
 \ -----------------------------------------------------------
 \ ----------------------------------------------------------
+ 
 
 
 
 
-
-\ Arq taught me this trick. <3
+\ Arq taught me this trick. <3 
 : make-alias: constant does> @ execute ;
 
 ' .voice.fhi! 			make-alias: .creature_size!
-' .voice.fhi@ 			make-alias: .creature_size@
+' .voice.fhi@ 			make-alias: .creature_size@ 
 
 ' .voice.vol! 			make-alias: .creature_power!
 ' .voice.vol@ 			make-alias: .creature_power@
@@ -414,180 +414,180 @@ cyoa: ember-scget
 ' .voice.k@ 			make-alias: .creature_feed@
 
 ' .voice.q! 			make-alias: .creature_health!
-' .voice.q@ 			make-alias: .creature_health@
+' .voice.q@ 			make-alias: .creature_health@  
 
 ' .user.special_counter! 		make-alias: .creature_id!
-' .user.special_counter@ 		make-alias: .creature_id@
+' .user.special_counter@ 		make-alias: .creature_id@ 
 
 ' .voice.duty! 			make-alias: .creature_targetid!
-' .voice.duty@ 			make-alias: .creature_targetid@
+' .voice.duty@ 			make-alias: .creature_targetid@ 
 
 : 2dp 100 * >int 100 / ;
 
 \ ... this is a bit problematic if the ringmaster ever gets the fly head...it would be good to add a failsafe against that...
 \ thoughts?
 
-\ I use these variables to ensure data pertaining to the creature is transient between missions and save loads.
+\ I use these variables to ensure data pertaining to the creature is transient between missions and save loads. 
 
 \ Ordinarily you would feed this creature over the course of a DRTS playthrough to make it more powerful.
-\ You said we should simplify the character, so I have not included the character ability that would otherwise allow for this.
+\ You said we should simplify the character, so I have not included the character ability that would otherwise allow for this. 
 
-: econdor-creature-thing-event  args( me teid )
+: econdor-creature-thing-event  args( me teid ) 
 
 
-	<- teid THING_EVENT_OVERLAP = if
-		<- me .overlapper .typeid@ THING_ZOMBIE = if
-			gameticks 12 % 0 = if
-				<- me .vel xymag 0.2 > if
-					<- me .character@ .mod_flags2@ 2 = if
-
-				<- me .pos xyblast -1 lt .hitcheck.blast! 9 12 rnd lt .hitcheck.rad! 0.2 0.4 frnd lt .hitcheck.power! 1 2 frnd lt .hitcheck.knockback!
+	<- teid THING_EVENT_OVERLAP = if 
+		<- me .overlapper .typeid@ THING_ZOMBIE = if 
+			gameticks 12 % 0 = if 
+				<- me .vel xymag 0.2 > if 
+					<- me .character@ .mod_flags2@ 2 = if 
+				
+				<- me .pos xyblast -1 lt .hitcheck.blast! 9 12 rnd lt .hitcheck.rad! 0.2 0.4 frnd lt .hitcheck.power! 1 2 frnd lt .hitcheck.knockback! 
 				\ RAMMING SPEED!!!
-				\ Scepter powerup. Disabled by default
-
-					then
-				then
-			then
-		then
-	then
+				\ Scepter powerup. Disabled by default 
+			
+					then 
+				then 
+			then 
+		then 
+	then 
 
 
 	<- teid THING_EVENT_DID_HIT = if
-
+		
 			<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
-				<- me .just_hit_id@ #thing .hitpoints@ <- me .character@ .creature_size@ 0.5 * >int - <- me .just_hit_id@ #thing .hitpoints! \ Bonus damage on attack based on size
+				<- me .just_hit_id@ #thing .hitpoints@ <- me .character@ .creature_size@ 0.5 * >int - <- me .just_hit_id@ #thing .hitpoints! \ Bonus damage on attack based on size 
+			
+			then 
+	then 
+	
+	
+	<- teid THING_EVENT_SWING = if 
+	
+		<- me .character@ .creature_size@ -0.1 * 1 + <- me .cooldown@ * <- me .cooldown! \ Bonus cooldown based on size 
+			\ -0.1x+1 
+	
+	then 
+	
 
-			then
-	then
-
-
-	<- teid THING_EVENT_SWING = if
-
-		<- me .character@ .creature_size@ -0.1 * 1 + <- me .cooldown@ * <- me .cooldown! \ Bonus cooldown based on size
-			\ -0.1x+1
-
-	then
-
-
-	<- teid THING_EVENT_TIMER = if
+	<- teid THING_EVENT_TIMER = if 
 		1 <- me .timer!
-
-		0.2 0.8 frnd <- me .character@ .bounceval!
-
-			<- me .weapon_state.val@ -1 + 0 900 clamp <- me .weapon_state.val! \ Aggro timer, set on-whip
-
+		
+		0.2 0.8 frnd <- me .character@ .bounceval! 
+		
+			<- me .weapon_state.val@ -1 + 0 900 clamp <- me .weapon_state.val! \ Aggro timer, set on-whip 
+		
 				gameticks 30 % 0 = if 				\ Teleport to owner every 0.5s if the two are apart...
 
-					\ I can disable this if you want.
-
-					<- me .character@ .creature_id@ #thing .mapid@ <- me .mapid@ = not if
+					\ I can disable this if you want. 
+				
+					<- me .character@ .creature_id@ #thing .mapid@ <- me .mapid@ = not if 
 						<- me .character@ .creature_id@ #thing .pos <- me .pos!
 						<- me .character@ .creature_id@ #thing .mapid@ <- me .mapid!
-						0 <- me .weapon_state.val!
-					then
-				then
-
-
-				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.x!
-				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.y!
-				<- me .character@ .creature_size@ 0.33 * <- me .character@ .speed_bonus! \ Speed ALSO based on size
+						0 <- me .weapon_state.val! 
+					then 
+				then 
+		
+				
+				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.x! 
+				1 <- me .character@ .creature_size@ 5 / + 1 1.5 clamp <- me .scale.y! 
+				<- me .character@ .creature_size@ 0.33 * <- me .character@ .speed_bonus! \ Speed ALSO based on size 
 
 			\	<- me .scale.x@ 7 * <- me .rad.x!
-
-				<- me .character@ .creature_size@ 2 * dup <- me .character@ .strength! <- me .character@ .fitness! \ Stats based on size...
-
+				
+				<- me .character@ .creature_size@ 2 * dup <- me .character@ .strength! <- me .character@ .fitness! \ Stats based on size... 
+			
 			\	<- me .rad.x@ <- me .rad.y!
 			\	1 <- me .nopush!
-			\	0 <- me .mass!
-
+			\	0 <- me .mass! 
+				
 				0 <- me .wallbox.x!
 				0 <- me .wallbox.y!
-				\ tile collision
+				\ tile collision 
 
 			\	<- me .character@ .creature_id@ #thing <- me .follow
-
-
-		<- me .weapon_state.val@ 0 > <- me .anim.extra@ 0 = <- me .character@ .creature_id@ #thing .anim.extra@ 0 = and and if
-		\ If i have an active aggro timer (recent whip), am not being bitten and my master is also not being bitten,
-
+		
+		
+		<- me .weapon_state.val@ 0 > <- me .anim.extra@ 0 = <- me .character@ .creature_id@ #thing .anim.extra@ 0 = and and if 
+		\ If i have an active aggro timer (recent whip), am not being bitten and my master is also not being bitten, 
+		
 			<- me .character@ .creature_targetid@ #thing if
-				<- me .character@ .creature_targetid@ #thing .hitpoints@ 0 = if
-					0 <- me .character@ .creature_targetid!
-					0 <- me .targetid! \ If what I'm targeting dies, give up
+				<- me .character@ .creature_targetid@ #thing .hitpoints@ 0 = if 
+					0 <- me .character@ .creature_targetid! 
+					0 <- me .targetid! \ If what I'm targeting dies, give up 
 				else
-					<- me .character@ .creature_targetid@ #thing <- me .follow \ relentlessly follow target
-
+					<- me .character@ .creature_targetid@ #thing <- me .follow \ relentlessly follow target 
+					
 					<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 2dp 0.00035 * 0.9 + 0.9 0.97 clamp <- me .friction!
-					<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 3 100 clamp <- me .mass!
+					<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 3 100 clamp <- me .mass! 
 						\ Skid mode! like a cat on wood
-
-					<- me .character@ .mod_flags2@ 2 = if
-
-						<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 10 * 100 1000 clamp <- me .mass!
-						7 <- me .rad.y! \ for RAMMING SPEED scepter powerup
-
-					then
-
-					10 <- me .character@ .ai.follow_leash!
-					10 <- me .character@ .ai.safety_leash!	\ run to target & kill
-
+						
+					<- me .character@ .mod_flags2@ 2 = if 
+					
+						<- me .character@ .creature_targetid@ #thing .pos <- me .pos xysub xymag 10 * 100 1000 clamp <- me .mass! 
+						7 <- me .rad.y! \ for RAMMING SPEED scepter powerup 
+						
+					then 
+					
+					10 <- me .character@ .ai.follow_leash!  
+					10 <- me .character@ .ai.safety_leash!	\ run to target & kill 
+					
 			then then then;
-
+		
 		<- me .character@ .creature_id@ #thing <- me .follow
-		20 <- me .character@ .ai.follow_leash!
-		20 <- me .character@ .ai.safety_leash!	\ ccome back to me bibi
-		0 <- me .rad.y!
-
+		20 <- me .character@ .ai.follow_leash!  
+		20 <- me .character@ .ai.safety_leash!	\ ccome back to me bibi 
+		0 <- me .rad.y! 
+		
 	then
 
-	\ <- teid THING_EVENT_WAS_HIT = if
-		\ <- me .character@ .health@ -1 > if
-
+	\ <- teid THING_EVENT_WAS_HIT = if 
+		\ <- me .character@ .health@ -1 > if 
+			
 			\ <- me .character@ .creature_id@ #thing .character@ .health@ -1 +  <- me .character@ .creature_id@ #thing .character@ .health!
-
-
-
+			
+			
+			
 			\ <- me .character@ .creature_id@ #thing .report-health
-			\ sfx{ bite }
-		\ then
-	\ then
-
+			\ sfx{ bite } 
+		\ then 
+	\ then 
+	
 	\ *********************************************
-
+	
 	\ in DRTS, Ringmaster shares damage with his creature.
-	\ I have disabled this for the sake of simplicity.
+	\ I have disabled this for the sake of simplicity. 
 
-;
+; 
 
-: econdor-creature-main-event args( chara eventid )
+: econdor-creature-main-event args( chara eventid ) 
 
-	<- eventid MAIN_EVENT_MISSION_END = if
-
-
-		<- chara .health@ <- chara .creature_id@ #thing .character@ .creature_health!
-		<- chara .creature_size@ <- chara .creature_id@ #thing .character@ .creature_size!
+	<- eventid MAIN_EVENT_MISSION_END = if 
+	
+		
+		<- chara .health@ <- chara .creature_id@ #thing .character@ .creature_health! 
+		<- chara .creature_size@ <- chara .creature_id@ #thing .character@ .creature_size! 
 		\ <- chara .weapons-to-trunk
 		<- chara .loot-to-trunk
-
-	then
+	
+	then 
 
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-		<- chara .location@ 1 = if
+		<- chara .location@ 1 = if 
 			1 <- chara .thing@ .timer!
-			 <- chara .thing@ swap ( teid ) econdor-creature-thing-event
-		then
+			 <- chara .thing@ swap ( teid ) econdor-creature-thing-event 
+		then 
 
-;
+; 
 
-: spawn-econdor-creature args( me )
+: spawn-econdor-creature args( me ) 
 		new-npc
 		<- me .pos lt .pos!
 		<- me lt .follow
-
-		135 lt .character@ .specialtype!
+		
+		135 lt .character@ .specialtype! 
 		-6 lt .character@ .headoff.x!
-
-			-1 lt .character@ .ai.attack_level!
+		
+			-1 lt .character@ .ai.attack_level! 
 			0 lt .character@ .ai.loot_chance!
 			500 lt .character@ .ai.attack_dist!
 			1 lt .character@ .ai.attack_chance!
@@ -596,137 +596,137 @@ cyoa: ember-scget
 			1	lt .character@ .ai.threat_respond_chance!
 			0	lt .character@ .ai.threat_threshold!
 			0	lt .character@ .ai.threat_relax_chance!
-			40 lt .character@ .ai.follow_leash!
+			40 lt .character@ .ai.follow_leash!  
 			40 lt .character@ .ai.safety_leash!
-
+		
 		mission.vehicle@ if
 		mission.vehicle@ lt .enter
 		then
-
-		lt .id@ <- me .character@ .creature_id! \ referencing me,
+		
+		lt .id@ <- me .character@ .creature_id! \ referencing me, 
 		<- me .id@ lt .character@ .creature_id! \ referencing you
-												\ uh huhhhhh.
-
-		<- me .character@ .mod_flags2@ lt .character@ .mod_flags2! \ inherit my scepter
-
-		6 STAT_FITNESS lt .character@ .bonus!
+												\ uh huhhhhh. 
+												
+		<- me .character@ .mod_flags2@ lt .character@ .mod_flags2! \ inherit my scepter 
+		
+		6 STAT_FITNESS lt .character@ .bonus! 
 		\ And still somehow less busted than nuggs...
-		\ did this coz it gets tired quickly
-
+		\ did this coz it gets tired quickly 
+		
 		lt .character@ .nopickups
+		
+		<- me .character@ .creature_health@ lt .character@ .health! 
+		<- me .character@ .creature_size@ 1 10 clamp lt .character@ .creature_size! 
+		' econdor-creature-main-event lt .character@ .main_events! 	
+		' econdor-creature-thing-event lt .events! 
+		1 lt .timer! 
+		
+		WEAPON_CREATUREMAUL lt .character@ .weapona! 
+		1 lt .character@ .carrying.slot_count! 
+		1 lt .character@ .weapon_nodropa! 
+			
+; 
 
-		<- me .character@ .creature_health@ lt .character@ .health!
-		<- me .character@ .creature_size@ 1 10 clamp lt .character@ .creature_size!
-		' econdor-creature-main-event lt .character@ .main_events!
-		' econdor-creature-thing-event lt .events!
-		1 lt .timer!
+: echocondor-thing-events args( me teid ) 
 
-		WEAPON_CREATUREMAUL lt .character@ .weapona!
-		1 lt .character@ .carrying.slot_count!
-		1 lt .character@ .weapon_nodropa!
-
-;
-
-: echocondor-thing-events args( me teid )
-
-		\ <- teid THING_EVENT_TIMER = if
+		\ <- teid THING_EVENT_TIMER = if 
 		\
-		\	<- me .anim.extra@ 0 > if
-		\		gameticks 2 % 0 = if
+		\	<- me .anim.extra@ 0 > if 
+		\		gameticks 2 % 0 = if 
 		\			1 <- me .stun!
-		\		then
-		\	then
-
-		\ then
-
-		\ Difficult-escaping-grapple trait from DRTS... will disable for now
-
+		\		then 
+		\	then 
+		
+		\ then  
+		
+		\ Difficult-escaping-grapple trait from DRTS... will disable for now 
+		
 		<- teid THING_EVENT_DID_HIT = if
 			<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
-				\ <- me .just_hit_id@ #thing .hitpoints@ 1 999 clamp <- me .just_hit_id@ #thing .hitpoints!
-				0 <- me .anim.weapon_counter!
+				\ <- me .just_hit_id@ #thing .hitpoints@ 1 999 clamp <- me .just_hit_id@ #thing .hitpoints! 
+				0 <- me .anim.weapon_counter! 
 			then
-		then
-
+		then 
+		
 		\ Originally, E-Condor had two melee downsides:
 		\ No lethal hits, and no multi-hit, even if the weapon has multi-hit.
-		\ I have only left the no multi-hit in.
-;
+		\ I have only left the no multi-hit in. 
+; 
 
 : echocondor-events args( chara eventid )
 
-		\ <- eventid MAIN_EVENT_MISSION_END = if
+		\ <- eventid MAIN_EVENT_MISSION_END = if 
 		\
 		\	<- chara .loot-to-trunk
 		\
-		 \ then
+		 \ then 
 
-
+	
 	<- eventid MAIN_EVENT_MISSION_START = if
-
+	
 	<- chara .team_status@ TEAM_STATUS_RECRUITED $= if
-		<- chara .location@ 1 = if
-			<- chara .creature_health@ 0 > if
-				<- chara .thing@ spawn-econdor-creature
-				"SPAWNED UR FRIEND" print
-			then
-
+		<- chara .location@ 1 = if 
+			<- chara .creature_health@ 0 > if 
+				<- chara .thing@ spawn-econdor-creature 
+				"SPAWNED UR FRIEND" print 
+			then 
+	
 			then
 		then
-	then
-
+	then 
+		
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-		<- chara .location@ 1 = if
+		<- chara .location@ 1 = if 
 			1 <- chara .thing@ .timer!
 			 <- chara .thing@ swap ( teid ) echocondor-thing-events
-		then
-
+		then 
+	
 ;
 
 : .ringmasterify args( chara )
 	134 <- chara .specialtype!
-	"Johannes" <- chara .name! \ Johannes Condor...
+	"Johannes" <- chara .name! \ Johannes Condor... 
 	"connait toutes les paroles de l'Entree des Gladiateurs. Toutes !" <- chara .job!
-	' echocondor-events <- chara .main_events!
+	' echocondor-events <- chara .main_events! 
 	3 <- chara .carrying.slot_count!
-	WEAPON_ECONDORWHIP <- chara .weapona!
-
+	WEAPON_ECONDORWHIP <- chara .weapona! 
+	
 	6 <- chara .attitude!
 	6 <- chara .wits!
-	6 <- chara .loyalty!
-	6 <- chara .composure!
-	1 <- chara .dexterity!
-
+	6 <- chara .loyalty! 
+	6 <- chara .composure! 
+	1 <- chara .dexterity! 
+	
 	3 <- chara .strength!
 	3 <- chara .fitness!
 	-3 STAT_STRENGTH <- chara .bonus!
-	-3 STAT_FITNESS <- chara .bonus!
-
+	-3 STAT_FITNESS <- chara .bonus! 
+	
 	2 <- chara .health!
 	2 <- chara .vitality!
-
-	2 <- chara .creature_health! \ determines initial creature HP
-	2 <- chara .creature_size! \ determines creature stats, damage, size, speed
+	
+	2 <- chara .creature_health! \ determines initial creature HP 
+	2 <- chara .creature_size! \ determines creature stats, damage, size, speed 
 
 ;
 
 
 
-cyoa{ road{
+cyoa{ road{ 
 
 cyoa: ringmaster-scget
-	"JE SAIS DEJA QUE TU FREDONNE L'AIR" cyoa-title!
+	"JE SAIS DEJA QUE TU FREDONNE L'AIR" cyoa-title! 
 	char-gen to recruitee ricon 5 recruitee .morale! recruitee .ringmasterify
-	($ rname .. " is gazing into a walk-in mirror when the group finds him, completely ensnared by his own grandeur. Not far from him, his pet is 'playing fetch' with zombies." $) cyoa-text! basic-tone
+	($ rname .. " contemple un grand miroir quand le groupe le trouve, completement piege par sa propre grandeur. Non loin de lui, son animal de compagnie 'joue a rapporter' avec des zombies." $) cyoa-text! basic-tone
 	($ "
-	Aren't I magnificent?...I mean, uh, can I join?" pbold $) +text
+	Aren't I magnificent?...I mean, uh, can I join?" pbold $) +text 
 	($ "He's some kind of well-dressed circus leader." $) +crtext
-
+	
 	($ "
 	Johannes' pet follows the crack of his whip. On closer inspection, his muscles appear atrophied - unsuitable for heavy loads or weapons."  $) +text
 	// team-count 4 < if recruited then
-		choice( "Demander a " .. rname .. " de vous rejoindre" )choice: recruit-yes
-		choice( "Dire NON a ce spectacle de monstres difformes." )choice
+		choice( "Demander a " .. rname .. " de rejoindre" )choice: recruit-yes
+		choice( "Dire NON a ce grand echalas bizarre" )choice
 ;
 
 } } 

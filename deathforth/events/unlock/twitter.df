@@ -25,7 +25,7 @@ cyoa-blank: twitter-zombop
 	"La chose poule bleue semble contente !" text!
 	"5 ZOMBO POINTS earned!" rainbold +crtext
 	zombopfull? if
-		zombo-point ZOMBOP_CAP > if
+		zombo-point ZOMBOP_CAP > if 
 			"Tu es au-dessus du maximum de Points Zombo !
 			Depense tes PZ en trop avant de commencer une partie !" fbold +crtext
 		else
@@ -57,16 +57,16 @@ cyoa-blank: twitter-zombop
 	then
 	"http://www.twitter.com/madgarden/" openurl
 ;
-
+		
 cyoa-blank: twitterbird gstats{
 	"POULET DES RESEAUX SOCIAUX" cyoa-title!
 
 	"C'est une sorte d'oiseau bleu. Il caquette :" text!
 	"Lisez les updates de Rocketcat Games sur Twitter ou Facebook pour les nouvelles de Death Road !
-	Lisez le Twitter de Madgarden pour decouvrir la veritable Sagesse Canadienne ! !" bbold +crtext
-
+	Lisez le Twitter de Madgarden pour de vraie Sagesse Canadienne !" bbold +crtext
+	
 	followusthing
-
+	
 	choice( "Partir pour l'instant" )choice
 	choice( "Rocketcat Twitter" gstats{ twitter-1 } 1 < if fbold then )choice: rocketcat-twitter
 	choice( "Madgarden Twitter" gstats{ twitter-2 } 1 < if fbold then )choice: madgarden-twitter

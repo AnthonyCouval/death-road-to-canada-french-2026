@@ -19,7 +19,7 @@ cyoa: brucerescue
 	dead? if npc-died then;
 	"La Voie du Zombie" cyoa-title!
 	($ cname .. " dit que " .. che .. " est content que " .. pname .. " soit arrive.
-	" .. cHe .. " s'est fait coincer en essayant de passer furtivement a pied dans la ville. " .. cHe .. " propose d'apprendre a " .. pname .. " une technique d'arts martiaux anti-zombie en echange d'un moyen de sortir d'ici." $) cyoa-text!
+	" .. cHe .. " s'est fait coincer en essayant de passer furtivement la ville a pied. " .. cHe .. " propose d'apprendre a " .. pname .. " une technique d'arts martiaux anti-zombie en echange d'un lift." $) cyoa-text!
 		choice( "Laisser " .. chim .. " vous suivre" )choice: brucerescue-2
 		choice( "Laisser " .. chim .. " pour l'instant" )choice
 ;

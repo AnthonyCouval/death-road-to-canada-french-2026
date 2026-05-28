@@ -92,7 +92,7 @@ cyoa-choice: fishing-1
 cyoa-bridge: fishing-go
 	particles_base_id 0x 5a + cyoa-sprite-icon!
 
-	o'clock@ 3 + o'clock
+	o'clock@ 3 + o'clock 
 	($ "Hours pass. " .. cname .. " catches a huge fish!
 	The fish has a tiny human face. It speaks: " .. "
 	hey let me go
@@ -110,13 +110,13 @@ cyoa-bridge: fishing-go
 
 : break-one-fishing
 	team-count for i 1- #teamchar .break-fishing if then; next
-	drop
+	drop	
 ;
 
 cyoa: nofishing
 	"Peche Interdite !" cyoa-title!
 	picon!
-	WEAPON_FISHING roadtrip-has-weapon? if
+	WEAPON_FISHING roadtrip-has-weapon? if 
 		($ "Il n'y a personne pour empecher " .. cname .. " de pecher ici. " .. cHe .. " utilise la canne a peche pour lancer une ligne dans l'eau." $) text!
 		clear-cyoa
 		choice( "Attendre un poisson..." )choice: fishing-go

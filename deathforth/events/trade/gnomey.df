@@ -9,29 +9,29 @@ cyoa{ regiondef{
 0 value the-tnome
 
 0 stack
-	"Bel achat, VIEUX NERD !" shove
+	"Bel achat, INTELLO !" shove
 	"OOOooooooo!" shove
 	"Continue a piller les toilettes ! " ;) .. shove
 	"Ooo! Oooooooo!" shove
 	"Bonne chance pour le Canada ! " trollface .. shove
 	"On se retrouve !" shove
 	"Quand t'as besoin d'aide... regarde les etooooooiles !" shove
-	"je m'eleve !" shove
-	"JE SUIS INTERFACCCCCCEEEEE !" shove
+	"Je m'envole !" shove
+	"I'M INTERFAAAAACED!" shove
 	"C'est... c'est un adieu !" shove
-	"Je me casse d'iiiiiiiiiiciiiii !" shove
-	"Glore aux Dblocks !" shove
+	"Je suis parti de laaaaa !" shove
+	"Croyez en les Oncks !" shove
 	"Que les Points Zombo te protegent !" shove
 	"Euh, quelque chose me tire vers le haut." shove
 	"Le vrai pouvoir, c'etait L'AMITIE !" shove
-	"Je serai toujours avec toi, au plus profond de ton coeur !" shove
+	"I'll always be with you, inside your heart!" shove
 	"Merci, revenez vite chez TNOME-CO !" shove
 	"Merci pour les PZ !" shove
 value tnome-sayings-base
 tnome-sayings-base shuffles var tnome-sayings
 
 : tnome-zoop3 the-tnome silentkillit ;
-: tnome-zoop2
+: tnome-zoop2 
 	-10 the-tnome .vel.z!
 	20 ' tnome-zoop3 timer_add
 ;
@@ -155,7 +155,7 @@ deck-new
 	($ "36 balles fusil - 30 " .. "PZ" pbold $) choice-card: tnome-rifle-3
 	($ "Recrue Rare Aleatoire ! - 30 " .. "PZ" pbold $) choice-card: tnome-recruit-3
 	($ "Masse - 30 " .. "PZ" pbold $) choice-card: tnome-sledge-3
-	($ "Hache Incendiaire - 30 " .. "PZ" pbold $) choice-card: tnome-fire-3
+	($ "Hache Incendiaire - 30 " .. "PZ" pbold $) choice-card: tnome-fire-3	
 constant tnome-reward-3-base last to d3-base
 tnome-reward-3-base shuffles to tnome-reward-3-deck
 
@@ -168,9 +168,9 @@ tnome-reward-3-base shuffles to tnome-reward-3-deck
 
 cyoa: tnomey-start
 	"TNOMEY THE TRADER GNOME" cyoa-title!
-
+	
 	1 to tnome-seen
-
+	
 	"SALUT C'EST TNOMEY
 	TU ME CONNAIS PAS ?
 	ATTENDS CA MARCHE PAS AUSSI BIEN" pbold text!

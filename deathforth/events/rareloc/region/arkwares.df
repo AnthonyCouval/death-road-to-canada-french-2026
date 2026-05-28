@@ -144,7 +144,7 @@ cyoa: an-alde-door
 cyoa: an-alde-gate
 	"Locked Gate" cyoa-title!
 	picon!
-	($ cname .. " sees a generator beyond the gate. You can destroy the gate by attacking it with your weapons!" $) text!
+	($ cname .. " voit un generateur derriere la grille. Vous pouvez detruire la grille en l'attaquant avec your weapons!" $) text!
 	choice( "DANGNAMIT" )choice
 ;
 
@@ -724,7 +724,7 @@ cyoa-choice: startsiege
 cyoa: wirecharge
 	"An Impasse" cyoa-title!
 	picon!
-	($ cname .. " realises that if they are to ever find something behind that door, this generator needs to be ON. They'll need gas, about 150 total, and it'll attract zombies, so be ready." $) text!
+	($ cname .. " realise que pour trouver quelque chose derriere cette porte, ce generateuror needs to be ON. They'll need gas, about 150 total, and it'll attract zombies, so be ready." $) text!
 	choice( "Go find that gas" )choice: startsiege
 	choice( "Not now" )choice
 ;

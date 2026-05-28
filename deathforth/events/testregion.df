@@ -25,7 +25,7 @@ cyoa: camp-rec-rohoa
 	"Admiral Raven obtient des bonus de CD importants sur les tuiles d'eau et sous la pluie. Elle est une bonne tireuse, mecanicienne et contre-bandit. Aussi : harpon." rbold +crtext
 
 		choice( "Laisser pour l'instant" )choice
-		choice( "Les engager" )choice: camp-testing-recruit
+		choice( "Les engager" )choice: camp-testing-recruit	
 ;
 
 cyoa: camp-rec-ember
@@ -35,7 +35,7 @@ cyoa: camp-rec-ember
 	"Zeus a de la foudre en chaine qui se charge via les attaques de melee. Il peut aussi causer des eclairs a l'impact." rbold +crtext
 
 		choice( "Laisser pour l'instant" )choice
-		choice( "Les engager" )choice: camp-testing-recruit
+		choice( "Les engager" )choice: camp-testing-recruit	
 ;
 
 cyoa: camp-rec-ringmaster
@@ -45,7 +45,7 @@ cyoa: camp-rec-ringmaster
 	"Ce personnage obtient une nouvelle arme quand elle tue avec son arme verrouilee. Cela fait aussi voler des balles partout !" rbold +crtext
 
 		choice( "Laisser pour l'instant" )choice
-		choice( "Les engager" )choice: camp-testing-recruit
+		choice( "Les engager" )choice: camp-testing-recruit	
 ;
 
 cyoa: camp-rec-rubick
@@ -55,7 +55,7 @@ cyoa: camp-rec-rubick
 	"Ce personnage peut copier les armes des autres personnages. Il peut aussi manier la magie." rbold +crtext
 
 		choice( "Laisser pour l'instant" )choice
-		choice( "Les engager" )choice: camp-testing-recruit
+		choice( "Les engager" )choice: camp-testing-recruit	
 ;
 
 cyoa: camp-rec-pew
@@ -65,7 +65,7 @@ cyoa: camp-rec-pew
 	"This character has a unique shotgun with high knockback. They're also quite beefy." rbold +crtext
 
 		choice( "Laisser pour l'instant" )choice
-		choice( "Les engager" )choice: camp-testing-recruit
+		choice( "Les engager" )choice: camp-testing-recruit	
 ;
 
 }

@@ -276,21 +276,21 @@ dup constant MOD_COUNT modcount?!
 		// EXAMPLE SICK MESSAGE, probably don't use this like this
 		: sickmsg
 			dup .sick? if
-				"BRR, J'AI LA GERBE" swap .charsay else drop
+				"BRR, JE ME SENS MAL" swap .charsay else drop
 			then ;
 
 		last handler!
 
 	MOD_INJURED #set \ Unused, so I am repurposing it for buff banner minicrits. Again, sorry modders...
-		"DEGATS CRITIQUES" desc!
+		"EN CRITIQUE" desc!
 		STATMOD_ICONS -2 + icon!
 
 		: critting-commands to eventid to me
-			eventid THING_EVENT_DID_HIT = if
-
+			eventid THING_EVENT_DID_HIT = if 
+			
 				me .just_hit_id@ #thing .hitpoints@ -1 + me .just_hit_id@ #thing .hitpoints!
-				0.5 RED "!" .. me .just_hit_id@ #thing .reportdurnow
-
+				0.5 RED "!" .. me .just_hit_id@ #thing .reportdurnow 
+			
 			then
 		; last animate!
 
@@ -305,15 +305,15 @@ dup constant MOD_COUNT modcount?!
 	MOD_SUPERDOG #set
 		"SURENTRAINE" desc!
 		STATMOD_ICONS 5 + icon!
-
+	
 	MOD_DOGPAL #set
 		"AMI DES CHIENS" desc!
 		STATMOD_ICONS 6 + icon!
-
+	
 	MOD_EXPLORER #set
 		"EXPLORATEUR" desc!
 		STATMOD_ICONS 6 + icon!
-
+	
 	MOD_DOGMALUS #set
 		"CHIEN MALADROIT" desc!
 		-4 STAT_FITNESS statmod+
@@ -321,7 +321,7 @@ dup constant MOD_COUNT modcount?!
 		-4 STAT_SHOOTING statmod+
 		-4 STAT_MECHANICAL statmod+
 		-4 STAT_MEDICAL statmod+
-//		STATMOD_ICONS 2 + icon!
+//		STATMOD_ICONS 2 + icon!		
 
 		// You get MORALE + 1 amount of POOS per mission
 		: try-poo args( me )
@@ -356,8 +356,8 @@ dup constant MOD_COUNT modcount?!
 		-4 STAT_SHOOTING statmod+
 		-4 STAT_MECHANICAL statmod+
 		-4 STAT_MEDICAL statmod+
-//		STATMOD_ICONS 2 + icon!
-
+//		STATMOD_ICONS 2 + icon!		
+	
 	MOD_COFFEE #set
 		"CAFFEINATE" desc!
 		+4 STAT_FITNESS statmod+
@@ -365,19 +365,19 @@ dup constant MOD_COUNT modcount?!
 		+3 STAT_DEXTERITY statmod+
 		// 0.5 me .speed_bonus!
 		STATMOD_ICONS 1 + icon!
-
+	
 	MOD_HAGGLER #set
 		"VENDEUR" desc!
 		STATMOD_ICONS 6 + icon!
-
+	
 	MOD_SOUNDSLEEP #set
 		"SOMMEIL PROFOND" desc!
 		STATMOD_ICONS 6 + icon!
-
+	
 	MOD_PATHFINDER #set
 		"ECLAIREUR" desc!
 		STATMOD_ICONS 6 + icon!
-
+		
 	// TODO: actual gameplay effects
 	MOD_SINGER #set
 		: notes
@@ -386,12 +386,12 @@ dup constant MOD_COUNT modcount?!
 				" " .. BOUNCY .. 0x df $chr .. " " .. BOUNCY_OFF ..
 				BOUNCY .. 0x dd $chr $) ;
 
-		: charsing to eventid to me
+		: charsing to eventid to me 
 			// ( THING is passed in for command handlers )
 			// It's for a SWAP command only
 			// dup .isswap? not if drop exit then
-
-
+			
+			
 			me .action_cooldown@ if exit then
 			eventid THING_EVENT_SWING = not if exit then
 			notes me 4 -rot .reportdur
@@ -489,7 +489,7 @@ dup constant MOD_COUNT modcount?!
 			3 of "Je vous tiens !" endof
 			4 of "Parade et riposte !" endof
 			5 of "Tous trop lents pour moi !" endof
-			6 of "Maintenant le coup de grace!" endof
+			6 of "Pour le coup de grace !" endof
 			7 of "Ha!" endof
 			8 of "Estoc ! Esquive ! Ha !" endof
 			9 of "Ha ha! Ho ho!" endof
@@ -505,7 +505,7 @@ dup constant MOD_COUNT modcount?!
 			me .action_cooldown@ if exit then
 			eventid THING_EVENT_SWING = if engarde then
 		; last animate!
-
+		
 	MOD_CARL #set
 		: carlsay 1 33 rnd case
 			1 of "CAAAAARL!" endof
@@ -514,7 +514,7 @@ dup constant MOD_COUNT modcount?!
 			4 of "CAAAAAAAAAAAAAAAAAAAAARL!" endof
 			5 of "CAAAARL!" endof
 			6 of "CARL!" endof
-			7 of "I'm doin stuff" endof
+			7 of "Je fais des trucs" endof
 			8 of "CORAL!" endof
 			9 of "CAAAARL!" endof
 			10 of "CAAAAAAAAAAAARL!" endof
@@ -552,7 +552,7 @@ dup constant MOD_COUNT modcount?!
 			me .action_cooldown@ if exit then
 			eventid THING_EVENT_SWING = if carl then
 		; last animate!
-
+	
 	MOD_LNK #set
 		: lnksay 1 5 rnd case
 			1 of "KYAAA!" endof
@@ -567,7 +567,7 @@ dup constant MOD_COUNT modcount?!
 //			30 me .action_cooldown!
 			me .carried if
 				($ RAINBOW .. "HAAUUUGH!" $) me .yellmsg
-
+					
 			else
 				($ RAINBOW .. lnksay $) me .yellmsg
 			then
@@ -576,7 +576,7 @@ dup constant MOD_COUNT modcount?!
 		: lnk-events to eventid to me
 			eventid THING_EVENT_SWING = if lnkattack then
 		; last animate!
-
+	
 	// Cancelled
 	MOD_MADSCI #set
 		: madsci-port
@@ -614,7 +614,7 @@ dup constant MOD_COUNT modcount?!
 			1 me .slotuse!
 			me .attack
 		; last command!
-
+		
 	MOD_HORSE #set
 		: horse-neigh
 			10 3 * me .action_cooldown!
@@ -635,7 +635,7 @@ dup constant MOD_COUNT modcount?!
 			}
 			0 1 camera.pos alertlcxy
 		;
-
+		
 		: .mew dup .character@ .charmew
 			dup sfx{ .adjust-vol } >r
 			0.375 ($ PINK .. "mew" $) r@ .reportdur
@@ -670,18 +670,18 @@ dup constant MOD_COUNT modcount?!
 		; last command!
 
 	MOD_DSYP #set
-
+		
 		0 value dsyp-farted
-
+		
 		: dsyp-fart1
 			me .pos 5 + xyfart -1 lt .hitcheck.blast!
 			-30 me .shudder!
 		;
-
+		
 		: dsyp-fartdie
 			dsyp-fart1 0 me .character@ .health!
 		;
-
+		
 		: dsyp-fart
 
 			30 3 * me .action_cooldown!
@@ -706,13 +706,13 @@ dup constant MOD_COUNT modcount?!
 
 	MOD_ANIME #set
 		: animesay 1 16 rnd case
-			1 of "Rayon Coeur !" endof
+			1 of "Heart Beam!" endof
 			2 of "Heeeaaaart Beeeaaaam!" endof
 			3 of "Kyaaaaaa!" endof
 			4 of "Tu vas le regretter !" endof
-			5 of "MAGNIFIQUE TRANSFORMATION !" endof
-			6 of "*scintille*" endof
-			7 of "*tournoie*" endof
+			5 of "LOVELY TRANSFORM!" endof
+			6 of "*sparkles*" endof
+			7 of "*twirls*" endof
 			8 of "Je n'arrive pas a croire que senpai est un zombie !" endof
 			9 of "( ^ '-' ^ )" endof
 			10 of "(*' ^'*)" endof
@@ -733,27 +733,27 @@ dup constant MOD_COUNT modcount?!
 		: anime-commands to eventid to me
 			eventid THING_EVENT_SWING = if kyaaaaaa then
 		; last animate!
-
+			
 
 	MOD_SWAPACTION #set
-
+	
 		\ R update...
 		\ Hello fellow modders!
-		\ Sorry if this overwrites one of your custom statuses, I know statmod space is limited
+		\ Sorry if this overwrites one of your custom statuses, I know statmod space is limited 
 		\ I truly do believe this was the best implementation; if necessary, you can re-implement your status
-		\ as I intend for this to only actviate for certain specialtypes to activate their swap action code
-		\ Best of luck, ~Syca <3
+		\ as I intend for this to only actviate for certain specialtypes to activate their swap action code 
+		\ Best of luck, ~Syca <3 
+		
+	: swapaction_logic 	
+		me .character@ .specialtype@ 146 = if \ Am I The Defective? 
+			60 6 * me .action_cooldown! \ ~ 6s...nerf? buff? 
 
-	: swapaction_logic
-		me .character@ .specialtype@ 146 = if \ Am I The Defective?
-			60 6 * me .action_cooldown! \ ~ 6s...nerf? buff?
-
-				\ visual fx and stuff
-				me .pos me .move_angle@ anglexy 30 xymul xyadd me .pos! \ teleport between shopping aisles
-				1 rumble
-				sfx{ growl 1000 r! 100 ramp_start! 1500 ramp_end! 0.95 0.993 frnd q! 0.9 1.15 frnd pitch! } \ weeeeawwwww
-
-				12 for
+				\ visual fx and stuff 
+				me .pos me .move_angle@ anglexy 30 xymul xyadd me .pos! \ teleport between shopping aisles 
+				1 rumble 
+				sfx{ growl 1000 r! 100 ramp_start! 1500 ramp_end! 0.95 0.993 frnd q! 0.9 1.15 frnd pitch! } \ weeeeawwwww 
+				
+				12 for 
 				me .pos
 				particle{
 					new pos!
@@ -768,24 +768,24 @@ dup constant MOD_COUNT modcount?!
 					0.25 0.4 frnd scale!
 					1 0.1 0 rgb!
 				}
-				next
+				next 
 		then
-	;
-
+	; 
+	
 	: elsa-commands to me
 		me .action_cooldown@ if me .deny exit then
 		me .isswap? if swapaction_logic then;
-
+			
 	; last command!
-
-
-
+	
+	
+		
 	MOD_EHZERBEAM #set
 
 		: ehzershot to eventid to me
 
 			eventid THING_EVENT_TIMER = if exit
-				1 me .timer!
+				1 me .timer! 
 
 				me .fade@ if then;
 
@@ -835,7 +835,7 @@ dup constant MOD_COUNT modcount?!
 					0.75 scale!
 					1 clr.r! 0 clr.g! 0.0 clr.b!
 					-2 vel.y!
-
+					
 					particles32_base_id 3 + spriteid!
 
 				// blast ring
@@ -992,8 +992,8 @@ dup constant MOD_COUNT modcount?!
 
 			ehzerbeam
 		; last command!
-
-
+		
+		
 	MOD_ZEALOUS #set
 	
 		\ retina ... 
@@ -1005,117 +1005,117 @@ dup constant MOD_COUNT modcount?!
 		
 		"CRAFTY" desc!
 		STATMOD_ICONS -5 + icon!
-
-		: swinging-commands to eventid to me
-
-			eventid THING_EVENT_WIELD = if
+		
+		: swinging-commands to eventid to me 
+			
+			eventid THING_EVENT_WIELD = if 
 				weapondef{ me .wielded sel melee_break_scale@ } me .character@ .voice.fhi!
-			then
-
-			eventid THING_EVENT_SWING = if
-				\ "WWAAAW" me .report
+			then 
+			
+			eventid THING_EVENT_SWING = if 
+				\ "WWAAAW" me .report 
 				0 weapondef{ me .wielded sel melee_break_scale! }
-			then
-
-		; last animate!
-
+			then 
+			
+		; last animate! 
+		
 		: unbreakable-commands to eventid to me
-
-		eventid THING_EVENT_SWING <> if
-			me .location@ 1 = if
-				me chara>thing .anim.weapon_counter@ 0 = if
-					me chara>thing .character@ .voice.fhi@ 0 = not if
+			
+		eventid THING_EVENT_SWING <> if 		
+			me .location@ 1 = if 
+				me chara>thing .anim.weapon_counter@ 0 = if 
+					me chara>thing .character@ .voice.fhi@ 0 = not if 
 						me chara>thing .character@ .voice.fhi@ weapondef{ me chara>thing .wielded sel melee_break_scale! }
-					then
-				then
-			then
-		then
-
+					then 
+				then 
+			then 
+		then 
+				
 		; last mod_events!
-
-
+		
+		
 	MOD_GWM #set
-
+	
 		\ stomach
 		\ MOARRRR STATMODSSSSS
-		\ best way to avoid main_events conflict, sorry
-
-		\ NOTE TO SELF: NUKE FLYHEAD FROM ORBIT
-		\ how bliss life would be without the flyhead
-
+		\ best way to avoid main_events conflict, sorry 
+		
+		\ NOTE TO SELF: NUKE FLYHEAD FROM ORBIT 
+		\ how bliss life would be without the flyhead 
+		
 		"B.S.D" desc!
 		STATMOD_ICONS -43 + icon!
-
+		
 		\ Was originally going to also provide stamina on 3rd, 4th hit
-		\ This was a bit too much for a single trait
-
-		: great-weapon to eventid to me
-
-			eventid THING_EVENT_SWING = if
-				weapondef{ me .wielded sel cooldown@ } 1.09 > weapondef{ me .wielded sel power@ } 1.99 > and if
-				\	0 me .character@ .voice.flo!
+		\ This was a bit too much for a single trait 
+		
+		: great-weapon to eventid to me 
+		
+			eventid THING_EVENT_SWING = if 
+				weapondef{ me .wielded sel cooldown@ } 1.09 > weapondef{ me .wielded sel power@ } 1.99 > and if 
+				\	0 me .character@ .voice.flo! 
 				then
-			then
-
-			eventid THING_EVENT_DID_HIT = if
-
-				weapondef{ me .wielded sel cooldown@ } 1.09 > weapondef{ me .wielded sel power@ } 1.99 > and if
+			then 
+			
+			eventid THING_EVENT_DID_HIT = if 
+	
+				weapondef{ me .wielded sel cooldown@ } 1.09 > weapondef{ me .wielded sel power@ } 1.99 > and if 
 				\	me .character@ .voice.flo@ 1 + 0 5 clamp me .character@ .voice.flo!
-
-					\ me .character@ .voice.flo@ 1 > if
-						me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
-							me .just_hit_id@ #thing .hitpoints@ -2 + me .just_hit_id@ #thing .hitpoints!
+					 
+					\ me .character@ .voice.flo@ 1 > if 
+						me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if 
+							me .just_hit_id@ #thing .hitpoints@ -2 + me .just_hit_id@ #thing .hitpoints! 
 							\ "YELLOW" evaluate "!" .. me .just_hit_id@ #thing .report
 							sfx{ thump 0.96 q! 0.66 scale! pitch@ 0.8 1.2 frnd * pitch! 150 1500 frnd filt!  } \
 
-							weapondef{ me .wielded sel power@ } 2.49 > if
-								0 me .just_hit_id@ #thing .hitpoints!
+							weapondef{ me .wielded sel power@ } 2.49 > if 
+								0 me .just_hit_id@ #thing .hitpoints! 
 								\ Weapons @ 2.5 PWR already have an 80% chance to instakill.
-								\ Just bury the hatchet and let the instakill be confirmed in this case.
-							then
-
-						\	me .character@ .voice.flo@ 2 > if
-
+								\ Just bury the hatchet and let the instakill be confirmed in this case. 
+							then 
+							
+						\	me .character@ .voice.flo@ 2 > if 
+							
 						\		me .fatigue@ -3 + 0 127 clamp me .fatigue!
 								\ me .fatigue+ doesn't work with negative numbers?? lol???
 								\ It's a small amount of stamina, but using a claymore @ 6 STR only uses 10 fatigue
-						\	then
-					\	then
-					then
-				then
-			then
-
-		; last animate!
-
-		: bwah to eventid to me
-			eventid THING_EVENT_SWING <> if
+						\	then 
+					\	then 
+					then  
+				then 	
+			then 
+			
+		; last animate! 
+		
+		: bwah to eventid to me 
+			eventid THING_EVENT_SWING <> if 
 				\ 1 me chara>thing .fatigue@ me chara>thing .reportdurnow
-			me .location@ 1 = if
-				weapondef{ me chara>thing .wielded sel cooldown@ } 1.09 > weapondef{ me chara>thing .wielded sel power@ } 1.99 > and if
-					me .health@ 0 > if
-						me chara>thing .inside_id@ 0 = if
+			me .location@ 1 = if 
+				weapondef{ me chara>thing .wielded sel cooldown@ } 1.09 > weapondef{ me chara>thing .wielded sel power@ } 1.99 > and if 	
+					me .health@ 0 > if 
+						me chara>thing .inside_id@ 0 = if 
 							particle{ new me chara>thing .pos pos! weapons_base_id 344 + spriteid! pos.y@ -39  + pos.y! 1 ticks! 0 fade_in! 0 fade_out! 0 global_colour! 0.6 clr.a! }
 							particle{ 0 angle! }
-						then
-					then
-				then
-			then
-		then
-		;
-
-		last mod_events!
-
-
+						then 
+					then 
+				then 
+			then 
+		then 
+		; 
+		
+		last mod_events!	
+		
+		
 }
 
 
 // TODO: Move these somewhere else
 
 // Prevent them from swapping weapons
-: .swapspecial USE_FLAG_SWAP swap .usefilterset ;
+: .swapspecial USE_FLAG_SWAP swap .usefilterset ; 
 
 // Prevent from attacking normally
-: .atkspecial USE_FLAG_ATTACK swap  .usefilterset ;
+: .atkspecial USE_FLAG_ATTACK swap  .usefilterset ; 
 
 : .sing statmod{ sfx{ charsing } } ;
 
@@ -1141,13 +1141,13 @@ dup constant MOD_COUNT modcount?!
 	1 <- self .pet!
 	2 <- self .vitality!
 	2 <- self .health!
-	"is a dog. Dogs used to be pets, now most are feral." <- self .job!
+	"est un chien. Les chiens etaient des animaux de compagnie, maintenant la plupart sont sauvages." <- self .job!
 
 	6 <- self .footoff.y!
 
 	0 17 rnd <- self .bodytype!
 	statmod{ MOD_DOGMALUS <- self .setmod }
-	USE_FLAG_SWAP USE_FLAG_CARRY | <- self .usefilterset
+	USE_FLAG_SWAP USE_FLAG_CARRY | <- self .usefilterset 
 	WEAPON_CLAW <- self .weapon_default!
 //	<- self .swapspecial
 	<- self statmod{ .noweapon }
@@ -1205,7 +1205,7 @@ dup constant MOD_COUNT modcount?!
 		<- temp <- thing .carry
 	);
 	THING_EVENT_THROW ?(
-		<- thing .carryid@ 0 = if then; \ bottle throw fix
+		<- thing .carryid@ 0 = if then; \ bottle throw fix 
 		<- thing .carried -> temp // . cr cr
 		<- temp .zomb? if RAINBOW statmod{ slamname } .. <- thing .yellmsg then;
 		<- temp .item? if RAINBOW "FOREIGN OBJECT!" .. <- thing .yellmsg then;
@@ -1385,7 +1385,7 @@ dup constant MOD_COUNT modcount?!
 	// <- chara .nodeathdrop
 	WEAPON_SOLARMAZER <- chara .weapona! 50 <- chara .stackeda!
 	1 <- chara .weapon_nodropa!
-	WEAPON_DOODAD <- chara .weaponb! 5 <- chara .stackedb!
+	WEAPON_DOODAD <- chara .weaponb! 5 <- chara .stackedb! 
 	1 <- chara .weapon_nodropb!
 	' madsci-main-events <- chara .main_events!
 ;
@@ -1428,7 +1428,7 @@ char-event: valk-main-events
 	1 over .composure!
 	"est une sorte de guerriere celeste. Bref." over .job!
 	WEAPON_MJOLNIR over .weapona!
-	statmod{ MOD_VALK over .setmod
+	statmod{ MOD_VALK over .setmod 
 	' valk-main-events swap } .main_events!
 ;
 
@@ -1481,7 +1481,7 @@ char-event: valk-main-events
 	WEAPON_KUNAI over .weapon_default!
 	WEAPON_SHURIKEN over .weapona! 7 over .stackeda!
 	// 1 over .weapon_nodropa!
-	WEAPON_SMOKEBOMB over .weaponb! 5 over .stackedb!
+	WEAPON_SMOKEBOMB over .weaponb! 5 over .stackedb! 
 	// 1 over .weapon_nodropb!
 
 	// statmod{ MOD_SWAP_ATTACK over .setmod } .swapspecial
@@ -1542,7 +1542,7 @@ char-event: valk-main-events
 	45 over .specialtype!
 	1 over .female!
 	4 over .fitness!
-	// "isn't necessarily a cleaning woman. She might just like the outfit."
+	// "n'est pas necessairement une femme de menage. Elle aime peut-etre juste la tenue." 
 	"vous a rejoints pour eviter de faire son boulot de nettoyage." over .job!
 	WEAPON_ULTRAMOP over .weapona!
 	1 over .weapon_nodropa!
@@ -1595,15 +1595,15 @@ char-event: valk-main-events
 	1 <- chara .ai.rush_chance!
 ;
 
-: .mechamountify dup .cur_thingid@ #thing args( chara thing ) statmod{
+: .mechamountify dup .cur_thingid@ #thing args( chara thing ) statmod{ 
 	0 <- chara .pet!
 	1 <- chara .specialtype!
 	1 <- chara .specialmode!
 	-3 <- chara .headoff.x!
 	7 <- chara .headoff.y!
-	<- chara .nocarry
-	<- chara .notake
-	<- chara .noswap
+	<- chara .nocarry 
+	<- chara .notake 
+	<- chara .noswap 
 	<- chara .swapspecial <- chara .atkspecial
 	<- chara .mechamountie-ai
 	statmod{ MOD_EHZERBEAM <- chara .setmod }
@@ -1612,13 +1612,13 @@ char-event: valk-main-events
 
 : .mechamountie? dup .specialtype@ 1 = swap .specialmode@ 1 = and ;
 
-: .genieify dup .cur_thingid@ #thing args( chara thing ) statmod{
+: .genieify dup .cur_thingid@ #thing args( chara thing ) statmod{ 
 	0 <- chara .pet!
 	2 <- chara .specialtype!
 	1 <- chara .specialmode!
-	<- chara .nocarry
-	<- chara .notake
-	<- chara .noswap
+	<- chara .nocarry 
+	<- chara .notake 
+	<- chara .noswap 
 	<- chara .nopickups
 	0 <- chara .ai.flee_dist!
 	0.001 <- chara .ai.wander_chance!
@@ -1645,7 +1645,7 @@ statmod{
 }
 
 : anime? args( char )
-	<- char .specialtype@ 62 = <- char .specialtype@ 63 = <- char .specialtype@ 64 = <- char .specialtype@ 65 = or or or
+	<- char .specialtype@ 62 = <- char .specialtype@ 63 = <- char .specialtype@ 64 = <- char .specialtype@ 65 = or or or 
 ;
 : dsyp? .specialtype@ 58 = ;
 
@@ -1672,10 +1672,10 @@ statmod{
 	2 <- chara .pet!
 	WEAPON_CLAW <- chara PRINTSTACK .weapon_default!
 	statmod{ MOD_PETMALUS <- chara .setmod }
-	USE_FLAG_SWAP USE_FLAG_CARRY | <- chara .usefilterset
+	USE_FLAG_SWAP USE_FLAG_CARRY | <- chara .usefilterset 
 	<- chara statmod{ .noweapon }
-	1 <- chara .carrying.slot_count!
-;
+	1 <- chara .carrying.slot_count!	
+; 
 
 
 : .catify dup args( chara ) .doggify
@@ -1733,7 +1733,7 @@ statmod{
 	' kspet-checker ++
 ;
 
-: .nugsify dup .cur_thingid@ #thing args( chara thing ) statmod{
+: .nugsify dup .cur_thingid@ #thing args( chara thing ) statmod{ 
 	"NUGS CHUNGUS" <- chara .name!
 	"est le Tampon le plus surpuissant." <- chara .job!
 	0 <- chara .pet!

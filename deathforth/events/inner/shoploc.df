@@ -45,10 +45,10 @@ cyoa-choice: lovetest-go
 	else
 		cchar .morale 1 < if
 			ctemper+ if
-				($ cname .. " ignores " .. chis .. " strong impulse to smash the machine." $)
+				($ cname .. " ignores " .. chis .. " forte envie de fracasser la machine." $)
 				badfx
 			else
-				($ cname .. " smashes the machine until it stops working!" $)
+				($ cname .. " fracasse la machine jusqu'a ce qu'elle arrete de fonctionner !" $)
 				clear-cyoa bitefx
 			then +crtext temperREV
 		else
@@ -56,21 +56,21 @@ cyoa-choice: lovetest-go
 			cattitude+ if
 				($ cname .. " laughs this off, but a part of " .. chim .. " dies this day." $) +crtext
 			else
-				($ cname .. " is infuriated by this humiliation!" $) +crtext
+				($ cname .. " est furieux de cette humiliation !" $) +crtext
 				morale--
 			then
 			attitudeREV
 		then
 	then
 ;
-
+	
 	cyoa: lovetest
 	"Le Testeur d'Amour" cyoa-title!
 	picon!
-	($ "C'est une vieille machine Testeuse d'Amour !
+	($ "C'est une vieille machine Testeur d'Amour !
 	Cela va-t-il reveler des VERITES CACHEES sur " .. pname .. " ?" $) cyoa-text!
 	cpet? if
-		($ "Ce n'etait pas concu avec " .. pname .. " en tete. Encore un exemple de favoritisme envers les humains et les plus-ou-moins humains." $)
+		($ "Ce n'etait pas concu avec " .. pname .. " en tete. Encore un exemple de favoritisme humain et plus-ou-moins humain." $)
 	+crtext then;
 		choice( "Laisser pour l'instant" )choice
 		pchar charchoice( ": Use Love Tester" )choice: lovetest-go

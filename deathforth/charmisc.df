@@ -142,7 +142,7 @@ cyoa{
 		2 of "MEDECINE AUJOURD'HUI" endof
 		3 of "VOITURES-ET-GADGETS" endof
 		4 of "CHASSEUR MODERNE" endof
-
+		
 		5 of "GUIDE COMPLET DU MUSCU" endof
 		6 of "1001 EXERCISES ANYWHERE" endof
 		7 of "GUIDE DU DEBILE EN CHIRURGIE" endof
@@ -248,7 +248,7 @@ cyoa{
 	statmod{ dup .nocarry dup .notake dup .noswap }
 
 	// 1 over .weapon_nodropa!
-
+	
 	drop
 ;
 
@@ -284,7 +284,7 @@ cyoa{
 
 : .beaver? .specialtype@ 77 = ;
 
-: .moosify ( chara ) statmod{
+: .moosify ( chara ) statmod{ 
 	3 over .pet!
 
 	skeletons_base_id 10 + over .skeleton_spriteid!
@@ -298,10 +298,10 @@ cyoa{
 	WEAPON_ANTLERS over .weapon_default!
 	50 over .fitness!
 	-0.75 over .breathescale!
-	dup .nocarry
-	dup .notake
-	dup .noswap
-//	MOD_MOO over .setmod
+	dup .nocarry 
+	dup .notake 
+	dup .noswap 
+//	MOD_MOO over .setmod 
 	drop
 } ;
 
@@ -313,7 +313,7 @@ cyoa{
 	"est maintenant un DEMI-HUMAIN, DEMI-SQUELETTE !" over .job!
 drop ;
 
-: .skelify
+: .skelify 
 	78 over .specialtype!
 	WEAPON_CLAW over .weapon_default!
 	0 over .fitness!
@@ -546,9 +546,9 @@ last to dracbat
 	100 STAT_FITNESS <- chara .bonus!
 	10 <- chara .strength!
 	100 STAT_STRENGTH <- chara .bonus!
-	<- chara .nocarry
-	<- chara .notake
-	<- chara .noswap
+	<- chara .nocarry 
+	<- chara .notake 
+	<- chara .noswap 
 	<- chara .nopickups
 	0 <- chara .ai.loot_chance!
 ;
@@ -558,7 +558,7 @@ last to dracbat
 	// Don't die!
 	3 <- chara .health!
 	1 <- thing .hitpoints!
-
+	
 	<- chara .char-droploot
 	// Drop weapon word like .char-droploot?
 
@@ -578,18 +578,18 @@ last to dracbat
 
 		team-count 4 < if
 			lt .character@ .recruit
-		else
+		else 
 			lt .character@ .nopickups
-			\ stomach : nopickups for temp chars
-		then
-
+			\ stomach : nopickups for temp chars 
+		then 
+		
 		// - check if there is room in the group, and if so, lt .character@ .recruit the new dog
 		// - otherwise, special post-mission event?
 	next
 
 	<- thing .pos.z@ 8 - <- thing .pos.z!
 	-2 <- thing .vel.z!
-	36000 <- thing .angle!
+	36000 <- thing .angle! 
 
 	"Aboiement, WOOF" <- thing statmod{ .yellmsglong }
 
@@ -606,7 +606,7 @@ last to dracbat
 
 	THING_EVENT_DIED ?( <- chara dogman-death-handler );
 
-
+	
 ;
 
 : .dogmanify args( chara )
@@ -629,7 +629,7 @@ last to dracbat
 	new-npc lt .character@ .catify
 	<- body lt .character@ .bodytype!
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 	lt .character@ .default-ai-setup
 ;
 
@@ -672,14 +672,14 @@ last to dracbat
 	"Cat Lady" <- chara .name!
 	"adore les chats ! Elle les adore bien plus que toute autre chose, personne ou concept." <- chara .job!
 	WEAPON_CLAW <- chara .weapon_default!
-
+	
 	' catlady-main-events <- chara .main_events!
 
 	7 for
 		i catladycat 				// Spawn cat number for 7 down to 1
 		<- lady lt .follow 			// lt (cat) follows the lady
 		<- lady lt-to-thing drift	// Position around lady and drift them away a bit
-	next
+	next 
 
 ;
 
@@ -742,7 +742,7 @@ random-coldsteel-base shuffles var random-coldsteel
 : lynn-thing-events args( me teid )
 
 	<- me .character@ .dead? if then;
-
+	
 	<- teid THING_EVENT_TIMER = <- me .character@ .seed@ 555 = and if
 		60 6 10 rnd * <- me .timer!
 		RED random-coldsteel-saying .. <- me .yellmsglong
@@ -754,15 +754,15 @@ random-coldsteel-base shuffles var random-coldsteel
 
 	<- chara .party@ 0= if then;
 
-	<- eventid MAIN_EVENT_MISSION_START = if
-		60 5 8 rnd * <- chara .thing@ .timer!
+	<- eventid MAIN_EVENT_MISSION_START = if 
+		60 5 8 rnd * <- chara .thing@ .timer! 
 		555 <- chara .seed!
 	then;
 
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
 
 	<- chara .thing@ swap ( teid ) lynn-thing-events
-
+		
 ;
 
 : .lynnify args( chara )
@@ -777,7 +777,7 @@ random-coldsteel-base shuffles var random-coldsteel
 	4 <- chara .fitness!
 	4 STAT_STRENGTH <- chara .bonus!
 	5 <- chara .strength!
-
+	
 	' lynn-main-events <- chara .main_events!
 ;
 
@@ -800,17 +800,17 @@ random-coldsteel-base shuffles var random-coldsteel
 
 : .goatify args( chara )
 	<- chara .petify
-
+		
 	13 <- chara .bodytype!
 	WEAPON_BUTT <- chara .weapon_default!
 	0.2 <- chara .bounceval!
 	-0.75 <- chara .breathescale!
-
+	
 	0 <- chara .loyalty!
 	0 <- chara .attitude!
-
+	
 	"est une chevre. Vous ne la possedez pas, elle vous suit de son plein gre." <- chara .job!
-
+	
 	skeletons_base_id 10 + <- chara .skeleton_spriteid!
 
 	' goat-main-events <- chara .main_events!
@@ -835,7 +835,7 @@ random-coldsteel-base shuffles var random-coldsteel
 	1 <- chara .weapon_nodropb!
 	"est le fan de sport ultime." <- chara .job!
 	2 <- chara .carrying.slot_count!
-
+		
 	' sports-main-events <- chara .main_events!
 ;
 
@@ -940,7 +940,7 @@ random-coldsteel-base shuffles var random-coldsteel
 	new-npc lt .character@ .skelify
 	lt .character@ .default-ai-setup
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 ;
 
 : samedisummon args( lady )
@@ -985,15 +985,15 @@ random-coldsteel-base shuffles var random-coldsteel
 	"is constantly followed around by skeletons." <- chara .job!
 	"Skeleton Queen" <- chara .perk!
 	"One Foot in Grave" <- chara .trait!
-
+	
 	' samedi-main-events <- chara .main_events!
 
 	4 for
 		samediskel
-		<- lady lt .follow
+		<- lady lt .follow 			
 		<- lady lt-to-thing drift
-	next
-
+	next 
+	
 ;
 
 : .deadsamedify args( chara )
@@ -1028,7 +1028,7 @@ random-coldsteel-base shuffles var random-coldsteel
 	3 <- chara .health!
 	"Muscle Eagle" <- chara .name!
 	"EAGLE" <- chara .perk!
-	"BALD" <- chara .trait!
+	"BALD" <- chara .trait! 
 	"est un symbole vivant de l'AMERIQUE, actuellement en fuite vers le Canada." <- chara .job!
 ;
 
@@ -1059,16 +1059,16 @@ random-coldsteel-base shuffles var random-coldsteel
 ;
 
 : .botshared args( st health chara )
-	6 <- chara .strength! 6 <- chara .fitness! <- chara .notake
+	6 <- chara .strength! 6 <- chara .fitness! <- chara .notake 
 	<- st <- chara .specialtype! <- health <- chara .vitality! <- health <- chara .health!
 ;
 : .redbotify args( chara )
-	WEAPON_KUNG <- chara .weapon_default!
+	WEAPON_KUNG <- chara .weapon_default! 
 	39 6 <- chara .botshared
 ;
 
 : .bluebotify args( chara )
-	WEAPON_BOXING <- chara .weapon_default!
+	WEAPON_BOXING <- chara .weapon_default! 
 	40 4 <- chara .botshared
 ;
 
@@ -1130,11 +1130,11 @@ random-coldsteel-base shuffles var random-coldsteel
 : fireman-main-events ( teid ) args( chara eventid )
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
-		<- chara WEAPON_NAPALM <- chara .weapona@ = if
+		<- chara WEAPON_NAPALM <- chara .weapona@ = if 
 			<- chara .stackeda@ 6 + <- chara .stackeda!
 			<- chara .stackeda@ 20 > if 20 <- chara .stackeda! then
 		then;
-		<- chara WEAPON_NAPALM <- chara .weaponb@ = if
+		<- chara WEAPON_NAPALM <- chara .weaponb@ = if 
 			<- chara .stackedb@ 6 + <- chara .stackedb!
 			<- chara .stackedb@ 20 > if 20 <- chara .stackedb! then
 		then;
@@ -1190,7 +1190,7 @@ moodguy-picker-base shuffles var moodguy-picker
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
 		moodguy-pick <- chara .weaponb! moodguy-pick <- chara .weaponc!
-		WEAPON_PLASMARIFLE <- chara .weapona@ = <- chara .stackeda@ 300 < and if
+		WEAPON_PLASMARIFLE <- chara .weapona@ = <- chara .stackeda@ 300 < and if 
 			<- chara .stackeda@ 280 > if 300 else <- chara .stackeda@ 20 + then <- chara .stackeda!
 		then
 		WEAPON_MOODYROCKET <- chara .weaponb@ = if 10 <- chara .stackedb! then
@@ -1213,7 +1213,7 @@ moodguy-picker-base shuffles var moodguy-picker
 ;
 
 : .woodwomanify args( chara )
-	106 <- chara .specialtype!
+	106 <- chara .specialtype! 
 	"Wood Woman" <- chara .name!
 	WEAPON_LOGLADYLOG <- chara .weapona!
 	1 <- chara .weapon_nodropa!
@@ -1230,7 +1230,7 @@ moodguy-picker-base shuffles var moodguy-picker
 
 
 : .piratify args( chara )
- 	108 <- chara .specialtype!
+ 	108 <- chara .specialtype! 
 	WEAPON_CUTLASS <- chara .weapona!
 	1 <- chara .weapon_nodropa!
 	WEAPON_CAPTAINCANNON <- chara .weaponb!
@@ -1271,7 +1271,7 @@ moodguy-picker-base shuffles var moodguy-picker
 ;
 
 : .farmshotify args( chara )
- 	103 <- chara .specialtype!
+ 	103 <- chara .specialtype! 
 	WEAPON_FARMDSHOTGUN <- chara .weapona!
 	1 <- chara .weapon_nodropa!
 	35 LOOT_SHOTGUN_SHELL <- chara .lootamt!
@@ -1286,14 +1286,14 @@ moodguy-picker-base shuffles var moodguy-picker
 : cupid-main-events ( teid ) args( chara eventid )
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
-		WEAPON_CUPIDBOW <- chara .weapona@ = <- chara .stackeda@ 60 < and if
+		WEAPON_CUPIDBOW <- chara .weapona@ = <- chara .stackeda@ 60 < and if 
 			<- chara .stackeda@ 50 > if 60 else <- chara .stackeda@ 10 + then <- chara .stackeda!
 		then
 	then;
 ;
 
 : .cupidify args( chara )
- 	107 <- chara .specialtype!
+ 	107 <- chara .specialtype! 
 	WEAPON_CUPIDBOW <- chara .weapona!
 	1 <- chara .weapon_nodropa!
 	60 <- chara .stackeda!
@@ -1338,14 +1338,14 @@ barbar-picker-base shuffles var barbar-picker
 	<- eventid MAIN_EVENT_DRIVING_START = if
 		// change weapona
 		barbar-pick <- chara .weapona!
-		WEAPON_BOW <- chara .weaponb@ = <- chara .stackedb@ 50 < and if
+		WEAPON_BOW <- chara .weaponb@ = <- chara .stackedb@ 50 < and if 
 			<- chara .stackedb@ 29 > if 50 else <- chara .stackedb@ 20 + then <- chara .stackedb!
 		then
 	then;
 ;
 
 : .barbarify args( chara )
-	100 <- chara .specialtype!
+	100 <- chara .specialtype! 
 	// WEAPON_DAGGER <- chara .weapona!
 	1 <- chara .weapon_nodropa!
 	WEAPON_BOW <- chara .weaponb!
@@ -1353,14 +1353,14 @@ barbar-picker-base shuffles var barbar-picker
 	50 <- chara .stackedb!
 	"Barbarian" <- chara .name!
 	1 <- chara .female!
-	50 %chance if
+	50 %chance if 
 		4 <- chara .strength!
 		3 <- chara .fitness!
 		1 STAT_FITNESS
-	else
+	else 
 		3 <- chara .strength!
 		4 <- chara .fitness!
-		1 STAT_STRENGTH
+		1 STAT_STRENGTH 
 	then <- chara .bonus!
 	4 <- chara .shooting!
 	0 <- chara .loyalty!
@@ -1398,7 +1398,7 @@ barbar-picker-base shuffles var barbar-picker
 
 // Turrets (don't use tempchar-common shared logic)
 : .turretshared dup .thing@ args( st health chara me )
-	6 <- chara .shooting! <- chara .notake
+	6 <- chara .shooting! <- chara .notake 
 	<- st <- chara .specialtype! <- health <- chara .vitality! <- health <- chara .health!
 	1 <- chara .carrying.slot_count!
 	60 300 330 rnd * <- me .timer!
@@ -1486,7 +1486,7 @@ barbar-picker-base shuffles var barbar-picker
 : .tempredbotify args( chara )
 	<- chara .redbotify
 	<- chara tempchar-common-2min
-;
+;	
 
 0 stack
 	' .moosify shove
@@ -1506,7 +1506,7 @@ pukey-picker-base shuffles var pukey-picker
 : .pukeypicker pukey-picker depths 0= if pukey-picker-base shuffles to pukey-picker then pops nip execute ;
 
 : .pukeyify args( chara )
-	<- chara .pukeypicker
+	<- chara .pukeypicker 
 	// 0 <- chara .thing@ 50 %chance if .clr.g! else .clr.r! then
 	// 0 1 rnd <- chara .thing@ .clr.b!
 	0 360 frnd angle-colour 2 rgb* <- chara .thing@ .clr!
@@ -1523,9 +1523,9 @@ custom: Egg
 	melee_thrown_lob: 2
 	stack_max: 12
 
-	: spawn-a-chicken
+	: spawn-a-chicken 
 		new-npc 30 lt .fade! lt .character@ .tempchickenify lt .character@ .nopickups
-		\ stomach : nopickups for temp chars
+		\ stomach : nopickups for temp chars 
 	;
 
 	:noname args( me eventid )
@@ -1546,7 +1546,7 @@ custom: Egg
 *)
 
 // Set up whatever character for PUKEYBALL
-// - set party/recruit if required
+// - set party/recruit if required 
 : new-tempchar new-npc 30 lt .fade! lt .character@ ;
 
 :noname new-tempchar .pukeyify
@@ -1620,7 +1620,7 @@ custom: Egg
 ;
 
 : .bryuify args( chara )
- 	71 <- chara .specialtype!
+ 	71 <- chara .specialtype! 
 	0 <- chara .specialmode!
 	WEAPON_KARATAY <- chara .weapon_default!
 	WEAPON_PUNCHBALL <- chara .weapona!
@@ -1657,7 +1657,7 @@ custom: Egg
 	// Use BRYU as defaults
 	<- chara .bryuify
 
- 	72 <- chara .specialtype!
+ 	72 <- chara .specialtype! 
 	WEAPON_ROUNDHOUSE <- chara .weapon_default!
 
 	6 <- chara .strength!
@@ -1871,9 +1871,9 @@ last to main-event-mission-character
 
 : gnomey-gerbil args( gnomey )
 	// Slight time variation for cooler disappearance poofiness
-	new-npc 9 0 1 frnd + 60 * lt .character@ .tempgerbilfy
+	new-npc 9 0 1 frnd + 60 * lt .character@ .tempgerbilfy 
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 	<- gnomey lt-to-thing drift
 	1 lt .tinkle
 	rndtint lt .character@ .tint.body!
@@ -1895,7 +1895,7 @@ last to main-event-mission-character
 
 	// PQ guy already spawned, using unused zombietype as state
 	<- me .zombietype@ if
-		1 %chance if
+		1 %chance if 
 			3 for <- me gnomey-gerbil next
 			begin 75 %chance while <- me gnomey-gerbil repeat
 		then
@@ -1904,7 +1904,7 @@ last to main-event-mission-character
 
 	// Either gerbils or PQ guy
 	90 %chance if
-		<- me gnomey-gerbil
+		<- me gnomey-gerbil 
 	else
 		<- me gnomey-pq-guy
 		1 <- me .zombietype!
@@ -1980,7 +1980,7 @@ road{ 0 value stampuser-countdown }
 	5 <- chara .fitness!
 	0 <- chara .female!
 
- 	113 <- chara .specialtype!
+ 	113 <- chara .specialtype! 
 	WEAPON_BOXING <- chara .weapon_default!
 	2 <- chara .headoff.y!
 
@@ -1989,7 +1989,7 @@ road{ 0 value stampuser-countdown }
 : .stampcommon args( chara )
 	<- chara .stampuserify
 	6 <- chara .fitness!
-	<- chara .notake
+	<- chara .notake 
 	<- chara .nocarry
 	<- chara .nopickups
 	2 <- chara .vitality!
@@ -2002,7 +2002,7 @@ road{ 0 value stampuser-countdown }
 
 	<- chara .stampcommon
 
- 	114 <- chara .specialtype!
+ 	114 <- chara .specialtype! 
 
 	"S Doggy Dog" <- chara .name!
 	"CharBro's iconic Stamp" <- chara .job!
@@ -2028,7 +2028,7 @@ road{ 0 value stampuser-countdown }
 	new-npc lt .character@ .tempsdog
 	<- charbro lt-to-thing drift
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 ;
 
 : charbropoof sdogsummon lt mission{ .smokepoof } ;
@@ -2073,7 +2073,7 @@ CHARBRO-STAMPSAY shuffles var charbro-stampsay
 
 	"CharBro" <- chara .name!
 	"is a Stamp User. His catch phrase, roughly translated from Japanese, means 'Good Grief'." <- chara .job!
-
+	
 	' charbro-main-events <- chara .main_events!
 ;
 
@@ -2115,15 +2115,15 @@ CHARBRO-STAMPSAY shuffles var charbro-stampsay
 	0 <- chara .headoff.y!
 	-0.2 <- chara .speed_bonus!
 
- 	116 <- chara .specialtype!
+ 	116 <- chara .specialtype! 
 	WEAPON_KUNG <- chara .weapon_default!
-
+	
 	1 <- chara .vitality!
 	1 <- chara .health!
 
 	"ProPAIN" <- chara .name!
 	"is an embodiment of propane" <- chara .job!
-
+	
 	' propain-main-events <- chara .main_events!
 ;
 
@@ -2133,7 +2133,7 @@ CHARBRO-STAMPSAY shuffles var charbro-stampsay
 	<- chara 30 38 tempstamp-init
 
 	// Call this last to replace the main_events handler with our custom one
-	<- chara .propainify
+	<- chara .propainify 
 ;
 
 
@@ -2141,7 +2141,7 @@ CHARBRO-STAMPSAY shuffles var charbro-stampsay
 	new-npc lt .character@ .tempspropain
 	<- hheck lt-to-thing drift
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 ;
 
 
@@ -2192,11 +2192,11 @@ HHECK-STAMPSAY shuffles var hheck-stampsay
 	<- chara .stampuserify
 	6 <- chara .fitness!
 
- 	115 <- chara .specialtype!
+ 	115 <- chara .specialtype! 
 
 	"H. Heck" <- chara .name!
 	"est un Utilisateur de Tampon. Il pretend vendre du pro-pane et des accessoires pro-pane." <- chara .job!
-
+	
 	' hheck-main-events <- chara .main_events!
 ;
 
@@ -2206,7 +2206,7 @@ HHECK-STAMPSAY shuffles var hheck-stampsay
 
 	<- chara .stampcommon
 	0 <- chara .headoff.y!
-	<- chara .yestake
+	<- chara .yestake 
 
  	117 <- chara .specialtype!
 	WEAPON_POKIN <- chara .weapon_default!
@@ -2228,7 +2228,7 @@ HHECK-STAMPSAY shuffles var hheck-stampsay
 	new-npc lt .character@ .tempbdog
 	<- ziggy lt-to-thing drift
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 ;
 
 : ziggypoof bdogsummon lt mission{ .smokepoof } ;
@@ -2256,13 +2256,13 @@ HHECK-STAMPSAY shuffles var hheck-stampsay
 ;
 
 : .ziggify args( chara )
-
+	
 	<- chara .doggify
 	<- chara statmod{ .superdog }
 	6 <- chara .wits!
-
+	
 	"Ziggy" <- chara .name!
-	"est un Utilisateur de Tampon et un chien. Les Tampons sont des manifestations de puissance psychique intense, mais ils frappent surtout des trucs." <- chara .job!
+	"est un Utilisateur de Tampon et un chien. Les Tampons sont des manifestations de puissance psychique intense, mais ils frappent surtout des trucs." <- chara .job!	
 	' ziggy-main-events <- chara .main_events!
 ;
 
@@ -2275,7 +2275,7 @@ HHECK-STAMPSAY shuffles var hheck-stampsay
 	new-npc lt .character@ .tempnugs
 	<- efudd lt-to-thing drift
 	lt .character@ .nopickups
-	\ stomach : nopickups for temp chars
+	\ stomach : nopickups for temp chars 
 ;
 
 : efuddpoof nugssummon lt mission{ .smokepoof } ;
@@ -2324,9 +2324,9 @@ EFUDD-STAMPSAY shuffles var efudd-stampsay
 
 	"E*FUDD" <- chara .name!
 	"est peut-etre l'utilisateur de Tampon ultime, et il se passe quelque chose de tres bizarre avec sa tete/coiffure." <- chara .job!
-
+	
 	' efudd-main-events <- chara .main_events!
-
+	
 ;
 
 118 is-specialchar: .efudd?
@@ -2334,15 +2334,15 @@ EFUDD-STAMPSAY shuffles var efudd-stampsay
 : jackham-main-events ( teid ) args( chara eventid )
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
-		<- chara WEAPON_EJHAMMER <- chara .weapona@ = if
+		<- chara WEAPON_EJHAMMER <- chara .weapona@ = if 
 			<- chara .stackeda@ 15 + <- chara .stackeda!
 			<- chara .stackeda@ 60 > if 60 <- chara .stackeda! then
 		then;
-		<- chara WEAPON_EJHAMMER <- chara .weaponb@ = if
+		<- chara WEAPON_EJHAMMER <- chara .weaponb@ = if 
 			<- chara .stackedb@ 15 + <- chara .stackedb!
 			<- chara .stackedb@ 60 > if 60 <- chara .stackedb! then
 		then;
-		<- chara WEAPON_EJHAMMER <- chara .weaponc@ = if
+		<- chara WEAPON_EJHAMMER <- chara .weaponc@ = if 
 			<- chara .stackedb@ 15 + <- chara .stackedc!
 			<- chara .stackedb@ 60 > if 60 <- chara .stackedc! then
 		then;
@@ -2371,7 +2371,7 @@ jackham-picker-base shuffles var jackham-picker
 	WEAPON_EJHAMMER <- chara .weapona!
 	jackham-pick <- chara .weaponb! jackham-pick <- chara .weaponc!
 	60 <- chara .stackeda!
-	1 <- chara .weapon_nodropa!
+	1 <- chara .weapon_nodropa!	
 	5 <- chara .strength!
 	4 <- chara .fitness!
 	0 <- chara .attitude!
@@ -2387,7 +2387,7 @@ jackham-picker-base shuffles var jackham-picker
 	WEAPON_PUKEYBALL <- char .weaponb@ = if <- char .stackedb@ 0= if 1 else <- char .stackedb@ then + then
 	WEAPON_PUKEYBALL <- char .weaponc@ = if <- char .stackedc@ 0= if 1 else <- char .stackedc@ then + then
 ;
-: team-has-pukeyballs? 0 ' pukeyball-counter foreach-team-char
+: team-has-pukeyballs? 0 ' pukeyball-counter foreach-team-char 
 	WEAPON_PUKEYBALL trunk.weapon@ +
 	dup MAX_PUKEYBALL_COUNT >= if true else false then swap " pukeyballs" .. print ;
 
@@ -2402,13 +2402,13 @@ defer get-brckmon // see /events/sc/omentum.df
 		1 <- chara .charm! 1 <- chara .party!
 	then;
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> ?;
-
+	
 	THING_EVENT_WAS_HIT
 	?(
 		<- chara .dead? 0?;
 		0 <- thing .timer! 0 <- thing .events! // 0 <- chara .main_events!
 	);
-
+	
 	THING_EVENT_TIMER
 	?(
 		<- chara .charm@ ?;
@@ -2493,16 +2493,16 @@ defer get-brckmon // see /events/sc/omentum.df
 : .brckify
 	125 over .specialtype! 0 over .specialmode! 0 over .female!
 	' brck-main-events over .main_events!
-
+	
 	2 over .wits! 6 over .attitude! 2 4 rnd over .composure! 6 over .loyalty!
 	4 over .strength! 1 over .fitness! 0 over .shooting!
 	0 over .mechanical! 0 over .medical!
-
+	
 	dup brcknamer
 	($ "doit trouver des " .. "belles nanas" fbold .. " au Canada." $) over .job!
 	WEAPON_FRYING over .weapona! 1 over .ai.prefer_weapon_slot!
 	WEAPON_PUKEYBALL over .weaponb! 9 over .stackedb!
-
+	
 	0 over .charm!
 	0 over .ai.wander_chance!
 	dup .thing@ dup if
@@ -2523,7 +2523,7 @@ defer get-brckmon // see /events/sc/omentum.df
 	122 over .specialtype! 0 over .specialmode! 1 over .female!
 	2 4 rnd over .wits! 2 4 rnd over .attitude! 2 4 rnd over .composure! 6 over .loyalty!
 	0 over .strength! 0 over .fitness! 0 over .shooting! 0 over .mechanical! 0 over .medical!
-
+	
 	"Carter" over .name!
 	"fait toujours plus de cartes !" over .job!
 	drop
@@ -2575,10 +2575,10 @@ defer get-brckmon // see /events/sc/omentum.df
 
 
 
-\ Q update
+\ Q update 
 \ RPG mode powerups
-
-
+ 
+ 
  \ Gamemode text colours - move to more fitting file later
 
 : ORANGE GREEN ROLLCLR .. ;
@@ -2595,11 +2595,11 @@ defer get-brckmon // see /events/sc/omentum.df
 : PINKFLASH2 YELLOW BWFLASH .. ; // a softer pink flash
 : ICY PINKFLASH2 BWFLASH .. ; // light blue and black!
 
-
+ 
  : team-dex args( chara )
 	1 STAT_DEXTERITY <- chara .bonus+
  ;
-
+ 
  : dexup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if
@@ -2609,7 +2609,7 @@ defer get-brckmon // see /events/sc/omentum.df
 		then
 	then
  ;
-
+ 
  : dexup
 	spawn
 	weapons_base_id 313 + lt .spriteid!
@@ -2621,11 +2621,11 @@ defer get-brckmon // see /events/sc/omentum.df
 	90 lt .angle!
 
 ;
-
+ 
   : team-fit args( chara )
 	1 STAT_FITNESS <- chara .bonus+
  ;
-
+ 
  : fitup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if
@@ -2635,7 +2635,7 @@ defer get-brckmon // see /events/sc/omentum.df
 		then
 	then
  ;
-
+ 
  : fitup
 	spawn
 	weapons_base_id 314 + lt .spriteid!
@@ -2651,7 +2651,7 @@ defer get-brckmon // see /events/sc/omentum.df
   : team-str args( chara )
 	1 STAT_STRENGTH <- chara .bonus+
  ;
-
+ 
  : strup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if
@@ -2661,7 +2661,7 @@ defer get-brckmon // see /events/sc/omentum.df
 		then
 	then
  ;
-
+ 
  : strup
 	spawn
 	weapons_base_id 315 + lt .spriteid!
@@ -2673,11 +2673,11 @@ defer get-brckmon // see /events/sc/omentum.df
 	90 lt .angle!
 
 ;
-
+ 
    : team-sht args( chara )
 	1 STAT_SHOOTING <- chara .bonus+
  ;
-
+ 
  : shtup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if
@@ -2687,7 +2687,7 @@ defer get-brckmon // see /events/sc/omentum.df
 		then
 	then
  ;
-
+ 
  : shtup
 	spawn
 	weapons_base_id 316 + lt .spriteid!
@@ -2699,11 +2699,11 @@ defer get-brckmon // see /events/sc/omentum.df
 	90 lt .angle!
 
 ;
-
+ 
    : team-med args( chara )
 	1 STAT_MEDICAL <- chara .bonus+
  ;
-
+ 
  : medup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if
@@ -2713,7 +2713,7 @@ defer get-brckmon // see /events/sc/omentum.df
 		then
 	then
  ;
-
+ 
  : medup
 	spawn
 	weapons_base_id 317 + lt .spriteid!
@@ -2729,7 +2729,7 @@ defer get-brckmon // see /events/sc/omentum.df
    : team-mech args( chara )
 	1 STAT_MECHANICAL <- chara .bonus+
  ;
-
+ 
  : mechup-events args( me eventid )
 	<- eventid THING_EVENT_OVERLAP = if
 		<- me .overlapper .typeid@ THING_HUMAN = if

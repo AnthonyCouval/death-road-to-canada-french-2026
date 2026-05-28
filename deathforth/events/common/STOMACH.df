@@ -131,145 +131,145 @@ endcase
 ;
 
 : bayonet_lines 1 20 rnd case  
-	1 of "ESSAIE DE SUIVRE~" endof
-	2 of "UN PROBLEME ?~" endof
-	3 of "TROP RAPIDE ?~" endof
-	4 of "I'M OUTPACING YOU!~" endof
-	5 of "FAIS PLUS D'EFFORTS !~" endof
-	6 of "ALLEZ~" endof
-	7 of "BON SANG~" endof
-	8 of "JE SUIS VRAIMENT FORTE~" endof
-	9 of "RECOMMENCE !~" endof
-	10 of "TROP RAPIDE !~" endof
-	11 of "REGARDE-MOI ALLER !~" endof
-	12 of "Oups !" endof
-	13 of "Hehe, oups !~" endof
-	14 of "IL VA FALLOIR ALLER PLUS VITE QUE CA !" endof
-	15 of "SUIS-MOI !~" endof
-	16 of "SMASH!~" endof
-	17 of "BASH!~" endof
-	18 of "I'M SO GOOD~" endof
-	19 of "TU VOUDRAIS ETRE AUSSI RAPIDE !~" endof
-	20 of "BAY-OH-NETTI!~" endof
+	1 of "ESSAIE DE SUIVRE~" endof 
+	2 of "UN PROBLEME ?~" endof 
+	3 of "TROP RAPIDE ?~" endof 
+	4 of "I'M OUTPACING YOU!~" endof 
+	5 of "FAIS PLUS D'EFFORTS !~" endof 
+	6 of "ALLEZ~" endof 
+	7 of "BON SANG~" endof 
+	8 of "JE SUIS VRAIMENT FORTE~" endof 
+	9 of "RECOMMENCE !~" endof 
+	10 of "TROP RAPIDE !~" endof 
+	11 of "REGARDE-MOI ALLER !~" endof 
+	12 of "Oups !" endof 
+	13 of "Hehe, oups !~" endof 
+	14 of "IL VA FALLOIR ALLER PLUS VITE QUE CA !" endof 
+	15 of "SUIS-MOI !~" endof 
+	16 of "SMASH!~" endof 
+	17 of "BASH!~" endof 
+	18 of "I'M SO GOOD~" endof 
+	19 of "TU VOUDRAIS ETRE AUSSI RAPIDE !~" endof 
+	20 of "BAY-OH-NETTI!~" endof 
 	endcase
-;
+; 
 
-: bayonet-thing-events args( me eventid )
+: bayonet-thing-events args( me eventid ) 
 
-	<- eventid THING_EVENT_DIED = if
+	<- eventid THING_EVENT_DIED = if 
 		"BAYONETTI...BAYO-MORTE-TTI..." <- me .yellmsglong
-	then
+	then 
 
-	<- eventid THING_EVENT_DID_HIT = if \ if i hit
-		<- me .weapon_slot_using@ 2 = if \ and am using the combo slot
-			<- me .character@ .weapon_nodropc@ 1 = if \ and still have a combo slot, even
-				<- me .action_cooldown@ 0 = if \ and havent changed recently
-					<- me .just_hit_id@ #thing .hitpoints@ 1 < if \ and killed the target
+	<- eventid THING_EVENT_DID_HIT = if \ if i hit 
+		<- me .weapon_slot_using@ 2 = if \ and am using the combo slot 
+			<- me .character@ .weapon_nodropc@ 1 = if \ and still have a combo slot, even 
+				<- me .action_cooldown@ 0 = if \ and havent changed recently 
+					<- me .just_hit_id@ #thing .hitpoints@ 1 < if \ and killed the target 
 						<- me .anim.weapon_counter@ <- me .action_cooldown! \ GIVE ME A NEW WEAPON!!!!
-						50 %chance if new_bay_wep_heavy <- me .character@ .weaponc! else new_bay_wep_light <- me .character@ .weaponc! then
+						50 %chance if new_bay_wep_heavy <- me .character@ .weaponc! else new_bay_wep_light <- me .character@ .weaponc! then 
 						<- me fire_bayonettabolts
-						33 %chance if
-							50 %chance if
-								RED bayonet_lines .. <- me .yellmsg
+						33 %chance if 
+							50 %chance if 
+								RED bayonet_lines .. <- me .yellmsg 
 							else
 								BLUE bayonet_lines .. <- me .yellmsg
-							then
+							then 
+						
+						then 
+					then 
+				then 
+			then 
+		then 
+	then 
+; 	
 
-						then
-					then
-				then
-			then
-		then
-	then
-;
 
-
-: bayonet-main-events args( chara eventid )
+: bayonet-main-events args( chara eventid ) 
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
 		<- chara .location@ 1 = if
 			<- chara .thing@ swap ( teid ) bayonet-thing-events
-	then
-;
+	then 
+; 
 
-: .bayonetta_ify args( chara )
-
+: .bayonetta_ify args( chara ) 
+	
 	"Bayonetti" <- chara .name!
 	6 <- chara .strength!
 \	4 <- chara .shooting!
 	6 <- chara .fitness!
-	2 <- chara .health!
-	2 <- chara .vitality!
-	3 <- chara .carrying.slot_count!
-	"decollerait probablement comme une fusee si elle continuait a claquer ses talons ensemble." <- chara .job!
+	2 <- chara .health! 
+	2 <- chara .vitality! 
+	3 <- chara .carrying.slot_count! 
+	"decollerait probablement comme une fusee si elle continuait a claquer ses talons ensemble." <- chara .job! 
 	6 <- chara .loyalty!
-	1 <- chara .dexterity!
-	WEAPON_MEGAMAUL <- chara .weaponc!
-	' bayonet-main-events <- chara .main_events!
-
-	WEAPON_THE1911 <- chara .weapona!
-	WEAPON_THE1911 <- chara .weaponb!
-
-	1 <- chara .weapon_nodropc!
-
-	0.5 <- chara .bounceval! \ skip & saunter about
-
-	2 <- chara .wits!
+	1 <- chara .dexterity! 
+	WEAPON_MEGAMAUL <- chara .weaponc! 
+	' bayonet-main-events <- chara .main_events! 
+	
+	WEAPON_THE1911 <- chara .weapona! 
+	WEAPON_THE1911 <- chara .weaponb! 
+	
+	1 <- chara .weapon_nodropc! 
+	
+	0.5 <- chara .bounceval! \ skip & saunter about 
+	
+	2 <- chara .wits! 
 	4 <- chara .attitude!
-	2 <- chara .composure!
-
-	148 <- chara .specialtype!
+	2 <- chara .composure! 
+	
+	148 <- chara .specialtype! 
 	1 <- chara .female!
-	6 <- chara .morale!
+	6 <- chara .morale! 
 	"Pugnala" <- chara .perk!
-	"Vampire Survivor" <- chara .trait!
+	"Vampire Survivor" <- chara .trait! 
+	
+; 
 
-;
-
-\ todo: hiring event
-\ todo: dial ogg
+\ todo: hiring event 
+\ todo: dial ogg 
 
 
 
 \ -----------------------------------------------
 \ ----------------------------------------------
-\ ZEUS "SURELY NOT FROM DOTA2" STUFF BELOW
+\ ZEUS "SURELY NOT FROM DOTA2" STUFF BELOW 
 \ -----------------------------------------------
 \ -----------------------------------------------
 
 
 
-: zeus_yells 1 21 rnd case
-1 of "PUNY MORTALS..." endof
-2 of "TRIBUTE ONTO ME!" endof
-3 of "I AM YOUR SUPERIOR" endof
-4 of "BEHOLD, THE MIGHTY!" endof
-5 of "BEHOLD, ZEUS!" endof
-6 of "WAIT, YOU AREN'T MY WIFE" endof
-7 of "I AM YOUR DEITY! PAY RESPECT!" endof
-8 of "WANT TO DATE?" endof
-9 of "PATHETIC." endof
-10 of "DISAPPOINTING..." endof
-11 of "THIS IS YOUR 'EARTH'?" endof
-12 of "MY CURRENT, YOUR VEINS" endof
-13 of "BEHOLD...ZEUS!" endof
-14 of "MY POWER INCREASES!" endof
-15 of "AAHHH... A TRIBUTE." endof
-16 of "WITNESS A DEITY'S POWER!" endof
-17 of "YOUR PRAYER, ANSWERED" endof
-18 of "BY MY WHISKERS." endof
+: zeus_yells 1 21 rnd case 
+1 of "PUNY MORTALS..." endof 
+2 of "TRIBUTE ONTO ME!" endof 
+3 of "I AM YOUR SUPERIOR" endof 
+4 of "BEHOLD, THE MIGHTY!" endof 
+5 of "BEHOLD, ZEUS!" endof 
+6 of "WAIT, YOU AREN'T MY WIFE" endof 
+7 of "I AM YOUR DEITY! PAY RESPECT!" endof 
+8 of "WANT TO DATE?" endof 
+9 of "PATHETIC." endof 
+10 of "DISAPPOINTING..." endof 
+11 of "THIS IS YOUR 'EARTH'?" endof 
+12 of "MY CURRENT, YOUR VEINS" endof 
+13 of "BEHOLD...ZEUS!" endof 
+14 of "MY POWER INCREASES!" endof 
+15 of "AAHHH... A TRIBUTE." endof 
+16 of "WITNESS A DEITY'S POWER!" endof 
+17 of "YOUR PRAYER, ANSWERED" endof 
+18 of "BY MY WHISKERS." endof 
 19 of "THUNDEROUS APPLAUSE..." endof
-20 of "THUNDER-STRUCK!" endof
-21 of "I TAKETH AWAY." endof
+20 of "THUNDER-STRUCK!" endof 
+21 of "I TAKETH AWAY." endof 
 endcase
-;
+; 
 
 : aoe-damage args( me eventid )
-
+	
 	<- eventid THING_EVENT_TIMER = if
 		1 <- me .timer!
-
-		<- me .pos.z@ -40 > if
-
+		
+		<- me .pos.z@ -40 > if 
+		
 				14 for
 			<- me .pos
 				particle{
@@ -286,17 +286,17 @@ endcase
 					0 0.4 1 rgb!
 					}
 			next
-
+		
 		15 <- me .smashybits
 		0 <- me .spriteid!
 		0 <- me .hitpoints!
 		<- me silentkillit
 
-
+	
 		then
 	then
-
-
+	
+	
 	<- eventid THING_EVENT_BREAK = if
 			15 for
 			<- me .pos
@@ -314,31 +314,31 @@ endcase
 					0 0.4 1 rgb!
 					}
 			next
-
-
-		0 <- me .spriteid!
+	
+	
+		0 <- me .spriteid! 
 		0 <- me .hitpoints!
 		<- me silentkillit
-
+	
 	then
 ;
 
-: initiate_lightning args( me )
+: initiate_lightning args( me ) 
 
 
-		spawn special_objects96_base_id 5 + lt .spriteid! 100 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z!
-
+		spawn special_objects96_base_id 5 + lt .spriteid! 100 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z! 
+		
 		 1 lt .timer!
 		 1 lt .tileflags!
 		 1 lt .anim.info!
-		 1 lt .nocollide!
-		 0 lt .rad.x! 0 lt .rad.y!
+		 1 lt .nocollide! 
+		 0 lt .rad.x! 0 lt .rad.y! 
 		 -350 lt .pos.z!
 		 13 lt .vel.z!
-		 173 185 rnd lt .angle!
+		 173 185 rnd lt .angle!	
 		' aoe-damage lt .events!
-		<- me .vel lt .vel xyadd lt .vel!
-
+		<- me .vel lt .vel xyadd lt .vel! 
+	
 		<- me .pos lt .pos!
 		sfx{ thump 2 scale! 2.7 3.3 frnd pitch! 30 180 rnd a! 700 d! 120 r! }
 
@@ -352,14 +352,14 @@ endcase
 
 : zeus-thing-events args( me teid )
 
-	<- teid THING_EVENT_DIED = if
-		"OHHHH, JOURRRR TRAGIQUE !!!" <- me .yellmsglong
-	then
+	<- teid THING_EVENT_DIED = if 
+		"OHHHH, JOURRRR TRAGIQUE !!!" <- me .yellmsglong 
+	then 
 
-	<- teid THING_EVENT_DID_HIT = if
+	<- teid THING_EVENT_DID_HIT = if			
 
 	<- me .just_hit_id@ #thing .typeid@ THING_ZOMBIE = if
-
+	
 			6 7 rnd for
 			<- me .just_hit_id@ #thing dup .pos
 			particle{
@@ -377,86 +377,86 @@ endcase
 				0 0.7 1 rgb!
 			}
 			next
-
-			20 %chance if
+			
+			20 %chance if 
 				FLASHY zeus_yells .. <- me .yellmsg
-			then
-
-			33 %chance if
+			then 
+			
+			33 %chance if 
 			<- me .pos 600 things-in-xyrad
 				depths for i picks .zombie? if
 					\ i picks .pos <- me .pos xysub xymag print
-					i picks .pos <- me .pos xysub xymag 21 > if
-					i picks initiate_lightning
-						break
-					then then
+					i picks .pos <- me .pos xysub xymag 21 > if 
+					i picks initiate_lightning 	
+						break 
+					then then 
 				next drop
-			then
-
+			then 
+			
 			<- me .character@ .stackedc@ 101 < if
-
+			
 			weapondef{ <- me .wielded sel power@ } 2 * <- me .character@ .stackedc@ + <- me .character@ .stackedc!
-
+			
 			then
-
+			
 		then
 	then
-
+	
 
 ;
 
 : zeus-main-events ( teid ) args( chara eventid )
-
+	 	
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-
+	
 	 <- chara .thing@ swap ( teid ) zeus-thing-events
-
-
+	 
+	
 ;
 
-: .zeusify args( chara )
-
+: .zeusify args( chara ) 
+	
 	"Zeus" <- chara .name!
 	14 STAT_STRENGTH <- chara .bonus!
-	6 <- chara .strength!
-
-	' zeus-main-events <- chara .main_events!
-
-	-6 STAT_FITNESS <- chara .bonus!
-	6 <- chara .fitness!
-
-	4 <- chara .health!
-	4 <- chara .vitality!
-	"a ete bannie aux USA apres un incident disgracieux impliquant un orignal et son mari." <- chara .job!
-	0 <- chara .wits!
+	6 <- chara .strength! 
+	
+	' zeus-main-events <- chara .main_events! 
+	
+	-6 STAT_FITNESS <- chara .bonus! 
+	6 <- chara .fitness! 
+	
+	4 <- chara .health! 
+	4 <- chara .vitality! 
+	"a ete bannie aux USA apres un incident disgracieux impliquant un orignal et son mari." <- chara .job! 
+	0 <- chara .wits! 
 	0 <- chara .loyalty!
 
-	1 <- chara .weapon_nodropc!
-	WEAPON_ZEUSFIRE <- chara .weaponc!
-	WEAPON_SUNDER <- chara .weapon_default!
-
-	0 <- chara .female!
-
-
+	1 <- chara .weapon_nodropc! 
+	WEAPON_ZEUSFIRE <- chara .weaponc! 
+	WEAPON_SUNDER <- chara .weapon_default! 
+	
+	0 <- chara .female! 
+	
+	
 	3 <- chara .carrying.slot_count!
 
 	0 <- chara .attitude!
-	0 <- chara .composure!
+	0 <- chara .composure! 
+	
+	149 <- chara .specialtype! 
 
-	149 <- chara .specialtype!
-
-	6 <- chara .morale!
+	6 <- chara .morale! 
 	"Electric" <- chara .perk!
-	"Chiselled" <- chara .trait!
-
-;
+	"Chiselled" <- chara .trait! 
+	
+; 
 
 
 
 
 \ -----------------------------------------------
 \ ----------------------------------------------
-\ CAPTAIN "RUNS AROUND IN THE RAIN" MERENJA RAVEN STUFF BELOW
+\ CAPTAIN "RUNS AROUND IN THE RAIN" MERENJA RAVEN STUFF BELOW 
 \ -----------------------------------------------
 \ -----------------------------------------------
 
@@ -464,118 +464,118 @@ endcase
 
 : merenja-thing-events args( me teid )
 
-	<- teid THING_EVENT_DIED = if
-		"ENTERREZ-MOI...DANS UN SIPHON..." <- me .yellmsglong
-		\ Would have preferred a reference to Hanna, but oh well.
-		2 weather!
-		2 wind_force!
-	then
-
-	<- teid THING_EVENT_SWING = <- teid THING_EVENT_SHOOT = or if
-
+	<- teid THING_EVENT_DIED = if 
+		"ENTERREZ-MOI...DANS UN SIPHON..." <- me .yellmsglong 
+		\ Would have preferred a reference to Hanna, but oh well. 
+		2 weather! 
+		2 wind_force! 
+	then 
+	
+	<- teid THING_EVENT_SWING = <- teid THING_EVENT_SHOOT = or if 
+	
 		weather@ 0.1 > if
-			<- me .cooldown@ 0.6 * <- me .cooldown!
-		then;
-
-	map{ <- me .pos pos>tile tile@ } 0 = not if
-		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if
-
-			<- me .cooldown@ 0.6 * <- me .cooldown!
-
+			<- me .cooldown@ 0.6 * <- me .cooldown! 
+		then; 
+		
+	map{ <- me .pos pos>tile tile@ } 0 = not if 
+		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if 
+			
+			<- me .cooldown@ 0.6 * <- me .cooldown! 
+		
 		then then;
-
-	then
+	
+	then 
 
 	<- teid THING_EVENT_TIMER = if
-
-		1 <- me .timer!
-	<- me .character@ .health@ 1 < if then;
-
-	weather@ 0 > if
-		HAS_YAPPED 0 = if
-			<- me .inside_id@ 0 = if
+	
+		1 <- me .timer! 
+	<- me .character@ .health@ 1 < if then; 
+	
+	weather@ 0 > if 
+		HAS_YAPPED 0 = if 
+			<- me .inside_id@ 0 = if 
 				"Ah, c'est comme etre en mer a nouveau !" <- me .yellmsglong
 				1 to HAS_YAPPED
-			then
-		then
-	then
-
+			then 
+		then 
+	then 
+	
 	weather@ 0.1 > if
-		<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++
-		0.25 <- me .character@ .speed_bonus!
-	then;
-
-	map{ <- me .pos pos>tile tile@ } 0 = not if
-		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if
-
-			<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++
-			0.25 <- me .character@ .speed_bonus!
-
+		<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++ 
+		0.25 <- me .character@ .speed_bonus! 
+	then; 
+	
+	map{ <- me .pos pos>tile tile@ } 0 = not if 
+		map{ <- me .pos pos>tile tile@ .wet@ } 1 = if 
+			
+			<- me .fatigue@ -1 + 0 127 clamp <- me .fatigue! \ stamina regen ++ 
+			0.25 <- me .character@ .speed_bonus! 
+		
 			else
+		
+			0.05 <- me .character@ .speed_bonus! 
 
-			0.05 <- me .character@ .speed_bonus!
-
-			then
-		then;
-	then
+			then 
+		then;		
+	then 
 
 ;
 
 
 : merenja-main-events ( teid ) args( chara eventid )
 
-	<- eventid MAIN_EVENT_MISSION_START = if
+	<- eventid MAIN_EVENT_MISSION_START = if 
 		0 to HAS_YAPPED
-	then
-
+	then 
+	 	
 	<- eventid MAIN_EVENT_MISSION_CHARACTER_THING_EVENT <> if then;
-
-	<- chara .location@ 1 = if
+	
+	<- chara .location@ 1 = if 
 		1 <- chara .thing@ .timer!
 		<- chara .thing@ swap ( teid ) merenja-thing-events
-	then
+	then 
 	 \ I can't forego a timer here ... sorry modders.
-
+	
 ;
 
-: .ravenify args( chara )
-
+: .ravenify args( chara ) 
+	
 	"Admiral" <- chara .name!
 
 	5 <- chara .shooting!
-	5 <- chara .mechanical!
-
-	' merenja-main-events <- chara .main_events!
-
-	"se demande si ce sentiment d'angoisse en se regardant dans le miroir disparaitra un jour." <- chara .job!
-	6 <- chara .wits!
+	5 <- chara .mechanical! 
+	
+	' merenja-main-events <- chara .main_events! 
+	
+	"se demande si ce sentiment d'angoisse en se regardant dans le miroir disparaitra un jour." <- chara .job! 
+	6 <- chara .wits! 
 	6 <- chara .loyalty!
 	6 <- chara .composure!
 	0 <- chara .attitude!
-	1 <- chara .female!
-
+	1 <- chara .female! 
+	
 	3 <- chara .carrying.slot_count!
-
-	150 <- chara .specialtype!
-
-	WEAPON_JAG <- chara .weapona!
-	WEAPON_MERENJAHARP <- chara .weaponb!
-	WEAPON_SUPPLYDROP <- chara .weaponc!
-	20 LOOT_SHOTGUN_SHELL <- chara .lootamt!
+	
+	150 <- chara .specialtype! 
+	
+	WEAPON_JAG <- chara .weapona! 
+	WEAPON_MERENJAHARP <- chara .weaponb! 
+	WEAPON_SUPPLYDROP <- chara .weaponc! 
+	20 LOOT_SHOTGUN_SHELL <- chara .lootamt! 
 	\ IM LOCKED AND LOADEDDDDDDDDD
 
-	6 <- chara .morale!
+	6 <- chara .morale! 
 	"Alert" <- chara .perk!
-	"Waterborne" <- chara .trait!
+	"Waterborne" <- chara .trait! 
+	
+	1 weather! \ Rain follows Merenja wherever she goes 
+; 
 
-	1 weather! \ Rain follows Merenja wherever she goes
-;
 
 
+cyoa{ 
 
-cyoa{
-
-\ Admiral Raven
+\ Admiral Raven 
 
 cyoa-bridge: camp-admiral-recruit
     ricon 4 recruitee .morale! clear-cyoa
@@ -714,7 +714,7 @@ cyoa: camp-rec-bayonetta
 	6 <- chara .loyalty!
 	"Deciduous" <- chara .perk!
 	"Developer" <- chara .trait!
-	"is mostly here on accident after 'quit-to-title' stopped working for her." <- chara .job!
+	"est la presque par accident apres que 'quitter-au-titre' ait cesse de fonctionner pour elle." <- chara .job!
 	"Hazel" <- chara .name!
 ;
 

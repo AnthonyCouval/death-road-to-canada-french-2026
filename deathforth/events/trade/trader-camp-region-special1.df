@@ -55,7 +55,7 @@ cyoa: tradelab-bluebot
 cyoa: tradelab-redbot
 	iicon "Robot Menacant" cyoa-title!
 	"Ce robot semble intense.
-	Ses griffes sont menaçantes. Ce doit etre un garde." text!
+	Ses griffes sont menacantes. Ce doit etre un garde." text!
 	"1. BEEP 2. HONK
 	3. I AM SELLING A ROBIT
 	4. MAXIMUM OVERPOWER" rbold +crtext
@@ -86,7 +86,7 @@ cyoa-choice: tradelab-doodad-sale
 
 cyoa-bridge: tradelab-recruit
 	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
-	20 recruit-yes-food "Je suis prete a electrocuter des trucs ! J'ai apporte mon rechargeur solaire." pbold +crtext
+	20 recruit-yes-food "Je suis prete a electrocuter des trucs ! J'ai apporte mon rechargeur solaire." pbold +crtext 
 	recruitee .mechanicREV recruitee .witsREV recruitee .shootingREV
 ;
 

@@ -7,17 +7,17 @@ cyoa: gym-sweaty
 	clear-cyoa badfx
 ;
 
-: gym-barbell-end
+: gym-barbell-end 
 	pchar .dead? if ($ cname .. " meurt a cause de cet incident avec les halteres." $) +crtext
 	else
 		strengthREV "Une heure s'est ecoulee pendant cette seance d'entrainement impromptue." +crtext
 	then clear-cyoa ' gym-sweaty this-cyoa o'clock@ 1 + o'clock
-		team-nearby? not if
+		team-nearby? not if	
 			($ "Personne n'etait la pour defendre " .. pname .. " pendant l'entrainement, alors " .. phe .. " a du repousser des zombies entre les series. Attention !" $) +crtext
-			6 11 rnd roomgen{ .zombspawn }
+			6 11 rnd roomgen{ .zombspawn } 
 		then
 	;
-cyoa-choice: gym-barbell-1
+cyoa-choice: gym-barbell-1 
 	($ cname .. " retire la plupart des poids de la barre puis commence a " .. "POUSSER DE LA FONTE" pbold .. " avec la barre presque vide." $) cyoa-text!
 	cstrength- if
 		($ "C'est quand meme un bon entrainement pour " .. chim .. ". Et rien de casse ni de rompu dans le processus !" $) +crtext
@@ -40,7 +40,7 @@ cyoa-choice: gym-barbell-2
 ;
 cyoa-choice: gym-barbell-3
 	($ cname .. " tente de soulever la barre completement surchargee. " .. "
-	SI LA BARRE NE PLIE PAS TU FAIS SEMBLANT" fbold .. "
+	SI LA BARRE NE PLIE PAS TU FAIS SEMBLANT" fbold .. " 
 	-- Sagesse Ancestrale du Culturiste" $) cyoa-text!
 	cstrength+ if
 		($ cHe .. " la souleve, bien que ses yeux aient failli lui sortir de la tete." $) +crtext
@@ -70,17 +70,17 @@ cyoa: gym-barbell
 	choice( "Laisser ca pour l'instant" )choice
 ;
 
-: gym-bike-end
+: gym-bike-end 
 	pchar .dead? if ($ cname .. " meurt sur le velo d'appartement par pur epuisement." $) +crtext
 	else
 		fitnessREV "Une heure s'est ecoulee pendant cette seance d'exercice." +crtext
 	then clear-cyoa ' gym-sweaty this-cyoa o'clock@ 1 + o'clock
-	team-nearby? not if
+	team-nearby? not if	
 			($ "Personne n'etait la pour defendre " .. pname .. " pendant l'entrainement, alors " .. phe .. " a du repousser des zombies en pedalant. Attention !" $) +crtext
-			6 11 rnd roomgen{ .zombspawn }
+			6 11 rnd roomgen{ .zombspawn } 
 		then
-	;
-cyoa-choice: gym-bike-1
+	; 
+cyoa-choice: gym-bike-1 
 	($ cname .. " regle le velo sur " .. "ROUTE PAVEE SUR LA LUNE" pbold .. " et commence a bouger ses jambes." $) cyoa-text!
 	cfitness- if
 		($ "C'est un bon exercice pour " .. chim .. ", vu la condition physique au plus bas." $) +crtext

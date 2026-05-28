@@ -268,7 +268,7 @@ roomgen{
 
 	opprecruit-in .lynnify
 	opprecruit-in .chickenify "Rebotar-rebotar " rename 2 movex
-	opprecruit-in .pqify "The punchzerker is an elite character, specialized in punches." rename 4 movex
+	opprecruit-in .pqify "Le punchzerker est un personnage d'elite, specialise dans les coups de poing." rename 4 movex
 	opprecruit-in .skelify "Sin undertale: ninguna referencia a undertale en" rename -2 movex
 	opprecruit-in .grimreaperify -4 movex
 
@@ -384,7 +384,7 @@ trade-camp-reset
 	opprecruit .firemanify -2 movey -2 movex
 	opprecruit .unclesamify -2 movey -4 movex
 
-	opprecruit .knightify "End of the demonstration." rename 2 movey
+	opprecruit .knightify "Fin de la demonstration." rename 2 movey
 	opprecruit .rollerify 2 movey 2 movex
 	opprecruit .cavemanify 2 movey 4 movex
 	opprecruit .gigaguyify 2 movey -2 movex

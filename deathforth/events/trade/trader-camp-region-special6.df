@@ -74,7 +74,7 @@ cyoa-choice: prepperturret-hack
 			"Etonnamment, ca marche vraiment !" +crtext prepperturret-grab
 		else
 			($ "Ca marche aussi bien qu'on pouvait s'y attendre. De plus, " .. pname .. " prend une sacree decharge." $) +crtext bitefx sting-- morale--
-		then strengthREV
+		then strengthREV 
 	then
 ;
 
@@ -139,7 +139,7 @@ cyoa-choice: trade-p2-3
 	" .. "Je l'ai vendu avec une enorme remise parce que j'y ai accidentellement mis du beurre de cacahuete dessus." pbold $) cyoa-text! goodfx
 	1 WEAPON_MINIGUN trunk.weapon+ -35 trunk-food+ someicon ' pt2-3 ++
 ;
-
+	
 cyoa-choice: trade-p2-2
 	($ Thegroup .. " achete le " .. "BIG DAWG" rbold .. ". C'est un fusil a pompe sur mesure unique au monde ! Chaque tir est une enorme decharge qui ecrabouille les zombies." $) cyoa-text! goodfx ' pt2-2 ++
 	1 WEAPON_DAWG trunk.weapon+ -20 trunk-food+ picon
@@ -180,7 +180,7 @@ cyoa-choice: trade-p3-3
 	" .. "Parfois, je l'asperge meme sur ma nourriture." pbold $) cyoa-text! goodfx
 	10 WEAPON_HEALSPRAY trunk.weapon+ -10 trunk-food+ someicon ' pt3-3 ++
 ;
-
+	
 cyoa-choice: trade-p3-2
 	($ Thegroup .. " achete un " .. "COUTEAU DE SURVIE" rbold .. ". Il est leger, facile a manier meme epuise, et peut toucher deux zombies d'un seul coup." $) cyoa-text! goodfx ' pt3-2 ++
 	1 WEAPON_SURVKNIFE trunk.weapon+ -6 trunk-food+ picon
@@ -232,17 +232,17 @@ cyoa-choice: deltarecruit-name1
 ;
 
 cyoa-choice: deltarecruit-name2
-	"Harry Hamm" deltrarecruit-rename
-	$( rname .. " etait l'un des noms de chien les plus populaires, juste avant la Zombocalypse. A ne pas confondre avec le tres puissant nom humain 'Harry Jambon'." $) +crtext
+	"Harry Hamm" deltrarecruit-rename 
+	$( rname .. " etait l'un des noms de chien les plus populaires, juste avant la Zombocalypse. A ne pas confondre avec le tres puissant nom humain 'Harry Jambon'." $) +crtext 
 ;
 
 cyoa-choice: deltarecruit-name3
-	cchar delta-cool deltrarecruit-rename
+	cchar delta-cool deltrarecruit-rename 
 	($ "Ce nom est encore plus cool, d'une certaine facon." $) +crtext
 ;
 
 cyoa-choice: deltarecruit-name4
-	cchar delta-good deltrarecruit-rename
+	cchar delta-good deltrarecruit-rename 
 	"Quel super nom !" +crtext
 	($ pname .. " est peu satisfait." $) +crtext
 	pchar .morale--
@@ -260,7 +260,7 @@ cyoa-bridge: deltarecruit-go
 	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
 	($ "Desormais sans mission, DELTA decide de suivre un nouveau maitre...... VOUS..........." rbold $) cyoa-text!
 	-10 trunk-food+ goodfx
-
+	
 	team-full? if
 		($ "Le groupe est plein.
 		Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) +crtext
@@ -271,7 +271,7 @@ cyoa-bridge: deltarecruit-go
 		choice( "NON" )choice
 		choice( "OUI" )choice: deltarecruit-name
 	then
-
+	
 	WEAPON_SHOTGUN recruitee .weaponb! 	20 LOOT_SHOTGUN_SHELL recruitee .lootamt!
 ;
 

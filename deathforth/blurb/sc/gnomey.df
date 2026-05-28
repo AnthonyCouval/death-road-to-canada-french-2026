@@ -27,7 +27,7 @@
 	: GNOMEY-oneline19 "Je suis Gnomey, tu me connais pas ???" ;
 	: GNOMEY-oneline20 "Frapper des choses epuise ton Energie de Coup [EC]. Fais avec !" ;
 	: GNOMEY-oneline21 "Quelqu'un pourrait m'aider a augmenter mon NIVEAU DE GNOMES en accomplissant des QUETES ?" ;
-	: GNOMEY-oneline22 "Les trois secrets de la vie ! Frapper, Manger, Chapeau Fashion." ;
+	: GNOMEY-oneline22 "Les trois secrets de la vie ! Frapper, Manger, Mode Chapeau." ;
 	: GNOMEY-oneline23 "Why won't anyone help me with my arbitrary QUESTS?" ;
 	: GNOMEY-oneline24 "GLOIRE AUX GNOMES !" ;
 	: GNOMEY-oneline25 "Seul toi peux augmenter mon NIVEAU DE GNOME en accomplissant des QUETES DE GNOMES." ;

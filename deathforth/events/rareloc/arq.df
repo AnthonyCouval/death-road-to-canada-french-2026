@@ -33,7 +33,7 @@ cyoa: arq-toilet-cyoa
 	pchar .arq? if
 		"Rien d'Inhabituel Ici" cyoa-title!
 		"C'est des toilettes." cyoa-text!
-		($ pname .. " doesn't need to use it right now." $) +crtext
+		($ pname .. " n'a pas besoin de l'utiliser pour l'instant." $) +crtext
 	then;
 	"ENFIN !" cyoa-title!
 	($ pname .. " n'en croit pas ses yeux : " .. "De vraies toilettes qui fonctionnent !
@@ -55,7 +55,7 @@ cyoa: arq-bath-cyoa
 	pchar .arq? if
 		"Rien d'Inhabituel Ici" cyoa-title!
 		"C'est une douche." cyoa-text!
-		($ pname .. " doesn't need to use it right now." $) +crtext
+		($ pname .. " n'a pas besoin de l'utiliser pour l'instant." $) +crtext
 	then;
 	"Une Douche Propre" cyoa-title!
 	($ "Il y a une douche avec de l'eau ici. Incroyable !
@@ -79,7 +79,7 @@ cyoa: arq-bath-cyoa
 ;
 }
 
-"
+" 
 :map 1
 :tags arqroom
 :scriptA arq-fridge
@@ -87,8 +87,8 @@ cyoa: arq-bath-cyoa
 :scriptC arq-bed
 :scriptD arq-table
 :size 11 10
-:off 4 0
-:tiles
+:off 4 0 
+:tiles 
 22222222222
 23333333332
 211A111B112
@@ -147,28 +147,28 @@ cyoa: arq-talk
 : .arq dup .arqify .thing@ cyoa{ ' arq-talk swap .cyoa! } ;
 
 locdef{
-
+		
 location
 		tags: arqhouse
 		max-rooms: 2
 		entry-tags: arqroom
 		script: set-theme-house
 		pre-script: set-theme-house
-
+		
 		: arqroom-script
 			w random-edge-door "arqtoilet" only-with-door
 			still-npc .arq
-		;
+		;	
 		room-choice: arqroom
 			room-weight: 300
 			room-count: 1
 			room-post-script: arqroom-script
 			filter-only
-
+		
 		room-choice: arqtoilet
 			room-script: nad floor-bath
 			room-post-script:
 			room-weight: 1
 			room-count: 1
-
+			
 }

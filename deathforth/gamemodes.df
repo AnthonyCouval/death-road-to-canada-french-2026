@@ -76,7 +76,7 @@ gamedef{
 	15 recruitee .haircolour!
 	1234512345 recruitee .seed!
 	"IS KEPA" recruitee .trait!
-	($ "promises you a " .. "'cheevo'" fbold .. " if you get him to Canada." $) recruitee .job!
+	($ "vous promet une " .. "'cheevo'" fbold .. " si vous l'amenez au Canada." $) recruitee .job!
 	"GAME DESIGNER" recruitee .perk!
 	WEAPON_CARDBOARD recruitee .weapona!
 	5 recruitee .shooting! 5 recruitee .strength! 3 recruitee .fitness!	2 recruitee .morale!

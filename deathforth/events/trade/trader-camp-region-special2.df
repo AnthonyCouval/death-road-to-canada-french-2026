@@ -40,7 +40,7 @@ cyoa: renfaire-light
 	Pour le chevalier avec un petit budget !" rbold text!
 	+cr foodamt
 		trunk-food 3 < if
-			"Le chevalier remarque ton manque de nourriture et te donne une dague gratuite !" +crtext
+			"Le chevalier remarque ton manque de nourriture et te donne une dague gratuite !" +crtext 
 			clear-cyoa 1 WEAPON_DAGGER trunk.weapon+ goodfx
 		then;
 		choice( "Partir pour l'instant" )choice
@@ -81,7 +81,7 @@ cyoa: renfaire-mid
 	Mes armements ne sont ni trop lourds ni trop legers.
 	Ils sont parfaits." rbold text! +cr foodamt
 		trunk-food 15 < if
-			"Tu n'as pas les moyens d'acheter quoi que ce soit a ce chevalier." +crtext
+			"Tu n'as pas les moyens d'acheter quoi que ce soit a ce chevalier." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		trunk-food 14 > rfbuy-mid-1 1 < and if
@@ -123,17 +123,17 @@ cyoa: renfaire-heavy
 	Si tu as les pieces...... et le courage....??" rbold text!
 	rfbuy-heavy-3 1 < if
 		"Le chevalier offre un deal special si tu achetes la Lame du Mega-Chevalier : " +crtext
-		"Seance de Force Offerte du Chevalier" rainbold +text
+		"Seance de Force Offerte du Chevalier" rainbold +text 
 	then +cr foodamt
 		trunk-food 15 < if
-			"Le chevalier se moque de ton manque de nourriture." +crtext
+			"Le chevalier se moque de ton manque de nourriture." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		trunk-food 14 > rfbuy-heavy-1 1 < and if
 			choice( "Acheter Hache Medievale - 15 nourriture" )choice: renfaire-heavy-1
 		then
 		trunk-food 29 > rfbuy-heavy-2 1 < and if
-			choice( "Acheter Puissante Claymore - 30 nourriture" )choice: renfaire-heavy-2
+			choice( "Acheter Puissant Claymore - 30 nourriture" )choice: renfaire-heavy-2
 		then
 		trunk-food 34 > rfbuy-heavy-3 1 < and if
 			choice( "Acheter Lame du Mega-Chevalier - 35 nourriture" )choice: renfaire-heavy-3
@@ -145,16 +145,16 @@ cyoa-choice: renfaire-armor-buy
 	" .. "Enfin ! Je peux quitter ce Ren Faire !" pbold $) text!
 	goodfx -40 trunk-food+ clear-cyoa
 	3 for pchar .vitality++ pchar .health++ next 53 pchar .specialbody! 0 interactee .character@ .specialbody!
-
+	
 ;
 
 cyoa: renfaire-armor
-	"Achat du titre de Chevalier" cyoa-title!
-	"J'en ai marre de ce jeu de role grandeur nature
+	"Achat de la Chevalerie" cyoa-title!
+	"J'en ai marre de tout ce LARP !
 	Je peux te vendre mon armure. Je n'ai pas le casque, donc tu ne seras pas entierement protege. Tu pourras quand meme encaisser beaucoup plus de degats qu'avant !
 	Juste 40 nourriture !" pbold text! foodamt
 		trunk-food 40 < if
-			"Tu n'as pas les moyens pour l'armure." +crtext
+			"Tu n'as pas les moyens pour l'armure." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		trunk-food 39 > if
@@ -165,7 +165,7 @@ cyoa: renfaire-armor
 cyoa-bridge: renfaire-bard-recruit
 	ricon 4 recruitee .morale! clear-cyoa 0.25 recruitee .ai.wander_chance! 0 nearest .unseen!
 	5 recruit-yes-food "Je suis pret a du G.N. !" pbold +crtext "*" rbold +text
-	"*NOTE DU TRADUCTEUR : 'Jeu de Role Grandeur Nature'" rbold +crtext
+	"*NOTE DU TRADUCTEUR : 'Grandeur Nature - Jeu de Role en Costume'" rbold +crtext
 	recruitee .witsREV recruitee .attitudeREV
 ;
 

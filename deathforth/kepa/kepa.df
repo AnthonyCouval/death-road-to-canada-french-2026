@@ -52,9 +52,9 @@ cyoa{
 
 cyoa-bridge: broomy-recruit
 	cchar to recruitee goodfx clear-cyoa
-	($ cname .. " evite toute tentative de se faire prendre." $) text!
+	($ cname .. " evades any attempt to be picked up." $) text!
 	($ "Arrete ! Je vais te suivre, d'accord, mais arrete d'essayer de me soulever !" pbold $) +crtext
-	($ pname .. " voit cela comme une opportunite d'obtenir un balai gratuit, sans meme occuper un emplacement dans son inventaire !" $) +crtext
+	($ pname .. " sees this as an opportunity to get a free broom, without even taking up an inventory slot!" $) +crtext
 	// recruitee .strengthREV recruitee .fitnessREV
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
 	recruit-yesno
@@ -64,9 +64,9 @@ cyoa: broomy-cyoa
 	"Balayeur de Zombies" cyoa-title!
 	nearest .character@ choosechar cicon
 	1 to broom-found
-	($ pname .. " essaie d'attraper ce balai qu'" .. phe .. " a trouve, mais celui-ci se met soudainement a parler !" $) text!
+	($ pname .. " tries to grab this broom " .. phe .. " found, but it suddenly starts talking!" $) text!
 		($ "HEY ! Arrete de me prendre, DINGUS ! Je suis pas un balai !" pbold $) +crtext
-	"C'est un peu bizarre de la part d'un balai de dire ca." +crtext
+	"C'est une drole de chose a dire pour un balai." +crtext
 		choice( "Faire comme si tu n'avais jamais vu ce balai" )choice
 		choice( "Attraper ce balai" )choice: broomy-recruit
 ;

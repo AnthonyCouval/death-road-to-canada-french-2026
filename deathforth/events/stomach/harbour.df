@@ -767,7 +767,7 @@ map{ regiondef{
 
 	drop
 ;
-\ "this doesnt look like the mooring posts ive seen" well it looks like one IVE seen 
+\ "ca ne ressemble pas aux postes d'amarrage que j'ai vus" well it looks like one IVE seen 
 
 
 : sycatiledeepsea tile@
@@ -847,8 +847,8 @@ cyoa{
 
 cyoa: recruit-doakes-yes
 
-	($ rname .. " marmonne quelque chose a propos de " "lezards" bbold .. " et d'" .. "eau gelee" bbold .. ". Un plan d'anniversaire qui a mal tourne ?" .. $) cyoa-text!
-
+	($ rname .. " marmonne quelque chose a propos de " "lezards" bbold .. " et d'" .. "eau gelee" bbold .. ". Un plan d'anniversaire qui a mal tourne ?" .. $) cyoa-text! 
+	
 	team-full? if
 		($ "Le groupe est plein.
 		Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) +crtext
@@ -857,19 +857,19 @@ cyoa: recruit-doakes-yes
 	ricon
 	($ Thegroup .. " accepte " .. rname .. " dans l'equipe !" $) +crtext 2 300 tone
 		recruited
-	recruitee .showitall
+	recruitee .showitall 
 ;
 
 
-\ SURPRISE MFER
-\ dexter easter egg because of that one harbour scene
-cyoa: doakes_surprise
-	"MATIN DEXTERE" cyoa-title!
+\ SURPRISE MFER 
+\ dexter easter egg because of that one harbour scene 
+cyoa: doakes_surprise 
+	"MATIN DEXTERE" cyoa-title! 
 	interactee .character@ to recruitee
-	($ "SURPRISE, PERE DES TOCARDS ! Je voulais te faire une surprise. Pour ton anniversaire. Comment ca c'est pas ton anniversaire ?" bbold $) cyoa-text!
+	($ "SURPRISE, PERE DES TOCARDS ! Je voulais te faire une surprise. Pour ton anniversaire. Comment ca c'est pas ton anniversaire ?" bbold $) cyoa-text! 
 	($ "Puisque ce type s'est donne tout ce mal pour vous faire une surprise pour votre pretendu anniversaire, ce serait sympa de le recruter." $) +crtext
 	choice( "Recruter prudemment" )choice: recruit-doakes-yes
-	choice( "Le laisser derriere" )choice
+	choice( "Le laisser derriere" )choice 
 ; 	
 
 } 
@@ -878,7 +878,7 @@ cyoa: doakes_surprise
 	new-npc 
 	player .pos lt .pos! 
 	"Sgt. Oates" lt .character@ .name! 
-	"really just wanted to surprise you, then the apocalypse happened." lt .character@ .job! 
+	"voulait vraiment vous faire une surprise, puis l'apocalypse est arrivee." lt .character@ .job! 
 	0 lt .character@ .female! 
 	2 lt .character@ .bodytype!
 	27 lt .character@ .headtype!
@@ -929,7 +929,7 @@ cyoa: doakes_surprise
 			then 
 		
 	else 
-		"I'd need the masterkey to open it." <- me .interact_id@ #thing .yellmsg 
+		"Il me faudrait le passe-partout pour l'ouvrir." <- me .interact_id@ #thing .yellmsg 
 	then 
 ; 
 
@@ -962,7 +962,7 @@ cyoa: doakes_surprise
 		lt .engine@ 1.5 * lt .engine! 
 		\ Harbour vehicles are sturdier, because they have been preserved in their containers. 
 	else 
-		"I'd need the masterkey to open it." <- me .interact_id@ #thing .yellmsg 
+		"Il me faudrait le passe-partout pour l'ouvrir." <- me .interact_id@ #thing .yellmsg 
 	then 
 ; 
 
@@ -1055,7 +1055,7 @@ map{ roomgen{
 
 : keys_harb args( me ) 
 	regiondef{ 1 to harbkey }  
-	"It's the harbour master key." interactee .yellmsg 
+	"C'est la cle du maitre du port." interactee .yellmsg 
 	<- me silentkillit
 ; 
 

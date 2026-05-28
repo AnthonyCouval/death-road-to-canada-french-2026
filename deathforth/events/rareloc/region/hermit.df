@@ -54,7 +54,7 @@ cyoa: cabin1-hermitchat
 		choice( "Demander la sagesse de l'ermite" )choice: cabin1-hermitchat-wisdom
 		choice( "Lui demander de vous rejoindre" )choice: cabin1-hermitchat-recruit
 		choice( "Dire a l'Ermite de 'Se Calmer'" fcoolit )choice: cabin1-hermitchat-coolit
-		clear-cyoa
+		clear-cyoa 
 	then
 ;
 

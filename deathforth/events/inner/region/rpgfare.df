@@ -56,7 +56,7 @@ map{ roomgen{
 	WEAPON_FADEBOLT_EXP <- chara .weapona!
 	WEAPON_MAGECLASSTWO <- chara .weaponb!
 	0 <- chara .weaponc!
-	"has an assortment of fiery spells!" <- chara .job!
+	"possede un assortiment de sorts de feu !" <- chara .job!
 	1 <- chara .vitality!
 	1 <- chara .health!
 	1 <- chara .stackeda!
@@ -79,7 +79,7 @@ map{ roomgen{
 	100 LOOT_BULLET <- chara .lootamt!
 	100 LOOT_RIFLE_SHELL <- chara .lootamt!
 	100 LOOT_SHOTGUN_SHELL <- chara .lootamt! 
-	"can dance on the head of a pin as well." <- chara .job!
+	"peut danser sur une tete d'epingle." <- chara .job!
 	1 STAT_DEXTERITY <- chara .bonus+
 	1 <- chara .stackeda!
 	1 <- chara .stackedb!
@@ -101,7 +101,7 @@ map{ roomgen{
 	WEAPON_BOMBERCLASSTWO <- chara .weaponb!
 	-1 STAT_DEXTERITY <- chara .bonus+
 	12 <- chara .stackedb!
-	"is ever so slightly accident-prone, which is not great for an explosives-wielder." <- chara .job!
+	"est legerement casse-cou, ce qui n'est pas ideal pour quelqu'un qui manie des explosifs." <- chara .job!
 	' bomber-recharge <- chara .main_events!
 	0 <- chara .thing@ .events!
 	
@@ -117,7 +117,7 @@ map{ roomgen{
 	139 <- chara .specialbody!
 	3 <- chara .carrying.slot_count!
 
-	"is going to have an unpleasant time on the toilet." <- chara .job!
+	"va passer un mauvais moment aux toilettes." <- chara .job!
 
 	WEAPON_WARRIORSHIELD <- chara .weaponb! 
 	1 <- chara .weapon_nodropb!
@@ -140,7 +140,7 @@ map{ roomgen{
 	1 <- chara .weapon_nodropa!
 	0 <- chara .weapon_nodropb!
 	WEAPON_WARBOW <- chara .weapona!
-	"thinks they're in a Lord Of The Dinks remake." <- chara .job!
+	"se croit dans un remake du Seigneur des Dinks." <- chara .job!
 	' archer-recharge <- chara .main_events!
 	0 <- chara .thing@ .events!
 	
@@ -165,7 +165,7 @@ map{ roomgen{
 	
 	1 WEAPON_ELONGSWORD trunk.weapon+ 
 
-	"doesn't sleep so well due to the glow of their sword." <- chara .job!
+	"dort mal a cause de la lueur de son epee." <- chara .job!
 
 	1 <- chara .vitality!
 	1 <- chara .health!
@@ -187,7 +187,7 @@ map{ roomgen{
 	WEAPON_GRENADE <- chara .weapona!
 	6 <- chara .stackeda!
 	
-	"is really good at tossing grenades." <- chara .job!
+	"est vraiment doue pour lancer des grenades." <- chara .job!
 	
 	' grenadier-recharge <- chara .main_events!
 	0 <- chara .thing@ .events!
@@ -210,7 +210,7 @@ map{ roomgen{
 	3 <- chara .carrying.slot_count!
 	\ WEAPON_MELEEALT <- chara .weapona!
 	1 WEAPON_SAMURAI_SWORD trunk.weapon+
-	"is something similar to Oda Nobunaga, sometimes scarily so." <- chara .job!
+	"ressemble parfois a Oda Nobunaga, de maniere presque effrayante." <- chara .job!
 	
 	4 STAT_STRENGTH <- chara .bonus+ 
 	2 STAT_FITNESS <- chara .bonus+ 
@@ -231,54 +231,54 @@ map{ roomgen{
 cyoa{
 
 cyoa-choice: melee
-		($ cname .. " puts the final piece of their armour on, only to find a part of it is REALLY chafing. Deus Vult! " $) cyoa-text!
-		($ RED "Don't let zombies get past your shield!" .. $) +crtext
+		($ cname .. " enfile le dernier morceau de son armure, pour decouvrir qu'une partie frotte VRAIMENT. Dieu le veut ! " $) cyoa-text!
+		($ RED "Ne laisse pas les zombies passer ton bouclier !" .. $) +crtext
 		pchar meleer
 ;
 
 cyoa-choice: hammer
-		($ cname .. " heaves the katana into their hands. They nearly fall over from the weight. Time to make ZOMBO SALAD!" $) cyoa-text!
-		($ RED "You can find your samurai sword in the trunk. Make sure to use it!" .. $) +crtext
+		($ cname .. " souleve le katana a deux mains. " .. cHe .. " manque presque de tomber sous le poids. Il est temps de faire de la SALADE DE ZOMBIS !" $) cyoa-text!
+		($ RED "Ton katana est dans le coffre. Assure-toi de l'utiliser !" .. $) +crtext
 		pchar hammerer
 ;
 
 cyoa-choice: range
-		($ cname .. " becomes one with the way of the marksman, spinning their revolver and tying their coat with pleasure. It's highhhhh nooooon! " $) cyoa-text!
-		($ RED "You can find your MAMBA and SLUG SHOTGUN in the trunk. Make sure to use them!" .. $) +crtext
+		($ cname .. " fait corps avec la voie du franc-tireur, faisant tournoyer son revolver et attachant son manteau avec satisfaction. C'est l'heure de gloire !" $) cyoa-text!
+		($ RED "Ton MAMBA et ton FUSIL A POMPE SLUG sont dans le coffre. Assure-toi de les utiliser !" .. $) +crtext
 		pchar ranger
 		1 WEAPON_BLACKMAMBA trunk.weapon+
 		1 WEAPON_SLUG trunk.weapon+ 
 ;
 
 cyoa-choice: archer
-		($ cname .. " twirls their bow around in their hands, before nearly dropping the bow on their foot. Go for the eyes! " $) cyoa-text!
-		($ RED "Juggle your bow and other weapons where necessary!" .. $) +crtext
+		($ cname .. " fait tourner son arc dans ses mains avant de presque le lacher sur son pied. Vise les yeux !" $) cyoa-text!
+		($ RED "Jongle avec ton arc et tes autres armes si necessaire !" .. $) +crtext
 		pchar archer
 ;
 
 cyoa-choice: mage
-		($ cname .. " silently recites a spell known for GREAT GLUTES under their breath. May your magic be potent, and your spells deadly! " $) cyoa-text!
-		($ RED "Get trained up! Your weapons are powerful...but heavy." .. $) +crtext
+		($ cname .. " recite silencieusement un sort connu pour ses FESSIERS D'ACIER. Que ta magie soit puissante et tes sorts mortels !" $) cyoa-text!
+		($ RED "Entraine-toi ! Tes armes sont puissantes... mais lourdes." .. $) +crtext
 		pchar mage 
 ;
 
 cyoa-choice: longswordsman
-		($ cname .. " binds their weapon to their patron, who promptly rewards them with a massively inflated ego. Dolor! " $) cyoa-text!
-		($ RED "You can find your hexblade sword in the trunk. Make sure to use it!" .. $) +crtext
+		($ cname .. " lie son arme a son patron, qui le recompense aussitot par un ego demesurement gonfle. Dolor !" $) cyoa-text!
+		($ RED "Ton epee hexblade est dans le coffre. Assure-toi de l'utiliser !" .. $) +crtext
 		pchar swordmagemale
 ;
 
 cyoa-choice: bomber
-		($ cname .. " tinkers with the fuse of one of their bombs, only to realise it's a DUD. Blow em all to heck! " $) cyoa-text!
-		($ RED "Don't be afraid to lob your dynamite everywhere! Your poleaxe is in the trunk." .. $) +crtext
+		($ cname .. " bidouille la meche d'une de ses bombes, pour realiser que c'est un RATE. Tout faire exploser !" $) cyoa-text!
+		($ RED "N'aie pas peur de balancer ta dynamite partout ! Ta hallebarde est dans le coffre." .. $) +crtext
 		pchar bombardier
 		1 WEAPON_POLEAXE trunk.weapon+
 
 ;
 
 cyoa-choice: grenader
-		($ cname .. " excitedly lights a handful of grenades, before realising this is a terrible idea and putting them out. Molon Labe! " $) cyoa-text!
-		($ RED "Get those support stats increased to help your team! Your poleaxe is in the trunk." .. $) +crtext
+		($ cname .. " allume avec enthousiasme une poignee de grenades, avant de realiser que c'est une tres mauvaise idee et de les eteindre. Viens les prendre !" $) cyoa-text!
+		($ RED "Augmente tes stats de soutien pour aider ton equipe ! Ta hallebarde est dans le coffre." .. $) +crtext
 		pchar grenadier
 		1 WEAPON_POLEAXE trunk.weapon+
 
@@ -286,88 +286,88 @@ cyoa-choice: grenader
 
 
 cyoa: melees
-	"The Melee Class" cyoa-title!
+	"La Classe Corps-a-Corps" cyoa-title!
 	picon!
 	
 	pchar .user.special_counter@ 1 = if 
-		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+		($ "Tu as deja choisi une classe pour ce personnage. Comme les stats, perks et traits se cumulent avec les bonus de sous-classe, seule 1 classe est autorisee par personnage et par sauvegarde." $) text! 
 	then; 
 	
-	($ "The melee classes are generally tougher and receive bonuses to STR and FIT. They cannot shoot guns. Samurais start with a good sword that can crit, whereas the Knight starts with more health and a shield that can REPEL ZOMBIES in the direction you are facing/moving." $) text!
+	($ "Les classes de melee sont generalement plus resistantes et recoivent des bonus en FOR et FORM. Elles ne peuvent pas tirer avec des armes a feu. Les Samourais commencent avec une bonne epee qui peut effectuer des critiques, tandis que le Chevalier commence avec plus de sante et un bouclier pouvant REPOUSSER LES ZOMBIS dans la direction ou il regarde ou se deplace." $) text!
 	
 	pchar .main_events@ 0 = not if 
-		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+		($ RED "La configuration des perks et traits de ton personnage le rend deja complexe. Certaines fonctionnalites de ses perks ou traits peuvent etre desactivees par Archer, Bombardier ou Grenadier." .. $) +crtext 
 	then 
 	
-	($ BLUE "The melee classes have FITNESS as their most important stat." .. $) +crtext 
+	($ BLUE "Les classes de melee ont la FORME comme stat la plus importante." .. $) +crtext 
 	
-	choice( "No, thanks!" )choice
-	choice( "[Pick The Knight]" )choice: melee
-	choice( "[Pick The Samurai]" )choice: hammer
+	choice( "Non, merci !" )choice
+	choice( "[Choisir le Chevalier]" )choice: melee
+	choice( "[Choisir le Samourais]" )choice: hammer
 ;
 
 cyoa: rangers
-	"The Ranger Class" cyoa-title!
+	"La Classe Ranger" cyoa-title!
 	picon!
 	
 	pchar .user.special_counter@ 1 = if 
-		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+		($ "Tu as deja choisi une classe pour ce personnage. Comme les stats, perks et traits se cumulent avec les bonus de sous-classe, seule 1 classe est autorisee par personnage et par sauvegarde." $) text! 
 	then; 
 	
-	($ "The ranged classes are reliable ways to deal with hordes. Marksman is ammo-dependent but powerful, and the only major source of SHOOTING. Archer is only STR/FIT dependent, but limited by their bow." $) text!
+	($ "Les classes a distance sont des moyens fiables de gerer les hordes. Le Tireur d'elite depend des munitions mais est puissant, et la seule source majeure de TIR. L'Archer depend uniquement de la FOR/FORM, mais est limite par son arc." $) text!
 	
 	pchar .main_events@ 0 = not if 
-		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+		($ RED "La configuration des perks et traits de ton personnage le rend deja complexe. Certaines fonctionnalites de ses perks ou traits peuvent etre desactivees par Archer, Bombardier ou Grenadier." .. $) +crtext 
 	then 
 	
-	($ BLUE "The ranged classes have SHOOTING as their most important stat." .. $) +crtext 
+	($ BLUE "Les classes a distance ont le TIR comme stat la plus importante." .. $) +crtext 
 	
-	choice( "No, thanks!" )choice
-	choice( "[Pick The Marksman]" )choice: range
-	choice( "[Pick The Archer]" )choice: archer
+	choice( "Non, merci !" )choice
+	choice( "[Choisir le Tireur d'elite]" )choice: range
+	choice( "[Choisir l'Archer]" )choice: archer
 ;
 
 cyoa: mages
-	"The Mage Class" cyoa-title!
+	"La Classe Mage" cyoa-title!
 	picon!
 	
 	pchar .user.special_counter@ 1 = if 
-		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+		($ "Tu as deja choisi une classe pour ce personnage. Comme les stats, perks et traits se cumulent avec les bonus de sous-classe, seule 1 classe est autorisee par personnage et par sauvegarde." $) text! 
 	then; 
 	
-	($ "Magic classes can obliterate hordes but are fragile. Mages can cast fireballs, or chain deadly damage with scorching ray. Picking mage will likely replace most of your held weapons. Spellblades have excellent stats and even a bit of control, but must remain in melee range." $) text!
+	($ "Les classes magiques peuvent aneantir les hordes mais sont fragiles. Les Mages peuvent lancer des boules de feu ou enchainer des degats mortels avec un rayon de chaleur. Choisir la classe Mage remplacera probablement la plupart de tes armes. Les Lames Magiques ont d'excellentes stats et un peu de controle, mais doivent rester au corps-a-corps." $) text!
 	
 	pchar .main_events@ 0 = not if 
-		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+		($ RED "La configuration des perks et traits de ton personnage le rend deja complexe. Certaines fonctionnalites de ses perks ou traits peuvent etre desactivees par Archer, Bombardier ou Grenadier." .. $) +crtext 
 	then 
 	
-	($ BLUE "The magic classes have STRENGTH as their most important stat." .. $) +crtext 
+	($ BLUE "Les classes magiques ont la FORCE comme stat la plus importante." .. $) +crtext 
 	
-	choice( "No, thanks!" )choice
-	choice( "[Pick The Mage]" )choice: mage
-	choice( "[Pick The Spellblade]" )choice: longswordsman
+	choice( "Non, merci !" )choice
+	choice( "[Choisir le Mage]" )choice: mage
+	choice( "[Choisir la Lame Magique]" )choice: longswordsman
 ;
 
 cyoa: bombards
-	"The Bombardier Class" cyoa-title!
+	"La Classe Bombardier" cyoa-title!
 	picon!
 	
 	pchar .user.special_counter@ 1 = if 
-		($ "You have already picked a class for this character. Since character stats, perks and traits stack with the subclass bonuses, only 1 class is allowed per character per save." $) text! 
+		($ "Tu as deja choisi une classe pour ce personnage. Comme les stats, perks et traits se cumulent avec les bonus de sous-classe, seule 1 classe est autorisee par personnage et par sauvegarde." $) text! 
 	then; 
 	
-	($ "The bombardier is a safe but limited explosive option. Bombardier bombs cause no self damage, whereas grenadier grenades are better but have self-damage. Grenadiers receive large bonuses to MED and MECH." $) text!
-	($ "Both classes also receive a poleaxe for when they are not tossing bombs." $) +crtext
+	($ "Le Bombardier est une option explosive sure mais limitee. Les bombes du Bombardier ne causent pas de degats a soi-meme, tandis que les grenades du Grenadier sont meilleures mais causent des degats au lanceur. Les Grenadiers recoivent de grands bonus en MED et MECH." $) text!
+	($ "Les deux classes recoivent aussi une hallebarde pour quand elles ne lancent pas de bombes." $) +crtext
 	
 	pchar .main_events@ 0 = not if 
-		($ RED "Your character's perk and trait setup means they are already complex. Due to this, some features of their perks or traits may be disabled by Archer, Bombardier or Grenadier." .. $) +crtext 
+		($ RED "La configuration des perks et traits de ton personnage le rend deja complexe. Certaines fonctionnalites de ses perks ou traits peuvent etre desactivees par Archer, Bombardier ou Grenadier." .. $) +crtext 
 	then 
 	
-	($ BLUE "The bombard classes have MECH or MED as their most important stat." .. $) +crtext 
+	($ BLUE "Les classes bombardement ont le MECH ou le MED comme stat la plus importante." .. $) +crtext 
 	
-	choice( "No, thanks!" )choice
-	choice( "[Pick The Bombardier]" )choice: bomber
-	choice( "[Pick The Grenadier]" )choice: grenader
+	choice( "Non, merci !" )choice
+	choice( "[Choisir le Bombardier]" )choice: bomber
+	choice( "[Choisir le Grenadier]" )choice: grenader
 ;
 
 
@@ -499,7 +499,7 @@ constant maplayout
 	kill-zombies-here
 	kill-zombies-outside
 	120 player .stun!
-	"Oh hey, free items." player .yellmsg	
+	"Oh hey, des objets gratuits !" player .yellmsg	
 
 ;
 

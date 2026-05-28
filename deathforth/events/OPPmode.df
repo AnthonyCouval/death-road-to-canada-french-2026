@@ -95,18 +95,18 @@ cyoa: opp-recruit-yes
 cyoa: opp-recruit
 	nearest .character@ choosechar cchar to recruitee ricon
 	($ "BONJOUR JE SUIS " .. rname $) text!
-
+	
 	recruitee .specialmode@ 0 > if
 		"AVERTISSEMENT : EXTREMEMENT BUGGUE" fbold +crtext
 		recruitee .specialtype@ 1 = if
-			"MECHAMOUNTIE EST PARTICULIEREMENT BUGGUE ! UTILISATION A VOS RISQUES ET PERILS !" rbold +crtext
+			"MECHAMOUNTIE EST PARTICULIEREMENT BUGGUE ! UTILISATION AUX RISQUES ET PERILS !" rbold +crtext
 		then
 	then
-
+	
 	OPP-recruit-count 3 > if ($ "Vous avez recrute assez de personnages surpuissants ! J'arrete la." bbold $) +crtext then;
 	($ "Vous pouvez recruter " bbold .. OPP-recruit-left .. " personnage(s) surpuissant(s) de plus !" bbold $) +crtext
 	choice( "Laisser " .. rname .. " pour l'instant" )choice
-	choice( "Demander a " .. rname .. " de rejoindre" )choice: opp-recruit-yes
+	choice( "Demander a " .. rname .. " de rejoindre" )choice: opp-recruit-yes	
 ;
 
 : opp-recruit-to-fam-yes
@@ -120,7 +120,7 @@ cyoa: opp-recruit
 cyoa: opp-recruit-to-fam
 	"Familiar Faces" cyoa-title!
 	"GO TO THE FAMILIAR CHARACTERS HUT?" cyoa-text!
-	"This will teleport you to a small area that contains all your previously created Custom Characters!" pbold +crtext
+	"This will te teleporter vers une zone contenant tous tes Personnages Personnalises precedemment creesaracters!" pbold +crtext
 	"WARNING: This will leave the OPP Characters Area! 
 	No going back if you pick 'YES'!" rbold +crtext
 	choice( "NO" )choice
@@ -264,7 +264,7 @@ roomgen{
 	1 <- char .female!
 	0 <- char .loyalty!
 	4 <- char .medical!
-	"is the Queen of all Fae Folk." <- char .job!
+	"est la Reine de tout le Peuple des Fees." <- char .job!
 ;
 
 : .opp-panda args( char )
@@ -299,7 +299,7 @@ roomgen{
 	0 <- char .female!
 	0 <- char .attitude!
 	0 <- char .composure!
-	"was surprised that he even joined the team, being a hermit and all." <- char .job!
+	"etait surpris d'avoir rejoint l'equipe, vu qu'il est ermite et tout." <- char .job!
 	WEAPON_SHOTGUN <- char .weapona!
 	WEAPON_FIRE <- char .weaponb!
 	40 LOOT_SHOTGUN_SHELL <- char .lootamt!
@@ -405,7 +405,7 @@ roomgen{
 	// opprecruit-in . -2 movey -2 movex
 	opprecruit-in .moosify -2 movey -3 movex
 	
-	opprecruit-in .fly "The Fly" rename 2 movey
+	opprecruit-in .fly "La Mouche" rename 2 movey
 	opprecruit-in .oscarcatify 2 movey 2 movex
 	opprecruit-in .sambyoolify 2 movey 4 movex
 	opprecruit-in .flyhead "Fly" rename 2 movey -2 movex

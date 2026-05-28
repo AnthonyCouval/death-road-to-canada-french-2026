@@ -47,7 +47,7 @@ cyoa{ road{
 : familiar-carnut-yes
 	perkdef{
 		carnut-picker to starting-car
-		starting-car get-car
+		starting-car get-car 
 	}
 ;
 
@@ -57,14 +57,14 @@ cyoa: familiar-carnut-event
 		Voulez-vous echanger votre voiture contre celle de " .. rname .. " ?" $) cyoa-text!
 		choice( "Garder la voiture actuelle" )choice
 		choice( "Changer pour la nouvelle voiture" )choice: familiar-carnut-yes
-
+		
 ;
 
 : familiar-recruit-check
 	perkdef{
 		recruitee carnut? if
 			' familiar-carnut-event stack-road-action
-		then
+		then 
 	}
 	// Arq adding this for perk supplies checks
 	recruitee-perkcheck
@@ -104,9 +104,9 @@ cyoa: famevent
 
 	to recruitee ricon
 
-	($ "Waouh, c'est " .. rname .. " ! Ca fait du bien de voir un visage familier ! " .. fam-text $) text!
-		($ "TRAIT : " pbold .. recruitee .trait@ $) +crtext
-		($ "  PERK : " pbold .. recruitee .perk@ $) +text
+	($ "Waouh, c'est " .. rname .. " ! Ca fait du bien de voir un visage familier ! " .. fam-text $) text! 
+		($ "TRAIT : " pbold .. recruitee .trait@ $) +crtext 
+		($ "  PERK : " pbold .. recruitee .perk@ $) +text 
 			choice( "Recruter " .. rname .. " dans l'equipe" )choice: recruit-familiaryes
 			choice( "Laisser " .. rname .. " derriere" )choice
 ;

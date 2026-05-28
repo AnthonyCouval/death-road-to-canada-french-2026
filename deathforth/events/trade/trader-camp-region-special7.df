@@ -49,12 +49,12 @@ cyoa{
 cyoa-choice: hosptrader1-go
 	"BRULE POUR TOUJOURS" cyoa-title!
 	($ "Le medecin (?) remet a " .. cname .. " un petit bout de papier. Il dit :
-	" .. "t'es un dingo
+	" .. "t'es un dingus
 	t'as une odeur d'oeuf" pbold $) cyoa-text!
 	cchar statmod{ .fireproof? } not if
 		"OH !
 		OH ! BRULE ! OH !!!!!" fbold +crtext
-		($ cname .. " se sent emotionnellement devaste par les degats de feu de ce pique terrible ! "
+		($ cname .. " se sent emotionnellement devaste par les degats de feu de ce pique terrible ! " 
 		.. "La peau de " .. cname .. " se sent etrangement froide." bbold $) +crtext
 		cchar statmod{ .fireproof } morale4- badfx
 		choice( "ARGH !" )choice
@@ -98,7 +98,7 @@ cyoa-choice: trade-h2-3
 	" .. "Le Spray de Soin XL fonctionne meme sur les orteils cognes." pbold $) cyoa-text! goodfx
 	10 WEAPON_HEALSPRAY trunk.weapon+ 10 trunk-medical+ -15 trunk-food+ someicon ' ht2-3 ++
 ;
-
+	
 cyoa-choice: trade-h2-2
 	($ Thegroup .. " achete le " .. "SCALPEL DORE" rbold .. ". Il ne casse jamais, et frappe un zombie a la fois extremement fort pour une arme qui se manie a vitesse maximale !" $) cyoa-text! goodfx ' ht2-2 ++
 	1 WEAPON_GOLDSCALP trunk.weapon+ -15 trunk-food+ picon
@@ -136,8 +136,8 @@ cyoa: hosptrader2
 : issick? statmod{ .sick? } ; // The only time I ever use a sickness check, ever
 : hospital-superserum
 	' .strength++ foreach-team-char
-	' .fitness++ foreach-team-char
-	' .vitality++ foreach-team-char
+	' .fitness++ foreach-team-char 
+	' .vitality++ foreach-team-char 
 	' .dexterity++ foreach-team-char
 ;
 
@@ -149,22 +149,22 @@ cyoa-choice: hosptrader3-go
 	else
 		12 groupheal
 		($ Thegroup .. " recoit un traitement pour " $) cyoa-text!
-		team-damage 1 < if
-			"toutes" +text
+		team-damage 1 < if 
+			"toutes" +text 
 		else
 			"la plupart" +text
 		then
 			" de leurs blessures." +text
 			"Le medecin est incroyablement decu et ennuye par vos blessures banales." +crtext
 	then
-
-	team-stack ' issick? stack-filter 0 > if
+	
+	team-stack ' issick? stack-filter 0 > if 
 		"MAIS ATTENDEZ ! " rbold +crtext
 		($ "Le Docteur Genie Tourmente detecte une maladie !
 		Apres environ 44 minutes, le medecin arrive a une conclusion passionnante : La maladie etait " .. "UN EMPOISONNEMENT AU CAFE ! " fbold $) +text
 		($ "Le medecin administre un super-serum miracle experimental a " .. thegroup .. " ! Ca ne guerit pas la maladie, mais un jour de repos suffira de toute facon." $) +text +cr hospital-superserum
 	then
-
+	
 	goodfx -5 trunk-food+ picon clear-cyoa
 ;
 
@@ -202,7 +202,7 @@ cyoa-choice: cleaninglady-meal-eat
 
 cyoa-bridge: cleaninglady-meal
 	solo if
-		soloer choosechar cleaninglady-meal-eat
+		soloer choosechar cleaninglady-meal-eat 
 	else
 		($ "Qui devrait manger la Nourriture de la Cafeteria de l'Hopital ?" $) cyoa-text!
 		"CETTE NOURRITURE DES DIEUX CONFERERA UN BONUS A LA SANTE MAXIMUM ET UN ENORME BOOST DE MORAL !" rbold +crtext
@@ -222,7 +222,7 @@ cyoa-bridge: cleaninglady-recruit
 	" .. "Il est temps de nettoyer ce bazar !
 	" pbold .. "L'eau de serpilliere trempe " .. thegroup .. " sacrement." $) cyoa-text!
 	goodfx
-
+	
 	team-full? if
 		($ "Le groupe est plein.
 		Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) +crtext
@@ -235,10 +235,10 @@ cyoa-bridge: cleaninglady-recruit
 			choice( "DONNEZ-MOI CETTE NOURRITURE D'HOPITAL" )choice: cleaninglady-meal
 		then
 	then
-
+	
 	// WEAPON_SHOTGUN recruitee .weaponb! 	20 LOOT_SHOTGUN_SHELL recruitee .lootamt!
 ;
-
+		
 cyoa: cleaninglady
 	"Le Marche Noir de la Cafeteria" cyoa-title!
 	nearest .character@ choosechar cchar to recruitee ricon
@@ -248,7 +248,7 @@ cyoa: cleaninglady
 		Je peux vous en avoir un autre, mais ca va couter."
 	else
 		"Je sais pourquoi vous etes VRAIMENT ici. Vous etes venus jusqu'ici pour la nourriture de l'hopital.
-		Je peux vous faire passer en douce le repas de cafeteria que vous desirez, pour un prix."
+		Je peux vous faire passer en douce le repas de cafeteria que vous desirez, pour un prix." 
 	then pbold +crtext +cr foodamt
 	cleaninglady-pay? if
 		choice( "Partir pour l'instant" )choice back-esc
@@ -262,7 +262,7 @@ cyoa: cleaninglady
 
 0 value hospital-medical+
 
-: hospital-train-amt numhums 2 * hospital-medical+ 1 + * 1 + ;
+: hospital-train-amt numhums 2 * hospital-medical+ 1 + * 1 + ; 
 : hospital-train-pay? trunk-food hospital-train-amt 1 - > notsolo notsolohuman and and ;
 : hospital-train-pay hospital-train-amt -1 * trunk-food+ ;
 
@@ -276,7 +276,7 @@ cyoa-choice: hospital-medical-train
 	else
 		($ cname .. " a deja son diplome complet de l'USSHB !
 		Cependant, Notre Sainte Universite des Salles de Bains Hospitalieres n'effectue pas de remboursements." $) badfx
-	then cyoa-text!
+	then cyoa-text! 
 	hospital-solo-pay medicalREV medical++ ' hospital-medical+ ++
 ;
 
@@ -299,7 +299,7 @@ cyoa: hosptrainer
 	"Pfff ! Les medecins ! La belle affaire ! Je peux vous apprendre tout ce que vous devez savoir sur la medecine, ici dans ces toilettes, bien mieux que dans n'importe quelle soi-disante 'UNIVERSITE'." pbold text!
 	"Des postillons jaillissent de leur bouche quand ils disent 'Universite'. Vous vous demandez vaguement depuis combien de temps ils sont dans ces toilettes, et s'ils se sont laves les mains." +crtext foodamt
 		hospital-solo-pay? not if
-			"Tu n'as pas les moyens de te former davantage." +crtext
+			"Tu n'as pas les moyens de te former davantage." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice back-esc
 		hospital-solo-pay? if

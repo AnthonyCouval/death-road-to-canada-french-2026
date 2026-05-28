@@ -730,7 +730,7 @@ perkdef{
 			2 STAT_MECHANICAL <- chara .stat+
 		else
 			1 STAT_MECHANICAL <- chara .stat+
-		then
+		then	
 	then crap-weapon <- chara .weapona!
 // Commented out to fix the "familiar faces gives car against will" problem
 //	carnut-picker to starting-car
@@ -743,10 +743,10 @@ perkdef{
 		4 STAT_STRENGTH <- chara .stat+
 	else
 		gstats{ perk-megabuff } 2 >= if
-			3 STAT_STRENGTH <- chara .stat+
+			3 STAT_STRENGTH <- chara .stat+	
 		else
-			2 STAT_STRENGTH <- chara .stat+
-		then
+			2 STAT_STRENGTH <- chara .stat+	
+		then	
 	then WEAPON_METAL <- chara .weapona!
 ;
 
@@ -766,7 +766,7 @@ perkdef{
 			3 STAT_FITNESS <- chara .stat+
 		else
 			2 STAT_FITNESS <- chara .stat+
-		then
+		then	
 	then crap-weapon <- chara .weapona! 2 trunk-food+
 	*)
 	gstats{ perk-ultrafit } 1+ 4 min STAT_FITNESS <- chara .stat+
@@ -780,11 +780,11 @@ perkdef{
 		3 STAT_STRENGTH <- chara .stat+
 	else
 		gstats{ perk-bruiser } 2 >= if
-			2 STAT_STRENGTH <- chara .stat+
+			2 STAT_STRENGTH <- chara .stat+	
 		else
-			1 STAT_STRENGTH <- chara .stat+
-		then
-	then WEAPON_BOXING <- chara .weapon_default!
+			1 STAT_STRENGTH <- chara .stat+	
+		then	
+	then WEAPON_BOXING <- chara .weapon_default! 
 	1 STAT_VITALITY <- chara .stat+	<- chara .health++nostat
 	-1 STAT_DEXTERITY <- chara .bonus+
 ;
@@ -798,7 +798,7 @@ perkdef{
 			2 STAT_FITNESS <- chara .stat+
 		else
 			1 STAT_FITNESS <- chara .stat+
-		then
+		then	
 	then 1 STAT_STRENGTH <- chara .stat+
 	WEAPON_KUNG <- chara .weapon_default! <- chara .nocanshoot
 	-10 STAT_SHOOTING <- chara .bonus+
@@ -825,7 +825,7 @@ perkdef{
 			1 STAT_FITNESS <- chara .stat+ 1 STAT_STRENGTH <- chara .stat+
 		else
 			1 STAT_FITNESS <- chara .stat+
-		then
+		then 
 	then <- chara statmod{ .zombielifter }
 		-3 STAT_SHOOTING <- chara .bonus+
 		0 <- chara .loyalty! <- chara .loyaltyREV
@@ -835,9 +835,9 @@ perkdef{
 : hiddenpotentialperk args( chara )
 	"HIDDENPOT APPLIED ON CHAR " type <- chara .name@ print
 
-	\ stomach rework : see below for details
-
-	gstats{ perk-hiddenpotential } 2 >= if
+	\ stomach rework : see below for details 
+		
+	gstats{ perk-hiddenpotential } 2 >= if 
 		1 STAT_FITNESS <- chara .stat+
 	then
 	gstats{ perk-hiddenpotential } 3 >= if
@@ -865,22 +865,22 @@ perkdef{
 		gstats{ perk-trademark } 2 >= if
 			50 %chance if WEAPON_ALUMINUM else WEAPON_MACHETE2 then
 		else
-			WEAPON_ALUMINUM
-		then
+			WEAPON_ALUMINUM 
+		then	
 	then <- chara .trademarkwep
 ;
 
 : naturalshotperk args( chara )
 	"NATURALSHOT APPLIED ON CHAR " type <- chara .name@ print
 	gstats{ perk-naturalshot } 3 >= if
-		2 STAT_SHOOTING <- chara .bonus+
+		2 STAT_SHOOTING <- chara .bonus+ 
 	else
 		gstats{ perk-naturalshot } 2 >= if
-			1 STAT_SHOOTING <- chara .bonus+
+			1 STAT_SHOOTING <- chara .bonus+ 
 			1 STAT_SHOOTING <- chara .stat+
 		else
-			1 STAT_SHOOTING <- chara .bonus+
-		then
+			1 STAT_SHOOTING <- chara .bonus+ 
+		then 
 	then
 	crap-weapon <- chara .weapona!
 ;
@@ -888,14 +888,14 @@ perkdef{
 : tstcperk args( chara )
 	"T*S*T*C APPLIED ON CHAR " type <- chara .name@ print
 	gstats{ perk-tstc } 3 >= if
-		-4 STAT_FITNESS <- chara .bonus+
+		-4 STAT_FITNESS <- chara .bonus+ 
 	else
 		gstats{ perk-tstc } 2 >= if
-			-5 STAT_FITNESS <- chara .bonus+
+			-5 STAT_FITNESS <- chara .bonus+ 
 		else
-			-6 STAT_FITNESS <- chara .bonus+
-		then
-	then 6 STAT_FITNESS <- chara .stat+
+			-6 STAT_FITNESS <- chara .bonus+ 
+		then 
+	then 6 STAT_FITNESS <- chara .stat+ 
 	6 STAT_STRENGTH <- chara .bonus+
 ;
 
@@ -915,15 +915,15 @@ perkdef{
 : archer-main-events ( teid ) args( chara eventid )
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
-		WEAPON_BOW <- chara .weapona@ = "WEAPON_WARBOW" evaluate <- chara .weapona@ = or if
-		\ 266 is the longbow ID... I  did it this way coz it preserves the
-		\ "all in one file" update philosophy
-		\ so long as we continue this we should be fine to do this
-
+		WEAPON_BOW <- chara .weapona@ = "WEAPON_WARBOW" evaluate <- chara .weapona@ = or if 
+		\ 266 is the longbow ID... I  did it this way coz it preserves the 
+		\ "all in one file" update philosophy 
+		\ so long as we continue this we should be fine to do this 
+		
 			<- chara .stackeda@ <- chara archer-formula <- chara .stackeda!
 			<- chara .stackeda@ <- chara archer-max > if <- chara archer-max <- chara .stackeda! then
 		then;
-		WEAPON_BOW <- chara .weaponb@ = "WEAPON_WARBOW" evaluate <- chara .weaponb@ = or if
+		WEAPON_BOW <- chara .weaponb@ = "WEAPON_WARBOW" evaluate <- chara .weaponb@ = or if 
 			<- chara .stackedb@ <- chara archer-formula <- chara .stackedb!
 			<- chara .stackedb@ <- chara archer-max > if <- chara archer-max <- chara .stackedb! then
 		then;
@@ -955,11 +955,11 @@ perkdef{
 : pyro-main-events ( teid ) args( chara eventid )
 	<- chara .party@ 0= if then;
 	<- eventid MAIN_EVENT_DRIVING_START = if
-		<- chara pyro-weapon <- chara .weapona@ = if
+		<- chara pyro-weapon <- chara .weapona@ = if 
 			<- chara .stackeda@ <- chara pyro-formula <- chara .stackeda!
 			<- chara .stackeda@ <- chara pyro-max > if <- chara pyro-max <- chara .stackeda! then
 		then;
-		<- chara pyro-weapon <- chara .weaponb@ = if
+		<- chara pyro-weapon <- chara .weaponb@ = if 
 			<- chara .stackedb@ <- chara pyro-formula <- chara .stackedb!
 			<- chara .stackedb@ <- chara pyro-max > if <- chara pyro-max <- chara .stackedb! then
 		then;
@@ -1012,13 +1012,13 @@ perkdef{
 
 
 : NEXT_LEVEL cr$ .. cr$ .. RED .. "NEXT LEVEL: " ;
-: LOCKED cr$ .. cr$ .. RED ..
+: LOCKED cr$ .. cr$ .. RED .. 
 	game.location 0 > if "LOCKED! " else "LOCKED: Unlock at Perks & Traits Hut in Zombo Town" then
-
+	
 ;
 // Formerly : cr$ .. "NEXT LEVEL: " rbold
 
-: mechaniclevel
+: mechaniclevel 
 	gstats{ perk-mechanic } 3 >= if
 		($ "+ Gain 2 points in mechanical!
 		+ Gain 2 points in fitness!" $) 2 lvl
@@ -1028,15 +1028,15 @@ perkdef{
 		+ Gain 1 point in fitness" .. NEXT_LEVEL .. "2 points in fitness!" $) 1 lvl
 	then;
 		($ "+ Gain 1 point in mechanical
-		+ Gain 1 point in fitness" ..
-		gstats{ perk-mechanic } 1 < if
+		+ Gain 1 point in fitness" .. 
+		gstats{ perk-mechanic } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			NEXT_LEVEL .. "2 points in mechanical!"
 		then $)
 ;
 
-: athletelevel
+: athletelevel 
 	gstats{ perk-athlete } 3 >= if
 		($ "+ Gain 2 points in fitness!
 		+ Gain 2 points in strength!" $) 2 lvl
@@ -1049,7 +1049,7 @@ perkdef{
 		+ Gain 1 point in strength" .. NEXT_LEVEL .. "2 points in fitness!" $)
 ;
 
-: fighterlevel
+: fighterlevel 
 	gstats{ perk-fighter } 3 >= if
 		($ "+ Gain 2 points in strength!
 		+ Gain 2 points in shooting!" $) 2 lvl
@@ -1062,7 +1062,7 @@ perkdef{
 		+ Gain 1 point in shooting" .. NEXT_LEVEL .. "2 points in strength!" $)
 ;
 
-: surgeonlevel
+: surgeonlevel 
 	gstats{ perk-surgeon } 3 >= if
 		($ "+ Gain 2 points in medical!
 		+ Gain 2 points in shooting!" $) 2 lvl
@@ -1075,7 +1075,7 @@ perkdef{
 		+ Gain 1 point in shooting" .. NEXT_LEVEL .. "2 points in medical!" $)
 ;
 
-: gungineerlevel
+: gungineerlevel 
 	gstats{ perk-gungineer } 3 >= if
 		($ "+ Gain 2 points in shooting!
 		+ Gain 2 points in mechanical!" $) 2 lvl
@@ -1088,7 +1088,7 @@ perkdef{
 		+ Gain 1 point in mechanical" .. NEXT_LEVEL .. "2 points in shooting!" $)
 ;
 
-: healthcarelevel
+: healthcarelevel 
 	gstats{ perk-healthcare } 3 >= if
 		($ "+ Start with 7 medical supplies!
 		+ Gain 2 points in medical!" $) 2 lvl
@@ -1107,7 +1107,7 @@ perkdef{
 : shotgunlevel ($ "+ Gain 3 points in shooting!" $) 2 lvl ;
 : riflelevel ($ "+ Gain 3 points in shooting!" $) 2 lvl ;
 
-: guncrazylevel
+: guncrazylevel 
 	gstats{ perk-guncrazy } 3 >= if
 		($ "+ Gain 3 points in shooting!
 			+ Start with a shotgun, rifle, pistol, and ammo!!" $) 2 lvl
@@ -1120,7 +1120,7 @@ perkdef{
 			+ Start with a pistol and bullets!" .. NEXT_LEVEL .. "2 in shooting, and a rifle!" $)
 ;
 
-: carnutlevel
+: carnutlevel 
 	gstats{ perk-carnut } 3 >= if
 		($ "+ Gain 3 points in mechanical!" $) 2 lvl
 	then;
@@ -1130,7 +1130,7 @@ perkdef{
 		($ "+ Gain 1 point in mechanical" .. NEXT_LEVEL .. "2 points in mechanical" $)
 ;
 
-: megabufflevel
+: megabufflevel 
 	gstats{ perk-megabuff } 3 >= if
 		($ "+ Gain 4 points in strength!" $) 2 lvl
 	then;
@@ -1140,7 +1140,7 @@ perkdef{
 		($ "+ Gain 2 points in strength" .. NEXT_LEVEL .. "3 points in strength" $)
 ;
 
-: ultrafitlevel
+: ultrafitlevel 
 	gstats{ perk-ultrafit } 3 >= if
 		($ "+ Gain 4 points in fitness!" $) 2 lvl
 	then;
@@ -1150,7 +1150,7 @@ perkdef{
 		($ "+ Gain 2 points in fitness" .. NEXT_LEVEL .. "3 points in fitness" $)
 ;
 
-: martialartistlevel
+: martialartistlevel 
 	gstats{ perk-martialartist } 3 >= if
 		($ "+ Gain 3 points in fitness, 1 in strength!
 			+ Fitness can go 1 point over the usual maximum!" $) 2 lvl
@@ -1161,7 +1161,7 @@ perkdef{
 		($ "+ Gain 1 points in fitness, 1 in strength" .. NEXT_LEVEL .. "2 points in fitness" $)
 ;
 
-: bruiserlevel
+: bruiserlevel 
 	gstats{ perk-bruiser } 3 >= if
 		($ "+ Gain 3 points in strength!" $) 2 lvl
 	then;
@@ -1171,7 +1171,7 @@ perkdef{
 		($ "+ Gain 1 points in strength" .. NEXT_LEVEL .. "2 points in strength" $)
 ;
 
-: doglevel
+: doglevel 
 	gstats{ perk-dogfriend } 3 >= if
 		($ "+ 70% chance supplementaire qu'une recrue aleatoire soit un chien" $) 2 lvl
 	then;
@@ -1181,7 +1181,7 @@ perkdef{
 		($ NEXT_LEVEL .. "35% chance que les recrues soient un chien" $)
 ;
 
-: explorerlevel
+: explorerlevel 
 	gstats{ perk-explorer } 3 >= if
 		($ "+ ABL rerolling costs much less gas!" $) 2 lvl
 	then;
@@ -1191,7 +1191,7 @@ perkdef{
 		($ NEXT_LEVEL .. "Moins d'essence pour les relances ABL" $)
 ;
 
-: exwrestlerlevel
+: exwrestlerlevel 
 	gstats{ perk-exwrestler } 3 >= if
 		($ "+ Gain 2 points in fitness!
 		+ Gain 1 point in strength!" $) 2 lvl
@@ -1200,15 +1200,15 @@ perkdef{
 		($ "+ Gain 1 point in fitness
 		+ Gain 1 point in strength!" .. NEXT_LEVEL .. "2 points in fitness!" $) 1 lvl
 	then;
-		($ "+ Gain 1 point in fitness" ..
-		gstats{ perk-exwrestler } 1 < if
+		($ "+ Gain 1 point in fitness" .. 
+		gstats{ perk-exwrestler } 1 < if 
 			LOCKED 1 lock
 		else
 			NEXT_LEVEL .. "1 point in strength!"
 		then $)
 ;
 
-: hiddenpotentiallevel
+: hiddenpotentiallevel 
 	gstats{ perk-hiddenpotential } 3 >= if
 		($ "+ Gain 1 point in strength!
 		+ Gain 1 point in fitness!" $) 2 lvl
@@ -1216,42 +1216,42 @@ perkdef{
 	gstats{ perk-hiddenpotential } 2 >= if
 		($ "+ Gain 1 point in fitness!" .. NEXT_LEVEL .. "Also gain 1 point in strength!" $) 1 lvl
 	then;
-		gstats{ perk-hiddenpotential } 1 < if
+		gstats{ perk-hiddenpotential } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			($ NEXT_LEVEL .. "+ Gain 1 point in fitness!" $)
 		then
 ;
 
-: hagglerlevel
+: hagglerlevel 
 	gstats{ perk-haggler } 3 >= if
 		($ "+ Les peages des bandits sont reduits !" $) 2 lvl
 	then;
 	gstats{ perk-haggler } 2 >= if
 		($ "+ Les peages des bandits sont reduits" .. NEXT_LEVEL .. "Encore plus petits !" $) 1 lvl
 	then;
-		gstats{ perk-haggler } 1 < if
+		gstats{ perk-haggler } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			($ NEXT_LEVEL .. "Les peages des bandits sont reduits" $)
 		then
 ;
 
-: pathfinderlevel
+: pathfinderlevel 
 	gstats{ perk-pathfinder } 3 >= if
 		($ "+ 75% chance d'eviter les penalites pour le 2e jour a pied !" $) 2 lvl
 	then;
 	gstats{ perk-pathfinder } 2 >= if
 		($ "+ 60% chance d'eviter la penalite pour le 2e jour a pied" .. NEXT_LEVEL .. "75% chance !" $) 1 lvl
 	then;
-		gstats{ perk-pathfinder } 1 < if
+		gstats{ perk-pathfinder } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			($ NEXT_LEVEL .. "60% chance d'eviter la penalite pour le 2e jour a pied" $)
 		then
 ;
 
-: trademarklevel
+: trademarklevel 
 	gstats{ perk-trademark } 3 >= if
 		($ "+ Arme par defaut : machette solide !!" $) 2 lvl
 	then;
@@ -1259,14 +1259,14 @@ perkdef{
 		($ "+ Arme par defaut : 50% chance batte alu, 50% machette" .. NEXT_LEVEL .. "100% chance machette solide !" $) 1 lvl
 	then;
 		($ "+ Arme par defaut : batte en aluminium !" ..
-		gstats{ perk-trademark } 1 < if
+		gstats{ perk-trademark } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			($ NEXT_LEVEL .. "50% chance de machette solide !" $)
 		then $)
 ;
 
-: naturalshotlevel
+: naturalshotlevel 
 	gstats{ perk-naturalshot } 3 >= if
 		($ "+ Gain 2 points in shooting!
 		+ Shooting can go 2 points over the usual maximum!" $) 2 lvl
@@ -1276,15 +1276,15 @@ perkdef{
 		+ Shooting can go 1 point over the usual maximum" .. NEXT_LEVEL .. "2 over maximum!" $) 1 lvl
 	then;
 		($ "+ Gain 1 point in shooting
-		+ Shooting can go 1 point over the usual maximum" ..
-		gstats{ perk-naturalshot } 1 < if
+		+ Shooting can go 1 point over the usual maximum" .. 
+		gstats{ perk-naturalshot } 1 < if 
 			LOCKED 1 lock
 		else
 			NEXT_LEVEL .. "2 points in shooting!"
 		then $)
 ;
 
-: tstclevel
+: tstclevel 
 		($ "- Can't raise fitness!!! " $) ..
 	gstats{ perk-tstc } 3 >= if
 		($ "Fitness starts at 2!" $) 2 lvl
@@ -1292,14 +1292,14 @@ perkdef{
 	gstats{ perk-tstc } 2 >= if
 		($ "Fitness starts at 1" .. NEXT_LEVEL .. "La Forme passe a 2 !" $) 1 lvl
 	then;
-		gstats{ perk-tstc } 1 < if
+		gstats{ perk-tstc } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			($ NEXT_LEVEL .. "La Forme passe a 1" $)
 		then
 ;
 
-: shieldofhopelevel
+: shieldofhopelevel 
 	gstats{ perk-shieldofhope } 3 >= if
 		($ "- Vous perdez 2 moral chaque fois que vous evitez la mort !" $) 2 lvl
 	then;
@@ -1307,7 +1307,7 @@ perkdef{
 		($ "- Vous perdez 3 moral chaque fois que vous evitez la mort" .. NEXT_LEVEL .. "Seulement 2 moral !" $) 1 lvl
 	then;
 		($ "- Vous perdez 4 moral chaque fois que vous evitez la mort" ..
-		gstats{ perk-shieldofhope } 1 < if
+		gstats{ perk-shieldofhope } 1 < if 
 			LOCKED 1 lock
 		else
 			NEXT_LEVEL .. "3 moral perdus"
@@ -1323,7 +1323,7 @@ perkdef{
 		($ "jusqu'a 7" .. NEXT_LEVEL .. "Cree 10 fleches !" $) 1 lvl
 	then;
 		($ "jusqu'a 4" ..
-		gstats{ perk-archer } 1 < if
+		gstats{ perk-archer } 1 < if 
 			LOCKED 1 lock
 		else
 			NEXT_LEVEL .. "Create 7 arrows"
@@ -1339,7 +1339,7 @@ perkdef{
 		($ "jusqu'a 6 charges" .. NEXT_LEVEL .. "Find 8 charges!" $) 1 lvl
 	then;
 		($ "jusqu'a 4 charges" ..
-		gstats{ perk-pyro } 1 < if
+		gstats{ perk-pyro } 1 < if 
 			LOCKED 1 lock
 		else
 			NEXT_LEVEL .. "Find 6 charges"
@@ -1390,16 +1390,16 @@ perkdef{
 	endcase
 ;
 
-\ Quadricep additions
-: tavernlevel
+\ Quadricep additions 
+: tavernlevel 
 	gstats{ perk-tavern } 3 >= if
 		($ "+ Gain 2 points in strength!" $) 2 lvl
 	then;
 	gstats{ perk-tavern } 2 >= if
 		($ "+ Gain 1 points in strength!" .. NEXT_LEVEL .. "2 points in strength!" $) 1 lvl
 	then;
-		($ "" ..
-		gstats{ perk-tavern } 1 < if
+		($ "" .. 
+		gstats{ perk-tavern } 1 < if 
 			($ LOCKED $) 1 lock
 		else
 			NEXT_LEVEL .. "1 points in strength!"

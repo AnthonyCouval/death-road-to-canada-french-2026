@@ -96,13 +96,13 @@ cyoa: perk1-dogfriend-buy
 	"Friend of Dog" "perk-dogfriend" gstats{ perk-dogfriend } perk-buy! ;
 cyoa-blank: perk1-dogfriend
 	"Friend of Dog" DOGPAL_COST gstats{ perk-dogfriend } ' perk1-dogfriend-buy ' perk1back perk-confirm! ;
-
+	
 cyoa: perk1-carnut-buy
 	"Plaque: SWEETRIDEZ" cyoa-title!
 	"Car Nut" "perk-carnut" gstats{ perk-carnut } perk-buy! ;
 cyoa-blank: perk1-carnut
 	"Car Nut" CARNUT_COST gstats{ perk-carnut } ' perk1-carnut-buy ' perk1back perk-confirm! ;
-
+	
 cyoa: perk1-explorer-buy
 	"AUCUNE PIERRE NON RETOURNEE, AUCUNE TOILETTE NON OUVERTE" cyoa-title!
 	"Explorer" "perk-explorer" gstats{ perk-explorer } perk-buy! ;
@@ -132,42 +132,42 @@ cyoa: perk1-support-buy
 	"Supporter" "perk-support" gstats{ perk-support } perk-buy! ;
 cyoa-blank: perk1-support
 	"Supporter" SHIELDOFHOPE_COST gstats{ perk-support } ' perk1-support-buy ' perk1back perk-confirm! ;
-
+	
 cyoa: perk1-dingus gstats{
 	"Perks de l'Esprit" cyoa-title!
-
+	
 	($ "La Debutante tient une petite tasse a the.
 	" .. "Courir partout en s'agitant n'a aucune GRACE ! Utilisez l'INTELLIGENCE et le DECORUM." pbold .. "
 	Elle reduit la tasse a the en fine poussiere." $) text!
-
+	
 	perk1-stockleft 15 < if
 		($ "Je n'ai plus de tasses maintenant !
 		Bon, je peux en avoir d'autres plus tard." pbold .. "
 		Elle hausse les epaules avec elegance." $) text!
 	then
-
+	
 	perk1-stockleft 12 < if
 		($ "Je pense qu'Explorer est sous-estime.
 		Vous pouvez utiliser son option moins chere 'conduire' pour trouver les meilleurs endroits et rester bien approvisionne !" pbold $) text!
 	then
-
+	
 	perk1-stockleft 9 < if
 		($ "Une de mes strategies preferees est de me concentrer sur les competences mecaniques et medicales, puis de remplir mon groupe de boucliers de chair utiles !" pbold $) text!
 	then
-
+	
 	perk1-stockleft 6 < if
 		($ "Restez calme et alerte !
 		Gardez votre voiture en marche et vos boucliers de chair soignes !" pbold $) text!
 	then
-
+	
 	perk1-stockleft 1 < if
 		($ "Je n'ai plus rien a vous apprendre !
 		Continuez a reflechir et vous y arriverez !" pbold .. "
 		Elle ecrase une poignee de fine poussiere, et quand elle ouvre les mains ca s'est transforme en tasse a the." $) text!
-	then
-
+	then 
+	
 	+cr zpwallet perk1-remaining
-
+	
 	choice( "Partir pour l'instant" )choice
 	
 	perk-healthcare 3 < if 

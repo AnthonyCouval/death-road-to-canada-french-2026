@@ -18,15 +18,15 @@ cyoa-choice: arcade-vidcon2
 		6 of "U*L*T*R*A*D*E*A*T*H" endof
 	endcase
 ;
-
+		
 cyoa-choice: arcade-vidcon1
 	($ cname .. " joue a un vieux jeu d'arcade intitule " .. arcade-names fbold .. " et s'y plonge vraiment.
 	Comme tous les jeux video jamais crees, y jouer ameliore vos competences avec les armes. Les critiques avaient raison.
 	Avant que " .. cname .. " s'en rende compte, 2 heures s'etaient ecoulees." $) cyoa-text!
 		shootingREV shooting++ morale++ goodfx
 		clear-cyoa
-		o'clock@ 2 + o'clock
-		team-nearby? not if
+		o'clock@ 2 + o'clock 
+		team-nearby? not if	
 			($ "Personne n'etait la pour defendre " .. pname .. " pendant ce temps, alors " .. phe .. " a du repousser des zombies en jouant. Attention !" $) +crtext
 			7 13 rnd roomgen{ .zombspawn }
 		then
@@ -38,7 +38,7 @@ cyoa: arcade-vidcon
 	"Cette borne d'arcade semble fonctionner ! On ne voit pas bien comment elle peut tourner sans electricite." cyoa-text!
 	chumany? not if
 		($ pname .. " fixe la borne d'arcade avec confusion. Ce qui distingue les gens des animaux c'est surtout que les animaux ne jouent pas aux jeux video. En tout cas, la plupart." $) +crtext
-	then;
+	then; 
 	team-nearby? not if
 		($ "Sans personne de confiance pour surveiller les zombies, jouer pourrait etre dangereux." $) +crtext
 	else

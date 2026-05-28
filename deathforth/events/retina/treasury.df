@@ -984,7 +984,7 @@ map{ roomgen{
 		sfx{ goodfx } 
 		<- me silentkillit
 	else
-		"I need a key to open this." interactee .yellmsg 
+		"Il me faut une cle pour ouvrir ca." interactee .yellmsg 
 	then 
 ; 
 
@@ -1038,8 +1038,8 @@ map{ roomgen{
 : obs spawn special_objects32_base_id 1 + lt .spriteid! 50 lt .hitpoints! bbox 50 lt .mass! ;
 
 : compass_finder case 
-	0 of "WEST" endof 
-	1 of "NORTH" endof 
+	0 of "OUEST" endof 
+	1 of "NORD" endof 
 	2 of "EAST" endof 
 	3 of "SOUTH" endof 
 	endcase
@@ -1058,12 +1058,12 @@ cyoa: combonote
 	($ "This piece of paper has a series of directions on it. It's today's vault code!
 	" .. pname .. " picks it up." $) cyoa-text! goodfx
 	
-	($ "It reads the following code:" $) +crtext 
+	($ "Il affiche le code suivant :" $) +crtext 
 	($ combo_1 compass_finder $) +crtext
 	($ combo_2 compass_finder $) +crtext
 	($ combo_3 compass_finder $) +crtext
 	($ combo_4 compass_finder $) +crtext
-	($ "Use the 4 valves to input the code!" rbold $) +crtext 
+	($ "Utilisez les 4 vannes pour entrer le code !" rbold $) +crtext 
 ;
 
 } 

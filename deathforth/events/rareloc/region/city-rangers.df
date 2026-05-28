@@ -9,8 +9,8 @@ cyoa: rangerp
 	nearestget nearest .character@ to rangerp
 	rangerp choosechar cicon
 	dead? if npc-died then;
-	"Danger Ranger: Pink" cyoa-title!
-	($ cname .. " says she is glad " .. pname .. " showed up. 
+	"Danger Ranger : Rose" cyoa-title!
+	($ cname .. " dit qu'elle est contente que " .. pname .. " soit arrive.
 	She assumes a martial arts stance!" $) cyoa-text!
 		road{ ' rangerrescue to post-mission-cyoa }
 ;
@@ -19,7 +19,7 @@ cyoa: rangero
 	nearestget nearest .character@ to rangero
 	rangero choosechar cicon
 	dead? if npc-died then;
-	"Danger Ranger: Orange" cyoa-title!
+	"Danger Ranger : Orange" cyoa-title!
 	($ cname .. " says she needs to get back to her team.
 	She does a fancy kick to emphasize her sentence, and loses a shoe." $) cyoa-text!
 		road{ ' rangerrescue to post-mission-cyoa }
@@ -29,7 +29,7 @@ cyoa: rangerg
 	nearestget nearest .character@ to rangerg
 	rangerg choosechar cicon
 	dead? if npc-died then;
-	"Danger Ranger: Green" cyoa-title!
+	"Danger Ranger : Vert" cyoa-title!
 	($ cname .. " says he could use some help! 
 	He cracks his knuckles and starts following." $) cyoa-text!
 		road{ ' rangerrescue to post-mission-cyoa }
@@ -39,7 +39,7 @@ cyoa: rangerb
 	nearestget nearest .character@ to rangerb
 	rangerb choosechar cicon
 	dead? if npc-died then;
-	"Danger Ranger: Blue" cyoa-title!
+	"Danger Ranger : Bleu" cyoa-title!
 	($ cname .. " says he got separated from his team. 
 	He does a few little poses for no good reason." $) cyoa-text!
 		road{ ' rangerrescue to post-mission-cyoa }

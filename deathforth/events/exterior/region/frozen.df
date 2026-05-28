@@ -38,7 +38,7 @@ cyoa: caveman-chat
 	choice( "La recruter dans l'equipe" )choice: caveman-recruit
 	pchar charchoice( ": Demander des conseils de combat" )choice: caveman-reward1
 	pchar charchoice( ": Demander des conseils de survie" )choice: caveman-reward2
-
+	
 ;
 
 cyoa-blank: frozen-ice

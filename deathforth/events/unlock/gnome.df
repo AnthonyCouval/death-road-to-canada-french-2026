@@ -27,7 +27,7 @@ gstats{
 
 }
 
-: gnome-buy! args( name cost )
+: gnome-buy! args( name cost ) 
 	($ "VOUS AVEZ DEBLOQUE : " .. <- name pbold $) text!
 	gstats{ ' ugnome-unlocks ++ }
 	<- cost zp-buy!	goodfx
@@ -39,7 +39,7 @@ gstats{
 	choice( "BACK" )choice <- exit cyoa-choice-handler!
 	gstats{ zombo-point } <- cost 1 - > if
 		choice( "Debloquer " .. <- name pbold .. " ! - " .. <- cost .. " PZ" pbold )choice <- handler cyoa-choice-handler!
-	then
+	then 
 		($ "Cout : " .. <- cost .. " PZ pour debloquer !" $) rbold +crtext zptally
 ;
 
@@ -65,7 +65,7 @@ cyoa-blank: ugnome--view
 	"AUGMENTATION DES POINTS ZOMBO MAX !" cyoa-title!
 	"Plafond de Points Zombo augmente !" +crtext
 ;
-
+	
 : ugnome-max1 "Augmentation PZ Max (15)" GNOMECOST_1 ;
 : ugnome-max2 "Augmentation PZ Max (20)" 15 ;
 : ugnome-max3 "Augmentation PZ Max (30)" GNOMECOST_2 ;
@@ -96,7 +96,7 @@ cyoa-blank: ugnome--view
 : ugnome-max7 "Augmentation PZ Max (99)" 75 ;
 : ugnome-tnomemax1 "DOUBLE TNOMEY" 75 ;
 : ugnome-tnomemax2 "TRIPLE TNOMEY" 99 ;
-
+	
 cyoa: ugnome-ZPmax1-buy
 	gstats{ 15 to ZOMBOP_CAP }
 	ugnome-max1 gnome-buy!
@@ -106,7 +106,7 @@ cyoa-blank: ugnome-ZPmax1
 	($ "Augmente ton PZ max a 15 !
 	" .. "NOTE :" pbold .. " Tu peux debloquer ca gratuitement en gagnant le jeu dans n'importe quel mode." $) +crtext
 	ugnome-max1 ' ugnome-ZPmax1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-ZPmax2-buy
 	gstats{ 20 to ZOMBOP_CAP }
 	ugnome-max2 gnome-buy!
@@ -116,7 +116,7 @@ cyoa-blank: ugnome-ZPmax2
 	($ "Augmente ton PZ max a 20 !
 	" .. "NOTE :" pbold .. " Tu peux debloquer ca gratuitement en gagnant en mode Route Mortelle !" $) +crtext
 	ugnome-max2 ' ugnome-ZPmax2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-ZPmax3-buy
 	gstats{ 30 to ZOMBOP_CAP }
 	ugnome-max3 gnome-buy!
@@ -127,7 +127,7 @@ cyoa-blank: ugnome-ZPmax3
 	C'EST PRESQUE UNE BOURSE" pbold text!
 	($ "Augmente ton PZ max a 30 ! Le Trait ou Perk le plus cher est bien en dessous de 30 points, mais Unomey vise une clientele haut de gamme." $) +crtext
 	ugnome-max3 ' ugnome-ZPmax3-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-ZPmax5-buy
 	gstats{ 50 to ZOMBOP_CAP }
 	ugnome-max5 gnome-buy!
@@ -138,7 +138,7 @@ cyoa-blank: ugnome-ZPmax5
 	TRES A LA MODE" pbold text!
 	($ "Augmente ton PZ max a 50 ! Tu peux acheter les deblocages les plus chers d'Unomey." $) +crtext
 	ugnome-max5 ' ugnome-ZPmax5-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-ZPmax6-buy
 	gstats{ 75 to ZOMBOP_CAP }
 	ugnome-max6 gnome-buy!
@@ -149,7 +149,7 @@ cyoa-blank: ugnome-ZPmax6
 	PEUT-ETRE DANS UN FUTUR RADIEUX" pbold text!
 	($ "Augmente ton PZ max a 75 ! Tu peux accumuler encore plus de points !" $) +crtext
 	ugnome-max6 ' ugnome-ZPmax6-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-ZPmax7-buy
 	gstats{ 99 to ZOMBOP_CAP }
 	ugnome-max7 gnome-buy!
@@ -171,7 +171,7 @@ cyoa-blank: ugnome-toilet1-view
 	($ "Unomey vous lance un regard de pur degout.
 	Ameliore les toilettes. Elles auront 2 essence au lieu de 1. Ca finit par s'accumuler ?" $) +crtext
 	ugnome-toilet1 ' ugnome-toilet1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-toilet2-buy
 	gstats{ 2 to ugnome-toilet }
 	ugnome-toilet2 gnome-buy!
@@ -184,7 +184,7 @@ cyoa-blank: ugnome-toilet2-view
 	($ "Unomey plisse le nez avec un regard de degout encore plus exagere.
 	Les toilettes peuvent contenir 2 balles. Chaque petit peu aide." $) +crtext
 	ugnome-toilet2 ' ugnome-toilet2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-toilet3-buy
 	gstats{ 3 to ugnome-toilet }
 	ugnome-toilet3 gnome-buy!
@@ -197,7 +197,7 @@ cyoa-blank: ugnome-toilet3-view
 	($ "Unomey a juste un regard vide de mepris envers vous a ce stade.
 	Les toilettes peuvent rarement contenir quelque chose de mysterieux. Elles auront aussi 30% de chance de contenir du butin, contre 20% par defaut." $) +crtext
 	ugnome-toilet3 ' ugnome-toilet3-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-toilet4-buy
 	gstats{ 4 to ugnome-toilet }
 	ugnome-toilet4 gnome-buy!
@@ -212,7 +212,7 @@ cyoa-blank: ugnome-toilet4-view
 	($ "Avec cette derniere amelioration, il suffit d'ouvrir 50 toilettes pour invoquer le Genie, au lieu de 100 !
 	" .. "NOTE :" pbold .. " Je suis serieux." $) +crtext
 	ugnome-toilet4 ' ugnome-toilet4-buy ' gnomeback gnome-confirm! ;
-
+		
 cyoa: ugnome-trader1-buy
 	gstats{ 1 to ugnome-trader }
 	ugnome-trader1 gnome-buy!
@@ -223,7 +223,7 @@ cyoa-blank: ugnome-trader1-view
 	IL VA TRAINER DANS LES CAMPS DE MARCHANDS !" pbold text!
 	($ "Permet d'acheter un peu de fournitures supplementaires aupres de Tnomey le Gnome Marchand. Il prend des PZ, et vous pouvez lui acheter une chose par partie. En plus des fournitures, il peut aussi vendre une recrue supplementaire !" $) +crtext
 	ugnome-trader1 ' ugnome-trader1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-trader2-buy
 	gstats{ 2 to ugnome-trader }
 	ugnome-trader2 gnome-buy!
@@ -234,7 +234,7 @@ cyoa-blank: ugnome-trader2-view
 	ILS SONT TOUS FOURRES DANS UN SAC" pbold text!
 	($ "Ameliore le Gnome Marchand pour porter des articles a 20 PZ. Ce sera une option supplementaire dans chaque boutique, en plus de son article a 10 PZ. Il peut vendre des armes bon marche et des rongeurs de combat !" $) +crtext
 	ugnome-trader2 ' ugnome-trader2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-trader3-buy
 	gstats{ 3 to ugnome-trader }
 	ugnome-trader3 gnome-buy!
@@ -246,7 +246,7 @@ cyoa-blank: ugnome-trader3-view
 	C'EST TOOOOOOI" pbold text!
 	($ "Ameliore le Gnome Marchand pour porter aussi des articles a 30 PZ. Il peut vendre de nouvelles armes et des personnages rares aleatoires !" $) +crtext
 	ugnome-trader3 ' ugnome-trader3-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-extraZP1-buy
 	gstats{ 1 to ugnome-extraZP }
 	ugnome-extraZP1 gnome-buy!
@@ -259,7 +259,7 @@ cyoa-blank: ugnome-extraZP1-view
 	($ "Obtiens 1 PZ chaque fois que tu sauves une personne ou un chien !
 	" .. "NOTE :" pbold .. " Pour les sauvetages normaux seulement, les rares ne comptent pas." $) +crtext
 	ugnome-extraZP1 ' ugnome-extraZP1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-extraZP2-buy
 	gstats{ 2 to ugnome-extraZP }
 	ugnome-extraZP2 gnome-buy!
@@ -271,7 +271,7 @@ cyoa-blank: ugnome-extraZP2-view
 	C'EST CE QUE LES GNOMES APPELLENT UN WIN-WIN" pbold text!
 	($ "Obtiens 1 PZ chaque fois que tu vends un article aux acheteurs d'armes !" $) +crtext
 	ugnome-extraZP2 ' ugnome-extraZP2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-extraZP3-buy
 	gstats{ 3 to ugnome-extraZP }
 	ugnome-extraZP3 gnome-buy!
@@ -283,12 +283,12 @@ cyoa-blank: ugnome-extraZP3-view
 	LES GNOMES ADORENT LES PREQUELLES STAR WARS" pbold text!
 	($ "Obtiens 1 PZ chaque fois que tu recrutes quelqu'un ou quelque chose !" $) +crtext
 	ugnome-extraZP3 ' ugnome-extraZP3-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-extraZP4-buy
 	gstats{ 4 to ugnome-extraZP }
 	ugnome-extraZP4 gnome-buy!
 	"DE NOUVEAUX SQUELETTES" cyoa-title!
-	"Tu obtiens maintenant 1 PZ chaque fois qu'un allie meurt !" +crtext
+	"Tu obtiens maintenant 1 PZ chaque fois qu'un allie meurt !" +crtext 
 	"LE GENERATEUR DE PZ ULTIME" fbold +crtext ;
 cyoa-blank: ugnome-extraZP4-view
 	"JE POURRAIS COMMENCER A TE DONNER UN POINT ZOMBO
@@ -296,7 +296,7 @@ cyoa-blank: ugnome-extraZP4-view
 	CA SEMBLE UNE TRES BONNE IDEE" pbold text!
 	($ "Obtiens 1 PZ chaque fois qu'un allie meurt !" $) +crtext
 	ugnome-extraZP4 ' ugnome-extraZP4-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-raretrader1-buy
 	gstats{ 1 to ugnome-raretrader }
 	ugnome-raretrader1 gnome-buy!
@@ -310,7 +310,7 @@ cyoa-blank: ugnome-raretrader1-view
 	"La chance normale d'un Marchand Rare est 1/30
 	Ceci augmentera la chance a 1/27 !" +crtext
 	ugnome-raretrader1 ' ugnome-raretrader1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-raretrader2-buy
 	gstats{ 2 to ugnome-raretrader }
 	ugnome-raretrader2 gnome-buy!
@@ -323,7 +323,7 @@ cyoa-blank: ugnome-raretrader2-view
 	CERTAINS PEUVENT ETRE RECRUTES AVEC UN POT-DE-VIN" pbold text!
 	"La chance de Marchands Rares augmentera a 1/24 !" +crtext
 	ugnome-raretrader2 ' ugnome-raretrader2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-raretrader3-buy
 	gstats{ 3 to ugnome-raretrader }
 	ugnome-raretrader3 gnome-buy!
@@ -363,7 +363,7 @@ cyoa-blank: ugnome-rarelocs1-view
 	($ "La chance de Lieux Rares augmentera legerement ! Tu peux aussi trouver un Lieu Rare supplementaire par partie !
 	" .. "NOTE :" pbold .. " Les Lieux Rares sont identifiables par leur texte clignotant." $) +crtext
 	ugnome-rarelocs1 ' ugnome-rarelocs1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-rarelocs2-buy
 	gstats{ 2 to ugnome-rarelocs }
 	ugnome-rarelocs2 gnome-buy!
@@ -376,7 +376,7 @@ cyoa-blank: ugnome-rarelocs2-view
 	($ "La chance d'Evenements Rares sur la Route augmentera legerement !
 	Tu peux aussi trouver un Evenement Rare supplementaire par partie !" $) +crtext
 	ugnome-rarelocs2 ' ugnome-rarelocs2-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-rarelocs3-buy
 	gstats{ 3 to ugnome-rarelocs }
 	ugnome-rarelocs3 gnome-buy!
@@ -389,7 +389,7 @@ cyoa-blank: ugnome-rarelocs3-view
 	MAIS J'AI MIS DES AUTOCOLLANTS DESSUS" pbold text!
 	($ "La chance de Lieux Rares augmentera legerement ! Tu peux aussi trouver un Lieu Rare supplementaire par partie !" $) +crtext
 	ugnome-rarelocs3 ' ugnome-rarelocs3-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-rarelocs4-buy
 	gstats{ 4 to ugnome-rarelocs }
 	ugnome-rarelocs4 gnome-buy!
@@ -414,7 +414,7 @@ cyoa-blank: ugnome-jerkstore1-view
 	($ "Debloque un nouveau batiment ou tu peux voir des defis speciaux !
 	Reussir ces defis peut debloquer de nouvelles fonctionnalites cosmetiques !" $) +crtext
 	ugnome-jerkstore1 ' ugnome-jerkstore1-buy ' gnomeback gnome-confirm! ;
-
+		
 cyoa: ugnome-tnomemax1-buy
 	gstats{ 1 to ugnome-tnomemax }
 	ugnome-tnomemax1 gnome-buy!
@@ -426,7 +426,7 @@ cyoa-blank: ugnome-tnomemax1-view
 	DOUBLE LES TNOMEYS ??" pbold text!
 	($ "Achete aupres de Tnomey le Gnome Marchand jusqu'a deux fois par partie, au lieu d'une seule !" $) +crtext
 	ugnome-tnomemax1 ' ugnome-tnomemax1-buy ' gnomeback gnome-confirm! ;
-
+	
 cyoa: ugnome-tnomemax2-buy
 	gstats{ 2 to ugnome-tnomemax }
 	ugnome-tnomemax2 gnome-buy!
@@ -438,11 +438,11 @@ cyoa-blank: ugnome-tnomemax2-view
 	TRIPLE LES TNOMEYS" pbold text!
 	($ "Achete aupres de Tnomey le Gnome Marchand jusqu'a trois fois par partie ! Depense ces PZ !" $) +crtext
 	ugnome-tnomemax2 ' ugnome-tnomemax2-buy ' gnomeback gnome-confirm! ;
-
-
+	
+		
 cyoa: unlockgnome gstats{
 	"UNOMEY LE GNOME DES DEBLOCAGES" cyoa-title!
-
+	
 	ugnome-found 1 < if
 		1 to ugnome-found save
 		"JE SUIS UNOMEY, LE GNOME DES DEBLOCAGES
@@ -450,61 +450,61 @@ cyoa: unlockgnome gstats{
 		JE TE VENDRAI DES DEBLOCAGES DESORMAIS
 		SORTEZ DE CHEZ MOI ESPECE DE NERD !" text!
 	else
-
+	
 		"HELLO I'M UNOMEY
-		TU NE ME RECONNAIS PAS ?" text!
-
+		DON'T YOU KNOW ME?" text!
+		
 		ugnome-unlocks 2 > if
 			"LES DEBLOCAGES SONT UNE GRANDE PARTIE
 			DE LA SOCIETE GNOMIQUE !
 			CELUI QUI A LE PLUS DE DEBLOCAGES EST ROI" text!
 		then
-
+		
 		gnome-stockleft 18 < if
 			"LES GNOMES ONT INVENTE LES DEBLOCAGES !
-			ON LES APPELLE 'DBLOCKS' EN ABREGE
+			ON LES APPELLE 'ONCKS' EN ABREGE
 			CA FAIT GAGNER BEAUCOUP DE TEMPS" text!
 		then
-
+				
 		gnome-stockleft 14 < if
 			"PLUS DE DEBLOCAGES
 			PLUS DE PROBLEMES
 			-- PROVERBE GNOMIQUE" text!
 		then
-
+		
 		gnome-stockleft 10 < if
 			"PERSONNE NE PEUT EN AVOIR ASSEZ
-			DE CES DBLOCKS
-			'DBLOCKS' SIGNIFIE DEBLOCAGES" text!
+			DE CES ONCKS
+			'ONCKS' SIGNIFIE DEBLOCAGES" text!
 		then
-
+		
 		gnome-stockleft 7 < if
-			"J'ESPERE QUE TU AS AIME CES DBLOCKS
+			"J'ESPERE QUE TU AS AIME CES ONCKS
 			AUTANT QUE J'AI AIME RESTER ICI
 			DES JOURS DURANT" text!
 		then
-
+		
 		gnome-stockleft 4 < if
 			"JE SUIS PRESQUE A COURT DE TRUCS !
 			J'EN AURAI BEAUCOUP PLUS PLUS TARD
 			PEUT-ETRE MEME UNE AUTRE TOILETTE POUR TOI" text!
 		then
-
+		
 		gnome-stockleft 1 < if
 			"JE N'AI PLUS DE DEBLOCAGES !
 			REVENEZ A LA PROCHAINE MISE A JOUR
 			J'EN AURAI D'AUTRES, PEUT-ETRE !" text!
 		then
-
+				
 	then
-
+		
 	// 15 ugnome-unlocks total
 	// plus 7 added in Eyeball
 	// now 24 total
 	// NERVE: Now 28
-
+	
 	+cr zptally gnome-remaining
-	choice( "Laisser tomber" )choice
+	choice( "Laisser ca tranquille" )choice
 	
 	// Upgrade series for rare events and flashing locations
 	

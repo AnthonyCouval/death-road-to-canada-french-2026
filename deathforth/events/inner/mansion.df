@@ -16,7 +16,7 @@ cyoa{
 	morale2- ghosty-sound deleteme
 ;
 
-: mghost-warn
+: mghost-warn 
 	text! "Parler a un fantome est EXTREMEMENT flippant et causera forcement un coup au moral, en plus de tout le reste." rbold +crtext
 		choice( "Ignorer le fantome pour l'instant" )choice
 		cheevo: ghostfound
@@ -53,7 +53,7 @@ cyoa-blank: mghost-bite
 ;
 
 cyoa-choice: mghost-sass-sass
-	"EVIDEMMENT QUE JE ME FOUS DE TOI ! PRENDS CA TA DANS TA FACE !" rainbold text!
+	"EVIDEMMENT QUE JE ME FOUS DE TOI ! PRENDS CA EN PLEINE TETE !" rainbold text!
 	($ "Le Fantome se moque de " .. pname .. " sans aucune retenue !" $) +crtext
 	morale-- badfx
 ;

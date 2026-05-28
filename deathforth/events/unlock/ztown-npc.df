@@ -14,7 +14,7 @@ uses events/unlock/gnome.df
 uses events/unlock/twitter.df
 
 : challenge-gamemodecheck
-	\ q update again...
+	\ q update again... 
 	// Increment this 0 by 1 for each game mode with wins
 	0 gstats{
 		wins-normal		if 1+ then
@@ -35,11 +35,11 @@ uses events/unlock/twitter.df
 		wins-weathermode	if 1+ then
 		wins-sceptermode	if 1+ then
 		wins-rpgmode	if 1+ then
-		wins-infectionmode	if 1+ then
-		wins-mutationmode	if 1 + then
-		wins-infectionmodeEX	if 1 + then
-		wins-mutationmodeEX	if 1 + then
-		wins-horrormode if 1 + then
+		wins-infectionmode	if 1+ then		
+		wins-mutationmode	if 1 + then 
+		wins-infectionmodeEX	if 1 + then 
+		wins-mutationmodeEX	if 1 + then 
+		wins-horrormode if 1 + then 
 	}
 ;
 
@@ -156,7 +156,7 @@ cyoa: jerk-dingus
 	"Le Magasin des Tocards a Appele" cyoa-title!
 	"T'ES UN TOCARD
 	OK, CA FERA CINQ DOLLARS !
-
+	
 	MERCI D'AVOIR FAIT VOS COURSES
 	AU MAGASIN DES TOCARDS" text!
 	choice( "ILS SONT A COURT DE VOUS" )choice
@@ -171,7 +171,7 @@ cyoa: roaming-capyrun
 
 cyoa: ugnome-note
 	"Du Bureau d'Unomey" cyoa-title!
-	($ "La note dit ceci :" $) cyoa-text!
+	($ "La note dit ceci :" $) cyoa-text! 
 	"SORS DE CHEZ MOI, ESPECE DE NERD !" pbold +crtext
 ;
 
@@ -184,7 +184,7 @@ cyoa: tutorial
 	($ "Tu peux repeter le tutoriel ici !
 	C'est pratique si tu as rate des infos sur des choses comme lacher des armes ou lancer des meubles.
 	Cette option te ramene a l'ecran titre, appuie juste sur DEMARRER pour relancer le tutoriel." $) cyoa-text! basic-tone
-
+	
 		choice( "SORTIR" )choice
 		choice( "Repeter le Tutoriel" )choice: tutorial-repeat
 ;
@@ -228,26 +228,26 @@ cyoa: deletedata
 	choice( "Personnages Personnalises" )choice: deletedata-custchars-confirm
 	choice( "Stats et Perks" )choice: deletedata-gstats-confirm
 	choice( "Effacer les Deux" )choice: deletedata-both-confirm
-;
+; 
 
 cyoa-blank: freeZP-give-go
 	iicon
 	"POINTS ZOMBO augmentes a 99 !" rainbold text!
 	goodfx gstats{ 99 to zombo-point save }
-
+	
 ;
 
 cyoa: freeZP-give
 	"Distribution de Points Zombo !" cyoa-title! iicon
 	"C'EST LA BRANCHE DE TEST
 	DONC JE PEUX VOUS DONNER DES POINTS ZOMBO" bbold text!
-	gstats{ zombo-point } 99 < if
+	gstats{ zombo-point } 99 < if 
 		choice( "Donne-moi ces Points Zombo" )choice: freeZP-give-go
 	else
 		"REVIENS QUAND TU AS MOINS DE 99 PZ !" bbold
 	then +crtext
 	choice( "Partir pour l'instant" )choice
-
+	
 ;
 
 cyoa-blank: gamemode-unlockening
@@ -255,15 +255,15 @@ cyoa-blank: gamemode-unlockening
 	"Modes de jeu debloques !" rainbold text!
 	RED "DIS A L'AUTRE SYCAMORE QUE SI JE LE VOIS, JE VAIS LE VAPORISER." .. +crtext
 	WHITE "Tu n'avais aucune idee que les guerres des arbres etaient si profondes." .. +crtext
-	goodfx
-
-	gstats{ 1 to wins-deadlier }
-	gstats{ 1 to wins-infectionmode }
+	goodfx 
+	
+	gstats{ 1 to wins-deadlier } 
+	gstats{ 1 to wins-infectionmode } 
 	gstats{ 1 to wins-4jerks }
-	gstats{ 1 to wins-4jerksEX }
-	gstats{ 1 to wins-mutationmode }
-	gstats{ 1 to wins-marathon }
-
+	gstats{ 1 to wins-4jerksEX } 
+	gstats{ 1 to wins-mutationmode } 
+	gstats{ 1 to wins-marathon } 
+	
 ;
 
 cyoa-blank: perk-unlockening
@@ -272,8 +272,8 @@ cyoa-blank: perk-unlockening
 	PURPLE "tu n'as pas l'air si mauvais." .. +crtext
 	RED "OH TU N'AS AUCUNE IDEE. CETTE SEMAINE J'AI BALANCE UN GNOME DU HAUT D'UNE FALAISE." .. +crtext
 	WHITE "Qui pourrait avouer un crime si odieux ?" .. +crtext
-	goodfx
-
+	goodfx 
+	
 	gstats{ 3 to perk-healthcare }
 	gstats{ 3 to perk-mechanic }
 	gstats{ 3 to perk-athlete }
@@ -327,10 +327,10 @@ cyoa-blank: perk-unlockening
 
 	gstats{ 1 to trait-rand }
 	gstats{ 1 to trait-backwall }
-
+	
 	filesave{ save-global-stats }
 	perkdef{ defperks }
-
+	
 ;
 
 cyoa: gamemode-unlocker
@@ -341,7 +341,7 @@ cyoa: gamemode-unlocker
 	choice( "Donne-moi ces nouveaux modes de jeu" )choice: gamemode-unlockening
 	choice( "Donne-moi tous les perks et traits" )choice: perk-unlockening
 	choice( "OK INTELLO" )choice
-
+	
 ;
 
 } } }
@@ -376,7 +376,7 @@ map{ regiondef{
 
 	// <- me .loot@ dup 0= if drop 1 GREEN "$" .. else looticon then
 	// <- me GREEN "11" .. looticon - a ?
-
+	
 	<- perk 1 < if
 		<- me "?" pbold
 	else
@@ -417,35 +417,35 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 ;
 
 : perk-dingus unlocker-shared
-
+		
 	57 lt .character@ .specialtype!
 	' perk1-stockleft-event lt .events!
 	' perk-dingus lt .cyoa!
 ;
 
 : perk1-dingus unlocker-shared
-
+		
 	12 lt .character@ .specialtype!
 	' perk1-stockleft-event lt .events!
 	' perk1-dingus lt .cyoa!
 ;
 
 : perk2-dingus unlocker-shared
-
+		
 	25 lt .character@ .specialtype!
 	' perk2-stockleft-event lt .events!
 	' perk2-dingus lt .cyoa!
 ;
 
 : perk3-dingus unlocker-shared
-
+		
 	46 lt .character@ .specialtype!
 	' perk3-stockleft-event lt .events!
 	' perk3-dingus lt .cyoa!
 ;
 
 : trait1-dingus unlocker-shared
-
+		
 	24 lt .character@ .specialtype!
 	' trait1-stockleft-event lt .events!
 	' trait1-dingus lt .cyoa!
@@ -455,14 +455,14 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	// new-camper
 	nomove-npc
 	21 lt .character@ .specialtype!
-
+	
 	' trader-event lt .events!
 	1 lt .timer!
 
 	' jerk-dingus lt .cyoa!
 ;
 
-: challenge-statue1
+: challenge-statue1 
 	spawn special_objects48_base_id 0x 24 + 2 + lt .spriteid! bbox immovable
 	' challenge-statue1 lt .cyoa!
 ;
@@ -490,7 +490,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 : unlockgnome unlocker-shared
 	lt .character@ .gnomify2
 	' gnome-stockleft-event lt .events!
-	' unlockgnome lt .cyoa!
+	' unlockgnome lt .cyoa!	
 ;
 
 : ugnome-note wrotenote cyoa{ ' ugnome-note cyoa! } ;
@@ -500,7 +500,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	<- me ($ "*GNORT*" rbold $) <- me
 	.sprayit
 	// statmod{ .report } clear-cyoa
-	sfx{ sing 500 fx .d! 2.25 fx .pitch! 0.9 fx .q! <- me .adjust-vol }
+	sfx{ sing 500 fx .d! 2.25 fx .pitch! 0.9 fx .q! <- me .adjust-vol } 
 ;
 
 : capy-chat args( me )
@@ -509,7 +509,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	else
 		cyoa{ roaming-capyrun }
 	then
-	;
+	; 
 
 : roaming-capybara
 	new-camper lt .character@ .gerbilfy
@@ -523,9 +523,9 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 ;
 
 : freeZP-dingus
-	nomove-npc
+	nomove-npc 
 	40 lt .character@ .specialtype!
-
+	
 	' trader-event lt .events!
 	1 lt .timer!
 	' freeZP-give lt .cyoa!
@@ -535,7 +535,7 @@ gstat: twitter-twitsleft pe: twitter-twitsleft-event
 	// new-camper
 	nomove-npc
 	147 lt .character@ .specialtype!
-	1 lt .character@ .female!
+	1 lt .character@ .female! 
 	' trader-event lt .events!
 	1 lt .timer!
 	' gamemode-unlocker lt .cyoa!
@@ -564,15 +564,15 @@ cyoa: sycamore-dingus
 	Creator of: Death Road to Sycamore" +crtext
 	"Ancien moddeur, maintenant developpeur de DR2C." rbold +crtext
 	"A contribue aux mises a jour PANCREAS, MANDIBLE, QUADRICEPS, RETINA et STOMACH." bbold +crtext
-	"Au fait, la mafia a hache va me tuer." pbold +crtext
+	"Au fait, la mafia a hache va me tuer." pbold +crtext 	
 	choice( "SY-CA-MORE" )choice
 ;
 
 cyoa: modguard-dingus
 	"Cabane dans la Cabane" cyoa-title!
 	"Je suis le gardien de la Cabane des Contributeurs !
-	Derriere moi se trouvent des createurs qui ont contribue du nouveau contenu a la Death Road ! Ce sont des createurs de mods de Death Road to Canada, depuis notre Discord ! " text! "#mod-showcase" pbold +text " and " +text "#deathroad-modding" pbold +text
-
+	Derriere moi se trouvent des createurs qui ont contribue du nouveau contenu a la Death Road ! Ce sont des createurs de mods de Death Road to Canada, depuis notre Discord ! " text! "#mod-showcase" pbold +text " and " +text "#deathroad-modding" pbold +text 
+	
 	"Entrez pour lire leurs mots d'inspiration et apprendre ce qu'ils ont ajoute dans chaque mise a jour !
 	C'est une cabane dans la grande Cabane d'Infos !" +crtext
 	choice( "Allons voir cette cabane" )choice
@@ -594,7 +594,7 @@ cyoa: arq-dingus
 	choice( "Merci mec" )choice
 ;
 
-\ stomach library
+\ stomach library 
 
 cyoa: librarian-dingus
 	"LA BIBLIOTHEQUE INFORMATIQUE" cyoa-title!
@@ -602,7 +602,7 @@ cyoa: librarian-dingus
 	"Ici tu trouveras des explications plus detaillees des stats et mecaniques de DRTC." +crtext
 	"Toutes les infos sont etiquetees et gratuites ! Tu peux les lire en interagissant avec les objets ici." +crtext
 	"Tu te demandes peut-etre : comment suis-je a la fois ici ET dans la CABANE D'INFOS ?" pbold +crtext
-	"C'est tres simple - TA MERE. Oh, et briser la causalite, ca aussi." pbold +crtext
+	"C'est tres simple - TA MERE. Oh, et briser la causalite, ca aussi." pbold +crtext 	
 	choice( "OK TOCARD" )choice
 ;
 
@@ -612,16 +612,16 @@ cyoa: blackboard_combat_2
 	"Les zombies renverses prennent toujours au moins 1 degat. Meme un coup de poing peut les tuer de cette facon !" +crtext
 	"De plus, les zombies dans cet etat recoivent 2x les degats des armes." pbold +crtext
 	"Les zombies au sol sont plus difficiles a deplacer que ceux debout." +crtext
-	choice( "MERCI POUR L'INFO" )choice
-;
+	choice( "MERCI POUR L'INFO" )choice 
+; 
 
-cyoa: blackboard_combat_1
+cyoa: blackboard_combat_1 
 	"NOTES SUR LE COMBAT : 1" cyoa-title!
 	"Presque tous les coups de corps-a-corps et a distance etourdissent le zombie." text!
 	"Les armes de type fouet sont speciales : elles etourdissent plus longtemps que la normale." +crtext
 	"Les zombies etourdit ne peuvent rien faire. Cela inclut attraper et mordre des personnages." +crtext
 	"Tu peux aussi obtenir cet effet en renversant les zombies." pbold +crtext
-	choice( "MERCI INTELLO" )choice
+	choice( "MERCI INTELLO" )choice 
 	choice( "Etudier le combat plus loin" )choice: blackboard_combat_2
 ;
 
@@ -631,7 +631,7 @@ cyoa: blackboard_combat
 	"Les degats sont un nombre aleatoire de 1 a 5, multiplie par la puissance de l'arme, arrondi a l'inferieur." +crtext
 	"Par exemple, une hache a une puissance de 1.25. Si un coup de hache touche un zombie et tire un 3, ca donnera..." +crtext
 	"1.25 * 3 = 3.75, arrondi a l'inferieur -> 3 degats au zombie." pbold +crtext
-	"Dans tous les modes sauf MUTATION EXTREME, les zombies ont 5 PV." +crtext
+	"Dans tous les modes sauf MUTATION EXTREME, les zombies ont 5 PV." +crtext 	
 	choice( "OK INTELLO" )choice
 	choice( "Etudier le combat plus loin" )choice: blackboard_combat_1
 ;
@@ -663,7 +663,7 @@ cyoa: blackboard_combat
 : ICY PINKFLASH2 BWFLASH .. ; // light blue and black!
 : YELLOWFLASH ICY BWFLASH .. ; // yellow and black
 : LIMEFLASH NAVYBLUE BWFLASH .. ; // lime and black
-: REDFLASH LIMEFLASH BWFLASH .. ; // red and black
+: REDFLASH LIMEFLASH BWFLASH .. ; // red and black 
 : MONTY GREEN BWFLASH .. ;
 
 : rbold ($ RED .. swap .. WHITE $) ;
@@ -682,13 +682,13 @@ cyoa: blackboard_combat
 : redflash ($ RED .. swap .. RAINBOW $) ;
 : iceflash ($ TEAL .. swap .. WHITE $) ;
 
-cyoa: blackboard_chars_2
+cyoa: blackboard_chars_2 
 	"NOTES SUR LES PERSONNAGES : 2" cyoa-title!
 	"Une bonne equipe est composee d'un melange de personnages de soutien et de combat." text!
 	"BONS COMBOS MELEE : " rbold "Megabuff + Warrior, Martial Artist + Warrior, Fighter + Warrior, Fighter + Craftsman, Kensai + Berserk" .. +crtext
 	"BONS COMBOS DISTANCE : " obold "Natural Shot + Calm Under Fire, Ranger + Hyperfixated, Gun Collector + Calm Under Fire, Gun Collector + Hyperfixated" ..  +crtext
 	"BONS COMBOS SOUTIEN : " ybold "Health Care + Nurturing, Surgeon + Civilized, Car Nut + Paranoid, Car Nut + Craftsman" .. +crtext
-	"BONS COMBOS UTILITAIRES OU HYBRIDES : " bbold "Explorer + City Seeker, Explorer + Gourmand, Pathfinder + Paranoid, Gungineer + Civilized" .. +crtext
+	"BONS COMBOS UTILITAIRES OU HYBRIDES : " bbold "Explorer + City Seeker, Explorer + Gourmand, Pathfinder + Paranoid, Gungineer + Civilized" .. +crtext 	
 	"Experimentez par vous-meme !" +crtext
 	choice( "BREF LES PERSONNAGES" )choice
 ;
@@ -699,10 +699,10 @@ cyoa: blackboard_chars_1
 	"Paranoiaque" obold " ... au plus " D: " attitude, au moins " :D " intuition." .. .. .. .. .. +crtext
 	"Tireur Calme" ybold " ... au moins " :D " sangfroid, au moins " :D " tir." .. .. .. .. .. +crtext
 	"Insouciant" bbold " ... au plus " D: " intuition, au moins " :D " attitude." .. .. .. .. .. +crtext
-	"Bandit" ice " ... au plus " D: " sangfroid, au plus " D: " loyaute." .. .. .. .. .. +crtext
+	"Bandit" ice " ... au plus " D: " sangfroid, au plus " D: " loyaute." .. .. .. .. .. +crtext 	
 	"Charmant" pbold " ... au moins " :D " intuition, au moins " :D " attitude." .. .. .. .. .. +crtext
 	"Enervant" pibold " ... au plus " D: " attitude, au plus " D: " intuition." .. .. .. .. .. +crtext
-	"Les combos remarquables de perks+traits sont a la page suivante." +crtext
+	"Les combos remarquables de perks+traits sont a la page suivante." +crtext 
 	choice( "MERCI L'ORIGINAL" )choice
 	choice( "Etudier les personnages plus loin" )choice: blackboard_chars_2
 ;
@@ -711,9 +711,9 @@ cyoa: blackboard_chars
 	"NOTES SUR LES PERSONNAGES : 0" cyoa-title!
 	"Les perks de personnage affectent generalement l'action et le combat. Les traits affectent generalement la personnalite." text!
 	"Les traits peuvent donner certaines combinaisons de stats. Ces combos presentent des options utiles dans les evenements de route." pbold +crtext
-	"Stats are measured " DX " to " =D ", or 0 to 6 in numbers. MAX BONUSES move the range. A +1 bonus to a stat means the range is " D: " to "  =DD  .. .. .. .. .. .. .. ", or 1 to 7 in numbers." .. +crtext
-	"For example, the Paranoid stat combo is granted by at least " :D " Wits and at most " .. D: " attitude." .. .. .. +crtext
-	"D'autres combinaisons de stats seront listees a la page suivante." +crtext
+	"Les stats sont mesurees " DX " to " =D ", ou de 0 a 6 en chiffres. Les BONUS MAX deplacent la plage. Un +1 a une stat deplace la range is " D: " to "  =DD  .. .. .. .. .. .. .. ", or 1 to 7 in numbers." .. +crtext
+	"Par exemple, le combo de stats Paranoiaque est accorde par au moins " :D " Astuce et au plus " .. D: " attitude." .. .. .. +crtext
+	"D'autres combinaisons de stats seront listees a la page suivante." +crtext 	
 	choice( "OK BOULET" )choice
 	choice( "Etudier les personnages plus loin" )choice: blackboard_chars_1
 ;
@@ -724,9 +724,9 @@ cyoa: book_melee_2
 	"La Dexterite augmente la vitesse de deplacement, te permettant d'esquiver ou de fuir plus facilement." pbold +crtext
 	"Les sources de Dexterite sont rares. Dans les conditions ideales, tu pourrais atteindre 3 de Dexterite, avec de la chance et le bon trait." +crtext
 	"Une haute Dexterite rend beaucoup plus difficile d'etre mordu. Dans le Mode Meteo Extreme, elle peut etre un handicap a cause de la glace." +crtext
-	"Si tu as un moral eleve avant le siege de la Cite des Espoirs Brises, tes personnages peuvent gagner de la Dexterite. Le moyen le plus simple : avoir des provisions alimentaires en reserve." pbold +crtext
+	"Si tu as un moral eleve avant le siege de la Cite des Espoirs Brises, tes personnages peuvent gagner de la Dexterite. Le moyen le plus simple : avoir des provisions alimentaires en reserve." pbold +crtext 	
 	choice( "MERCI MEGA INTELLO" )choice
-	\ choice( "Study chars further" )choice: book_melee_2
+	\ choice( "Study chars further" )choice: book_melee_2 
 ;
 
 cyoa: book_melee_1
@@ -735,9 +735,9 @@ cyoa: book_melee_1
 	"6 points de Forme augmentent la regen d'endurance de 1x additivement. Un 1x supplementaire est ajoute pour chaque tranche de 5 niveaux de Forme ensuite." pbold +crtext
 	"Par exemple, un personnage a 6 Forme recupere son endurance 2x plus vite. A 11 Forme, 3x plus vite." +crtext
 	"Les niveaux intermediaires de Forme (comme 4, 5, 8 ou 9) n'" "APPORTENT PAS" rbold .. " de benefices de regen." .. +crtext
-	"Chaque 2 points cumulatifs de FOR et FORM reduisent le temps de recharge des armes de melee de 10%, jusqu'a 0.65s." pbold +crtext
+	"Chaque 2 points cumulatifs de FOR et FORM reduisent le temps de recharge des armes de melee de 10%, jusqu'a 0.65s." pbold +crtext 	
 	choice( "MERCI SUPER INTELLO" )choice
-	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_2
+	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_2 
 ;
 
 cyoa: book_melee
@@ -746,9 +746,9 @@ cyoa: book_melee
 	"Chaque point de Force (et de Forme aussi) reduit le cout en endurance des coups d'arme. La Force permet aussi de lancer des objets plus lourds." pbold +crtext
 	"Les chaises peuvent etre lancees avec 0 Force. La plupart des meubles necessitent au moins 2. La plupart des pieces de salle de bain ou de cuisine necessitent 7 ou plus." +crtext
 	"Les objets plus lourds ont tendance a etre plus resistants et a infliger plus de degats a l'impact." +crtext
-	"NOTE IMPORTANTE : LA FORCE N'" "AFFECTE PAS" rbold .. " LES DEGATS AU CORPS-A-CORPS." .. +crtext
+	"NOTE IMPORTANTE : LA FORCE N'" "AFFECTE PAS" rbold .. " LES DEGATS AU CORPS-A-CORPS." .. +crtext 	
 	choice( "OK INTELLO" )choice
-	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_1
+	choice( "Etudier le corps-a-corps plus loin" )choice: book_melee_1 
 ;
 
 cyoa: book_ranged_3
@@ -758,10 +758,10 @@ cyoa: book_ranged_3
 	"Sniper Rifle" ybold " - evolue normalement. Penetre 1-5 cibles. Silencieux. Optimal a 8 Tir." .. +crtext
 	"Slug Shotgun" bbold " - evolue normalement. Penetre 2-8 cibles. Optimal a 9 Tir." .. +crtext
 	"M.O.A.R" ice " - evolue rapidement. Penetre 3-11 cibles. Max a 7 Tir." .. +crtext
-	"Mamba" pbold " - evolue normalement. Penetre 1-4 cibles. Max a 6 Tir." .. +crtext
+	"Mamba" pbold " - evolue normalement. Penetre 1-4 cibles. Max a 6 Tir." .. +crtext 
 	"N'oublie pas les armes a feu. Garde tes munitions. Les armes auto sont aussi puissantes !" +crtext
 	choice( "OK SNIPER" )choice
-	\ choice( "Study ranged further" )choice: book_ranged_3
+	\ choice( "Study ranged further" )choice: book_ranged_3 
 ;
 
 cyoa: book_ranged_2
@@ -771,10 +771,10 @@ cyoa: book_ranged_2
 	"Cowboy Rifle, Hunting Rifle, Sniper Rifle, M.O.A.R, Slug Shotgun, Mamba" rainbold +crtext
 	"La penetration lineaire est constante : chaque tir de ces armes penetrera. Le nombre de cibles touchees s'ameliore LINEAIREMENT avec le Tir." +crtext
 	"Dans les bonnes circonstances, ces armes peuvent penetrer les objets et les etageres." +crtext
-	"Chaque cible penetree entraine une perte multiplicative de degats/recul de 18% pour la balle." pbold +crtext
+	"Chaque cible penetree entraine une perte multiplicative de degats/recul de 18% pour la balle." pbold +crtext 
 	"La page suivante decrit quelques stats communes de fusils." +crtext
 	choice( "OK FRANC-TIREUR" )choice
-	choice( "Etudier le tir plus loin" )choice: book_ranged_3
+	choice( "Etudier le tir plus loin" )choice: book_ranged_3 
 ;
 
 cyoa: book_ranged_1
@@ -783,10 +783,10 @@ cyoa: book_ranged_1
 	"Ce type se trouve sur de nombreuses armes automatiques, et particulierement dans les revolvers." pbold +crtext
 	"La penetration normale est basee sur l'aleatoire. Pour qu'un tir penetre de cette facon, il doit tuer la cible initiale." +crtext
 	"Dans la plupart des cas, ce type de penetration peut occasionnellement donner un ou deux impacts supplementaires." +crtext
-	"De plus, ces balles sont bloquees par les objets." +crtext
+	"De plus, ces balles sont bloquees par les objets." +crtext 
 	"La page suivante decrit la penetration lineaire." +crtext
 	choice( "OK AS DU TIR" )choice
-	choice( "Etudier le tir plus loin" )choice: book_ranged_2
+	choice( "Etudier le tir plus loin" )choice: book_ranged_2 
 ;
 
 cyoa: book_ranged
@@ -795,10 +795,10 @@ cyoa: book_ranged
 	"Chaque point de Tir reduit le recul apres le coup et ameliore la penetration des balles." pbold +crtext
 	"Les armes a feu ont deux types de penetration :" " normale" rbold .. " et " .. "lineaire." bbold .. +crtext
 	"La penetration normale concerne presque toutes les armes autres que les fusils. Elle s'ameliore avec le Tir et est basee sur l'aleatoire." +crtext
-	"La penetration lineaire est plus puissante, plus polyvalente et constante." .. +crtext
+	"La penetration lineaire est plus puissante, plus polyvalente et constante." .. +crtext 
 	"La page suivante decrit leurs differences." +crtext
 	choice( "OK INTELLO" )choice
-	choice( "Etudier le tir plus loin" )choice: book_ranged_1
+	choice( "Etudier le tir plus loin" )choice: book_ranged_1 
 ;
 
 
@@ -810,7 +810,7 @@ cyoa: book_support_1
 	"La voiture de depart normale necessite " :) .. " (4) de Mecanique pour etre reparee la premiere fois. Les Passionnes de Voitures peuvent avoir des voitures plus faciles a reparer." .. +crtext
 	"Garder ta voiture intacte rend le voyage plus sur en evitant les evenements desagreables et en permettant la progression des jours." pbold +crtext
 	choice( "OK MECANO" )choice
-\ 	choice( "Study support further" )choice: book_support_1
+\ 	choice( "Study support further" )choice: book_support_1  
 ;
 
 cyoa: book_support
@@ -819,10 +819,10 @@ cyoa: book_support
 	"Les personnages avec une stat Medical tres basse peuvent s'ameliorer legerement en soignant. En s'ameliorant ainsi, ils ne peuvent pas depasser " :| " (3) de competence." .. .. +crtext
 	"Les personnages avec une stat Medical tres elevee n'ont meme pas besoin de fournitures medicales (" medicon .. ") pour soigner." pbold .. pbold +crtext
 	"A 0 Medical, tu peux soigner une fois par evenement pour 4 " medicon .. ". A 2 Medical, tu peux soigner 1x par evenement pour 2 " medicon .. " par fois. A 5 Medical, deux fois par fois, pour 1 " medicon .. " par fois." .. .. .. +crtext
-	"Un Medical eleve offre aussi une bonne option contre certains evenements de route." pbold +crtext
+	"Un Medical eleve offre aussi une bonne option contre certains evenements de route." pbold +crtext 
 	"La page suivante decrit la stat Mecanique." +crtext
 	choice( "OK DOC" )choice
-	choice( "Etudier le soutien plus loin" )choice: book_support_1
+	choice( "Etudier le soutien plus loin" )choice: book_support_1  
 ;
 
 } }

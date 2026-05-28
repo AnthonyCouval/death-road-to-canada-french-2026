@@ -110,11 +110,11 @@ cyoa: LIVER-
 
 : roadstandcheck
 	stampuser-countdown 49 > if then;
-	stampuser-countdown 38 > if
+	stampuser-countdown 38 > if 
 		' stamp-efudd-event stack-road-action
 	then;
 	stampuser-countdown 29 > if then;
-	stampuser-countdown 15 > if
+	stampuser-countdown 15 > if 
 		' stamp-ziggy-event stack-road-action
 	then;
 	stampuser-countdown 9 > if then;
@@ -170,7 +170,7 @@ cyoa: rom-dead
 	the-rom choosechar cicon
 	"LA T'AS VRAIMENT FAIT UNE BETISE" cyoa-title!
 	($ "Avec la mort de ce personnage, le fil de la prophetie est tranche. Restaurez une sauvegarde pour retisser la trame du destin, ou persistez dans le monde voue a la ruine que vous avez cree." rbold .. "
-
+		
 	Blague pour la partie sauvegarde. " .. "VOUS AVEZ PERDU !
 	VOUS AVEZ PERDU !
 	ESPECE DE DINGUS !" fbold $) text!
@@ -217,7 +217,7 @@ cyoa: rom-dead
 	
 	2 <- chara .carrying.slot_count!
 	<- chara .yesswap
-
+	
 	"est un super-soldat entraine par le gouvernement americain pour atteindre des potentiels de combat depassant les humains/chiens normaux." <- chara .job!
 ;
 

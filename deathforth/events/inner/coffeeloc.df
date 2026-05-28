@@ -6,7 +6,7 @@ cyoa{
 cyoa-choice: coffee-get2
 	($ cname .. " utilise toutes ses competences mecaniques pour comprendre les tres, tres nombreux boutons de la machine a cafe.
 	" .. cHe .. " fait la tasse de cafe parfaite ! C'est delicieux !
-	La machine a cafe fait des etincelles, emet de la fumee et rend l'ame." $) cyoa-text!
+	La machine a cafe grillote, emet de la fumee et rend l'ame." $) cyoa-text!
 		coffeed	pchar statmod{ .unsick }
 		morale2+ dexterity++ goodfx clear-cyoa mechanicREV
 ;
@@ -31,7 +31,7 @@ cyoa: coffee-get
 	"Cette enorme et complexe machine a cafe a ete concue pour survivre a plusieurs types de fin du monde. C'etait une grande partie de la campagne marketing de ce cafe.
 	Publicite veridique, elle fonctionne toujours !" cyoa-text!
 	chumany? not if
-		($ pname .. " n'a aucune idee de comment faire fonctionner ce truc. Et vraiment, les " .. cdogcat .. "s ne devraient pas boire de cafe de toute facon." $) +crtext
+		($ pname .. " n'a aucune idee de comment faire fonctionner ce truc. Et vraiment, les " .. cdogcat .. "s ne devraient pas boire de cafe de toute facon." $) +crtext	
 	then;
 		pchar charchoice( " prend du CAFE" )choice: coffee-get1
 		cmechanic+ if

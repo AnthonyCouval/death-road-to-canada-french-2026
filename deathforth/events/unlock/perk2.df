@@ -147,7 +147,7 @@ cyoa: perk2-dingus gstats{
 	
 	+cr zpwallet perk2-remaining
 	
-	choice( "Leave for now" )choice
+	choice( "Partir pour l'instant" )choice
 	
 	perk-athlete 3 < if 
 		"Athlete" ATHLETE_COST perk-athlete zpview ' perk2-athlete perk-view!

@@ -407,7 +407,7 @@ defer cooling-it-cheevo
 	2 STAT_FITNESS <- chara .bonus!
 	6 <- chara .loyalty!
 	"BART" <- chara .perk!
-	"looks just like Bart! Tip to toe, this is a Bart!" <- chara .job!
+	"ressemble exactement a Bart ! De la tete aux pieds, c'est un Bart !" <- chara .job!
 ;
 
 : isbort? .trait@ "BORT" $= ;

@@ -266,7 +266,7 @@ cyoa: camp2-berry
 		"DES ALLERGIES AUX CACAHUETES !" shove
 		"DES GOBELINS QUI RIGOLENT !!!" shove
 		"DES GOBELINS !!" shove
-		"DES GOBELINS MENAcANTS !" shove
+		"DES GOBELINS MENACANTS !" shove
 	shuffles pops nip
 ;
 

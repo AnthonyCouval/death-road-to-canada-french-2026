@@ -72,20 +72,20 @@ cyoa: 4j-rec-familiar
 	"Choisissez vos Tocards" cyoa-title!
 	nearest .character@ choosechar
 	cchar to recruitee ricon
-
+		
 	($ rname .. " est pret pour un road trip !" $) cyoa-text! basic-tone
-
+	
 	4j-recruit-count 1 > if ($ "Vous avez recrute assez de tocards ! La voiture est pleine !" bbold $) +crtext then;
-
+	
 	recruitee .trait@ $len 0= if
 		($ rHe .. " pretend vous connaitre, mais vous jurez ne jamais avoir vu cette personne avant..." $) +crtext
 	else
-		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext
-		($ "  PERK: " pbold .. recruitee .perk@ $) +text
+		($ "TRAIT: " pbold .. recruitee .trait@ $) +crtext 
+		($ "  PERK: " pbold .. recruitee .perk@ $) +text 
 	then
 
 	($ "Vous pouvez recruter " bbold .. 4j-recruit-left .. " tocard(s) de plus !" bbold $) +crtext
-
+	
 	choice( "Laisser " .. rname .. " pour l'instant" )choice
 
 		choice( "Recruter " .. rname .. " !" )choice: 4j-campyes-familiar

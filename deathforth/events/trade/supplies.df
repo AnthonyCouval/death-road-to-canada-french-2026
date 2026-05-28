@@ -5,9 +5,9 @@ cyoa{ regiondef{
         // ($ Thegroup .. " est force de fuir le camp de marchands !" $) +crtext quitmission
         team-stack-living depths 1 > if drop "Le groupe" else shuffles pops nip .colourname then
         " est force de fuir le camp de marchands !" .. +crtext quitmission
-    else
+    else 
         clear-streak delete-the-game
-        ' quit-to-title cyoa-choice-handler!
+        ' quit-to-title cyoa-choice-handler! 
     then
 ;
 
@@ -15,7 +15,7 @@ cyoa{ regiondef{
 
 0 value gas-to-food-bought
 
-cyoa-choice: trade-gas-food-rob
+cyoa-choice: trade-gas-food-rob 
 	($ cname .. " renverse l'homme, attrape un sac de nourriture et s'enfuit. " $) cyoa-text! badfx
 	notsolo if
 		($ Theothersare .. " dragged into it." $) +text
@@ -53,7 +53,7 @@ cyoa: trade-gas-food
 		then
 	else
 		clear-cyoa ($ "Merci pour toute l'essence !" pbold $) +crtext
-	then basic-tone
+	then basic-tone 
 	trunk-gas 25 < if
 		($ "Pas assez a epargner." $) +text
 	else
@@ -73,7 +73,7 @@ cyoa: trade-gas-food
 
 0 value gas-bought
 
-cyoa-choice: trade-gas-rob
+cyoa-choice: trade-gas-rob 
 	($ cname .. " attrape quelques jerricanes d'essence et s'enfuit. " $) cyoa-text! badfx
 	notsolo if
 		($ Theothersare .. " dragged into it." $) +text
@@ -106,15 +106,15 @@ cyoa: trade-gas
 	"Essence a Vendre" cyoa-title! picon!
 	($ Thegroup .. " trouve un homme pres d'un camion rouille. Le camion est plein de jerricanes et de chiffons graisseux. L'homme et le camion puent l'essence." $) cyoa-text!
 	gas-bought 15 < if
-		"Il propose de vendre 10 unites d'essence contre chaque unite de nourriture." +crtext
+		"Il propose de vendre 10 unites d'essence contre chaque unite de nourriture." +crtext 
 		foodamt
 		choice( "Non merci" )choice back-esc
 		most-ahole if
 			charchoice( " devalise le marchand" )choice: trade-gas-rob
 		then
 	else
-		clear-cyoa "Il est a court d'essence." +crtext
-	then basic-tone
+		clear-cyoa "Il est a court d'essence." +crtext 
+	then basic-tone 
 	// Possibly replace some with weaselest-pass if weaselest
 	trunk-food 0 > if
 		trunk-food 14 > gas-bought 5 < and if
@@ -126,7 +126,7 @@ cyoa: trade-gas
 		gas-bought 15 < if
 			trunk-food 4 > if
 				choice( "Echanger 5 nourriture" )choice: trade-gas-5
-			else
+			else	
 				choice( "Echanger " .. trunk-food .. " nourriture" )choice: trade-gas-all
 			then
 		then
@@ -137,7 +137,7 @@ cyoa: trade-gas
 
 0 value bullet-bought
 
-cyoa-choice: trade-bullet-rob
+cyoa-choice: trade-bullet-rob 
 	($ cname .. " attrape quelques boites de balles et s'enfuit. La fouilleur mentait sur les armes, et envoie quelques balles supplementaires vers " .. thegroup .. "." $) cyoa-text! bitefx 50 80 rnd trunk-bullet+
 		rob-fail
 	aholeREV trade-flee
@@ -166,12 +166,12 @@ cyoa-choice: trade-bullet-all
 cyoa: trade-bullet
 	"Surplus de Balles" cyoa-title! picon!
 	($ Thegroup .. " parle a une fouilleure sympathique qui vend des balles supplementaires. Elle pretend ne pas utiliser de pistolets car les coups de feu agitent les zombies." $) text!
-	bullet-bought 15 < if
+	bullet-bought 15 < if 
 		"Elle propose 8 balles pour chaque unite de nourriture." +crtext foodamt
 		choice( "Non merci" )choice back-esc
 		most-ahole if
 			charchoice( " devalise la marchande" )choice: trade-bullet-rob
-		then
+		then		
 	else
 		clear-cyoa "Elle vient de manquer de balles." +crtext
 	then basic-tone
@@ -185,7 +185,7 @@ cyoa: trade-bullet
 		bullet-bought 15 < if
 			trunk-food 4 > if
 				choice( "Echanger 5 nourriture" )choice: trade-bullet-5
-			else
+			else	
 				choice( "Echanger " .. trunk-food .. " nourriture" )choice: trade-bullet-all
 			then
 		then
@@ -196,8 +196,8 @@ cyoa: trade-bullet
 
 0 value shotgun-shell-bought
 
-cyoa-choice: trade-shotgun-shell-rob
-	($ cname .. " prend une grande boite de cartouches et s'en va. Dans un geste calme et fluide, le marchand sort son fusil et la merchant whips out a shotgun and starts blasting." $) cyoa-text! bitefx
+cyoa-choice: trade-shotgun-shell-rob 
+	($ cname .. " prend une grande boite de cartouches et s'en va. Dans un geste calme et fluide, le marchand degaine son fusil a pompe et starts blasting." $) cyoa-text! bitefx
 		30 40 rnd trunk-shotgun-shell+ rob-fail	aholeREV trade-flee
 ;
 
@@ -255,7 +255,7 @@ cyoa: trade-shotgun-shell
 0 value rifle-shell-bought
 
 cyoa-choice: trade-rifle-shell-rob
-	($ Thegroup .. "'s robbery attempt ends up messy. The seller has two loaded assault rifles. She fires them wildly, one in each hand, spraying ammo everywhere." $) cyoa-text! bitefx
+	($ Thegroup .. "'s tentative de vol tourne mal. La vendeuse a deux fusils d'assaut charges. Elle tire dans tous les sens, un dans chaque main, arrosant ammo everywhere." $) cyoa-text! bitefx
 		40 65 rnd trunk-rifle-shell+ rob-fail aholeREV trade-flee
 ;
 
@@ -280,7 +280,7 @@ cyoa-choice: trade-rifle-shell-all
 
 cyoa: trade-rifle-shell
 	"Vendeur de Balles de Fusil" cyoa-title! picon!
-	($ Thegroup .. " runs into someone selling extra rifle ammo. She says she's frugal with ammo, often killing multiple zombies in one shot." $) text!
+	($ Thegroup .. " tombe sur quelqu'un qui vend des balles de fusil supplementaires. Elle dit etre econome avec ses munitions, tuant souvent plusieurs zombies en un seul tir." $) text!
 	rifle-shell-bought 15 < if
 		"Elle propose 6 balles de fusil par unite de nourriture." +crtext foodamt
 		choice( "Non merci" )choice back-esc
@@ -393,9 +393,9 @@ cyoa-choice: trade-groupheal-group
 		($ Thegroup .. " gets a check-up, but there's nothing wrong with them." $) cyoa-text!
 	else
 		7 groupheal
-		($ Thegroup .. " gets treatment for " $) cyoa-text!
-		team-damage 1 < if
-			"tout" +text
+		($ Thegroup .. " recoit un traitement pour " $) cyoa-text!
+		team-damage 1 < if 
+			"tout" +text 
 		else
 			"la plupart" +text
 		then
@@ -415,13 +415,13 @@ cyoa-choice: trade-groupheal-group
 	' trade-groupheal-heal cyoa-team-choice
 ;
 
-cyoa-choice: trade-groupheal-charm
+cyoa-choice: trade-groupheal-charm 
 	charmroll if
 		($ cname .. " convinces the doctor to offer her services for free!
 		" .. cHe .. "'s just that charming." $) cyoa-text! ' camp-charm ++ goodfx
 		trade-groupheal-guy +crtext
 	else
-		($ cname .. " accidentally just comes off as creepy.
+		($ cname .. " accidentally just comes off as creepy. 
 		" .. gHe .. " is asked to leave and never return." $) cyoa-text! badfx
 	then clear-cyoa
 ;
@@ -452,7 +452,7 @@ cyoa: trade-groupheal
 0 value allammo-bought
 0 value allammo-dogpal
 
-cyoa-choice: trade-allammo-rob
+cyoa-choice: trade-allammo-rob 
 	($ Thegroup .. " tente de voler le gros stock de munitions. Le chien n'est pas content, et il devient" .. " COMPLETEMENT DINGUE" fbold $) cyoa-text! bitefx 50 75 rnd trunk-bullet+ 20 40 rnd trunk-shotgun-shell+ 30 60 rnd trunk-rifle-shell+
 		rob-megafail aholeREV trade-flee
 ;
@@ -508,7 +508,7 @@ cyoa: trade-allammo
 		allammo-bought 15 < if
 			trunk-food 4 > if
 				choice( "Echanger 5 nourriture" )choice: trade-allammo-5
-			else
+			else	
 				choice( "Echanger " .. trunk-food .. " nourriture" )choice: trade-allammo-all
 			then
 		then
@@ -517,7 +517,7 @@ cyoa: trade-allammo
 
 // Weapon buyer
 
-cyoa-choice: trade-weapon-buy-rob
+cyoa-choice: trade-weapon-buy-rob 
 	($ "La marchande se defend en lancant des boites de nourriture sur " .. cname .. " ! C'est etonnamment efficace." $) cyoa-text!
 	notsolo if
 		($ Theothersare .. " dragged into it." $) +text
@@ -675,22 +675,22 @@ cyoa-choice: trade-weapon-buy-nodrop
 	WEAPON_SLAMFIRE shove
 	WEAPON_SIXSHOOTER shove
 	WEAPON_FLIPARI shove
-	WEAPON_FOSBURY shove
-	WEAPON_BLACKMAMBA shove
-	WEAPON_FLET shove
-	WEAPON_THREEBURST shove
-	WEAPON_STEELPIKE shove
-	WEAPON_MOARGUN shove
-	WEAPON_KUKRI shove
-	WEAPON_TARGETRIFLE shove
-	WEAPON_FN_FAL shove
-	WEAPON_MP5 shove
-	WEAPON_CHROMESHOTGUN shove
-	WEAPON_MASTERKEY shove
-
+	WEAPON_FOSBURY shove 
+	WEAPON_BLACKMAMBA shove 
+	WEAPON_FLET shove 
+	WEAPON_THREEBURST shove 
+	WEAPON_STEELPIKE shove 
+	WEAPON_MOARGUN shove 
+	WEAPON_KUKRI shove 
+	WEAPON_TARGETRIFLE shove 
+	WEAPON_FN_FAL shove 
+	WEAPON_MP5 shove 
+	WEAPON_CHROMESHOTGUN shove 
+	WEAPON_MASTERKEY shove 
+	
 constant WEAPON_LIST_SELLABLE
 
-\ q update - new weps are sellable too
+\ q update - new weps are sellable too 
 
 : pchar-weapon-sell-check WEAPON_LIST_SELLABLE pchar-has-weapontype? ;
 
@@ -783,10 +783,10 @@ constant WEAPON_LIST_SELLABLE
 : trade-weapon-fosbury 3 WEAPON_FOSBURY .sell-weapon ;
 : trade-weapon-flet 1 WEAPON_FLET .sell-weapon ;
 
-: trade-weapon-moar 8 WEAPON_MOARGUN .sell-weapon ;
-: trade-weapon-kukri 2 WEAPON_KUKRI .sell-weapon ;
-: trade-weapon-steelpike 4 WEAPON_STEELPIKE .sell-weapon ;
-: trade-weapon-dnk 6 WEAPON_THREEBURST .sell-weapon ;
+: trade-weapon-moar 8 WEAPON_MOARGUN .sell-weapon ; 
+: trade-weapon-kukri 2 WEAPON_KUKRI .sell-weapon ; 
+: trade-weapon-steelpike 4 WEAPON_STEELPIKE .sell-weapon ; 
+: trade-weapon-dnk 6 WEAPON_THREEBURST .sell-weapon ; 
 
 : trade-weapon-fal 3 WEAPON_FN_FAL .sell-weapon ;
 : trade-weapon-targetrifle 2 WEAPON_TARGETRIFLE .sell-weapon ;
@@ -794,7 +794,7 @@ constant WEAPON_LIST_SELLABLE
 : trade-weapon-mp5 4 WEAPON_MP5 .sell-weapon ;
 : trade-weapon-chromeshotgun 4 WEAPON_CHROMESHOTGUN .sell-weapon ;
 : trade-weapon-masterkey 3 WEAPON_MASTERKEY .sell-weapon ;
-\ should probably be worth more but its just a dshotgun sidegrade...even if rare
+\ should probably be worth more but its just a dshotgun sidegrade...even if rare 
 
 cyoa: trade-weapon-buy
 	"Troc d'Armes" cyoa-title!
@@ -804,7 +804,7 @@ cyoa: trade-weapon-buy
 		" pbold .. "Elle jette un rapide coup d'oeil a ce que " .. pname .. " transporte..." $) +crtext
 	pchar-weapon-sell-check if
 		choice( "Ne rien donner pour l'instant" )choice back-esc
-	else
+	else 
 		"Elle ne voit rien qui l'interesse !" +crtext
 		WEAPON_LIST_SELLABLE roadtrip-has-weapontype? if
 			" Cependant, il y a quelque chose que tu peux vendre " +text
@@ -819,7 +819,7 @@ cyoa: trade-weapon-buy
 	pchar ahole? if
 		pchar charchoice( " robs her" )choice: trade-weapon-buy-rob
 	then
-	basic-tone
+	basic-tone 
 
 	// WEAPON_ pchar-weapon? if choice( "Sell  - 1 food" )choice: trade-weapon- then
 	// Prices roughly a quarter of their buy prices
@@ -841,13 +841,13 @@ cyoa: trade-weapon-buy
 	WEAPON_AUTOSHOT pchar-weapon? if choice( "Sell Autoshotty - 7 food" )choice: trade-weapon-autoshot then
 	WEAPON_MINIGUN pchar-weapon? if choice( "Sell Minigun - 16 food" )choice: trade-weapon-minigun then
 	WEAPON_AK47 pchar-weapon? if choice( "Sell Assault Rifle - 6 food" )choice: trade-weapon-ak47 then
-	WEAPON_GLADIUS pchar-weapon? if	choice( "Sell Gladius - 3 food" )choice: trade-weapon-gladius then
+	WEAPON_GLADIUS pchar-weapon? if	choice( "Sell Gladius - 3 food" )choice: trade-weapon-gladius then	
 	WEAPON_HUNTING pchar-weapon? if choice( "Sell Hunting Rifle - 3 food" )choice: trade-weapon-hunting then
 	WEAPON_FLAMETHROWER pchar-weapon? if choice( "Sell Flamethrower - 12 food" )choice: trade-weapon-flamethrower then
 	WEAPON_PARKING pchar-weapon? if choice( "Sell Parking Meter - 1 food" )choice: trade-weapon-parking then
 	WEAPON_CHAINSAW pchar-weapon? if choice( "Sell Chainsaw - 4 food" )choice: trade-weapon-chainsaw then
 	WEAPON_MACHETE2 pchar-weapon? if choice( "Sell Sturdy Machete - 3 food" )choice: trade-weapon-machete then
-	WEAPON_CLAYMORE pchar-weapon? if choice( "Sell Claymore - 8 food" )choice: trade-weapon-claymore then
+	WEAPON_CLAYMORE pchar-weapon? if choice( "Sell Claymore - 8 food" )choice: trade-weapon-claymore then	
 	WEAPON_KNIGHT pchar-weapon? if choice( "Sell Knight Sword - 5 food" )choice: trade-weapon-knight then
 	WEAPON_MEGAMAUL pchar-weapon? if choice( "Sell Mega Maul - 3 food" )choice: trade-weapon-megamaul then
 	WEAPON_SLEDGE pchar-weapon? if choice( "Sell Sledgehammer - 1 food" )choice: trade-weapon-sledge then
@@ -859,7 +859,7 @@ cyoa: trade-weapon-buy
 	WEAPON_GUITAR pchar-weapon? if choice( "Sell Electric Guitar - 2 food" )choice: trade-weapon-guitar then
 	WEAPON_FIRE pchar-weapon? if choice( "Sell Fire Axe - 1 food" )choice: trade-weapon-fireaxe then
 	WEAPON_RED9 pchar-weapon? if choice( "Sell Ded9 - 3 food" )choice: trade-weapon-red9 then
-
+	
 	WEAPON_WHACKER pchar-weapon? if choice( "Sell Weed Whacker - 2 food" )choice: trade-weapon-whacker then
 	WEAPON_SILENTSHOTGUN pchar-weapon? if choice( "Sell Quiet Shotgun - 7 food" )choice: trade-weapon-silentshotgun then
 	WEAPON_SILENTRIFLE pchar-weapon? if choice( "Sell Sniper Rifle - 6 food" )choice: trade-weapon-silentrifle then

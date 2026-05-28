@@ -45,7 +45,7 @@ cyoa-choice: tradergym-strength-train
 		($ cname .. " est tout gonfle apres le programme d'entrainement en force !" $) goodfx
 	else
 		($ cname .. " a atteint les limites de ce que l'entrainement peut faire pour " .. chim .. " !" $) badfx
-	then cyoa-text!
+	then cyoa-text! 
 	swolegym-solo-pay strengthREV strength++ ' tradergym-strength+ ++
 ;
 
@@ -64,12 +64,12 @@ cyoa: tradergym-strength-give
 ;
 
 cyoa: tradergym-strength
-	($ "LA SALLE DE SPORT " rbold .. "OU TU DEVIENS" rainbold .. " MUSCLE" fbold $) cyoa-title!
+	($ "THE GYM " rbold .. "TU DEVIENS" rainbold .. " SWOLE" fbold $) cyoa-title!
 	"Bienvenue a SWOLE MOUNTAIN !
 	Avec les methodes brevetes de SWOLE MOUNTAIN, je peux t'entrainer au niveau de force que tu veux, VITE !
 	Tant que t'as de la nourriture, on continue a s'entrainer !" rbold text! +cr foodamt
 		swolegym-solo-pay? not if
-			"Tu n'as pas les moyens de t'entrainer davantage." +crtext
+			"Tu n'as pas les moyens de t'entrainer davantage." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		swolegym-solo-pay? if
@@ -78,12 +78,12 @@ cyoa: tradergym-strength
 		swolegym-train-pay? if
 			choice( "Donner " .. swolegym-train-amt .. " nourriture pour entrainement de groupe" )choice: tradergym-strength-group
 		then
-
+		
 ;
 
 0 value tradergym-fitness+
 
-: swolefit-train-amt numhums 2 * tradergym-fitness+ 1 + * 1 + ;
+: swolefit-train-amt numhums 2 * tradergym-fitness+ 1 + * 1 + ; 
 : swolefit-train-pay? trunk-food swolefit-train-amt 1 - > notsolo notsolohuman and and ;
 : swolefit-train-pay swolefit-train-amt -1 * trunk-food+ ;
 
@@ -96,7 +96,7 @@ cyoa-choice: tradergym-fitness-train
 		($ cname .. " est tout revigore apres le programme d'entrainement cardio !" $) goodfx
 	else
 		($ cname .. " a atteint les limites de ce que l'entrainement peut faire pour " .. chim .. " !" $) badfx
-	then cyoa-text!
+	then cyoa-text! 
 	swolefit-solo-pay fitnessREV fitness++ ' tradergym-fitness+ ++
 ;
 
@@ -120,7 +120,7 @@ cyoa: tradergym-fitness
 	Ici a SWOLE MOUNTAIN, on croit que l'entrainement cardio est tres important !
 	Tant que t'as de la nourriture, on continue a s'entrainer !" rbold text! +cr foodamt
 		swolefit-solo-pay? not if
-			"Tu n'as pas les moyens de t'entrainer davantage." +crtext
+			"Tu n'as pas les moyens de t'entrainer davantage." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		swolefit-solo-pay? if
@@ -129,7 +129,7 @@ cyoa: tradergym-fitness
 		swolefit-train-pay? if
 			choice( "Donner " .. swolefit-train-amt .. " nourriture pour entrainement de groupe" )choice: tradergym-fitness-group
 		then
-
+		
 ;
 
 // Boxing Training
@@ -200,14 +200,14 @@ cyoa-choice: tradergym-shady-1
 
 cyoa-choice: tradergym-shady-2-go
 	iicon ($ cname .. " apprend la " .. "POMPE INTERDITE" bbold .. " !" $) text!
-	cchar .specialtype@ 25 = if
+	cchar .specialtype@ 25 = if	
 		($ "QU'AS-TU FAIT ?
 		QU'AS-TU FAAAAAAAAAAIT ????
 		" fbold .. cname .. " gagne LEGEREMENT PLUS DE MASSE MUSCULAIRE !
 		" rbold .. cname .. " peut maintenant soulever des zombies avant meme qu'ils tombent !" rbold $) +crtext
 	else
 		($ "Sa force est " .. "ELEVEE A DES NIVEAUX IMPOSSIBLES !!!" fbold $) +crtext
-		"Ca claque !" pbold +crtext
+		"Ca claque !" pbold +crtext 
 	then goodfx
 	-20 trunk-food+ ' tradergym-shady-2-buy ++
 		cchar .shadypump
@@ -246,7 +246,7 @@ cyoa: tradergym-shady
 	Moi j'ai le vrai entrainement !" pbold text!
 	+cr foodamt
 		trunk-food 3 < if
-			"L'entraineur louche te ricane dessus." +crtext
+			"L'entraineur louche te ricane dessus." +crtext 
 		then;
 		choice( "Partir pour l'instant" )choice
 		trunk-food 2 > tradergym-shady-1-buy 3 < and if
@@ -299,7 +299,7 @@ trade-camp-reset
 : bldg tanchor!
 	"tradergym" $picklocid addloc 
 		prefab{
-		GREEN "SWOLE MOUNTAIN " .. RED .. BLINKY .. "LA SALLE DE SPORT " .. RAINBOW .. "OU TU DEVIENS " .. FLASHY .. "MUSCLE" .. sign-text!
+		GREEN "SWOLE MOUNTAIN " .. RED .. BLINKY .. "THE GYM " .. RAINBOW .. "U GET " .. FLASHY .. "SWOLE" .. sign-text!
 		0 0 0 sign-bg!
 		0 1 0 sign-border!
 		1 1 1 sign-fg!

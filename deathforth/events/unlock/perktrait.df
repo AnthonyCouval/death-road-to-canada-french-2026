@@ -100,11 +100,11 @@
 : trait-buy! args( title name ) ($ trait-nowmake .. <- title pbold .. " trait!" $) text!
 <- name 0 shared-buy! goodfx ;
 
-: perk-buy! args( title name level )
+: perk-buy! args( title name level ) 
 	($ <- level perk-line1 .. <- title pbold .. " perk!" $) text!
-	<- level zp-upgradenote?
+	<- level zp-upgradenote? 
 	<- level 1 > if "Ce perk a atteint le niveau maximum !" rainbold +crtext then
-	<- name <- level shared-buy! goodfx
+	<- name <- level shared-buy! goodfx 
 ;
 
 defer perkback
@@ -129,11 +129,11 @@ defer gnomeback
 	// Will have to include a zpcost calc
 	zpcost? if
 		choice( <- level unlockupgrade? .. <- name pbold .. <- type traitperk? .. "! - " .. ADJ-ZPCOST .. " PZ" pbold )choice <- handler cyoa-choice-handler!
-	then
-		<- level 1 < if
-			($ "Cout : " .. ADJ-ZPCOST .. " PZ pour debloquer !" $)
+	then 
+		<- level 1 < if 
+			($ "Cout : " .. ADJ-ZPCOST .. " PZ pour debloquer !" $) 
 		else
-			($ " COUT : " .. ADJ-ZPCOST .. " PZ" $)
+			($ " COUT : " .. ADJ-ZPCOST .. " PZ" $) 
 		then +text +cr zptally
 ;
 
@@ -149,30 +149,30 @@ defer gnomeback
 : perk-view! args( name cost handler )
 	choice( <- name $upper pbold .. " - " .. <- cost .. " PZ" pbold )choice <- handler cyoa-choice-handler!
 ;
-
+	
 // END the prep logic
 
-// Temporary Dude
+// Temporary Dude	
 
 cyoa: perk-dingus gstats{
 	"Perks et Traits" cyoa-title!
-
+		
 	"Je developpe un produit incroyable
-	Je les appelle... les deblocages. Ou 'dblocks' pour faire court" text!
-
+	Je les appelle... les deblocages. Ou 'oncks' pour faire court" text!
+	
 	zombo-point 3 < if
 		"Tu vas avoir besoin de Points Zombo pour voir ce que je veux dire ! Je les ai aussi inventes a l'instant."
 	else
 		"Temoin de la magie des 'cheevos' !
 		Attends, je voulais dire 'deblocages'."
 	then +crtext +cr zptally
-
+	
 	choice( "Partir pour l'instant" )choice
-
+	
 } ;
 
 ' perk-dingus to perkback
 
 	(* gstats{ trait-specialist } 0 > if
-		($ "Tu as achete tous mes " .. "'dblocks'" pbold .. " pour l'instant.
+		($ "Tu as achete tous mes " .. "'oncks'" pbold .. " pour l'instant.
 		Reviens a la prochaine mise a jour ! J'en aurai d'autres !" $) text! *)

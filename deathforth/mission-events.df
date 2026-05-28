@@ -83,7 +83,7 @@ all-leaving
 	then
 
 	mission-right-leave? if
-		player .pos.x@ pixelw 16 - > if mission-right-leave? then;
+		player .pos.x@ pixelw 16 - > if mission-right-leave? then;	
 	then
 
 	0
@@ -103,18 +103,18 @@ all-leaving
 
 	cyoa-start
 	"DEPART" cyoa-title!
-	ZOMBOTOWN if
+	ZOMBOTOWN if 
 		"QUITTER ZOMBO TOWN" cyoa-title!
 		"Veux-tu retourner a l'ecran titre ?"
 	else
 		"Veux-tu retourner a pied sur la route ?"
-
+		
 		mv@ 0 > if
 			cr$ .. cr$ .. RED .. "Tu vas abandonner ta voiture " .. WHITE .. "si tu " .. RAINBOW .. "partir comme ca" .. WHITE .. " sans elle !" ..
 		then
-
+	
 	then cyoa-text!
-
+	
 	cyoa-add-choice
 		"Non, rester ici." cyoa-choice-text!
 
@@ -132,14 +132,14 @@ last to main-event-mission-edge
 : door-no-escape
 	cyoa-start
 	beep "door-no-escape" print
-	"PAS D'ECHAPPATOIRE" cyoa-title!
+	"PAS DE SORTIE" cyoa-title!
 	"Tu ne peux pas partir de cet endroit. Il va falloir trouver une autre sortie." cyoa-text!
 ;
 
 : door-sieged
 	cyoa-start
 	beep "door-sieged" print
-	"PAS D'ECHAPPATOIRE" cyoa-title!
+	"PAS DE SORTIE" cyoa-title!
 	"C'est trop dangereux dehors pour l'instant. Tu ne peux pas quitter cet endroit encore." cyoa-text!
 ;
 
@@ -174,12 +174,12 @@ last to main-event-mission-location-leave
 	// TODO: summary stuff
 
 
-
+	
 	(* THIS WAS REALLY SCREWY and broke if you were in a building in a city, presumably because driveout would happen but you weren't around to see the car drive out
 	getcar thecar if
 		vehicle.which@ if driveout beep "cyoa-car-fail2 at driveout" print then; // Car
 	then *)
-
+	
 	main-event-mission-end // No car
 ;
 
@@ -264,7 +264,7 @@ last to main-event-mission-killed
 : handle-quit cyoa{
 	cyoa-active? if then;
 //	4 500 tone
-	cyoa-new-
+	cyoa-new- 
 	"QUITTER ?" cyoa-title!
 
 	game.location 0 < if
@@ -272,7 +272,7 @@ last to main-event-mission-killed
 		choice( "NON" )choice back-esc
 		choice( "OUI" )choice: mad_quit
 	then;
-
+	
 	"ABANDONNER le jeu et retourner a l'ecran titre ?" cyoa-text!
 	choice( "NO" )choice back-esc
 	road? if
@@ -285,7 +285,7 @@ last to main-event-mission-killed
 		Tes ameliorations achetees sont deja sauvegardees." cyoa-text!
 		choice( "OUI" )choice: quit-to-title
 	then;
-	mission? if
+	mission? if 
 		"ATTENTION : Quitter directement depuis une mission supprimera la sauvegarde !" rbold +crtext
 		choice( "QUIT AND DELETE SAVE" )choice: quit-from-mission
 	then;
@@ -299,7 +299,7 @@ last to main-event-do-quit
 : handle-esc
 	game.location 0 < if
 		cyoa-active? if then;
-		cyoa-new-
+		cyoa-new- 
 		"QUITTER ?" cyoa-title!
 		"QUITTER le jeu ?" cyoa-text!
 		choice( "NON" )choice back-esc

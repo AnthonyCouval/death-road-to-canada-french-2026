@@ -158,7 +158,7 @@ cyoa: trait1-dingus gstats{
 	
 	+cr zptally trait1-remaining
 	
-	choice( "Leave for now" )choice
+	choice( "Partir pour l'instant" )choice
 	
 	trait-soundsleep 1 < if 
 		"Sound Sleeper" SOUNDSLEEP_COST ' trait1-soundsleep perk-view!

@@ -26,7 +26,7 @@ cyoa: anime1
 	"Manga Trouve" cyoa-title!
 	picon!
 	($ cname .. " trouve un manga intitule " .. "SANDWICH-CHAN" pbold .. "
-	 C'est un roman graphique sur une magique fille de manga qui est aussi un sandwich vivant dans un refrigerateur. Ou peut-etre que c'est un sandwich qui est aussi une magique fille de manga.
+	 C'est un roman graphique sur une magique fille de manga qui est aussi un sandwich vivant dans un refrigerateur. Ou peut-etre que c'est un sandwich qui est aussi une magique fille de manga. 
 	 L'intrigue est un peu difficile a suivre." $) text!
 		animechoice
 ;
@@ -35,7 +35,7 @@ cyoa: anime2
 	"Manga Trouve" cyoa-title!
 	picon!
 	($ cname .. " trouve un manga intitule " .. "JE N'EN REVIENS PAS : MON FIANCE EST UNE SORTE DE CREATURE MARINE !" pbold .. "
-	 C'est un comic sur une femme qui a un boulot ennuyeux dans un bureau. Sa vie s'egaye quand elle adopte un poisson a visage humain qui parle.
+	 C'est un comic sur une femme qui a un boulot ennuyeux dans un bureau. Sa vie s'egaye quand elle adopte un poisson a visage humain qui parle. 
 	 L'intrigue les voit obliges de se marier a cause de la malediction d'un sorcier." $) text!
 		animechoice
 ;
@@ -59,7 +59,7 @@ cyoa: animebox
 	picon!
 	($ cname .. " trouve une boite de manga. Elle contient un tas de masques de filles de manga." $) text!
 		choice( "Laisser ca tranquille pour l'instant" )choice
-		cchar charchoice( " met le masque de manga" )choice: animebox-go
+		cchar charchoice( " met le masque de manga" )choice: animebox-go	
 ;
 
 : anime-recruit nearest .character@ choosechar cicon 1 cchar .party-familiar goodfx clear-cyoa ;
@@ -70,7 +70,7 @@ cyoa: animebox
 		" .. "LE MANGA EST REEL !" rainbold $) text!
 		road{ anime-countdown } 50 < if
 			($ "La purete de l'amour de " .. cname .. " pour le manga arrete la " .. "MALEDICTION DU MANGA" rbold .. " placee sur " .. pname .. " ! Profitez-en !" $) +crtext road{ 1000 to anime-countdown }
-		then \ retina fix
+		then \ retina fix 
 	then
 ;
 

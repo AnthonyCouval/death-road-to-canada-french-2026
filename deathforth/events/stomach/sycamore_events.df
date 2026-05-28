@@ -196,7 +196,7 @@ cyoa-choice: drts-bison-nearby
 	($ "Choisissez un nouvel endroit a explorer :" bbold $) +crtext
 
 	choice( "Aire de Repos" )choice: rest-easy
-	choice( "Yall-Mart Tranquille" )choice: yallmart-easy
+	choice( "Lidl Tranquille" )choice: yallmart-easy
 	choice( "Abandonner l'exploration" )choice
 	\ deja vu...
 ;
@@ -448,7 +448,7 @@ cyoa-choice: drts-sub-trade
 	
 	vehicle.which@ 0 = if 
 		($ "YE BE IN NEED OF A VEHICKLE VESSEL? YARGH. I CAN OFFER YE ONE, IF YE HAVE THE FUNDS!" pbold $) +crtext
-		($ "The captain offers to take " THE_OFFER rbold " food " rbold .. .. "in exchange for giving you a (random) vehicle. You will keep your weapons and loot." .. $) +crtext 
+		($ "Le capitaine propose de prendre " THE_OFFER rbold " food " rbold .. .. "en echange de vous donner un vehicule (aleatoire). Vous garderez vos armes et votre butin." .. $) +crtext 
 		
 		trunk-food 1 - THE_OFFER > not if
 			($ "Le groupe ne peut pas se passer de cette nourriture !" rbold $)
@@ -1132,7 +1132,7 @@ cyoa-choice: t-pyro-coolit
 ;
 
 cyoa-choice: t-pyrobandits-paytoll
-	($ Thegroup .. " decides to play it safe. " .. gThey .. " give" .. g1s .. " into the bandits' demands." $) cyoa-text! badfx
+	($ Thegroup .. " decide de ne pas prendre de risque. " .. gThey .. " cede" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
 	bandit-pyrotakestuff haggler-morale 
 	trunk.killer 
 	
@@ -1171,7 +1171,7 @@ cyoa: t-pyrobandits
 		charchoice( ": COOL IT" copbanditcoolit )choice: t-pyro-coolit 
 	then 
 	
-	choice( "Give up gas and weapons" )choice: t-pyrobandits-paytoll
+	choice( "Ceder essence et armes" )choice: t-pyrobandits-paytoll
 	
 	bandit-fight
 

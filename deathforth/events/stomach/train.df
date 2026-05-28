@@ -41,37 +41,37 @@ map{ regiondef{
 ;
 
 
-0 value obj_in_question
-\ probably belongs in globals or things someday
+0 value obj_in_question 
+\ probably belongs in globals or things someday 
 
-: %some-anyobj ( num, obj_word_name )
+: %some-anyobj ( num, obj_word_name ) 
 
 	to obj_in_question
-
-	w h + 4 / *
+	
+	w h + 4 / * 
 		for
 			obj_in_question evaluate scatter
-		next
+		next 
 
 ;
 
 \ example usage:
-\ 1 "tire" %some-anyobj
+\ 1 "tire" %some-anyobj 
 
 
 
-\ Tiles to reconstruct walls - an "indoor" map outside
-\ "Why sycamore"?
-\ coz this way I can have the illusion of movement.
+\ Tiles to reconstruct walls - an "indoor" map outside 
+\ "Why sycamore"? 
+\ coz this way I can have the illusion of movement. 
 
 
 : sycamallvertical tile@
 	dup LAYER_FLOOR inside_tiles_floors_id 160 162 rnd + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 5 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -83,7 +83,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -99,9 +99,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 2 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -113,7 +113,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -127,9 +127,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 160 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 2 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -141,7 +141,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
 
@@ -153,9 +153,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_walls_id 12 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLSIDE 0 .lspriteid!
-
+	
 	TILE_BLOCK_FLOOR over .id!
 	drop
 ;
@@ -165,9 +165,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 164 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 5 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -179,7 +179,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -193,9 +193,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 165 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 5 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -207,7 +207,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -221,9 +221,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_walls_id 35 37 rnd + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 11 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -235,7 +235,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -248,7 +248,7 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 160 162 rnd + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLSIDE 0 .lspriteid!
 	drop
 ;
@@ -257,7 +257,7 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 165 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLSIDE 0 .lspriteid!
 	drop
 ;
@@ -266,7 +266,7 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_floors_id 164 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLSIDE 0 .lspriteid!
 	drop
 ;
@@ -283,11 +283,11 @@ map{ regiondef{
 : sycatiledarkness tile@ // main
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOOR street_tiles_base_id 15 + .lspriteid!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 15 + .lspriteid!
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 	dup LAYER_WALLSIDE 0 .lspriteid!
@@ -299,9 +299,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -313,9 +313,9 @@ map{ regiondef{
 	dup LAYER_FLOOR inside_tiles_walls_id 3 + .lspriteid!
 	dup LAYER_FLOOR 0 0 .tile_layer.off!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
 
@@ -327,9 +327,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 203 204 rnd + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -341,7 +341,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
 
@@ -353,9 +353,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 203 204 rnd + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -367,10 +367,10 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 575 + .lspriteid!
 	dup LAYER_FLOORTOP 0 8 .tile_layer.off!
 
@@ -382,9 +382,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 1 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 2 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -396,7 +396,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
 
@@ -410,9 +410,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 2 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -424,7 +424,7 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 1 .tile_layer.flipx!
 
@@ -438,9 +438,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 +  .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 9 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -452,10 +452,10 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 576 + .lspriteid!
 	dup LAYER_FLOORTOP 0 8 .tile_layer.off!
 
@@ -467,9 +467,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 +  .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 1 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 9 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -481,10 +481,10 @@ map{ regiondef{
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 1 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 576 + .lspriteid!
 	dup LAYER_FLOORTOP 0 8 .tile_layer.off!
 	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
@@ -497,9 +497,9 @@ map{ regiondef{
 	\ dup LAYER_WALLSIDE inside_tiles_walls_id 201 + .lspriteid!
 	\ dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	\ dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 4 + .lspriteid!
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	\ dup LAYER_WALLTOP 0 .tile_layer.flipx!
 
@@ -511,9 +511,9 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 200 + .lspriteid!
 	\ dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	\ dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 1 + .lspriteid!
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	\ dup LAYER_WALLTOP 0 .tile_layer.flipx!
 
@@ -522,93 +522,93 @@ map{ regiondef{
 ;
 
 
-: sycatile_railmain tile@
+: sycatile_railmain tile@ 
 	dup LAYER_WALLTOP street_tiles_base_id 549 + .lspriteid!
 	dup LAYER_WALLTOP 0 8 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	\ dup LAYER_FLOORTOP street_tiles_base_id 575 + .lspriteid!
 	\ dup LAYER_FLOORTOP 0 -8 .tile_layer.off!
-
+	
 	TILE_BLOCK over .id!
-
+	
 	drop
 ;
 
-: sycatile_railjoin tile@
+: sycatile_railjoin tile@ 
 	dup LAYER_WALLTOP street_tiles_base_id 550 + .lspriteid!
 	dup LAYER_WALLTOP 0 8 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOOR street_tiles_base_id 580 + .lspriteid!
 	dup LAYER_FLOOR 0 .tile_layer.flipx!
 	\ dup LAYER_FLOORTOP 0 -16 .tile_layer.off!
-
+	
 	TILE_BLOCK over .id!
 
 	drop
 ;
 
-: sycatile_railbed tile@
+: sycatile_railbed tile@ 
 	dup LAYER_WALLTOP street_tiles_base_id 551 + .lspriteid!
 	dup LAYER_WALLTOP 0 0 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	\ dup LAYER_FLOORTOP street_tiles_base_id 575 + .lspriteid!
 	\ dup LAYER_FLOORTOP 0 -8 .tile_layer.off!
-
+	
 	drop
 ;
 
-: sycatile_carriagejoiner tile@
+: sycatile_carriagejoiner tile@ 
 	dup LAYER_WALLSIDE street_tiles_base_id 577 + .lspriteid!
-
+	
 	dup LAYER_WALLTOP street_tiles_base_id 578 + .lspriteid!
 	dup LAYER_WALLTOP -6 -16 .tile_layer.off!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 578 + .lspriteid!
 	dup LAYER_FLOORTOP 6 -16 .tile_layer.off!
 	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
+	
+	TILE_BLOCK over .id! 
+	
+	drop 
+; 
 
-	TILE_BLOCK over .id!
 
-	drop
-;
-
-
-: sycatile_carriagejoiner_floor tile@
-
+: sycatile_carriagejoiner_floor tile@ 
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 579 + .lspriteid!
 	dup LAYER_FLOORTOP 6 0 .tile_layer.off!
 	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
 	dup LAYER_WALLSIDE street_tiles_base_id 579 + .lspriteid!
 	dup LAYER_WALLSIDE -6 0 .tile_layer.off!
+	
+	drop 
+; 
 
-	drop
-;
-
-: sycatile_carriagejoiner_floor_block tile@
-
+: sycatile_carriagejoiner_floor_block tile@ 
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 579 + .lspriteid!
 	dup LAYER_FLOORTOP 6 0 .tile_layer.off!
 	dup LAYER_FLOORTOP 1 .tile_layer.flipx!
 	dup LAYER_WALLSIDE street_tiles_base_id 579 + .lspriteid!
 	dup LAYER_WALLSIDE -6 0 .tile_layer.off!
-
+	
 	TILE_BLOCK over .id!
-
-	drop
-;
+	
+	drop 
+; 
 
 
 : sycamall-corner-rightdown tile@
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 +  .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 6 + .lspriteid!
-
-
+	
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 1 .tile_layer.flipx!
 
@@ -622,22 +622,22 @@ map{ regiondef{
 	dup LAYER_WALLSIDE inside_tiles_walls_id 202 +  .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 1 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 6 + .lspriteid!
 
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 
 	TILE_BLOCK over .id!
 	drop
 ;
 
 : sycamall-straightupordown tile@
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 5 + .lspriteid!
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 1 .tile_layer.flipx!
 
@@ -645,7 +645,7 @@ map{ regiondef{
 	drop
 ;
 
-: sycatilestreet_leftadjust tile@
+: sycatilestreet_leftadjust tile@ 
 	dup LAYER_FLOORTOP street_tiles_base_id 17 + .lspriteid!
 	dup LAYER_FLOORTOP -8 0 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
@@ -654,7 +654,7 @@ map{ regiondef{
 	drop
 ;
 
-: sycatilestreet_rightadjust tile@
+: sycatilestreet_rightadjust tile@ 
 	dup LAYER_FLOORTOP street_tiles_base_id 17 + .lspriteid!
 	dup LAYER_FLOORTOP 8 0 .tile_layer.off!
 	dup LAYER_FLOORTOP 0 .tile_layer.flipx!
@@ -665,153 +665,153 @@ map{ regiondef{
 
 
 
-: tube_window
+: tube_window 
 	spawn special_objects16_base_id 72 + spriteid! 3 lt .tileflags! 1 lt .no_hit! 1 lt .nocollide! 500 lt .hitpoints! 500 lt .mass!
-;
-\ district line my unbeloved
+; 
+\ district line my unbeloved 
 
 : tube_door_L
 	spawn special_objects16_base_id 73 + spriteid! 3 lt .tileflags! 1 lt .no_hit! 1 lt .nocollide! 500 lt .hitpoints! 500 lt .mass!
-;
+; 
 
 : tube_door_R
 	spawn special_objects16_base_id 73 + spriteid! 3 lt .tileflags! 1 lt .no_hit! 1 lt .nocollide! 500 lt .hitpoints! 500 lt .mass! 1 lt .flip!
-;
+; 
 
 
 
 : train_echonoiser
 
-	2 for
-		sfx{ thump 0.45 0.55 frnd pitch! 74 freq! i 15 * delay! }
+	2 for 
+		sfx{ thump 0.45 0.55 frnd pitch! 74 freq! i 15 * delay! } 
 		1 rumble
-	next
+	next 
 
-;
+; 
 
-: train_noiser
+: train_noiser 
 
-	2 for
-		sfx{ thump 0.45 0.55 frnd pitch! 74 freq! i 15 * delay! }
+	2 for 
+		sfx{ thump 0.45 0.55 frnd pitch! 74 freq! i 15 * delay! } 
 		1 rumble
-	next
+	next 
 
 	timer_retrigger
-
+	
 	35 ' train_echonoiser timer_add
-;
+; 
 
-: turn_trainwheels args( me eventid )
+: turn_trainwheels args( me eventid ) 
+ 
+	<- eventid THING_EVENT_TIMER = if 
+		5 <- me .timer! 
+			<- me .flip@ 1 + 2 % <- me .flip! 
+			
+		\ 10 %chance if 
+		\ 	10 <- me .smashychunks 
+		\ then 
+			
+	then 
+		
+;	
 
-	<- eventid THING_EVENT_TIMER = if
-		5 <- me .timer!
-			<- me .flip@ 1 + 2 % <- me .flip!
-
-		\ 10 %chance if
-		\ 	10 <- me .smashychunks
-		\ then
-
-	then
-
-;
-
-: train_wheel
+: train_wheel 
 	spawn special_objects16_base_id 74 + spriteid! 3 lt .tileflags! 1 lt .no_hit! 1 lt .nocollide! 500 lt .hitpoints! 500 lt .mass! 0 1 rnd lt .flip!
 	' turn_trainwheels lt .events! 30 lt .timer! 20 lt .layer!
-;
-\ layer 20...bit overkill. shouldnt matter
+; 
+\ layer 20...bit overkill. shouldnt matter 
 
-\ also: make train wheels spark periodically
+\ also: make train wheels spark periodically 
 
 : train_seat
 	spawn special_objects16_base_id 76 + spriteid! 30 lt .hitpoints! 6 lt .mass! 0 1 rnd lt .flip! 2 lt .bolted! 3 lt .boltstr!
-;
+; 
 
-: tree_maker args( me eventid )
-	<- eventid THING_EVENT_TIMER = if
-			90 150 rnd <- me .timer!
-
+: tree_maker args( me eventid ) 
+	<- eventid THING_EVENT_TIMER = if 
+			90 150 rnd <- me .timer! 
+			
 			\ 1 "HAHA!" <- me .reportdurnow
-			\ sfx{ fm }
-
-			map{ tree }
-			camera.pos.x@ view_w 0.66 * + lt .pos.x!
-			<- me .pos.y@ -32 32 rnd + lt .pos.y!
-			map{ pixelw } 0.5 * <- me .pos.x!
-		then
-;
+			\ sfx{ fm } 
+	
+			map{ tree }  
+			camera.pos.x@ view_w 0.66 * + lt .pos.x! 
+			<- me .pos.y@ -32 32 rnd + lt .pos.y! 
+			map{ pixelw } 0.5 * <- me .pos.x! 
+		then 
+; 
 
 : train_fauna_generator
 
 	spawn 3 lt .tileflags! 1 lt .walkover! 100 lt .hitpoints! 1 lt .no_hit! 0 lt .clr.a!
 	1 lt .timer! ' tree_maker lt .events!
+	
+; 
 
-;
-
-: stations_list 1 33 rnd case
-	1 of "CROUPIONVILLE" endof
-	2 of "TROCARDSVILLE" endof
-	3 of "TONYVILLE-DES-SANS-LE-SOUS" endof
-	4 of "CHEZ TA MERE" endof
-	5 of "TOCARDS-SUR-MER" endof
-	6 of "GARE DES FESSES" endof
-	7 of "TOCARDS CENTRAL" endof
-	8 of "FESSES-SUR-MER" endof
-	9 of "USINE A TOCARDS" endof
-	10 of "TOCARDSVILLE" endof
-	11 of "TOCARDSTOWN" endof
-	12 of "VILLE DES TOCARDS" endof
-	13 of "VILLE DES DINKS" endof
-	14 of "VILLE DES FESSES" endof
-	15 of "FORTNITE" endof
-	16 of "AU BORD DU GOUFFRE" endof
-	17 of "JUSTE DERRIERE NOUS" endof
-	18 of "DINKSICO" endof
-	19 of "GARE DES PRETENTIEUX" endof
+: stations_list 1 33 rnd case 
+	1 of "CROUPIONVILLE" endof 
+	2 of "TROCARDSVILLE" endof 
+	3 of "TONYVILLE-DES-SANS-LE-SOUS" endof 
+	4 of "CHEZ TA MERE" endof 
+	5 of "TOCARDS-SUR-MER" endof 
+	6 of "GARE DES FESSES" endof 
+	7 of "TOCARDS CENTRAL" endof 
+	8 of "FESSES-SUR-MER" endof 
+	9 of "USINE A TOCARDS" endof 
+	10 of "TOCARDSVILLE" endof 
+	11 of "TOCARDSTOWN" endof 
+	12 of "VILLE DES TOCARDS" endof 
+	13 of "VILLE DES DINKS" endof 
+	14 of "VILLE DES FESSES" endof 
+	15 of "FORTNITE" endof 
+	16 of "AU BORD DU GOUFFRE" endof 
+	17 of "JUSTE DERRIERE NOUS" endof 
+	18 of "DINKSICO" endof 
+	19 of "GARE DES PRETENTIEUX" endof 
 	20 of "XERIA CITY" endof
-	21 of "LEGO CITY" endof
-	22 of "CENTRALE DES TOCARDS" endof
-	23 of "TOCARDTOWN" endof
-	24 of "AU-DELA DE L'ARC-EN-CIEL" endof
-	25 of "MILE END" endof
-	26 of "ALDERAAN" endof
-	27 of "L'ENFER LUI-MEME" endof
-	28 of "TOCARDINGTON" endof
-	29 of "GROS-FESSETON" endof
-	30 of "CROTTE-VILLE" endof
-	31 of "JE SAIS PAS..." endof
+	21 of "LEGO CITY" endof 
+	22 of "CENTRALE DES TOCARDS" endof 
+	23 of "TOCARDTOWN" endof  
+	24 of "AU-DELA DE L'ARC-EN-CIEL" endof 
+	25 of "MILE END" endof 
+	26 of "ALDERAAN" endof 
+	27 of "L'ENFER LUI-MEME" endof 
+	28 of "TOCARDINGTON" endof 
+	29 of "GROS-FESSETON" endof 
+	30 of "CROTTE-VILLE" endof 
+	31 of "JE SAIS PAS..." endof 
 	32 of "CA ARRIVE, JE CROIS" endof
-	33 of "QUELQUE PART ?" endof
+	33 of "QUELQUE PART ?" endof 
 	endcase
 ;
-
+	
 
 : announce_bs_2 args( me eventid )
-	<- eventid THING_EVENT_TIMER = if
-		440 <- me .timer!
-
-		<- me .weapon_state.val@ 1 = if
+	<- eventid THING_EVENT_TIMER = if 
+		440 <- me .timer! 
+		
+		<- me .weapon_state.val@ 1 = if 
 			stations_list <- me .yellmsg
 			0 <- me .weapon_state.val!
-		then;
-
-		<- me .weapon_state.val@ 0 = if
+		then; 
+		
+		<- me .weapon_state.val@ 0 = if 
 			"LA PROCHAINE GARE EST..." <- me .yellmsg
 			1 <- me .weapon_state.val!
 			60 <- me .timer!
-		then;
-	then
-;
+		then; 
+	then 			
+; 		
 
 : speaker_train
 	spawn special_objects32_base_id 220 + lt .spriteid!
-	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags!
-	-1.7 lt .vel.y!
-	0.75 dup lt .scale.x! lt .scale.y!
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
+	0.75 dup lt .scale.x! lt .scale.y! 
 	' announce_bs_2 lt .events!
-	60 lt .timer!
+	60 lt .timer! 
 	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
-
+	
 ;
 
 
@@ -821,55 +821,55 @@ map{ regiondef{
 \ loc-pick-rare
 \ loc-pick-stack
 
-0 value trainlocs_picked
+0 value trainlocs_picked 
 
-road{
-: get-train-ride-results
-
+road{ 
+: get-train-ride-results 
+	
 	siege_minutes 55 > if
-
-		siege_minutes 60 - 15 / >int 1 4 clamp for
+		
+		siege_minutes 60 - 15 / >int 1 4 clamp for 
 			loc-pick-rare
 			depths 0= if loc-pick-rare-base shuffles to loc-pick-rare then
 			pops nip
-			execute
-			' trainlocs_picked ++
-		next
+			execute 
+			' trainlocs_picked ++ 
+		next  
 
-		4 trainlocs_picked - 0 4 clamp for
+		4 trainlocs_picked - 0 4 clamp for  
 			loc-pick-stack
 			depths 0= if loc-pick-stack-base shuffles to loc-pick-stack then
-			pops nip
+			pops nip 
 			execute
-		next
-
-	else
+		next 
+	
+	else 
 
 		siege_minutes 60 - 15 / >int 1 4 clamp for
 			loc-pick-stack
 			depths 0= if loc-pick-stack-base shuffles to loc-pick-stack then
-			pops nip
+			pops nip 
 			execute
-		next
-	then
+		next 
+	then 
 
-
+		
 ;
 
-}
+} 
 
-cyoa{
+cyoa{ 
 
-: deduce_siege_rarity
-	siege_minutes 55 > if
-		RAINBOW "RARE " .. "(" .. siege_minutes 60 - 15 / >int 1 4 clamp .. ")" ..
-	then;
-
-	"COMMUN ou " RED "PEU COMMUN" .. ..
-;
+: deduce_siege_rarity 
+	siege_minutes 55 > if 
+		RAINBOW "RARE " .. "(" .. siege_minutes 60 - 15 / >int 1 4 clamp .. ")" ..  
+	then; 
+	
+	"COMMUN ou " RED "PEU COMMUN" .. ..   
+; 
 
 cyoa-choice: train_halt
-
+	
 	($ "Le train freine sans grace jusqu'a l'arret, comme une espece de chauve-souris mecanique grincante." $) cyoa-text!
 	($ "Une fois le train arrete, les survivants de l'assaut ferroviaire ont l'opportunite d'explorer de nouveaux lieux." $) +crtext
 
@@ -881,63 +881,63 @@ cyoa: emergencystoplever
 	($ "Ce train roule depuis un moment. Peut-etre qu'en tirant le levier STOP, vous finirez quelque part de nouveau." $) cyoa-text! goodfx
 	($ "Plus vous attendez, meilleurs seront les lieux que vous trouverez. Les lieux sont a environ 15m d'intervalle." rbold $) +crtext
 	($ "Vous avez tenu : " siege_minutes .. "m" .. $) +crtext
-	($ "Les lieux trouves seront... " deduce_siege_rarity .. $) +crtext
-
+	($ "Les lieux trouves seront... " deduce_siege_rarity .. $) +crtext  
+	
 	choice( "Continuez a vous battre !" )choice
-	choice( "Tirez le levier STOP !" )choice: train_halt
-
+	choice( "Tirez le levier STOP !" )choice: train_halt 
+	
 ;
 
-}
+} 
 
 
 : emergency_stop
 	spawn special_objects16_base_id 77 + spriteid!
-	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags!
-	-1.7 lt .vel.y!
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
 	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
 	cyoa{ ' emergencystoplever } lt .cyoa!
-
+	
 ;
 
-: illuminate_carriages args( me eventid )
+: illuminate_carriages args( me eventid ) 
 	<- eventid THING_EVENT_TIMER = if
 
-		12 for
+		12 for 
 			1 1 1 67 <- me .pos 12 16 i * * 0 xyadd d-light
-		next
+		next 
 
 		1 <- me .timer!
-	then
+	then 
 ;
 
-: carriage_lights_generator
+: carriage_lights_generator 
 
-	spawn 3 lt .tileflags! 1 lt .walkover! 100 lt .hitpoints! 1 lt .no_hit! 0 lt .clr.a! 1000 lt .mass!
+	spawn 3 lt .tileflags! 1 lt .walkover! 100 lt .hitpoints! 1 lt .no_hit! 0 lt .clr.a! 1000 lt .mass! 
 	1 lt .timer! ' illuminate_carriages lt .events!
-
-;
+	
+; 
 
 : train_decor
 	spawn special_objects16_base_id 79 83 rnd + spriteid!
-	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags!
-	-1.7 lt .vel.y!
+	as-metal 30 lt .hitpoints! 200 lt .mass! 3 lt .tileflags! 
+	-1.7 lt .vel.y! 
 	1 lt .no_hit! 1 lt .nopush! 1 lt .nocollide!
-
+	
 ;
 
 \ todo: siege integration
 \ todo: location pickening
 \ todo: cyoa attached to lever
-\ todo: ur mom
+\ todo: ur mom 
 
 : sycamall_window tile@
 	dup LAYER_WALLSIDE street_tiles_base_id 581 + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -949,7 +949,7 @@ cyoa: emergencystoplever
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
 
@@ -961,9 +961,9 @@ cyoa: emergencystoplever
 	dup LAYER_WALLSIDE street_tiles_base_id 581 + .lspriteid!
 	dup LAYER_WALLSIDE 0 0 .tile_layer.off!
 	dup LAYER_WALLSIDE 0 .tile_layer.flipx!
-
+	
 	dup LAYER_WALLTOP inside_tiles_walltops_id 10 + .lspriteid!
-
+	
 	// 10 for regular walltop
 	// 9 for right-hand up turn
 	// 8 for right-hand end
@@ -975,10 +975,10 @@ cyoa: emergencystoplever
 	// 2 for lefthand end
 	// 1 for downward end
 	// 0 for tiny square
-
+	
 	dup LAYER_WALLTOP 0 -16 .tile_layer.off!
 	dup LAYER_WALLTOP 0 .tile_layer.flipx!
-
+	
 	dup LAYER_FLOORTOP street_tiles_base_id 575 + .lspriteid!
 	dup LAYER_FLOORTOP 0 8 .tile_layer.off!
 
@@ -986,84 +986,84 @@ cyoa: emergencystoplever
 	drop
 ;
 
-\ I preferred windows as actual objects, but they have to be integrated within the tileset or else
-\ We hit the object limit very easily, especially on endless.
+\ I preferred windows as actual objects, but they have to be integrated within the tileset or else 
+\ We hit the object limit very easily, especially on endless. 
 
-: train_subloot 1 7 rnd case
-	1 of 1 LOOT_FOOD spawnloot endof
-	2 of 3 LOOT_GAS spawnloot endof
-	3 of 3 8 rnd LOOT_BULLET spawnloot endof
-	4 of 1 2 rnd LOOT_MEDICAL spawnloot endof
-	5 of purse endof
-	6 of cleaver endof
-	7 of pipebomb endof
+: train_subloot 1 7 rnd case 
+	1 of 1 LOOT_FOOD spawnloot endof 
+	2 of 3 LOOT_GAS spawnloot endof 
+	3 of 3 8 rnd LOOT_BULLET spawnloot endof 
+	4 of 1 2 rnd LOOT_MEDICAL spawnloot endof 
+	5 of purse endof 
+	6 of cleaver endof 
+	7 of pipebomb endof 
 	endcase
-;
+; 
 
 
 defer ft
 
 : pt
 	xyp.xy ft
-
+	
 	\ .s console-open
-
+	
 	xyp.i char . = if then;
 	xyp.i char R = if xyp.xy sycatile_railmain then;
 	xyp.i char T = if xyp.xy sycatile_railjoin then;
 	\ xyp.i char B = if xyp.xy sycatile_railbed then;
-
+	
 	 xyp.i char b = if xyp.xy sycamall then;
 	 xyp.i char c = if xyp.xy sycamallvertical then;
-
+	
 	\ xyp.i char t = if xyp.xy sycamallverticaltpost then;
-
+	 
 	  xyp.i char 9 = if xyp.xy sycatilestreetblock then;
 	  xyp.i char 8 = if xyp.xy sycatilestreet then;
-
+	 
 	  xyp.i char C = if xyp.xy sycamall_bot then;
-
+	 
 	  xyp.i char l = if xyp.xy sycamall-leftend then;
 	  xyp.i char r = if xyp.xy sycamall-rightend then;
-
+	 
 	  xyp.i char g = if xyp.xy sycamall-corner-rightup then;
 		xyp.i char h = if xyp.xy sycamall-corner-leftup then;
 	  xyp.i char 3 = if xyp.xy sycamall-corner-rightdown then;
 	  xyp.i char 4 = if xyp.xy sycamall-corner-leftdown then;
 	  xyp.i char 5 = if xyp.xy sycamall-straightupordown xyp.xy sycatilestreet_rightadjust then;
 	  xyp.i char 0 = if xyp.xy sycamall-straightupordown xyp.xy sycatilestreet_leftadjust then;
-
+	 
 	  xyp.i char J = if xyp.xy sycatile_carriagejoiner then;
 	  xyp.i char 7 = if xyp.xy sycatile_carriagejoiner_floor then;
 	  xyp.i char 6 = if xyp.xy sycatile_carriagejoiner_floor_block then;
-
+	 
 	  xyp.i char W = if xyp.xy train_seat lt-here lt .pos 0 -4 xyadd lt .pos! 10 %chance if skel lt-here lt .pos 1 4 rnd 1 4 rnd xyadd lt .pos! then xyp.xy sycatilestreet then;
-	 ( * tube_window lt-here -1.66 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! tube_window lt-here 4.7 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! * )
-
+	 ( * tube_window lt-here -1.66 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! tube_window lt-here 4.7 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! * )	 
+	 
 	  xyp.i char 1 = if xyp.xy tube_door_L lt-here -1.66 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! tube_door_L lt-here 4.7 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! sycatilestreet then;
 	  xyp.i char 2 = if xyp.xy tube_door_R lt-here -1.66 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! tube_door_R lt-here 4.7 lt .vel.y! 1 dup lt .scale.x! lt .scale.y! sycatilestreet then;
-
+	  
 	  xyp.i char F = if xyp.xy sycatile_GTFO then;
-
-	  xyp.i char w = if xyp.xy train_wheel lt-here -1.5 lt .vel.y! then;
-
-	  xyp.i char f = if train_fauna_generator lt-here then;
-
-	  xyp.i char S = if xyp.xy sycatilestreet  speaker_train lt-here then;
-	  xyp.i char E = if xyp.xy sycatilestreet emergency_stop lt-here then;
-
-	  xyp.i char L = if xyp.xy sycatilestreet carriage_lights_generator lt-here then;
-
-	  xyp.i char D = if xyp.xy 50 %chance if train_decor lt-here then then;
-
-	  xyp.i char Z = if xyp.xy tanchor! 5 zombs-clump then;
-
-	  \ window tiles e & a
-	  xyp.i char a = if xyp.xy sycamall_window then;
+	
+	  xyp.i char w = if xyp.xy train_wheel lt-here -1.5 lt .vel.y! then; 
+	 
+	  xyp.i char f = if train_fauna_generator lt-here then; 
+	 
+	  xyp.i char S = if xyp.xy sycatilestreet  speaker_train lt-here then; 
+	  xyp.i char E = if xyp.xy sycatilestreet emergency_stop lt-here then; 
+	 
+	  xyp.i char L = if xyp.xy sycatilestreet carriage_lights_generator lt-here then; 
+	   
+	  xyp.i char D = if xyp.xy 50 %chance if train_decor lt-here then then; 
+	   
+	  xyp.i char Z = if xyp.xy tanchor! 5 zombs-clump then; 
+	  
+	  \ window tiles e & a 
+	  xyp.i char a = if xyp.xy sycamall_window then;	
 	  xyp.i char e = if xyp.xy sycamall_bot_window then;
-
+	  
 	  xyp.i char G = if xyp.xy train_subloot lt-here then;
-
+	  
 ;
 
 
@@ -1132,54 +1132,54 @@ constant grass_illusionalt
 ;
 
 : plotmap_illu
-	0 -1 grass_illusion xyplot: pt
-;
+	0 -1 grass_illusion xyplot: pt 
+; 
 
 : plotmap_illu_alt
-	0 -1 grass_illusionalt xyplot: pt
-;
+	0 -1 grass_illusionalt xyplot: pt 
+; 
 
-\ todo: investigate zombs and 3 anim state
+\ todo: investigate zombs and 3 anim state 
 
-: go_backwards args( me )
-
-	<- me .pos.y@ 65 < <- me .pos.y@ 170 > or if \ if you are not within the train boundaries,
-		<- me .typeid@ THING_PROJECTILE = not if
-				<- me .layer@ 20 = not if
-				<- me .pos -8 0 xyadd <- me .pos!
+: go_backwards args( me ) 
+	
+	<- me .pos.y@ 65 < <- me .pos.y@ 170 > or if \ if you are not within the train boundaries, 
+		<- me .typeid@ THING_PROJECTILE = not if 
+				<- me .layer@ 20 = not if 
+				<- me .pos -8 0 xyadd <- me .pos! 
 				\ 59 <- me .anim.weapon_counter!
-				\ 3 <- me .anim.state!
-				\ 0 <- me .vel.y!
-				\ 20 <- me .stun!
+				\ 3 <- me .anim.state! 
+				\ 0 <- me .vel.y! 
+				\ 20 <- me .stun! 
 				\ -0.1 <- me .pos.z!
 				\ 0 <- me .gravity!
-
-				<- me .charid@ 0 = not if
+				
+				<- me .charid@ 0 = not if 
 					0 <- me .character@ .health!
-				then \ No cheesing the train!
-				\ Not like you'd survive bailing a train irl
-			then
-		then
-	then
-
-	<- me .pos.x@ 2 < if
-		<- me .typeid@ THING_ZOMBIE = if
+				then \ No cheesing the train! 
+				\ Not like you'd survive bailing a train irl 
+			then 
+		then 
+	then 
+	
+	<- me .pos.x@ 2 < if 
+		<- me .typeid@ THING_ZOMBIE = if 
 			map{ w } 16 * <- me .pos.x!
-		then
-	then
-	\ reset at map bounds
-
-	<- me .pos.x@ <- me .rad.x@ - 2 < <- me .pos.x@ <- me .wallbox.x@ - 2 < or if
-		<- me .typeid@ THING_ZOMBIE = not if
+		then 
+	then 
+	\ reset at map bounds 
+	
+	<- me .pos.x@ <- me .rad.x@ - 2 < <- me .pos.x@ <- me .wallbox.x@ - 2 < or if 
+		<- me .typeid@ THING_ZOMBIE = not if 
 			<- me silentkillit
-		then
-	then
-
+		then 
+	then 
+	
 	<- me .pos.y@ 155 > if \ do not cling to train walls or edge
 		<- me .pos.y@ 173 < if
-			<- me .typeid@ THING_ZOMBIE = if
+			<- me .typeid@ THING_ZOMBIE = if 
 				0 <- me .hitpoints!
-	then then then
+	then then then 
 ;
 
 : %chars-right 0 100 clamp 100 / map{ pixelw * pixelw } swap - args( posx )
@@ -1195,48 +1195,48 @@ constant grass_illusionalt
 
 0 value TRACKS_COUNTER
 
-: process_move_illu
+: process_move_illu 
 
-	TIMESTOP_ACTIVE 0 = if \ Coz I just know basement is gonna try this xDDD
+	TIMESTOP_ACTIVE 0 = if \ Coz I just know basement is gonna try this xDDD 
 		TRACKS_COUNTER 1 + 0 5 clamp to TRACKS_COUNTER
 
-		TRACKS_COUNTER 3 < if
+		TRACKS_COUNTER 3 < if 
 			regiondef{ plotmap_illu }
 
-
+			
 		else
 			regiondef{ plotmap_illu_alt }
-
-		then
-
-		TRACKS_COUNTER 5 = if
+			
+		then 
+		
+		TRACKS_COUNTER 5 = if 
 			0 to TRACKS_COUNTER
-		then
-
-		' go_backwards foreach-active-thing
-	then
-
+		then 
+		
+		' go_backwards foreach-active-thing 
+	then 
+	
 	timer_retrigger
-;
+; 
 
 : dofall_train
 
-	\ # Alligators on a train... #
-
-	' xyzombceil 5sdiff 1.2 * 5 15 rnd zwave-ex
+	\ # Alligators on a train... # 
+		
+	' xyzombceil 5sdiff 1.2 * 5 15 rnd zwave-ex	
 
 	timer_retrigger
 ;
 
-: process_siege_text
+: process_siege_text 
 
 	FLASHY "HOLDOUT!" $cat 60 view_w 0.5 * 16 msgtickxy
 	1 1 camera.pos alertlcxy
 	siege_minutes 5 + to siege_minutes
-
+	
 	timer_retrigger
 
-;
+; 
 
 : site-setup
 
@@ -1244,34 +1244,34 @@ constant grass_illusionalt
 
 	plotmap
 
-	\ 5diff %zombs
-
+	\ 5diff %zombs 
+	
 	600 ' dofall_train timer_add
-
+	
 	5 60 * ' process_siege_text timer_add
-
+	
 	180 ' train_noiser timer_add
-	\ clack-clack clack-clack ...
-
-	1 ' process_move_illu timer_add
-	\ the train is totally moving guys i promise
-
+	\ clack-clack clack-clack ... 
+	
+	1 ' process_move_illu timer_add 
+	\ the train is totally moving guys i promise 
+	
 	4 crowbar .scatter
-	\ 5 pickaxe .scatter
-
-	\ 20 for
-	\ 	1 skel .scatter
+	\ 5 pickaxe .scatter 
+	
+	\ 20 for 
+	\ 	1 skel .scatter 
 	\ 	70 140 lt .pos.y!
-	\ next
-
+	\ next 
+	
 	51 %chars-up
 	51 %chars-right
-
+	
 	map{ 1 water_colour_r! 1 water_colour_b! 1 water_colour_g! }
 
-	\ mission{ siege-start }
-
-
+	\ mission{ siege-start } 
+	
+	
 ;
 
 
@@ -1279,7 +1279,7 @@ region: specialcamp-3
 	w: maplayout layoutw
 	h: maplayout layouth
 	on-foot no-rest
-	post-script: site-setup
+	post-script: site-setup 
 	script: timeofday o'clock
 
 } }

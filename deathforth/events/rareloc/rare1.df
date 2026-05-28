@@ -124,7 +124,7 @@ cyoa: rare1-factory
 
 cyoa: rare1-altar
 	"Maison Malefique" cyoa-title!
-
+	
 	($ Thegroup .. " tombe sur une maison au bout d'un cul-de-sac. Elle degage un sentiment " .. "ECRASANT" rbold .. " de peur et de malice.
 	Il y a peut-etre une boite de nourriture dedans !" $) cyoa-text! basic-tone
 	1.6 8 18 rnd 0 1 rnd zforecast // former 2.3
@@ -137,7 +137,7 @@ cyoa: rare1-altar
 
 cyoa: rare1-hotdog
 	"Animal Geant" cyoa-title!
-
+	
 	($ Thegroup .. " voit un animal gigantesque sur le bord de la route, au milieu d'un groupe de magasins. C'est peut-etre une hallucination ? Ou un piege ?" $) cyoa-text! basic-tone
 	2.3 8 18 rnd 0 1 rnd zforecast
 	"events/rareloc/region/hotdog.df" $load-region
@@ -161,7 +161,7 @@ cyoa: rare1-hermit
 // Alien Car
 
 cyoa: rare1-ufo
-	"La Verite Est Ailleurs" cyoa-title!
+	"La Verite Est La-Dehors" cyoa-title!
 		char-gen to recruitee 51 recruitee .specialtype! ricon
 		($ "En roulant dans les bois, " .. thegroup .. " VOIT UN OVNI PARMI LES ARBRES ! WOOOOOUAAAAAH !!!!" rbold .. "
 		Attention ! Il y a quelque chose qui bouge pres de lui !" $) cyoa-text!
@@ -284,7 +284,7 @@ cyoa: rare1-rangers
 
 // Bryce Li
 
-cyoa-choice: bruce-picked
+cyoa-choice: bruce-picked 
 	cchar .weapon_default@ WEAPON_KUNG = if
 		($ cname .. " apprend des techniques de niveau maitre ! " .. cHe .. " frappe encore plus fort !
 		Maintenant ses mains peuvent toucher trois cibles par attaque !" $) text!
@@ -309,7 +309,7 @@ cyoa: brucerescued
 			else
 				($ "En remerciement, il apprend a " .. cname .. " comment ecraser les zombies a mains nues !" $) +crtext WEAPON_KUNG
 			then cchar .weapon_default! goodfx
-		else
+		else		
 			($ "En remerciement d'avoir aide " .. rhim .. ", " .. rhe .. " propose d'apprendre a une personne comment ecraser les zombies a mains nues.
 			Qui devrait recevoir la formation ?" $) +crtext
 			' bruce-picked cyoa-human-choice
@@ -333,7 +333,7 @@ cyoa: rare1-bruce
 ;
 
 
-cyoa: rare1-busdepot
+cyoa: rare1-busdepot 
 	"Vieux Cimetiere de Bus" cyoa-title!
 	($ Thegroup .. " passe devant un grand garage de bus. Bien que longtemps abandonne, quelque chose brille encore dans un des garages." $) cyoa-text! basic-tone
 	1.2 8 18 rnd 1 zforecast
@@ -342,7 +342,7 @@ cyoa: rare1-busdepot
 		gas-draw
 ;
 
-cyoa: q-beach
+cyoa: q-beach 
 	"Cabanons en Bord de Mer" cyoa-title!
 	($ Thegroup .. " trouve une plage, aussi sableuse que dans les souvenirs d'enfance. En approchant, le faible bruit des vagues de mer se rapproche..." $) cyoa-text! basic-tone
 	1.1 8 18 rnd 1 zforecast
@@ -360,19 +360,19 @@ cyoa: rare1-warehouse
 		gas-draw
 ;
 
-cyoa: q-hmp
+cyoa: q-hmp 
 	"Prison Oubliee" cyoa-title!
 	($ Thegroup .. " tombe sur une prison. Dehors, les cameras tournent encore de gauche a droite. Quelqu'un pourrait-il encore etre a l'interieur ?" $) cyoa-text! basic-tone
 	1.1 8 18 rnd 1 zforecast
-
-	50 %chance if
+	
+	50 %chance if 
 		"events/inner/region/hmp.df" $load-region
-	else
+	else 
 		"events/inner/region/hmp2.df" $load-region
-	then
-	\ dear roomgen,
-	\ i hate you. love, sycamore
-
+	then 
+	\ dear roomgen, 
+	\ i hate you. love, sycamore 
+	
 		choice( "Lire vos Droits Miranda" )choice: premission
 		gas-draw
 ;
@@ -387,12 +387,12 @@ cyoa: rare1-marshland
 ;
 
 
-cyoa: r-bank
+cyoa: r-bank 
 	"Banque Centrale" cyoa-title!
 	($ Thegroup .. " tombe sur la banque centrale d'une succursale. Bien que la plupart des coffres aient probablement ete pilles, peut-etre qu'il reste quelque chose ?" $) cyoa-text! basic-tone
 	1.1 7 14 rnd 3 zforecast
 	"events/retina/treasury.df" $load-region
-		choice( "Frauder le fisc" )choice: premission
+		choice( "Evader les Impots" )choice: premission
 		gas-draw
 ;
 
@@ -400,31 +400,31 @@ cyoa: r-bank
 cyoa: rare1-train
 	"Metro Malefique" cyoa-title!
 	($ Thegroup .. " se balade dans une gare abandonnee quand un metro arrive. C'est un de ces nouveaux metros a pilotage automatique de l'ere post-2000. Qui sait ou il pourrait aller ?" $) cyoa-text! basic-tone
-
+	
 	($ "Apres une minute ou deux, les zombies commencent a envahir le train." $) +crtext
-\	($ RAINBOW "HOLDOUT FOR AS LONG AS YOU CAN!" .. $) +crtext
+\	($ RAINBOW "HOLDOUT FOR AS LONG AS YOU CAN!" .. $) +crtext 
 
-	50 %chance if
-		10 to timeofday
-	else
+	50 %chance if 
+		10 to timeofday 
+	else 
 		22 to timeofday
-	then
-
+	then 
+	
 	($ "TENEZ BON ! SURVIVEZ LE PLUS LONGTEMPS POSSIBLE !" fbold .. "
 		TAILLE DE LA HORDE : " pbold .. "HEURE DE POINTE" rbold .. "
 		HEURE ACTUELLE : " pbold .. timeforecast .. "
-		DUREE DU SIEGE : " pbold .. "Variable" $) +crtext
-	($ "VOUS POUVEZ TIRER LES LEVIERS STOP POUR QUITTER LE SIEGE !" fbold $) +crtext
+		DUREE DU SIEGE : " pbold .. "Variable" $) +crtext 
+	($ "VOUS POUVEZ TIRER LES LEVIERS STOP POUR QUITTER LE SIEGE !" fbold $) +crtext 
 	\ Doesn't make sense to have a regular siegecast, coz its not a regular siege
-	\ Even down to the way zombies spawn.
+	\ Even down to the way zombies spawn. 
 
 	"events/stomach/train.df" $load-region
 		choice( "Oubliez votre Billet" )choice: premission
-		\ forget your ticket.. like silly sycamore did one time!!!
+		\ forget your ticket.. like silly sycamore did one time!!! 
 		gas-draw
 ;
 
-cyoa: s-citadel
+cyoa: s-citadel 
 	"Citadelle Antique" cyoa-title!
 	($ Thegroup .. " passe devant un checkpoint juste a l'exterieur d'une citadelle militaire. Des caisses de munitions partout ; manifestement une force tenait ici. Quand le groupe s'approche du portail, des legions de zombies surgissent de nulle part." $) cyoa-text! basic-tone
 	2.1 14 19 rnd 1 siegecast
@@ -434,9 +434,9 @@ cyoa: s-citadel
 ;
 
 \ It's definitely not Murkywater from payday2 guys.
-\ Defffffffinitely not.
+\ Defffffffinitely not. 
 cyoa: s-railyard
-	"Gare de Dinguswater" cyoa-title!
+	"Gare de Dinguswater" cyoa-title! 
 	($ Thegroup .. " trouve un depot de train plein de conteneurs. La plupart sont vides et il ne reste que des bogies sans chargement, mais peut-etre que certains ont encore du butin." $) cyoa-text! basic-tone
 	1.2 10 16 rnd 2 zforecast
 	"events/stomach/rail_yard.df" $load-region
@@ -445,7 +445,7 @@ cyoa: s-railyard
 ;
 
 cyoa: s-multistory
-	"Stationnement Reserve" cyoa-title!
+	"Stationnement Reserve" cyoa-title! 
 	($ Thegroup .. " jette un oeil dans un vieux parking en beton. Il est surtout rempli de voitures rouillees, mais peut-etre qu'il y en a encore une qui fonctionne." $) cyoa-text! basic-tone
 	1.2 7 11 rnd 2 zforecast
 	"events/stomach/multistory.df" $load-region

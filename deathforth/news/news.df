@@ -85,7 +85,7 @@ cyoa-blank: social
 cyoa-blank: weblinks
 	"NEWS OPTIONS" cyoa-title!
 
-	"Here are more ways to contact us, give feedback and suggestions, and see what we are up to for updates and new projects!
+	"Here are more ways to contact us, give feedback and suggestions, and see what we are up to for updates and new projects! 
 	We are very active on the Official Rocketcat Discord, where you can talk to us and other fans of our games." bbold text!
 	"Vous pouvez aussi masquer le panneau de nouvelles jusqu'a la prochaine mise a jour majeure." +crtext
 

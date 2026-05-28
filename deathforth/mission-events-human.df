@@ -150,7 +150,7 @@ var shieldofhope-saying-stack
 : death-handler args( chara )
 	<- chara .char-droploot
 	deadtally
-
+	
 	<- chara dog? if
 		70 %chance if
 			"whiiiiiiiine" <- chara thingyell
@@ -166,15 +166,15 @@ var shieldofhope-saying-stack
 			"BAAAAAAAAAAA!" fbold <- chara thingyell
 		then
 	then;
-
+	
 	<- chara pig? if
 		1 %chance if
 			"UN SACRE COCHON" fbold <- chara thingyell
 		else
 			"SQUEEEEEL!" rbold <- chara thingyell
 		then
-	then;
-
+	then;	
+	
 	<- chara cat? if
 		1 %chance if
 			"je deteste les lundis" fbold <- chara thingyell
@@ -182,7 +182,7 @@ var shieldofhope-saying-stack
 			"HISSSSSSSSSSSSS!" fbold <- chara thingyell
 		then
 	then;
-
+	
 	<- chara ispet? if
 		"BLORFFF!" <- chara thingyell
 	then;
@@ -191,9 +191,9 @@ var shieldofhope-saying-stack
 
 	<- chara .specialtype@ 76 = if RED "*GNOOOOORT*" .. <- chara thingyell then;
 	<- chara .specialtype@ 77 = if RED "nuuuuuuurp!" .. <- chara thingyell then;
-
+	
 	<- chara .perk@ "BART" $= if RED "PAS AVOIR.... VACHE" .. <- chara thingyell then;
-
+	
 	<- chara .specialtype@ 79 = if RED "COLD.... STEEEEEEEL" .. <- chara thingyell then;
 	<- chara .specialtype@ 93 = if RED "............." .. <- chara thingyell then;
 	<- chara .specialtype@ 95 = if RED "TU ES MORT... non attendez je suis mort" .. <- chara thingyell then;
@@ -218,10 +218,10 @@ var shieldofhope-saying-stack
 	<- chara .johnny? 			if RED "QUE VOUS ALLIEZ TOUS AU DIABLE !" .. <- chara thingyell then;
 	<- chara .arq? 				if FLASHY "vous etes nuls" .. <- chara thingyell then;
 	<- chara .brckmon? 			if RED "..." .. <- chara thingyell then;
-
-	<- chara .specialtype@ 121 = if GREEN "c'est ok, je reviendrai dans 250 ans !" .. <- chara thingyell then; \ Sycamore
-	<- chara .specialtype@ 153 = if RED "ON DIRAIT QU'ON A DECOUVERT QUI EST LE VRAI JOKER." .. <- chara thingyell then; \ Jimbo
-
+	
+	<- chara .specialtype@ 121 = if GREEN "c'est ok, je reviendrai dans 250 ans !" .. <- chara thingyell then; \ Sycamore 
+	<- chara .specialtype@ 153 = if RED "ON DIRAIT QU'ON A DECOUVERT QUI EST LE VRAI JOKER." .. <- chara thingyell then; \ Jimbo  
+	
 	// Default sayings, if none of above apply
 	70 %chance if
 		<- chara .thing@ .death-saying
@@ -239,21 +239,21 @@ statmod{
 
 		 <- eventid THING_EVENT_WAS_HIT
 		?(
-
+	
 		// <- chara .dead? if then; - Doesn't work with a dead cancel
 		<- chara .health@ 1 < if
-			<- chara isbort? if
-				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast!
+			<- chara isbort? if 
+				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast! 
 				RED "AY CRUMBO!!!" .. <- chara thingyell
-				<- chara .fullheal <- chara .superbortify
+				<- chara .fullheal <- chara .superbortify 
 			then;
-			<- chara .trait@ "AMERICA" $= if
-				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast!
+			<- chara .trait@ "AMERICA" $= if 
+				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast! 
 				RED "CAAAAAAAAAAAAAAW!" .. <- chara thingyell
-				<- chara .july4ify
+				<- chara .july4ify 
 			then;
-			<- chara .trait@ "One Foot in Grave" $= if
-				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast!
+			<- chara .trait@ "One Foot in Grave" $= if 
+				<- thing .pos 12 xypowboom -1 lt .hitcheck.blast! 
 				RED "Le squelette etait en moi depuis le debut !" .. <- chara thingyell
 				<- chara .deadsamedify
 			then;
@@ -271,9 +271,9 @@ statmod{
 				then
 			then
 		then
-
+			
 		);
-
+	
 		THING_EVENT_DIED
 		?(
 
@@ -295,7 +295,7 @@ statmod{
 		?(
 			<- chara .tired? if <- chara MOD_TIRED #mod-icon$ <- thing .report then;
 		);
-
+		
 		drop // remove <- eventid from stack
 ;
 }
@@ -333,7 +333,7 @@ drop
 		COMBAT_MELEE of
 			"AU CORPS-A-CORPS !"
 		endof
-		COMBAT_GUNS of
+		COMBAT_GUNS of 
 			"A DISTANCE !"
 		endof
 		otherwise
@@ -344,7 +344,7 @@ drop
 
 : tactic_report
 	orders_tactic@ case
-		TACTIC_FLEE of
+		TACTIC_FLEE of 
 			"EN FUITE !"
 		endof
 		TACTIC_ATTACK of

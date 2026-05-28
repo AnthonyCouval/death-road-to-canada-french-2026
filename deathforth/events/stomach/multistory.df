@@ -32,23 +32,23 @@ cyoa{
 		mission{ ' walk-try-end-mission cyoa-choice-handler! }
 ;
 
-: foot_leave_zone
-	spawn
-	0 lt .clr.a!
-	1 lt .nocollide!
+: foot_leave_zone 
+	spawn 
+	0 lt .clr.a! 
+	1 lt .nocollide! 
 	1 lt .walkover!
-	100000 lt .mass!
-	3 lt .mass!
-	26 lt .rad.y!
-	8 lt .rad.x!
-	3 lt .tileflags!
-	' leaveonfoot lt .cyoa!
-;
+	100000 lt .mass! 
+	3 lt .mass! 
+	26 lt .rad.y! 
+	8 lt .rad.x! 
+	3 lt .tileflags! 
+	' leaveonfoot lt .cyoa! 
+; 
 
 cyoa: lot_car_choice
 	"C'est parti !" cyoa-title!
 		($ "Cette voiture n'est meme pas verrouillee et est en parfait etat." $) cyoa-text!
-		($ "N'entrez pas dans la voiture sauf si vous avez l'intention de partir avec." rbold $) +crtext
+		($ "N'entrez pas dans la voiture sauf si vous avez l'intention de partir avec." rbold $) +crtext 
 			choice( "Monter dans la voiture" )choice: get-into-car
 			choice( "Laisser pour l'instant" )choice
 			interactee .car-cyoa-default

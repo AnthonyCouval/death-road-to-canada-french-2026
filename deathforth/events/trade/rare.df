@@ -30,7 +30,7 @@ cyoa{ regiondef{
 : charm-witch
 	most-charming if
 		choosechar ($ " The witch gives " .. cname .. " a free Witch's Broom.
-		" .. "PEUT-ETRE QUE TU SERAS UNE SORCIERE UN JOUR ! *RICANEMENTS*" pbold $)
+		" .. "PEUT-ETRE QUE TU SERAS UNE SORCIERE UN JOUR ! *RICANEMENTS*" pbold $) 
 		+cr +text 1 WEAPON_WITCH trunk.weapon+ cicon
 	then
 ;
@@ -51,8 +51,8 @@ cyoa-bridge: trade-witch-20
 	charm-witch
 ;
 
-: trade-witch-roll
-	dup .cwits+ if .morale-- else .morale3+ then
+: trade-witch-roll 
+	dup .cwits+ if .morale-- else .morale3+ then 
 ;
 
 : mew-recruit recruitee .thing@ statmod{ .mew } ;
@@ -96,12 +96,12 @@ cyoa-choice: trade-witch-coolit
 	cpet? if
 		($ cname .. " lache un gros pet contre le chaudron de la sorciere." $)
 	else
-		($ cname .. " dit a la marchande sorciere de " .. "SE CALMER.
+		($ cname .. " dit a la marchande sorciere de " .. "SE CALMER. 
 	ALSO, NICE CAULDRON! NOT!" pbold $) then cyoa-text!
 	cool-it++
 		($ "La sorciere saisit " .. cname .. ".
 		" .. "SE MOQUER DE LA POTION DE LA SORCIERE ?
-			GET THROWN IN THE WITCH'S STEW!!" rbold $) badfx +crtext
+			GET THROWN IN THE WITCH'S STEW!!" rbold $) badfx +crtext 
 		($ "La sorciere jette " .. chim .. " dans le chaudron !" $) +crtext
 		cpet? if
 			($ cname .. " est completement enveloppee dans le ragout toxique ! Miam !" $) +crtext
@@ -123,7 +123,7 @@ cyoa: trade-rare-witch
 	($ "Tu deranges cette sorciere dans ses activites de sorciere.
 	" .. "TU PEUX ME DERANGER UNE FOIS ET UNE SEULE, JE SUIS OCCUPEE AVEC MES ACTIVITES DE SORCIERE !" pbold $) cyoa-text! basic-tone foodamt
 	choice( "Rester tranquille pour l'instant" )choice
-	most-grating if
+	most-grating if 
 		charchoice( " tells her to COOL IT" fcoolit )choice: trade-witch-coolit
 	then
 	trunk-food 5 < if
@@ -150,7 +150,7 @@ cyoa-choice: trade-rare-lab-go
 	($ cname .. " entre dans la machine et se fait bombarder par les " .. "RAYONS COSMIQUES" fbold .. ". " .. cHe .. " se sent dynamisee !" $) text!
 	strength++ fitness++ cchar .fullheal
 	lab-effect depths 0= if LAB-EFFECT shuffles to lab-effect then
-	drawcard
+	drawcard 
 	kip-lab-foodcheck -1 * trunk-food+
 	' kip-lab-zap ++
 
@@ -298,9 +298,9 @@ cyoa-choice: doc-gnome-go
 		25 %chance if
 			33
 		else
-			75
+			75 
 		then cchar .specialhead! -1 cchar .headoff.x!
-		WEAPON_POKIN cchar .weapon_default!
+		WEAPON_POKIN cchar .weapon_default!		
 ;
 cyoa-bridge: doc-gnome-go4
 	"Qui devrait avoir la tete du gnome ?" text!
@@ -322,7 +322,7 @@ cyoa-choice: doc-robot-go
 		50 %chance if
 			39
 		else
-			40
+			40 
 		then cchar .specialhead! -1 cchar .headoff.y!
 		1 STAT_MECHANICAL cchar .bonus+ mechanicREV
 ;
@@ -384,9 +384,9 @@ cyoa-choice: doc-skele-go
 		($ cname .. "'s MAXIMUM STRENGTH, FITNESS, AND SHOOTING INCREASED!" rbold $) +crtext
 		78 cchar .specialhead! -1 cchar .headoff.y!
 		-1 STAT_VITALITY cchar .stat+ sting--
-		1 STAT_STRENGTH cchar .bonus+
+		1 STAT_STRENGTH cchar .bonus+ 
 		1 STAT_FITNESS cchar .bonus+
-		1 STAT_SHOOTING cchar .bonus+
+		1 STAT_SHOOTING cchar .bonus+		
 ;
 cyoa-bridge: doc-skele-go4
 	"Qui devrait avoir la tete du squelette ?" text!
@@ -406,7 +406,7 @@ cyoa-choice: doc-swole-go
 	($ cname .. " a maintenant le potentiel de devenir trop muscle pour etre controle !" $) dochead-done
 		($ cname .. "'s MAXIMUM STRENGTH INCREASED!" rbold $) +crtext
 		25 cchar .specialhead! -4 cchar .headoff.y!
-		1 STAT_STRENGTH cchar .bonus+ strengthREV
+		1 STAT_STRENGTH cchar .bonus+ strengthREV	
 ;
 cyoa-bridge: doc-swole-go4
 	"Qui devrait avoir la tete du bodybuilder ?" text!
@@ -498,7 +498,7 @@ cyoa-bridge: trade-rare-doc-pick
 	($ "Super ! Voila ce que j'ai en stock.
 	Dites-moi quelle tete vous interesse ! Je n'ai le temps que pour une greffe. Je vais " pbold .. "JOUER AU GOLF" rbold .. " apres ca parce que je suis " pbold .. "MEDECIN." rbold $) text!
 		"Une Toute Nouvelle Tete" cyoa-title!
-
+		
 		pick-3-docheads
 ;
 
@@ -508,14 +508,14 @@ cyoa: trade-rare-doc
 	"Medecin Reconnu" cyoa-title!
 	nearest .character@ choosechar cicon
 	cchar to victim
-	($ "C'est un medecin. Un " .. "VRAI" rbold .. " medecin, il porte une tenue de medecin et tout !
+	($ "C'est un medecin. Un " .. "VRAI" rbold .. " medecin, il porte une tenue de medecin et tout ! 
 	" .. "Allons droit au but... Je peux remplacer votre tete par une meilleure tete. " pbold $) cyoa-text! basic-tone
 		numhums 1 < if
 			($ "Attendez... sortez d'ici ! Je suis pas veterinaire !" rbold $) +text
 		else
 			($ "Je suis PAS fou ! Mais je le deviens, donc belle remise. Seulement 5 nourriture !" rbold $) +text +cr foodamt
 		then
-
+	
 	trunk-food 5 < numhums 1 < or if
 		"On dirait que tu es coincee avec ton ancienne tete." +crtext
 		choice( "Partir dans la grande honte" )choice
@@ -590,7 +590,7 @@ cyoa-bridge: trade-rare-wiz-recruit
 		' recruit-replace cyoa-team-choice
 	else
 		recruited
-	then
+	then	
 
 ;
 
@@ -677,7 +677,7 @@ cyoa: trade-rare-book
 // COLD STEEL
 
 cyoa-choice: trade-rare-coldsteel-buy
-	($ Thegroup .. " buys the giant sword.
+	($ Thegroup .. " achete la grande epee.
 	" .. "Tu ne regretteras pas l'achat d'une epee Cold Steel !" pbold $) cyoa-text! basic-tone
 	1 WEAPON_ZWEI trunk.weapon+ -45 trunk-food+
 	clear-cyoa goodfx
@@ -736,7 +736,7 @@ cyoa-bridge: trade-skelknight-25
 ;
 
 cyoa-bridge: trade-skelknight-15
-	($ Thegroup .. " buys the skeleton's shortsword!
+	($ Thegroup .. " achete l'epee courte du squelette !
 	" .. "Ce gladius est une belle epee, mais je ne l'ai jamais aimee car elle n'a pas de theme de crane." pbold $) cyoa-text! basic-tone
 	1 WEAPON_GLADIUS trunk.weapon+ -15 trunk-food+ ' skelknight-gladius ++
 ;
@@ -766,7 +766,7 @@ cyoa-choice: trade-skelknight-coolit
 			1 recruitee .weapon_nodropb!
 			WEAPON_BOMBSKULL recruitee .weaponc!
 			3 recruitee .stackedc!
-		cooled-it
+		cooled-it 
 		team-full? if
 			($ "Il insiste pour rejoindre. Qui voulez-vous remplacer pour faire de la place a " .. rname .. " ?" $) +crtext
 			' recruit-replace cyoa-team-choice
@@ -785,14 +785,14 @@ cyoa: trade-rare-skelknight
 	nearest .character@ choosechar cchar to recruitee ricon
 	($ "C'est un squelette anime portant une armure de plaques.
 	" .. "Je hais aussi les zombies. Ils sont recouverts de peau et de chair. C'est degoutant !" pbold $) cyoa-text!
-	skelknight-bomb 1 < skelknight-hammer 1 < skelknight-gladius 1 < or or if
+	skelknight-bomb 1 < skelknight-hammer 1 < skelknight-gladius 1 < or or if 
 		"Je te vendrai quelques-unes de mes armes de rechange, si cela te plait."
 	else
 		"C'est tout ce que je peux ceder ! Amusez-vous bien dans votre croisade."
 	then pbold +crtext
 	basic-tone foodamt
 	choice( "Non merci" )choice
-	most-grating if
+	most-grating if 
 		charchoice( " tells him to COOL IT" fcoolit )choice: trade-skelknight-coolit
 	then
 	trunk-food 5 < if
@@ -821,12 +821,12 @@ cyoa-choice: trade-rare-sleep-feed
 	sleepy-ate-food -1 * trunk-food+
 	' sleepy-ate ++
 	sleepy-ate 2 > if
-		($ pname .. " commence a comprendre " .. vhis .. " parfaite tranquillite zen, et apprend la capacite " .. "DORMEUR PROFOND" rbold .. " !" $) +crtext
+		($ pname .. " commence a comprendre " .. vhis .. " parfaite tranquillite zen, et apprend la capacite " .. "DORMEUR PROFOND" rbold .. " !" $) +crtext 
 		statmod{ pchar .soundsleep }
 		($ "Quelqu'un remarque que " .. pname .. " a ete en train de fourrer de grandes quantites de nourriture dans la bouche d'une personne endormie." $) +crtext
 		"HEY ! SORTEZ DE CE CAMP MAINTENANT !" rbold +crtext
 		($ Thegroup .. " s'enfuit en fuyant le camp de marchands !" $) +crtext
-		badfx quitmission
+		badfx quitmission		
 	else
 		($ vHe .. " talks nonsense in " .. vhis .. " sleep.
 		Or at least it sounds like nonsense, at first. " .. pname .. " thinks about it and realizes it's valuable knowledge." $) +crtext goodfx
@@ -842,7 +842,7 @@ cyoa: trade-rare-sleep
 	sleepy-ate 1 > if
 		($ RED .. "AVERTISSEMENT : Fourrer 4 unites de nourriture de plus dans " .. vhis .. " bouche va causer des ennuis, mais donnera aussi a " .. pname .. " une nouvelle capacite !" rbold $) +crtext
 	else
-
+		
 	then
 		choice( "Laisser " .. vhim .. " tranquille" )choice
 		trunk-food sleepy-ate-food 1 - > if

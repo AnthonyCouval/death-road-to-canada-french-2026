@@ -15,7 +15,7 @@ cyoa-blank: wsnews-yes sfx{ goodfx }
 	"Merci d'avoir consulte Wayward Souls !" text!
 	"10 ZOMBO POINTS earned!" rainbold +crtext
 	zombopfull? if
-		zombo-point ZOMBOP_CAP > if
+		zombo-point ZOMBOP_CAP > if 
 			"Tu es au-dessus du maximum de Points Zombo !
 			Depense tes PZ en trop dans DEBLOCAGES avant de commencer une partie !" fbold +crtext
 		else
@@ -35,14 +35,14 @@ cyoa-blank: WSnews
 	choice( "Peut-etre une prochaine fois" )choice
 	choice( "Voir sur Steam - " .. "Obtenir 10 Points Zombo" bbold )choice: wsnews-yes
 	choice( "Ne plus afficher ce message" )choice: wsnews-complete
-
+	
 ;
 
 
 0 value shown-in-session
 
 
-: WSnewscheck amend main-event-do-title
+: WSnewscheck amend main-event-do-title 
 
 	// Only show once per game session
 	shown-in-session if then; 1 to shown-in-session
@@ -60,11 +60,11 @@ uses cyoa-charstats.df
 uses mission-events.df
 uses locgen.df
 
-\ copied code from charfilt
-\ this stuff shouldnt change, so
-\ should be okay to copy
+\ copied code from charfilt 
+\ this stuff shouldnt change, so 
+\ should be okay to copy 
 
-\ uses charfilt.df wouldnt play ball for some reason
+\ uses charfilt.df wouldnt play ball for some reason 
 
 : foreach-char >r 1 #character >r
 	begin r@ while
@@ -108,7 +108,7 @@ uses locgen.df
 
 : #team-stack-shuffled team-stack shuffles swap resizes ;
 : #team-stack-shuffled-except ( character number -- )
-	swap team-stack-except shuffles swap resizes
+	swap team-stack-except shuffles swap resizes 
 ;
 
 : foreach-team-char ( ' word -- ) team-stack swap popeach ;
@@ -119,7 +119,7 @@ uses locgen.df
 	0 0.8 1 tint_far!
 	1 light_mode!
 	60 tint_trigger
-;
+;	
 
 : 3dp 1000 * >int 1000 / ;
 
@@ -139,13 +139,13 @@ uses locgen.df
 
 : ohdearme ' zombo-turn foreach-team-char ;
 
-: countdowner
-
+: countdowner 
+	
 	road{ kills-this-game } 0 = if
 	3 for
-
+	
 		ohdearme
-
+		
 	next
 
 	then;
@@ -156,7 +156,7 @@ uses locgen.df
 ;
 
 
-
+	
 : slipslide args( chara )
 
 <- chara .team_status@ 3 = if then;
@@ -164,16 +164,16 @@ uses locgen.df
 
 0.97 <- chara .thing@ .friction!
 
- <- chara .thing@ .vel.x@ abs 1.9 > <- chara .thing@ .vel.y@ abs 1.9 > or if
+ <- chara .thing@ .vel.x@ abs 1.9 > <- chara .thing@ .vel.y@ abs 1.9 > or if 
 	60 <- chara .thing@ .stun!
 	<- chara .thing@ .thing_liedown
 	-2 <- chara .thing@ .vel.z!
 	-1 1 rnd <- chara .thing@ .vel.x!
 	-1 1 rnd <- chara .thing@ .vel.y!
-	"OW!" <- chara .thing@ .yellmsg
-
-
-	30 %chance if
+	"OW!" <- chara .thing@ .yellmsg 
+	
+	
+	30 %chance if 
 	<- chara .thing@ .hitpoints@ -1 + <- chara .thing@ .hitpoints!
 	then
 
@@ -185,22 +185,22 @@ uses locgen.df
 
 : iceslide ' slipslide foreach-mission-char ;
 
-
+	
 
 : bitter-outside args( chara )
 
 	<- chara .team_status@ 3 = if then;
-
-	mission.vehicle@ not if
+	
+	mission.vehicle@ not if 	
 		0.84 <- chara .thing@ .friction!
 	then;
-
-	mission.vehicle@ .pos <- chara .thing@ .pos xysub xymag 26 < if
-		0.9 <- chara .thing@ .friction!
+	
+	mission.vehicle@ .pos <- chara .thing@ .pos xysub xymag 26 < if 
+		0.9 <- chara .thing@ .friction! 
 	else
 		0.84 <- chara .thing@ .friction!
-	then
-	\ Should help AI get into the car
+	then 
+	\ Should help AI get into the car 
 
 ;
 
@@ -217,56 +217,56 @@ uses locgen.df
 : sowarm ' warm-inside foreach-mission-char ;
 
 : thunderstrike args( me eventid )
-
+	
 	<- eventid THING_EVENT_TIMER = if
 		1 <- me .timer!
-
-
-		<- me .pos.z@ -40 > if
-
+		
+		
+		<- me .pos.z@ -40 > if 
+		
 		5 <- me .smashybits
-		0 <- me .spriteid!
+		0 <- me .spriteid! 
 		0 <- me .hitpoints!
-
+	
 		then
 	then
-
-
+	
+	
 	<- eventid THING_EVENT_BREAK = if
 						<- me .pos xyblast
 			1 lt .hitcheck.blast! 20 lt .hitcheck.rad!
 			2 lt .hitcheck.power!
 	then
 ;
-
+	
 : warninglight args( me )
 	<- me .pos
-		particle{
-			new pos!
+		particle{ 
+			new pos! 
 			particles32_base_id 4 + spriteid!
 			1 clr.r!
 			0 clr.b!
 			0 clr.g!
-			30 fade_out!
+			30 fade_out! 
 			1 layer!
 			0.5 clr.a!
 			1.5 scalex!
 			1.5 scaley!
 		}
-;
-
+; 
+	
 
 : colddirector
 
 	coldtint
-
+	
 	player not if then;
-
+	
 	randomweather 0 = if
 	($ "*AVERTISSEMENT : Inondation Soudaine !*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
 	($ "*Cherchez un abri !*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
 		coldtint
-		player .mapid@ 0 = if
+		player .mapid@ 0 = if 
 			map{ wetfloor } // awful outside
 			0 1 1 waterclr
 			1.25 1.98 weather!
@@ -276,7 +276,7 @@ uses locgen.df
 			sowarm // ok inside
 		then
 	then
-
+	
 	randomweather 1 = if
 	($ "*AVERTISSEMENT : Orage !*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
 	($ "*Cherchez un abri !*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
@@ -284,9 +284,9 @@ uses locgen.df
 			coldtint
 		0.5 weather!
 		1 gloom_lighting!
-			player .mapid@ 0 = if
+			player .mapid@ 0 = if 
 				2 %chance if
-					spawn special_objects96_base_id 5 + lt .spriteid! 1 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z!
+					spawn special_objects96_base_id 5 + lt .spriteid! 1 health! 2000 lt .mass! 0 lt .rad.x! 0 lt .rad.y! 0 lt .rad.z! 
 					' thunderstrike lt .events!
 					0.5 gloom_lighting!
 					1 lt .timer!
@@ -302,10 +302,10 @@ uses locgen.df
 					player .pos.x@ lt .pos.x!
 					lt .pos.x@ -125 125 rnd + dup lt .pos.x!
 					lt .pos.y@ -125 125 rnd + dup lt .pos.y!
-
+					
 					lt warninglight
-
-
+					
+					
 				then
 			then
 		else
@@ -313,20 +313,20 @@ uses locgen.df
 			sfx{ thump 3 scale! 2.5 3.5 frnd pitch! 100 a! 700 d! 120 r! 1 j! 0.5 scale! }
 			then
 		then
-
+		
 	randomweather 2 = if
-
+		
 		0 clr_near_set_r!
 		0 clr_near_tile_r!
 		0 clr_near_thing_r!
 		($ "*AVERTISSEMENT : Glace Glissante !*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
 		($ "*Ne vous pressez pas !*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
 		iceslide
-
-	then
-
+		
+	then	
+	
 	randomweather 3 = if
-
+	
 		($ "*Temps Clair !*" $) 5 view_w 0.825 * view_h 0.75 * msgtickxy
 		($ "*Aucun Effet Actif*" $) 5 view_w 0.825 * view_h 0.81 * msgtickxy
 		

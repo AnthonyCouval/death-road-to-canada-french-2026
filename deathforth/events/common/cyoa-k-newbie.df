@@ -213,7 +213,7 @@ cyoa: crashtest
 ;
 
 cyoa: special-testing
-	($ "Get ready... for a superior JoJo experience." rbold $) text!
+	($ "Preparez-vous... pour une experience JoJo superieure." rbold $) text!
 		char-gen to recruitee
 		recruitee .charbroify
 		(* WEAPON_MOODYSAW recruitee .weaponb!
@@ -225,17 +225,17 @@ cyoa: special-testing
 ;
 
 cyoa: location-testing
-	($ "Get ready... for a Mechnical shopping experience." rbold $) text!
+	($ "Preparez-vous... pour une experience d'achat Mecanique." rbold $) text!
 	80 trunk-food+ "events/trade/trader-camp-region-special8.df" $load-region to-mission
 ;
 
 cyoa: location-testing2
-	($ "Get ready... for a relaxing park experience." rbold $) text!
+	($ "Preparez-vous... pour une experience de parc relaxante." rbold $) text!
 	"events/exterior/park.df" $load-region to-mission
 ;
 
 (* cyoa: location-testing
-	($ "Get ready... for a spooky graveyard experience." rbold $) text!
+	($ "Preparez-vous... pour une experience de cimetiere flippante." rbold $) text!
 	"events/exterior/region/graveyardcar.df" $load-region to-mission
 ; *)
 
@@ -274,7 +274,7 @@ cyoa: wykreset
 cyoa-choice: update-testing
 	\ 30 trunk-food+
 	"UPDATE TESTING" cyoa-title!
-	($ "Notes for the " .. "STOMACH" rainbold .. " Update:" $) text!
+	($ "Notes pour la " .. "STOMACH" rainbold .. " mise a jour :" $) text!
 	($ "BTTW compatibility has been improved with other perks. There are many more new trademark weapon combinations!
 	Axes were reworked! They now have an AoE around the point of impact. There's also a citadel, train and rail yard to find!" rbold $) +crtext
 	($ "Also, most major firearms have been animated!" $) +crtext

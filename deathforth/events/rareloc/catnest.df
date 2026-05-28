@@ -4,7 +4,7 @@ cyoa{
 : npc-cat-recruit
 	cchar to recruitee goodfx clear-cyoa
 	($ "Faut-il recruter le chat pour " .. pname .. " ?" $) +crtext
-	pchar .morale3+
+	pchar .morale3+ 
 	// pchar .loyaltyREV pchar .attitudeREV
 	recruitee .loyaltyREV recruitee .fitnessREV
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
@@ -15,10 +15,10 @@ cyoa-bridge: npc-cat-oscar
 	cchar to recruitee clear-cyoa
 	0.25 cchar .ai.wander_chance! 0 nearest .unseen!
 	recruit-yes
-	pchar .morale3+
+	pchar .morale3+ 
 	recruitee .loyaltyREV recruitee .fitnessREV recruitee .temperREV
 	"BONUS : Le moral d'Oscar reste toujours au-dessus de zero !" fbold +crtext
-
+	
 ;
 
 cyoa-bridge: npc-cat-food
@@ -33,7 +33,7 @@ cyoa-bridge: npc-cat-food
 ;
 
 cyoa-bridge: npc-cat-poke
-	($ "Bien, c'est ton choix, je suppose.
+	($ "Won, c'est ton choix, je suppose.
 	" .. pname .. " tend la main pour titiller le chat mais est interrompu a cause d'" .. "UN ASSASSINAT EN BONNE ET DUE FORME" fbold .. " par une rafale de griffes et de morsures." $) text!
 	pchar .kill
 ;
@@ -42,7 +42,7 @@ cyoa-bridge: npc-cat-poke
 
 cyoa: npc-catrecruit
 	nearest .character@ choosechar cicon
-
+	
 	cchar .bodytype@ 9 = if
 		"Le Dernier Bon Chat" cyoa-title!
 			($ pname .. " trouve un chat qui a fait son repaire ici. Il semble different de tous les autres chats post-zombocalypse.
@@ -51,10 +51,10 @@ cyoa: npc-catrecruit
 		choice( "Laisser Oscar derriere" )choice
 		choice( "Recruter Oscar !" )choice: npc-cat-oscar
 	then;
-
+	
 	"Le Nid du Chat" cyoa-title!
 	($ pname .. " trouve un chat qui a fait son repaire dans cette maison sacagee. Le chat fixe " .. phim .. " d'un regard paresseux teinte de " .. "INTENTIONS MEURTRIERES." rainbold $) text!
-	// "Les chats sont devenus enormes quelque temps apres l'apocalypse. Les petits chats d'antan ne sont plus qu'un lointain souvenir." +crtext
+	// "Les chats sont devenus enormes quelque temps apres l'apocalypse. Les petits chats d'antan ne sont plus qu'un lointain souvenir." +crtext 
 	"AVERTISSEMENT : Va vous tuer. Maintenant ou plus tard." rbold +crtext
 		choice( "Le laisser tranquille" )choice
 		choice( "Titille le chat ! Yeah !" fbold )choice: npc-cat-poke

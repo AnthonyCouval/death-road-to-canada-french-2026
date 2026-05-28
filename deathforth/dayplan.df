@@ -298,7 +298,7 @@ events{ road{
 	view_w 0.5 * 16
 	msgtickxy
 ;
-
+	
 
 : new-day // Logic for what happens every new day
 	0 to outofmedsblurb
@@ -310,10 +310,10 @@ events{ road{
 	then travel_days!
 	' calendar-days ++
 	80 %chance if 0 weather! -1 1 frnd wind_force! then
-	road-trip-days 2 < if
+	road-trip-days 2 < if 
 		diff-scalar 0.7 * to road-difficulty
 		newbie-day // no day 0 due to how increments work
-	then;
+	then; 
 	new-day-diffset
 	new-day-tileset
 	road-trip-days 3 = if
@@ -359,12 +359,12 @@ events{ road{
 : end-demo-old cyoa-new "Tu as gagne pour l'instant ! Envoie-nous un message via Kickstarter si tu as remarque un bug ou si le jeu a plante !" cyoa-text! 0 cyoa-image-icon! 1 500 tone
 	delete-the-game
 	choice( "OK" )choice: quit-to-title ;
-
+	
 : dog-driver cyoa-new "Plus de Victimes pour la Death Road" cyoa-title! ($ "Sans la moindre idee de comment conduire, " .. somename .. " la met dans un fosse et part en vadrouille. Le voyage au Canada est termine." $) cyoa-text! 0 cyoa-image-icon! 1 500 tone
 	// This one's no longer used, on launch of the game you'd lose for only having dogs.
 	delete-the-game
 	choice( "MINCE ALORS" )choice: quit-to-title ;
-
+	
 : petnodrivetext
 	ccat? if
 		"CE MAUDIT CHAT"
@@ -372,7 +372,7 @@ events{ road{
 		"LA FIN... OU PAS ?"
 	then
 ;
-
+	
 : no-driver cyoa-new "Plus de Victimes pour la Death Road" cyoa-title! ($ "Sans personne" vehicle.which@
 	if .. " pour conduire la voiture" then .. ", le voyage au Canada prend fin." $) cyoa-text!
 	0 cyoa-image-icon! 1 500 tone
@@ -387,7 +387,7 @@ events{ road{
 				($ cname .. " fait des petits cercles un moment, puis se met a marcher vers le nord. En route pour le Canada !" $)
 			then +crtext goodfx cchar .dogtosuperdog goodfx
 		else
-			ccat? if
+			ccat? if 
 				($ cname .. " horks up a hairball." $)
 			else
 				($ cname .. " sneezes." $)
@@ -396,7 +396,7 @@ events{ road{
 				($ " " .. cHe .. " n'est pas du tout interesse par ces betises de Canada, et part en vadrouille." $) +text
 				clear-streak delete-the-game
 				choice( petnodrivetext )choice: quit-to-title
-		then
+		then			
 	else
 		clear-streak delete-the-game
 		choice( "MINCE ALORS" )choice: quit-to-title

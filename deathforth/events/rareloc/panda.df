@@ -59,7 +59,7 @@ cyoa-bridge: npc-panda-charm
 cyoa: npc-panda
 	"Panda Panic" cyoa-title!
 	nearest .character@ choosechar cicon
-	($ "'C'est un panda, debout autour du batiment saccage. Il regarde " .. pname .. " with a blank expression. It may be possible to get it to follow you..." $) text!
+	($ "'C'est un panda, debout autour du batiment saccage. Il regarde " .. pname .. " avec une expression vide. Il est peut-etre possible de le faire te suivre..." $) text!
 	"'AVERTISSEMENT : Vous tuera probablement a moins que vous ne lui offriez de la nourriture. Est un dingus avec 50 % de chances de gaspiller votre nourriture." rbold +crtext
 		choice( "Laisse le tranquille" )choice
 		choice( "Tirez le panda" )choice: npc-panda-pull

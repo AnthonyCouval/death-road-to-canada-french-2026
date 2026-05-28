@@ -20,72 +20,72 @@ cyoa{
 		($ "ZOMBO POINTS" rainbold .. " Maximum augmente a 15 !" rbold $) +crtext
 		gstats{ 15 to ZOMBOP_CAP ' ugnome-unlocks ++ }
 	then
-
+	
 	gamedef{ ' deadlier gamemode? } gstats{ ZOMBOP_CAP } 20 < and if
 		($ "ZOMBO POINTS" rainbold .. " Maximum augmente a 20 !" rbold $) +crtext
 		gstats{ 20 to ZOMBOP_CAP ' ugnome-unlocks ++ }
 	then
-
+		
 	(* gamedef{ ' kepamode gamemode? } gstats{ ZOMBOP_CAP } 21 < and if
 		($ "ZOMBO POINTS" rainbold .. " Maximum augmente a 30 !" rbold $) +crtext
 		gstats{ 30 to ZOMBOP_CAP }
 	then *)
-
+	
 	// filesave{ save-global-stats }
 ;
-// gamedef{   } or if
+// gamedef{   } or if 
 : ending-zp-reward
 
 	end-unlock-checker
 
-	gamedef{ ' defaultmode gamemode? ' longroad gamemode? ' 4jerksmode gamemode? } or or if
+	gamedef{ ' defaultmode gamemode? ' longroad gamemode? ' 4jerksmode gamemode? } or or if 
 		3 zombop! // 2
 	then;
-
-	gamedef{ ' specialchars gamemode? ' familiarchars gamemode? ' shortroad gamemode? } or or if
+		
+	gamedef{ ' specialchars gamemode? ' familiarchars gamemode? ' shortroad gamemode? } or or if 
 		2 zombop! // 1 zombop++
-	then;
-
-	gamedef{ ' theinfection gamemode? } if
+	then;	
+	
+	gamedef{ ' theinfection gamemode? } if 
 		5 zombop! // 1 zombop++
+	then;	
+	
+	gamedef{ ' theinfectionEX gamemode? } if 
+		5 zombop! // 1 zombop++ 
 	then;
 
-	gamedef{ ' theinfectionEX gamemode? } if
+	gamedef{ ' mutationmode gamemode? } if 
 		5 zombop! // 1 zombop++
-	then;
+	then;	
 
-	gamedef{ ' mutationmode gamemode? } if
-		5 zombop! // 1 zombop++
-	then;
-
-	gamedef{ ' mutationmodeEX gamemode? } if
+	gamedef{ ' mutationmodeEX gamemode? } if 
 		10 zombop! // 1 zombop++
-	then;
+	then;	
 
-	gamedef{ ' horrormode gamemode? } if
+	gamedef{ ' horrormode gamemode? } if 
 		10 zombop! // 1 zombop++
-	then;
-
-	gamedef{ ' weathermode gamemode? } if
-		5 zombop!
-	then;
-
-	gamedef{ ' thelongsiege gamemode? } if
-		6 zombop!
-	then;
-
+	then;		
+	
+	gamedef{ ' weathermode gamemode? } if 
+		5 zombop! 
+	then; 
+	
+	gamedef{ ' thelongsiege gamemode? } if 
+		6 zombop! 
+	then; 
+	
 	gamedef{ ' familiarcharsEX gamemode? ' specialcharsEX gamemode? ' quicknightmare gamemode? } or or if
 		6 zombop! // 4
-	then;
-
+	then;	
+			
 	gamedef{ ' marathonmode gamemode? ' kepamode gamemode? ' 4jerksmodeEX gamemode? } or or if
 		10 zombop! // 5
 	then;
-
+	
 	gamedef{ ' deadlier gamemode? ' OPPmode gamemode? } or if
 		5 zombop! // 3
 	then;
-
+	
 	gamedef{ ' endlessmode gamemode? } if
 		999 zombop!
 	then;
@@ -96,7 +96,7 @@ cyoa-bridge: wyk-ending
 	($ "L'" .. "honneur" rbold .. " et la " .. "reputation" rbold .. " de l'equipe Would You Kindly sont sauves par " .. wyk-name .. " !" $) text!
 	"Voici des codes pour celebrer !" rainbold +crtext
 		gstats{ ' wyk-highscore ++ }
-		wyk-win1 +crtext
+		wyk-win1 +crtext 
 		wyk-win2 +crtext
 		wyk-win3 +crtext
 		filesave{ save-global-stats }
@@ -123,7 +123,7 @@ cyoa: cyoa-the-pm
 	the-pm .character@ choosechar cicon
 //	clear-cyoa
 	"Prime Minister" cchar .name!
-
+	
 	"Victoire sur la Death Road" cyoa-title!
 			mission{ killtally }
 	($ "VOUS AVEZ UNE ATTITUDE DE GAGNANT, HEIN ?
@@ -131,32 +131,32 @@ cyoa: cyoa-the-pm
 	" .. cname .. " lui-meme fait de " .. thegroup .. " des citoyen" ganVSs .. " honoraires du Canada. Il accueille " ..
 		ghim .. " dans la derniere nation restante sur Terre !" $) text! goodfx
 
-	wyk? if
+	wyk? if 
 		($ wyk-name rainbold .. " a gagne la partie !" $) +crtext
-
-		gstats{ wyk-highscore } 5 < if
+		
+		gstats{ wyk-highscore } 5 < if 
 			choice( "Victoire WYK !" )choice: wyk-ending
 		then;
 	then
-
-	gamedef{ ' mutationmode gamemode? } if
-
-		($ "J'AI AUGMENTE TA TAILLE DE PORTEFEUILLE PZ POUR TOUTES CES RECHERCHES DE BOUILLIE DE ZOMBIES. MERCI. AUSSI, TU PUES" pbold $) +crtext
-		5 for
-			gstats{ ' ZOMBOP_CAP ++ }
-		next
-
-	then
-
-	gamedef{ ' mutationmodeEX gamemode? } if
-
-		($ "MON DIEU TU PUES LES ENTRAILLES DE ZOMBIE. JE PEEEUUUX PAS RESPIRERRR... ARG. MERCI. TIENS DE L'ARGENT J'IMAGINE" pbold $) +crtext
-		10 for
-			gstats{ ' ZOMBOP_CAP ++ }
-		next
-
-	then
-
+	
+	gamedef{ ' mutationmode gamemode? } if 
+	
+		($ "J'AI AUGMENTE TA TAILLE DE PORTEFEUILLE PZ POUR TOUTES CES RECHERCHES DE BOUILLIE DE ZOMBIES. MERCI. AUSSI, TU PUES" pbold $) +crtext 
+		5 for 
+			gstats{ ' ZOMBOP_CAP ++ } 
+		next 
+	
+	then 
+	
+	gamedef{ ' mutationmodeEX gamemode? } if 
+	
+		($ "MON DIEU TU PUES LES ENTRAILLES DE ZOMBIE. JE PEEEUUUX PAS RESPIRERRR... ARG. MERCI. TIENS DE L'ARGENT J'IMAGINE" pbold $) +crtext 
+		10 for 
+			gstats{ ' ZOMBOP_CAP ++ } 
+		next 
+	
+	then 
+	
 	ending-zp-reward
 	ending-choice
 ;
@@ -247,24 +247,24 @@ roadw 2 / value roadrad
 	"Transportez-vous des fruits ou legumes ?" shove
 	"Les patates de l'I.P.E. sont les MEILLEURES" shove
 	"Ces zombies, ils y allaient a fond !" shove
-	"Jouons au hockey de rue plus tard." shove
+	"Let's play some road hockey later" shove
 	RAINBOW 0x dd $chr .. " Je suis Bud la Patate de la boue rouge ecarlate " .. 0x de $chr .. shove
 	"Les zombies n'aiment pas notre neige ici" shove
-	"Il est GRAND TEMPS que vous veniez tous nous voir, VOUS SAVEZ ? " WHITE .. wink$ .. shove
+	"It's ABAYAHT time Y'ALL came up to see us Y'KNOW? " WHITE .. wink$ .. shove
 	"Je mange une poutine apres ca" shove
 	RAINBOW 0x dd $chr .. " TAKE OFF! TO THE GREAT WHITE NORTH! "  .. 0x de $chr .. shove
 	"Tu veux une canette de boisson gazeuse ?" shove
-	"Ou est ta motoneige ?" shove
-	"ELLE ENVOIE LA SAUCE !" shove
+	"C'est ou ton skidoo ?" shove
+	"HOW'S SHE BOOTIN'ER?" shove
 	"Mon manga prefere c'est Dragon Ball ZED" shove
-	"La sallew de bath est juste par la suw la gauchew" shove
+	"De salle de bains est juste par la sur la gauche" shove
 	"Tiens, essuie-toi avec cette serviette" shove
 	"Veuillez retirer toutes les armes a feu de votre sac a dos" shove
 	"T'as amene une luge ?" shove
 	"Je parie que t'avais les foies la-bas" shove
 	"Ne caressez pas les castors" shove
 	"We say ABOOT, not ABOOT. GEEZ" shove
-	"Voila un dollar pour un double-double chez Timmies" shove
+	"Voila un dolard pour un double-double chez Timmies" shove
 	"C'est quoi ta couleur de tuque preferee ?" shove
 value canada-sayings-base
 canada-sayings-base shuffles var canada-sayings
@@ -279,12 +279,12 @@ canada-sayings-base shuffles var canada-sayings
 		"MOORF!!"
 	else
 		<- me .character@ .specialtype@ 38 = <- me .character@ .specialmode@ 1 = or if
-			random-canada-saying else "NURP squerp!"
+			random-canada-saying else "NURP squerp!" 
 		then
 	then
 
 	BLUE swap .. <- me .sprayit clear-cyoa ( $cyoa-ok-dialog )
-;
+; 
 
 : pm-dead-check the-pm .character@ .dead? if cyoa{ pm-dead } then ;
 
@@ -318,7 +318,7 @@ canada-sayings-base shuffles var canada-sayings
 	<- eventid THING_EVENT_TIMER <> if then;
 
 	1 <- me .timer!
-
+ 
 	<- me .vel.z@ 0.1 >= if then;
 
 	<- me .anim.substate@ if
@@ -387,7 +387,7 @@ canada-sayings-base shuffles var canada-sayings
 
 	splat-zombies-here
 	kill-zombies-here
-
+	
 	1 to game_is_over?
 ;
 
@@ -407,7 +407,7 @@ canada-sayings-base shuffles var canada-sayings
 		8 else 5 then
 ;
 
-: mecha-count-calc
+: mecha-count-calc 
 	gamedef{ ' OPPmode gamemode? ' 4jerksmodeEX gamemode? } or if
 		24 else 12 then
 ;
@@ -456,7 +456,7 @@ zomb-wave-calc constant ZOMB_WAVES // formerly 5
 	// DEBUG_BUILD if "ZOMBIE WAVE" <- wave .. msg then
 
 	// <- wave 5 = if hideall debug-unseen-reached then
-
+	
 	// TODO: cyoa-dialog-ok of some sort at different <- wave number?
 	// - make humans unseen at some point? Final wave perhaps?
 
@@ -491,15 +491,15 @@ zomb-wave-calc constant ZOMB_WAVES // formerly 5
 	siege-timeout 0 > if ' siege-timeout -- 16 50 debug-tone then;
 
 	pm-dead-check
-
+	
 	siege-state case
 
 		// Just arrived near the gate
 		0 of
 			' siege-counter ++
-			zombs-near 5 <= siege-counter 10 >= or if
+			zombs-near 5 <= siege-counter 10 >= or if 
 				winstotal 1 < if siege-gate-reached then // Warning on what you should do if you've never won before
-				next-state
+				next-state 
 			then;
 		endof
 
@@ -510,7 +510,7 @@ zomb-wave-calc constant ZOMB_WAVES // formerly 5
 			then;
 
 			' siege-counter ++
-
+			
 			siege-counter MECHA_COUNT_IN 2 - = ezbandit? and if hideall then // Hide team before MECHA on ezbandit modes
 			siege-counter MECHA_COUNT_IN = if spawn-mecha-mountie siege-spawned-mecha then
 
@@ -528,7 +528,7 @@ zomb-wave-calc constant ZOMB_WAVES // formerly 5
 			then
 		endof
 
-		2 of
+		2 of 
 			// Cue the end
 			trigger-end-state
 		endof

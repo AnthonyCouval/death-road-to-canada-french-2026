@@ -742,7 +742,7 @@ DOT1 value DOT
 	\ stomach 
 	
 	gamedef{ ' mutationmodeEX gamemode? } if drop "Mutation Mode EXTREME" rbold then
-	gamedef{ ' horrormode gamemode? } if drop "The Horrors Mode" rbold then
+	gamedef{ ' horrormode gamemode? } if drop "Le Mode des Horreurs" rbold then
 	
 
 //	0 gamemode? not if drop "CUSTOM GAME MODE" then

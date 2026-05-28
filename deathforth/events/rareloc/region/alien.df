@@ -55,7 +55,7 @@ cyoa: alien
 		($ "L'alien touche " .. pname .. " avec un doigt lumineux. " .. "Son cerveau est rempli d'informations sur comment ouvrir des portes de voiture deverrouillees un peu plus compliquees !
 		L'alien en profite pour s'enfuir." $)
 	else
-		"L'alien est un peu occupe en ce moment ! Essaie de lui parler plus tard, s'il survit a ce siege !"
+		"L'alien est un peu occupe en ce moment ! Essaie de lui parler plus tard, s'il survit a ce siege !" 
 	then +crtext
 ;
 

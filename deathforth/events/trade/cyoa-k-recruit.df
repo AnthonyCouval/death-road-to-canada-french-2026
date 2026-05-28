@@ -11,8 +11,8 @@ cyoa-bridge: recruit1-yes
 	" pbold .. "La porte s'ouvre et " .. rname .. " sort." $) cyoa-text! 2 300 tone
 		recruited recruitee .attitudeREV recruitee .witsREV judgerecruit
 ;
-cyoa-choice: recruit1-no
-	($ "T'ES UN IMMENSE TOCARD.
+cyoa-choice: recruit1-no 
+	($ "T'ES UN TOCARD IMMENSE.
 	ESPECE DE TOCARD.
 	" pbold .. cname .. " est furieux et martele la porte pendant un moment. " .. Thegroup .. " finit par partir peu apres." $) cyoa-text! badfx temperREV temper-- attitudeREV attitude--
 ;
@@ -41,7 +41,7 @@ cyoa-bridge: recruit1-coolit
 ;
 
 cyoa: recruit1
-	"La Portedestocards : Porte des Tocards" cyoa-title!
+	"La Porte des Tocards : Porte de Tocards" cyoa-title!
 	char-gen to recruitee
 	0 1 rnd recruitee .attitude!
 	0 1 rnd recruitee .wits!
@@ -52,7 +52,7 @@ cyoa: recruit1
 	" .. "HEY LAISSEZ MA PORTE TRANQUILLE ESPECES DE TOCARDS" pbold $) cyoa-text! basic-tone
 		choice( "Essayer de Recruter" )choice: recruit1-yes
 		someone charchoice( ": JE SUIS PAS UN TOCARD" )choice: recruit1-no
-		most-grating if
+		most-grating if 
 			charchoice( " dit a la voix de SE CALMER" fcoolit )choice: recruit1-coolit
 		then
 ;
@@ -123,7 +123,7 @@ cyoa: recruit2
 		weaselest-pass if
 			weaselest charchoice( ": Devalisez ce dingus !" )choice: recruit2-rob
 		then
-		most-grating if
+		most-grating if 
 			charchoice( " dit a " .. rname .. " de SE CALMER" fcoolit )choice: recruit2-coolit
 		then
 ;
@@ -164,7 +164,7 @@ cyoa: recruit3
 
 : recruit-confirm
 	choosechar
-	($ cname ..
+	($ cname .. 
 	1 5 rnd case
 		1 of " confirme ce qui est dit." endof
 		2 of " y croit en se basant sur ce qu'il a vecu." endof
@@ -177,7 +177,7 @@ cyoa: recruit3
 
 : recruit-scoff
 	choosechar
-	($ cname ..
+	($ cname .. 
 	1 6 rnd case
 		1 of " en doute serieusement." endof
 		2 of " leve les yeux au ciel face a ce mensonge evident." endof
@@ -246,7 +246,7 @@ cyoa: recruit3
 
 : recruit-highstat 80 %chance if 4 else 5 then recruitee ;
 : recruit-liestat 0 1 rnd recruitee .loyalty! 0 2 rnd recruitee ;
-
+		
 
 cyoa: recruit-strength
 	"Etranger Costaud" cyoa-title!
@@ -257,7 +257,7 @@ cyoa: recruit-strength
 		recruit-highstat .strength!
 		strongest-pass if strongest recruit-confirm .strengthREV strengthREV
 		else
-			most-paranoid if recruit-confirm .strengthREV witsREV attitudeREV then
+			most-paranoid if recruit-confirm .strengthREV witsREV attitudeREV then 
 		then
 	else
 		recruit-liestat .strength!
@@ -278,7 +278,7 @@ cyoa: recruit-fitness
 		recruit-highstat .fitness!
 		fittest-pass if fittest recruit-confirm .fitnessREV fitnessREV
 		else
-			most-paranoid if recruit-confirm .fitnessREV witsREV attitudeREV then
+			most-paranoid if recruit-confirm .fitnessREV witsREV attitudeREV then 
 		then
 	else
 		recruit-liestat .fitness!
@@ -298,7 +298,7 @@ cyoa: recruit-shooting
 		recruit-highstat .shooting!
 		shootest-pass if shootest recruit-confirm .shootingREV shootingREV
 		else
-			most-paranoid if recruit-confirm .shootingREV witsREV attitudeREV then
+			most-paranoid if recruit-confirm .shootingREV witsREV attitudeREV then 
 		then
 	else
 		recruit-liestat .shooting!
@@ -307,7 +307,7 @@ cyoa: recruit-shooting
 			most-paranoid if recruit-scoff .shootingREV witsREV attitudeREV then
 		then
 	then
-
+	
 	recruit-yesno
 ;
 cyoa: recruit-medical
@@ -319,7 +319,7 @@ cyoa: recruit-medical
 		recruit-highstat .medical!
 		medicalest-pass if medicalest recruit-confirm .medicalREV medicalREV
 		else
-			most-paranoid if recruit-confirm .medicalREV witsREV attitudeREV then
+			most-paranoid if recruit-confirm .medicalREV witsREV attitudeREV then 
 		then
 	else
 		recruit-liestat .medical!
@@ -327,8 +327,8 @@ cyoa: recruit-medical
 		else
 			most-paranoid if recruit-scoff .medicalREV witsREV attitudeREV then
 		then
-	then
-
+	then	
+	
 	recruit-yesno
 ;
 cyoa: recruit-mechanical
@@ -340,7 +340,7 @@ cyoa: recruit-mechanical
 		recruit-highstat .mechanical!
 		mechanicest-pass if mechanicest recruit-confirm .mechanicREV mechanicREV
 		else
-			most-paranoid if recruit-confirm .mechanicREV witsREV attitudeREV then
+			most-paranoid if recruit-confirm .mechanicREV witsREV attitudeREV then 
 		then
 	else
 		recruit-liestat .mechanical!

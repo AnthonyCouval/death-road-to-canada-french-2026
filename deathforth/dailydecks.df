@@ -167,7 +167,7 @@ HAZARD-SPECIAL shuffles to hazard-special-deck
 ;
 
 cyoa: rewardevent
-	"Glimmer of Hope on the Death Road" cyoa-title!
+	"Lueur d'Espoir sur la Death Road" cyoa-title!
 	($ Thegroup .. " se sent inspire apres avoir reussi a survivre a cette situation !
 	L'impression de commencer enfin a maitriser la situation..." $) cyoa-text!
 	
