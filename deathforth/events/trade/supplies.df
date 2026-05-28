@@ -394,8 +394,8 @@ cyoa-choice: trade-groupheal-group
 	else
 		7 groupheal
 		($ Thegroup .. " recoit un traitement pour " $) cyoa-text!
-		team-damage 1 < if 
-			"tout" +text 
+		team-damage 1 < if
+			"tout" +text
 		else
 			"la plupart" +text
 		then
@@ -415,13 +415,13 @@ cyoa-choice: trade-groupheal-group
 	' trade-groupheal-heal cyoa-team-choice
 ;
 
-cyoa-choice: trade-groupheal-charm 
+cyoa-choice: trade-groupheal-charm
 	charmroll if
 		($ cname .. " convinces the doctor to offer her services for free!
 		" .. cHe .. "'s just that charming." $) cyoa-text! ' camp-charm ++ goodfx
 		trade-groupheal-guy +crtext
 	else
-		($ cname .. " accidentally just comes off as creepy. 
+		($ cname .. " accidentally just comes off as creepy.
 		" .. gHe .. " is asked to leave and never return." $) cyoa-text! badfx
 	then clear-cyoa
 ;
@@ -452,7 +452,7 @@ cyoa: trade-groupheal
 0 value allammo-bought
 0 value allammo-dogpal
 
-cyoa-choice: trade-allammo-rob 
+cyoa-choice: trade-allammo-rob
 	($ Thegroup .. " tente de voler le gros stock de munitions. Le chien n'est pas content, et il devient" .. " COMPLETEMENT DINGUE" fbold $) cyoa-text! bitefx 50 75 rnd trunk-bullet+ 20 40 rnd trunk-shotgun-shell+ 30 60 rnd trunk-rifle-shell+
 		rob-megafail aholeREV trade-flee
 ;
@@ -484,8 +484,8 @@ cyoa-choice: trade-allammo-dogpal
 
 cyoa: trade-allammo
 	"Emporium de Munitions" cyoa-title! picon!
-	($ Thegroup .. " finds a dog surrounded by a bunch of ammo. The dog speaks:" .. "
-	WELCOME TO AMMO EMPORIUM! EVERYTHING MUST GO!" pbold $) cyoa-text!
+	($ Thegroup .. " trouve un chien entoure d'un tas de munitions. Le chien parle :" .. "
+	BIENVENUE A L'EMPORIUM DE MUNITIONS ! TOUT DOIT PARTIR !" pbold $) cyoa-text!
 	allammo-bought 15 < if
 		"Il propose 5 balles, 4 balles de fusil et 3 cartouches par unite de nourriture." +crtext foodamt
 		choice( "Non merci" )choice back-esc

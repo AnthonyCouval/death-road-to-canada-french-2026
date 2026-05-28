@@ -70,8 +70,8 @@ cyoa: stamp-ziggy-event
 
 cyoa-bridge: stamp-hheck-recruit
 	ricon
-	"JUST LIKE IN MY PART 3 ANIMES" cyoa-title!
-	"[STAND NAME] ProPAIN   [STAND MASTER] Henk Heck" bbold cyoa-text!
+	"EXACTEMENT COMME DANS MES MANGAS PARTIE 3" cyoa-title!
+	"[NOM DU STAND] ProPAIN   [MAITRE DU STAND] Henk Heck" bbold cyoa-text!
 	"PUISSANCE : A   VITESSE : D   PORTEE : B
 	RESISTANCE : D   PRECISION : C   POTENTIEL : B" pbold +crtext goodfx
 	team-count 3 > if
@@ -82,7 +82,7 @@ cyoa-bridge: stamp-hheck-recruit
 
 cyoa: stamp-hheck-event
 	10 to stampuser-countdown
-	"ProPAIN and ProPAIN Accessories" cyoa-title!
+	"ProPAIN et Accessoires ProPAIN" cyoa-title!
 	char-gen to recruitee
 	recruitee .hheckify	ricon
 	3 recruitee .morale!

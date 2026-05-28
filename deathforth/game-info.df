@@ -6,56 +6,56 @@
 
 : specialthanks3
 	cyoa-start
-	"Special Thanks" cyoa-title!
-	$( "Special Thanks: " .. "Jetro K, Kelvin M, Britt S, Mikael B, Lorissa B, Marius W, Hinterland, Per Kristian B, Cybolt, Chankit P, Thomas S, Noel, Matthew C, Dalton H, Sean, Gary M, Richie B, Seth, Brando, Nick E, Fraser W, Mcmotu, Yousif A, Emerson G, Ben S, Dashiell S, Kerri C, Conatus Creative, Adrian A, Nick K, Richie191, Alex V, Luca F, Nerve Software, Ronald G, Ian M" bbold $) text!
-	choice( "THANKS EVERYONE!" )choice
+	"Remerciements Speciaux" cyoa-title!
+	$( "Remerciements Speciaux : " .. "Jetro K, Kelvin M, Britt S, Mikael B, Lorissa B, Marius W, Hinterland, Per Kristian B, Cybolt, Chankit P, Thomas S, Noel, Matthew C, Dalton H, Sean, Gary M, Richie B, Seth, Brando, Nick E, Fraser W, Mcmotu, Yousif A, Emerson G, Ben S, Dashiell S, Kerri C, Conatus Creative, Adrian A, Nick K, Richie191, Alex V, Luca F, Nerve Software, Ronald G, Ian M" bbold $) text!
+	choice( "MERCI A TOUS !" )choice
 ;
 
 : specialthanks2
 	cyoa-start
-	"Special Thanks" cyoa-title!
-	$( "Special Thanks: " .. "Smoochie Walrus, Thadeus 'ilikain' Dietzen, Keith Shepherd, LuiB, Cansin Akcasoy, Chris Lundin, Sir Baldhasir, Joshua Skelton, Matt Rix, AbdulAziz Al-Kaboor, James McEneely, Jeff Sulz, Hellblazer1138, Matt 'Zebe' Lee, Gustav Wedholm, Trace, James H, Kirbogon, Dustin Mierau" bbold $) text!
-	choice( "MORE... " )choice: specialthanks3
+	"Remerciements Speciaux" cyoa-title!
+	$( "Remerciements Speciaux : " .. "Smoochie Walrus, Thadeus 'ilikain' Dietzen, Keith Shepherd, LuiB, Cansin Akcasoy, Chris Lundin, Sir Baldhasir, Joshua Skelton, Matt Rix, AbdulAziz Al-Kaboor, James McEneely, Jeff Sulz, Hellblazer1138, Matt 'Zebe' Lee, Gustav Wedholm, Trace, James H, Kirbogon, Dustin Mierau" bbold $) text!
+	choice( "PLUS... " )choice: specialthanks3
 ;
-	
+
 : specialthanks
 	cyoa-start
-	"Special Thanks" cyoa-title!
+	"Remerciements Speciaux" cyoa-title!
 	($ "Death Road to Canada wouldn't have happened without all of our Kickstarter backers!
-	Special Thanks: " .. "MagicalTux" fbold .. " and " bbold .. "Kevin Clark" fbold .. "
+	Special Thanks: " .. "MagicalTux" fbold .. " et " bbold .. "Kevin Clark" fbold .. "
 	Lena Cardell, Jonas Winje, Ahmed Al Mutawa
 	Sean R Parker, Asten Yeo, Black Pants Studio, Christopher Gauss, Arlin 'FeXd' Schaffel, Greg Matyola, Chris 'Rosuav' Angelico, Mr S Zegar, Christopher Wilson" bbold $) text!
-	choice( "MORE... " )choice: specialthanks2
+	choice( "PLUS... " )choice: specialthanks2
 ;
 
 : infocredits
 
 	cyoa-start
-	"Credits!" cyoa-title!
-	($ "Developer: " .. "Paul Pridham (Madgarden)" bbold .. "
-	Design: " .. "Kepa Auwae (Rocketcat Games)" bbold .. "
-	Artists: " .. "G.P. Lackey and 'Conzeit' Camilo Arturo" bbold .. "
-	Additional Art: " .. "Sven 'ptoing' Ruthner, Madgarden, and Lyndsay Riches" bbold .. "
-	Musician: " .. "Joey Grady" bbold .. " 
-	Additional Support: " .. "P1XL Games, Don Thacker, Jon Auwae" bbold $) text!
-	
-	
-	choice( "Special Thanks" )choice: specialthanks
+	"Credits !" cyoa-title!
+	($ "Developpeur : " .. "Paul Pridham (Madgarden)" bbold .. "
+	Design : " .. "Kepa Auwae (Rocketcat Games)" bbold .. "
+	Artistes : " .. "G.P. Lackey and 'Conzeit' Camilo Arturo" bbold .. "
+	Art Supplementaire : " .. "Sven 'ptoing' Ruthner, Madgarden, and Lyndsay Riches" bbold .. "
+	Musicien : " .. "Joey Grady" bbold .. "
+	Support Additionnel : " .. "P1XL Games, Don Thacker, Jon Auwae" bbold $) text!
+
+
+	choice( "Remerciements Speciaux" )choice: specialthanks
 ;
 
 defer statsback
 
 : winstotal
-	gstats{ 
-		wins-normal wins-long wins-special wins-family wins-specialEX 
+	gstats{
+		wins-normal wins-long wins-special wins-family wins-specialEX
 		wins-familyEX wins-kepa wins-short wins-marathon wins-deadlier
 		wins-endless wins-opp wins-quickdeath wins-4jerks wins-4jerksEX
-		wins-sceptermode wins-weathermode wins-rpgmode wins-infectionmode wins-mutationmode wins-mutationmodeEX wins-infectionmodeEX wins-horrormode 
-	} + + + + + + + + + + + + + + + + + + + + + + 
+		wins-sceptermode wins-weathermode wins-rpgmode wins-infectionmode wins-mutationmode wins-mutationmodeEX wins-infectionmodeEX wins-horrormode
+	} + + + + + + + + + + + + + + + + + + + + + +
 ;
 
 : backtostats
-	choice( "BACK" )choice: statsback
+	choice( "RETOUR" )choice: statsback
 ;
 
 : streakstats

@@ -1167,7 +1167,7 @@ dup constant MOD_COUNT modcount?!
 	36 over .specialtype!
 	900 over .seed!
 	0 over .female!
-	"is a singer, trying to make it big in this zombie world." over .job!
+	"est un chanteur qui essaie de percer dans ce monde de zombies." over .job!
 	WEAPON_KARATE over .weapon_default!
 	.bardify drop
 ;

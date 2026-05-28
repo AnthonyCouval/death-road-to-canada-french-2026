@@ -480,7 +480,7 @@ cyoa-choice: OMENT-maplest-run
 cyoa-choice: OMENT-maplest-go
 	($ cname .. " parle a la foule en colere." $) text!
 	cpet? if
-		($ cHe .. " can't talk, so instead " .. che .. " spins around excitedly! How fun!
+		($ cHe .. " ne peut pas parler, alors " .. che .. " tourne sur elle-meme avec enthousiasme ! Comme c'est marrant !
 		The mob forgets whatever their problem was." $) +crtext goodfx morale++all
 	then;
 	cchar grating? if

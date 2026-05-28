@@ -64,7 +64,7 @@ cyoa: broomy-cyoa
 	"Balayeur de Zombies" cyoa-title!
 	nearest .character@ choosechar cicon
 	1 to broom-found
-	($ pname .. " tries to grab this broom " .. phe .. " found, but it suddenly starts talking!" $) text!
+	($ pname .. " essaie de saisir ce balai qu'" .. phe .. " a trouve, mais il se met soudainement a parler !" $) text!
 		($ "HEY ! Arrete de me prendre, DINGUS ! Je suis pas un balai !" pbold $) +crtext
 	"C'est une drole de chose a dire pour un balai." +crtext
 		choice( "Faire comme si tu n'avais jamais vu ce balai" )choice
