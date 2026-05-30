@@ -77,8 +77,8 @@ deck-new
     "Grande Epicerie" choice-card: grocery2
     "Epicerie Bondee" rchoice-card: grocery3
     "Quincaillerie" choice-card: hardware
-    "LIDL Bonde" choice-card: yallmart-mid
-    "LIDL Mortel" rchoice-card: yallmart-hard
+    "Yall-Mart Envahi" choice-card: yallmart-mid
+    "Yall-Mart Mortel" rchoice-card: yallmart-hard
     "Librairie" choice-card: bookstore
     "Magasin de Sport" choice-card: sporting
     "Usine Chic" choice-card: indust-safe // actually Successful Factory
@@ -125,7 +125,7 @@ deck-new
 	"Hotel Calme" choice-card: inner3-cyoa
 	"Maison au Bord de la Route" choice-card: inner5-cyoa
 	"Aire de Repos" choice-card: rest-easy
-	"LIDL" choice-card: yallmart-easy
+	"Yallmart" choice-card: yallmart-easy
 	"Usine Calme" choice-card: indust-easy
 	"Depot Ferroviaire" choice-card: s-railyard
 	"Parking Exterieur" choice-card: s-multistory
