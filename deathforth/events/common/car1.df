@@ -74,7 +74,7 @@ cyoa: car1-garage
 	image-car-garage
 	"Garage blindage" cyoa-title!
 	($ Thegroup .. " trouve un garage automobile professionnel. L'enseigne dit 'CAR PROZ'.
-	" .. gThey .. " trouve" .. g1s .. " de l'essence et beaucoup de ferraille." $) cyoa-text!
+	" .. gThey .. " trouv" .. g1s .. " de l'essence et beaucoup de ferraille." $) cyoa-text!
 		vehicle.which@ 0 = if nocar-garage then;
 		 " Il suffit d'un peu de temps pour bricoler." +text
 		30 50 rnd trunk-gas+
@@ -105,7 +105,7 @@ cyoa: car1-garage
 cyoa-choice: car1-garage-megatune
 	($ cname .. " passe quelques jours dans le garage. " .. cHe .. " espere pousser la voiture a ses limites." $) cyoa-text!
 	mechanic-diff 1 > if
-		($ cHe .. " fait un travail remarquable ! La voiture roule MIEUX que neuve !" $)
+		($ cHe .. " fait un travail remarquable ! La voiture fonctionne encore MIEUX qu'a sa sortie d'usine !" $)
 	else
 		mechanic-diff -1 > if
 		($ cHe .. " travaille efficacement. La duree de vie de la voiture est prolongee, avec une meilleure consommation !" $)
@@ -120,8 +120,8 @@ cyoa-choice: car1-garage-megatune
 cyoa: car1-tunegarage
 	image-car-garage
 	"Garage isole" cyoa-title!
-	($ Thegroup .. " trouve un garage isole. L'enseigne dit 'MASTER TUNERZ'.
-	" .. gThey .. " trouve" .. g1s .. " de l'essence et beaucoup de pieces detachees en bon etat." $) cyoa-text!
+	($ Thegroup .. " trouve un garage isole. L'enseigne dit 'MASTER TUNNINGZ'.
+	" .. gThey .. " trouv" .. g1s .. " de l'essence et beaucoup de pieces detachees en bon etat." $) cyoa-text!
 		vehicle.which@ 0 = if nocar-garage then;
 		30 50 rnd trunk-gas+
 		garage-choices
@@ -142,7 +142,7 @@ cyoa-choice: car1-garage-megaspeed
 		mechanic-diff -1 > if
 		($ cHe .. " les installe. C'etait un PROPULSEUR !" $)
 		else
-		"Les pieces restent un mystere et sont laissees derriere. La voiture est quand meme reparee."
+		"Les pieces restent un mystere et sont laissees sur place. La voiture est quand meme reparee."
 		then
 	+cr +text mechanic-megaspeed? chow_calc_anytime -3 * trunk-food+ mechanicREV mechanic++ 3 calendar-day+
 	mechanic-diff 1 > if morale3+all goodfx else mech-diff-1-morale then heal-event sleep
@@ -151,8 +151,8 @@ cyoa-choice: car1-garage-megaspeed
 cyoa: car1-speedgarage
 	image-car-garage
 	"Garage impeccable" cyoa-title!
-	($ Thegroup .. " trouve un garage encore impeccable. L'enseigne dit 'CARLZ CUSTOMZ'.
-	" .. gThey .. " trouve" .. g1s .. " de l'essence et des pieces auto mysterieuses." $) cyoa-text!
+	($ Thegroup .. " trouve un garage impeccable. L'enseigne dit 'CARLZ CUSTOMZ'.
+	" .. gThey .. " trouv" .. g1s .. " de l'essence et des pieces auto mysterieuses." $) cyoa-text!
 		vehicle.which@ 0 = if nocar-garage then;
 		30 50 rnd trunk-gas+
 		garage-choices
@@ -192,7 +192,7 @@ cyoa-choice: car1-fallentree-shoot
 	// Retooling this a bit later
 		"Le plan marche, d'une facon ou d'une autre ! L'arbre explose en morceaux." +cr +text goodfx
 	(* else
-		($ "Ca n'a rien donne. " .. Thegroup .. " essaie alors de percuter l'arbre cribler de balles avec la voiture." $) +cr +text car-plowthrough
+		($ "Ca n'a rien donne. " .. Thegroup .. " essaie alors de percuter l'arbre crible de balles avec la voiture." $) +cr +text car-plowthrough
 	then *)
 	car-shoot
 ;
@@ -216,7 +216,7 @@ cyoa-choice: car1-fallentree-lift
 cyoa: car1-fallentree
 	image-tree-in-road
 	"Arbre sur la route" cyoa-title!
-	"La voie est bloquee par un grand arbre abattu. On dirait que quelqu'un l'a coupe expres. Il faudrait un groupe de costauds pour le deplacer !" text!
+	"La voie est bloquee par un grand arbre abattu. On dirait que quelqu'un l'a coupe expres. Il faudrait un groupe de gars costauds pour le deplacer !" text!
 	vehicle.which@ 0 = if
 		($ "Sans voiture, " .. thegroup .. " se contente d'enjamber l'arbre abattu." $) +crtext morale++all goodfx
 	then;
@@ -233,7 +233,7 @@ cyoa: car1-fallentree
 
 cyoa-choice: car1-dashcode-mech
 	($ cname .. " inspecte la voiture et trouve le probleme.
-	C'etait juste un bouchon de reservoir desserrer. Facile a regler !" $) cyoa-text!
+	C'etait juste un bouchon de reservoir desserre. Facile a regler !" $) cyoa-text!
 		cmechanic- if mechanic++ then
 		mechanicREV goodfx 2 4 rnd car-tune+
 ;
@@ -241,15 +241,15 @@ cyoa-choice: car1-dashcode-punch
 	cpet? if
 		($ cname .. " mord la voiture de toutes ses forces." $)
 	else
-		($ cname .. " frappe la voiture de " .. chis .. " poings." $)
+		($ cname .. " frappe la voiture de ses poings." $)
 	then cyoa-text!
 	"Ca soulage un peu le stress, et le voyant s'eteint !" +crtext
 		cchar .strength 4 < if strength++ then
 		morale++ strengthREV goodfx -1 car-chassis+
 ;
 cyoa-choice: car1-dashcode-kick
-	($ cname .. " sort de la voiture et la cogne de " .. chis .. " pieds.
-	Quel entrainement ! Le voyant reste allume, cela dit." $) cyoa-text!
+	($ cname .. " sort de la voiture et la frappe avec ses pieds.
+	Sacre jeu de jambe ! Le voyant reste allume, cela dit." $) cyoa-text!
 		cchar .fitness 4 < if fitness++ then
 		morale++ fitnessREV goodfx -1 car-chassis+
 ;
@@ -260,11 +260,11 @@ cyoa: car1-dashcode
 	vehicle.which@ 0 = if
 		image-zombie-hoard-1
 		"A pied vers le Canada" cyoa-title!
-		($ Thegroup .. " n'a pas la protection d'une voiture en approchant du Canada. " .. gTheyare .. " attaque par une grande horde en terrain decouvert. Nulle part ou se cacher, pas le temps de se battre." $) text! ouch--all bitefx
+		($ Thegroup .. " n'a pas la protection d'une voiture en approchant du Canada. " .. gTheyare .. " attaque par une grande horde alors qu'" .. gTheyare .. " a decouvert. Nulle part ou se cacher, pas le temps de se battre." $) text! ouch--all bitefx
 	then;
 	image-check-engine
 	"VERIF MOTEUR" cyoa-title!
-	($ "La voiture roule bien, mais un code erreur s'affiche sur le tableau de bord. " .. Thegroup .. " n'a aucune idee du probleme, alors " .. gthey .. " s'arrete" .. g1s .. " pour verifier." $) cyoa-text!
+	($ "La voiture roule bien, mais un code erreur s'affiche sur le tableau de bord. " .. Thegroup .. " n'a aucune idee du probleme, alors " .. gthey .. " s'arret" .. g1s .. " pour verifier." $) cyoa-text!
 		choice( "Ignorer" )choice
 		mechanicest charchoice( " l'inspecte attentivement" )choice: car1-dashcode-mech
 		strongest choosechar cchar charchoice( " " .. car1-dashcode-dtext .. " violemment" )choice: car1-dashcode-punch
