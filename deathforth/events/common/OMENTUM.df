@@ -294,7 +294,7 @@ cyoa-choice: OMENT-deadend-A
 
 cyoa: OMENT-deadend
 	"Detour en Impasse" cyoa-title! image-dead-end
-	($ Thegroup .. " se perd dans ce labyrinthe de routes bloquees. " .. gThey .. " arrive" .. g1s .. " a a dead end." $) text!
+	($ Thegroup .. " se perd dans ce labyrinthe de routes bloquees. " .. gThey .. " arriv" .. g1s .. " a a dead end." $) text!
 	vehicle.which@ 0 = if
 		($ gThey .. " se perdent pendant une journee entiere, avant de trouver un itineraire alternatif. " $) +crtext
 		+cr fullcamp heal-event
@@ -451,7 +451,7 @@ cyoa-choice: OMENT-cooking-fire
 
 cyoa: OMENT-cooking
 	"Cuisine au Gaz" cyoa-title! image-cooking-on-fire
-	($ Thegroup .. " attempts to loot a restaurant. " .. gThey  .. " find" .. g1s .. " pas de nourriture, mais plein d'epices et une cuisine fonctionnelle, grace a un generateur !" $) text!
+	($ Thegroup .. " tente de cambrioler un restaurant. " .. gThey  .. " trouv" .. g1s .. " pas de nourriture, mais plein d'epices et une cuisine fonctionnelle, grace a un generateur !" $) text!
 		choice( "Prendre le Gaz du Generateur" )choice: OMENT-cooking-gas
 		trunk-food team-count >= if
 			choice( "Cuisiner un Snack - " .. team-count .. " Nourriture" )choice: OMENT-cooking-snack

@@ -59,7 +59,7 @@ cyoa: anime-test
 	"Le Pouvoir de l'Anime" cyoa-title!
 	char-gen to recruitee
 	5 recruitee .morale! recruitee .animeify ricon
-	($ Thegroup .. " se fait prendre en embuscade par une horde de zombies. En fuyant, " .. gthey .. " rencontre" .. g1s .. " une femme, deja coincee dans un coin par la horde.
+	($ Thegroup .. " se fait prendre en embuscade par une horde de zombies. En fuyant, " .. gthey .. " rencontr" .. g1s .. " une femme, deja coincee dans un coin par la horde.
 	Ca semble desespere, puis elle se transforme soudainement en " .. "FILLE MAGIQUE ANIME" rainbold .. ".
 	Les zombies n'ont aucune chance contre ca." $) cyoa-text! basic-tone
 		choice( "La recruter" )choice: anime-recruit

@@ -460,7 +460,7 @@ cyoa-choice: trade-axe-coolit
 	" .. "....." rbold .. "
 	" .. cname .. " n'a aucune idee s'il a ete entendu ou non." $)
 	+crtext attitudeREV witsREV 0.3 600 tone
-	($ Thegroup .. " se sent tellement mal a l'aise qu'" .. gthey .. " quitte" .. g1s .. " le camp de commerce le plus vite possible." $) +crtext quitmission badfx
+	($ Thegroup .. " se sent tellement mal a l'aise qu'" .. gthey .. " quitt" .. g1s .. " le camp de commerce le plus vite possible." $) +crtext quitmission badfx
 ;
 
 cyoa-choice: trade-axe-4

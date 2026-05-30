@@ -2,7 +2,7 @@ cyoa{ road{
 
 cyoa: siege2-mall
 	"Centre Commercial des Morts" cyoa-title!
-	($ Thegroup .. " conduit a travers une ville en ruine quand " .. gthey .. " se retrouve" .. g1s .. " encercle de toutes parts par une horde. " .. gTheyare .. " canalisee vers le seul endroit qui semble defendable : un centre commercial en ruine." $) cyoa-text! basic-tone	
+	($ Thegroup .. " conduit a travers une ville en ruine quand " .. gthey .. " se retrouv" .. g1s .. " encercle de toutes parts par une horde. " .. gTheyare .. " canalisee vers le seul endroit qui semble defendable : un centre commercial en ruine." $) cyoa-text! basic-tone
 		2.3 9 16 rnd 0.5 + 1.5 siegecast // 1.5 before ... Change to 3 difficulty later after adding mall cops
 		"events/siege/region/mall.df" $load-region
 		choice( "Essayer de survivre" )choice: premission
@@ -10,7 +10,7 @@ cyoa: siege2-mall
 
 cyoa: siege2-yall
 	"Derniere Promo au Yallmart" cyoa-title!
-	($ Thegroup .. " essaie d'echapper a une grande horde. Bloque par des debris, " .. gthey .. " se retrouve" .. g1s .. " coince dans un parking de Yallmart. Il va falloir se battre ici pendant un moment." $) cyoa-text! basic-tone	
+	($ Thegroup .. " essaie d'echapper a une grande horde. Bloque par des debris, " .. gthey .. " se retrouv" .. g1s .. " coince dans un parking de Yallmart. Il va falloir se battre ici pendant un moment." $) cyoa-text! basic-tone
 		2.2 9 16 rnd 1 siegecast // 1.4
 		"events/siege/region/yallmart.df" $load-region
 		choice( "Essayer de survivre" )choice: premission
@@ -26,7 +26,7 @@ cyoa: siege2-tunnel
 
 cyoa: siege2-road
 	"Pris a Decouvert" cyoa-title!
-	($ Thegroup .. " tombe sur un secteur de ville avec trop de debris pour conduire. Pendant qu'" .. gthey .. " essaie" .. g1s .. " de trouver un passage, une horde se rapproche. Sans nulle part ou fuir, " .. gtheyare .. " force de se battre dans la rue." $) cyoa-text! basic-tone	
+	($ Thegroup .. " tombe sur un secteur de ville avec trop de debris pour conduire. Pendant qu'" .. gthey .. " essai" .. g1s .. " de trouver un passage, une horde se rapproche. Sans nulle part ou fuir, " .. gtheyare .. " force de se battre dans la rue." $) cyoa-text! basic-tone
 		2.5 7 18 rnd 1 siegecast // 1.3 before
 		"events/siege/region/road-city.df" $load-region
 		choice( "Essayer de survivre" )choice: premission
@@ -34,7 +34,7 @@ cyoa: siege2-road
 
 cyoa: siege2-block
 	"Dos au Mur" cyoa-title!
-	($ Thegroup .. " tombe sur une horde trop dense pour passer en voiture, et se retrouve coince. " .. gThey .. " cours" .. g1s .. " vers un bon endroit pour tenir un siege, mais les batiments voisins ont tous l'air en ruine. La situation est mauvaise pour se battre." $) cyoa-text! basic-tone	
+	($ Thegroup .. " tombe sur une horde trop dense pour passer en voiture, et se retrouve coince. " .. gThey .. " caval" .. g1s .. " vers un bon endroit pour tenir un siege, mais les batiments voisins ont tous l'air en ruine. La situation est mauvaise pour se battre." $) cyoa-text! basic-tone
 		2.4 7 18 rnd 1 siegecast // 1.3 before
 		"events/siege/region/deathblock.df" $load-region
 		choice( "Essayer de survivre" )choice: premission
@@ -42,7 +42,7 @@ cyoa: siege2-block
 
 cyoa: siege2-houses
 	"Siege de Banlieue" cyoa-title!
-	($ "Au loin, " .. thegroup .. " voit des squelettes et du butin au milieu d'une rue bloquee par des debris. " .. gThey .. " s'avance" .. g1s .. " pour voir de plus pres. Ca attire l'attention d'une horde de zombies qui surgit de toutes parts." $) cyoa-text! basic-tone	
+	($ "Au loin, " .. thegroup .. " voit des squelettes et du butin au milieu d'une rue bloquee par des debris. " .. gThey .. " s'avanc" .. g1s .. " pour voir de plus pres. Ca attire l'attention d'une horde de zombies qui surgit de toutes parts." $) cyoa-text! basic-tone
 		2.4 7 18 rnd 1 siegecast // 1.3 before
 		"events/siege/region/intersection.df" $load-region
 		choice( "Essayer de survivre" )choice: premission
@@ -51,7 +51,7 @@ cyoa: siege2-houses
 
 cyoa: siege2-viaduct
 	"Traversee du Viaduc" cyoa-title!
-	($ Thegroup .. " tombe sur un vieux viaduc fluvial en explorant a pied. Pendant qu'" .. gthey .. " essaie" .. g1s .. " de trouver un passage, une horde arrive. Sans nulle part ou fuir, " .. gtheyare .. " force de tenter la perilleuse traversee du viaduc." $) cyoa-text! basic-tone	
+	($ Thegroup .. " tombe sur un vieux viaduc fluvial en explorant a pied. Pendant qu'" .. gthey .. " essai" .. g1s .. " de trouver un passage, une horde arrive. Sans nulle part ou fuir, " .. gtheyare .. " force de tenter la perilleuse traversee du viaduc." $) cyoa-text! basic-tone
 	($ "Ne regardez pas en arriere !" rbold $) +crtext
 		1.5 7 22 frnd 4 zforecast
 		"events/retina/viaduct.df" $load-region

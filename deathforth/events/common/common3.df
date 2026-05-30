@@ -87,7 +87,7 @@ cyoa-bridge: common3-bridgekeep-push
 		($ "Apres quelques efforts, " .. thegroup .. " reussit a le jeter par-dessus !" $) +crtext goodfx
 	else
 		($ "Impossible ! L'homme en armure colle des beignes a " .. thegroup .. " avec ses gants de boxe ! " $) +crtext
-			vehicle.which@ 0= if ($ gThey .. " passe" .. g1s .. " devant lui apres la raclee." $) +text then
+			vehicle.which@ 0= if ($ gThey .. " pass" .. g1s .. " devant lui apres la raclee." $) +text then
 		sting--all bitefx
 		vehicle.which@ 0 > if choice( "Le renverser avec la voiture" )choice: common3-bridgekeep-plow then
 		 
@@ -432,7 +432,7 @@ cyoa-choice: common3-gator-mech
 
 cyoa: common3-gator
 	"Cles Egarees" cyoa-title!
-	($ Thegroup .. " ne trouve pas les cles de voiture ! Apres un moment, " .. gthey .. " repere" .. g1s .. " les cles dans la " .. "gueule ouverte d'un alligator" rbold .. ".
+	($ Thegroup .. " ne trouve pas les cles de voiture ! Apres un moment, " .. gthey .. " reper" .. g1s .. " les cles dans la " .. "gueule ouverte d'un alligator" rbold .. ".
 	Apres la disparition de la plupart des humains, les alligators ont commence a se repandre sur toute la cote est. On dit que les alligators mangent les zombies et les cles de voiture." $) text!
 		strongest charchoice( " lutte contre l'alligator" )choice: common3-gator-str
 		fittest charchoice( " epuise l'alligator" )choice: common3-gator-fit

@@ -3,7 +3,7 @@ cyoa{ road{
 
 cyoa-choice: bandit-car-plow
 	($ Thegroup .. " decide de foncer avec la voiture a travers le barrage routier des bandits et de Lord Humungoid.
-	" .. gThey .. " prend" .. g1s .. " beaucoup de degats, mais s'en sort" .. g1s .. "." $) cyoa-text! sting12rnd--all bitefx car-plowthrough someicon
+	" .. gThey .. " encaiss" .. g1s .. " beaucoup de degats, mais s'en sort" .. g1s .. "." $) cyoa-text! sting12rnd--all bitefx car-plowthrough someicon
 ;
 
 cyoa-choice: bandit-car-paranoid
@@ -224,7 +224,7 @@ cyoa-choice: bandit-loyal-pick
 	cloyalty- if
 		($ cname .. " retourne instantanement contre " .. everyone .. " et rejoint les bandits." $) +crtext
 		loyaltyREV decruit-bad
-		($ Thegroup .. " est attaque ! " .. gThey .. " essaie" .. g1s .. " de fuir..." $) +crtext
+		($ Thegroup .. " est attaque ! " .. gThey .. " essai" .. g1s .. " de fuir..." $) +crtext
 		bandithurt
 	then;
 	($ cname .. " ne trahit pas " .. everyone .. " aupres des bandits ! " .. cHe .. " les distrait de loin et court. Ils le poursuivent, et la voiture peut passer." $) +crtext
@@ -240,7 +240,7 @@ cyoa-choice: bandit-loyal-pick
 
 cyoa-choice: bandit-loyal-plow
 	($ Thegroup .. " decide de foncer avec la voiture a travers le poste de controle.
-	" .. gThey .. " prend" .. g1s .. " beaucoup de degats, mais s'en sort" .. g1s .. "." $) cyoa-text! sting12rnd--all bitefx car-plowthrough someicon
+	" .. gThey .. " encaiss" .. g1s .. " beaucoup de degats, mais s'en sort" .. g1s .. "." $) cyoa-text! sting12rnd--all bitefx car-plowthrough someicon
 ;
 : bandit-loyal-plow? choice( "Foncer a travers en voiture !" )choice: bandit-loyal-plow ;
 

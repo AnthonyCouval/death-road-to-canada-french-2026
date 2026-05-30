@@ -208,7 +208,7 @@ cyoa-choice: car1-fallentree-lift
 			" .. cname .. " sent quelque chose craquer dans son corps !" $) +cr +text
 				cchar team-attacked morale-- strength-- badfx
 		else
-			($ Thegroup .. " n'arrive pas a bouger l'arbre, mais reussit a se blesser plutot severement. " .. gThey .. " decide" .. g1s .. " d'essayer de percuter l'arbre avec la voiture."  $) +cr +text
+			($ Thegroup .. " n'arrive pas a bouger l'arbre, mais reussit a se blesser plutot severement. " .. gThey .. " decid" .. g1s .. " d'essayer de percuter l'arbre avec la voiture."  $) +cr +text
 			car-plowthrough ' car1-fallentree-pop foreach-team-char
 		then
 	then

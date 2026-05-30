@@ -12,7 +12,7 @@ cyoa: siege1-farm
 
 cyoa: siege1-openhouse
 	"Siege de maison" cyoa-title!
-	($ Thegroup .. "  est surpris par une grande horde de zombies alors quil fouillait " .. gThey .. " courir" .. g1s .. "  dans une maison pour sabriter et planifier " .. ghis .. "  prochain mouvement." $) cyoa-text! basic-tone
+	($ Thegroup .. "  est surpris par une grande horde de zombies alors quil fouillait " .. gThey .. " caval" .. g1s .. "  dans une maison pour sabriter et planifier " .. ghis .. "  prochain mouvement." $) cyoa-text! basic-tone
 		1.8 ( 1.3 ) 9 16 rnd 1 siegecast
 		"events/siege/region/midopen1.df" $load-region
 		choice( "Essayez de survivre" )choice: premission
@@ -20,7 +20,7 @@ cyoa: siege1-openhouse
 
 cyoa: siege1-openhouseeasy
 	"Piege dans une maison" cyoa-title!
-	($ Thegroup .. "  est sur le point d'explorer une petite maison quand " .. gthey .. "  remarque" .. g1s .. "  qu'une horde se faufile a proximite. " .. Thegroup .. "  devra tenir le terrain pendant un moment avant de pouvoir s'echapper." $) cyoa-text! basic-tone
+	($ Thegroup .. "  est sur le point d'explorer une petite maison quand " .. gthey .. "  remarqu" .. g1s .. "  qu'une horde se faufile a proximite. " .. Thegroup .. "  devra tenir le terrain pendant un moment avant de pouvoir s'echapper." $) cyoa-text! basic-tone
 		1.5 ( 1 ) 9 16 rnd 1 siegecast
 		"events/siege/region/midopen1.df" $load-region
 		choice( "Essayez de survivre" )choice: premission

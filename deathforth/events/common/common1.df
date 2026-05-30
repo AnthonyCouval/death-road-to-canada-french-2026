@@ -67,7 +67,7 @@ cyoa: common1-twinkie
 // Deer Hunter
 
 : common1-deer-eat
-	($ Thegroup .. " ne connait pas grand chose a la conservation du gibier, mais " .. gthey .. " cuisine" .. g1s .. " maladroitement de la viande a emporter dans la voiture." $) +cr +text 8 12 rnd trunk-food+ goodfx
+	($ Thegroup .. " ne connait pas grand chose a la conservation du gibier, mais " .. gthey .. " cuisin" .. g1s .. " maladroitement de la viande a emporter dans la voiture." $) +cr +text 8 12 rnd trunk-food+ goodfx
 ;
 
 cyoa-choice: common1-deer-leave

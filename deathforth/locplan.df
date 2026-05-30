@@ -173,7 +173,7 @@ pops nip ;
 : locpick-repick
 	cyoa-start
 	"Driving All Over" cyoa-title!
-	($ Thegroup .. " decide de bruler un peu d'essence en esperant trouver des endroits plus interessants. " .. gThey .. " trouvent" .. g1s .. " de nouveaux emplacements: " $) text!
+	($ Thegroup .. " decide de bruler un peu d'essence en esperant trouver des endroits plus interessants. " .. gThey .. " trouv" .. g1s .. " de nouveaux emplacements: " $) text!
 	locpick-redrawcost -1 * trunk-gas+ -1 car-tune+
 	pick-3-locs
 	gas-skip
@@ -182,7 +182,7 @@ pops nip ;
 : explorer-repick
 	cyoa-start
 	"Careful Exploration" cyoa-title!
-	($ Thegroup .. " prend plus de temps pour explorer. " .. gThey .. " trouvent" .. g1s .. " de nouveaux emplacements : " $) text!
+	($ Thegroup .. " prend plus de temps pour explorer. " .. gThey .. " trouv" .. g1s .. " de nouveaux emplacements : " $) text!
 	explorer-redrawcost -1 * trunk-gas+ -1 car-tune+
 	pick-3-locs
 	gas-skip

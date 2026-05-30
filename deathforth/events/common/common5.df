@@ -441,7 +441,7 @@ cyoa-blank: common5-signal-drive
 			bandit-gas
 		then
 	then +cr fullcamp heal-event
-	($ gThey .. " find" .. g1s .. " a prepper bunker that is still playing the message. Everyone left in a hurry, leaving behind a stash of supplies.
+	($ gThey .. " trouv" .. g1s .. " sur un bunker de survivalistes ou le message continue de passer en boucle. Tout le monde est parti precipitamment, laissant derriere eux une reserve de provisions.
 	" $) +crtext homesearch2 ammosearch2
 ;
 
@@ -813,7 +813,7 @@ cyoa-choice: common5-chest-book
 
 cyoa-choice: common5-chest-loot
 	0 6 rnd to common5-lootweapon@
-	($ Thegroup .. " trouve une cache de tres vieilles armes ! En triant les detritus inutilisables, " .. gthey .. " rencontre" .. g1s .. " plein de problemes avec des eclats de bois et de petites araignees mordantes." $) text!
+	($ Thegroup .. " trouve une cache de tres vieilles armes ! En triant les detritus inutilisables, " .. gthey .. " rencontr" .. g1s .. " plein de problemes avec des eclats de bois et de petites araignees mordantes." $) text!
 	morale--all sting--all bitefx
 	($ gThey .. " prend quelques armes utiles, dont un " .. common5-lootweapon-name .. " !" $) +crtext
 	common5-lootweapon-pick

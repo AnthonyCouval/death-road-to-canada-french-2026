@@ -28,7 +28,7 @@ cyoa: roadloot-dirt
 cyoa: roadloot-gravel
 	"Route Caillouteuse" cyoa-title!
 	someicon
-	($ Thegroup .. " roule sur une route en gravier quand " .. gthey .. " apercoi" .. g1s .. " un groupe de voitures accidentees devant, avec une horde de morts-vivants qui la traverse." $) cyoa-text! basic-tone
+	($ Thegroup .. " roule sur une route en gravier quand " .. gthey .. " remarqu" .. g1s .. " un groupe de voitures accidentees devant, avec une horde de morts-vivants qui la traverse." $) cyoa-text! basic-tone
 		0.8 1.5 frnd 9 23 rnd 0 3 rnd zforecast
 		"events/exterior/region/road-gravel.df" $load-region
 		choice( "Inspecter les voitures detruites" )choice: premission
@@ -48,7 +48,7 @@ cyoa: roadloot-country
 cyoa: roadloot-city
 	"La Rue Dangereuse" cyoa-title!
 	image-cityscape
-	($ Thegroup .. " conduit dans une ville quand " .. gthey .. " repere" .. g1s .. " une rue transversale encombree de voitures rouillees et d'une horde de zombies deja en furie." $) cyoa-text! basic-tone
+	($ Thegroup .. " conduit dans une ville quand " .. gthey .. " reper" .. g1s .. " une rue transversale encombree de voitures rouillees et d'une horde de zombies deja en furie." $) cyoa-text! basic-tone
 		1.5 2 frnd 8 23 rnd 3 4 rnd zforecast
 		"events/exterior/region/road-city.df" $load-region
 		choice( "Inspecter cette rue laterale" )choice: premission

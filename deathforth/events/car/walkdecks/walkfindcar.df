@@ -33,7 +33,7 @@ cyoa: carfind-dirt
 cyoa: carfind-gravel
 	"Route Cahoteuse vers la Securite" cyoa-title!
 	image-abandoned-cars
-	($ Thegroup .. " descend une route en gravier quand " .. gthey .. " apercoivent" .. g1s .. " un groupe de voitures accidentees devant. Il y a de bonnes chances qu'il y ait de l'essence dans certaines, et l'une d'elles fonctionne peut-etre encore." $) cyoa-text! basic-tone
+	($ Thegroup .. " descend une route en gravier quand " .. gthey .. " remarqu" .. g1s .. " un groupe de voitures accidentees devant. Il y a de bonnes chances qu'il y ait de l'essence dans certaines, et l'une d'elles fonctionne peut-etre encore." $) cyoa-text! basic-tone
 		1.7 2 frnd 9 23 rnd 1 3 rnd zforecast
 		"events/car/region/car-gravel.df" $load-region
 		choice( "Inspecter les voitures" )choice: premission

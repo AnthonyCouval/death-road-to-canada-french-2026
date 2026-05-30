@@ -214,7 +214,7 @@ cyoa-choice: common2-farm-bandit
 
 cyoa-choice: common2-farm-haul
 	someicon
-	($ Thegroup .. " transporte des tonnes de trucs. Il y a toujours des trucs a transporter dans une ferme. C'est un travail epuisant, et " .. gthey .. " est tres fatigue" .. g1s .. " !" $) text! goodfx
+	($ Thegroup .. " transporte des tonnes de trucs. Il y a toujours des trucs a transporter dans une ferme. C'est un travail epuisant, et " .. gtheyare .. " tres fatigue !" $) text! goodfx
 	' .strengthREV foreach-team-char ' .strength++ foreach-team-char common2-farm-reward
 	// added STR check for scythe
 	strongest-pass if strongest choosechar
@@ -226,7 +226,7 @@ cyoa-choice: common2-farm-haul
 
 cyoa-choice: common2-farm-till
 	someicon
-	($ Thegroup .. " aide a labourer les champs et planter de nouvelles cultures. C'est un travail epuisant, et " .. gthey .. " est tres fatigue" .. g1s .. " !" $) text! goodfx
+	($ Thegroup .. " aide a labourer les champs et planter de nouvelles cultures. C'est un travail epuisant, et " .. gtheyare .. " tres fatigue !" $) text! goodfx
 	' .fitnessREV foreach-team-char ' .fitness++ foreach-team-char common2-farm-reward
 	// added FIT check for scythe
 	fittest-pass if fittest choosechar
@@ -483,7 +483,7 @@ cyoa-bridge: common2-carhelp-coolit
 		($ "T'AS RAISON ! LA VOITURE A JUSTE BESOIN DE PLUS DE LIQUIDE DE REFROIDISSEMENT !" pbold .. " Il offre une recompense !" $) +crtext
 		cooled-it goodfx rescue-trainitem morale3+all
 	else cool-it++
-		($ "Il commence a crier apres " .. thegroup .. " jusqu'a ce qu'" .. gthey .. " parte" .. g1s .. "." $) +crtext
+		($ "Il commence a crier apres " .. thegroup .. " jusqu'a ce qu'" .. gthey .. " part" .. g1s .. "." $) +crtext
 		morale--all badfx
 	then witsattREV
 ;

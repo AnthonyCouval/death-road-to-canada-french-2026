@@ -93,7 +93,7 @@ cyoa: common4-weegee
 
 cyoa-choice: common4-dogpoo-ignore
 	($ Thegroup .. " ignore la boite de ravitaillement et toute la nourriture dedans.
-	" .. gThey .. " trouve" .. g1s .. " quelques boites de conserve en fouillant le reste de la maison, mais se demande" .. g1s .. " ce qu'il y avait dedans." $) text!
+	" .. gThey .. " trouv" .. g1s .. " quelques boites de conserve en fouillant le reste de la maison, mais se demande" .. g1s .. " ce qu'il y avait dedans." $) text!
 	2 trunk-food+ goodfx
 ;
 
@@ -162,7 +162,7 @@ cyoa-bridge: common4-dogpoo-open
 
 cyoa: common4-dogpoo
 	"DESESPOIR TOTAL" cyoa-title! picon!
-	($ "As " .. thegroup .. " fouille une maison abandonnee, et c'est le miracle. " .. gThey .. " trouve" .. g1s .. " une boite de rations gouvernementale, non ouverte." $) text!
+	($ "As " .. thegroup .. " fouille une maison abandonnee, et c'est le miracle. " .. gThey .. " trouv" .. g1s .. " une boite de rations gouvernementale, non ouverte." $) text!
 	($ "A sa " .. "GRANDE HORREUR" rbold .. ", il s'avere qu'il y a une " .. "crotte de chien" fbold .. " posee " .. "JUSTE SUR LA POIGNEE" rbold .. " de la boite. " .. "Impossible de l'ouvrir sans toucher la crotte." rbold $) +crtext
 	WEAPON_TREEBRANCH roadtrip-has-weapon? not if
 		"Ca pourrait etre le plus grand defi jusqu'ici !" +crtext

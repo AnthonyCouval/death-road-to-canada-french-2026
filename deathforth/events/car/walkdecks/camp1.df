@@ -31,12 +31,12 @@ cyoa: walk-camp4
 cyoa: walk-camp5
 	camp-pic
 	"INSECTES ET CAMPING" cyoa-title!
-	($ "Apres une longue marche " .. thegroup .. " decide de monter le camp. Malheureusement " .. thegroup .. " est assailli par des moustiques pendant la nuit et " .. gthey .. " ne dor" .. g1s .. " pas du tout." $) cyoa-text! morale--all +cr tiredcamp
+	($ "Apres une longue marche " .. thegroup .. " decide de monter le camp. Malheureusement " .. thegroup .. " est assailli par des moustiques pendant la nuit et " .. gthey .. " ne se repos" .. g1s .. " pas du tout." $) cyoa-text! morale--all +cr tiredcamp
 ;
 cyoa: walk-camp6
 	camp-pic
 	"LONGUE JOURNEE" cyoa-title!
-	($ "Apres une journee entiere de marche " .. thegroup .. " trouve un endroit sur pour camper. " .. gHe .. " a tres faim, et " .. gthey .. " mange" .. g1s .. " un repas supplementaire." $) cyoa-text!
+	($ "Apres une journee entiere de marche " .. thegroup .. " trouve un endroit sur pour camper. " .. gHe .. " a tres faim, et " .. gthey .. " mang" .. g1s .. " un repas supplementaire." $) cyoa-text!
 	chowday +cr fullcamp
 ;
 cyoa: walk-camp7

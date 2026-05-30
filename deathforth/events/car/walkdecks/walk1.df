@@ -53,7 +53,7 @@ cyoa: walk-branchbreak
 	image-tree
 	"LA BRANCHE" cyoa-title!
 	choosehuman
-	($ "En traversant les bois, " .. thegroup .. " se perd completement. Si " .. gthey .. " continue" .. g1s .. " comme ca, " .. gthey .. " va perdre beaucoup de temps." $) cyoa-text! 
+	($ "En traversant les bois, " .. thegroup .. " se perd completement. Si " .. gthey .. " continu" .. g1s .. " comme ca, " .. gthey .. " va perdre beaucoup de temps." $) cyoa-text!
 		fittest charchoice( " grimpe a un arbre pour regarder" )choice: walk-branchbreak-go
 		choice( "Continuer a errer sans but" )choice: walk-branchbreak-no
 ;
@@ -152,9 +152,9 @@ cyoa-choice: walk-bandit2-coolit
 cyoa-choice: walk-bandit2-pay
 	($ Thegroup .. " cede aux exigences." $) text!
 	ezbandit? if
-		($ gThey .. " per" .. g1s .. " une bonne partie de ses provisions. " .. gTheyare .. " encore en vie, pour l'instant." $) 
+		($ gThey .. " perd" .. g1s .. " une bonne partie de " .. ghis .. " provisions. " .. gTheyare .. " encore en vie, pour l'instant." $)
 	else
-		($ gThey .. " per" .. g1s .. " ses armes et tout le reste. " .. gTheyare .. " encore en vie, pour l'instant." $) 
+		($ gThey .. " perd" .. g1s .. " les armes et tout le reste. " .. gTheyare .. " encore en vie, pour l'instant." $)
 	then +crtext badfx
 	 ezbandit? not if 0weaponsall trunk.clear then bandit-all morale3-all someicon
 ;

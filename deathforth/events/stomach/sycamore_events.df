@@ -839,7 +839,7 @@ cyoa-choice: t-mech-calmshot
 ;
 
 cyoa-choice: t-mech-paytoll
-	($ Thegroup .. " decide de jouer la securite. " .. gThey .. " cede" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
+	($ Thegroup .. " decide de jouer la securite. " .. gThey .. " ced" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
 	bandit-mechtakestuff haggler-morale
 ;
 
@@ -988,7 +988,7 @@ cyoa-choice: t-cop-calmshot
 ;
 
 cyoa-choice: t-cop-paytoll
-	($ Thegroup .. " decide de jouer la securite. " .. gThey .. " cede" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
+	($ Thegroup .. " decide de jouer la securite. " .. gThey .. " ced" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
 	bandit-coptakestuff haggler-morale
 	trunk.killer
 ;
@@ -1132,7 +1132,7 @@ cyoa-choice: t-pyro-coolit
 ;
 
 cyoa-choice: t-pyrobandits-paytoll
-	($ Thegroup .. " decide de ne pas prendre de risque. " .. gThey .. " cede" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
+	($ Thegroup .. " decide de ne pas prendre de risque. " .. gThey .. " ced" .. g1s .. " aux exigences des bandits." $) cyoa-text! badfx
 	bandit-pyrotakestuff haggler-morale 
 	trunk.killer 
 	
