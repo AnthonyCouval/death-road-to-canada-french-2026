@@ -85,7 +85,7 @@ cyoa-choice: card1-group "Tout le monde decide de tirer sur les cibles en meme t
 cyoa: card1-cyoa
 	"Stand de Tir Abandonne" cyoa-title!
 	0 to cyoaicon cyoaicon // picks a CYOA image, displays it using "cyoaicon"
-	($ Thegroup .. " trouve un stand de tir. Il est vide et la plupart des provisions ont ete pillees. Cependant, " .. gthey .. " trouve" .. g1s .. " quelques cibles de tir et un pistolet fonctionnel." $) cyoa-text! basic-tone
+	($ Thegroup .. " trouve un stand de tir. Il est vide et la plupart des provisions ont ete pillees. Cependant, " .. gthey .. " trouv" .. g1s .. " quelques cibles de tir et un pistolet fonctionnel." $) cyoa-text! basic-tone
 	1 WEAPON_PISTOL trunk.weapon+
 	choice( "Chercher des Munitions" )choice: card1-search
 	// SOLO CHOICE, cancels group choices after it if solo

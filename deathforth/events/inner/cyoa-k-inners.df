@@ -61,7 +61,7 @@ cyoa: inner4-cyoa
 cyoa: inner3-cyoa
 	"Hotel dans une Ville Calme" cyoa-title!
 	someicon
-	($ Thegroup .. " traverse une ville vide, sans provisions et peu d'activite zombie. Un petit hotel semble avoir plus de morts-vivants qui rodent que le reste." $) cyoa-text! basic-tone
+	($ Thegroup .. " traverse une ville vide, sans provisions et peu d'activite zombie. Un petit hotel semble contenir plus de rodeurs que le reste de la zone." $) cyoa-text! basic-tone
 	0.4 1 frnd 9 15 frnd 0 1 rnd zforecast
 	"events/inner/region/easyhotel.df" $load-region
 		choice( "Explorer l'Hotel" )choice: premission
