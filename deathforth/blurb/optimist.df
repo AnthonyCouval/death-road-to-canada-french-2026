@@ -47,21 +47,21 @@
     then
 ;
 
-    : optimist-oneline1 "Je me sens plutot bien la-dedans. Enfin, dans l'ensemble." ;
+    : optimist-oneline1 "Je le sens plutot bien ce voyage. Enfin, dans l'ensemble." ;
     : optimist-oneline2 "Les chances sont encore de notre cote, j'y crois." ;
     : optimist-oneline3 "La chance est avec moi !" ;
     : optimist-oneline4 "Le monde est pas si horrible. Bon, il y aurait des trucs a ameliorer..." ;
-    : optimist-oneline5 "Je le sens, on va tomber sur quelque chose de bien !" ;
-    : optimist-oneline6 "Cette nourriture pour chat c'est pas si mauvais !" ;
+    : optimist-oneline5 "On va tomber sur quelque chose de bien, je le sens !" ;
+    : optimist-oneline6 "Cette nourriture pour chat n'est pas si mauvaise !" ;
     : optimist-oneline7 "Je crois que je me lasserai jamais de la viande en conserve." ;
     : optimist-oneline8 "Si on ignore les zombies c'est comme un road trip normal !" ;
-    : optimist-oneline9 "Cette voiture devrait pas avoir de mal a aller jusqu'au Canada." ;
+    : optimist-oneline9 "Cette voiture ne devrait pas avoir de mal a aller jusqu'au Canada." ;
     : optimist-oneline10 "J'ai hate de rencontrer d'autres survivants sur la route." ;
-    : optimist-oneline11 "On devrait pas avoir de probleme pour atteindre le Canada." ;
+    : optimist-oneline11 "On ne devrait pas avoir de probleme pour atteindre le Canada." ;
     : optimist-oneline12 "Ca va etre tranquille a partir de maintenant !" ;
-    : optimist-oneline13 "Ca peut pas faire de mal de s'allier a d'autres survivants." ;
+    : optimist-oneline13 "Ca ne peut pas faire de mal de s'allier a d'autres survivants." ;
     : optimist-oneline14 "C'est agreable d'avoir toute la route pour soi." ;
-    : optimist-oneline15 "Je prevoyais de toute facon demenager au Canada !" ;
+    : optimist-oneline15 "Je prevoyais de toute facon d'emmenager au Canada !" ;
     : optimist-oneline16 "J'ai hate de profiter du froid canadien." ;
     : optimist-oneline17 "Je me vois bien me mettre au hockey !" ;
     : optimist-oneline18 "Pas de nourriture ? Au moins j'aurai perdu du poids en arrivant au Canada !" ;

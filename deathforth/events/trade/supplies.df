@@ -18,7 +18,7 @@ cyoa{ regiondef{
 cyoa-choice: trade-gas-food-rob 
 	($ cname .. " renverse l'homme, attrape un sac de nourriture et s'enfuit. " $) cyoa-text! badfx
 	notsolo if
-		($ Theothersare .. " dragged into it." $) +text
+		($ Theothersare .. " est traine de force dans la voiture." $) +text
 	then
 	6 10 rnd trunk-food+ rob-guilt
 	aholeREV trade-flee
@@ -42,10 +42,10 @@ cyoa-choice: trade-gas-food-8
 cyoa: trade-gas-food
 	"Conversion Essence-en-Vivres" cyoa-title!
 //	iicon
-	($ Thegroup .. " sees a man standing near an SUV." $) cyoa-text!
+	($ Thegroup .. " voit un homme qui se tient pres d'un SUV." $) cyoa-text!
 	gas-to-food-bought 20 < if
 		($ "Tu as de l'essence de rechange ? J'en manque !
-		" pbold .. "Il propose de te donner 2 boites de nourriture pour 25 unites d'essence." $)
+		" pbold .. "Il propose de te donner 2 portions de nourriture pour 25 unites d'essence." $)
 		+crtext gasamt
 		choice( "Non merci" )choice back-esc
 		most-ahole if

@@ -39,7 +39,7 @@ cyoa-choice: common6-fastfood-burgin
 ;
 
 cyoa-choice: common6-fastfood-toys
-    ($ Thegroup .. " trouve un dernier jouet de menu enfant. C'est un bon !" $) text!
+    ($ Thegroup .. " deniche un dernier jouet de menu enfant. C'est une belle trouvaille !" $) text!
     60 %chance if
        1 WEAPON_PUKEYBALL trunk.weapon+
        "PUKEYBALL trouvee !"

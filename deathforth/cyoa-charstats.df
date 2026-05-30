@@ -230,7 +230,7 @@ cyoa: toiletwishgenie // Added an underscore so that "toiletwish" isn't redefine
 ' toiletwish_ to toiletwish
 
 : foodamt
-	($ " Vous avez " .. LOOT_FOOD looticon .. "" .. trunk-food .. " nourriture restante. " $) +text
+	($ " Vous avez " .. LOOT_FOOD looticon .. "" .. trunk-food .. " conserves de nourriture restante. " $) +text
 ;
 
 : gasamt

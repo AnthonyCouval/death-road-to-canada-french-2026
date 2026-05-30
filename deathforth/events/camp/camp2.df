@@ -238,10 +238,10 @@ cyoa-choice: camp2-berry-no
 cyoa: camp2-berry
 	image-camp-2
 	"Cueillette de Baies en Pleine Apocalypse Zombie" cyoa-title!
-	($ Thegroup .. " monte le camp pour la nuit apres s'etre assure qu'il n'y a aucun danger." $) cyoa-text!
+	($ Thegroup .. " monte le camp pour la nuit apres s'etre assure qu'il n'y avait aucun danger." $) cyoa-text!
 		($ gThey .. " decouvr" .. g1s .. " des buissons de baies comestibles tout autour du campement !
 
-		Les baies ne feraient pas une grande quantite de nourriture pour le travail et la nuit blanche, mais chaque petit bit peut aider." $) +crtext
+		Les baies ne representeraient pas une grande quantite de nourriture par rapport au travail fourni et a la nuit blanche passee a cueillir, mais chaque apport serait bon a prendre." $) +crtext
 		choice( "Cueillir des baies toute la nuit" )choice: camp2-berry-go
 		choice( "Aller dormir" )choice: camp2-berry-no
 ;

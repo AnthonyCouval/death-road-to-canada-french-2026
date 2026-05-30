@@ -105,7 +105,7 @@ defer car-go
 	<- me .anim.state@ 0= if
 		' car-start "DEMARRER LA VOITURE" menuadd
 	else
-		' car-go rnd5050 if "PIED AU PLANCHER !" else "GIVE 'ER!" then menuadd
+		' car-go rnd5050 if "PIED AU PLANCHER !" else "FONCE !" then menuadd
 	then
 	' car-honk "KLAXONNER" menuadd
 	' car-get-out "FONCER" menuadd
